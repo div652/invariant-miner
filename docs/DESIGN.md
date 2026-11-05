@@ -35,11 +35,22 @@ The workspace is mounted at its host path so a path means the same thing to the 
 (container). A benchmark that hard-codes another path (`/workspace`) gets its prompt text substituted, or, if that
 cannot work, the fallback of running DSH inside the container.
 
+## What makes the isolation work (tested by `tests/test_isolation.py`, 19 checks)
+
+| Piece | Setting |
+|---|---|
+| Container | rootless podman, `--network=none --cap-drop=ALL --security-opt=no-new-privileges --userns=keep-id` (runs as the host uid), workspace mounted at its host path, read-only subdirectories mounted `:ro`, `HOME=/tmp` |
+| DSH sandbox | the base `sandbox` row disabled, `sandbox-podman` inserted; `DSH_PERMISSION_MODE=workspace-isolated` plus a `permission` preset with `sandbox: workspace-isolated, approval: never` (DSH refuses to boot if the defaults match no preset) |
+| File tools | `workspace-isolated`: they resolve real paths, so paths and symlinks outside the workspace are refused |
+| Read-only directories | `:ro` in the container AND read-only permissions on the host (the file tools run on the host) |
+| Killing commands | `podman-exec.sh` runs each command in its own process group and kills that group inside the container when DSH stops the command (tool timeout, `job_kill`) |
+| Collection | copies symlinks as links, never their targets (the agent can create links to host paths) |
+
 ## Core pieces (shared by every benchmark)
 
 | Piece | What it does |
 |---|---|
-| `plugins/sandbox-podman` | Provides `ctx.sandbox`: `confine(argv)` returns `podman exec` argv into the run's container, so `bash`, jobs and glob/grep run there unchanged. Maps DSH's bundled ripgrep path to the container's `rg`; wraps commands in `timeout` so a kill reaches the process inside. |
+| `plugins/sandbox-podman` | **Done, tested.** Provides `ctx.sandbox`: `confine(argv)` returns `podman exec` argv into the run's container, so `bash`, jobs and glob/grep run there unchanged. Maps DSH's bundled ripgrep path to the container's `rg`; `podman-exec.sh` kills the command's process group inside the container when DSH stops it. |
 | `plugins/final-answer` | A `final_answer` tool that records the answer and ends the turn. |
 | `plugins/benchmark-limits` | Step limit, wall-clock timeout, temperature (from `agentic-evolution`'s `benchmark-limits.mjs`). |
 | MCP bridge | Serves benchmark tools that are plain functions or REST APIs as an MCP server. |

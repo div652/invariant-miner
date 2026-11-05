@@ -70,6 +70,8 @@ benchmark teaches us a new kind of check, add it here so the next benchmark gets
   - `run.json`: what ran (DSH commit, patch files, image digest, model, budgets, timings).
 - [ ] **What the grader reads**: files in a directory (which), the workspace diff, the final answer, container state,
       the trajectory.
+- [ ] **Collection does not follow symlinks**: the agent can leave links in the workspace pointing at host files
+      (`ln -s /etc/passwd output/x`); collection and grading copy links as links, never their targets.
 - [ ] **How the grader is run**: command, environment, judge model and endpoint; it runs on the host, outside the
       agent's reach.
 - [ ] **Output mapping**: where our run directory's outputs go in the layout the grader expects.
@@ -77,8 +79,9 @@ benchmark teaches us a new kind of check, add it here so the next benchmark gets
 ## 10. Validation
 - [ ] **Smoke**: 1-2 tasks end to end (staging, run, collect, grade) with no harness errors.
 - [ ] **Reference**: a published or earlier score to compare with (setup, model, judge), and our score on it.
-- [ ] **Isolation tests**: bash cannot read outside the workspace, cannot write to read-only dirs, has no network
-      when it should have none; file tools refuse paths outside the workspace.
+- [ ] **Isolation tests**: `tests/test_isolation.py` passes with this benchmark's image and mounts (bash cannot read
+      outside the workspace or write read-only dirs, has no network when it should have none; file tools refuse
+      paths and symlinks outside the workspace; timed-out and killed commands stop inside the container).
 
 ---
 
