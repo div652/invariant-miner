@@ -5,10 +5,10 @@
 
 --tasks: a file of task ids (e.g. firm-knowledge/tasks/001, one per line), or an AHE splits JSON with
 `:<split>` (default train), whose task_json_sha256 values are checked against the pinned tasks. Needs
-benchmarks/harvey/setup.sh (pinned checkout, image, prepared prompt and skills).
+benchmarks/harvey/setup.sh (pinned checkout, image, prepared prompt).
 
 Per task: documents (the task's own, or the shared corpus its `docs_dir` names) are hard-linked read-only into
-workspace/documents; the skill scripts are copied to workspace/skills/<name>/scripts; output/ starts empty. The user
+workspace/documents; output/ starts empty. No skills (user's decision). patch.yml adds Harvey's write path rule. The user
 prompt is the task's `instructions`, verbatim, as Harvey's harness sends it. task.json (rubric) is never staged.
 """
 
@@ -43,7 +43,6 @@ def main() -> None:
     if not (PREPARED / "system_prompt.md").exists():
         raise SystemExit("run benchmarks/harvey/setup.sh (or prepare.py) first")
     system_prompt = (PREPARED / "system_prompt.md").read_text()
-    skills = sorted(p.parent.name for p in (PREPARED / "skills").glob("*/SKILL.md"))
     ids, expected = task_ids(args.tasks)
     args.out.mkdir(parents=True, exist_ok=True)
     for task_id in ids:
@@ -56,8 +55,6 @@ def main() -> None:
         if not docs.is_dir():
             raise SystemExit(f"{task_id}: documents directory missing: {docs}")
         stage = [{"from": str(docs), "to": "documents", "readonly": True, "method": "hardlink"}]
-        stage += [{"from": str(PREPARED / "skills" / name / "scripts"), "to": f"skills/{name}/scripts"}
-                  for name in skills if (PREPARED / "skills" / name / "scripts").is_dir()]
         spec = {
             "task_id": task_id,
             "prompt": task["instructions"],
@@ -71,7 +68,7 @@ def main() -> None:
             "container_env": {"WORKSPACE_DIR": "{workspace}", "DOCUMENTS_DIR": "{workspace}/documents",
                               "OUTPUT_DIR": "{workspace}/output"},
             "disable": ["tool-web"],
-            "skills_dir": str(PREPARED / "skills"),
+            "extra_patches": [str(HERE / "patch.yml")],
             "final_answer": False,
             "limits": {"max_steps": args.max_steps, "timeout_s": args.timeout_s, "temperature": None},
             "meta": {"benchmark": "harvey", "lab_commit": "4743403f52c1c1db75f3feb1c8f91fae1bd30296",

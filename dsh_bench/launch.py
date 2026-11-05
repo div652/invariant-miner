@@ -55,7 +55,9 @@ SPEC_DEFAULTS: dict = {
     "limits": {"max_steps": None, "timeout_s": 3600, "temperature": None},  # temperature: None leaves it unset
     "skills_dir": None,  # host dir of <name>/SKILL.md, registered as DSH skills (plugins/skills); outside the workspace
     "final_answer": True,
-    "extra_patches": [],  # benchmark patch files, applied after run.patch.yml; "__DSH_REPO__" -> the DSH checkout
+    "extra_patches": [],  # benchmark patch files, applied after run.patch.yml; "__DSH_REPO__" -> the DSH checkout,
+    # "__BENCH_REPO__" -> this repository (for a benchmark's own plugins: the run gets a copy of the patch file, so
+    # patch-relative plugin paths would not resolve)
     "dsh_env": {},  # extra environment for the DSH process (endpoints for benchmark plugins, ...)
     "dsh_env_files": {},  # NAME -> file whose content is the value (tokens: kept out of specs and run records)
     "grace_s": 300,  # wall-clock allowance beyond limits.timeout_s before the DSH process is killed
@@ -338,7 +340,7 @@ def main() -> int:
     patches = [CORE_PATCH, patch]
     for i, extra in enumerate(spec["extra_patches"]):
         copy = out / f"extra-{i}-{Path(extra).name}"
-        copy.write_text(Path(extra).read_text().replace("__DSH_REPO__", str(DSH)))
+        copy.write_text(Path(extra).read_text().replace("__DSH_REPO__", str(DSH)).replace("__BENCH_REPO__", str(REPO)))
         patches.append(copy)
     record["patches"] = [{"path": str(p), "sha256": sha256(p)} for p in patches]
 

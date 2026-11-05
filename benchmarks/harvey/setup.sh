@@ -8,7 +8,7 @@
 # - image dsh-bench-harvey: harvey-labs' own lab_core/sandbox/Dockerfile at the pin, under our tag (never a locally
 #   built lab-sandbox of unknown age).
 # - work/harvey-labs/.venv: harvey-labs' locked environment (uv sync --locked), used by grade.py.
-# - work/harvey-prepared: the adapted system prompt and skills (prepare.py).
+# - work/harvey-prepared: the adapted system prompt (prepare.py).
 set -euo pipefail
 HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"; REPO="$(cd "$HERE/../.." && pwd)"
 PIN=4743403f52c1c1db75f3feb1c8f91fae1bd30296

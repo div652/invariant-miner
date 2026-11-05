@@ -1,0 +1,7 @@
+# Harvey LAB rows on top of harness/core.patch.yml and the run's run.patch.yml.
+# DSH's `write` with Harvey's path rule: relative paths are written under output/ (plugins/harvey-write.mjs).
+- insert:
+    - id: harvey-write
+      name: __BENCH_REPO__/benchmarks/harvey/plugins/harvey-write.mjs
+      config:
+        outputDir: output
