@@ -87,6 +87,7 @@ def main() -> int:
                 break
             time.sleep(0.1)
         port = port_file.read_text()
+        # The real core configuration, plus the scripted model and final_answer off (as a benchmark would set it).
         patch = root / "run.patch.yml"
         patch.write_text(f"""
 - id: agent-default-model
@@ -100,34 +101,17 @@ def main() -> int:
         baseURL: http://127.0.0.1:{port}/v1
         compat: {{supportsDeveloperRole: false, supportsStore: false, maxTokensField: max_tokens}}
         models: [{{id: scripted, contextWindow: 131072, maxTokens: 4096}}]
-- id: session-persistence-jsonl
-  config: {{root: !!js dshHomePath('sessions'), compression: none}}
-- id: session-title-llm
+- id: final-answer
   disabled: true
-- id: approval
-  config: {{policy: never}}
-- id: permission
-  config:
-    presets:
-      bench-isolated:
-        sandbox: workspace-isolated
-        approval: never
-        name: Benchmark workspace
-        description: Files only inside the task workspace; commands run in the task container; no approval prompts.
-    defaultPreset: bench-isolated
-- id: sandbox
-  disabled: true
-- insert:
-    - id: sandbox-podman
-      name: {REPO / 'plugins/sandbox-podman/index.mjs'}
-      config:
-        container: {container}
-        runtime: {RUNTIME}
-        env: {{WORKSPACE_DIR: {ws}}}
 """)
         env = os.environ | {"DSH_HOME": str(home), "DSH_PERMISSION_MODE": "workspace-isolated",
-                            "SCRIPTED_API_KEY": "x", "DSH_BENCH_DSH_ROOT": str(DSH)}
-        proc = subprocess.run([NODE, str(DSH / "apps/cli/lib/bin.js"), "--profile", "headless", "--patch", str(patch),
+                            "SCRIPTED_API_KEY": "x", "DSH_BENCH_DSH_ROOT": str(DSH),
+                            "DSH_BENCH_CONTAINER": container, "DSH_BENCH_RUNTIME": RUNTIME,
+                            "DSH_BENCH_CONTAINER_ENV": json.dumps({"WORKSPACE_DIR": str(ws)}),
+                            "DSH_BENCH_LIMITS": json.dumps({"maxSteps": 50, "timeoutMs": 240000}),
+                            "DSH_BENCH_ANSWERS_DIR": str(root / "answers")}
+        proc = subprocess.run([NODE, str(DSH / "apps/cli/lib/bin.js"), "--profile", "headless",
+                               "--patch", str(REPO / "harness/core.patch.yml"), "--patch", str(patch),
                                "Run the isolation checks."], cwd=ws, env=env, capture_output=True, text=True, timeout=300)
         (root / "dsh.stdout").write_text(proc.stdout)
         (root / "dsh.stderr").write_text(proc.stderr)
@@ -171,6 +155,8 @@ def main() -> int:
         ("read refuses a symlink pointing outside the workspace", "HOSTSECRET" not in r(14) and "LINKED" in r(13)),
         ("write tool cannot write a read-only directory", not (ws / "documents/host-write.txt").exists()),
         ("a killed background job stops inside the container", r(18).strip().endswith("0")),
+        ("final_answer disabled by a later patch row", bool(requests) and "final_answer" not in requests[0]["tools"]
+         and "bash" in requests[0]["tools"]),
         ("the run completed", proc.returncode == 0),
     ]
     width = max(len(name) for name, _ in checks)

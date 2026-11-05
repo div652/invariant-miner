@@ -6,8 +6,10 @@ Steps (docs/DESIGN.md):
   1. stage the workspace (copies from the spec), make read-only dirs read-only on the host, take the baseline snapshot
      (a git repo OUTSIDE the workspace: <out>/baseline.git);
   2. start the container: workspace mounted at its host path, read-only dirs `:ro`, no capabilities, host uid;
-  3. write <out>/run.patch.yml: the model, the isolation rows, sandbox-podman, final-answer, benchmark-limits, the system
-     prompt, disabled rows and MCP servers from the spec; the spec's extra patches follow it as further --patch files;
+  3. DSH's configuration is three layers of patch files on the `headless` profile: harness/core.patch.yml (the same
+     for every run: isolation, sandbox-podman, benchmark-limits, final-answer; per-run values via DSH_BENCH_* env),
+     then <out>/run.patch.yml (generated: model, system prompt, disabled rows, MCP servers), then the spec's
+     extra_patches (the benchmark's own rows);
   4. run `dsh --profile headless` in the workspace (DSH_HOME = <out>/dsh-home, outside the workspace);
   5. collect the four standard outputs: answer.json, workspace/ + workspace.diff, dsh-home/sessions, run.json;
   6. remove the container.
@@ -33,6 +35,7 @@ from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[1]
 DSH = Path(os.environ.get("DSH_BENCH_DSH_ROOT", REPO / "work/deepseek-harness"))
+CORE_PATCH = REPO / "harness/core.patch.yml"
 HEADLESS_PREFIX = "You are a coding agent powered by the {{model}} model."
 HEADLESS_SUFFIX = "Your working directory is {{cwd}}."
 
@@ -172,18 +175,9 @@ def model_rows(model: dict) -> list[dict]:
     ]
 
 
-def build_patch(spec: dict, model: dict, out: Path, workspace: Path, container: str) -> list[dict]:
-    rows = model_rows(model) + [
-        {"id": "session-persistence-jsonl", "config": {"root": str(out / "dsh-home/sessions"), "compression": "none"}},
-        {"id": "session-title-llm", "disabled": True},
-        {"id": "approval", "config": {"policy": "never"}},
-        {"id": "permission", "config": {
-            "presets": {"bench-isolated": {
-                "sandbox": "workspace-isolated", "approval": "never", "name": "Benchmark workspace",
-                "description": "Files only inside the task workspace; commands run in the task container."}},
-            "defaultPreset": "bench-isolated"}},
-        {"id": "sandbox", "disabled": True},
-    ]
+def build_run_rows(spec: dict, model: dict, workspace: Path) -> list[dict]:
+    """The rows that depend on the spec's structure; everything fixed is in harness/core.patch.yml."""
+    rows = model_rows(model)
     if spec["system_prompt"] is not None:
         text = spec["system_prompt"].replace("{workspace}", str(workspace))
         if spec["system_prompt_mode"] == "append":
@@ -191,28 +185,36 @@ def build_patch(spec: dict, model: dict, out: Path, workspace: Path, container: 
         else:
             config = {"personaPrefix": text, "personaSuffix": HEADLESS_SUFFIX, "includeHarnessIdentity": False}
         rows.append({"id": "system-prompt", "config": config})
+    if not spec["final_answer"]:
+        rows.append({"id": "final-answer", "disabled": True})
     rows += [{"id": row, "disabled": True} for row in spec["disable"]]
-    inserts = [{"id": "sandbox-podman", "name": str(REPO / "plugins/sandbox-podman/index.mjs"), "config": {
-        "container": container, "runtime": spec["runtime"],
-        "env": {k: v.replace("{workspace}", str(workspace)) for k, v in spec["container_env"].items()}}}]
-    limits = spec["limits"]
-    limits_config = {"maxSteps": limits["max_steps"],
-                     "timeoutMs": None if limits["timeout_s"] is None else int(limits["timeout_s"] * 1000)}
-    if limits["temperature"] is not None:
-        limits_config["temperature"] = limits["temperature"]
-    inserts.append({"id": "benchmark-limits", "name": str(REPO / "plugins/benchmark-limits/index.mjs"),
-                    "config": limits_config})
-    if spec["final_answer"]:
-        inserts.append({"id": "final-answer", "name": str(REPO / "plugins/final-answer/index.mjs"),
-                        "config": {"answersDir": str(out / "answers")}})
+    inserts = []
     for server in spec["mcp"]:
         config = {"serverName": server["name"], "transport": server["transport"], "failOnStartupError": True}
         for key in ("url", "headers", "command", "args", "env", "toolCallTimeoutMs"):
             if key in server:
                 config[key] = server[key]
         inserts.append({"id": f"mcp-{server['name']}", "name": "@deepseek-ai/dsh-mcp-client", "config": config})
-    rows.append({"insert": inserts})
+    if inserts:
+        rows.append({"insert": inserts})
     return rows
+
+
+def core_env(spec: dict, out: Path, workspace: Path, container: str) -> dict[str, str]:
+    """The per-run values harness/core.patch.yml reads (DSH_BENCH_*)."""
+    limits = spec["limits"]
+    config = {"maxSteps": limits["max_steps"],
+              "timeoutMs": None if limits["timeout_s"] is None else int(limits["timeout_s"] * 1000)}
+    if limits["temperature"] is not None:
+        config["temperature"] = limits["temperature"]
+    return {
+        "DSH_BENCH_CONTAINER": container,
+        "DSH_BENCH_RUNTIME": spec["runtime"],
+        "DSH_BENCH_CONTAINER_ENV": json.dumps({k: v.replace("{workspace}", str(workspace))
+                                               for k, v in spec["container_env"].items()}),
+        "DSH_BENCH_LIMITS": json.dumps(config),
+        "DSH_BENCH_ANSWERS_DIR": str(out / "answers"),
+    }
 
 
 def write_yaml_rows(path: Path, rows: list[dict]) -> None:
@@ -307,8 +309,8 @@ def main() -> int:
     record["image"] = {"name": spec["image"], "id": run([spec["runtime"], "image", "inspect", "--format", "{{.Id}}",
                                                          spec["image"]]).stdout.strip()}
     patch = out / "run.patch.yml"
-    write_yaml_rows(patch, build_patch(spec, model, out, workspace, container))
-    patches = [patch]
+    write_yaml_rows(patch, build_run_rows(spec, model, workspace))
+    patches = [CORE_PATCH, patch]
     for i, extra in enumerate(spec["extra_patches"]):
         copy = out / f"extra-{i}-{Path(extra).name}"
         copy.write_text(Path(extra).read_text().replace("__DSH_REPO__", str(DSH)))
@@ -322,6 +324,8 @@ def main() -> int:
         key = os.environ[model["api_key_env"]]
     env = os.environ | {"DSH_HOME": str(home), "DSH_PERMISSION_MODE": "workspace-isolated", "DSH_TELEMETRY_DISABLED": "1",
                         "DSH_BENCH_DSH_ROOT": str(DSH), "DSH_BENCH_MODEL_KEY": key or "none"} | spec["dsh_env"]
+    env |= core_env(spec, out, workspace, container)
+    record["core_env"] = {k: v for k, v in env.items() if k.startswith("DSH_BENCH_") and k != "DSH_BENCH_MODEL_KEY"}
     for name, file in spec["dsh_env_files"].items():
         env[name] = Path(os.path.expanduser(file)).read_text().strip()
     prompt = spec["prompt"].replace("{workspace}", str(workspace))

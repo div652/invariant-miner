@@ -8,7 +8,7 @@ text answer:
      {"text": "done"}]
 
 An argument value "$from_last:REGEX" is replaced by the first group of REGEX matched against the last tool result in
-the request (e.g. a background job id). Every request is appended to --log as one JSON line (the step served and the request's messages), so a test can read
+the request (e.g. a background job id). Every request is appended to --log as one JSON line (the step served, the offered tool names and the messages), so a test can read
 the tool results the harness sent back.
 
     python scripted_model.py --script steps.json --log requests.jsonl --port 0 --port-file port.txt
@@ -77,7 +77,8 @@ def make_handler(steps: list[dict], log: Path, lock: threading.Lock):
             index = sum(m.get("role") == "assistant" for m in messages)
             step = steps[index] if index < len(steps) else {"text": "(script exhausted)"}
             with lock, log.open("a") as out:
-                out.write(json.dumps({"step": index, "messages": messages}) + "\n")
+                tools = [t.get("function", {}).get("name") for t in request.get("tools", [])]
+                out.write(json.dumps({"step": index, "tools": tools, "messages": messages}) + "\n")
             self.send_response(200)
             self.send_header("Content-Type", "text/event-stream")
             self.end_headers()

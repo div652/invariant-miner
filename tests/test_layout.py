@@ -1,8 +1,8 @@
 """Layout rule: the core knows nothing about any benchmark; only benchmarks/<name>/ refers to the core.
 
-Fails if a core file (everything outside benchmarks/, docs/, patches/, work/, runs/) mentions the name of a directory
+Fails if a core file (everything outside benchmarks/, docs/, README.md, patches/, work/, runs/) mentions the name of a directory
 in benchmarks/. Names are matched case-insensitively, ignoring "-", "_" and spaces (so "MyBench", "my-bench" and
-"my_bench" all match a directory "mybench"). docs/ may name benchmarks (as references and examples); patches/ is the upstream
+"my_bench" all match a directory "mybench"). docs/ and README.md may name benchmarks (as references and examples); patches/ is the upstream
 DSH patch series.
 
     python3 tests/test_layout.py
@@ -13,7 +13,7 @@ import sys
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[1]
-NOT_CORE = {"benchmarks", "docs", "patches", "work", "runs", ".git"}
+NOT_CORE = {"benchmarks", "docs", "patches", "work", "runs", ".git", "README.md"}
 
 
 def main() -> int:

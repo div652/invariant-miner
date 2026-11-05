@@ -84,7 +84,8 @@ def main() -> int:
         ("workspace: read-only dir unchanged", (out / "workspace/docs/input.txt").read_text() == "the number is 6 times 7\n"),
         ("sessions: one complete root session", len(sessions) == 1 and record["root_steps"] == 2),
         ("run.json: DSH commit, image id, patches", bool(record["dsh"]["commit"]) and record["image"]["id"]
-         and len(record["patches"]) == 1),
+         and [Path(p["path"]).name for p in record["patches"]] == ["core.patch.yml", "run.patch.yml"]),
+        ("final_answer offered to the model", "final_answer" in requests[0]["tools"] and "bash" in requests[0]["tools"]),
         ("system prompt reached the model", "BENCHMARK-SYSTEM-PROMPT-MARKER" in system and "coding agent" in system),
         ("prompt has the real workspace path", str(out / "workspace") in (out / "prompt.txt").read_text()),
         ("container removed", containers == ""),

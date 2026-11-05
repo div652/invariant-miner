@@ -1,0 +1,61 @@
+# The core harness configuration: DSH's `headless` profile + these rows, for every run of every benchmark.
+#
+# This file is passed to DSH as-is (`dsh --profile headless --patch harness/core.patch.yml ...`); plugin paths are
+# relative to this file. Per-run values arrive as environment variables set by dsh_bench/launch.py (DSH_BENCH_*).
+# Applied after it, in order: the run's generated run.patch.yml (model, the benchmark's system prompt, disabled rows,
+# MCP servers), then the benchmark's own patch files (benchmarks/<name>/*.yml).
+#
+# A row `- id: X` with `config:` REPLACES row X's whole config in the profile; `disabled: true` turns a row off;
+# `- insert:` adds rows. `dsh --profile headless --patch ... --dump-config` prints the composed result.
+
+# --- Sessions: plain JSONL under the run's dsh-home (DSH_HOME, outside the workspace) ----------------------------------
+- id: session-persistence-jsonl
+  config:
+    root: !!js dshHomePath('sessions')
+    compression: none
+
+# --- No LLM-generated session title (one extra model call per run, not part of the task) --------------------------------
+- id: session-title-llm
+  disabled: true
+
+# --- Isolation ---------------------------------------------------------------------------------------------------------
+# No approval prompts (nobody is there to answer them). The file tools run on the host in `workspace-isolated` mode
+# (DSH patch 0001): they refuse every path, and every symlink target, outside the workspace. DSH refuses to boot unless
+# the sandbox and approval defaults match a preset, hence the preset. (The launcher also sets
+# DSH_PERMISSION_MODE=workspace-isolated, which the profile's sandbox-policy row reads.)
+- id: approval
+  config:
+    policy: never
+
+- id: permission
+  config:
+    presets:
+      bench-isolated:
+        sandbox: workspace-isolated
+        approval: never
+        name: Benchmark workspace
+        description: Files only inside the task workspace; commands run in the task container.
+    defaultPreset: bench-isolated
+
+# Commands (bash, background jobs, glob/grep) run in the task's container instead of a local bwrap/Landlock sandbox.
+- id: sandbox
+  disabled: true
+
+- insert:
+    - id: sandbox-podman
+      name: ../plugins/sandbox-podman/index.mjs
+      config:
+        container: !!js process.env.DSH_BENCH_CONTAINER
+        runtime: !!js process.env.DSH_BENCH_RUNTIME ?? 'podman'
+        env: !!js JSON.parse(process.env.DSH_BENCH_CONTAINER_ENV ?? '{}')
+
+    # --- Budgets: step limit, wall-clock timeout, temperature (each optional) ------------------------------------------
+    - id: benchmark-limits
+      name: ../plugins/benchmark-limits/index.mjs
+      config: !!js JSON.parse(process.env.DSH_BENCH_LIMITS ?? '{}')
+
+    # --- final_answer tool: records the answer and ends the turn (a benchmark can disable this row) ---------------------
+    - id: final-answer
+      name: ../plugins/final-answer/index.mjs
+      config:
+        answersDir: !!js process.env.DSH_BENCH_ANSWERS_DIR
