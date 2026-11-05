@@ -3,10 +3,9 @@ gpt-5.6-sol high, helper claude-sonnet-5, all via CAO), task by task.
 
     python3 benchmarks/harvey/compare_c0.py RUN_DIR [--artifacts ~/AHE_Harvey_cao/harvey-ahe-project/campaign-artifacts]
 
-C0 trials come from these evaluations (agent gpt-5.6-luna in all of them): campaign 23 C0-train / C0-validation /
-C0-final-test, campaign 24 C0-train (held-out 50), campaign 34 C0-train / C0-validation (campaign 23 rerun after the
-reasoning-summary fix). c23's C0-train-extra is left out: it re-ran only tasks with 0/3 all-pass, so it would bias
-the baseline. Per task, C0 is the mean over its trials; the comparison is paired over tasks both sides graded.
+C0 trials: campaign 34 (the reference Luna run, reasoning summaries on: 100 firm-knowledge tasks x 3 trials) by default;
+--with-c23-c24 adds the older runs without summaries. Per task, C0 is the mean over its trials; the comparison is
+paired over tasks both sides graded.
 """
 
 import argparse
@@ -16,19 +15,25 @@ import statistics as st
 from collections import Counter, defaultdict
 from pathlib import Path
 
-EVALUATIONS = [
+# Campaign 34 is the reference Luna run (reasoning summaries on, the endpoint this harness uses). Its C0 covers the
+# 80 train and 20 validation tasks of splits-firm-knowledge-c34-80-20-70.json, 3 trials each.
+C34 = [
+    ("harvey-lab-campaign-34-c23-rerun-summaries-80-20-70", "C0-train"),
+    ("harvey-lab-campaign-34-c23-rerun-summaries-80-20-70", "C0-validation"),
+]
+# Older Luna C0 runs WITHOUT reasoning summaries (c23 sent no `reasoning` field); --with-c23-c24 only.
+# c23's C0-train-extra re-ran only tasks with 0/3 all-pass and is never used (it would bias the baseline).
+C23_C24 = [
     ("harvey-lab-campaign-23-cao-luna-allpass-80-20-20", "C0-train"),
     ("harvey-lab-campaign-23-cao-luna-allpass-80-20-20", "C0-validation"),
     ("harvey-lab-campaign-23-cao-luna-allpass-80-20-20", "C0-final-test"),
     ("harvey-lab-campaign-24-cao-c23C0-heldout50", "C0-train"),
-    ("harvey-lab-campaign-34-c23-rerun-summaries-80-20-70", "C0-train"),
-    ("harvey-lab-campaign-34-c23-rerun-summaries-80-20-70", "C0-validation"),
 ]
 
 
-def c0_trials(artifacts: Path) -> dict[str, list[dict]]:
+def c0_trials(artifacts: Path, evaluations: list[tuple[str, str]] = C34) -> dict[str, list[dict]]:
     per_task: dict[str, list[dict]] = defaultdict(list)
-    for campaign, evaluation in EVALUATIONS:
+    for campaign, evaluation in evaluations:
         root = artifacts / campaign / "evaluations" / evaluation
         result = json.loads((root / "evaluation_result.json").read_text())
         for fact in result["trial_facts"]:
@@ -43,9 +48,10 @@ def main() -> None:
     parser.add_argument("run_dir", type=Path)
     parser.add_argument("--artifacts", type=Path,
                         default=Path("~/AHE_Harvey_cao/harvey-ahe-project/campaign-artifacts").expanduser())
+    parser.add_argument("--with-c23-c24", action="store_true", help="also use the c23/c24 C0 runs (no summaries)")
     args = parser.parse_args()
     ours = {r["task"]: r for r in json.loads((args.run_dir / "grading/scores.json").read_text())["tasks"]}
-    c0 = c0_trials(args.artifacts)
+    c0 = c0_trials(args.artifacts, C34 + (C23_C24 if args.with_c23_c24 else []))
     common = sorted(set(ours) & set(c0))
     rows = []
     for task in common:
