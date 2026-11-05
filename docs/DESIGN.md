@@ -47,6 +47,13 @@ cannot work, the fallback of running DSH inside the container.
 | Killing commands | `podman-exec.sh` runs each command in its own process group and kills that group inside the container when DSH stops the command (tool timeout, `job_kill`) |
 | Collection | copies symlinks as links, never their targets (the agent can create links to host paths) |
 
+## Known differences from running everything in one place
+
+- **The workspace is the only shared place.** bash runs in the container, the file tools (`read`, `write`, `edit`)
+  on the host. A file bash writes outside the workspace (e.g. `/tmp/x.txt`) exists only in the container, so `read`
+  cannot open it (and refuses the path anyway: it is outside the workspace). Seen in the first Harvey smoke run: the
+  agent wrote converted text to `/tmp`, `read` refused it, and it copied the files into the workspace instead.
+
 ## Core pieces (shared by every benchmark)
 
 | Piece | What it does |
