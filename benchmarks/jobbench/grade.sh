@@ -7,15 +7,18 @@
 # Builds RUN_DIR/grading/dataset/main/<task>/ from the dataset's task dir (task_folder, RUBRICS.json, ...) plus the
 # run's workspace/output as model_output/$LABEL/. Symlinks in the output are NOT copied (an agent could point one at a
 # host file); they are listed in RUN_DIR/grading/skipped-symlinks.txt. Scores: RUN_DIR/grading/scores.txt.
+# Env: GRADING_DIR (default RUN_DIR/grading), ONLY (space-separated task dir names under RUN_DIR/tasks to grade).
 set -euo pipefail
 RUN="$(cd "$1" && pwd)"; DATASET="$(cd "${2:-$HOME/job-bench-eval/dataset/main}" && pwd)"
+[[ "$(realpath -m "${GRADING_DIR:-$RUN/grading}")" != "$RUN/tasks/"* ]] || { echo "GRADING_DIR must not be inside a task dir" >&2; exit 1; }
 NGROUPS="${3:-2}"; PER_GROUP="${4:-9}"
 LABEL="${LABEL:-gpt-5-6-luna-dsh-bench}"
-G="$RUN/grading"
+G="$(realpath -m "${GRADING_DIR:-$RUN/grading}")"   # absolute: the copies below run from inside each output dir
 [[ ! -e "$G" ]] || { echo "$G exists; remove it to re-grade" >&2; exit 1; }
 mkdir -p "$G/dataset/main"
 : > "$G/skipped-symlinks.txt"
 for task in "$RUN"/tasks/*/; do
+  if [[ -n "${ONLY:-}" && " $ONLY " != *" $(basename "$task") "* ]]; then continue; fi
   [[ -f "$task/run.json" ]] || { echo "skip (unfinished): $task"; continue; }
   id="$(python3 -c 'import json,sys; print(json.load(open(sys.argv[1]))["task_id"])' "$task/spec.json")"
   dest="$G/dataset/main/$id"
