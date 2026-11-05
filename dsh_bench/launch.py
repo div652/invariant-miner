@@ -223,7 +223,8 @@ def write_yaml_rows(path: Path, rows: list[dict]) -> None:
 def root_session(home: Path) -> tuple[dict, list[dict]] | None:
     roots = []
     for path in sorted((home / "sessions").rglob("session.v*.jsonl")):
-        lines = [json.loads(line) for line in path.read_text().splitlines() if line.strip()]
+        # Split on "\n" only: str.splitlines() also splits on U+2028/U+2029, which JSON leaves unescaped inside strings.
+        lines = [json.loads(line) for line in path.read_text().split("\n") if line.strip()]
         if lines and not lines[0].get("parentSession"):
             roots.append((lines[0], lines[1:]))
     return roots[0] if len(roots) == 1 else None
@@ -257,7 +258,7 @@ def collect(out: Path, workspace: Path, gitdir: Path, home: Path, exit_code: int
 
     git(gitdir, workspace, "add", "-A", "--force")
     (out / "workspace.diff").write_bytes(git(gitdir, workspace, "diff", "--cached", "--binary", "HEAD", binary=True))
-    changed = [line.split("\t", 1) for line in git(gitdir, workspace, "diff", "--cached", "--name-status", "HEAD").splitlines()]
+    changed = [line.split("\t", 1) for line in git(gitdir, workspace, "diff", "--cached", "--name-status", "HEAD").split("\n") if line]
     steps = sum(e.get("type") == "step/start" for e in events)
     sessions = len(list((home / "sessions").rglob("session.v*.jsonl")))
     return {"finish_reason": finish, "answer_source": source, "root_steps": steps, "sessions": sessions,

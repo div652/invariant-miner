@@ -28,7 +28,7 @@ def main() -> int:
     steps = [
         {"calls": [{"name": "bash", "args": {"command": "cat docs/input.txt && echo 42 > output/answer.txt",
                                              "description": "write deliverable"}}]},
-        {"calls": [{"name": "final_answer", "args": {"answer": "The answer is 42."}}]},
+        {"calls": [{"name": "final_answer", "args": {"answer": "The answer is 42.\u2028(U+2028 inside the text)"}}]},
         {"text": "should never be requested"},
     ]
     (root / "script.json").write_text(json.dumps(steps))
@@ -74,7 +74,8 @@ def main() -> int:
     containers = subprocess.run([RUNTIME, "ps", "-a", "--filter", f"name={record['container']}", "-q"],
                                 capture_output=True, text=True).stdout.strip()
     checks = [
-        ("answer.json: final_answer text", answer["answer"] == "The answer is 42." and answer["source"] == "final_answer"),
+        ("answer.json: final_answer text (U+2028 kept)", answer["answer"] == "The answer is 42.\u2028(U+2028 inside the text)"
+         and answer["source"] == "final_answer"),
         ("answer.json: finish reason final_answer", answer["finish_reason"] == "final_answer"),
         ("model not called after final_answer", len(requests) == 2),
         ("workspace.diff: exactly the deliverable", [c["path"] for c in record["changed_files"]] == ["output/answer.txt"]
