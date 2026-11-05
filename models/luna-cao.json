@@ -1,15 +1,15 @@
 {
   "provider": "luna-cao",
-  "display_name": "GPT-5.6 Luna 256K (CAO via model_serve proxy)",
-  "model": "gpt-5.6",
+  "display_name": "GPT-5.6 Luna (CAO, c34 endpoint)",
+  "model": "gpt-5.6-luna",
   "api": "openai-responses",
-  "base_url": "http://127.0.0.1:8018/v1",
-  "api_key_file": "~/.config/evolve_agents/model_serve_local.token",
-  "reasoning": "high",
-  "context_window": 262144,
-  "max_tokens": 32768,
+  "base_url": "http://127.0.0.1:4141/v1",
+  "api_key_file": "~/cao/profile/.gateway-key",
+  "reasoning": "medium",
+  "reasoning_efforts": {"low": "low", "medium": "medium", "high": "high", "xhigh": "xhigh"},
+  "context_window": 922000,
+  "max_tokens": 128000,
   "input": ["text", "image"],
-  "reasoning_efforts": {"off": "none", "low": "low", "medium": "medium", "high": "high", "xhigh": "xhigh", "max": "max"},
   "compat": {"supportsStrictMode": false},
   "stream_idle_timeout_ms": 1800000
 }

@@ -1,7 +1,7 @@
 """Write one launcher spec per Harvey LAB task (benchmarks/harvey/CHECKLIST.md has the decision behind each field).
 
     python3 benchmarks/harvey/make_specs.py --tasks <ids.txt | split.json[:split]> --out runs/<run>/specs \
-        [--model {repo}/models/luna-cao-direct.json] [--max-steps 200] [--timeout-s 7200]
+        [--model {repo}/models/luna-cao.json] [--max-steps 200] [--timeout-s 7200]
 
 --tasks: a file of task ids (e.g. firm-knowledge/tasks/001, one per line), or an AHE splits JSON with
 `:<split>` (default train), whose task_json_sha256 values are checked against the pinned tasks. Needs
@@ -36,7 +36,7 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--tasks", required=True)
     parser.add_argument("--out", type=Path, required=True)
-    parser.add_argument("--model", default="{repo}/models/luna-cao-direct.json")
+    parser.add_argument("--model", default="{repo}/models/luna-cao.json")
     parser.add_argument("--max-steps", type=int, default=200, help="Harvey's --max-turns default")
     parser.add_argument("--timeout-s", type=int, default=7200)
     args = parser.parse_args()

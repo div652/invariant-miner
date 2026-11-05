@@ -24,7 +24,7 @@ setup differs from the reference, the row says so.
 | 5 | Non-MCP tools | None. | yes |
 | 5 | Side effects / back doors | Grading reads only output files; nothing to bypass. | yes |
 | 6 | Skills | None provided. | yes |
-| 7 | Budgets / model | `models/luna-cao.json`: GPT-5.6 Luna via the model_serve proxy on :8018 (CAO upstream), Responses API, reasoning high, 262,144 context, 32,768 output cap. Timeout 7,200 s per task, no step limit, temperature unset: all as the reference. | yes |
+| 7 | Budgets / model | Default now `models/luna-cao.json`, the harness-wide standard (c34 endpoint: Luna on CAO directly, summaries on, effort medium, 128K output). The parity run below used `models/luna-proxy-high.json` (the reference overlay's settings: model_serve proxy on :8018, reasoning high, 262K context, 32K output); the standard has not been run on JobBench yet. Timeout 7,200 s per task, no step limit, temperature unset. | yes |
 | 8 | Ending / answer format | The agent just stops; `final_answer` is OFF (the reference had no such tool). Deliverables are files in `output/`. | yes |
 | 9 | Standard outputs | Checked on the smoke task: answer.json (last message, finish `completed`), workspace.diff = the 3 deliverables + the agent's one scratch script (no harness files), 1 complete root session, run.json. | yes |
 | 9 | Collection / symlinks | `grade.sh` copies regular files only; symlinks are listed in `grading/skipped-symlinks.txt`. | yes |

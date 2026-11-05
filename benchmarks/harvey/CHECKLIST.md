@@ -1,7 +1,7 @@
 # Harvey LAB: checklist answers
 
 Benchmark: `harveyai/harvey-labs` @ `4743403` (2,010 tasks; grader `lab_core.evaluation`). Reference for validation:
-C0 of the AHE campaigns c23/c24 (Harvey's own harness, ported as `harness_lab`): GPT-5.6 Luna on the 70
+C0 of the AHE campaigns (Harvey's own harness, ported as `harness_lab`; campaign 34 is the reference Luna run: reasoning summaries on): GPT-5.6 Luna on the 70
 firm-knowledge tasks of `splits-firm-knowledge-c15-eval70.json`, judge gpt-5.6-sol high, helper claude-sonnet-5,
 all via CAO: **15.2% all-pass, 0.437 mean criterion pass rate (70 tasks x 3 runs)**. The 70 task.json files are
 byte-identical at our pin (checked against the split's sha256 values).
@@ -32,7 +32,7 @@ no skills (not used for now).
 | 5 | Harvey's tools | Not used, except Harvey's relative-path rule for `write`. Harvey's six tools belong to its harness and have DSH counterparts with the same names. Differences that remain: `read` text only (office files via `parse-doc`); `read`/`edit` resolve relative paths against the workspace (Harvey: workspace, then documents, then output); `glob`/`grep` search the whole workspace by default (Harvey: documents). Harvey has no environment tools (no MCP, no domain APIs). | yes |
 | 5 | MCP / non-MCP tools | None. | yes |
 | 6 | Skills | None for now (user's decision): Harvey's docx/pptx/xlsx skills are not registered, their scripts are not staged, and the prompt does not mention them. The agent can still build .docx/.xlsx/.pptx with the image's python-docx, openpyxl, python-pptx, pandoc, LibreOffice. | yes |
-| 7 | Budgets / model | `models/luna-cao-direct.json`: gpt-5.6-luna on CAO directly (Responses API), provider-default reasoning, 128K output cap, no temperature: as C0. Max steps 200 (Harvey's `--max-turns` default), timeout 7,200 s. Bash timeout 60 s (DSH default; Harvey's `--shell-timeout`). | yes |
+| 7 | Budgets / model | `models/luna-cao.json`, the harness-wide standard (the AHE campaign 34 agent endpoint): gpt-5.6-luna on CAO directly, Responses API, reasoning summaries on with encrypted reasoning sent back each turn, effort medium (Luna's default; c34 sends none, DSH must name one to get summaries), 128K output cap, no temperature. Verified on the request bodies (`tests/log_proxy.py`). Max steps 200 (Harvey's `--max-turns` default), timeout 7,200 s. Bash timeout 60 s. A first FK-250 launch without summaries (no effort configured: c23's behaviour) was stopped after 10 tasks and discarded. | yes |
 | 8 | Ending | DSH's own: the run ends when the model replies without a tool call. No `finish` tool and no deliverable check (Harvey harness features, not benchmark requirements); `final_answer` off. | yes |
 | 9 | Standard outputs | answer.json, workspace + diff (without documents/), sessions, run.json. | smoke |
 | 9 | Grader | `grade.py` (Harvey's venv): `lab_core.evaluation.run_eval.evaluate_run` per task, one judge gpt-5.6-sol at effort high (added to the upstream judge, which sends none), helper claude-sonnet-5 (upstream hard-codes claude-sonnet-4-6), via CAO; 10 criteria at a time; 2 attempts on grading errors. Reads only `output/`; symlinks are not copied. | yes |

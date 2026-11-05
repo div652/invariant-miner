@@ -2,7 +2,7 @@
 
 ## train-20, Luna via CAO, 2026-11-05 (core-v0)
 
-Run `runs/jb-train20-20261105T170005Z` (not in git): 20 tasks, 10 at a time, GPT-5.6 Luna (reasoning high) via the
+Run `runs/jb-train20-20261105T170005Z` (not in git): 20 tasks, 10 at a time, GPT-5.6 Luna (reasoning high; `models/luna-proxy-high.json`) via the
 model_serve proxy on CAO, graded by grok-4.6 high through the CAO judge shim, original rubrics. Reference: the same
 tasks, model, judge and rubrics on agentic-evolution's own runner (`train20-luna-cao-20261105T074611Z`). One run each,
 so per-task differences are mostly run-to-run noise (SD ~0.13-0.15 per task).
