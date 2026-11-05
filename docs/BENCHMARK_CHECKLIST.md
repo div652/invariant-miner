@@ -33,6 +33,8 @@ benchmark teaches us a new kind of check, add it here so the next benchmark gets
 
 ## 4. Network and access
 - [ ] **Container network**: `none` by default. If bash needs the network (package installs, APIs), which hosts.
+      With the network on (podman `pasta`), check the container still cannot reach the host's loopback services (model
+      proxy, CAO, MCP servers, judge): they must listen on 127.0.0.1 only.
 - [ ] **Web tools** (`web_search`, `web_fetch`, run on the host): on or off. On needs the Exa relay.
 - [ ] **Host paths visible to the agent**: only the workspace (file tools in `workspace-isolated` mode, container
       mounts only the workspace).

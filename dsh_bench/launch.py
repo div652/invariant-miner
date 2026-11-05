@@ -51,6 +51,7 @@ SPEC_DEFAULTS: dict = {
     "final_answer": True,
     "extra_patches": [],  # benchmark patch files, applied after run.patch.yml; "__DSH_REPO__" -> the DSH checkout
     "dsh_env": {},  # extra environment for the DSH process (endpoints for benchmark plugins, ...)
+    "dsh_env_files": {},  # NAME -> file whose content is the value (tokens: kept out of specs and run records)
     "grace_s": 300,  # wall-clock allowance beyond limits.timeout_s before the DSH process is killed
 }
 
@@ -100,9 +101,12 @@ def set_readonly(root: Path) -> None:
     root.chmod(0o555)
 
 
-def git(gitdir: Path, workspace: Path, *args: str) -> str:
-    return run(["git", f"--git-dir={gitdir}", f"--work-tree={workspace}", "-c", "user.name=dsh-bench",
-                "-c", "user.email=dsh-bench@localhost", "-c", "core.autocrlf=false", *args]).stdout
+def git(gitdir: Path, workspace: Path, *args: str, binary: bool = False) -> str | bytes:
+    argv = ["git", f"--git-dir={gitdir}", f"--work-tree={workspace}", "-c", "user.name=dsh-bench",
+            "-c", "user.email=dsh-bench@localhost", "-c", "core.autocrlf=false", "-c", "core.quotepath=false", *args]
+    if binary:  # diffs of binary files (xlsx, pdf) are not text
+        return subprocess.run(argv, check=True, capture_output=True).stdout
+    return run(argv).stdout
 
 
 def stage(spec: dict, workspace: Path, gitdir: Path) -> list[Path]:
@@ -252,12 +256,23 @@ def collect(out: Path, workspace: Path, gitdir: Path, home: Path, exit_code: int
     (out / "answer.json").write_text(json.dumps(answer_json, indent=2) + "\n")
 
     git(gitdir, workspace, "add", "-A", "--force")
-    (out / "workspace.diff").write_text(git(gitdir, workspace, "diff", "--cached", "--binary", "HEAD"))
+    (out / "workspace.diff").write_bytes(git(gitdir, workspace, "diff", "--cached", "--binary", "HEAD", binary=True))
     changed = [line.split("\t", 1) for line in git(gitdir, workspace, "diff", "--cached", "--name-status", "HEAD").splitlines()]
     steps = sum(e.get("type") == "step/start" for e in events)
     sessions = len(list((home / "sessions").rglob("session.v*.jsonl")))
     return {"finish_reason": finish, "answer_source": source, "root_steps": steps, "sessions": sessions,
             "changed_files": [{"status": s, "path": p} for s, p in changed]}
+
+
+def collect_only(out: Path) -> int:
+    record = json.loads((out / "run.json").read_text()) if (out / "run.json").exists() else {
+        "task_id": json.loads((out / "spec.json").read_text())["task_id"], "recollected": True}
+    record |= collect(out, out / "workspace", out / "baseline.git", out / "dsh-home", record.get("exit_code"))
+    record["collected_at"] = now()
+    (out / "run.json").write_text(json.dumps(record, indent=2) + "\n")
+    print(json.dumps({k: record.get(k) for k in ("task_id", "finish_reason", "root_steps", "sessions")}
+                     | {"changed": len(record["changed_files"]), "out": str(out)}))
+    return 0
 
 
 def main() -> int:
@@ -266,7 +281,11 @@ def main() -> int:
     parser.add_argument("--out", type=Path, required=True, help="new run directory for this task")
     parser.add_argument("--node", default=os.environ.get("NODE", shutil.which("node") or "node"))
     parser.add_argument("--keep-container", action="store_true", help="leave the container running (debugging)")
+    parser.add_argument("--collect-only", action="store_true",
+                        help="only (re)build answer.json, workspace.diff and run.json of an existing --out")
     args = parser.parse_args()
+    if args.collect_only:
+        return collect_only(args.out.resolve())
 
     spec = load_spec(args.spec)
     model = json.loads(Path(spec["model"]).read_text())
@@ -302,6 +321,8 @@ def main() -> int:
         key = os.environ[model["api_key_env"]]
     env = os.environ | {"DSH_HOME": str(home), "DSH_PERMISSION_MODE": "workspace-isolated", "DSH_TELEMETRY_DISABLED": "1",
                         "DSH_BENCH_DSH_ROOT": str(DSH), "DSH_BENCH_MODEL_KEY": key or "none"} | spec["dsh_env"]
+    for name, file in spec["dsh_env_files"].items():
+        env[name] = Path(os.path.expanduser(file)).read_text().strip()
     prompt = spec["prompt"].replace("{workspace}", str(workspace))
     (out / "prompt.txt").write_text(prompt)
     argv = [args.node, str(DSH / "apps/cli/lib/bin.js"), "--profile", "headless"]

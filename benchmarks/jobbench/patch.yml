@@ -1,0 +1,15 @@
+# JobBench rows on top of the launcher's run.patch.yml: web search through the Exa relay, HTTP fetch.
+# Same as the reference overlay (job-bench-eval eval/dsh-gpt56-luna-262k-32k.patch.yml); the model rows come from
+# models/*.json and the sandbox/permission rows from the launcher. EXA_API_KEY (the relay's local token) is set by
+# the spec's dsh_env_files.
+- insert:
+    - id: web-search-exa
+      name: __DSH_REPO__/packages/web/web-search-exa/lib/index.js
+      config:
+        baseURL: !!js process.env.DSH_JOBBENCH_EXA_BASE_URL ?? 'http://127.0.0.1:8010'
+
+- id: web
+  name: '@deepseek-ai/dsh-web'
+  config:
+    searchProvider: exa
+    fetchProvider: http
