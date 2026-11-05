@@ -47,6 +47,13 @@
 - id: workflow-worker-thread
   disabled: true
 
+# No filesystem skill discovery. It scans the workspace (.dsh/skills, .agents/skills: the agent could plant skills) and
+# the host user's ~/.dsh/skills and ~/.agents/skills (host skills would leak into benchmark runs); under
+# workspace-isolated it is refused the host paths, which leaves the skill catalog incomplete, and DSH then never shows
+# the model the catalog. A benchmark's skills are registered by plugins/skills (spec key skills_dir).
+- id: skill-filesystem
+  disabled: true
+
 # Commands (bash, background jobs, glob/grep) run in the task's container instead of a local bwrap/Landlock sandbox.
 - id: sandbox
   disabled: true

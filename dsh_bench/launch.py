@@ -42,7 +42,9 @@ HEADLESS_SUFFIX = "Your working directory is {{cwd}}."
 SPEC_DEFAULTS: dict = {
     "system_prompt": None,  # text; None keeps DSH's headless persona only
     "system_prompt_mode": "append",  # append: after DSH's persona; replace: instead of it (and of the DSH identity)
-    "stage": [],  # [{"from": path, "to": rel path in workspace, "readonly": bool}]
+    "stage": [],  # [{"from": path, "to": rel path in workspace, "readonly": bool, "method": "copy" | "hardlink"}]
+    # "hardlink" (readonly items only) links the source files instead of copying them: instant and no extra disk for
+    # large shared inputs. The source must be on the same filesystem, and its files become read-only too (same inodes).
     "make_dirs": [],  # empty writable dirs to create in the workspace (e.g. "output")
     "image": "dsh-bench-base",
     "runtime": "podman",
@@ -51,6 +53,7 @@ SPEC_DEFAULTS: dict = {
     "disable": [],  # base-profile row ids to disable (e.g. "web", "tool-subagent")
     "mcp": [],  # [{"name": str, "transport": "streamable-http"|"stdio", "url"|"command"/"args", "headers": {}}]
     "limits": {"max_steps": None, "timeout_s": 3600, "temperature": None},  # temperature: None leaves it unset
+    "skills_dir": None,  # host dir of <name>/SKILL.md, registered as DSH skills (plugins/skills); outside the workspace
     "final_answer": True,
     "extra_patches": [],  # benchmark patch files, applied after run.patch.yml; "__DSH_REPO__" -> the DSH checkout
     "dsh_env": {},  # extra environment for the DSH process (endpoints for benchmark plugins, ...)
@@ -91,6 +94,8 @@ def load_spec(path: Path) -> dict:
 
     spec["model"] = str(where(spec["model"]))
     spec["extra_patches"] = [str(where(p)) for p in spec["extra_patches"]]
+    if spec["skills_dir"] is not None:
+        spec["skills_dir"] = str(where(spec["skills_dir"]))
     for item in spec["stage"]:
         item["from"] = str(where(item["from"]))
     return spec
@@ -112,6 +117,12 @@ def git(gitdir: Path, workspace: Path, *args: str, binary: bool = False) -> str 
     return run(argv).stdout
 
 
+def snapshot_pathspec(gitdir: Path) -> list[str]:
+    """Everything in the workspace except the read-only staged inputs (recorded by stage())."""
+    excludes = json.loads((gitdir / "dsh-bench-excludes.json").read_text())
+    return ["."] + [f":(exclude,top){rel}" for rel in excludes]
+
+
 def stage(spec: dict, workspace: Path, gitdir: Path) -> list[Path]:
     workspace.mkdir(parents=True)
     readonly = []
@@ -119,7 +130,15 @@ def stage(spec: dict, workspace: Path, gitdir: Path) -> list[Path]:
         src, dest = Path(item["from"]), workspace / item["to"]
         if not src.exists():
             raise FileNotFoundError(f"stage source missing: {src}")
-        if src.is_dir():
+        method = item.get("method", "copy")
+        if method not in ("copy", "hardlink"):
+            raise ValueError(f"stage method must be copy or hardlink, not {method!r}")
+        if method == "hardlink":
+            if not item.get("readonly"):
+                raise ValueError("stage method hardlink is only allowed for readonly items")
+            dest.parent.mkdir(parents=True, exist_ok=True)
+            run(["cp", "-al", "--no-dereference", str(src), str(dest)])
+        elif src.is_dir():
             shutil.copytree(src, dest, symlinks=True, dirs_exist_ok=True)
         else:
             dest.parent.mkdir(parents=True, exist_ok=True)
@@ -129,7 +148,11 @@ def stage(spec: dict, workspace: Path, gitdir: Path) -> list[Path]:
     for rel in spec["make_dirs"]:
         (workspace / rel).mkdir(parents=True, exist_ok=True)
     run(["git", "init", "-q", "--bare", str(gitdir)])
-    git(gitdir, workspace, "add", "-A", "--force")
+    # Read-only inputs cannot change (read-only on the host and mounted :ro), so they stay out of the snapshot and
+    # the diff: a large shared corpus would otherwise be stored once per task. --force: a staged repo's own
+    # .gitignore must not hide files from the snapshot.
+    (gitdir / "dsh-bench-excludes.json").write_text(json.dumps([str(p.relative_to(workspace)) for p in readonly]))
+    git(gitdir, workspace, "add", "-A", "--force", "--", *snapshot_pathspec(gitdir))
     git(gitdir, workspace, "commit", "-q", "--allow-empty", "-m", "baseline")
     for path in readonly:
         set_readonly(path) if path.is_dir() else path.chmod(0o444)
@@ -189,6 +212,8 @@ def build_run_rows(spec: dict, model: dict, workspace: Path) -> list[dict]:
         rows.append({"id": "final-answer", "disabled": True})
     rows += [{"id": row, "disabled": True} for row in spec["disable"]]
     inserts = []
+    if spec["skills_dir"] is not None:
+        inserts.append({"id": "skills", "name": str(REPO / "plugins/skills/index.mjs"), "config": {"dir": spec["skills_dir"]}})
     for server in spec["mcp"]:
         config = {"serverName": server["name"], "transport": server["transport"], "failOnStartupError": True}
         for key in ("url", "headers", "command", "args", "env", "toolCallTimeoutMs"):
@@ -258,7 +283,7 @@ def collect(out: Path, workspace: Path, gitdir: Path, home: Path, exit_code: int
                    "root_session_id": header.get("id"), "exit_code": exit_code}
     (out / "answer.json").write_text(json.dumps(answer_json, indent=2) + "\n")
 
-    git(gitdir, workspace, "add", "-A", "--force")
+    git(gitdir, workspace, "add", "-A", "--force", "--", *snapshot_pathspec(gitdir))
     (out / "workspace.diff").write_bytes(git(gitdir, workspace, "diff", "--cached", "--binary", "HEAD", binary=True))
     changed = [line.split("\t", 1) for line in git(gitdir, workspace, "diff", "--cached", "--name-status", "HEAD").split("\n") if line]
     steps = sum(e.get("type") == "step/start" for e in events)

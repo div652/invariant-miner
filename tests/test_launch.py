@@ -25,7 +25,14 @@ def main() -> int:
     src = root / "task-src"
     (src / "docs").mkdir(parents=True)
     (src / "docs" / "input.txt").write_text("the number is 6 times 7\n")
+    (src / "corpus" / "sub").mkdir(parents=True)
+    (src / "corpus" / "sub" / "big.txt").write_text("a large shared corpus, hard-linked\n")
+    skills = root / "skills" / "demo-skill"
+    skills.mkdir(parents=True)
+    (skills / "SKILL.md").write_text('---\nname: demo-skill\ndescription: "A demo skill for the launcher test."\n---\n\n'
+                                     "# Demo\n\nSKILL-BODY-MARKER: write the answer with bash.\n")
     steps = [
+        {"calls": [{"name": "skill", "args": {"name": "demo-skill"}}]},
         {"calls": [{"name": "bash", "args": {"command": "cat docs/input.txt && echo 42 > output/answer.txt",
                                              "description": "write deliverable"}}]},
         {"calls": [{"name": "final_answer", "args": {"answer": "The answer is 42.\u2028(U+2028 inside the text)"}}]},
@@ -49,7 +56,9 @@ def main() -> int:
             "prompt": "Read docs/input.txt in {workspace} and save the result to output/answer.txt.",
             "system_prompt": "BENCHMARK-SYSTEM-PROMPT-MARKER: you are solving a smoke task.",
             "model": str(root / "model.json"),
-            "stage": [{"from": str(src / "docs"), "to": "docs", "readonly": True}],
+            "stage": [{"from": str(src / "docs"), "to": "docs", "readonly": True},
+                      {"from": str(src / "corpus"), "to": "corpus", "readonly": True, "method": "hardlink"}],
+            "skills_dir": str(root / "skills"),
             "make_dirs": ["output"],
             "container_env": {"WORKSPACE_DIR": "{workspace}"},
             "limits": {"max_steps": 10, "timeout_s": 120},
@@ -77,12 +86,18 @@ def main() -> int:
         ("answer.json: final_answer text (U+2028 kept)", answer["answer"] == "The answer is 42.\u2028(U+2028 inside the text)"
          and answer["source"] == "final_answer"),
         ("answer.json: finish reason final_answer", answer["finish_reason"] == "final_answer"),
-        ("model not called after final_answer", len(requests) == 2),
+        ("model not called after final_answer", len(requests) == 3),
+        ("skill: catalog shown in the first request", "<available_skills>" in json.dumps(requests[0]["messages"])
+         and "demo-skill" in json.dumps(requests[0]["messages"])),
+        ("skill: body loaded by the skill tool", "skill" in requests[0]["tools"]
+         and "SKILL-BODY-MARKER" in json.dumps(requests[1]["messages"])),
+        ("hardlink stage: same inode, read-only", (out / "workspace/corpus/sub/big.txt").stat().st_ino
+         == (src / "corpus/sub/big.txt").stat().st_ino and not os.access(out / "workspace/corpus/sub/big.txt", os.W_OK)),
         ("workspace.diff: exactly the deliverable", [c["path"] for c in record["changed_files"]] == ["output/answer.txt"]
          and "+42" in diff),
         ("workspace: deliverable on disk", (out / "workspace/output/answer.txt").read_text().strip() == "42"),
         ("workspace: read-only dir unchanged", (out / "workspace/docs/input.txt").read_text() == "the number is 6 times 7\n"),
-        ("sessions: one complete root session", len(sessions) == 1 and record["root_steps"] == 2),
+        ("sessions: one complete root session", len(sessions) == 1 and record["root_steps"] == 3),
         ("run.json: DSH commit, image id, patches", bool(record["dsh"]["commit"]) and record["image"]["id"]
          and [Path(p["path"]).name for p in record["patches"]] == ["core.patch.yml", "run.patch.yml"]),
         ("final_answer offered to the model", "final_answer" in requests[0]["tools"] and "bash" in requests[0]["tools"]),
