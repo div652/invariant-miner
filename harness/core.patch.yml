@@ -37,6 +37,16 @@
         description: Files only inside the task workspace; commands run in the task container.
     defaultPreset: bench-isolated
 
+# workflow and ralph run model-written JavaScript in a node:vm worker thread inside the DSH process, ON THE HOST. DSH's
+# own README calls that "containment, not a security boundary": a script that escapes the vm has the DSH process's
+# authority (host files, network, the API tokens in its environment), outside the task container. Off for every run.
+- id: tool-workflow
+  disabled: true
+- id: tool-ralph
+  disabled: true
+- id: workflow-worker-thread
+  disabled: true
+
 # Commands (bash, background jobs, glob/grep) run in the task's container instead of a local bwrap/Landlock sandbox.
 - id: sandbox
   disabled: true

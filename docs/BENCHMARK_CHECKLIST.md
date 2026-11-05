@@ -7,6 +7,12 @@ benchmark teaches us a new kind of check, add it here so the next benchmark gets
 ## 1. Task and prompts
 - [ ] **Task prompt**: where it comes from (file, field), and whether it is passed verbatim.
 - [ ] **System prompt**: does the benchmark give one? Append it after DSH's persona, or replace the persona?
+- [ ] **DSH's own prompt is always there**: an identity line, the headless persona, one guidance section per enabled
+      tool, the working-directory line, plus a runtime-context user message (the sandbox policy). `append` keeps the
+      persona; `replace` drops persona and identity; the tool sections stay either way (they describe DSH's tools).
+- [ ] **The benchmark's prompt vs DSH's tools**: if the prompt was written for the benchmark's own harness, check
+      every statement still holds under DSH (tool names, which formats `read` opens, where relative `write` paths go,
+      the name of the completion tool). Adapt the ones that would be false and record each change.
 - [ ] **Hard-coded paths** in the task or system prompt (`/workspace`, `/repo`, `~/...`): none, substitute the real
       path in the text, or does this benchmark need the in-container fallback?
 - [ ] **Environment variables** the prompts mention (`$WORKSPACE_DIR`, `$OUTPUT_DIR`, ...): set them to the real paths
@@ -24,6 +30,8 @@ benchmark teaches us a new kind of check, add it here so the next benchmark gets
 ## 3. Sandbox image (where bash and glob/grep run)
 - [ ] **Image**: the benchmark's own image, or `images/base` plus a benchmark layer
       (`benchmarks/<name>/Dockerfile`, `FROM dsh-bench-base`).
+- [ ] **Image provenance**: build the benchmark's image from its pinned source under our own tag; never reuse a
+      locally built tag of unknown age (it may predate the pinned Dockerfile).
 - [ ] **What the agent needs in it**: Python packages, CLIs (libreoffice, pandoc, git, compilers, ...), with versions.
       Only what the benchmark expects; do not add tools "just in case".
 - [ ] **What the harness needs in it** (any image, including the benchmark's own): `bash`, coreutils `timeout`,
@@ -36,6 +44,8 @@ benchmark teaches us a new kind of check, add it here so the next benchmark gets
       With the network on (podman `pasta`), check the container still cannot reach the host's loopback services (model
       proxy, CAO, MCP servers, judge): they must listen on 127.0.0.1 only.
 - [ ] **Web tools** (`web_search`, `web_fetch`, run on the host): on or off. On needs the Exa relay.
+      They run in the DSH process on the host, so the container's `--network=none` does NOT stop them: a benchmark
+      that forbids the network must disable them (`web`, `tool-web` rows).
 - [ ] **Host paths visible to the agent**: only the workspace (file tools in `workspace-isolated` mode, container
       mounts only the workspace).
 - [ ] **Credentials**: none in the container or the workspace. Tokens for the model, MCP servers and search stay on
@@ -44,6 +54,12 @@ benchmark teaches us a new kind of check, add it here so the next benchmark gets
 ## 5. Tools
 - [ ] **DSH native tools**: keep or disable each group (bash, file tools, glob/grep, web, subagents, todo, goal,
       workflow, skill). Disabling = `disabled: true` rows in `benchmarks/<name>/patch.yml`.
+- [ ] **The benchmark's harness tools vs its environment tools**: generic workspace tools that belong to the
+      benchmark's own harness (its bash/read/write/...) are replaced by DSH's; only environment tools (domain APIs,
+      simulated systems, MCP servers) are added. Map each benchmark harness tool to its DSH counterpart and note
+      behaviour differences (path resolution, defaults, what it returns).
+- [ ] **Document formats**: DSH's `read` is UTF-8 text only. If inputs are .docx/.pdf/.xlsx/.pptx, decide how the
+      agent reads them (converters in the image via bash, or a document-reading plugin) and say so in the prompt.
 - [ ] **Benchmark tools served over MCP**: transport (stdio / streamable HTTP), URL or command, auth, timeout. One
       `dsh-mcp-client` row each. A stdio server's runtime must exist where it runs.
 - [ ] **Benchmark tools not served over MCP** (Python functions, REST APIs): wrap them with the MCP bridge.
@@ -53,7 +69,12 @@ benchmark teaches us a new kind of check, add it here so the next benchmark gets
 
 ## 6. Skills
 - [ ] **Skills provided?** Folder location (outside the workspace) and format (`SKILL.md` frontmatter).
-- [ ] **Skill scripts** that must run in the container are available there.
+- [ ] **Delivery**: the benchmark's harness may inline skill manuals in the system prompt; DSH's way is a catalog
+      (name + description) plus the `skill` tool that loads a manual on demand. Decide which, and record it.
+- [ ] **Registration**: the file tools are workspace-isolated, so DSH cannot load a skill body from outside the
+      workspace through its filesystem provider; register skills at boot instead (`ctx.skills.register`).
+- [ ] **Skill scripts**: staged into the workspace before the baseline snapshot (not in the diff), at the path the
+      manuals name; their runtimes (python packages, node modules, soffice) present in the image.
 
 ## 7. Budgets and model
 - [ ] Max steps, wall-clock timeout, output-token cap, context window, temperature, reasoning effort.

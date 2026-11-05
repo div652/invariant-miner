@@ -155,6 +155,7 @@ def main() -> int:
         ("read refuses a symlink pointing outside the workspace", "HOSTSECRET" not in r(14) and "LINKED" in r(13)),
         ("write tool cannot write a read-only directory", not (ws / "documents/host-write.txt").exists()),
         ("a killed background job stops inside the container", r(18).strip().endswith("0")),
+        ("workflow / ralph (host-side JS) not offered", bool(requests) and not {"workflow", "ralph"} & set(requests[0]["tools"])),
         ("final_answer disabled by a later patch row", bool(requests) and "final_answer" not in requests[0]["tools"]
          and "bash" in requests[0]["tools"]),
         ("the run completed", proc.returncode == 0),
