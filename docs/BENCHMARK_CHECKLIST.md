@@ -62,6 +62,12 @@ benchmark teaches us a new kind of check, add it here so the next benchmark gets
 - [ ] **Answer format**: free text, JSON, file names; where the grader expects it.
 
 ## 9. Outputs and grading
+- [ ] **Standard run outputs**: every run of this benchmark produces all four, checked on the smoke tasks:
+  - `answer.json`: the `final_answer` argument (else the last assistant message) and the finish reason;
+  - `workspace/` + `workspace.diff`: the final workspace, and its diff against the baseline snapshot (the diff holds
+    only the agent's changes: no staging files, no harness artifacts);
+  - `dsh-home/sessions/**/session.v2.jsonl`: the trajectory, one file per agent and subagent, complete (turn ended);
+  - `run.json`: what ran (DSH commit, patch files, image digest, model, budgets, timings).
 - [ ] **What the grader reads**: files in a directory (which), the workspace diff, the final answer, container state,
       the trajectory.
 - [ ] **How the grader is run**: command, environment, judge model and endpoint; it runs on the host, outside the
@@ -101,6 +107,7 @@ benchmark teaches us a new kind of check, add it here so the next benchmark gets
 | 6 | Skills | | |
 | 7 | Budgets / model | | |
 | 8 | Ending / answer format | | |
+| 9 | Standard outputs (answer.json, workspace + diff, sessions, run.json) present and correct | | |
 | 9 | Grader input / command | | |
 | 10 | Smoke / reference / isolation tests | | |
 ```
