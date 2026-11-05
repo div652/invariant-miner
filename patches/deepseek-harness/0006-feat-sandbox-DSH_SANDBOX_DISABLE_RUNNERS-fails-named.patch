@@ -1,0 +1,70 @@
+From 344f188c81f552f2086514e226f1e00df9e7c7b8 Mon Sep 17 00:00:00 2001
+From: Ashutosh Chaubey <ashutoshchaubey2999@gmail.com>
+Date: Sun, 11 Oct 2026 21:20:47 -0700
+Subject: [PATCH] feat(sandbox): DSH_SANDBOX_DISABLE_RUNNERS fails named
+ runners' probes
+
+Lets an operator pin the Linux chain to Landlock on hosts where bwrap happens to work, so
+replays of trajectories recorded under Landlock run under the same runner.
+---
+ packages/sandbox/sandbox-local/src/index.ts       | 10 ++++++++++
+ .../sandbox/sandbox-local/tests/local.spec.ts     | 15 +++++++++++++++
+ 2 files changed, 25 insertions(+)
+
+diff --git a/packages/sandbox/sandbox-local/src/index.ts b/packages/sandbox/sandbox-local/src/index.ts
+index 5e8794b1a0..fa1b1fd60c 100644
+--- a/packages/sandbox/sandbox-local/src/index.ts
++++ b/packages/sandbox/sandbox-local/src/index.ts
+@@ -128,6 +128,15 @@ function defaultProbeWindowsAcl(runnerInvocation: string[], timeoutMs: number):
+   return probe.status === 0
+ }
+ 
++/**
++ * Runners named in `DSH_SANDBOX_DISABLE_RUNNERS` (comma-separated, e.g. `bwrap`) fail their probe, so the chain
++ * walk moves on exactly as on a host where that runner is unusable (e.g. pin Linux to Landlock where unprivileged
++ * user namespaces happen to be allowed).
++ */
++function disabledRunners(): Set<string> {
++  return new Set((process.env.DSH_SANDBOX_DISABLE_RUNNERS ?? '').split(',').map(r => r.trim()).filter(Boolean))
++}
++
+ /** Test hook: inject probe verdicts / a fake launcher / a platform without real runners. */
+ export interface SandboxInternals {
+   /** Replaces `process.platform` for chain selection (exercise any platform's chain from any host). */
+@@ -611,6 +620,7 @@ export class LocalSandboxProvider extends SandboxProvider {
+     // are always full enforcement; the Landlock launcher's probe report
+     // distinguishes full from per-ABI-partial, while windows-acl is always
+     // partial for its documented Everyone and hard-link boundaries.
++    if (disabledRunners().has(runner)) return 'unusable'
+     switch (runner) {
+       case 'bwrap': {
+         const probe = this.internals.probeBwrap ?? (() => defaultProbeBwrap(this.probeTimeoutMs))
+diff --git a/packages/sandbox/sandbox-local/tests/local.spec.ts b/packages/sandbox/sandbox-local/tests/local.spec.ts
+index 18bfe3eb35..9a9b6701ab 100644
+--- a/packages/sandbox/sandbox-local/tests/local.spec.ts
++++ b/packages/sandbox/sandbox-local/tests/local.spec.ts
+@@ -529,6 +529,21 @@ describe('the windows-acl probe (runner invocation contract)', () => {
+     expect(confined.runnerFailureRules).toEqual([{ allowedExitCodes: [127], fatalSignatures: ['windows-acl-run: '] }])
+   })
+ 
++  it('DSH_SANDBOX_DISABLE_RUNNERS fails a rung\'s probe without running it, so the walk moves on', async () => {
++    vi.stubEnv('DSH_SANDBOX_DISABLE_RUNNERS', ' bwrap ,')
++    try {
++      const probeBwrap = vi.fn(() => true)
++      const probeLandlock = vi.fn(() => 'full' as const)
++      const { sandbox } = await setup({}, { platform: 'linux', probeBwrap, probeLandlock, landlockLauncher: '/fake/landlock-run' })
++      const confined = sandbox.confine(['true'], RO)
++      expect(confined.argv[0]).toBe('/fake/landlock-run')
++      expect(probeBwrap).not.toHaveBeenCalled()
++      expect(probeLandlock).toHaveBeenCalledTimes(1)
++    } finally {
++      vi.unstubAllEnvs()
++    }
++  })
++
+   it('reads a failing probe as unusable and walks to the next rung', async () => {
+     const probeWindowsAcl = vi.fn(() => false)
+     const { sandbox } = await setup({}, { chain: ['windows-acl', 'bwrap'], probeWindowsAcl, probeBwrap: () => true })
+-- 
+2.43.0
+

@@ -1,0 +1,410 @@
+From 2ee095dcad421695e076014786db9926378a0f93 Mon Sep 17 00:00:00 2001
+From: Ashutosh Chaubey <ashutoshchaubey2999@gmail.com>
+Date: Wed, 28 Oct 2026 11:46:55 -0700
+Subject: [PATCH] feat(agent-loop): regenerate a step cut at the output-token
+ ceiling
+
+agent-loop config maxTokensRetries (default 0) regenerates a step whose
+response stopped at the output-token ceiling up to that many times. Each
+cut response is settled as a log-only assistant/attempt followed by an
+agent/max-tokens-retry {turn, step, retry, maxRetries, outputTokens}
+event, and the step's request is rebuilt from the unchanged history; the
+response that finishes becomes the step's assistant/message. When the
+budget runs out the last cut response is the step and the turn ends
+max-tokens, as without the setting.
+---
+ docs/architecture.md                          |   2 +-
+ docs/config-catalog.md                        |  10 +-
+ docs/persistence-catalog.md                   |  25 ++++
+ packages/core/agent-loop/README.md            |   3 +-
+ packages/core/agent-loop/src/agent.ts         |  21 +++
+ packages/core/agent-loop/src/index.ts         |  21 ++-
+ .../agent-loop/tests/max-tokens-retry.spec.ts | 139 ++++++++++++++++++
+ packages/core/agent/src/types.ts              |  16 ++
+ .../core/session/src/known-event-types.ts     |   1 +
+ 9 files changed, 234 insertions(+), 4 deletions(-)
+ create mode 100644 packages/core/agent-loop/tests/max-tokens-retry.spec.ts
+
+diff --git a/docs/architecture.md b/docs/architecture.md
+index a77dfd06c6..60e4b1497a 100644
+--- a/docs/architecture.md
++++ b/docs/architecture.md
+@@ -112,7 +112,7 @@ Details: the [sequence diagram](agent-lifecycle.md), the [tool pipeline](tool-ex
+ 
+ ## Session log
+ 
+-The session log is the source of the context the model sees. `deriveMessages()` projects model history from it. Each `assistant/message` embeds the exact compact timed stream that produced its assembled content; `assistant/attempt` retains settled failed, retried, cancelled, and stream-error attempts without adding model history. Fork, resume, transcripts, telemetry, and persistence all derive from these durable settlements, while live UI incrementality comes from `agent/assistant-stream`; a hard process loss before settlement leaves no durable attempt stream ([decision](../.agents/notes/implemented/architecture/2026-09-01-v2-embedded-assistant-streams.md)).
++The session log is the source of the context the model sees. `deriveMessages()` projects model history from it. Each `assistant/message` embeds the exact compact timed stream that produced its assembled content; `assistant/attempt` retains settled failed, retried, cancelled, and stream-error attempts without adding model history; under agent-loop `maxTokensRetries` it also retains responses cut at the output-token ceiling, each followed by an `agent/max-tokens-retry` event before the step's request is rebuilt. Fork, resume, transcripts, telemetry, and persistence all derive from these durable settlements, while live UI incrementality comes from `agent/assistant-stream`; a hard process loss before settlement leaves no durable attempt stream ([decision](../.agents/notes/implemented/architecture/2026-09-01-v2-embedded-assistant-streams.md)).
+ 
+ Session consumers know only the current logical format. Header-only `stat` and `list` rescan each Session directory, select its numerically highest canonical generation, and translate a supported historical header without loading events or publishing a successor. A stored-session `open` selects that same generation, refuses a future version, or decodes and composes the static adjacent migration chain once before returning validated current logical events. A read open uses that in-memory result without publishing a successor; a write open first encodes, verifies, and exclusively publishes the final version-named successor beside the unchanged source. Ordinary repair of an unsealed interrupted tail remains a handle consumer responsibility; migration inserts a missing interrupted `turn/end` only for the bounded released restart already sealed by a later `turn/start`. JSONL v0 uses `session.jsonl[.zstd]`, v1 and later use lowercase `session.vN.jsonl[.zstd]`, and committed generation paths are never renamed, replaced, or deleted. The JSONL provider owns physical framing, compression, generation selection, and exclusive publication, while each adjacent migration package owns exactly one `vN -> vN+1` step ([decision](../.agents/notes/implemented/architecture/2026-08-31-released-session-format-migrations.md)).
+ 
+diff --git a/docs/config-catalog.md b/docs/config-catalog.md
+index d43bb0317d..3ca2659a67 100644
+--- a/docs/config-catalog.md
++++ b/docs/config-catalog.md
+@@ -95,6 +95,14 @@ export interface Config {
+    * omission defaults to {@link DEFAULT_MAX_PARALLEL_TOOL_CALLS}.
+    */
+   maxParallelToolCalls?: number
++  /**
++   * Regenerations of a step whose response stopped at the output-token
++   * ceiling before the turn ends `max-tokens`. Each cut response is settled as
++   * a log-only `assistant/attempt` plus an `agent/max-tokens-retry` event, and
++   * the step's request is rebuilt from the unchanged history. `0` (the
++   * default) keeps the cut response as the step's `assistant/message`.
++   */
++  maxTokensRetries?: number
+   /** Agents created or resumed at plugin startup. */
+   agents: (AgentOptions & {
+     /** Stable config label used in logs and as the fresh combined-id prefix. */
+@@ -111,7 +119,7 @@ export interface Config {
+ 
+ Depends on: [`AgentOptions`](subsystems/core.md) · [`SessionId`](subsystems/core.md)
+ 
+-Source: [`packages/core/agent-loop/src/index.ts:318`](../packages/core/agent-loop/src/index.ts)
++Source: [`packages/core/agent-loop/src/index.ts:327`](../packages/core/agent-loop/src/index.ts)
+ 
+ <a id="deepseek-aidsh-agent-presets"></a>
+ 
+diff --git a/docs/persistence-catalog.md b/docs/persistence-catalog.md
+index 8d6f66dc94..956e7f20b7 100644
+--- a/docs/persistence-catalog.md
++++ b/docs/persistence-catalog.md
+@@ -115,6 +115,31 @@ Sources: [`packages/core/session/src/types.ts:385`](../packages/core/session/src
+ 
+ Source: [`packages/core/agent/src/types.ts:87`](../packages/core/agent/src/types.ts)
+ 
++<a id="agentmax-tokens-retry--log-only"></a>
++
++#### `agent/max-tokens-retry` — log-only
++
++```ts persistence-catalog
++/**
++ * One regeneration of a step whose response stopped at the output-token
++ * ceiling, under agent-loop `maxTokensRetries`. The cut response is the
++ * preceding `assistant/attempt` of the same step, never model-visible;
++ * the step's request is rebuilt from unchanged history.
++ */
++'agent/max-tokens-retry': {
++  turn: number
++  step: number
++  /** 1-based retry number within the step. */
++  retry: number
++  /** The configured `maxTokensRetries`. */
++  maxRetries: number
++  /** Output tokens the cut response reported, when its stream carried usage. */
++  outputTokens?: number
++}
++```
++
++Source: [`packages/core/agent/src/types.ts:100`](../packages/core/agent/src/types.ts)
++
+ ### `agent-preset/*`
+ 
+ <a id="agent-presetselected--log-only"></a>
+diff --git a/packages/core/agent-loop/README.md b/packages/core/agent-loop/README.md
+index b24151c8fb..fd378a3d0c 100644
+--- a/packages/core/agent-loop/README.md
++++ b/packages/core/agent-loop/README.md
+@@ -46,6 +46,7 @@ Agents declared in the config start automatically when the plugin loads. Each en
+ | Field | Default | Meaning |
+ |---|---|---|
+ | `maxParallelToolCalls` | `10` | Parallel-safe tool calls in flight per step; `1` is serial |
++| `maxTokensRetries` | `0` | Regenerations per step of a response cut at the output-token ceiling before the turn ends `max-tokens` |
+ | `agents[].id` | required | Stable label; a fresh session mints `${id}-session-<uuid>` unless `sessionId` is set |
+ | `agents[].provider` / `agents[].model` | — | Model route; both required before dispatch |
+ | `agents[].reasoningEffort` | — | Non-empty initial reasoning effort; `agent/request` may override it |
+@@ -54,7 +55,7 @@ Agents declared in the config start automatically when the plugin loads. Each en
+ | `agents[].sessionId` | — | Exact identity: first use creates, a remount resumes materialized history |
+ | `agents[].resumeSessionId` | — | Load this persisted session instead of creating one; mutually exclusive with `sessionId` |
+ 
+-The generated [configuration catalog](../../../docs/config-catalog.md#deepseek-aidsh-agent-loop) is the exhaustive source for every accepted field. The adapter validates the effective reasoning effort and the loop records it in the request header. `maxParallelToolCalls` is also the whole `agent-loop` settings section, so a user layer over this entry caps the next tool group without a restart.
++The generated [configuration catalog](../../../docs/config-catalog.md#deepseek-aidsh-agent-loop) is the exhaustive source for every accepted field. The adapter validates the effective reasoning effort and the loop records it in the request header. `maxParallelToolCalls` is also the whole `agent-loop` settings section, so a user layer over this entry caps the next tool group without a restart. With `maxTokensRetries` above zero, a response that stops at the output-token ceiling is settled as a log-only `assistant/attempt` followed by an `agent/max-tokens-retry` event, and the step's request is rebuilt from the unchanged history; the response that finishes becomes the step's `assistant/message`. When the budget runs out, the last cut response is the step and the turn ends `max-tokens`.
+ 
+ ### Create or resume agents programmatically
+ 
+diff --git a/packages/core/agent-loop/src/agent.ts b/packages/core/agent-loop/src/agent.ts
+index 0bb02706ed..75d8bdb73f 100644
+--- a/packages/core/agent-loop/src/agent.ts
++++ b/packages/core/agent-loop/src/agent.ts
+@@ -346,6 +346,8 @@ export class ReactLoopAgent implements Agent {
+     const { turn, step, abort: { signal } } = this.phase
+     signal.throwIfAborted()
+     const system = renderPrompt(assembly)
++    const { maxTokensRetries } = this.loopCtx.agentLoop.config
++    let capRetries = 0
+ 
+     while (true) {
+       const surfaceGeneration = this.session.surface.replaceGeneration
+@@ -446,6 +448,25 @@ export class ReactLoopAgent implements Agent {
+           continue
+         }
+ 
++        if (finish.kind === 'max-tokens' && capRetries < maxTokensRetries) {
++          // The cut response stays log-only: the rebuilt request derives the same
++          // history, so the regeneration answers the step's unchanged request.
++          const outputTokens = live.usage?.outputTokens
++          live.settle(
++            'assistant/attempt',
++            () => this.session.append('assistant/attempt', { turn, step, stream: live.stream }).seq,
++          )
++          capRetries += 1
++          this.session.append('agent/max-tokens-retry', {
++            turn,
++            step,
++            retry: capRetries,
++            maxRetries: maxTokensRetries,
++            ...outputTokens === undefined ? {} : { outputTokens },
++          })
++          continue
++        }
++
+         const message = createAssistantMessage({
+           content: live.blocks(),
+           source: {
+diff --git a/packages/core/agent-loop/src/index.ts b/packages/core/agent-loop/src/index.ts
+index db25ec4e64..928f9719ad 100644
+--- a/packages/core/agent-loop/src/index.ts
++++ b/packages/core/agent-loop/src/index.ts
+@@ -195,6 +195,15 @@ function resolveMaxParallelToolCalls(value: number | undefined): number {
+   return maxParallelToolCalls
+ }
+ 
++/** Resolve the per-step regeneration budget for responses cut at the output-token ceiling. */
++function resolveMaxTokensRetries(value: number | undefined): number {
++  const maxTokensRetries = value ?? 0
++  if (!Number.isInteger(maxTokensRetries) || maxTokensRetries < 0) {
++    throw new Error('maxTokensRetries must be a non-negative integer')
++  }
++  return maxTokensRetries
++}
++
+ /** Reject an output-token cap that cannot be represented exactly on the request wire. */
+ function assertAgentOptions(options: AgentOptions): void {
+   if (options.maxTokens !== undefined
+@@ -321,6 +330,14 @@ export interface Config {
+    * omission defaults to {@link DEFAULT_MAX_PARALLEL_TOOL_CALLS}.
+    */
+   maxParallelToolCalls?: number
++  /**
++   * Regenerations of a step whose response stopped at the output-token
++   * ceiling before the turn ends `max-tokens`. Each cut response is settled as
++   * a log-only `assistant/attempt` plus an `agent/max-tokens-retry` event, and
++   * the step's request is rebuilt from the unchanged history. `0` (the
++   * default) keeps the cut response as the step's `assistant/message`.
++   */
++  maxTokensRetries?: number
+   /** Agents created or resumed at plugin startup. */
+   agents: (AgentOptions & {
+     /** Stable config label used in logs and as the fresh combined-id prefix. */
+@@ -335,7 +352,7 @@ export interface Config {
+ }
+ 
+ /** Agent-loop configuration after defaults and load-time validation. */
+-type ResolvedConfig = Config & { maxParallelToolCalls: number }
++type ResolvedConfig = Config & { maxParallelToolCalls: number; maxTokensRetries: number }
+ 
+ /** Reject self-contained identity conflicts before any configured agent starts. */
+ function validateConfiguredAgents(agents: Config['agents']): void {
+@@ -362,6 +379,7 @@ export class AgentLoop extends Service implements AgentFactory {
+   /** Runtime schema for declarative agents. */
+   static Config = z.object({
+     maxParallelToolCalls: z.number().step(1).min(1).default(DEFAULT_MAX_PARALLEL_TOOL_CALLS),
++    maxTokensRetries: z.number().step(1).min(0).max(Number.MAX_SAFE_INTEGER).default(0),
+     agents: z.array(z.object({
+       id: z.string().required(),
+       sessionId: z.string().min(1),
+@@ -389,6 +407,7 @@ export class AgentLoop extends Service implements AgentFactory {
+     let source: () => AgentLoopSettings = () => entry
+     this.config = {
+       ...config,
++      maxTokensRetries: resolveMaxTokensRetries(config.maxTokensRetries),
+       agents: applyLauncherIdentities(config.agents, ctx.get(CONFIGURED_AGENT_IDENTITIES_KEY)),
+       // Read through on every scheduler decision: `tool-calls.ts` destructures
+       // this at the start of each group, so a committed change caps the next
+diff --git a/packages/core/agent-loop/tests/max-tokens-retry.spec.ts b/packages/core/agent-loop/tests/max-tokens-retry.spec.ts
+new file mode 100644
+index 0000000000..55306de4dc
+--- /dev/null
++++ b/packages/core/agent-loop/tests/max-tokens-retry.spec.ts
+@@ -0,0 +1,139 @@
++import { describe, expect, it } from 'vitest'
++import { Context } from '@deepseek-ai/cordis'
++import LlmRuntime, { createUserMessage } from '@deepseek-ai/dsh-llm'
++import SessionStore, { SessionId, TurnEndReason } from '@deepseek-ai/dsh-session'
++import SystemPrompt from '@deepseek-ai/dsh-system-prompt'
++import ToolRuntime, { defineContentToolFixture } from '@deepseek-ai/dsh-tools'
++import AgentRegistry, { type Agent } from '@deepseek-ai/dsh-agent'
++
++import AgentLoop from '@deepseek-ai/dsh-agent-loop'
++import SessionProjectionRegistry from '@deepseek-ai/dsh-session-projection'
++import { MockAdapter, maxTokensResponse, textResponse, toolCallResponse } from './mock-adapter.ts'
++
++async function harness(adapter: MockAdapter, maxTokensRetries?: number) {
++  const ctx = new Context()
++  await ctx.plugin(LlmRuntime)
++  await ctx.plugin(SessionStore)
++  await ctx.plugin(SessionProjectionRegistry)
++  await ctx.plugin(SystemPrompt, { personaPrefix: '' })
++  await ctx.plugin(ToolRuntime)
++  await ctx.plugin(AgentRegistry)
++  await ctx.plugin(AgentLoop, maxTokensRetries === undefined ? { agents: [] } : { agents: [], maxTokensRetries })
++  ctx.llm.registerAdapter(['mock'], adapter)
++  return ctx
++}
++
++function waitForIdle(ctx: Context, agent: Agent): Promise<void> {
++  return new Promise((resolve) => {
++    const dispose = ctx.on('agent/status', ({ agent: subject, status }) => {
++      if (subject === agent && status === 'idle') {
++        dispose()
++        resolve()
++      }
++    })
++  })
++}
++
++async function run(ctx: Context, text = 'go'): Promise<{ agent: Agent; reasons: TurnEndReason[] }> {
++  const agent = await ctx.agentLoop.create(SessionId('max-tokens-retry'), { provider: 'mock', model: 'mock' })
++  const reasons: TurnEndReason[] = []
++  ctx.on('session/event', (_s, event) => { if (event.type === 'turn/end') reasons.push(event.data.reason) })
++  agent.followup(createUserMessage({ content: [{ type: 'text', text }], source: { kind: 'user' } }))
++  await waitForIdle(ctx, agent)
++  return { agent, reasons }
++}
++
++function eventsOf(agent: Agent, type: string) {
++  return agent.session.snapshotEvents().filter(e => e.type === type)
++}
++
++function retries(agent: Agent) {
++  return agent.session.snapshotEvents().flatMap(e => e.type === 'agent/max-tokens-retry' ? [e.data] : [])
++}
++
++function assistantTexts(agent: Agent): string[] {
++  return agent.session.deriveMessages()
++    .filter(m => m.role === 'assistant')
++    .flatMap(m => m.content.flatMap(b => b.type === 'text' ? [b.text] : []))
++}
++
++describe('agent loop maxTokensRetries', () => {
++  it('regenerates a step cut at the output ceiling and keeps the cut response log-only', async () => {
++    const adapter = new MockAdapter([maxTokensResponse('cut'), textResponse('done')])
++    const ctx = await harness(adapter, 3)
++    const { agent, reasons } = await run(ctx)
++
++    expect(adapter.requests).toHaveLength(2)
++    expect(adapter.requests[1]!.messages).toEqual(adapter.requests[0]!.messages)
++    expect(eventsOf(agent, 'step/start')).toHaveLength(1)
++    expect(eventsOf(agent, 'assistant/attempt').map(e => e.data)).toEqual([
++      expect.objectContaining({ turn: 1, step: 1 }),
++    ])
++    expect(retries(agent)).toEqual([
++      { turn: 1, step: 1, retry: 1, maxRetries: 3, outputTokens: 3 },
++    ])
++    expect(eventsOf(agent, 'assistant/message')).toHaveLength(1)
++    expect(assistantTexts(agent)).toEqual(['done'])
++    expect(reasons).toEqual([{ kind: 'completed' }])
++  })
++
++  it('ends the turn max-tokens with the last cut response once the retries run out', async () => {
++    const adapter = new MockAdapter([
++      maxTokensResponse('cut 1'),
++      maxTokensResponse('cut 2'),
++      maxTokensResponse('cut 3'),
++      maxTokensResponse('cut 4'),
++    ])
++    const ctx = await harness(adapter, 3)
++    const { agent, reasons } = await run(ctx)
++
++    expect(adapter.requests).toHaveLength(4)
++    expect(eventsOf(agent, 'assistant/attempt')).toHaveLength(3)
++    expect(retries(agent).map(r => r.retry)).toEqual([1, 2, 3])
++    expect(assistantTexts(agent)).toEqual(['cut 4'])
++    expect(reasons).toEqual([{ kind: 'max-tokens' }])
++  })
++
++  it('keeps the cut response as the step without the setting', async () => {
++    const adapter = new MockAdapter([maxTokensResponse('cut')])
++    const ctx = await harness(adapter)
++    const { agent, reasons } = await run(ctx)
++
++    expect(adapter.requests).toHaveLength(1)
++    expect(ctx.agentLoop.config.maxTokensRetries).toBe(0)
++    expect(retries(agent)).toHaveLength(0)
++    expect(eventsOf(agent, 'assistant/attempt')).toHaveLength(0)
++    expect(assistantTexts(agent)).toEqual(['cut'])
++    expect(reasons).toEqual([{ kind: 'max-tokens' }])
++  })
++
++  it('gives every step its own budget and runs the tool calls of the regenerated response', async () => {
++    const adapter = new MockAdapter([
++      maxTokensResponse('cut in step 1'),
++      toolCallResponse('c1', 'echo', { text: 'x' }),
++      maxTokensResponse('cut in step 2'),
++      textResponse('done'),
++    ])
++    const ctx = await harness(adapter, 1)
++    let executions = 0
++    ctx.tools.register(defineContentToolFixture({
++      name: 'echo',
++      description: '',
++      parameters: { text: { type: 'string' } },
++      async execute() {
++        executions += 1
++        return [{ type: 'text', text: 'echoed' }]
++      },
++    }))
++    const { agent, reasons } = await run(ctx)
++
++    expect(executions).toBe(1)
++    expect(retries(agent).map(r => [r.step, r.retry])).toEqual([[1, 1], [2, 1]])
++    expect(assistantTexts(agent)).toEqual(['done'])
++    expect(reasons).toEqual([{ kind: 'completed' }])
++  })
++
++  it('rejects a negative retry budget at load', async () => {
++    await expect(harness(new MockAdapter([]), -1)).rejects.toThrow()
++  })
++})
+diff --git a/packages/core/agent/src/types.ts b/packages/core/agent/src/types.ts
+index d0be69ac58..6c64ad2fd2 100644
+--- a/packages/core/agent/src/types.ts
++++ b/packages/core/agent/src/types.ts
+@@ -91,5 +91,21 @@ declare module '@deepseek-ai/dsh-session/types' {
+       inserted: UserMessage[]
+       outcome?: 'canceled'
+     }
++    /**
++     * One regeneration of a step whose response stopped at the output-token
++     * ceiling, under agent-loop `maxTokensRetries`. The cut response is the
++     * preceding `assistant/attempt` of the same step, never model-visible;
++     * the step's request is rebuilt from unchanged history.
++     */
++    'agent/max-tokens-retry': {
++      turn: number
++      step: number
++      /** 1-based retry number within the step. */
++      retry: number
++      /** The configured `maxTokensRetries`. */
++      maxRetries: number
++      /** Output tokens the cut response reported, when its stream carried usage. */
++      outputTokens?: number
++    }
+   }
+ }
+diff --git a/packages/core/session/src/known-event-types.ts b/packages/core/session/src/known-event-types.ts
+index 3bc31ec32d..14d78e0fa6 100644
+--- a/packages/core/session/src/known-event-types.ts
++++ b/packages/core/session/src/known-event-types.ts
+@@ -22,6 +22,7 @@
+ export const KNOWN_SESSION_EVENT_TYPES: ReadonlySet<string> = new Set([
+   'agent-preset/selected',
+   'agent/inbox/spliced',
++  'agent/max-tokens-retry',
+   'approval/asked',
+   'approval/decided',
+   'approval/policy',
+-- 
+2.43.0
+

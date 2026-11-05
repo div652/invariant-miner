@@ -1,0 +1,97 @@
+From 516b4119272e8a51772d1d2c8bccd4b014ccdec8 Mon Sep 17 00:00:00 2001
+From: Ashutosh Chaubey <ashutoshchaubey2999@gmail.com>
+Date: Wed, 30 Sep 2026 04:59:38 -0700
+Subject: [PATCH 4/5] docs: explain private fork and JobBench profile
+
+Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>
+---
+ README.i18n.yaml |  4 ++--
+ README.md        | 17 +++++++++++++++--
+ README.zh.md     | 17 +++++++++++++++--
+ 3 files changed, 32 insertions(+), 6 deletions(-)
+
+diff --git a/README.i18n.yaml b/README.i18n.yaml
+index aca5fead6f..9a838f7b5e 100644
+--- a/README.i18n.yaml
++++ b/README.i18n.yaml
+@@ -2,5 +2,5 @@
+ # side as of the last confirmed-consistent state. Both languages carry equal authority;
+ # after editing either side, bring the other along and re-record with:
+ #   pnpm run verify-translation-pairing --write README.md
+-README.md: 9f89db3d4502dea4a0d181799164f304d4976740
+-README.zh.md: aa66ef1d24a5e2165859e9337273d807dff3d070
++README.md: beb17ba208521c24e9619d758786fb1a32297614
++README.zh.md: 11f4226ff262223529f60b3552c8ed702b0cfef9
+diff --git a/README.md b/README.md
+index 9f89db3d45..beb17ba208 100644
+--- a/README.md
++++ b/README.md
+@@ -8,6 +8,19 @@ It is built on an **everything-is-a-plugin** architecture and powered by [Cordis
+ 
+ Documentation: [https://deepseek-harness.github.io/deepseek-harness/](https://deepseek-harness.github.io/deepseek-harness/)
+ 
++## Repository context
++
++This repository is a maintained derivative of the upstream [DeepSeek Harness repository](https://github.com/deepseek-ai/deepseek-harness). It adds these product capabilities:
++
++- **Workspace-isolated execution** — The `workspace-isolated` sandbox limits model-facing filesystem operations to the session workspace. On Linux, confined shell and terminal processes require Bubblewrap, can read only the workspace plus configured runtime paths, write only inside the workspace, and cannot request a wider sandbox retry. See the [sandbox details](docs/subsystems/sandbox.md).
++- **PDF-aware `web_fetch`** — HTTP fetch accepts text-bearing PDFs, extracts embedded text into ordered page entries, preserves page numbers, and enforces the existing byte and character limits plus a PDF page cap. Malformed, encrypted, and image-only PDFs fail explicitly; OCR is not included. See the [web fetch details](packages/web/web-fetch-http/README.md).
++
++### Preferred JobBench profile
++
++The strongest observed GPT-5.6 Luna JobBench performance used the OpenAI Responses API at `http://127.0.0.1:8003/v1`, `high` reasoning, a 262,144-token context window, a 32,768-token output cap, Exa web search, HTTP fetch, one task at a time, and a 3,600-second task limit. Each task ran with a private DSH home, a fresh task workspace, `approval: never`, and the `workspace-write` policy.
++
++This profile selected the Linux Landlock backend and did not use Bubblewrap or the Bubblewrap-only `workspace-isolated` mode. Landlock kept writes inside the task workspace while preserving the host reads required by the JobBench toolchain. Treat the result as evidence for the complete profile rather than a controlled Landlock-versus-Bubblewrap comparison, and use it only when host-read isolation is not required.
++
+ ## Developer preview
+ 
+ DeepSeek Harness is in _developer preview_ and iterating rapidly. **THERE WILL BE COMPATIBILITY-BREAKING CHANGES.**
+@@ -31,8 +44,8 @@ The command starts the Web UI at `http://127.0.0.1:3080` by default and opens it
+ To run from a repository checkout:
+ 
+ ```sh
+-git clone https://github.com/deepseek-ai/deepseek-harness.git
+-cd deepseek-harness
++git clone git@github.com:t-aschaubey_microsoft/DSH-Attribution.git
++cd DSH-Attribution
+ pnpm install
+ pnpm run build
+ pnpm dsh web
+diff --git a/README.zh.md b/README.zh.md
+index aa66ef1d24..11f4226ff2 100644
+--- a/README.zh.md
++++ b/README.zh.md
+@@ -8,6 +8,19 @@ DeepSeek Harness（`dsh`）是由 [DeepSeek AI](https://deepseek.com) 开发的
+ 
+ 文档：[https://deepseek-harness.github.io/deepseek-harness/](https://deepseek-harness.github.io/deepseek-harness/)
+ 
++## 本仓库上下文
++
++本仓库基于上游 [DeepSeek Harness 仓库](https://github.com/deepseek-ai/deepseek-harness)持续维护，并增加以下产品能力：
++
++- **工作区隔离执行**——`workspace-isolated` 沙箱将面向模型的文件系统操作限制在会话工作区内。在 Linux 上，受限 shell 与终端进程必须使用 Bubblewrap，只能读取工作区及配置的运行时路径，只能写入工作区，且不能请求更宽松的沙箱重试。详见[沙箱说明](docs/subsystems/sandbox.zh.md)。
++- **支持 PDF 的 `web_fetch`**——HTTP fetch 接受包含文本的 PDF，将嵌入文本提取为有序页面条目，保留页码，并执行现有字节、字符上限及 PDF 页数上限。格式错误、加密或仅含图像的 PDF 会显式失败；不提供 OCR。详见 [web fetch 说明](packages/web/web-fetch-http/README.zh.md)。
++
++### 推荐的 JobBench 配置
++
++目前观察到的最佳 GPT-5.6 Luna JobBench 表现使用 `http://127.0.0.1:8003/v1` 上的 OpenAI Responses API、`high` 推理强度、262,144 token 上下文窗口、32,768 token 输出上限、Exa Web 搜索、HTTP fetch、单任务串行执行及 3,600 秒任务时限。每个任务使用独立的 DSH home、全新的任务工作区、`approval: never` 与 `workspace-write` 策略。
++
++该配置选择 Linux Landlock 后端，不使用 Bubblewrap，也不使用仅支持 Bubblewrap 的 `workspace-isolated` 模式。Landlock 将写入限制在任务工作区内，同时保留 JobBench 工具链所需的宿主机读取能力。该结果证明的是完整配置，而不是受控的 Landlock 与 Bubblewrap 对比；仅在不要求宿主机读取隔离时使用此配置。
++
+ ## 开发者预览
+ 
+ DeepSeek Harness 处于 _开发者预览_ 阶段，正在快速迭代。**未来将出现破坏兼容性的变更。**
+@@ -35,8 +48,8 @@ npx @deepseek-ai/dsh web
+ 如需从仓库源码运行：
+ 
+ ```sh
+-git clone https://github.com/deepseek-ai/deepseek-harness.git
+-cd deepseek-harness
++git clone git@github.com:t-aschaubey_microsoft/DSH-Attribution.git
++cd DSH-Attribution
+ pnpm install
+ pnpm run build
+ pnpm dsh web
+-- 
+2.43.0
+
