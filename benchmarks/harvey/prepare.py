@@ -29,9 +29,14 @@ PROMPT_CHANGES = [
      "  `$WORKSPACE_DIR/skills/<name>/scripts/`.",
      "- **`$WORKSPACE_DIR`** — your working area, default `bash` cwd. Use it for\n"
      "  notes and intermediate files."),
-    ("only `write` routes relative paths to output/ (plugins/harvey-write.mjs); `edit` is DSH's (relative to the workspace)",
+    ("every deliverable goes in output/, including files built with bash; only `write` routes relative paths there "
+     "(plugins/harvey-write.mjs), `edit` is DSH's (relative to the workspace)",
+     "- **`$OUTPUT_DIR`** (`$WORKSPACE_DIR/output`) — deliverables. The harness\n"
      "  routes relative `write` and `edit` paths here automatically.",
-     "  routes relative `write` paths here automatically."),
+     "- **`$OUTPUT_DIR`** (`$WORKSPACE_DIR/output`) — deliverables. Save every\n"
+     "  deliverable file here, including files you build with `bash` (.docx,\n"
+     "  .xlsx, .pptx): only files in `$OUTPUT_DIR` are delivered. `write` saves\n"
+     "  here by default: a relative `write` path is written under `$OUTPUT_DIR`."),
     ("DSH's read opens text only; office files are converted with bash",
      "- Use `read` to consume input files (handles .docx, .xlsx, .pptx, .pdf, and\n  plain text).",
      "- `read` opens plain-text files only (.txt, .md, .eml, .csv, ...). To read\n"
