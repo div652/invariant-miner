@@ -3,7 +3,9 @@
     python3 benchmarks/apex-agents/grade.py RUN_DIR [RUN_DIR ...] [--jobs 8] [--judge gemini-3.8-flash --effort low]
 
 RUN_DIR is one task's run_task.py output, or a directory of them. Per task, in RUN_DIR/grading/:
-  - a run that did not end with final_answer (step limit, timeout, error) is not graded and scores 0, as in the paper;
+  - a run that ended normally is graded: with final_answer, or with a final reply that calls no tool (DSH's own end of
+    a turn; the answer is that reply, as for JobBench and Harvey). A run stopped by the step limit, the timeout or an
+    error is not graded and scores 0, as in the paper;
   - before.zip / after.zip from the run's snapshots (the grader reads zips);
   - verifiers.json: one output_llm verifier per rubric criterion, with the grading target the paper uses: the task's
     expected_output mapped to the grader's file-type category (Final Answer Only for message_in_console, Word /
@@ -34,6 +36,8 @@ from dsh_bench.endpoints import load_local_env, setting_path  # noqa: E402
 GRADING = REPO / "work/archipelago/grading"
 EXAMPLE = REPO / "work/archipelago/examples/hugging_face_task"
 CAO_BASE = "http://127.0.0.1:4141/v1"
+# Run endings that carry an answer: the final_answer tool, or DSH's normal turn end (a reply with no tool call).
+ANSWERED = {"final_answer", "completed"}
 # Task expected_output -> the grader's grading target (output_llm artifact_filters.FileTypeCategory).
 GRADING_TARGET = {
     "message_in_console": "Final Answer Only (No Files)",
@@ -73,9 +77,9 @@ def grade_task(run_dir: Path, judge: str, effort: str, env: dict[str, str]) -> d
     out.mkdir(exist_ok=True)
     base = {"task_id": task["task_id"], "domain": task["domain"], "expected_output": task["expected_output"],
             "criteria_count": len(task["rubric"]), "finish_reason": record.get("finish_reason")}
-    if record.get("finish_reason") != "final_answer":
+    if record.get("finish_reason") not in ANSWERED:
         result = base | {"graded": False, "score": 0.0, "all_pass": False,
-                         "reason": f"run ended {record.get('finish_reason')!r}, not with final_answer (counts as failed)"}
+                         "reason": f"run ended {record.get('finish_reason')!r} without an answer (counts as failed)"}
         (out / "grades.json").write_text(json.dumps(result, indent=2) + "\n")
         return result
     tar_to_zip(run_dir / "snapshots/before.tar.gz", out / "before.zip")

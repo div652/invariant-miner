@@ -167,7 +167,7 @@ def trajectory(prompt: str, answer: dict) -> dict:
     """Archipelago's AgentTrajectoryOutput: the grader reads the first user message (task prompt) and the last
     message's content (the final answer). One user message keeps the grader's single-turn path, as in the paper (the
     judge sees prompt, final answer and file changes, not the trajectory)."""
-    status = "completed" if answer.get("finish_reason") == "final_answer" else "failed"
+    status = "completed" if answer.get("finish_reason") in ("final_answer", "completed") else "failed"
     return {"messages": [{"role": "system", "content": SYSTEM_PROMPT},
                          {"role": "user", "content": prompt},
                          {"role": "assistant", "content": answer.get("answer") or ""}],
@@ -271,7 +271,7 @@ def main() -> int:
         (out / "trajectory.json").write_text(json.dumps(trajectory(task["prompt"], answer), indent=2) + "\n")
         (out / "run.json").write_text(json.dumps(record, indent=2) + "\n")
     print(json.dumps({k: record.get(k) for k in ("task_id", "finish_reason", "setup_s", "agent_s")} | {"out": str(out)}))
-    return 0 if record.get("finish_reason") == "final_answer" else 1
+    return 0 if record.get("finish_reason") in ("final_answer", "completed") else 1
 
 
 if __name__ == "__main__":
