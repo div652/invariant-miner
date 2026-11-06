@@ -18,7 +18,9 @@ upstream deepseek-ai/deepseek-harness @ c389f96          the harness
   + harness/core.patch.yml      the harness configuration used for every run: which DSH plugins are on or off,
                                 the isolation settings, and our three plugins
   + plugins/                    our DSH plugins: sandbox-podman (commands run in the task container),
-                                benchmark-limits (steps / timeout / temperature), final-answer (final_answer tool)
+                                benchmark-limits (steps / timeout / temperature), final-answer (final_answer tool),
+                                skills (a benchmark's skills), toolbelt (optional: managed tools start hidden and
+                                the agent adds them with toolbelt_* meta-tools; spec key `toolbelt`)
   + images/base/                the minimal container image bash runs in
 dsh_bench/launch.py             the runner AROUND DSH (not the harness): stage the workspace, start the container,
                                 run DSH with the patch files, collect the outputs
@@ -72,6 +74,7 @@ python3 tests/test_layout.py      # the core mentions no benchmark
 python3 tests/test_isolation.py   # DSH + sandbox-podman + a scripted model (tests/scripted_model.py), no real model needed
 python3 tests/test_launch.py      # the launcher end to end with the scripted model: the four standard outputs
 python3 tests/test_vscode_shim.py # the VS Code endpoint shim against a fake GH Copilot Server extension
+python3 tests/test_toolbelt.py   # plugins/toolbelt with the scripted model and a stdio MCP server (tests/mcp_demo_server.py)
 ```
 
 ## Setup

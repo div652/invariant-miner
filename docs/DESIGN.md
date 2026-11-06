@@ -61,6 +61,7 @@ cannot work, the fallback of running DSH inside the container.
 | `plugins/sandbox-podman` | **Done, tested.** Provides `ctx.sandbox`: `confine(argv)` returns `podman exec` argv into the run's container, so `bash`, jobs and glob/grep run there unchanged. Maps DSH's bundled ripgrep path to the container's `rg`; `podman-exec.sh` kills the command's process group inside the container when DSH stops it. |
 | `plugins/final-answer` | A `final_answer` tool that records the answer and ends the turn. |
 | `plugins/benchmark-limits` | Step limit, wall-clock timeout, temperature (from `agentic-evolution`'s `benchmark-limits.mjs`). |
+| `plugins/toolbelt` | **Optional** (spec key `toolbelt`, off by default). Managed tools (default: every MCP tool) are not offered to the model until the agent adds them with `toolbelt_list_tools` / `toolbelt_inspect_tool` / `toolbelt_add_tool` / `toolbelt_remove_tool` (at most 80). A port of the toolbelt of Archipelago's `react_toolbelt_agent`: same tool names, descriptions, result and error texts. Hides tools in the `system-prompt/assemble` waterfall (DSH rebuilds the tool list before every step) and denies calls to hidden tools in `tools/pre-execute`. One toolbelt per agent. Tested by `tests/test_toolbelt.py`. |
 | MCP bridge | Serves benchmark tools that are plain functions or REST APIs as an MCP server. |
 | launcher | Steps 1-6 above. |
 | `images/base` | The minimal default container image. |

@@ -64,6 +64,9 @@ benchmark teaches us a new kind of check, add it here so the next benchmark gets
       `dsh-mcp-client` row each. A stdio server's runtime must exist where it runs.
 - [ ] **Benchmark tools not served over MCP** (Python functions, REST APIs): wrap them with the MCP bridge.
 - [ ] **Tool names**: no collision with DSH tools (MCP tools appear as `mcp__<server>__<tool>`).
+- [ ] **Tool visibility**: every tool offered on every step (DSH's default), or the toolbelt (spec key `toolbelt`):
+      managed tools hidden until the agent adds them. Count the tools and their schema size; check the endpoint's
+      limit on tools per request.
 - [ ] **Side effects** the grader reads (simulated world state, database, files): every one goes through a logged
       tool call; the agent has no back door to them (e.g. `curl` from bash).
 

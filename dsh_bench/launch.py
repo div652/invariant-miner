@@ -56,6 +56,9 @@ SPEC_DEFAULTS: dict = {
     "mcp": [],  # [{"name": str, "transport": "streamable-http"|"stdio", "url"|"command"/"args", "headers": {}}]
     "limits": {"max_steps": None, "timeout_s": 3600, "temperature": None},  # temperature: None leaves it unset
     "skills_dir": None,  # host dir of <name>/SKILL.md, registered as DSH skills (plugins/skills); outside the workspace
+    "toolbelt": None,  # None: every tool is offered on every step. A dict turns on plugins/toolbelt: managed tools
+    # start hidden and the agent adds them with toolbelt_* meta-tools. Keys (all optional): "managed" (name patterns,
+    # `*` wildcard; default ["mcp__*"]), "max_size" (default 80), "initial" (managed tools already in the toolbelt)
     "final_answer": True,
     "extra_patches": [],  # benchmark patch files, applied after run.patch.yml; "__DSH_REPO__" -> the DSH checkout,
     # "__BENCH_REPO__" -> this repository (for a benchmark's own plugins: the run gets a copy of the patch file, so
@@ -219,6 +222,14 @@ def build_run_rows(spec: dict, model: dict, workspace: Path) -> list[dict]:
     inserts = []
     if spec["skills_dir"] is not None:
         inserts.append({"id": "skills", "name": str(REPO / "plugins/skills/index.mjs"), "config": {"dir": spec["skills_dir"]}})
+    if spec["toolbelt"] is not None:
+        belt = spec["toolbelt"]
+        unknown = set(belt) - {"managed", "max_size", "initial"}
+        if unknown:
+            raise ValueError(f"unknown toolbelt keys: {sorted(unknown)}")
+        config = {key: belt[field] for key, field in (("managed", "managed"), ("maxSize", "max_size"), ("initial", "initial"))
+                  if field in belt}
+        inserts.append({"id": "toolbelt", "name": str(REPO / "plugins/toolbelt/index.mjs"), "config": config})
     for server in spec["mcp"]:
         config = {"serverName": server["name"], "transport": server["transport"], "failOnStartupError": True}
         for key in ("url", "headers", "command", "args", "env", "toolCallTimeoutMs"):
