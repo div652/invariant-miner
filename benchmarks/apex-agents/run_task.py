@@ -292,9 +292,20 @@ def main() -> int:
         }
         (out / "agent-spec.json").write_text(json.dumps(spec, indent=2) + "\n")
         t1 = time.monotonic()
-        launch = subprocess.run([sys.executable, "-m", "dsh_bench.launch", "--spec", str(out / "agent-spec.json"),
-                                 "--out", str(out / "agent")], cwd=REPO, capture_output=True, text=True)
-        (out / "launch.log").write_text(launch.stdout + launch.stderr)
+        record["agent_relaunches"] = 0
+        for attempt in range(2):
+            launch = subprocess.run([sys.executable, "-m", "dsh_bench.launch", "--spec", str(out / "agent-spec.json"),
+                                     "--out", str(out / "agent")], cwd=REPO, capture_output=True, text=True)
+            (out / "launch.log").write_text(launch.stdout + launch.stderr)
+            ended = json.loads((out / "agent/answer.json").read_text()).get("finish_reason") \
+                if (out / "agent/answer.json").exists() else None
+            # DSH never started an agent (its MCP startup has 60 s; slow `podman exec` under load): the container is
+            # untouched, so start DSH again in it once instead of redoing the whole task.
+            if ended != "no_session" or attempt == 1:
+                break
+            (out / "agent").rename(out / f"agent-no-session-{attempt + 1}")
+            record["agent_relaunches"] += 1
+            in_container(container, "python3", "/opt/dsh-bench-apex/gateway_probe.py", "http://127.0.0.1:8080/mcp/", "300")
         record["agent_s"] = round(time.monotonic() - t1, 1)
         with setup_slot(args.lock_dir, args.setup_slots):
             snapshot(container, out / "snapshots/after.tar.gz")
