@@ -47,6 +47,13 @@ keeps its `run.patch.yml`, and `run.json` records every patch file with its sha2
 
 None changes behaviour for one benchmark only; 0004 mentions JobBench in README text.
 
+## Endpoints
+
+One switch picks the model server: `--endpoint cao|trapi|vscode|vllm` on a benchmark's `make_specs.py` (default
+`$DSH_BENCH_ENDPOINT`, else `cao`). Modes, how to start each one and how their requests differ:
+[endpoints/README.md](endpoints/README.md); model settings: [models/README.md](models/README.md). Check a mode with
+`python3 -m dsh_bench.endpoint_check --endpoint <mode>`.
+
 ## Rules
 
 - **One branch, one core.** Every benchmark runs on the same core, so results from different benchmarks are
@@ -64,6 +71,7 @@ Benchmarks: `jobbench` (smoke run done; train-20 comparison with the reference h
 python3 tests/test_layout.py      # the core mentions no benchmark
 python3 tests/test_isolation.py   # DSH + sandbox-podman + a scripted model (tests/scripted_model.py), no real model needed
 python3 tests/test_launch.py      # the launcher end to end with the scripted model: the four standard outputs
+python3 tests/test_vscode_shim.py # the VS Code endpoint shim against a fake GH Copilot Server extension
 ```
 
 ## Setup

@@ -1,0 +1,25 @@
+{
+  "provider": "luna-trapi",
+  "display_name": "GPT-5.6 Luna (TRAPI via the local token proxy, effort high)",
+  "model": "gpt-5.6-luna_2026-07-09",
+  "api": "openai-responses",
+  "base_url": "http://127.0.0.1:8031/v1",
+  "api_key_file": "~/.config/dsh-bench/endpoint.token",
+  "reasoning": "high",
+  "reasoning_efforts": {
+    "low": "low",
+    "medium": "medium",
+    "high": "high",
+    "xhigh": "xhigh"
+  },
+  "context_window": 262144,
+  "max_tokens": 128000,
+  "input": [
+    "text",
+    "image"
+  ],
+  "compat": {
+    "supportsStrictMode": false
+  },
+  "stream_idle_timeout_ms": 1800000
+}
