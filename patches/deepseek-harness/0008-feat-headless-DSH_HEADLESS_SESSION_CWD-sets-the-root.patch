@@ -1,0 +1,50 @@
+From 6b22a78ef9c7b2aa9a7624e1e9234c70c41d000a Mon Sep 17 00:00:00 2001
+From: div652 <div652@users.noreply.github.com>
+Date: Fri, 6 Nov 2026 19:32:18 +0000
+Subject: [PATCH] feat(headless): DSH_HEADLESS_SESSION_CWD sets the root
+ session cwd
+
+For a deployment whose files and commands live in another execution world (a container) at a path that does not
+exist on the host: the session cwd drives the {{cwd}} prompt variable, the sandbox policy's workspace root and
+relative-path resolution. Unset, the session cwd stays the process cwd.
+---
+ packages/bundle/headless/src/index.ts | 16 +++++++++++++++-
+ 1 file changed, 15 insertions(+), 1 deletion(-)
+
+diff --git a/packages/bundle/headless/src/index.ts b/packages/bundle/headless/src/index.ts
+index 50a5c66..eab185d 100644
+--- a/packages/bundle/headless/src/index.ts
++++ b/packages/bundle/headless/src/index.ts
+@@ -160,6 +160,18 @@ function fail(io: HeadlessIo, error: unknown): void {
+   io.exit(1)
+ }
+ 
++/**
++ * The root session's working directory: `DSH_HEADLESS_SESSION_CWD` when set (absolute POSIX path), else the
++ * process cwd.
++ * @returns the absolute session cwd.
++ */
++function sessionCwd(): string {
++  const configured = process.env['DSH_HEADLESS_SESSION_CWD']
++  if (configured === undefined || configured === '') return process.cwd()
++  if (!configured.startsWith('/')) throw new Error(`DSH_HEADLESS_SESSION_CWD must be an absolute path: ${JSON.stringify(configured)}`)
++  return configured
++}
++
+ /**
+  * Run one task through a freshly created Agent and request process exit.
+  * @param ctx - plugin context carrying the Agent, default model, Session, and launcher IO services.
+@@ -183,7 +195,9 @@ async function run(ctx: Context, task: string, io: HeadlessIo): Promise<void> {
+   // (@deepseek-ai/dsh-agent-presets README, "Composing a child agent").
+   const { agent } = await agents.create({
+     sessionId: brandString<SessionId>(`session-${randomUUID()}`),
+-    meta: { cwd: process.cwd() },
++    // DSH_HEADLESS_SESSION_CWD names the session working directory when the agent's files live in another
++    // execution world (a container) whose path does not exist on this host; unset, it is the process cwd.
++    meta: { cwd: sessionCwd() },
+     agentOptions: { provider: selection.provider, model: selection.model },
+     setup: (agentCtx) => {
+       const selected: ModelSelectionRef = { current: selection, assembled: undefined }
+-- 
+2.43.0
+
