@@ -53,3 +53,21 @@ Paired with the parity run: -0.087, 95% CI [-0.167, -0.010], better/equal/worse 
 root steps median 15.5 vs 40, bash calls 208 vs 573, web_search + web_fetch 37 vs 139, 2-5 min per task vs about 6-15;
 every task still produced its deliverables. The drop is the endpoint setting (reasoning effort medium vs high), not
 the harness: harness and tasks are the same as the parity run.
+
+## All 65 tasks, Luna effort high via CAO (c34 endpoint shape), 2026-11-06 (main 33db37e)
+
+Run `runs/jb-all65-lunahigh-20261106T051911Z`: all 65 tasks of `dataset/main`, 10 at a time, `models/luna-cao.json` at
+effort high; judge grok-4.6 high via the CAO shim. Two tasks (civil_engineers/task1, secretaries.../task1) hit a CAO
+stall ("Upstream stream was inactive for 300000ms", turn ended in error, no deliverables) and were re-run once (first
+attempts kept as `tasks-failed-*-attempt1-cao-stall`); both completed on the re-run.
+
+| Rubrics | macro | pooled | tasks scoring 0 |
+|---|---|---|---|
+| original | **0.347** | 0.335 | 4 |
+| task-instruction-aligned v1 | **0.414** | 0.406 | 2 |
+
+Against the reference harness's all-65 run on the same model, endpoint (CAO), judge and v1 rubrics
+(`all65-luna-cao-v1rubrics-20261105T090945Z`, macro 0.388; agentic-evolution's own non-refined Luna v1 run: 0.393),
+paired over the 65 tasks: **+0.026, 95% CI [-0.020, +0.073]**, better/equal/worse 28/12/25. Equal within noise. (The
+reference run used effort high through the model_serve proxy with a 32K output cap; ours effort high, CAO direct,
+128K output.)
