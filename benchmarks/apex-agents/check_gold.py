@@ -78,7 +78,7 @@ def main() -> int:
         answer = t["gold_response"] if t["gold_response_type"] == "text" else "Done."
         (run_dir / "trajectory.json").write_text(json.dumps(
             trajectory(t["prompt"], {"finish_reason": "final_answer", "answer": answer}), indent=2) + "\n")
-    sys.argv = ["grade.py", str(out), "--jobs", str(args.jobs), "--regrade"]
+    sys.argv = ["grade.py", str(out), "--jobs", str(args.jobs), "--regrade", "--keep-snapshots"]
     grade.main()
     results = [json.loads((out / t["task_id"] / "grading/grades.json").read_text()) for t in sample]
     print()
