@@ -4,7 +4,7 @@ Benchmark: Hugging Face dataset `mercor/apex-agents` (revision `92c8685`, 480 ta
 gated, accept the terms and log in first) and its infrastructure Archipelago (`Mercor-Intelligence/archipelago` @
 `f8e41cb`, a 2026-11-01 sync of Mercor's studio repo). Paper: arXiv 2601.14242v3, "APEX–Agents".
 
-Status: **decisions recorded, nothing built yet** (2026-11-06). "Done" says whether a row is decided (D), built (B),
+Status: **all decisions recorded; base image built; nothing else built yet** (2026-11-06). "Done" says whether a row is decided (D), built (B),
 tested (T).
 
 ## Design (decided with the user, 2026-11-06)
@@ -25,6 +25,40 @@ tested (T).
   So every tool, DSH's and the apps', sees the same files under the same path.
 - **Toolbelt on** (core-v4 `plugins/toolbelt`): the app tools are hidden until the agent adds them, as in Archipelago's
   harness; DSH's tools are always visible.
+
+## Changes from Archipelago's own setup, and why
+
+Archipelago's code is used unmodified. These are the places where how we run it differs from its Hugging Face example
+(`examples/hugging_face_task`) or its open-source image. Each was decided with the user.
+
+1. **App servers start once and keep running (HTTP) instead of restarting on every tool call (stdio)**
+   (2026-11-06). The example runs every app as a stdio subprocess (`uv run python main.py`, `MCP_TRANSPORT=stdio`).
+   The gateway opens a fresh connection per request (`client_factory=lambda: base_client.new()`), so every tool call
+   started all 9 servers and shut them down again. Measured: 11.6 s per call, even for `code_exec` with `echo hi`;
+   9 -> 153 processes, 120 MB -> 900 MB per call. We start each server once inside the container with the example's
+   exact command and environment, changing only `MCP_TRANSPORT=http` (each server's own default) and a port (`MCP_PORT`),
+   and give the gateway their URLs. Server names, and with them tool names, are unchanged. Measured: the same 73
+   tools (the tool list is the same size to the byte, 271,492 characters), the same results, 0.25 s per call; the
+   container holds about 1 GB with all servers resident. What else changes: anything an app keeps in memory (e.g. the
+   PDF app's extracted-image cache) now lives across calls. It did not before, though `read_image` re-extracted on a
+   miss. It probably matches how Mercor ran the paper's experiments (the servers default to HTTP), but that is not
+   documented.
+2. **`code_exec`'s package mirror is rebuilt in our image layer** (approved 2026-11-06). In Mercor's images an internal
+   install task (not in the open-source repo) fills `/usr/local/lib/code_execution`: the Python packages `code_exec`
+   puts on `PYTHONPATH`, the Node modules on `NODE_PATH` (docx, pptxgenjs, react, sharp) and the `soffice` wrapper that
+   lets LibreOffice start under the sandbox shim. The open-source Dockerfile instead pip-installs the packages into the
+   system Python; that step fails (`ResolutionImpossible`: litellm 1.83.10 / fastmcp-slim 3.3.1 / python-dotenv
+   1.2.1), and the `;`-joined RUN hides it. Checked: in the unmodified image `code_exec` cannot import pandas,
+   openpyxl or python-docx. Our layer installs the exact locked versions (516 pins from the code server's `uv.lock`,
+   `--no-deps`, no re-resolution), `node_tools/package-lock.json`, and `sandbox_bin/soffice` into the mirror.
+3. **Individual tools** (`USE_INDIVIDUAL_TOOLS=true`; `GUI_ENABLED=true` for EDGAR/FMP). The example sets neither, so
+   the apps would serve 2 combined tools each. The paper's tool counts (63, 187) and tool names are individual tools.
+4. **The "before" snapshot is taken after the task's input files are loaded.** The example grades against the bare
+   world zip, so a task's input files would look created by the agent.
+5. **Grading target passed to the grader** (the task's `expected_output`, as the paper). The example passes only the
+   criterion text.
+6. **Budgets and judge**: 250 steps as the paper (the example: 50); judge `gemini-3.8-flash` at low thinking (paper:
+   Gemini 3 Flash at low; example: `gemini-2.5-flash`).
 
 ## Tool map (individual-tool mode, the paper's)
 
@@ -49,27 +83,27 @@ tested (T).
 | # | Item | Answer | Done |
 |---|------|--------|------|
 | 1 | Task prompt | `prompt` of `tasks_and_rubrics.json`, verbatim, as the user message. Scanned all 480: no paths, no `/filesystem`, no tool names, no `code_exec`/`final_answer`. Harness-flavoured phrases need no change: "message to/in the console" (6) and "reply back to me / here" (137) = the `final_answer` text; "the attached file/email/SEC filings" = the task's input files in `/filesystem`; "data tools available to you" (1) = the EDGAR/FMP apps. | D |
-| 1 | System prompt | The paper's (Appendix D.2; Archipelago's README "to reproduce the paper"), appended after DSH's persona. Wording of the path sentence for DSH's tools: **open**. | open |
+| 1 | System prompt | The paper's (Appendix D.2; Archipelago's README "to reproduce the paper"), appended after DSH's persona, verbatim except the path sentence, which also names DSH's tools: "For every tool except the code_exec, bash, read, write, edit, read_image, glob and grep tools, you may assume that all relevant files are located under the root path /. For those tools, however, you must explicitly use /filesystem/ as the root path to locate all relevant files." (approved 2026-11-06) | D |
 | 1 | Hard-coded paths | None in the prompts. The paper prompt's `/` (app tools) and `/filesystem/` (`code_exec`) hold, since every tool works in Archipelago's container; DSH's working directory is `/filesystem`. | D |
 | 1 | Env vars | None. | D |
 | 1 | Hidden material | Rubrics, `gold_response`, `gold_files/` stay in the dataset on the host; never in the container or the prompt. | D |
 | 2 | Staged files | World zip (`filesystem/` + `.apps_data/`), then the task's `task_files/<id>/` overlay (141 tasks; 3 add files under `.apps_data/calendar`), through Archipelago's `/data/populate` as its example does. | D |
 | 2 | Read-only / writable | As Archipelago: `/filesystem` writable (19 tasks edit existing files); `/.apps_data` only through Mail/Calendar/Chat. | D |
 | 2 | Baseline snapshot | Archipelago's `/data/snapshot` after population (world + task files), before the agent starts. (Archipelago's HF example uses the bare world zip as "before", so task input files would look agent-created; not copied.) | D |
-| 3 | Image | `dsh-bench-apex-agents-env:f8e41cb`, Archipelago's `environment/Dockerfile` at the pin, plus ripgrep for DSH's `glob`/`grep`. | building |
+| 3 | Image | Base `dsh-bench-apex-agents-env:f8e41cb`: Archipelago's `environment/Dockerfile` at the pin, built unmodified (12.4 GB; no Mercor credentials needed). Our layer `benchmarks/apex-agents/Dockerfile`: `code_exec`'s package mirror (change 2) and ripgrep for DSH's `glob`/`grep`. | base built; layer todo |
 | 3 | Agent packages | Archipelago's image as is: Python 3.13 with `code_exec`'s package set (pandas, openpyxl, python-docx, python-pptx, pymupdf, pdfplumber, ...), LibreOffice, Chromium, poppler. | D |
 | 3 | Resource limits | None (Archipelago sets none locally). | D |
 | 4 | Container network | None, except worlds 244 and 246: internet for EDGAR (sec.gov) and FMP. There `code_exec` and `bash` reach the internet too (as in Archipelago's example). | D |
 | 4 | Web tools | Off (`web_search`, `web_fetch`): the paper turns web search off for reproducibility. | D |
 | 4 | Credentials | FMP key from `DSH_BENCH_FMP_KEY_FILE` in your `local.env` (a file, chmod 600; every user brings their own; never in the repo). Passed only to the FMP server in the environment container of worlds 244/246. | D |
 | 5 | Native tools | DSH's headless set minus web; `bash` and file tools inside Archipelago's container (see Design). | D |
-| 5 | MCP servers | Archipelago's gateway (`/mcp/`) as one DSH MCP server: the 9 apps (+2 in 244/246), `USE_INDIVIDUAL_TOOLS=true` (and `GUI_ENABLED=true` for EDGAR/FMP), as the paper. | D |
+| 5 | MCP servers | Archipelago's gateway (`/mcp/`) as one DSH MCP server: the 9 apps (+2 in 244/246), `USE_INDIVIDUAL_TOOLS=true` (and `GUI_ENABLED=true` for EDGAR/FMP), as the paper. App servers run once per task over HTTP (change 1); DSH's call timeout for them is 300 s. Measured with individual tools: 73 tools. | D, (b) tested |
 | 5 | Tool visibility | Toolbelt on: app tools hidden until added; DSH tools visible. | D |
 | 5 | Side effects / back doors | `/.apps_data` (graded) is reachable only through Mail/Calendar/Chat: DSH's `bash` runs under Archipelago's path-blocking shim (`sandbox_fs.so`: `/app`, `/.apps_data`, `/proc`, `/sys`), the same rules as `code_exec`; `fs-podman` refuses paths outside `/filesystem`. | D |
 | 6 | Skills | None. | D |
 | 7 | Budgets / model | `models/luna-cao.json` (GPT-5.6 Luna, effort high, the harness standard); 250 steps (paper); 3 h wall clock (Archipelago's default); a run that hits a limit counts as failed (paper). | D |
 | 8 | Ending / answer | `final_answer` (core). 422 tasks answer in the text ("message in console"); 58 create or edit a file (`expected_output`: make_new_doc 20, edit_existing_sheet 16, make_new_sheet 14, make_new_slide_deck 5, edit_existing_doc 2, edit_existing_slide_deck 1). | D |
 | 9 | Grader | Archipelago's grading runner, unchanged: `output_llm` per criterion, mean score per task; Pass@1 = all criteria met. Judge `gemini-3.8-flash` at low thinking via CAO (paper: Gemini 3 Flash, low; not on CAO). Grading target = the task's `expected_output` for every criterion (the released rubric has no per-criterion target). Document extraction local (no Reducto key), to be checked for errors on the gold files. Input: before/after snapshots + a trajectory file converted from DSH's session (first user message, final answer). | D |
-| 10 | Smoke / runs | 60 tasks (20 per job) with Luna, then all 480 x 1. | D |
+| 10 | Smoke / runs | 60 tasks (20 per job, seeded random) with Luna, then all 480 x 1; 20 tasks at a time (measured: about 1 GB per task container with all servers running; 24 cores, 185 GB free). | D |
 | 10 | Reference | Archipelago's own agent (`react_toolbelt_agent`, the paper's prompt and settings) with Luna on the same 60 tasks; the paper's leaderboard (other models) for context. | D |
 | 10 | Isolation tests | To do: `bash` and `fs-podman` cannot reach `/.apps_data` or `/app`; no network outside 244/246. | todo |
