@@ -61,6 +61,11 @@ Archipelago's code is used unmodified. These are the places where how we run it 
    criterion text.
 6. **Budgets and judge**: 250 steps as the paper (the example: 50); judge `gemini-3.8-flash` at low thinking (paper:
    Gemini 3 Flash at low; example: `gemini-2.5-flash`).
+7. **Judge replies unwrapped from markdown fences** (2026-11-07). The grader asks for JSON (`response_format`); CAO does
+   not pass that to Gemini, which then answers inside ```json ... ```. The grading call tolerated it, but the artifact
+   selector (used when a changed file is too big for the judge's context, e.g. a large spreadsheet) parses strictly:
+   all criteria of such a task errored. grade.py's local relay removes one surrounding fence from replies to requests
+   with `response_format`; nothing else changes. (Via Vertex, as in the paper, Gemini returns bare JSON.)
 
 ## Tool map (individual-tool mode, the paper's)
 

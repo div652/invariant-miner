@@ -11,7 +11,10 @@ RUN_DIR is one task's run_task.py output, or a directory of them. Per task, in R
     expected_output mapped to the grader's file-type category (Final Answer Only for message_in_console, Word /
     Spreadsheets / Presentations for the file tasks) -- Archipelago's example passes none (change 5);
   - Archipelago's grading runner (work/archipelago/grading, uv) with the judge through CAO (OpenAI-compatible; the key
-    goes in the environment, never into a file); no Reducto key, so documents are extracted locally;
+    goes in the environment, never into a file); no Reducto key, so documents are extracted locally. Calls pass through
+    a local relay (JudgeRelay) that strips a markdown fence around the reply when the request asked for JSON
+    (response_format): CAO does not pass response_format to Gemini, which then answers ```json ...```, and the grader's
+    artifact selector parses strictly (CHECKLIST.md, change 7);
   - grades.json: score (mean criterion score, the grader's own "template" scoring), all_pass (every criterion met:
     the paper's Pass@1 per run), and each criterion's grade and rationale;
   - then, unless --keep-snapshots, the task is compacted: snapshots/changes.tar.gz (files the agent added or modified)
@@ -24,11 +27,16 @@ import concurrent.futures
 import hashlib
 import json
 import os
+import re
 import subprocess
 import sys
 import tarfile
+import threading
+import urllib.error
+import urllib.request
 import uuid
 import zipfile
+from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
@@ -39,6 +47,73 @@ from dsh_bench.endpoints import load_local_env, setting_path  # noqa: E402
 GRADING = REPO / "work/archipelago/grading"
 EXAMPLE = REPO / "work/archipelago/examples/hugging_face_task"
 CAO_BASE = "http://127.0.0.1:4141/v1"
+FENCE = re.compile(r"^\s*```(?:json)?\s*\n(.*?)\n?\s*```\s*$", re.S)
+
+
+class JudgeRelay:
+    """Local OpenAI-compatible relay to CAO for the grader (one per process, started on first use).
+
+    Forwards every request unchanged. When the request carries response_format and a reply's message content is one
+    markdown code fence around JSON, the fence is removed; nothing else in the reply changes.
+    """
+
+    _lock = threading.Lock()
+    _base: str | None = None
+
+    @classmethod
+    def base_url(cls) -> str:
+        with cls._lock:
+            if cls._base is None:
+                server = ThreadingHTTPServer(("127.0.0.1", 0), _RelayHandler)
+                threading.Thread(target=server.serve_forever, daemon=True).start()
+                cls._base = f"http://127.0.0.1:{server.server_address[1]}/v1"
+            return cls._base
+
+
+class _RelayHandler(BaseHTTPRequestHandler):
+    def log_message(self, *args):
+        pass
+
+    def _forward(self, body: bytes | None) -> None:
+        request = urllib.request.Request(CAO_BASE.removesuffix("/v1") + self.path, data=body, method=self.command,
+                                         headers={k: v for k, v in self.headers.items()
+                                                  if k.lower() not in ("host", "content-length", "accept-encoding")})
+        try:
+            with urllib.request.urlopen(request, timeout=900) as upstream:
+                status, headers, payload = upstream.status, upstream.headers, upstream.read()
+        except urllib.error.HTTPError as error:
+            status, headers, payload = error.code, error.headers, error.read()
+        if body and status == 200:
+            try:
+                if json.loads(body).get("response_format"):
+                    reply = json.loads(payload)
+                    for choice in reply.get("choices", []):
+                        content = (choice.get("message") or {}).get("content")
+                        match = FENCE.match(content) if isinstance(content, str) else None
+                        if match:
+                            choice["message"]["content"] = match.group(1).strip()
+                    payload = json.dumps(reply).encode()
+            except (ValueError, AttributeError):
+                pass  # not JSON on either side: pass the reply through as it came
+        self.send_response(status)
+        self.send_header("Content-Type", headers.get("Content-Type", "application/json"))
+        self.send_header("Content-Length", str(len(payload)))
+        self.end_headers()
+        self.wfile.write(payload)
+
+    def do_POST(self):
+        self._forward(self.rfile.read(int(self.headers.get("Content-Length", 0))))
+
+    def do_GET(self):
+        self._forward(None)
+
+
+def judge_env(cao_key: str) -> dict[str, str]:
+    """Environment for the grader process: the judge goes through the relay, the key stays in the environment."""
+    base = JudgeRelay.base_url()
+    return os.environ | {"OPENAI_API_KEY": cao_key, "OPENAI_API_BASE": base, "OPENAI_BASE_URL": base}
+
+
 # Run endings that carry an answer: the final_answer tool, or DSH's normal turn end (a reply with no tool call).
 ANSWERED = {"final_answer", "completed"}
 # Task expected_output -> the grader's grading target (output_llm artifact_filters.FileTypeCategory).
@@ -107,7 +182,9 @@ def verifiers(task: dict) -> list[dict]:
 
 def grade_task(run_dir: Path, judge: str, effort: str, env: dict[str, str], keep_snapshots: bool = False) -> dict:
     result = grade_once(run_dir, judge, effort, env)
-    if not keep_snapshots and not result.get("error"):
+    # Compact a graded task, or one that could not be graded (a limit hit); never one whose grading failed.
+    gradable_done = result.get("graded") is True or "reason" in result
+    if not keep_snapshots and gradable_done and not result.get("error"):
         compact(run_dir)
     return result
 
@@ -156,14 +233,16 @@ def grade_once(run_dir: Path, judge: str, effort: str, env: dict[str, str]) -> d
         criteria.append({"verifier_id": c["verifier_id"], "criteria": c["criteria"], "score": v.get("score"),
                          "status": v.get("status"), "judge_grade": values.get("judge_grade"),
                          "rationale": values.get("grade_rationale"), "auto_failed": values.get("auto_failed", False)})
-    errors = [c for c in criteria if c["score"] is None]
+    errors = [c for c in criteria if c["score"] is None or c["status"] == "error"]
+    run_failed = grades.get("grading_run_status") == "error"
     scores = [c["score"] for c in criteria if c["score"] is not None]
-    result = base | {"graded": not errors, "grading_run_status": grades.get("grading_run_status"),
+    result = base | {"graded": not errors and not run_failed, "grading_run_status": grades.get("grading_run_status"),
                      "score": (grades.get("scoring_results") or {}).get("final_score"),
-                     "all_pass": bool(scores) and not errors and all(s >= 1.0 for s in scores),
+                     "all_pass": bool(scores) and not errors and not run_failed and all(s >= 1.0 for s in scores),
                      "criteria": criteria}
-    if errors:
-        result["error"] = f"{len(errors)} criteria without a score"
+    if errors or run_failed:
+        first = next((v.get("message") for v in grades.get("verifier_results", []) if v.get("status") == "error"), "")
+        result["error"] = f"{len(errors)} criteria errored (grading run {grades.get('grading_run_status')}): {str(first)[:300]}"
     (out / "grades.json").write_text(json.dumps(result, indent=2) + "\n")
     return result
 
@@ -186,7 +265,7 @@ def main() -> int:
     args = parser.parse_args()
     load_local_env()
     key = Path(setting_path("$DSH_BENCH_CAO_KEY_FILE")).read_text().strip()
-    env = os.environ | {"OPENAI_API_KEY": key, "OPENAI_API_BASE": CAO_BASE, "OPENAI_BASE_URL": CAO_BASE}
+    env = judge_env(key)
     dirs = [d for d in task_dirs([p.resolve() for p in args.runs])
             if args.regrade or not (d / "grading/grades.json").exists()]
     with concurrent.futures.ThreadPoolExecutor(args.jobs) as pool:

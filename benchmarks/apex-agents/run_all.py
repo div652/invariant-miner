@@ -93,6 +93,8 @@ def main() -> int:
     parser.add_argument("--dataset", type=Path, default=Path("~/apex-agents-data"))
     parser.add_argument("--jobs", type=int, default=20)
     parser.add_argument("--grade-jobs", type=int, default=6)
+    parser.add_argument("--setup-slots", type=int, default=4, help="tasks populating/snapshotting at the same time")
+    parser.add_argument("--retries", type=int, default=1, help="reruns of a task that ended without an agent session")
     parser.add_argument("--endpoint")
     parser.add_argument("--model")
     parser.add_argument("--judge", default="gemini-3.8-flash")
@@ -111,25 +113,40 @@ def main() -> int:
     run_dir = args.out.resolve()
     (run_dir / "tasks").mkdir(parents=True, exist_ok=True)
     (run_dir / "tasks.txt").write_text("\n".join(ids) + "\n")
+    # A task directory without run.json is a run that was killed: move it aside and run the task again.
+    for tid in ids:
+        out = run_dir / "tasks" / tid
+        if out.exists() and not (out / "run.json").exists():
+            (run_dir / "aborted").mkdir(exist_ok=True)
+            out.rename(run_dir / "aborted" / f"{tid}-{int(time.time())}")
     todo = [tid for tid in ids if tid not in deferred and not (run_dir / "tasks" / tid / "run.json").exists()]
     log(run_dir, f"start: {len(ids)} tasks, {len(todo)} to run, {len(deferred)} deferred (banking setup missing), "
                  f"jobs {args.jobs}, model {args.model or args.endpoint or 'default (luna-cao)'}")
     key = Path(setting_path("$DSH_BENCH_CAO_KEY_FILE")).read_text().strip()
-    grade_env = os.environ | {"OPENAI_API_KEY": key, "OPENAI_API_BASE": grade.CAO_BASE, "OPENAI_BASE_URL": grade.CAO_BASE}
+    grade_env = grade.judge_env(key)
     graders = concurrent.futures.ThreadPoolExecutor(args.grade_jobs)
     grading = []
 
     def run_one(tid: str) -> None:
         out = run_dir / "tasks" / tid
-        argv = [sys.executable, str(HERE / "run_task.py"), "--task", tid, "--out", str(out), "--dataset", str(dataset)]
+        argv = [sys.executable, str(HERE / "run_task.py"), "--task", tid, "--out", str(out), "--dataset", str(dataset),
+                "--lock-dir", str(run_dir / ".locks"), "--setup-slots", str(args.setup_slots)]
         argv += ["--endpoint", args.endpoint] if args.endpoint else []
         argv += ["--model", args.model] if args.model else []
-        t0 = time.monotonic()
-        proc = subprocess.run(argv, cwd=REPO, capture_output=True, text=True)
-        out.mkdir(parents=True, exist_ok=True)
-        (out / "run_task.log").write_text(proc.stdout + proc.stderr)
-        record = json.loads((out / "run.json").read_text()) if (out / "run.json").exists() else {}
-        log(run_dir, f"ran {tid}: {record.get('finish_reason')} in {time.monotonic() - t0:.0f}s (exit {proc.returncode})")
+        for attempt in range(args.retries + 1):
+            t0 = time.monotonic()
+            proc = subprocess.run(argv, cwd=REPO, capture_output=True, text=True)
+            out.mkdir(parents=True, exist_ok=True)
+            (out / "run_task.log").write_text(proc.stdout + proc.stderr)
+            record = json.loads((out / "run.json").read_text()) if (out / "run.json").exists() else {}
+            log(run_dir, f"ran {tid}: {record.get('finish_reason')} in {time.monotonic() - t0:.0f}s (exit {proc.returncode})"
+                         f"{' attempt ' + str(attempt + 1) if attempt else ''}")
+            # No agent session (setup or MCP startup failed): infrastructure, not the agent; retry in a fresh directory.
+            if record.get("finish_reason") in (None, "no_session") and attempt < args.retries:
+                (run_dir / "retried").mkdir(exist_ok=True)
+                out.rename(run_dir / "retried" / f"{tid}-{attempt + 1}")
+                continue
+            break
         if (out / "run.json").exists():
             def grade_one() -> None:
                 result = grade.grade_task(out, args.judge, args.effort, grade_env)

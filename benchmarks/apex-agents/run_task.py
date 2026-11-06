@@ -19,6 +19,8 @@ run.json), trajectory.json, apps-logs/, run.json. Grade with grade.py.
 """
 
 import argparse
+import contextlib
+import fcntl
 import json
 import os
 import subprocess
@@ -163,6 +165,31 @@ def wait_healthy(container: str, timeout_s: float = 120) -> None:
     raise RuntimeError("environment container did not become healthy")
 
 
+@contextlib.contextmanager
+def setup_slot(lock_dir: Path | None, slots: int):
+    """Hold one of `slots` file locks in lock_dir (shared by every task process of a run) while populating or
+    snapshotting: twenty containers copying worlds at once made podman slow enough that DSH's MCP startup timed out."""
+    if lock_dir is None:
+        yield
+        return
+    lock_dir.mkdir(parents=True, exist_ok=True)
+    while True:
+        for i in range(slots):
+            handle = (lock_dir / f"setup-{i}.lock").open("w")
+            try:
+                fcntl.flock(handle, fcntl.LOCK_EX | fcntl.LOCK_NB)
+            except BlockingIOError:
+                handle.close()
+                continue
+            try:
+                yield
+            finally:
+                fcntl.flock(handle, fcntl.LOCK_UN)
+                handle.close()
+            return
+        time.sleep(1)
+
+
 def trajectory(prompt: str, answer: dict) -> dict:
     """Archipelago's AgentTrajectoryOutput: the grader reads the first user message (task prompt) and the last
     message's content (the final answer). One user message keeps the grader's single-turn path, as in the paper (the
@@ -185,6 +212,8 @@ def main() -> int:
     parser.add_argument("--max-steps", type=int, default=250)
     parser.add_argument("--timeout-s", type=int, default=10800)
     parser.add_argument("--keep-container", action="store_true")
+    parser.add_argument("--lock-dir", type=Path, help="setup slots shared by the tasks of one run (run_all.py)")
+    parser.add_argument("--setup-slots", type=int, default=4)
     args = parser.parse_args()
     load_local_env()
     dataset = args.dataset.expanduser().resolve()
@@ -203,7 +232,10 @@ def main() -> int:
               "network": "pasta" if networked else "none", "container": container, "image": IMAGE,
               "started_at": now()}
     t0 = time.monotonic()
+    slot = setup_slot(args.lock_dir, args.setup_slots)
     try:
+        slot.__enter__()
+        record["slot_wait_s"] = round(time.monotonic() - t0, 1)
         sh([RUNTIME, "run", "-d", "--name", container, f"--network={record['network']}",
             "-v", f"{HERE / 'container'}:/opt/dsh-bench-apex:ro", IMAGE])
         wait_healthy(container)
@@ -233,6 +265,11 @@ def main() -> int:
                              input=gateway)
         record["apps_configured"] = json.loads(reply)
         snapshot(container, out / "snapshots/before.tar.gz")
+        probe = json.loads(in_container(container, "python3", "/opt/dsh-bench-apex/gateway_probe.py",
+                                        "http://127.0.0.1:8080/mcp/", "300"))
+        record["gateway_probe"] = probe
+        slot.__exit__(None, None, None)
+        slot = None
         record["setup_s"] = round(time.monotonic() - t0, 1)
 
         spec = {
@@ -259,9 +296,12 @@ def main() -> int:
                                  "--out", str(out / "agent")], cwd=REPO, capture_output=True, text=True)
         (out / "launch.log").write_text(launch.stdout + launch.stderr)
         record["agent_s"] = round(time.monotonic() - t1, 1)
-        snapshot(container, out / "snapshots/after.tar.gz")
+        with setup_slot(args.lock_dir, args.setup_slots):
+            snapshot(container, out / "snapshots/after.tar.gz")
         subprocess.run([RUNTIME, "cp", f"{container}:/tmp/apps", str(out / "apps-logs")], capture_output=True)
     finally:
+        if slot is not None:
+            slot.__exit__(None, None, None)
         if not args.keep_container:
             subprocess.run([RUNTIME, "rm", "-f", "-t", "0", container], capture_output=True)
         record["finished_at"] = now()
