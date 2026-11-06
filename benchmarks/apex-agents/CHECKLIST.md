@@ -4,7 +4,9 @@ Benchmark: Hugging Face dataset `mercor/apex-agents` (revision `92c8685`, 480 ta
 gated, accept the terms and log in first) and its infrastructure Archipelago (`Mercor-Intelligence/archipelago` @
 `f8e41cb`, a 2026-11-01 sync of Mercor's studio repo). Paper: arXiv 2601.14242v3, "APEX–Agents".
 
-Status: **all decisions recorded; base image built; nothing else built yet** (2026-11-06). "Done" says whether a row is decided (D), built (B),
+Status (2026-11-06): **built and tested**: images, core attach mode + fs-podman (tests/test_fs_podman.py 19/19), adapter (test_plumbing.py 15/15 on a real task, scripted model), grading (check_gold.py: gold outputs 12/12 tasks, 50/50 criteria). Smoke with Luna: running.
+
+How to run: `run_all.py --tasks all --out runs/<run>` (grades as tasks finish; summary.md); one task: `run_task.py` then `grade.py`; gold check: `check_gold.py`. The dataset directory is read-only (an early check_gold bug overwrote 12 dataset files; restored and verified, 319/319). "Done" says whether a row is decided (D), built (B),
 tested (T).
 
 ## Design (decided with the user, 2026-11-06)
@@ -90,7 +92,7 @@ Archipelago's code is used unmodified. These are the places where how we run it 
 | 2 | Staged files | World zip (`filesystem/` + `.apps_data/`), then the task's `task_files/<id>/` overlay (141 tasks; 3 add files under `.apps_data/calendar`), through Archipelago's `/data/populate` as its example does. | D |
 | 2 | Read-only / writable | As Archipelago: `/filesystem` writable (19 tasks edit existing files); `/.apps_data` only through Mail/Calendar/Chat. | D |
 | 2 | Baseline snapshot | Archipelago's `/data/snapshot` after population (world + task files), before the agent starts. (Archipelago's HF example uses the bare world zip as "before", so task input files would look agent-created; not copied.) | D |
-| 3 | Image | Base `dsh-bench-apex-agents-env:f8e41cb`: Archipelago's `environment/Dockerfile` at the pin, built unmodified (12.4 GB; no Mercor credentials needed). Our layer `benchmarks/apex-agents/Dockerfile`: `code_exec`'s package mirror (change 2) and ripgrep for DSH's `glob`/`grep`. | base built; layer todo |
+| 3 | Image | Base `dsh-bench-apex-agents-env:f8e41cb`: Archipelago's `environment/Dockerfile` at the pin, built unmodified (12.4 GB; no Mercor credentials needed). Our layer `benchmarks/apex-agents/Dockerfile`: `code_exec`'s package mirror (change 2) and ripgrep for DSH's `glob`/`grep`. | B, T (code_exec imports pandas 2.3.3 etc., node docx/pptxgenjs, LibreOffice Calc under the shim; no Writer/Impress in Archipelago's image) |
 | 3 | Agent packages | Archipelago's image as is: Python 3.13 with `code_exec`'s package set (pandas, openpyxl, python-docx, python-pptx, pymupdf, pdfplumber, ...), LibreOffice, Chromium, poppler. | D |
 | 3 | Resource limits | None (Archipelago sets none locally). | D |
 | 4 | Container network | None, except worlds 244 and 246: internet for EDGAR (sec.gov) and FMP. There `code_exec` and `bash` reach the internet too (as in Archipelago's example). | D |
@@ -103,7 +105,7 @@ Archipelago's code is used unmodified. These are the places where how we run it 
 | 6 | Skills | None. | D |
 | 7 | Budgets / model | `models/luna-cao.json` (GPT-5.6 Luna, effort high, the harness standard); 250 steps (paper); 3 h wall clock (Archipelago's default); a run that hits a limit counts as failed (paper). | D |
 | 8 | Ending / answer | `final_answer` (core). 422 tasks answer in the text ("message in console"); 58 create or edit a file (`expected_output`: make_new_doc 20, edit_existing_sheet 16, make_new_sheet 14, make_new_slide_deck 5, edit_existing_doc 2, edit_existing_slide_deck 1). | D |
-| 9 | Grader | Archipelago's grading runner, unchanged: `output_llm` per criterion, mean score per task; Pass@1 = all criteria met. Judge `gemini-3.8-flash` at low thinking via CAO (paper: Gemini 3 Flash, low; not on CAO). Grading target = the task's `expected_output` for every criterion (the released rubric has no per-criterion target). Document extraction local (no Reducto key), to be checked for errors on the gold files. Input: before/after snapshots + a trajectory file converted from DSH's session (first user message, final answer). | D |
+| 9 | Grader | (B, T: `grade.py`, `check_gold.py` 50/50 on gold outputs; LiteLLM needs `allowed_openai_params` to pass `reasoning_effort` for gemini-3.8-flash) Archipelago's grading runner, unchanged: `output_llm` per criterion, mean score per task; Pass@1 = all criteria met. Judge `gemini-3.8-flash` at low thinking via CAO (paper: Gemini 3 Flash, low; not on CAO). Grading target = the task's `expected_output` for every criterion (the released rubric has no per-criterion target). Document extraction local (no Reducto key), to be checked for errors on the gold files. Input: before/after snapshots + a trajectory file converted from DSH's session (first user message, final answer). | D |
 | 10 | Smoke / runs | 60 tasks (20 per job, seeded random) with Luna, then all 480 x 1; 20 tasks at a time (measured: about 1 GB per task container with all servers running; 24 cores, 185 GB free). | D |
 | 10 | Reference | Archipelago's own agent (`react_toolbelt_agent`, the paper's prompt and settings) with Luna on the same 60 tasks; the paper's leaderboard (other models) for context. | D |
-| 10 | Isolation tests | To do: `bash` and `fs-podman` cannot reach `/.apps_data` or `/app`; no network outside 244/246. | todo |
+| 10 | Isolation tests | `tests/test_fs_podman.py` (file tools refuse paths and symlinks outside the workspace) and `test_plumbing.py` (bash cannot reach `/.apps_data` or `/app`; world containers have no network unless 244/246). | T |
