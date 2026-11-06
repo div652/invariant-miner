@@ -38,3 +38,18 @@ so per-task differences are mostly run-to-run noise (SD ~0.13-0.15 per task).
 Run notes: all 20 agents completed (about 23 min wall clock at 10 parallel). One task's outputs were first collected
 wrongly by a launcher bug (U+2028 in the session log), fixed in c54bbd9 and re-collected with `--collect-only`; that
 task was graded separately (`grading-financial1/`).
+
+## train-20, Luna via CAO with the harness-wide c34 endpoint, 2026-11-06 (main 0ef95c2)
+
+Run `runs/jb-train20-c34ep-20261106T043323Z`: same tasks, judge (grok-4.6 high via the CAO shim) and rubrics as above;
+model `models/luna-cao.json` (CAO direct, reasoning summaries on, effort medium, 128K output) instead of the parity
+run's proxy at effort high with a 32K output cap.
+
+| | c34 endpoint (effort medium) | parity run (effort high) | reference harness |
+|---|---|---|---|
+| mean score/max | **0.238** | 0.325 | 0.307 |
+
+Paired with the parity run: -0.087, 95% CI [-0.167, -0.010], better/equal/worse 7/2/11. The agents did much less work:
+root steps median 15.5 vs 40, bash calls 208 vs 573, web_search + web_fetch 37 vs 139, 2-5 min per task vs about 6-15;
+every task still produced its deliverables. The drop is the endpoint setting (reasoning effort medium vs high), not
+the harness: harness and tasks are the same as the parity run.
