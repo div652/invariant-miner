@@ -194,10 +194,11 @@ def model_rows(model: dict) -> list[dict]:
                        ("retryPolicy", "retry_policy")):
         if field in model:
             provider[key] = model[field]
+    # dsh_rows: model-specific DSH settings beyond the provider (e.g. agent-loop maxTokensRetries for a 32K-capped model).
     return [
         {"id": "agent-default-model", "config": {"provider": model["provider"], "model": model["model"]}},
         {"id": "llm-pi-ai", "config": {"providers": {model["provider"]: provider}}},
-    ]
+    ] + list(model.get("dsh_rows", []))
 
 
 def build_run_rows(spec: dict, model: dict, workspace: Path) -> list[dict]:

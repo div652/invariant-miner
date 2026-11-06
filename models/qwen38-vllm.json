@@ -1,0 +1,28 @@
+{
+  "provider": "qwen38-vllm",
+  "display_name": "Qwen3.8-27B (local vLLM, thinking on)",
+  "model": "Qwen/Qwen3.8-27B",
+  "api": "openai-completions",
+  "base_url": "http://127.0.0.1:8000/v1",
+  "api_key_file": "~/.config/dsh-bench/endpoint.token",
+  "reasoning": "high",
+  "reasoning_efforts": {
+    "off": null,
+    "high": "high"
+  },
+  "context_window": 262144,
+  "max_tokens": 32768,
+  "compat": {
+    "thinkingFormat": "qwen-chat-template"
+  },
+  "stream_idle_timeout_ms": 1800000,
+  "dsh_rows": [
+    {
+      "id": "agent-loop",
+      "config": {
+        "agents": [],
+        "maxTokensRetries": 3
+      }
+    }
+  ]
+}

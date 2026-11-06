@@ -15,7 +15,11 @@ prompt is the task's `instructions`, verbatim, as Harvey's harness sends it. tas
 import argparse
 import hashlib
 import json
+import sys
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from dsh_bench.endpoints import ENDPOINTS, model_for  # noqa: E402
 
 HERE = Path(__file__).resolve().parent
 REPO = HERE.parents[1]
@@ -36,10 +40,12 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--tasks", required=True)
     parser.add_argument("--out", type=Path, required=True)
-    parser.add_argument("--model", default="{repo}/models/luna-cao.json")
+    parser.add_argument("--endpoint", choices=sorted(ENDPOINTS), help="model server (default: $DSH_BENCH_ENDPOINT, else cao)")
+    parser.add_argument("--model", help="a model file; overrides --endpoint's default model")
     parser.add_argument("--max-steps", type=int, default=200, help="Harvey's --max-turns default")
     parser.add_argument("--timeout-s", type=int, default=7200)
     args = parser.parse_args()
+    model = model_for(args.endpoint, args.model)
     if not (PREPARED / "system_prompt.md").exists():
         raise SystemExit("run benchmarks/harvey/setup.sh (or prepare.py) first")
     system_prompt = (PREPARED / "system_prompt.md").read_text()
@@ -60,7 +66,7 @@ def main() -> None:
             "prompt": task["instructions"],
             "system_prompt": system_prompt,
             "system_prompt_mode": "append",
-            "model": args.model,
+            "model": model,
             "stage": stage,
             "make_dirs": ["output"],
             "image": "dsh-bench-harvey",

@@ -11,7 +11,11 @@ temporary paths replaced by the workspace's.
 
 import argparse
 import json
+import sys
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from dsh_bench.endpoints import ENDPOINTS, model_for  # noqa: E402
 
 HERE = Path(__file__).resolve().parent
 
@@ -42,10 +46,12 @@ def main() -> None:
     parser.add_argument("--dataset", type=Path, required=True, help="JobBench dataset/<split> directory")
     parser.add_argument("--tasks", required=True, help='file of task ids, or "all"')
     parser.add_argument("--out", type=Path, required=True)
-    parser.add_argument("--model", default="{repo}/models/luna-cao.json")
+    parser.add_argument("--endpoint", choices=sorted(ENDPOINTS), help="model server (default: $DSH_BENCH_ENDPOINT, else cao)")
+    parser.add_argument("--model", help="a model file; overrides --endpoint's default model")
     parser.add_argument("--timeout-s", type=int, default=7200)
     parser.add_argument("--network", default="pasta", help='container network ("none" turns bash networking off)')
     args = parser.parse_args()
+    model = model_for(args.endpoint, args.model)
 
     dataset = args.dataset.expanduser().resolve()
     if args.tasks == "all":
@@ -60,7 +66,7 @@ def main() -> None:
         spec = {
             "task_id": task_id,
             "prompt": PROMPT,
-            "model": args.model,
+            "model": model,
             "stage": [{"from": str(folder), "to": "task_folder", "readonly": False}],
             "make_dirs": ["output"],
             "image": "dsh-bench-jobbench",
