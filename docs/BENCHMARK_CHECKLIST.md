@@ -58,6 +58,12 @@ benchmark teaches us a new kind of check, add it here so the next benchmark gets
       benchmark's own harness (its bash/read/write/...) are replaced by DSH's; only environment tools (domain APIs,
       simulated systems, MCP servers) are added. Map each benchmark harness tool to its DSH counterpart and note
       behaviour differences (path resolution, defaults, what it returns).
+- [ ] **A tool the benchmark defines as part of its world stays, even if DSH has the same tool.** Decide by where the
+      tool comes from, not by what it does: tools of the harness the benchmark ships separately (its agent loop, its
+      bash/read/write, its todo or answer tool) are replaced by DSH's; tools the benchmark lists as part of the task
+      environment (an app or service of the world) are kept as they are, next to DSH's own. Example: APEX-Agents lists
+      Filesystem and Code Execution among each world's 9 apps, so they stay although DSH's `read`/`read_image`/`glob`
+      and `bash` duplicate them.
 - [ ] **Document formats**: DSH's `read` is UTF-8 text only. If inputs are .docx/.pdf/.xlsx/.pptx, decide how the
       agent reads them (converters in the image via bash, or a document-reading plugin) and say so in the prompt.
 - [ ] **Benchmark tools served over MCP**: transport (stdio / streamable HTTP), URL or command, auth, timeout. One
