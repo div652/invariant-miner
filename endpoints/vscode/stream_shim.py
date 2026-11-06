@@ -38,6 +38,9 @@ def main() -> None:
             request = json.loads(body)
             request.pop("stream_options", None)
             request["stream"] = False
+            # pi-ai sends a flat `reasoning_effort`; the extension reads the nested `reasoning: {effort}` form.
+            if "reasoning_effort" in request and "reasoning" not in request:
+                request["reasoning"] = {"effort": request["reasoning_effort"]}
             body = json.dumps(request).encode()
             headers["Content-Type"] = "application/json"
         return headers, body

@@ -1,7 +1,7 @@
 {
   "provider": "qwen38-vllm",
-  "display_name": "Qwen3.8-27B (local vLLM, thinking on)",
-  "model": "Qwen/Qwen3.8-27B",
+  "display_name": "Qwen3.8-27B FP8 (local vLLM, thinking on)",
+  "model": "Qwen/Qwen3.8-27B-FP8",
   "api": "openai-completions",
   "base_url": "http://127.0.0.1:8000/v1",
   "api_key_file": "~/.config/dsh-bench/endpoint.token",

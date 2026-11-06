@@ -95,7 +95,8 @@ def main() -> int:
         ("tool call ran (bash result sent upstream)", any("391" in json.dumps(b["messages"]) and
                                                           any(m.get("role") == "tool" for m in b["messages"]) for b in seen)),
         ("every upstream request had stream false", seen and all(b.get("stream") is False for b in seen)),
-        ("reasoning effort forwarded", seen and all(b.get("reasoning_effort") == "high" for b in seen)),
+        ("reasoning effort forwarded (flat and nested)", seen and all(b.get("reasoning_effort") == "high"
+                                                               and b.get("reasoning") == {"effort": "high"} for b in seen)),
     ]
     for name, ok in checks:
         print(f"{'PASS' if ok else 'FAIL'}  {name}")

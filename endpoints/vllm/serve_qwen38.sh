@@ -4,7 +4,8 @@
 # reasoning effort as a default kwarg), with the shared local endpoint token as the API key.
 #   (cd endpoints/vllm && uv sync)        # once: vllm==0.30.0 (agentic-evolution's pin)
 #   endpoints/vllm/serve_qwen38.sh         # foreground; run it in tmux
-# Env: MODEL_ID (default Qwen/Qwen3.8-27B; Qwen/Qwen3.8-27B-FP8 fits a shared 80 GB GPU), MODEL_PATH (a local
+# Env: MODEL_ID (default Qwen/Qwen3.8-27B-FP8, the served name models/qwen38-vllm.json uses; Qwen/Qwen3.8-27B is
+# the BF16 checkpoint, agentic-evolution's default: serve it with a model file naming it), MODEL_PATH (a local
 # snapshot; default: the HF cache), PORT (8000), MAX_MODEL_LEN (262144: models/qwen38-vllm.json's context window),
 # GPU_MEMORY_UTILIZATION (0.90; lower it on a shared GPU), REASONING_EFFORT (xhigh|medium|low, the template's levels),
 # TENSOR_PARALLEL_SIZE (all visible GPUs), MAX_NUM_SEQS.
@@ -12,7 +13,7 @@ set -euo pipefail
 HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 VLLM="${VLLM:-$HERE/.venv/bin/vllm}"
 [[ -x "$VLLM" ]] || { echo "no vllm at $VLLM: (cd $HERE && uv sync)" >&2; exit 1; }
-MODEL_ID="${MODEL_ID:-Qwen/Qwen3.8-27B}"
+MODEL_ID="${MODEL_ID:-Qwen/Qwen3.8-27B-FP8}"
 MODEL_PATH="${MODEL_PATH:-$MODEL_ID}"
 REASONING_EFFORT="${REASONING_EFFORT:-xhigh}"
 case "$REASONING_EFFORT" in xhigh | medium | low) ;; *) echo "REASONING_EFFORT: xhigh, medium or low" >&2; exit 2 ;; esac
