@@ -3,8 +3,11 @@
 //
 // The counterpart of sandbox-podman (which runs commands in the container): with both, every DSH tool sees the same
 // files under the same paths. Modelled on DSH's own remote backend `@deepseek-ai/dsh-fs-e2b`; every operation is a
-// `podman exec` (coreutils: realpath, stat, cat, head, dd, find, mktemp, ln, mv) in the container. Replaces the
-// profile's `fs-sandbox` row.
+// shell script in the container (coreutils: realpath, stat, cat, head, dd, find, mktemp, ln, mv). Scripts go through
+// one long-lived helper process in the container (`podman exec -i <container> python3`, started on first use), which
+// runs each as a subprocess: a few milliseconds per operation instead of a `podman exec` each (~0.4 s; DSH probes
+// AGENTS.md/CLAUDE.md/.git through ctx.fs before every step). Without python3 in the image, each operation falls back
+// to its own `podman exec`. Replaces the profile's `fs-sandbox` row.
 //
 // Containment is fixed, not a policy choice: every path is resolved inside the container (symlinks followed) and must
 // lie under `root`, else `FS_SANDBOX_DENIED` with fs-sandbox's own wording for workspace-isolated mode. The
@@ -35,6 +38,92 @@ const { FileSystem, FsError, FsTargetKey, FsVersion } = await import(pathToFileU
 export const name = 'fs-podman'
 
 const BINARY_SAMPLE_BYTES = 8192
+
+// The in-container helper: reads framed requests (4-byte length + JSON {shell, script, args}, 4-byte length + stdin
+// bytes), runs `shell -c script shell args...`, writes framed replies (4-byte length + JSON {code, stderr}, 4-byte
+// length + stdout bytes), strictly in order.
+const HELPER_PY = `import json, struct, subprocess, sys
+r, w = sys.stdin.buffer, sys.stdout.buffer
+def take(n):
+    b = b""
+    while len(b) < n:
+        c = r.read(n - len(b))
+        if not c:
+            sys.exit(0)
+        b += c
+    return b
+while True:
+    req = json.loads(take(struct.unpack(">I", take(4))[0]))
+    data = take(struct.unpack(">I", take(4))[0])
+    try:
+        p = subprocess.run([req["shell"], "-c", req["script"], req["shell"], *req["args"]], input=data, capture_output=True)
+        code, out, err = p.returncode, p.stdout, p.stderr
+    except Exception as e:
+        code, out, err = 127, b"", str(e).encode()
+    h = json.dumps({"code": code, "stderr": err.decode("utf-8", "replace")}).encode()
+    w.write(struct.pack(">I", len(h)) + h + struct.pack(">I", len(out)) + out)
+    w.flush()
+`
+
+/** One long-lived helper process in the container; requests are answered in order. */
+class ExecChannel {
+  constructor(runtime, container) {
+    this.runtime = runtime
+    this.container = container
+    this.child = undefined
+    this.pending = []
+    this.buffer = Buffer.alloc(0)
+    this.failed = false
+  }
+
+  start() {
+    const child = spawn(this.runtime, ['exec', '-i', this.container, 'python3', '-u', '-c', HELPER_PY],
+      { stdio: ['pipe', 'pipe', 'pipe'] })
+    this.child = child
+    this.buffer = Buffer.alloc(0)
+    child.stdout.on('data', chunk => {
+      this.buffer = Buffer.concat([this.buffer, chunk])
+      this.drain()
+    })
+    child.stderr.resume()
+    child.stdin.on('error', () => {})
+    child.on('close', () => {
+      if (this.child === child) this.child = undefined
+      const stranded = this.pending.splice(0)
+      for (const request of stranded) request.reject(new Error('fs-podman: helper process exited'))
+    })
+  }
+
+  drain() {
+    while (this.pending.length > 0) {
+      if (this.buffer.length < 4) return
+      const headerLength = this.buffer.readUInt32BE(0)
+      if (this.buffer.length < 8 + headerLength) return
+      const outLength = this.buffer.readUInt32BE(4 + headerLength)
+      const total = 8 + headerLength + outLength
+      if (this.buffer.length < total) return
+      const header = JSON.parse(this.buffer.subarray(4, 4 + headerLength).toString('utf8'))
+      const stdout = Buffer.from(this.buffer.subarray(8 + headerLength, total))
+      this.buffer = this.buffer.subarray(total)
+      this.pending.shift().resolve({ code: header.code, stdout, stderr: header.stderr })
+    }
+  }
+
+  request(shell, script, args, input) {
+    if (this.child === undefined) this.start()
+    return new Promise((resolvePromise, reject) => {
+      this.pending.push({ resolve: resolvePromise, reject })
+      const header = Buffer.from(JSON.stringify({ shell, script, args: args.map(String) }), 'utf8')
+      const data = input ?? Buffer.alloc(0)
+      const frame = Buffer.alloc(8 + header.length + data.length)
+      frame.writeUInt32BE(header.length, 0)
+      header.copy(frame, 4)
+      frame.writeUInt32BE(data.length, 4 + header.length)
+      data.copy(frame, 8 + header.length)
+      this.child.stdin.write(frame)
+    })
+  }
+}
 const STAT_FORMAT = '%F\t%s\t%.9Y\t%.9Z\t%i\t%d\t%a'
 
 function assertNotAborted(signal, operation) {
@@ -122,6 +211,7 @@ export default class PodmanFileSystem extends FileSystem {
     }
     this.locks = new Map()
     this.canonicalRoot = undefined
+    this.channel = new ExecChannel(this.settings.runtime, this.settings.container)
   }
 
   /** The deployment default mode, as fs-sandbox reports it (the tools advertise escalation fields from it). */
@@ -138,8 +228,21 @@ export default class PodmanFileSystem extends FileSystem {
     return spawn(runtime, argv, { stdio: [input === undefined ? 'ignore' : 'pipe', 'pipe', 'pipe'] })
   }
 
-  /** Run a script to completion: { code, stdout (Buffer), stderr (string) }. */
-  run(script, args, { input, shell, signal } = {}) {
+  /** Run a script to completion: { code, stdout (Buffer), stderr (string) }; through the helper when it works. */
+  async run(script, args, { input, shell = 'sh', signal } = {}) {
+    if (!this.channel.failed) {
+      try {
+        return await this.channel.request(shell, script, args, input)
+      } catch (_helperExited) {
+        // The helper could not start (no python3) or its container connection broke: use one exec per operation.
+      }
+      this.channel.failed = true
+    }
+    return this.runDirect(script, args, { input, shell, signal })
+  }
+
+  /** One `podman exec` for one script. */
+  runDirect(script, args, { input, shell, signal } = {}) {
     return new Promise((resolvePromise, reject) => {
       const child = this.spawnIn(script, args, { input, shell })
       const out = []

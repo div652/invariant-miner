@@ -14,13 +14,14 @@ This repo holds what goes on top of it:
 
 ```
 upstream deepseek-ai/deepseek-harness @ c389f96          the harness
-  + patches/deepseek-harness/   7 patches (see below)    -> built into work/deepseek-harness by setup.sh
+  + patches/deepseek-harness/   8 patches (see below)    -> built into work/deepseek-harness by setup.sh
   + harness/core.patch.yml      the harness configuration used for every run: which DSH plugins are on or off,
                                 the isolation settings, and our three plugins
   + plugins/                    our DSH plugins: sandbox-podman (commands run in the task container),
                                 benchmark-limits (steps / timeout / temperature), final-answer (final_answer tool),
                                 skills (a benchmark's skills), toolbelt (optional: managed tools start hidden and
-                                the agent adds them with toolbelt_* meta-tools; spec key `toolbelt`)
+                                the agent adds them with toolbelt_* meta-tools; spec key `toolbelt`), fs-podman
+                                (DSH's file tools inside a running container: launcher spec key `attach`)
   + images/base/                the minimal container image bash runs in
 dsh_bench/launch.py             the runner AROUND DSH (not the harness): stage the workspace, start the container,
                                 run DSH with the patch files, collect the outputs
@@ -35,7 +36,7 @@ previous: `harness/core.patch.yml` (same for every run) -> the run's generated `
 benchmark's system prompt, disabled rows, MCP servers) -> the benchmark's `benchmarks/<name>/*.yml`. A run directory
 keeps its `run.patch.yml`, and `run.json` records every patch file with its sha256.
 
-**The 7 DSH patches** (from `agentic-evolution`, so the build is the one their results came from):
+**The 8 DSH patches** (0001-0007 from `agentic-evolution`, so the build is the one their results came from; 0008 ours):
 
 | Patch | Kind | Used here |
 |---|---|---|
@@ -46,6 +47,7 @@ keeps its `run.patch.yml`, and `run.json` records every patch file with its sha2
 | 0005 README: clone URL | docs | no runtime effect |
 | 0006 `DSH_SANDBOX_DISABLE_RUNNERS` | code | no: the local sandbox it configures is replaced by `sandbox-podman` |
 | 0007 `maxTokensRetries` | code | off by default (0) |
+| 0008 `DSH_HEADLESS_SESSION_CWD` | code | only in launcher attach mode: the session cwd is a path in the container (it does not exist on the host); unset, the process cwd as before |
 
 None changes behaviour for one benchmark only; 0004 mentions JobBench in README text.
 
@@ -75,6 +77,7 @@ python3 tests/test_isolation.py   # DSH + sandbox-podman + a scripted model (tes
 python3 tests/test_launch.py      # the launcher end to end with the scripted model: the four standard outputs
 python3 tests/test_vscode_shim.py # the VS Code endpoint shim against a fake GH Copilot Server extension
 python3 tests/test_toolbelt.py   # plugins/toolbelt with the scripted model and a stdio MCP server (tests/mcp_demo_server.py)
+python3 tests/test_fs_podman.py  # launcher attach mode: file tools (fs-podman) and bash in a container-only workspace; escapes denied
 ```
 
 ## Setup
@@ -84,7 +87,7 @@ key files for the endpoints you use (CAO, the JobBench Exa relay), your TRAPI in
 judge script. Nothing in this repository points at anyone's credentials.
 
 ```bash
-./setup.sh          # clones DSH @ c389f96, applies patches/deepseek-harness (7), builds it; builds the dsh-bench-base image
+./setup.sh          # clones DSH @ c389f96, applies patches/deepseek-harness (8), builds it; builds the dsh-bench-base image
 ```
 
 Needs Linux, git, node >= 22.19 with corepack, and rootless podman (or `RUNTIME=docker`).

@@ -6,7 +6,7 @@ One DeepSeek Harness (DSH) setup that runs any benchmark. Each benchmark adds a 
 
 | Decision | Choice | Why |
 |---|---|---|
-| DSH build | `deepseek-ai/deepseek-harness` @ `c389f96` + the 7 patches of `agentic-evolution` (`patches/deepseek-harness/`), `headless` profile | The build that ran JobBench in `agentic-evolution`; our Luna run on it matched their score (0.388 vs 0.393 macro, 65 tasks). |
+| DSH build | `deepseek-ai/deepseek-harness` @ `c389f96` + the 7 patches of `agentic-evolution` + our 0008 (`patches/deepseek-harness/`), `headless` profile | The build that ran JobBench in `agentic-evolution`; our Luna run on it matched their score (0.388 vs 0.393 macro, 65 tasks). |
 | Where things run | **Agent loop on the host, tools in a container** | Model calls, credentials and session logs stay on the host, out of the agent's reach; the container can run with no network. DSH's tools stay native. |
 | Container runtime | rootless podman (configurable) | Same as Harvey LAB's sandbox; no daemon, runs as the host user. |
 | Default image | `images/base`: minimal (Python + bash + coreutils + ripgrep) | Each benchmark adds only what it expects, in its own layer. |
@@ -62,6 +62,7 @@ cannot work, the fallback of running DSH inside the container.
 | `plugins/final-answer` | A `final_answer` tool that records the answer and ends the turn. |
 | `plugins/benchmark-limits` | Step limit, wall-clock timeout, temperature (from `agentic-evolution`'s `benchmark-limits.mjs`). |
 | `plugins/toolbelt` | **Optional** (spec key `toolbelt`, off by default). Managed tools (default: every MCP tool) are not offered to the model until the agent adds them with `toolbelt_list_tools` / `toolbelt_inspect_tool` / `toolbelt_add_tool` / `toolbelt_remove_tool` (at most 80). A port of the toolbelt of Archipelago's `react_toolbelt_agent`: same tool names, descriptions, result and error texts. Hides tools in the `system-prompt/assemble` waterfall (DSH rebuilds the tool list before every step) and denies calls to hidden tools in `tools/pre-execute`. One toolbelt per agent. Tested by `tests/test_toolbelt.py`. |
+| `plugins/fs-podman` + launcher `attach` | **Optional** (spec key `attach`). For a benchmark whose environment is its own running container with the files at a path that exists only there (e.g. `/filesystem`): the launcher does not stage or start a container; DSH's session cwd is that path (DSH patch 0008), commands run there (`sandbox-podman`, `hostCwd`), and `fs-podman` replaces `fs-sandbox` so `read`/`write`/`edit`/`read_image` work there too. Containment is fixed to that path (symlinks resolved in the container). Operations go through one helper process in the container (python3; else one `podman exec` each). Tested by `tests/test_fs_podman.py`. |
 | MCP bridge | Serves benchmark tools that are plain functions or REST APIs as an MCP server. |
 | launcher | Steps 1-6 above. |
 | `images/base` | The minimal default container image. |
