@@ -1,7 +1,10 @@
 """Compare a dsh-bench Harvey run with C0 (Harvey's own harness as `harness_lab`, AHE campaigns, GPT-5.6 Luna, judge
 gpt-5.6-sol high, helper claude-sonnet-5, all via CAO), task by task.
 
-    python3 benchmarks/harvey/compare_c0.py RUN_DIR [--artifacts ~/AHE_Harvey_cao/harvey-ahe-project/campaign-artifacts]
+    python3 benchmarks/harvey/compare_c0.py RUN_DIR [RUN_DIR ...] [--out DIR] [--artifacts ...campaign-artifacts]
+
+Several RUN_DIRs: our per-task value is the mean over the runs that graded the task (e.g. 3 runs vs C0's 3).
+Results go to --out (default: the first RUN_DIR's grading/), as compare_c0.json and compare_c0.txt.
 
 C0 trials: campaign 34 (the reference Luna run, reasoning summaries on: 100 firm-knowledge tasks x 3 trials) by default;
 --with-c23-c24 adds the older runs without summaries. Per task, C0 is the mean over its trials; the comparison is
@@ -45,18 +48,24 @@ def c0_trials(artifacts: Path, evaluations: list[tuple[str, str]] = C34) -> dict
 
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("run_dir", type=Path)
+    parser.add_argument("run_dirs", type=Path, nargs="+")
+    parser.add_argument("--out", type=Path)
     parser.add_argument("--artifacts", type=Path,
                         default=Path("~/AHE_Harvey_cao/harvey-ahe-project/campaign-artifacts").expanduser())
     parser.add_argument("--with-c23-c24", action="store_true", help="also use the c23/c24 C0 runs (no summaries)")
     args = parser.parse_args()
-    ours = {r["task"]: r for r in json.loads((args.run_dir / "grading/scores.json").read_text())["tasks"]}
+    graded: dict[str, list[dict]] = defaultdict(list)
+    for run_dir in args.run_dirs:
+        for r in json.loads((run_dir / "grading/scores.json").read_text())["tasks"]:
+            graded[r["task"]].append(r)
+    ours = {task: {"all_pass": st.mean(r["all_pass"] for r in rs), "criterion_pass_rate": st.mean(r["criterion_pass_rate"] for r in rs),
+                   "runs": len(rs)} for task, rs in graded.items()}
     c0 = c0_trials(args.artifacts, C34 + (C23_C24 if args.with_c23_c24 else []))
     common = sorted(set(ours) & set(c0))
     rows = []
     for task in common:
         trials = c0[task]
-        rows.append({"task": task, "ours_all_pass": float(ours[task]["all_pass"]),
+        rows.append({"task": task, "ours_runs": ours[task]["runs"], "ours_all_pass": float(ours[task]["all_pass"]),
                      "ours_criterion": ours[task]["criterion_pass_rate"],
                      "c0_all_pass": st.mean(t["all_pass"] for t in trials), "c0_criterion": st.mean(t["score"] for t in trials),
                      "c0_trials": len(trials)})
@@ -70,13 +79,17 @@ def main() -> None:
                 f"{st.mean(diffs):+.3f}, 95% CI [{boots[250]:+.3f}, {boots[9750]:+.3f}], "
                 f"better/equal/worse {better}/{len(diffs) - better - worse}/{worse}")
 
-    lines = [f"tasks graded by us: {len(ours)}; with C0 trials: {len(common)} "
+    lines = [f"our runs: {len(args.run_dirs)}; tasks graded by us: {len(ours)} (runs per task: "
+             f"{dict(sorted(Counter(r['ours_runs'] for r in rows).items()))} on the common tasks); with C0 trials: {len(common)} "
              f"(C0 trials per task: {dict(sorted(Counter(r['c0_trials'] for r in rows).items()))})"]
     lines.append("all-pass:        " + paired("ours_all_pass", "c0_all_pass"))
     lines.append("criterion pass:  " + paired("ours_criterion", "c0_criterion"))
     text = "\n".join(lines)
-    (args.run_dir / "grading/compare_c0.json").write_text(json.dumps({"summary": lines, "tasks": rows}, indent=2) + "\n")
-    (args.run_dir / "grading/compare_c0.txt").write_text(text + "\n")
+    out = args.out or args.run_dirs[0] / "grading"
+    out.mkdir(parents=True, exist_ok=True)
+    (out / "compare_c0.json").write_text(json.dumps({"runs": [str(r) for r in args.run_dirs], "summary": lines,
+                                                     "tasks": rows}, indent=2) + "\n")
+    (out / "compare_c0.txt").write_text(text + "\n")
     print(text)
 
 
