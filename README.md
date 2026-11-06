@@ -76,6 +76,10 @@ python3 tests/test_vscode_shim.py # the VS Code endpoint shim against a fake GH 
 
 ## Setup
 
+**Your own credentials:** copy `local.env.example` to `~/.config/dsh-bench/local.env` (chmod 600) and fill it in:
+key files for the endpoints you use (CAO, the JobBench Exa relay), your TRAPI instance and Azure CLI config, your
+judge script. Nothing in this repository points at anyone's credentials.
+
 ```bash
 ./setup.sh          # clones DSH @ c389f96, applies patches/deepseek-harness (7), builds it; builds the dsh-bench-base image
 ```

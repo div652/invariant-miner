@@ -4,7 +4,7 @@
   "model": "gpt-5.6-luna",
   "api": "openai-responses",
   "base_url": "http://127.0.0.1:4141/v1",
-  "api_key_file": "~/cao/profile/.gateway-key",
+  "api_key_file": "$DSH_BENCH_CAO_KEY_FILE",
   "reasoning": "high",
   "reasoning_efforts": {
     "low": "low",

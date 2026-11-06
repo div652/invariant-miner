@@ -13,6 +13,7 @@ paired over tasks both sides graded.
 
 import argparse
 import json
+import sys
 import random
 import statistics as st
 from collections import Counter, defaultdict
@@ -50,10 +51,13 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("run_dirs", type=Path, nargs="+")
     parser.add_argument("--out", type=Path)
-    parser.add_argument("--artifacts", type=Path,
-                        default=Path("~/AHE_Harvey_cao/harvey-ahe-project/campaign-artifacts").expanduser())
+    parser.add_argument("--artifacts", type=Path, help="AHE campaign-artifacts dir (default: $DSH_BENCH_C0_ARTIFACTS)")
     parser.add_argument("--with-c23-c24", action="store_true", help="also use the c23/c24 C0 runs (no summaries)")
     args = parser.parse_args()
+    if args.artifacts is None:
+        sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+        from dsh_bench.endpoints import setting_path
+        args.artifacts = Path(setting_path("$DSH_BENCH_C0_ARTIFACTS"))
     graded: dict[str, list[dict]] = defaultdict(list)
     for run_dir in args.run_dirs:
         for r in json.loads((run_dir / "grading/scores.json").read_text())["tasks"]:

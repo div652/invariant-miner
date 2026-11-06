@@ -5,9 +5,9 @@ token (az CLI, the SC-ALT account), then streams TRAPI's response back unchanged
 
 Why a proxy: DSH sends a fixed API key, TRAPI tokens live ~1.5 h and must be refreshed (trapi-model-access skill).
 The Entra token is fetched with `az account get-access-token --scope api://trapi/.default` under
-AZURE_CONFIG_DIR (default ~/.azure-scalt, the account with TRAPI access) and reused until 5 minutes before expiry.
-It is never printed or logged. TRAPI_BASE_URL (the instance's .../openai/v1 URL) comes from the environment or
-~/.config/dsh-bench/trapi.env; it is not stored in this repository.
+AZURE_CONFIG_DIR (your account with TRAPI access; az's default ~/.azure when unset) and reused until 5 minutes
+before expiry. It is never printed or logged. TRAPI_BASE_URL (your instance's .../openai/v1 URL) and AZURE_CONFIG_DIR
+come from the environment or ~/.config/dsh-bench/local.env; neither is stored in this repository.
 """
 
 import argparse
@@ -44,7 +44,7 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--port", type=int, default=int(os.environ.get("DSH_BENCH_TRAPI_PORT", 8031)))
     parser.add_argument("--base-url", default=os.environ.get("TRAPI_BASE_URL"))
-    parser.add_argument("--azure-config-dir", default=os.environ.get("AZURE_CONFIG_DIR", "~/.azure-scalt"))
+    parser.add_argument("--azure-config-dir", default=os.environ.get("AZURE_CONFIG_DIR", "~/.azure"))
     parser.add_argument("--log-bodies", type=Path)
     args = parser.parse_args()
     if not args.base_url:

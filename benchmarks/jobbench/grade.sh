@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-# Grade a dsh-bench JobBench run with JobBench's own judge (job-bench-eval eval/run_judge.sh, through
-# ~/jobbench-cao/judge_parallel.sh: grok-4.6 via the CAO judge shim on :8019 by default).
+# Grade a dsh-bench JobBench run with JobBench's own judge (job-bench-eval eval/run_judge.sh, through the
+# judge_parallel.sh named by JOBBENCH_JUDGE_PARALLEL in ~/.config/dsh-bench/local.env; it carries the judge endpoint).
 #
 #   benchmarks/jobbench/grade.sh RUN_DIR [DATASET=~/job-bench-eval/dataset/main] [NGROUPS=2] [PER_GROUP=9]
 #
@@ -12,6 +12,8 @@
 #      agentic-evolution's attribution/jobbench_rubric_variants/task-instruction-aligned-v1/main), JUDGE_RESULTS_DIR.
 # The final line is over every task of the run: a task with no judge report (no deliverables) counts as 0.
 set -euo pipefail
+[[ -f "$HOME/.config/dsh-bench/local.env" ]] && set -a && source "$HOME/.config/dsh-bench/local.env" && set +a
+: "${JOBBENCH_JUDGE_PARALLEL:?set JOBBENCH_JUDGE_PARALLEL in ~/.config/dsh-bench/local.env (template: local.env.example)}"
 RUN="$(cd "$1" && pwd)"; DATASET="$(cd "${2:-$HOME/job-bench-eval/dataset/main}" && pwd)"
 [[ "$(realpath -m "${GRADING_DIR:-$RUN/grading}")" != "$RUN/tasks/"* ]] || { echo "GRADING_DIR must not be inside a task dir" >&2; exit 1; }
 NGROUPS="${3:-2}"; PER_GROUP="${4:-9}"
@@ -37,7 +39,7 @@ for task in "$RUN"/tasks/*/; do
      && find . -type f -exec cp --no-dereference "{}" "$dest/model_output/$LABEL/{}" \;)
 done
 echo "[grade] $(ls -d "$G"/dataset/main/*/task* | wc -l) tasks staged, label $LABEL"
-/home/agarwaldi/jobbench-cao/judge_parallel.sh "$G" "$LABEL" "$NGROUPS" "$PER_GROUP" | tee "$G/scores.txt"
+"$JOBBENCH_JUDGE_PARALLEL" "$G" "$LABEL" "$NGROUPS" "$PER_GROUP" | tee "$G/scores.txt"
 python3 - "$G/dataset/main" "$LABEL" "${JUDGE_RESULTS_DIR:-eval_result_grok-4-6-high-cao}" <<'PY' | tee -a "$G/scores.txt"
 import glob, json, os, sys
 main, label, results = sys.argv[1:]

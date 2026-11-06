@@ -12,6 +12,29 @@ from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[1]
 TOKEN_FILE = Path("~/.config/dsh-bench/endpoint.token").expanduser()
+LOCAL_ENV = Path("~/.config/dsh-bench/local.env").expanduser()
+
+
+def load_local_env() -> None:
+    """Read ~/.config/dsh-bench/local.env (KEY=VALUE lines, see local.env.example); the environment wins."""
+    if not LOCAL_ENV.exists():
+        return
+    for line in LOCAL_ENV.read_text().splitlines():
+        line = line.strip()
+        if line and not line.startswith("#") and "=" in line:
+            key, _, value = line.partition("=")
+            value = value.strip().strip('"').strip("'")
+            if value:  # $VARS and ~ expand as in a shell (local.env is also sourced by bash scripts)
+                os.environ.setdefault(key.strip(), os.path.expanduser(os.path.expandvars(value)))
+
+
+def setting_path(value: str) -> str:
+    """Expand $VARS and ~ in a credential path; refuse a variable that is not set (fill in local.env)."""
+    load_local_env()
+    expanded = os.path.expanduser(os.path.expandvars(value))
+    if "$" in expanded:
+        raise SystemExit(f"{value}: set the variable in {LOCAL_ENV} (template: local.env.example)")
+    return expanded
 
 ENDPOINTS = {
     "cao": {"model": "luna-cao", "start": None,

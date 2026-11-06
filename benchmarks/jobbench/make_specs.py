@@ -75,7 +75,7 @@ def main() -> None:
             "limits": {"max_steps": None, "timeout_s": args.timeout_s, "temperature": None},
             "extra_patches": [str(HERE / "patch.yml")],
             "dsh_env": {"DSH_JOBBENCH_EXA_BASE_URL": "http://127.0.0.1:8010"},
-            "dsh_env_files": {"EXA_API_KEY": "~/.config/evolve_agents/model_serve_local.token"},
+            "dsh_env_files": {"EXA_API_KEY": "$DSH_BENCH_EXA_KEY_FILE"},
             "meta": {"benchmark": "jobbench", "dataset": str(dataset)},
         }
         (args.out / (task_id.replace("/", "__") + ".json")).write_text(json.dumps(spec, indent=2) + "\n")

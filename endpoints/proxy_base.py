@@ -26,7 +26,7 @@ class Upstream:
         parts = urlsplit(base_url.rstrip("/"))
         self.https = parts.scheme == "https"
         self.host, self.port = parts.hostname, parts.port or (443 if self.https else 80)
-        self.base_path = parts.path  # e.g. /redmond/interactive/openai/v1 or /v1
+        self.base_path = parts.path  # e.g. /<instance>/openai/v1 or /v1
         self.timeout = timeout
 
     def connect(self) -> http.client.HTTPConnection:

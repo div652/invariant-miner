@@ -2,7 +2,7 @@
 
 Fails if a core file (everything outside benchmarks/, docs/, patches/, work/, runs/, and not a README.md) mentions the name of a directory
 in benchmarks/. Names are matched case-insensitively, ignoring "-", "_" and spaces (so "MyBench", "my-bench" and
-"my_bench" all match a directory "mybench"). docs/ and README.md files may name benchmarks (as references and examples); patches/ is the upstream
+"my_bench" all match a directory "mybench"). docs/, README.md files and the per-user settings template local.env.example may name benchmarks; patches/ is the upstream
 DSH patch series.
 
     python3 tests/test_layout.py
@@ -14,7 +14,7 @@ import sys
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[1]
-NOT_CORE = {"benchmarks", "docs", "patches", "work", "runs", ".git", "README.md"}
+NOT_CORE = {"benchmarks", "docs", "patches", "work", "runs", ".git", "README.md", "local.env.example"}
 
 
 def main() -> int:

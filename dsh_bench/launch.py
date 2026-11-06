@@ -34,6 +34,8 @@ from datetime import UTC, datetime
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(REPO))
+from dsh_bench.endpoints import setting_path  # noqa: E402
 DSH = Path(os.environ.get("DSH_BENCH_DSH_ROOT", REPO / "work/deepseek-harness"))
 CORE_PATCH = REPO / "harness/core.patch.yml"
 HEADLESS_PREFIX = "You are a coding agent powered by the {{model}} model."
@@ -352,7 +354,7 @@ def main() -> int:
 
     key = ""
     if "api_key_file" in model:
-        key = Path(os.path.expanduser(model["api_key_file"])).read_text().strip()
+        key = Path(setting_path(model["api_key_file"])).read_text().strip()
     elif "api_key_env" in model:
         key = os.environ[model["api_key_env"]]
     env = os.environ | {"DSH_HOME": str(home), "DSH_PERMISSION_MODE": "workspace-isolated", "DSH_TELEMETRY_DISABLED": "1",
@@ -360,7 +362,7 @@ def main() -> int:
     env |= core_env(spec, out, workspace, container)
     record["core_env"] = {k: v for k, v in env.items() if k.startswith("DSH_BENCH_") and k != "DSH_BENCH_MODEL_KEY"}
     for name, file in spec["dsh_env_files"].items():
-        env[name] = Path(os.path.expanduser(file)).read_text().strip()
+        env[name] = Path(setting_path(file)).read_text().strip()
     prompt = spec["prompt"].replace("{workspace}", str(workspace))
     (out / "prompt.txt").write_text(prompt)
     argv = [args.node, str(DSH / "apps/cli/lib/bin.js"), "--profile", "headless"]

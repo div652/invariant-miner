@@ -64,7 +64,9 @@ def main() -> int:
     (lab_root / "results").mkdir(parents=True, exist_ok=True)
     if not (lab_root / "tasks").exists():
         (lab_root / "tasks").symlink_to(LAB / "tasks")
-    key = Path("~/cao/profile/.gateway-key").expanduser().read_text().strip()
+    sys.path.insert(0, str(REPO))
+    from dsh_bench.endpoints import setting_path
+    key = Path(setting_path("$DSH_BENCH_CAO_KEY_FILE")).read_text().strip()
     os.environ.update(LAB_ROOT=str(lab_root), OPENAI_BASE_URL=f"{CAO}/v1", OPENAI_API_KEY=key,
                       ANTHROPIC_BASE_URL=CAO, ANTHROPIC_API_KEY=key)
 
