@@ -317,6 +317,11 @@ def main() -> int:
     if args.collect_only:
         return collect_only(args.out.resolve())
 
+    version = subprocess.run([args.node, "--version"], capture_output=True, text=True).stdout.strip().lstrip("v")
+    major, minor = (int(x) for x in (version.split(".") + ["0", "0"])[:2]) if version else (0, 0)
+    if not ((major == 22 and minor >= 19) or major >= 24):
+        raise SystemExit(f"node {version or '?'} at {args.node}: DSH needs node ^22.19 or >= 24 (set NODE or --node)")
+
     spec = load_spec(args.spec)
     model = json.loads(Path(spec["model"]).read_text())
     out = args.out.resolve()

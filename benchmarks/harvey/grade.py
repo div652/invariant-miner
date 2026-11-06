@@ -81,12 +81,17 @@ def main() -> int:
             judge.client.responses.create = lambda **kw: create(**kw, reasoning={"effort": args.effort})
         return judge
 
-    tasks = []
+    tasks, infra = [], []
     for task_dir in sorted((run / "tasks").iterdir()):
         if args.only and task_dir.name not in args.only:
             continue
         if not (task_dir / "run.json").exists():
             print(f"skip (unfinished): {task_dir.name}")
+            continue
+        finish = json.loads((task_dir / "answer.json").read_text()).get("finish_reason")
+        if finish in ("no_session", "incomplete"):
+            # DSH never started or never ended a turn: an infrastructure failure, not the agent's 0. Re-run the task.
+            infra.append(task_dir.name)
             continue
         tasks.append((task_dir.name, json.loads((task_dir / "spec.json").read_text())["task_id"], task_dir))
 
@@ -107,6 +112,10 @@ def main() -> int:
               + (f"  grading errors {row['n_grading_errors']}" if row["n_grading_errors"] else ""), flush=True)
         return row
 
+    if infra:
+        print(f"NOT GRADED: {len(infra)} tasks where DSH never ran a turn (infrastructure): {', '.join(infra[:10])}")
+        if not tasks or len(infra) > len(tasks):
+            raise SystemExit("most tasks never ran: fix the run (dsh.stderr) instead of grading it")
     with ThreadPoolExecutor(max_workers=args.task_workers) as pool:
         rows = list(pool.map(grade, tasks))
     rows.sort(key=lambda r: r["task"])
@@ -116,6 +125,7 @@ def main() -> int:
         "all_pass_rate": sum(r["all_pass"] for r in rows) / n if n else 0.0,
         "criterion_pass_rate": sum(r["criterion_pass_rate"] for r in rows) / n if n else 0.0,
         "tasks_with_grading_errors": sum(bool(r["n_grading_errors"]) for r in rows),
+        "not_graded_infrastructure": infra,
         "judge": args.judge, "effort": args.effort, "helper": args.helper,
     }
     (grading / "scores.json").write_text(json.dumps({"summary": summary, "tasks": rows}, indent=2) + "\n")
