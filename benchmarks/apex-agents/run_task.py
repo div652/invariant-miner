@@ -253,7 +253,6 @@ def main() -> int:
             "limits": {"max_steps": args.max_steps, "timeout_s": args.timeout_s, "temperature": None},
             "meta": {"benchmark": "apex-agents", "dataset": str(dataset), "world_id": world["world_id"]},
         }
-        spec["model"] = str((REPO / spec["model"]).resolve()) if not Path(spec["model"]).is_absolute() else spec["model"]
         (out / "agent-spec.json").write_text(json.dumps(spec, indent=2) + "\n")
         t1 = time.monotonic()
         launch = subprocess.run([sys.executable, "-m", "dsh_bench.launch", "--spec", str(out / "agent-spec.json"),
