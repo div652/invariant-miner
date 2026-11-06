@@ -56,3 +56,13 @@ context overflow).
 | firm-knowledge/tasks/185 | 0 | 0.67 | 0.00 | 0.67 |
 | firm-knowledge/tasks/061 | 0 | 1.00 | 0.00 | 1.00 |
 | firm-knowledge/tasks/093 | 0 | 1.00 | 0.00 | 1.00 |
+
+## c34's 100 tasks, run 2, 2026-11-06 (main 0ef95c2, Luna effort medium as run 1)
+
+Run `runs/hv-c34-100-rep2-20261106T043323Z`: the 100 firm-knowledge tasks with c34 C0 trials (`c34-c0-100.txt`), same
+setup and grading as run 1. All 100 completed. Run 2 alone: all-pass **20.0%**, criterion pass **0.542**.
+(Run 3 was cancelled by the user: two runs are enough.)
+
+Runs 1 + 2 (mean of 2 per task) vs C0 (mean of 3 per task), paired over the 100 tasks:
+- all-pass: ours 0.200 vs C0 0.123: **+0.077, 95% CI [+0.017, +0.138]**, better/equal/worse 21/70/9
+- criterion pass: ours 0.551 vs C0 0.385: **+0.165, 95% CI [+0.106, +0.223]**, better/equal/worse 72/11/17
