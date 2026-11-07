@@ -66,6 +66,10 @@ SPEC_DEFAULTS: dict = {
     "dsh_env": {},  # extra environment for the DSH process (endpoints for benchmark plugins, ...)
     "dsh_env_files": {},  # NAME -> file whose content is the value (tokens: kept out of specs and run records)
     "grace_s": 300,  # wall-clock allowance beyond limits.timeout_s before the DSH process is killed
+    "attach": None,  # {"container": name, "workspace": "/abs/path/in/container"}: run against a container the caller
+    # started (and stops), whose workspace exists only inside it. No staging, no snapshot or workspace.diff (the caller
+    # owns both); DSH's session cwd is that path (DSH patch 0008), commands run there (sandbox-podman) and the file tools
+    # work there too (plugins/fs-podman replaces fs-sandbox). "{workspace}" in prompts means that path.
 }
 
 
@@ -93,6 +97,12 @@ def load_spec(path: Path) -> dict:
     spec["limits"] = SPEC_DEFAULTS["limits"] | raw.get("limits", {})
     if spec["system_prompt_mode"] not in ("append", "replace"):
         raise ValueError("system_prompt_mode must be append or replace")
+    if spec["attach"] is not None:
+        attach = spec["attach"]
+        if set(attach) != {"container", "workspace"} or not str(attach["workspace"]).startswith("/"):
+            raise ValueError('attach needs exactly {"container": name, "workspace": absolute container path}')
+        if spec["stage"] or spec["make_dirs"]:
+            raise ValueError("attach: stage and make_dirs must be empty (the caller fills the container)")
     base = path.resolve().parent
 
     def where(value: str) -> Path:
@@ -220,6 +230,11 @@ def build_run_rows(spec: dict, model: dict, workspace: Path) -> list[dict]:
         rows.append({"id": "final-answer", "disabled": True})
     rows += [{"id": row, "disabled": True} for row in spec["disable"]]
     inserts = []
+    if spec["attach"] is not None:
+        rows.append({"id": "fs-sandbox", "disabled": True})
+        inserts.append({"id": "fs-podman", "name": str(REPO / "plugins/fs-podman/index.mjs"),
+                        "config": {"container": spec["attach"]["container"], "runtime": spec["runtime"],
+                                   "root": spec["attach"]["workspace"]}})
     if spec["skills_dir"] is not None:
         inserts.append({"id": "skills", "name": str(REPO / "plugins/skills/index.mjs"), "config": {"dir": spec["skills_dir"]}})
     if spec["toolbelt"] is not None:
@@ -273,7 +288,7 @@ def root_session(home: Path) -> tuple[dict, list[dict]] | None:
     return roots[0] if len(roots) == 1 else None
 
 
-def collect(out: Path, workspace: Path, gitdir: Path, home: Path, exit_code: int | None) -> dict:
+def collect(out: Path, workspace: Path, gitdir: Path, home: Path, exit_code: int | None, attached: bool = False) -> dict:
     session = root_session(home)
     header, events = session if session else ({}, [])
     ends = [e["data"]["reason"] for e in events if e.get("type") == "turn/end"]
@@ -299,23 +314,26 @@ def collect(out: Path, workspace: Path, gitdir: Path, home: Path, exit_code: int
                    "root_session_id": header.get("id"), "exit_code": exit_code}
     (out / "answer.json").write_text(json.dumps(answer_json, indent=2) + "\n")
 
+    steps = sum(e.get("type") == "step/start" for e in events)
+    sessions = len(list((home / "sessions").rglob("session.v*.jsonl")))
+    result = {"finish_reason": finish, "answer_source": source, "root_steps": steps, "sessions": sessions}
+    if attached:  # the workspace lives in the caller's container; the caller snapshots it
+        return result | {"changed_files": None}
     git(gitdir, workspace, "add", "-A", "--force", "--", *snapshot_pathspec(gitdir))
     (out / "workspace.diff").write_bytes(git(gitdir, workspace, "diff", "--cached", "--binary", "HEAD", binary=True))
     changed = [line.split("\t", 1) for line in git(gitdir, workspace, "diff", "--cached", "--name-status", "HEAD").split("\n") if line]
-    steps = sum(e.get("type") == "step/start" for e in events)
-    sessions = len(list((home / "sessions").rglob("session.v*.jsonl")))
-    return {"finish_reason": finish, "answer_source": source, "root_steps": steps, "sessions": sessions,
-            "changed_files": [{"status": s, "path": p} for s, p in changed]}
+    return result | {"changed_files": [{"status": s, "path": p} for s, p in changed]}
 
 
 def collect_only(out: Path) -> int:
     record = json.loads((out / "run.json").read_text()) if (out / "run.json").exists() else {
         "task_id": json.loads((out / "spec.json").read_text())["task_id"], "recollected": True}
-    record |= collect(out, out / "workspace", out / "baseline.git", out / "dsh-home", record.get("exit_code"))
+    record |= collect(out, out / "workspace", out / "baseline.git", out / "dsh-home", record.get("exit_code"),
+                      attached=json.loads((out / "spec.json").read_text()).get("attach") is not None)
     record["collected_at"] = now()
     (out / "run.json").write_text(json.dumps(record, indent=2) + "\n")
     print(json.dumps({k: record.get(k) for k in ("task_id", "finish_reason", "root_steps", "sessions")}
-                     | {"changed": len(record["changed_files"]), "out": str(out)}))
+                     | {"changed": len(record["changed_files"] or []), "out": str(out)}))
     return 0
 
 
@@ -344,18 +362,28 @@ def main() -> int:
     out.mkdir(parents=True)
     workspace, home, gitdir = out / "workspace", out / "dsh-home", out / "baseline.git"
     home.mkdir()
-    container = f"dshb-{uuid.uuid4().hex[:10]}"
+    attach = spec["attach"]
+    container = attach["container"] if attach else f"dshb-{uuid.uuid4().hex[:10]}"
     record: dict = {"task_id": spec["task_id"], "started_at": now(), "container": container, "spec": spec,
                     "model": model, "dsh": {"root": str(DSH), "commit": run(["git", "-C", str(DSH), "rev-parse", "HEAD"]).stdout.strip()},
                     "harness_commit": run(["git", "-C", str(REPO), "rev-parse", "HEAD"]).stdout.strip()}
     (out / "spec.json").write_text(json.dumps(spec, indent=2) + "\n")
 
     t0 = time.monotonic()
-    readonly = stage(spec, workspace, gitdir)
-    record["image"] = {"name": spec["image"], "id": run([spec["runtime"], "image", "inspect", "--format", "{{.Id}}",
-                                                         spec["image"]]).stdout.strip()}
+    if attach:
+        # DSH's process needs a host directory to start in; the workspace itself is in the container.
+        workspace.mkdir()
+        readonly = []
+        image_name, image_id = run([spec["runtime"], "inspect", "--format", "{{.ImageName}}\t{{.Image}}",
+                                    container]).stdout.strip().split("\t")
+        record["image"] = {"name": image_name, "id": image_id}
+    else:
+        readonly = stage(spec, workspace, gitdir)
+        record["image"] = {"name": spec["image"], "id": run([spec["runtime"], "image", "inspect", "--format", "{{.Id}}",
+                                                             spec["image"]]).stdout.strip()}
+    prompt_workspace = Path(attach["workspace"]) if attach else workspace
     patch = out / "run.patch.yml"
-    write_yaml_rows(patch, build_run_rows(spec, model, workspace))
+    write_yaml_rows(patch, build_run_rows(spec, model, prompt_workspace))
     patches = [CORE_PATCH, patch]
     for i, extra in enumerate(spec["extra_patches"]):
         copy = out / f"extra-{i}-{Path(extra).name}"
@@ -370,11 +398,13 @@ def main() -> int:
         key = os.environ[model["api_key_env"]]
     env = os.environ | {"DSH_HOME": str(home), "DSH_PERMISSION_MODE": "workspace-isolated", "DSH_TELEMETRY_DISABLED": "1",
                         "DSH_BENCH_DSH_ROOT": str(DSH), "DSH_BENCH_MODEL_KEY": key or "none"} | spec["dsh_env"]
-    env |= core_env(spec, out, workspace, container)
+    env |= core_env(spec, out, prompt_workspace, container)
+    if attach:
+        env |= {"DSH_HEADLESS_SESSION_CWD": attach["workspace"], "DSH_BENCH_HOST_CWD": str(workspace)}
     record["core_env"] = {k: v for k, v in env.items() if k.startswith("DSH_BENCH_") and k != "DSH_BENCH_MODEL_KEY"}
     for name, file in spec["dsh_env_files"].items():
         env[name] = Path(setting_path(file)).read_text().strip()
-    prompt = spec["prompt"].replace("{workspace}", str(workspace))
+    prompt = spec["prompt"].replace("{workspace}", str(prompt_workspace))
     (out / "prompt.txt").write_text(prompt)
     argv = [args.node, str(DSH / "apps/cli/lib/bin.js"), "--profile", "headless"]
     for p in patches:
@@ -383,7 +413,8 @@ def main() -> int:
 
     exit_code = None
     try:
-        start_container(spec, container, workspace, readonly)
+        if not attach:
+            start_container(spec, container, workspace, readonly)
         record["setup_s"] = round(time.monotonic() - t0, 1)
         wall = None if spec["limits"]["timeout_s"] is None else spec["limits"]["timeout_s"] + spec["grace_s"]
         t1 = time.monotonic()
@@ -402,14 +433,14 @@ def main() -> int:
                 record["killed_after_s"] = wall
         record["agent_s"] = round(time.monotonic() - t1, 1)
     finally:
-        if not args.keep_container:
+        if not args.keep_container and not attach:
             subprocess.run([spec["runtime"], "rm", "-f", "-t", "0", container], capture_output=True)
         record["exit_code"] = exit_code
-        record |= collect(out, workspace, gitdir, home, exit_code)
+        record |= collect(out, workspace, gitdir, home, exit_code, attached=attach is not None)
         record["finished_at"] = now()
         (out / "run.json").write_text(json.dumps(record, indent=2) + "\n")
     print(json.dumps({k: record.get(k) for k in ("task_id", "finish_reason", "root_steps", "sessions", "agent_s")}
-                     | {"changed": len(record["changed_files"]), "out": str(out)}))
+                     | {"changed": len(record["changed_files"] or []), "out": str(out)}))
     return 0 if record["finish_reason"] in ("final_answer", "completed") else 1
 
 

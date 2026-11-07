@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Build the DeepSeek Harness (DSH) used by dsh-bench-harness from the public upstream plus the patch series.
 #
-#   deepseek-harness  https://github.com/deepseek-ai/deepseek-harness  @ c389f96  + patches/deepseek-harness (7)
+#   deepseek-harness  https://github.com/deepseek-ai/deepseek-harness  @ c389f96  + patches/deepseek-harness (8)
 #
 # Usage: ./setup.sh [WORK_DIR]     (default: ./work; the checkout goes to WORK_DIR/deepseek-harness)
 # Needs: git, node >= 22.19 (or >= 24) with corepack. Env: NODE=/path/to/node to pick a node binary.
@@ -25,13 +25,26 @@ checkout() {  # url pin dir patches-dir
     git -C "$dir" fetch -q --depth 1 origin "$pin"
     git -C "$dir" checkout -q -B patched FETCH_HEAD
   fi
-  if git -C "$dir" log --format=%s "$pin"..HEAD 2>/dev/null | grep -q .; then
-    log "$dir already carries commits on top of ${pin:0:7}; leaving it as it is"
+  # A checkout from an earlier setup carries the patch series as it was then. If its commits are the first patches of
+  # the series (same patch ids), apply only the patches added since; any other local commits: leave it as it is.
+  local -a files commits
+  mapfile -t files < <(ls "$patches"/*.patch)
+  mapfile -t commits < <(git -C "$dir" rev-list --reverse "$pin"..HEAD)
+  local i applied=${#commits[@]}
+  for (( i = 0; i < applied; i++ )); do
+    if (( i >= ${#files[@]} )) || [[ "$(git patch-id --stable < "${files[i]}" | cut -d' ' -f1)" != \
+          "$(git -C "$dir" show "${commits[i]}" | git patch-id --stable | cut -d' ' -f1)" ]]; then
+      log "$dir carries commits on top of ${pin:0:7} that are not this patch series; leaving it as it is"
+      return
+    fi
+  done
+  if (( applied == ${#files[@]} )); then
+    log "$dir already carries all ${#files[@]} patches"
     return
   fi
-  log "applying $(ls "$patches"/*.patch | wc -l) patches to $dir"
+  log "applying $(( ${#files[@]} - applied )) of ${#files[@]} patches to $dir"
   git -C "$dir" -c user.name=setup -c user.email=setup@localhost am -q --3way --committer-date-is-author-date \
-    "$patches"/*.patch
+    "${files[@]:applied}"
 }
 
 checkout "$DSH_URL" "$DSH_PIN" "$WORK/deepseek-harness" "$HERE/patches/deepseek-harness"

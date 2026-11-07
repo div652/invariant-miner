@@ -18,6 +18,8 @@
 //           container: <name or id>          # required
 //           runtime: podman                  # or docker
 //           env: { WORKSPACE_DIR: /abs/ws }  # set inside the container for every command
+//           hostCwd: /abs/host/dir           # optional: host directory the wrapper starts in, for a workspace that
+//                                            # exists only in the container (default: the workspace path itself)
 //
 // The DSH checkout is found through $DSH_BENCH_DSH_ROOT, else ../../work/deepseek-harness from this file.
 import { fileURLToPath, pathToFileURL } from 'node:url'
@@ -51,18 +53,19 @@ export default class PodmanSandboxProvider extends SandboxProvider {
       runtime: config.runtime ?? 'podman',
       wrapper: config.wrapper ?? resolve(HERE, 'podman-exec.sh'),
       env,
+      hostCwd: config.hostCwd,
     }
   }
 
   confine(argv, policy) {
-    const { container, runtime, wrapper, env } = this.settings
+    const { container, runtime, wrapper, env, hostCwd } = this.settings
     const workdir = policy.workingDirectory ?? policy.workspaceRoot
     let [program, ...args] = argv
     // glob/grep launch DSH's bundled ripgrep by its host path; the image provides `rg`.
     if (isAbsolute(program) && basename(program) === 'rg') program = 'rg'
     return {
       argv: [wrapper, runtime, container, workdir, ...Object.entries(env).map(([k, v]) => `${k}=${v}`), '--', program, ...args],
-      cwd: policy.workspaceRoot,
+      cwd: hostCwd ?? policy.workspaceRoot,
       enforcement: 'full',
       denialSignatures: DENIAL_SIGNATURES,
       runnerFailureRules: RUNNER_FAILURE_RULES,
