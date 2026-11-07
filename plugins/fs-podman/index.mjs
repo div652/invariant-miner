@@ -87,11 +87,24 @@ class ExecChannel {
     })
     child.stderr.resume()
     child.stdin.on('error', () => {})
+    // The helper must never keep DSH's process alive: DSH exits by letting the event loop drain once its plugins are
+    // disposed (a forced exit only if disposal takes over 5 s), and a referenced child with open pipes never drains.
+    child.unref()
+    for (const stream of [child.stdin, child.stdout, child.stderr]) stream.unref?.()
     child.on('close', () => {
       if (this.child === child) this.child = undefined
       const stranded = this.pending.splice(0)
       for (const request of stranded) request.reject(new Error('fs-podman: helper process exited'))
     })
+  }
+
+  /** Stop the helper (plugin disposal): its pending requests fail, the next request would start a new one. */
+  close() {
+    const child = this.child
+    this.child = undefined
+    if (child === undefined) return
+    child.stdin.end()
+    child.kill('SIGTERM')
   }
 
   drain() {
@@ -212,6 +225,7 @@ export default class PodmanFileSystem extends FileSystem {
     this.locks = new Map()
     this.canonicalRoot = undefined
     this.channel = new ExecChannel(this.settings.runtime, this.settings.container)
+    ctx.effect(() => () => this.channel.close())
   }
 
   /** The deployment default mode, as fs-sandbox reports it (the tools advertise escalation fields from it). */
