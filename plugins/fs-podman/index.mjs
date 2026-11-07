@@ -25,6 +25,10 @@
 //           root: /filesystem         # required: absolute path in the container; the only files the tools reach
 //           cwd: /filesystem          # optional: base for relative paths (default: root)
 //           runtime: podman           # optional (or docker)
+//           user: svc_x               # optional: container user (name or uid[:gid]) every operation runs as; a name
+//                                     # also gets that user's groups. Default: the container's user (often root)
+//           umask: "0002"             # optional: umask of every operation (files the tools create); default: the
+//                                     # container's (podman exec: 0022)
 //           diffBasisMaxBytes: 1048576  # optional: larger prior files get no diff basis on overwrite
 import { spawn } from 'node:child_process'
 import { createHash } from 'node:crypto'
@@ -42,7 +46,9 @@ const BINARY_SAMPLE_BYTES = 8192
 // The in-container helper: reads framed requests (4-byte length + JSON {shell, script, args}, 4-byte length + stdin
 // bytes), runs `shell -c script shell args...`, writes framed replies (4-byte length + JSON {code, stderr}, 4-byte
 // length + stdout bytes), strictly in order.
-const HELPER_PY = `import json, struct, subprocess, sys
+const HELPER_PY = `import json, os, struct, subprocess, sys
+if os.environ.get("DSH_FS_UMASK"):
+    os.umask(int(os.environ["DSH_FS_UMASK"], 8))
 r, w = sys.stdin.buffer, sys.stdout.buffer
 def take(n):
     b = b""
@@ -67,9 +73,11 @@ while True:
 
 /** One long-lived helper process in the container; requests are answered in order. */
 class ExecChannel {
-  constructor(runtime, container) {
+  constructor(runtime, container, user, umask) {
     this.runtime = runtime
     this.container = container
+    this.user = user
+    this.umask = umask
     this.child = undefined
     this.pending = []
     this.buffer = Buffer.alloc(0)
@@ -77,8 +85,8 @@ class ExecChannel {
   }
 
   start() {
-    const child = spawn(this.runtime, ['exec', '-i', this.container, 'python3', '-u', '-c', HELPER_PY],
-      { stdio: ['pipe', 'pipe', 'pipe'] })
+    const argv = ['exec', '-i', ...execIdentity(this.user, this.umask), this.container, 'python3', '-u', '-c', HELPER_PY]
+    const child = spawn(this.runtime, argv, { stdio: ['pipe', 'pipe', 'pipe'] })
     this.child = child
     this.buffer = Buffer.alloc(0)
     child.stdout.on('data', chunk => {
@@ -201,6 +209,11 @@ const isUnder = (path, root) => {
   return relative === '' || (relative !== '..' && !relative.startsWith('../') && !posix.isAbsolute(relative))
 }
 
+/** `podman exec` flags for the configured user and umask (the helper applies DSH_FS_UMASK itself). */
+function execIdentity(user, umask) {
+  return [...(user === undefined ? [] : ['--user', user]), ...(umask === undefined ? [] : ['-e', `DSH_FS_UMASK=${umask}`])]
+}
+
 /** Container-side filesystem backend; one `podman exec` per operation. */
 export default class PodmanFileSystem extends FileSystem {
   static inject = ['sandboxPolicy']
@@ -215,16 +228,24 @@ export default class PodmanFileSystem extends FileSystem {
     }
     const cwd = config.cwd ?? config.root
     if (!posix.isAbsolute(cwd)) throw new Error('fs-podman: config.cwd must be an absolute path in the container')
+    if (config.user !== undefined && (typeof config.user !== 'string' || !/^[A-Za-z0-9_][A-Za-z0-9_.:-]*$/.test(config.user))) {
+      throw new Error('fs-podman: config.user must be a user name or uid[:gid]')
+    }
+    if (config.umask !== undefined && (typeof config.umask !== 'string' || !/^[0-7]{3,4}$/.test(config.umask))) {
+      throw new Error('fs-podman: config.umask must be an octal string such as "0002"')
+    }
     this.settings = {
       container: config.container,
       runtime: config.runtime ?? 'podman',
       root: posix.normalize(config.root),
       cwd: posix.normalize(cwd),
       diffBasisMaxBytes: config.diffBasisMaxBytes ?? 1024 * 1024,
+      user: config.user,
+      umask: config.umask,
     }
     this.locks = new Map()
     this.canonicalRoot = undefined
-    this.channel = new ExecChannel(this.settings.runtime, this.settings.container)
+    this.channel = new ExecChannel(this.settings.runtime, this.settings.container, this.settings.user, this.settings.umask)
     ctx.effect(() => () => this.channel.close())
   }
 
@@ -237,8 +258,10 @@ export default class PodmanFileSystem extends FileSystem {
 
   /** Spawn `sh -c SCRIPT sh ARGS...` (or bash) in the container; positional args are never interpolated. */
   spawnIn(script, args, { input, shell = 'sh' } = {}) {
-    const { runtime, container } = this.settings
-    const argv = ['exec', ...(input === undefined ? [] : ['-i']), container, shell, '-c', script, shell, ...args.map(String)]
+    const { runtime, container, user, umask } = this.settings
+    const body = umask === undefined ? script : `umask ${umask}; ${script}`
+    const argv = ['exec', ...(input === undefined ? [] : ['-i']), ...execIdentity(user, undefined), container, shell, '-c', body, shell,
+      ...args.map(String)]
     return spawn(runtime, argv, { stdio: [input === undefined ? 'ignore' : 'pipe', 'pipe', 'pipe'] })
   }
 
@@ -564,7 +587,10 @@ else
   mv -f -T -- "$tmp" "$t"
 fi
 stat -c '${STAT_FORMAT}' -- "$t"`
-    const mode = existing === undefined ? '644' : existing.mode
+    // A new file gets 666 minus the configured umask (what a shell redirect in the container would make), else 644.
+    const umask = this.settings.umask
+    const fresh = umask === undefined ? '644' : (0o666 & ~Number.parseInt(umask, 8)).toString(8)
+    const mode = existing === undefined ? fresh : existing.mode
     const result = await this.run(script, [String(target.targetKey), mode, createIfAbsent ? 1 : 0], { input: Buffer.from(content, 'utf8'), signal })
     if (result.code !== 0) throw this.failure(result, 'write', target.displayPath, signal)
     const out = result.stdout.toString('utf8')

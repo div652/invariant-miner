@@ -21,7 +21,9 @@ upstream deepseek-ai/deepseek-harness @ c389f96          the harness
                                 benchmark-limits (steps / timeout / temperature), final-answer (final_answer tool),
                                 skills (a benchmark's skills), toolbelt (optional: managed tools start hidden and
                                 the agent adds them with toolbelt_* meta-tools; spec key `toolbelt`), fs-podman
-                                (DSH's file tools inside a running container: launcher spec key `attach`)
+                                (DSH's file tools inside a running container: launcher spec key `attach`, optionally
+                                as a container user with a umask), tool-limits (optional: output cap and per-call
+                                timeout for every tool; spec key `tool_limits`)
   + images/base/                the minimal container image bash runs in
 dsh_bench/launch.py             the runner AROUND DSH (not the harness): stage the workspace, start the container,
                                 run DSH with the patch files, collect the outputs
@@ -78,6 +80,9 @@ python3 tests/test_launch.py      # the launcher end to end with the scripted mo
 python3 tests/test_vscode_shim.py # the VS Code endpoint shim against a fake GH Copilot Server extension
 python3 tests/test_toolbelt.py   # plugins/toolbelt with the scripted model and a stdio MCP server (tests/mcp_demo_server.py)
 python3 tests/test_fs_podman.py  # launcher attach mode: file tools (fs-podman) and bash in a container-only workspace; escapes denied
+python3 tests/test_attach_user.py  # attach as a container user with umask 0002: owner, group, modes, permissions
+python3 tests/test_tool_limits.py  # plugins/tool-limits: output cap (parity with Archipelago's rule) and per-call timeout
+python3 tests/repro_attach_exit.py # DSH exits promptly after a one-step answer in attach mode
 ```
 
 ## Setup
