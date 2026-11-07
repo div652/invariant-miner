@@ -2,7 +2,7 @@
 
 The scripted model answers in one step with no tool call. DSH then disposes its plugins and, when that finishes
 within 5 s, waits for Node's event loop to drain (no forced exit). fs-podman's helper process once kept the loop alive
-forever: the launcher killed DSH at its wall-clock limit (7 of 454 APEX-Agents runs). PASS: exit within 30 s.
+forever: the launcher killed DSH at its wall-clock limit (7 of 454 runs of one benchmark). PASS: exit within 30 s.
 
     python3 tests/repro_attach_exit.py [REPO]
 """
