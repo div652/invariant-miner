@@ -50,11 +50,28 @@ CAO_BASE = "http://127.0.0.1:4141/v1"
 FENCE = re.compile(r"^\s*```(?:json)?\s*\n(.*?)\n?\s*```\s*$", re.S)
 
 
+def clean_json_reply(content: str) -> str:
+    """A reply to a JSON request, as JSON the grader can parse: one surrounding markdown fence removed, and raw
+    control characters inside strings (an unescaped newline in a rationale) escaped by re-serializing. The values are
+    not changed; text that is not JSON even leniently is returned as it came (after fence removal)."""
+    match = FENCE.match(content)
+    text = match.group(1).strip() if match else content
+    try:
+        json.loads(text)
+        return text
+    except ValueError:
+        pass
+    try:
+        return json.dumps(json.loads(text, strict=False))
+    except ValueError:
+        return text
+
+
 class JudgeRelay:
     """Local OpenAI-compatible relay to CAO for the grader (one per process, started on first use).
 
-    Forwards every request unchanged. When the request carries response_format and a reply's message content is one
-    markdown code fence around JSON, the fence is removed; nothing else in the reply changes.
+    Forwards every request unchanged. When the request carries response_format, each reply's message content goes
+    through clean_json_reply (fence removed, control characters inside strings escaped); nothing else changes.
     """
 
     _lock = threading.Lock()
@@ -89,9 +106,8 @@ class _RelayHandler(BaseHTTPRequestHandler):
                     reply = json.loads(payload)
                     for choice in reply.get("choices", []):
                         content = (choice.get("message") or {}).get("content")
-                        match = FENCE.match(content) if isinstance(content, str) else None
-                        if match:
-                            choice["message"]["content"] = match.group(1).strip()
+                        if isinstance(content, str):
+                            choice["message"]["content"] = clean_json_reply(content)
                     payload = json.dumps(reply).encode()
             except (ValueError, AttributeError):
                 pass  # not JSON on either side: pass the reply through as it came

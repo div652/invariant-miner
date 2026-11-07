@@ -65,7 +65,7 @@ Archipelago's code is used unmodified. These are the places where how we run it 
    not pass that to Gemini, which then answers inside ```json ... ```. The grading call tolerated it, but the artifact
    selector (used when a changed file is too big for the judge's context, e.g. a large spreadsheet) parses strictly:
    all criteria of such a task errored. grade.py's local relay removes one surrounding fence from replies to requests
-   with `response_format`; nothing else changes. (Via Vertex, as in the paper, Gemini returns bare JSON.)
+   with `response_format`, and (2026-11-07, one task in the full run) escapes raw control characters inside JSON strings by re-serializing (Gemini once put an unescaped newline in a rationale; the grader's 10 attempts all failed strict parsing); values never change. (Via Vertex, as in the paper, Gemini returns bare JSON.)
 
 ## Tool map (individual-tool mode, the paper's)
 
