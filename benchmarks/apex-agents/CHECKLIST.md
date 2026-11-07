@@ -2,7 +2,9 @@
 
 Benchmark: Hugging Face dataset `mercor/apex-agents` (revision `92c8685`, 480 tasks, 33 worlds, 319 files, 8.5 GiB;
 gated, accept the terms and log in first) and its infrastructure Archipelago (`Mercor-Intelligence/archipelago` @
-`f8e41cb`, a 2026-11-01 sync of Mercor's studio repo). Paper: arXiv 2601.14242v3, "APEX–Agents".
+`f8e41cb`, a 2026-11-01 sync of Mercor's studio repo). Paper: arXiv 2601.14242v3, "APEX–Agents". Upstream rewrites
+its history on each sync, so the pin is fetched by hash, with `div652/archipelago-pinned` (private) as fallback: an
+unmodified copy of Mercor's commit, Mercor's work and not ours, kept only so the pin stays fetchable.
 
 Status (2026-11-06): **built and tested**: images, core attach mode + fs-podman (tests/test_fs_podman.py 19/19), adapter (test_plumbing.py 15/15 on a real task, scripted model), grading (check_gold.py: gold outputs 12/12 tasks, 50/50 criteria). Smoke with Luna: running.
 

@@ -4,7 +4,8 @@
 #
 #   benchmarks/apex-agents/setup.sh [--rebuild]       (after the repo's ./setup.sh)
 #
-# - work/archipelago: Mercor-Intelligence/archipelago @ $PIN (environment, MCP app servers, grader, HF example config).
+# - work/archipelago: Mercor-Intelligence/archipelago @ $PIN (environment, MCP app servers, grader, HF example config),
+#   from upstream or, if upstream dropped the commit, from the unmodified copy div652/archipelago-pinned.
 # - image dsh-bench-apex-agents-env:<pin>: Archipelago's environment/Dockerfile at the pin, unmodified, under our tag
 #   (~12 GB; first build ~10 min, needs network for apt/uv/npm).
 # - image dsh-bench-apex-agents:<pin>: our layer (benchmarks/apex-agents/Dockerfile): code_exec's package mirror and
@@ -23,14 +24,19 @@ REBUILD=0; [[ "${1:-}" == "--rebuild" ]] && REBUILD=1
 log() { echo "[apex-agents setup] $*"; }
 
 # Upstream rewrites its history on every sync from Mercor's internal repo (main is one new commit each time), so the
-# pin is fetched by hash; a plain clone would not contain it. ARCHIPELAGO_URL may point at a mirror of the pin.
-URL="${ARCHIPELAGO_URL:-https://github.com/Mercor-Intelligence/archipelago.git}"
+# pin is fetched by hash; a plain clone would not contain it, and upstream may garbage-collect it. Fallback:
+# div652/archipelago-pinned, an unmodified copy of Mercor's commit (Mercor's work, not ours; private, ask for access).
+# ARCHIPELAGO_URL replaces upstream as the first source.
+UPSTREAM="${ARCHIPELAGO_URL:-https://github.com/Mercor-Intelligence/archipelago.git}"
+MIRROR="https://github.com/div652/archipelago-pinned.git"
 if [[ ! -d "$ARCH/.git" ]]; then
-  log "fetching archipelago @ ${PIN:0:9} from $URL"
-  git init -q "$ARCH" && git -C "$ARCH" remote add origin "$URL"
-  git -C "$ARCH" fetch -q --depth 1 origin "$PIN" || {
-    echo "cannot fetch $PIN from $URL (upstream may have dropped it: set ARCHIPELAGO_URL to a mirror)" >&2; exit 1; }
-  git -C "$ARCH" checkout -q -B pinned FETCH_HEAD
+  git init -q "$ARCH"; got=""
+  for url in "$UPSTREAM" "$MIRROR"; do
+    log "fetching archipelago @ ${PIN:0:9} from $url"
+    if GIT_TERMINAL_PROMPT=0 git -C "$ARCH" fetch -q --depth 1 "$url" "$PIN"; then got="$url"; break; fi
+  done
+  [[ -n "$got" ]] || { rm -rf "$ARCH"; echo "cannot fetch $PIN from $UPSTREAM or $MIRROR (set ARCHIPELAGO_URL)" >&2; exit 1; }
+  git -C "$ARCH" checkout -q -B pinned FETCH_HEAD && git -C "$ARCH" remote add origin "$got"
 fi
 [[ "$(git -C "$ARCH" rev-parse HEAD)" == "$PIN" ]] || { echo "work/archipelago is not at $PIN" >&2; exit 1; }
 

@@ -25,6 +25,11 @@ benchmarks/apex-agents/setup.sh         # Archipelago at its pin, images dsh-ben
                                         # grader venv; then lists anything still missing
 ```
 
+Archipelago is fetched by commit hash (`f8e41cb`): upstream rewrites its history on every sync, so the commit may
+drop off upstream. The setup then falls back to [div652/archipelago-pinned](https://github.com/div652/archipelago-pinned),
+an unmodified copy of that commit kept only so it stays fetchable. It is Mercor's work, not ours (Apache-2.0); the repo
+is private, so ask for access, or set `ARCHIPELAGO_URL` to another copy.
+
 Settings go in `~/.config/dsh-bench/local.env` (template: `local.env.example`; file paths, not secrets):
 
 | Setting | For |
