@@ -46,6 +46,8 @@ from dsh_bench.endpoints import load_local_env, setting_path  # noqa: E402
 
 GRADING = REPO / "work/archipelago/grading"
 EXAMPLE = REPO / "work/archipelago/examples/hugging_face_task"
+# The judge's OpenAI-compatible endpoint: CAO by default; DSH_BENCH_JUDGE_BASE_URL / DSH_BENCH_JUDGE_KEY_FILE (local.env)
+# point it elsewhere. Read when the relay starts (after local.env is loaded).
 CAO_BASE = "http://127.0.0.1:4141/v1"
 FENCE = re.compile(r"^\s*```(?:json)?\s*\n(.*?)\n?\s*```\s*$", re.S)
 
@@ -76,11 +78,13 @@ class JudgeRelay:
 
     _lock = threading.Lock()
     _base: str | None = None
+    upstream: str = CAO_BASE
 
     @classmethod
     def base_url(cls) -> str:
         with cls._lock:
             if cls._base is None:
+                cls.upstream = os.environ.get("DSH_BENCH_JUDGE_BASE_URL") or CAO_BASE
                 server = ThreadingHTTPServer(("127.0.0.1", 0), _RelayHandler)
                 threading.Thread(target=server.serve_forever, daemon=True).start()
                 cls._base = f"http://127.0.0.1:{server.server_address[1]}/v1"
@@ -92,7 +96,7 @@ class _RelayHandler(BaseHTTPRequestHandler):
         pass
 
     def _forward(self, body: bytes | None) -> None:
-        request = urllib.request.Request(CAO_BASE.removesuffix("/v1") + self.path, data=body, method=self.command,
+        request = urllib.request.Request(JudgeRelay.upstream.removesuffix("/v1") + self.path, data=body, method=self.command,
                                          headers={k: v for k, v in self.headers.items()
                                                   if k.lower() not in ("host", "content-length", "accept-encoding")})
         try:
@@ -122,6 +126,13 @@ class _RelayHandler(BaseHTTPRequestHandler):
 
     def do_GET(self):
         self._forward(None)
+
+
+def judge_key() -> str:
+    """The judge endpoint's key: DSH_BENCH_JUDGE_KEY_FILE if set, else the CAO key file."""
+    load_local_env()
+    name = "$DSH_BENCH_JUDGE_KEY_FILE" if os.environ.get("DSH_BENCH_JUDGE_KEY_FILE") else "$DSH_BENCH_CAO_KEY_FILE"
+    return Path(setting_path(name)).read_text().strip()
 
 
 def judge_env(cao_key: str) -> dict[str, str]:
@@ -286,8 +297,7 @@ def main() -> int:
     parser.add_argument("--keep-snapshots", action="store_true", help="do not compact graded tasks")
     args = parser.parse_args()
     load_local_env()
-    key = Path(setting_path("$DSH_BENCH_CAO_KEY_FILE")).read_text().strip()
-    env = judge_env(key)
+    env = judge_env(judge_key())
     dirs = [d for d in task_dirs([p.resolve() for p in args.runs])
             if args.regrade or not (d / "grading/grades.json").exists()]
     with concurrent.futures.ThreadPoolExecutor(args.jobs) as pool:

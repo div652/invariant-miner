@@ -122,8 +122,7 @@ def main() -> int:
     todo = [tid for tid in ids if tid not in deferred and not (run_dir / "tasks" / tid / "run.json").exists()]
     log(run_dir, f"start: {len(ids)} tasks, {len(todo)} to run, {len(deferred)} deferred (banking setup missing), "
                  f"jobs {args.jobs}, model {args.model or args.endpoint or 'default (luna-cao)'}")
-    key = Path(setting_path("$DSH_BENCH_CAO_KEY_FILE")).read_text().strip()
-    grade_env = grade.judge_env(key)
+    grade_env = grade.judge_env(grade.judge_key())
     graders = concurrent.futures.ThreadPoolExecutor(args.grade_jobs)
     grading = []
 
