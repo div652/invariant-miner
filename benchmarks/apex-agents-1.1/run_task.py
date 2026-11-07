@@ -283,6 +283,12 @@ def main() -> int:
     parser.add_argument("--keep-world", action="store_true")
     args = parser.parse_args()
     load_local_env()
+    if args.model and not args.model.startswith("{repo}"):
+        # The launcher resolves a relative model path against the spec's directory (the task's out dir): make it
+        # absolute here, against the current directory, and fail now if it does not exist.
+        args.model = str(Path(args.model).resolve())
+        if not Path(args.model).exists():
+            raise SystemExit(f"--model {args.model}: no such file")
     if not (RG_DIR / "rg").exists():
         raise SystemExit(f"{RG_DIR / 'rg'} missing: run benchmarks/apex-agents-1.1/setup.sh")
     task = load_task(args.tasks_dir, args.task)
@@ -342,7 +348,9 @@ def main() -> int:
             record["agent_relaunches"] += 1
             wait_ready(task, container, timeout_s=300)
         record["agent_s"] = round(time.monotonic() - t1, 1)
-        answer = json.loads((out / "agent/answer.json").read_text()) if (out / "agent/answer.json").exists() else {}
+        if not (out / "agent/answer.json").exists():  # the launcher failed before DSH ran (bad spec, model file, node)
+            raise InfraError(f"DSH did not run: {(out / 'launch.log').read_text()[-1200:]}")
+        answer = json.loads((out / "agent/answer.json").read_text())
         record["finish_reason"] = answer.get("finish_reason")
         record["graded_ending"] = record["finish_reason"] in GRADED_ENDINGS
 

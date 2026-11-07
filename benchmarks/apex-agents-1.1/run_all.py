@@ -32,6 +32,7 @@ import run_task  # noqa: E402
 from dsh_bench.endpoints import load_local_env  # noqa: E402
 
 LOCK = threading.Lock()
+ABORT_AFTER = 6
 
 
 def log(run_dir: Path, message: str) -> None:
@@ -102,6 +103,10 @@ def main() -> int:
     parser.add_argument("--effort", default=grade.JUDGE_EFFORT)
     args = parser.parse_args()
     load_local_env()
+    if args.model and not args.model.startswith("{repo}"):
+        args.model = str(Path(args.model).resolve())  # run_task.py runs from the repo root
+        if not Path(args.model).exists():
+            raise SystemExit(f"--model {args.model}: no such file")
     tasks_dir = args.tasks_dir.expanduser().resolve()
     slugs = sorted(d.name for d in tasks_dir.iterdir() if d.is_dir()) if args.tasks == "all" else \
         [line.strip() for line in Path(args.tasks).read_text().splitlines() if line.strip()]
@@ -122,8 +127,13 @@ def main() -> int:
     grade.judge_key()  # fail now, not after the first run, if the judge key is missing
     graders = concurrent.futures.ThreadPoolExecutor(args.grade_jobs)
     grading = []
+    # Circuit breaker: after ABORT_AFTER tasks in a row that failed outside the agent (even after their retry), start no
+    # more tasks; they stay unrun, so re-running the command resumes once the cause is fixed.
+    breaker = {"streak": 0, "open": False}
 
     def run_one(slug: str) -> None:
+        if breaker["open"]:
+            return
         out = run_dir / "tasks" / slug
         argv = [sys.executable, str(HERE / "run_task.py"), "--task", slug, "--out", str(out), "--tasks-dir", str(tasks_dir),
                 "--lock-dir", str(run_dir / ".locks"), "--setup-slots", str(args.setup_slots)]
@@ -143,6 +153,14 @@ def main() -> int:
                 out.rename(run_dir / "retried" / f"{slug}-{attempt + 1}-{int(time.time())}")
                 continue
             break
+        with LOCK:
+            if record.get("infra_error"):
+                breaker["streak"] += 1
+                if breaker["streak"] >= ABORT_AFTER and not breaker["open"]:
+                    breaker["open"] = True
+                    print(f"ABORT: {ABORT_AFTER} tasks in a row failed outside the agent; starting no more", flush=True)
+            else:
+                breaker["streak"] = 0
         if (out / "run.json").exists():
             def grade_one() -> None:
                 try:
@@ -159,6 +177,8 @@ def main() -> int:
     for future in grading:
         future.result()
     graders.shutdown()
+    if breaker["open"]:
+        log(run_dir, f"ABORTED after {ABORT_AFTER} infrastructure failures in a row; fix the cause and re-run to resume")
     summary = summarize(run_dir, slugs)
     log(run_dir, f"done: Pass@1 {summary['overall']['pass_at_1']} mean {summary['overall']['mean_score']} over "
                  f"{summary['overall']['tasks']} tasks; infra errors {len(summary['infra_errors'])}, "
