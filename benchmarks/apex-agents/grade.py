@@ -217,6 +217,12 @@ def grade_once(run_dir: Path, judge: str, effort: str, env: dict[str, str]) -> d
                          "reason": f"run ended {record.get('finish_reason')!r} without an answer (counts as failed)"}
         (out / "grades.json").write_text(json.dumps(result, indent=2) + "\n")
         return result
+    missing = [n for n in ("before.tar.gz", "after.tar.gz") if not (run_dir / "snapshots" / n).exists()]
+    if missing or record.get("infra_error"):
+        result = base | {"graded": False, "error": f"cannot grade: missing snapshot(s) {missing}; "
+                                                    f"{record.get('infra_error') or ''}"[:500]}
+        (out / "grades.json").write_text(json.dumps(result, indent=2) + "\n")
+        return result
     tar_to_zip(run_dir / "snapshots/before.tar.gz", out / "before.zip")
     tar_to_zip(run_dir / "snapshots/after.tar.gz", out / "after.zip")
     (out / "verifiers.json").write_text(json.dumps(verifiers(task), indent=2) + "\n")

@@ -85,8 +85,18 @@ def now() -> str:
     return datetime.now(UTC).strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
+class InfraError(RuntimeError):
+    """A container or podman step failed; the message carries the command, exit status and its stderr."""
+
+
 def sh(argv: list[str], **kwargs) -> subprocess.CompletedProcess:
-    return subprocess.run(argv, check=True, capture_output=True, **kwargs)
+    proc = subprocess.run(argv, capture_output=True, **kwargs)
+    if proc.returncode != 0:
+        err = proc.stderr.decode("utf-8", "replace") if isinstance(proc.stderr, bytes) else str(proc.stderr)
+        shown = [a if len(a) < 120 else a[:117] + "..." for a in map(str, argv[:8])]
+        raise InfraError(f"{' '.join(shown)}{' ...' if len(argv) > 8 else ''} -> exit {proc.returncode}; stderr: "
+                         f"{err.strip()[-1500:] or '(empty)'}")
+    return proc
 
 
 def in_container(container: str, *argv: str, input: bytes | None = None) -> bytes:
@@ -149,10 +159,22 @@ def server_specs(apps: list[str]) -> dict:
     return servers
 
 
-def snapshot(container: str, path: Path) -> None:
+def snapshot(container: str, path: Path, attempts: int = 3) -> list[str]:
+    """Archipelago's /data/snapshot (reads state only, so a retry is safe). Returns the errors of failed attempts;
+    raises InfraError after the last one."""
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_bytes(in_container(container, "curl", "-sS", "--fail-with-body", "-X", "POST",
-                                  "http://127.0.0.1:8080/data/snapshot"))
+    errors = []
+    for attempt in range(attempts):
+        try:
+            path.write_bytes(in_container(container, "curl", "-sS", "--fail-with-body", "-X", "POST",
+                                          "http://127.0.0.1:8080/data/snapshot"))
+            return errors
+        except InfraError as error:
+            errors.append(str(error))
+            if attempt + 1 == attempts:
+                raise
+            time.sleep(15 * (attempt + 1))
+    return errors
 
 
 def wait_healthy(container: str, timeout_s: float = 120) -> None:
@@ -264,7 +286,7 @@ def main() -> int:
                              "Content-Type: application/json", "--data-binary", "@-", "http://127.0.0.1:8080/apps",
                              input=gateway)
         record["apps_configured"] = json.loads(reply)
-        snapshot(container, out / "snapshots/before.tar.gz")
+        record["snapshot_retries"] = snapshot(container, out / "snapshots/before.tar.gz")
         probe = json.loads(in_container(container, "python3", "/opt/dsh-bench-apex/gateway_probe.py",
                                         "http://127.0.0.1:8080/mcp/", "300"))
         record["gateway_probe"] = probe
@@ -307,9 +329,17 @@ def main() -> int:
             record["agent_relaunches"] += 1
             in_container(container, "python3", "/opt/dsh-bench-apex/gateway_probe.py", "http://127.0.0.1:8080/mcp/", "300")
         record["agent_s"] = round(time.monotonic() - t1, 1)
-        with setup_slot(args.lock_dir, args.setup_slots):
-            snapshot(container, out / "snapshots/after.tar.gz")
+        try:
+            with setup_slot(args.lock_dir, args.setup_slots):
+                record["snapshot_retries"] += snapshot(container, out / "snapshots/after.tar.gz")
+        except InfraError as error:
+            # Without the "after" state the run cannot be graded: an infrastructure failure, retried by run_all.
+            record["infra_error"] = f"after snapshot failed: {error}"
+
         subprocess.run([RUNTIME, "cp", f"{container}:/tmp/apps", str(out / "apps-logs")], capture_output=True)
+    except Exception as error:
+        record["infra_error"] = f"{type(error).__name__}: {error}"[:3000]
+        raise
     finally:
         if slot is not None:
             slot.__exit__(None, None, None)
@@ -321,8 +351,9 @@ def main() -> int:
         record["finish_reason"] = answer.get("finish_reason")
         (out / "trajectory.json").write_text(json.dumps(trajectory(task["prompt"], answer), indent=2) + "\n")
         (out / "run.json").write_text(json.dumps(record, indent=2) + "\n")
-    print(json.dumps({k: record.get(k) for k in ("task_id", "finish_reason", "setup_s", "agent_s")} | {"out": str(out)}))
-    return 0 if record.get("finish_reason") in ("final_answer", "completed") else 1
+    print(json.dumps({k: record.get(k) for k in ("task_id", "finish_reason", "setup_s", "agent_s", "infra_error")}
+                     | {"out": str(out)}))
+    return 0 if record.get("finish_reason") in ("final_answer", "completed") and not record.get("infra_error") else 1
 
 
 if __name__ == "__main__":

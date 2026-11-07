@@ -91,7 +91,7 @@ def main() -> int:
     parser.add_argument("--tasks", required=True)
     parser.add_argument("--out", type=Path, required=True)
     parser.add_argument("--dataset", type=Path, default=Path("~/apex-agents-data"))
-    parser.add_argument("--jobs", type=int, default=20)
+    parser.add_argument("--jobs", type=int, default=12)
     parser.add_argument("--grade-jobs", type=int, default=6)
     parser.add_argument("--setup-slots", type=int, default=4, help="tasks populating/snapshotting at the same time")
     parser.add_argument("--retries", type=int, default=1, help="reruns of a task that ended without an agent session")
@@ -139,17 +139,24 @@ def main() -> int:
             out.mkdir(parents=True, exist_ok=True)
             (out / "run_task.log").write_text(proc.stdout + proc.stderr)
             record = json.loads((out / "run.json").read_text()) if (out / "run.json").exists() else {}
+            infra = record.get("infra_error")
             log(run_dir, f"ran {tid}: {record.get('finish_reason')} in {time.monotonic() - t0:.0f}s (exit {proc.returncode})"
-                         f"{' attempt ' + str(attempt + 1) if attempt else ''}")
-            # No agent session (setup or MCP startup failed): infrastructure, not the agent; retry in a fresh directory.
-            if record.get("finish_reason") in (None, "no_session") and attempt < args.retries:
+                         f"{' attempt ' + str(attempt + 1) if attempt else ''}"
+                         f"{' INFRA: ' + infra[:300] if infra else ''}")
+            # No agent session, or a container step failed (setup, MCP startup, the "after" snapshot): infrastructure,
+            # not the agent; retry in a fresh directory.
+            if (infra or record.get("finish_reason") in (None, "no_session")) and attempt < args.retries:
                 (run_dir / "retried").mkdir(exist_ok=True)
                 out.rename(run_dir / "retried" / f"{tid}-{attempt + 1}")
                 continue
             break
         if (out / "run.json").exists():
             def grade_one() -> None:
-                result = grade.grade_task(out, args.judge, args.effort, grade_env)
+                try:
+                    result = grade.grade_task(out, args.judge, args.effort, grade_env)
+                except Exception as error:  # a grading crash must not stop the run or hide the rest
+                    log(run_dir, f"graded {tid}: errored (grading crashed: {type(error).__name__}: {str(error)[:300]})")
+                    return
                 log(run_dir, f"graded {tid}: score {result.get('score')} all_pass {result.get('all_pass')} "
                              f"{result.get('error') or ''}")
             grading.append(graders.submit(grade_one))
