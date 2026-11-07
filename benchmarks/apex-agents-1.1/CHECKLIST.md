@@ -8,8 +8,10 @@ rubric criteria, gold outputs for every task; Mercor's own images by digest (31 
 Version 1 of this work (APEX-Agents 1.0, 480 tasks, Archipelago `f8e41cb`) is `benchmarks/apex-agents/`, tag
 `apex-agents-v1`; it stays runnable. This directory is version 2.
 
-Status (2026-11-07): building. Core additions (attach as a user with a umask, `plugins/tool-limits`) merged on the
-branch with tests; `setup.sh`, `run_task.py`, `grade.py`, `run_all.py`, `check_gold.py`, `test_plumbing.py` written.
+Status (2026-11-07): **built and tested.** Core additions (attach as a user with a umask, `plugins/tool-limits`) with
+tests; plumbing 20/20 (scripted model, one real task); gold check 6/6 tasks, 32/32 criteria (one task per output type,
+the experts' outputs through the whole grading path); smoke with Luna (`smoke-3.txt`: one task per job, file and console
+outputs) 3/3 tasks with every criterion met, no infrastructure or grading errors. Full run: not started.
 
 ## What changed from 1.0 (summary of the 2026-11-07 analysis)
 
@@ -113,4 +115,9 @@ Harbor the containers would have it); 12 tasks in parallel, 4 worlds booting at 
   texts), the rest of the core suite unchanged.
 - `test_plumbing.py`: one real task end to end with a scripted model (world, 74 + DSH tools, fence, limits, snapshots,
   trajectory).
-- `check_gold.py`: the experts' outputs through the whole grading path.
+- `check_gold.py`: the experts' outputs through the whole grading path: 6/6 tasks, 32/32 criteria
+  (edit_existing_doc 7/7, edit_existing_sheet 5/5, make_new_doc 3/3, make_new_sheet 5/5, make_new_slide_deck 6/6,
+  message_in_console 6/6).
+- Smoke (`runs/apex11-smoke3-20261107T161504Z`, Luna high via CAO): 3/3 all criteria met; worlds ready in 87-101 s;
+  agent 8-11 min, 16-22 steps; the judge's rationales cite the agent's own cells and documents and list every value
+  asserted (the scattergunning guard at work).

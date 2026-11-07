@@ -14,8 +14,10 @@ RUN_DIR is one task's run_task.py output, or a directory of them. Per task, in R
   - Mercor's verifier image (digest from tests/Dockerfile, which Harbor builds as FROM + COPY tests: mounted here
     instead) runs like Harbor's verifier: `sh /tests/test.sh`, with /logs/agent/trajectory.json and
     /logs/world/{initial,final}_snapshot.tar.gz from the run, /logs/verifier and /logs/artifacts written here; 2 CPUs /
-    8 GB and 3600 s ([verifier] in task.toml); host network, to reach the judge relay on 127.0.0.1. The judge key goes
-    in the environment (LITELLM_PROXY_API_KEY, which Mercor's grade.py passes as api_key), never into a file.
+    8 GB and 3600 s ([verifier] in task.toml); host network, to reach the judge relay on 127.0.0.1. The judge is
+    `openai/<model>` for LiteLLM with OPENAI_API_BASE (the relay) and OPENAI_API_KEY in the environment (a variable
+    task.toml passes to the verifier), never in a file. (Not LITELLM_PROXY_*: with those LiteLLM switches to its proxy
+    mode and sends the model name with its `openai/` prefix, which the endpoint rejects.)
   - The relay (as in v1, JudgeRelay) forwards to CAO; for JSON requests (response_format) it removes a markdown fence
     around the reply and escapes raw control characters inside strings: CAO does not pass response_format to Gemini.
   - grades.json: score (final_score of the task's scoring config), all_pass (every criterion met: Pass@1 per run),
@@ -176,6 +178,7 @@ def compact(run_dir: Path) -> None:
 
 def grade_task(run_dir: Path, model: str = JUDGE_MODEL, effort: str = JUDGE_EFFORT, regrade: bool = False,
                keep_snapshots: bool = False, tasks_dir: Path | None = None) -> dict:
+    run_dir = run_dir.resolve()  # podman takes a relative mount source for a named volume
     out = run_dir / "grading"
     if (out / "grades.json").exists() and not regrade:
         return json.loads((out / "grades.json").read_text())
@@ -205,7 +208,8 @@ def grade_task(run_dir: Path, model: str = JUDGE_MODEL, effort: str = JUDGE_EFFO
     name = f"apex11-grade-{record['task'][:20]}-{uuid.uuid4().hex[:6]}"
     argv = [RUNTIME, "run", "--rm", "--name", name, "--network=host",
             f"--cpus={verifier_env.get('cpus', 2)}", f"--memory={verifier_env.get('memory_mb', 8192)}m",
-            "-e", "LITELLM_PROXY_API_KEY", "-e", f"LITELLM_PROXY_API_BASE={JudgeRelay.base_url()}",
+            "-e", "OPENAI_API_KEY", "-e", f"OPENAI_API_BASE={JudgeRelay.base_url()}",
+            "-e", f"OPENAI_BASE_URL={JudgeRelay.base_url()}",
             "-v", f"{tests}:/tests:ro",
             "-v", f"{run_dir / 'trajectory.json'}:/logs/agent/trajectory.json:ro",
             "-v", f"{run_dir / 'world-logs'}:/logs/world:ro",
@@ -214,7 +218,7 @@ def grade_task(run_dir: Path, model: str = JUDGE_MODEL, effort: str = JUDGE_EFFO
     t0 = time.monotonic()
     try:
         proc = subprocess.run(argv, capture_output=True, text=True, timeout=timeout_s + 300,
-                              env=os.environ | {"LITELLM_PROXY_API_KEY": judge_key()})
+                              env=os.environ | {"OPENAI_API_KEY": judge_key()})
         rc, log = proc.returncode, proc.stdout + proc.stderr
     except subprocess.TimeoutExpired as error:
         subprocess.run([RUNTIME, "rm", "-f", "-t", "0", name], capture_output=True)
@@ -235,7 +239,8 @@ def grade_task(run_dir: Path, model: str = JUDGE_MODEL, effort: str = JUDGE_EFFO
         values = result.get("verifier_result_values") or {}
         criteria.append({"verifier_id": result.get("verifier_id"), "criteria": texts.get(result.get("verifier_id")),
                          "score": result.get("score"), "status": result.get("status"),
-                         "rationale": values.get("rationale") or values.get("explanation")})
+                         "judge_grade": values.get("judge_grade"), "artifacts": values.get("evaluated_artifacts"),
+                         "rationale": values.get("grade_rationale") or values.get("rationale")})
     score = (details.get("scoring_results") or {}).get("final_score")
     grades |= {"graded": True, "score": score, "all_pass": bool(criteria) and all((c["score"] or 0) >= 1.0 for c in criteria),
                "criteria": criteria, "judge": {"model": model, "effort": effort}}
