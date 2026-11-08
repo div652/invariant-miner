@@ -7,13 +7,14 @@ SLUG is a task directory of the Harbor Hub download (e.g. world-225-je-01-70449b
 (CHECKLIST.md, "How a task runs"):
   1. world: Mercor's world image for the task (digest from environment/docker-compose.yaml) with that file's mounts and
      environment, plus WORLD_CAPTURE_INITIAL_SNAPSHOT=1 (pitfall 3), network none, and two read-only additions:
-     /opt/dsh-bench/lib (the MCP bridge) and /opt/dsh-bench/bin (ripgrep, for DSH's glob/grep). The world seeds itself,
+     /opt/dsh-bench/lib (the MCP relay) and /opt/dsh-bench/bin (ripgrep, for DSH's glob/grep). The world seeds itself,
      starts its 9 apps behind its gateway and takes the "before" snapshot; it is ready when the compose healthcheck
      passes (run here with podman exec).
   2. DSH (launcher attach mode) works in /filesystem as run_shell's user (svc_stirrup_code_execution, umask 0002,
-     run_shell's environment), with the world's 74 tools over the MCP bridge (all offered on every step), Mercor's
-     limits (100 steps, 3 h, tool output 200 lines / 32,768 characters, 60 s per tool call), no final_answer tool, and
-     Mercor's 1.1 system prompt with the two changes in CHECKLIST.md.
+     run_shell's environment), with the world's 74 tools through the MCP relay (all offered on every step; one world
+     call at a time; 60 s per call from when it reaches the world), Mercor's other limits (100 steps, 3 h, tool output
+     200 lines / 32,768 characters, 60 s for DSH's own tools), no final_answer tool, and Mercor's 1.1 system prompt
+     with the two changes in CHECKLIST.md. --no-subagents turns DSH's subagent tools (and their prompt paragraph) off.
   3. after DSH: leftover processes of that user are stopped (not the code-execution server), then Mercor's
      /app/tools/collect_world_snapshot.py takes the "after" snapshot (pitfall 3; retried up to 3 times).
   4. outputs in DIR: run.json (timings, finish reason, infra_error if a container step failed), agent/ (DSH's run),
@@ -61,7 +62,11 @@ RUN_SHELL_ENV = {
 }
 # Mercor's limits (apex_loop_truncated_tools_agent v1.1 manifest: max_steps, timeout, max_output_*, tool_call_timeout).
 MAX_STEPS, TIMEOUT_S = 100, 10800
-TOOL_LIMITS = {"max_lines": 200, "max_chars": 32768, "timeout_s": 60}
+# The 60 s per call applies to DSH's own tools here; world tools get it in the relay (container/mcp_relay.py), counted
+# from when the call reaches the world, as Mercor's agent counts it (CHECKLIST.md, change 5).
+TOOL_LIMITS = {"max_lines": 200, "max_chars": 32768, "timeout_s": 60, "timeout_exclude": ["mcp__world__*"]}
+# DSH's subagent tools (and with them their paragraph in the system prompt): off with --no-subagents.
+SUBAGENT_ROWS = ["tool-subagent", "tool-subagent-fork", "tool-subagent-control", "tool-subagent-list-agents"]
 # Mercor's 1.1 system prompt (apex_loop_truncated_tools_agent.py, _AGENT_SYSTEM_PROMPTS) with two changes
 # (CHECKLIST.md, decision 5): `code_exec` -> `run_shell` (pitfall 1: 1.1 has no code_exec tool), and the path sentence
 # also names DSH's own file and shell tools, which see the world's files at /filesystem like run_shell.
@@ -281,6 +286,7 @@ def main() -> int:
     parser.add_argument("--lock-dir", type=Path, default=None)
     parser.add_argument("--setup-slots", type=int, default=4)
     parser.add_argument("--keep-world", action="store_true")
+    parser.add_argument("--no-subagents", action="store_true", help="turn DSH's subagent tools and their guidance off")
     args = parser.parse_args()
     load_local_env()
     if args.model and not args.model.startswith("{repo}"):
@@ -300,7 +306,7 @@ def main() -> int:
     meta = task["meta"]
     record = {"task": args.task, "tasks_dir": str(args.tasks_dir.resolve()), "task_id": meta["task_id"], "world_id": meta["world_id"], "world": meta["world_slug"],
               "domain": meta["domain"], "expected_output": meta["expected_output"], "container": container,
-              "world_image": task["world"]["image"], "verifier_image": task["verifier_image"], "started_at": now()}
+              "subagents": not args.no_subagents, "world_image": task["world"]["image"], "verifier_image": task["verifier_image"], "started_at": now()}
     (out / "prompt.txt").write_text(task["instruction"])
     t0 = time.monotonic()
     try:
@@ -321,15 +327,18 @@ def main() -> int:
             "attach": {"container": container, "workspace": WORKSPACE, "user": EXEC_USER, "umask": "0002"},
             "runtime": RUNTIME,
             "container_env": RUN_SHELL_ENV,
-            "disable": ["tool-web"],
+            "disable": ["tool-web"] + (SUBAGENT_ROWS if args.no_subagents else []),
+            # The relay answers a call it stopped at its own limit; DSH's MCP client only stops a call that never
+            # comes back (a world call can also wait for the one-at-a-time lock first).
             "mcp": [{"name": "world", "transport": "stdio", "command": RUNTIME,
-                     "args": ["exec", "-i", container, "/app/.venv/bin/python", "/opt/dsh-bench/lib/mcp_bridge.py"],
-                     "toolCallTimeoutMs": TOOL_LIMITS["timeout_s"] * 1000}],
+                     "args": ["exec", "-i", container, "/app/.venv/bin/python", "/opt/dsh-bench/lib/mcp_relay.py"],
+                     "toolCallTimeoutMs": (args.timeout_s + 600) * 1000}],
             "toolbelt": None,
             "final_answer": False,
             "tool_limits": TOOL_LIMITS,
             "limits": {"max_steps": args.max_steps, "timeout_s": args.timeout_s, "temperature": None},
-            "meta": {"benchmark": "apex-agents-1.1", "task": args.task, "world": meta["world_slug"]},
+            "meta": {"benchmark": "apex-agents-1.1", "task": args.task, "world": meta["world_slug"],
+                     "subagents": not args.no_subagents},
         }
         (out / "agent-spec.json").write_text(json.dumps(spec, indent=2) + "\n")
         t1 = time.monotonic()

@@ -46,9 +46,17 @@ outputs) 3/3 tasks with every criterion met, no infrastructure or grading errors
 | 7 | Judge | `gemini-3.8-flash` via CAO, reasoning effort **high**; Mercor's judge system prompt and temperature 0.1 kept. | User: keep the cheap model, raise its effort (CAO passes effort through: hard puzzle, low ~3K / high ~44K reasoning tokens). |
 | 8 | Data | The Harbor Hub copy, not Hugging Face. | Pitfall 2. |
 
-Carried from v1: the agent is `gpt-5.6-luna` via CAO (Responses API, reasoning high, summaries on; `--endpoint`
-chooses another); the world has no network (the prompt says there is no internet, 1.1 has no internet apps; under
-Harbor the containers would have it); 12 tasks in parallel, 4 worlds booting at a time.
+Carried from v1: the world has no network (the prompt says there is no internet, 1.1 has no internet apps; under
+Harbor the containers would have it). Agent: `gpt-5.6-luna` via CAO, effort max (`models/luna-max-cao.json`, user
+2026-11-08; the leaderboard's setting). **8 tasks in parallel** (user 2026-11-09: less load; calibrated: with 8 worlds
+making calls back to back a world call takes 16.8 s median, 15 s on an idle machine; the first full run at 12, with
+DSH's concurrent calls, saw 35 s), 4 worlds booting at a time.
+
+**Subagents** (user 2026-11-09): two full runs to separate the effects: with DSH's subagent tools off
+(`--no-subagents`: rows tool-subagent, tool-subagent-fork, tool-subagent-control, tool-subagent-list-agents; their
+paragraph leaves the system prompt with them, checked: no "subagent" anywhere in the first request), and with them on
+(the prompt unchanged). Both with the relay. In the first full run, runs that used subagents passed 24% (25/105),
+those that did not 42% (57/135).
 
 ## Pitfalls in Mercor's 1.1 delivery, and what we do
 
@@ -80,9 +88,17 @@ Harbor the containers would have it); 12 tasks in parallel, 4 worlds booting at 
 3. **System prompt**: decision 5 (`code_exec` -> `run_shell`; path sentence).
 4. **ripgrep** (static 14.1.1, checksum-verified) is mounted read-only at `/opt/dsh-bench/bin` for DSH's glob/grep; the
    world image has none. Only DSH's PATH includes it; run_shell's environment is unchanged.
-5. **MCP bridge**: DSH reaches the world's gateway through a stdio proxy run inside the world (`podman exec`,
-   `container/mcp_bridge.py`, fastmcp from the world's own venv); Mercor's agent uses HTTP from its own container. Same
-   tools, schemas and results.
+5. **MCP relay, one world call at a time** (2026-11-09; replaces a FastMCP-proxy bridge). DSH reaches the world's
+   gateway through `container/mcp_relay.py`, run inside the world (`podman exec`, no network): a plain JSON-RPC
+   pass-through to http://127.0.0.1:8000/mcp that keeps no tool list or cache, so DSH is one client of the gateway as
+   Mercor's agent is. As Mercor's agent, the world gets one tools/call or tools/list at a time (a lock shared by all of
+   DSH's connections: the main agent and each subagent), and the 60 s per-call limit (then 5 s grace, then cancel,
+   answered "Tool call timed out") is counted from when the call reaches the world. DSH's own tools keep 60 s in
+   `tool_limits`. Why: the bridge used first (a FastMCP proxy) cached the gateway's tool list for 5 minutes; under
+   load the gateway sometimes lists tools without one app (it starts all 9 app servers afresh for every request, and
+   one can fail to start), and the cached partial list then failed calls with "Unknown tool" in streaks: 977 of 6,840
+   world calls (14%) in 68 of 240 tasks of the first full run, two thirds of them in subagents. With the relay: 0 in
+   the plumbing tests, and two calls sent together run one after the other.
 6. **No network** for the world (carried from v1). Harbor would give the containers network access.
 7. **Judge** (decision 7): the model and its extra args in `grading_settings`; Mercor's judge system prompt and
    temperature unchanged. Through a local relay (from v1) that removes a markdown fence around JSON replies and escapes

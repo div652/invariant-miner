@@ -8,6 +8,8 @@
 //                       timeoutText (an error result). A tool that does not stop within graceMs of the deadline is
 //                       left running and the timeout result is returned anyway.
 //   timeoutText         Default "Tool call timed out".
+//   timeoutExclude      Tool name patterns (`*` wildcard) the timeout does not apply to, e.g. ["mcp__*"] when an MCP
+//                       server enforces its own per-call limit. The output cap still applies to them.
 //   graceMs             Default 5000.
 //
 // Row:
@@ -64,6 +66,8 @@ export function apply(ctx, config = {}) {
   const { maxLines, maxChars, timeoutMs } = config
   const timeoutText = config.timeoutText ?? 'Tool call timed out'
   const graceMs = config.graceMs ?? 5000
+  const excluded = (config.timeoutExclude ?? []).map(pattern =>
+    new RegExp(`^${pattern.split('*').map(part => part.replace(/[.+?^${}()|[\]\\]/g, '\\$&')).join('.*')}$`))
   if (!positive(maxLines) || !positive(maxChars) || !positive(timeoutMs) || !(Number.isSafeInteger(graceMs) && graceMs >= 0)) {
     throw new Error('tool-limits: maxLines, maxChars, timeoutMs must be positive integers (graceMs >= 0)')
   }
@@ -88,6 +92,7 @@ export function apply(ctx, config = {}) {
 
   if (timeoutMs !== undefined) {
     ctx.on('tools/execute', async (exec, next) => {
+      if (excluded.some(re => re.test(exec.name))) return next()
       const upstream = exec.signal
       const controller = new AbortController()
       const forward = () => controller.abort(upstream.reason)

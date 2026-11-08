@@ -37,6 +37,7 @@ def tool_texts(request: dict) -> list[str]:
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--task", default="128-jr-1-f7f95d92")
+    parser.add_argument("--no-subagents", action="store_true", help="also check that subagents and their guidance are off")
     args = parser.parse_args()
     root = Path(tempfile.mkdtemp(prefix="apex11-plumbing-"))
     steps = [
@@ -66,7 +67,8 @@ def main() -> int:
             "compat": {"supportsDeveloperRole": False, "supportsStore": False, "maxTokensField": "max_tokens"}}))
         out = root / "run"
         proc = subprocess.run([sys.executable, str(HERE / "run_task.py"), "--task", args.task, "--out", str(out),
-                               "--model", str(root / "model.json")], cwd=REPO, capture_output=True, text=True, timeout=1800)
+                               "--model", str(root / "model.json")] + (["--no-subagents"] if args.no_subagents else []),
+                              cwd=REPO, capture_output=True, text=True, timeout=1800)
     finally:
         model_proc.terminate()
     print(proc.stdout.strip())
@@ -126,7 +128,17 @@ def main() -> int:
          and any(s.get("observation", {}).get("results") for s in agent_steps)
          and traj.get("extra", {}).get("native_status") == "completed"),
         ("world container removed", world_gone),
+        ("no world call failed with Unknown tool", not any("Unknown tool" in r for r in res)),
+        ("world tools reached through the relay", "/opt/dsh-bench/lib/mcp_relay.py" in (out / "agent-spec.json").read_text()),
     ]
+    sub_tools = {"subagent", "subagent_fork", "send_message", "list_agents", "interrupt_agent"}
+    everything = json.dumps(req[0]["messages"]).lower() if req else ""
+    if args.no_subagents:
+        checks += [("subagents off: no subagent tools offered", not (sub_tools & tools)),
+                   ("subagents off: no subagent guidance anywhere in the prompt", "subagent" not in everything)]
+    else:
+        checks += [("subagents on: subagent tools offered", {"subagent", "subagent_fork"} <= tools),
+                   ("subagents on: subagent guidance in the system prompt", "use subagent in the background" in everything)]
     width = max(len(name) for name, _ in checks)
     for name, ok in checks:
         print(f"{'PASS' if ok else 'FAIL'}  {name:<{width}}")

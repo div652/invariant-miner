@@ -72,9 +72,10 @@ SPEC_DEFAULTS: dict = {
     # work there too (plugins/fs-podman replaces fs-sandbox). "{workspace}" in prompts means that path. Optional keys:
     # "user" (container user, name or uid[:gid], that DSH's commands and file operations run as; a name also gets the
     # user's groups) and "umask" (octal string, e.g. "0002", for both).
-    "tool_limits": None,  # {"max_lines": int, "max_chars": int, "timeout_s": number}, each optional: every tool call's
-    # text output keeps its head up to max_lines / max_chars (whichever is hit first, with a note of what was cut), and
-    # a call running longer than timeout_s is stopped (plugins/tool-limits). None: no such caps.
+    "tool_limits": None,  # {"max_lines": int, "max_chars": int, "timeout_s": number, "timeout_exclude": [patterns]},
+    # each optional: every tool call's text output keeps its head up to max_lines / max_chars (whichever is hit first,
+    # with a note of what was cut), and a call running longer than timeout_s is stopped, except tools matching
+    # timeout_exclude (`*` wildcard; e.g. MCP tools whose server enforces its own limit) (plugins/tool-limits).
 }
 
 
@@ -245,11 +246,12 @@ def build_run_rows(spec: dict, model: dict, workspace: Path) -> list[dict]:
                                    **{k: spec["attach"][k] for k in ("user", "umask") if k in spec["attach"]}}})
     if spec["tool_limits"] is not None:
         limits = spec["tool_limits"]
-        unknown = set(limits) - {"max_lines", "max_chars", "timeout_s"}
+        unknown = set(limits) - {"max_lines", "max_chars", "timeout_s", "timeout_exclude"}
         if unknown:
             raise ValueError(f"unknown tool_limits keys: {sorted(unknown)}")
         config = {"maxLines": limits.get("max_lines"), "maxChars": limits.get("max_chars"),
-                  "timeoutMs": None if limits.get("timeout_s") is None else int(limits["timeout_s"] * 1000)}
+                  "timeoutMs": None if limits.get("timeout_s") is None else int(limits["timeout_s"] * 1000),
+                  "timeoutExclude": limits.get("timeout_exclude")}
         inserts.append({"id": "tool-limits", "name": str(REPO / "plugins/tool-limits/index.mjs"),
                         "config": {k: v for k, v in config.items() if v is not None}})
     if spec["skills_dir"] is not None:
