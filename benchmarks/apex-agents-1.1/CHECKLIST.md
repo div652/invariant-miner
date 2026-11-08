@@ -55,7 +55,9 @@ DSH's concurrent calls, saw 35 s), 4 worlds booting at a time.
 **Subagents** (user 2026-11-09): two full runs to separate the effects: with DSH's subagent tools off
 (`--no-subagents`: rows tool-subagent, tool-subagent-fork, tool-subagent-control, tool-subagent-list-agents; their
 paragraph leaves the system prompt with them, checked: no "subagent" anywhere in the first request), and with them on
-(the prompt unchanged). Both with the relay. In the first full run, runs that used subagents passed 24% (25/105),
+(the prompt unchanged). Both with the relay.
+
+**Tool schemas sent with `strict: false`** (2026-11-09): the first relay run (subagents off) was stopped after 14 of 124 runs ended in an OpenAI 400, "Invalid schema for 'function definition 28': oneOf constraints are not supported" (28 = `docs_server_create_document`, the first of three world tools with `oneOf`, in DSH's name-sorted tool list with subagents off; 30 with them on, where 240 runs had none). DSH had left `strict` out (`supportsStrictMode: false` in the model file) and OpenAI sometimes compiled the tool schemas strictly, mid-run, at random steps; not reproducible with single requests. `models/luna-max-cao.json` now sends `strict: false` on every tool (checked with tests/log_proxy.py) and retries a model request on INVALID_REQUEST too. Run discarded (`runs/apex11-full-relay-nosub-20261108T201634Z/STOPPED.txt`). In the first full run, runs that used subagents passed 24% (25/105),
 those that did not 42% (57/135).
 
 ## Pitfalls in Mercor's 1.1 delivery, and what we do
