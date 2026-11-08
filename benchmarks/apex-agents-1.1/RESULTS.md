@@ -50,3 +50,18 @@ are added. Version 1 of this harness on APEX-Agents 1.0 (480 tasks, Luna high, a
   infrastructure error, and run_all stops starting tasks after 6 infrastructure failures in a row.
 - Smoke (`runs/apex11-smoke3-20261107T161504Z`, Luna high): 3/3. Gold check (`runs/apex11-gold-*`): 6/6 tasks, 32/32
   criteria.
+
+### Judge check: the same runs regraded by claude-haiku-5-5 (2026-11-09, `runs/apex11-regrade-haiku-20261108T190811Z`)
+
+Mercor's leaderboard reports GPT-5.6 Luna (max) at Pass@1 43.0% (±5.4), mean 57.8% (±4.9), with their own agent and
+judge (deepseek-v4-flash, not on CAO). To see whether our judge explains the gap, the 206 console-answer runs of the
+full run were regraded, unchanged, by claude-haiku-5-5 (CAO; effort high requested, Mercor's temperature 0.1 and judge
+prompt): the CAO model closest to deepseek-v4-flash on Mercor's own leaderboard (as agents: 56.1% vs 55.3% Pass@1).
+
+| Tasks | Pass@1 Gemini 3.8 Flash | Pass@1 Haiku 5.5 | Mean Gemini | Mean Haiku |
+|---|---|---|---|---|
+| 206 console-answer tasks | 32.5% | 33.0% | 0.473 | 0.484 |
+| 199 with final-answer-only criteria | 32.2% | 32.7% | 0.467 | 0.474 |
+
+Criteria: 768 graded by both, 93.8% the same verdict (Cohen's kappa 0.87); tasks: 61 pass under both, 6 only under
+Gemini, 7 only under Haiku. The judge does not explain the gap.
