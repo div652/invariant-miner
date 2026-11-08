@@ -11,7 +11,7 @@ Version 1 of this work (APEX-Agents 1.0, 480 tasks, Archipelago `f8e41cb`) is `b
 Status (2026-11-07): **built and tested.** Core additions (attach as a user with a umask, `plugins/tool-limits`) with
 tests; plumbing 20/20 (scripted model, one real task); gold check 6/6 tasks, 32/32 criteria (one task per output type,
 the experts' outputs through the whole grading path); smoke with Luna (`smoke-3.txt`: one task per job, file and console
-outputs) 3/3 tasks with every criterion met, no infrastructure or grading errors. Full run: not started.
+outputs) 3/3 tasks with every criterion met, no infrastructure or grading errors. Full run (Luna max, 2026-11-08): Pass@1 34.2% (82/240), mean 0.490, no infrastructure or grading errors: RESULTS.md.
 
 ## What changed from 1.0 (summary of the 2026-11-07 analysis)
 

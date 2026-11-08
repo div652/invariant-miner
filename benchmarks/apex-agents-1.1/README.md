@@ -7,6 +7,7 @@ replaces Harbor, Mercor's runner, so that DSH's own tools can work inside the wo
 
 - [CHECKLIST.md](CHECKLIST.md): every decision, what changed from 1.0, pitfalls found in Mercor's 1.1 delivery
   (and what we do about each), each way we differ from Mercor's own setup.
+- [RESULTS.md](RESULTS.md): the full run (Luna max: Pass@1 34.2%).
 - Version 1 (APEX-Agents 1.0, 480 tasks): `benchmarks/apex-agents/`, tag `apex-agents-v1`.
 
 ## Requirements
