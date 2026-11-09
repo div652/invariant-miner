@@ -12,11 +12,19 @@ benchmarks/apex-agents-1.0/splits.json (1.0, 480 tasks).
   rubrics often edited), and each of those 1.0 tasks gets its 1.1 task's split, so a task tuned on in one version is
   never tested on in the other. The other 241 1.0 tasks are shuffled the same way and fill each job to 96/32/32.
 
-Use: `run_all.py --tasks split:train` (or val, test, trainval = train + val) in either benchmark directory.
+Also writes benchmarks/apex-agents/splits-third.json (1.1 only, user 2026-11-10): a second, train-light split of the
+240 tasks, 1/3 train / 2/3 test = 80 / 160, nested in the 60/20/20 one: its 80 train tasks are drawn from the 144
+train tasks above (per job, the job's train tasks, sorted, shuffled with random.Random(SEED)), 26 or 27 per job (the two
+jobs that get 27 drawn with the same generator); every other task is test. So the 60/20/20 val and test tasks are all
+test tasks here, and a harness tuned on this split's train has never seen them.
+
+Use: `run_all.py --tasks split:train` (or val, test, trainval = train + val) in either benchmark directory;
+`run_all.py --tasks third:train` / `third:test` for the 1/3 : 2/3 split (1.1).
 """
 
 import argparse
 import json
+import random
 import re
 import sys
 import tomllib
@@ -30,6 +38,7 @@ from dsh_bench.splits import DEFAULT_RATIOS, NAMES, stratified_split  # noqa: E4
 
 SEED = 20261109
 V10_OUT = REPO / "benchmarks/apex-agents-1.0/splits.json"
+THIRD_TRAIN = 80  # of 240: 1/3 train, 2/3 test
 
 
 def norm(name: str) -> str:
@@ -90,6 +99,31 @@ def main() -> None:
     print("1.0:", {n: data1["counts"][n] for n in NAMES}, data1["counts"]["domains"])
     moved = sum(1 for s, r in v11.items() if r["v1_task_id"] and a1[r["v1_task_id"]] != a11[s])
     print(f"aligned: {len(fixed)} task pairs, {moved} in different splits")
+
+    a3 = third_split(v11, a11)
+    data3 = {"benchmark": "apex-agents",
+             "description": "APEX-Agents 1.1.1 (240 tasks), 1/3 train / 2/3 test = 80 / 160 by job, no val; nested in "
+                            "splits.json: train is drawn from its train, so its val and test tasks are all test here",
+             "seed": SEED, "ratios": {"train": 1 / 3, "val": 0.0, "test": 2 / 3}, "group_by": "domain",
+             "method": "benchmarks/apex-agents/make_splits.py (third_split)",
+             "counts": counts(v11, a3), "splits": {n: [v11[s] for s in sorted(v11) if a3[s] == n] for n in NAMES}}
+    (HERE / "splits-third.json").write_text(json.dumps(data3, indent=1) + "\n")
+    print("1.1 third:", {n: data3["counts"][n] for n in NAMES}, data3["counts"]["domains"])
+
+
+def third_split(v11: dict, a11: dict) -> dict:
+    """slug -> train / test: THIRD_TRAIN train tasks drawn per job from a11's train tasks, the rest test."""
+    rng = random.Random(SEED)
+    domains = sorted({r["domain"] for r in v11.values()})
+    base, extra = divmod(THIRD_TRAIN, len(domains))
+    bonus = set(rng.sample(domains, extra))
+    out = {slug: "test" for slug in v11}
+    for domain in domains:
+        pool = sorted(s for s, r in v11.items() if r["domain"] == domain and a11[s] == "train")
+        rng.shuffle(pool)
+        for slug in pool[:base + (domain in bonus)]:
+            out[slug] = "train"
+    return out
 
 
 if __name__ == "__main__":

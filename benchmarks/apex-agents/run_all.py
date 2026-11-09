@@ -1,10 +1,11 @@
 """Run many APEX-Agents 1.1 tasks in parallel and grade each as it finishes.
 
-    python3 benchmarks/apex-agents/run_all.py --tasks all|FILE|split:NAME --out runs/<run> [--jobs 8]
+    python3 benchmarks/apex-agents/run_all.py --tasks all|FILE|split:NAME|third:NAME --out runs/<run> [--jobs 8]
         [--grade-jobs 6] [--setup-slots 4] [--endpoint cao | --model models/x.json] [--tasks-dir DIR] [--dry-run]
 
-FILE: task slugs (Hub task directory names), one per line. split:NAME: the shared split in splits.json (train, val,
-test, or trainval = train + val for work with only a train and a test set; make_splits.py).
+FILE: task slugs (Hub task directory names), one per line. Two shared splits (make_splits.py), pick one per study:
+split:NAME = splits.json, 60/20/20 (train, val, test, or trainval = train + val: 80:20 for work with only a train and
+a test set); third:NAME = splits-third.json, 1/3 train : 2/3 test (train 80, test 160; nested in splits.json).
 --dry-run lists the selected tasks and stops. Each task runs with run_task.py into <run>/tasks/<slug>/
 and is then graded with grade.py (grading/grades.json). Re-running the same command resumes: tasks with run.json are
 not run again; a task directory without run.json (killed) is moved to <run>/aborted/ and run again. A run that failed
@@ -33,6 +34,8 @@ import grade  # noqa: E402
 import run_task  # noqa: E402
 from dsh_bench.endpoints import load_local_env  # noqa: E402
 from dsh_bench.splits import task_ids as split_task_ids  # noqa: E402
+
+SPLIT_FILES = {"split": "splits.json", "third": "splits-third.json"}  # --tasks PREFIX:NAME
 
 LOCK = threading.Lock()
 ABORT_AFTER = 6
@@ -114,8 +117,9 @@ def main() -> int:
     tasks_dir = args.tasks_dir.expanduser().resolve()
     if args.tasks == "all":
         slugs = sorted(d.name for d in tasks_dir.iterdir() if d.is_dir())
-    elif args.tasks.startswith("split:"):
-        slugs = split_task_ids(HERE / "splits.json", args.tasks.removeprefix("split:"))
+    elif args.tasks.partition(":")[0] in SPLIT_FILES:
+        prefix, _, name = args.tasks.partition(":")
+        slugs = split_task_ids(HERE / SPLIT_FILES[prefix], name)
     else:
         slugs = [line.strip() for line in Path(args.tasks).read_text().splitlines() if line.strip()]
     unknown = [s for s in slugs if not (tasks_dir / s).is_dir()]

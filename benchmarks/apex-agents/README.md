@@ -50,11 +50,22 @@ python3 benchmarks/apex-agents/check_gold.py --out runs/apex11-gold --per-type 1
 
 ## Splits
 
-`splits.json`: the shared train / val / test split of the 240 tasks, 60/20/20 = 144 / 48 / 48, stratified by job
-(48 / 16 / 16 each), task slugs listed (the file is the split; `make_splits.py` made it, seed
-20261109). The APEX-Agents 1.0 split (`benchmarks/apex-agents-1.0/splits.json`) follows it: each 1.1 task's 1.0 original
-(`v1_task_id`) is in the same split. `run_all.py --tasks split:train` (val, test; `trainval` = train + val when working
-with only a train and a test set); `--dry-run` lists the tasks.
+Two shared splits of the 240 tasks, both stratified by job, task slugs listed (the files are the splits;
+`make_splits.py` made both, seed 20261109). Pick one per study:
+
+| `--tasks` | File | Tasks | Use |
+|---|---|---|---|
+| `split:train` / `split:val` / `split:test` | `splits.json` | 144 / 48 / 48 (48 / 16 / 16 per job) | 60/20/20 |
+| `split:trainval` + `split:test` | `splits.json` | 192 + 48 | the original 80:20 train : test |
+| `third:train` + `third:test` | `splits-third.json` | 80 + 160 (27 / 26 / 27 and 53 / 54 / 53 per job) | 1/3 train : 2/3 test |
+
+The 1/3 : 2/3 split is nested in the 60/20/20 one: its 80 train tasks are drawn from `splits.json`'s 144 train tasks,
+so every `splits.json` val and test task is a test task here, and a harness tuned on `third:train` has never seen them.
+It has no val (`third:val` is empty; `third:trainval` = `third:train`).
+
+The APEX-Agents 1.0 split (`benchmarks/apex-agents-1.0/splits.json`) follows `splits.json`: each 1.1 task's 1.0 original
+(`v1_task_id`) is in the same split. `--dry-run` lists the selected tasks; `python3 -m dsh_bench.splits FILE --check`
+prints the counts per job.
 
 ## Run
 
