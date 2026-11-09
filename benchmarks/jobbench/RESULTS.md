@@ -1,5 +1,26 @@
 # JobBench results
 
+## All 65 tasks, GPT-5.6 Luna high via CAO, subagents off vs on, 2026-11-10
+
+Runs `runs/jb-all65-lunahigh-suboff-20261109T215439Z` and `runs/jb-all65-lunahigh-subon-20261109T222237Z` (not in
+git), harness main `b49f3b6` (subagents off in core; the "on" run re-enables DSH's delegation tools and their prompt
+paragraph with a run-local patch). Model `models/luna-cao.json` (gpt-5.6-luna, effort high, reasoning summaries on),
+20 tasks at a time, 2 h per task, one run per task; graded by JobBench's judge (grok-4.6 high via the CAO shim,
+original rubrics), all 65 graded in both.
+
+| | subagents off | subagents on |
+|---|---|---|
+| mean score/max (macro, 65 tasks) | **0.313** | **0.338** |
+| pooled | 0.300 | 0.332 |
+| endings | 65 completed | 65 completed |
+| agent time per task, median | 380 s | 404 s |
+| tasks that delegated | - | 40 (79 subagent sessions) |
+
+Paired over the 65 tasks: on - off = +0.025, 95% CI [-0.007, +0.056], better/equal/worse 28/16/21: no clear effect.
+The difference is the same where the agent delegated (40 tasks: 0.322 vs 0.297) and where it did not (25 tasks: 0.364
+vs 0.339), so it looks like run-to-run noise (per-task SD ~0.13-0.15), not delegation. On APEX-Agents the same switch
+cost about 5 points, all on the tasks where the agent delegated (benchmarks/apex-agents/RESULTS.md).
+
 ## train-20, Luna via CAO, 2026-11-05 (core-v0)
 
 Run `runs/jb-train20-20261105T170005Z` (not in git): 20 tasks, 10 at a time, GPT-5.6 Luna (reasoning high; `models/luna-proxy-high.json`) via the
