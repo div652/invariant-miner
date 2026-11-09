@@ -85,7 +85,7 @@ python3 tests/test_fs_podman.py  # launcher attach mode: file tools (fs-podman) 
 python3 tests/test_attach_user.py  # attach as a container user with umask 0002: owner, group, modes, permissions
 python3 tests/test_tool_limits.py  # plugins/tool-limits: output cap (parity with Archipelago's rule) and per-call timeout
 python3 tests/repro_attach_exit.py # DSH exits promptly after a one-step answer in attach mode
-python3 tests/test_splits.py     # dsh_bench.splits and every benchmarks/*/splits.json (disjoint, 60/20/20 per group)
+python3 tests/test_splits.py     # dsh_bench.splits and every benchmarks/*/splits*.json (disjoint, ratios kept per group)
 ```
 
 ## Setup

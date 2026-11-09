@@ -3,10 +3,12 @@
     python3 benchmarks/harvey/make_specs.py --tasks <ids.txt | split.json[:split]> --out runs/<run>/specs \
         [--model {repo}/models/luna-cao.json] [--max-steps 200] [--timeout-s 7200]
 
---tasks: a file of task ids (e.g. firm-knowledge/tasks/001, one per line), or an AHE splits JSON with
-`:<split>` (default train; trainval = train + val), whose task_json_sha256 values are checked against the pinned
-tasks; `split:<name>` is the shared split, benchmarks/harvey/splits.json (make_splits.py). Needs
-benchmarks/harvey/setup.sh (pinned checkout, image, prepared prompt).
+--tasks: a file of task ids (e.g. firm-knowledge/tasks/001, one per line), or a splits JSON with `:<split>`
+(train, val, test; trainval = train + val; default train), whose task_json_sha256 values are checked against the
+pinned tasks. Shortcuts: `split:<name>` = our 60/20/20 split, benchmarks/harvey/splits.json (make_splits.py);
+`ahe:<name>` = the AHE campaigns' 80/20/70 split, benchmarks/harvey/splits-ahe-80-20-70.json (import_ahe_splits.py;
+ahe:trainval = the 100 tasks AHE evolved on, ahe:test = the 70 it reported on). Needs benchmarks/harvey/setup.sh
+(pinned checkout, image, prepared prompt).
 
 Per task: documents (the task's own, or the shared corpus its `docs_dir` names) are hard-linked read-only into
 workspace/documents; output/ starts empty. No skills (user's decision). patch.yml adds Harvey's write path rule. The user
@@ -21,6 +23,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 from dsh_bench.endpoints import ENDPOINTS, model_for  # noqa: E402
+from dsh_bench.splits import entries  # noqa: E402
 
 HERE = Path(__file__).resolve().parent
 REPO = HERE.parents[1]
@@ -28,16 +31,15 @@ LAB = REPO / "work/harvey-labs"
 PREPARED = REPO / "work/harvey-prepared"
 
 
+SPLIT_FILES = {"split": HERE / "splits.json", "ahe": HERE / "splits-ahe-80-20-70.json"}
+
+
 def task_ids(spec: str) -> tuple[list[str], dict[str, str]]:
     path, _, split = spec.partition(":")
-    if path == "split":  # split:NAME = the shared split, benchmarks/harvey/splits.json (make_splits.py)
-        path, split = str(HERE / "splits.json"), split
+    path = str(SPLIT_FILES.get(path, path))
     if path.endswith(".json"):
-        data = json.loads(Path(path).read_text())
-        split = split or "train"
-        # trainval = train + val: for work with only a train and a test set
-        entries = data["splits"]["train"] + data["splits"]["val"] if split == "trainval" else data["splits"][split]
-        return [e["task_id"] for e in entries], {e["task_id"]: e["task_json_sha256"] for e in entries}
+        chosen = entries(Path(path), split or "train")  # trainval = train + val: work with only a train and a test set
+        return [e["task_id"] for e in chosen], {e["task_id"]: e["task_json_sha256"] for e in chosen}
     return [line.strip() for line in Path(path).read_text().splitlines() if line.strip()], {}
 
 

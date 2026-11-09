@@ -1,0 +1,1927 @@
+{
+ "benchmark": "harvey",
+ "description": "Difficulty strata of the 250 firm-knowledge tasks, as AHE made them (reference). Difficulty is AHE campaign 9b's result per task: gpt-5.6-sol, reasoning high, Harvey's own harness (LAB-exact), one trial per task, judged by Harvey's grader. Tasks sorted hardest first by (9b all-pass, 9b criterion pass rate, sha256('harvey-lab-campaign-12:order:' + task_id)) and cut into 10 blocks of 25: block 0 is the hardest, block 9 the easiest. With one trial per task the all-pass value is 0 or 1, so a block is a coarse difficulty band, not a precise rank.",
+ "source": {
+  "repo": "github.com/div652/evo-harness (AHE Harvey project)",
+  "file": "harvey-ahe-project/splits-firm-knowledge-c34-80-20-70.json",
+  "commit": "8f1af2e",
+  "file_sha256": "f756fdebb0d6230560b881f40b937fb57e98c7c81441b37568d203a3d327836b",
+  "ahe_identity": "harvey-lab-firm-knowledge-c34-80-20-70",
+  "lab_commit": "86678eba6fcbc6c03958742c6e9e75737514f513",
+  "nine_b_source": "campaign 9b C0-train results (runbook 5o)"
+ },
+ "blocks": {
+  "0": {
+   "tasks": 25,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.0,
+   "ahe_split": {
+    "train": 8,
+    "val": 2,
+    "test": 7,
+    "unused": 8
+   },
+   "our_split": {
+    "train": 16,
+    "val": 4,
+    "test": 5
+   }
+  },
+  "1": {
+   "tasks": 25,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.0963,
+   "ahe_split": {
+    "train": 8,
+    "val": 2,
+    "test": 7,
+    "unused": 8
+   },
+   "our_split": {
+    "train": 10,
+    "val": 8,
+    "test": 7
+   }
+  },
+  "2": {
+   "tasks": 25,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.4016,
+   "ahe_split": {
+    "train": 8,
+    "val": 2,
+    "test": 7,
+    "unused": 8
+   },
+   "our_split": {
+    "train": 20,
+    "val": 3,
+    "test": 2
+   }
+  },
+  "3": {
+   "tasks": 25,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.6198,
+   "ahe_split": {
+    "train": 8,
+    "val": 2,
+    "test": 7,
+    "unused": 8
+   },
+   "our_split": {
+    "train": 15,
+    "val": 4,
+    "test": 6
+   }
+  },
+  "4": {
+   "tasks": 25,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.7119,
+   "ahe_split": {
+    "train": 8,
+    "val": 2,
+    "test": 7,
+    "unused": 8
+   },
+   "our_split": {
+    "train": 15,
+    "val": 4,
+    "test": 6
+   }
+  },
+  "5": {
+   "tasks": 25,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.7818,
+   "ahe_split": {
+    "train": 8,
+    "val": 2,
+    "test": 7,
+    "unused": 8
+   },
+   "our_split": {
+    "train": 16,
+    "val": 6,
+    "test": 3
+   }
+  },
+  "6": {
+   "tasks": 25,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.8516,
+   "ahe_split": {
+    "train": 8,
+    "val": 2,
+    "test": 7,
+    "unused": 8
+   },
+   "our_split": {
+    "train": 15,
+    "val": 7,
+    "test": 3
+   }
+  },
+  "7": {
+   "tasks": 25,
+   "nine_b_all_pass": 0.24,
+   "nine_b_criterion_pass_rate": 0.8873,
+   "ahe_split": {
+    "train": 8,
+    "val": 2,
+    "test": 7,
+    "unused": 8
+   },
+   "our_split": {
+    "train": 12,
+    "val": 5,
+    "test": 8
+   }
+  },
+  "8": {
+   "tasks": 25,
+   "nine_b_all_pass": 1.0,
+   "nine_b_criterion_pass_rate": 1.0,
+   "ahe_split": {
+    "train": 8,
+    "val": 2,
+    "test": 7,
+    "unused": 8
+   },
+   "our_split": {
+    "train": 16,
+    "val": 7,
+    "test": 2
+   }
+  },
+  "9": {
+   "tasks": 25,
+   "nine_b_all_pass": 1.0,
+   "nine_b_criterion_pass_rate": 1.0,
+   "ahe_split": {
+    "train": 8,
+    "val": 2,
+    "test": 7,
+    "unused": 8
+   },
+   "our_split": {
+    "train": 15,
+    "val": 2,
+    "test": 8
+   }
+  }
+ },
+ "tasks": {
+  "firm-knowledge/tasks/001": {
+   "difficulty_block": 4,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.7143,
+   "ahe_split": "test",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/002": {
+   "difficulty_block": 5,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.75,
+   "ahe_split": "test",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/003": {
+   "difficulty_block": 8,
+   "nine_b_all_pass": 1.0,
+   "nine_b_criterion_pass_rate": 1.0,
+   "ahe_split": "train",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/004": {
+   "difficulty_block": 0,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.0,
+   "ahe_split": "test",
+   "our_split": "test"
+  },
+  "firm-knowledge/tasks/005": {
+   "difficulty_block": 6,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.8333,
+   "ahe_split": "test",
+   "our_split": "val"
+  },
+  "firm-knowledge/tasks/006": {
+   "difficulty_block": 3,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.6667,
+   "ahe_split": "test",
+   "our_split": "test"
+  },
+  "firm-knowledge/tasks/007": {
+   "difficulty_block": 2,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.3333,
+   "ahe_split": "val",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/008": {
+   "difficulty_block": 1,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.0,
+   "ahe_split": "test",
+   "our_split": "val"
+  },
+  "firm-knowledge/tasks/009": {
+   "difficulty_block": 2,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.3684,
+   "ahe_split": "test",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/010": {
+   "difficulty_block": 2,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.5,
+   "ahe_split": "test",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/011": {
+   "difficulty_block": 2,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.3684,
+   "ahe_split": "train",
+   "our_split": "val"
+  },
+  "firm-knowledge/tasks/012": {
+   "difficulty_block": 8,
+   "nine_b_all_pass": 1.0,
+   "nine_b_criterion_pass_rate": 1.0,
+   "ahe_split": "unused",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/013": {
+   "difficulty_block": 8,
+   "nine_b_all_pass": 1.0,
+   "nine_b_criterion_pass_rate": 1.0,
+   "ahe_split": "test",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/014": {
+   "difficulty_block": 3,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.6667,
+   "ahe_split": "train",
+   "our_split": "val"
+  },
+  "firm-knowledge/tasks/015": {
+   "difficulty_block": 0,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.0,
+   "ahe_split": "unused",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/016": {
+   "difficulty_block": 3,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.6429,
+   "ahe_split": "train",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/017": {
+   "difficulty_block": 5,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.75,
+   "ahe_split": "train",
+   "our_split": "test"
+  },
+  "firm-knowledge/tasks/018": {
+   "difficulty_block": 0,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.0,
+   "ahe_split": "unused",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/019": {
+   "difficulty_block": 6,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.8333,
+   "ahe_split": "unused",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/020": {
+   "difficulty_block": 0,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.0,
+   "ahe_split": "val",
+   "our_split": "val"
+  },
+  "firm-knowledge/tasks/021": {
+   "difficulty_block": 7,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.9167,
+   "ahe_split": "test",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/022": {
+   "difficulty_block": 5,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.7692,
+   "ahe_split": "unused",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/023": {
+   "difficulty_block": 1,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.0,
+   "ahe_split": "test",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/024": {
+   "difficulty_block": 7,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.8889,
+   "ahe_split": "test",
+   "our_split": "val"
+  },
+  "firm-knowledge/tasks/025": {
+   "difficulty_block": 5,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.8,
+   "ahe_split": "unused",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/026": {
+   "difficulty_block": 0,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.0,
+   "ahe_split": "test",
+   "our_split": "test"
+  },
+  "firm-knowledge/tasks/027": {
+   "difficulty_block": 7,
+   "nine_b_all_pass": 0.5,
+   "nine_b_criterion_pass_rate": 0.9286,
+   "ahe_split": "test",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/028": {
+   "difficulty_block": 6,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.8333,
+   "ahe_split": "train",
+   "our_split": "val"
+  },
+  "firm-knowledge/tasks/029": {
+   "difficulty_block": 9,
+   "nine_b_all_pass": 1.0,
+   "nine_b_criterion_pass_rate": 1.0,
+   "ahe_split": "unused",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/030": {
+   "difficulty_block": 6,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.8333,
+   "ahe_split": "test",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/031": {
+   "difficulty_block": 6,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.8333,
+   "ahe_split": "test",
+   "our_split": "test"
+  },
+  "firm-knowledge/tasks/032": {
+   "difficulty_block": 9,
+   "nine_b_all_pass": 1.0,
+   "nine_b_criterion_pass_rate": 1.0,
+   "ahe_split": "train",
+   "our_split": "test"
+  },
+  "firm-knowledge/tasks/033": {
+   "difficulty_block": 9,
+   "nine_b_all_pass": 1.0,
+   "nine_b_criterion_pass_rate": 1.0,
+   "ahe_split": "test",
+   "our_split": "test"
+  },
+  "firm-knowledge/tasks/034": {
+   "difficulty_block": 9,
+   "nine_b_all_pass": 1.0,
+   "nine_b_criterion_pass_rate": 1.0,
+   "ahe_split": "train",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/035": {
+   "difficulty_block": 5,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.8,
+   "ahe_split": "train",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/036": {
+   "difficulty_block": 4,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.6667,
+   "ahe_split": "unused",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/037": {
+   "difficulty_block": 7,
+   "nine_b_all_pass": 0.5,
+   "nine_b_criterion_pass_rate": 0.75,
+   "ahe_split": "unused",
+   "our_split": "test"
+  },
+  "firm-knowledge/tasks/038": {
+   "difficulty_block": 9,
+   "nine_b_all_pass": 1.0,
+   "nine_b_criterion_pass_rate": 1.0,
+   "ahe_split": "unused",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/039": {
+   "difficulty_block": 2,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.28,
+   "ahe_split": "test",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/040": {
+   "difficulty_block": 0,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.0,
+   "ahe_split": "test",
+   "our_split": "val"
+  },
+  "firm-knowledge/tasks/041": {
+   "difficulty_block": 5,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.7609,
+   "ahe_split": "test",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/042": {
+   "difficulty_block": 5,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.75,
+   "ahe_split": "unused",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/043": {
+   "difficulty_block": 5,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.8182,
+   "ahe_split": "test",
+   "our_split": "val"
+  },
+  "firm-knowledge/tasks/044": {
+   "difficulty_block": 0,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.0,
+   "ahe_split": "unused",
+   "our_split": "test"
+  },
+  "firm-knowledge/tasks/045": {
+   "difficulty_block": 6,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.8462,
+   "ahe_split": "test",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/046": {
+   "difficulty_block": 3,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.6154,
+   "ahe_split": "train",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/047": {
+   "difficulty_block": 7,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.92,
+   "ahe_split": "train",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/048": {
+   "difficulty_block": 0,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.0,
+   "ahe_split": "train",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/049": {
+   "difficulty_block": 3,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.5667,
+   "ahe_split": "test",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/050": {
+   "difficulty_block": 2,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.4483,
+   "ahe_split": "val",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/051": {
+   "difficulty_block": 0,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.0,
+   "ahe_split": "unused",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/052": {
+   "difficulty_block": 1,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.0435,
+   "ahe_split": "train",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/053": {
+   "difficulty_block": 5,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.7619,
+   "ahe_split": "train",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/054": {
+   "difficulty_block": 4,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.75,
+   "ahe_split": "test",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/055": {
+   "difficulty_block": 2,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.5,
+   "ahe_split": "unused",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/056": {
+   "difficulty_block": 7,
+   "nine_b_all_pass": 0.5,
+   "nine_b_criterion_pass_rate": 0.75,
+   "ahe_split": "train",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/057": {
+   "difficulty_block": 2,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.4,
+   "ahe_split": "train",
+   "our_split": "val"
+  },
+  "firm-knowledge/tasks/058": {
+   "difficulty_block": 6,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.8636,
+   "ahe_split": "train",
+   "our_split": "test"
+  },
+  "firm-knowledge/tasks/059": {
+   "difficulty_block": 7,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.8889,
+   "ahe_split": "train",
+   "our_split": "test"
+  },
+  "firm-knowledge/tasks/060": {
+   "difficulty_block": 4,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.7143,
+   "ahe_split": "unused",
+   "our_split": "test"
+  },
+  "firm-knowledge/tasks/061": {
+   "difficulty_block": 0,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.0,
+   "ahe_split": "train",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/062": {
+   "difficulty_block": 3,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.6,
+   "ahe_split": "test",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/063": {
+   "difficulty_block": 7,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.9091,
+   "ahe_split": "train",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/064": {
+   "difficulty_block": 2,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.4444,
+   "ahe_split": "test",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/065": {
+   "difficulty_block": 6,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.8333,
+   "ahe_split": "unused",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/066": {
+   "difficulty_block": 5,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.7778,
+   "ahe_split": "train",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/067": {
+   "difficulty_block": 8,
+   "nine_b_all_pass": 1.0,
+   "nine_b_criterion_pass_rate": 1.0,
+   "ahe_split": "test",
+   "our_split": "val"
+  },
+  "firm-knowledge/tasks/068": {
+   "difficulty_block": 2,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.3333,
+   "ahe_split": "train",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/069": {
+   "difficulty_block": 1,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.1667,
+   "ahe_split": "test",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/070": {
+   "difficulty_block": 4,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.75,
+   "ahe_split": "test",
+   "our_split": "val"
+  },
+  "firm-knowledge/tasks/071": {
+   "difficulty_block": 8,
+   "nine_b_all_pass": 1.0,
+   "nine_b_criterion_pass_rate": 1.0,
+   "ahe_split": "unused",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/072": {
+   "difficulty_block": 4,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.75,
+   "ahe_split": "train",
+   "our_split": "test"
+  },
+  "firm-knowledge/tasks/073": {
+   "difficulty_block": 0,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.0,
+   "ahe_split": "unused",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/074": {
+   "difficulty_block": 5,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.7778,
+   "ahe_split": "unused",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/075": {
+   "difficulty_block": 7,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.9231,
+   "ahe_split": "test",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/076": {
+   "difficulty_block": 1,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.2,
+   "ahe_split": "unused",
+   "our_split": "test"
+  },
+  "firm-knowledge/tasks/077": {
+   "difficulty_block": 7,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.8889,
+   "ahe_split": "unused",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/078": {
+   "difficulty_block": 6,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.875,
+   "ahe_split": "test",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/079": {
+   "difficulty_block": 3,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.5,
+   "ahe_split": "test",
+   "our_split": "test"
+  },
+  "firm-knowledge/tasks/080": {
+   "difficulty_block": 5,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.7778,
+   "ahe_split": "train",
+   "our_split": "val"
+  },
+  "firm-knowledge/tasks/081": {
+   "difficulty_block": 0,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.0,
+   "ahe_split": "train",
+   "our_split": "test"
+  },
+  "firm-knowledge/tasks/082": {
+   "difficulty_block": 9,
+   "nine_b_all_pass": 1.0,
+   "nine_b_criterion_pass_rate": 1.0,
+   "ahe_split": "train",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/083": {
+   "difficulty_block": 9,
+   "nine_b_all_pass": 1.0,
+   "nine_b_criterion_pass_rate": 1.0,
+   "ahe_split": "unused",
+   "our_split": "test"
+  },
+  "firm-knowledge/tasks/084": {
+   "difficulty_block": 4,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.6944,
+   "ahe_split": "test",
+   "our_split": "val"
+  },
+  "firm-knowledge/tasks/085": {
+   "difficulty_block": 9,
+   "nine_b_all_pass": 1.0,
+   "nine_b_criterion_pass_rate": 1.0,
+   "ahe_split": "unused",
+   "our_split": "test"
+  },
+  "firm-knowledge/tasks/086": {
+   "difficulty_block": 2,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.4286,
+   "ahe_split": "unused",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/087": {
+   "difficulty_block": 9,
+   "nine_b_all_pass": 1.0,
+   "nine_b_criterion_pass_rate": 1.0,
+   "ahe_split": "test",
+   "our_split": "test"
+  },
+  "firm-knowledge/tasks/088": {
+   "difficulty_block": 5,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.75,
+   "ahe_split": "unused",
+   "our_split": "test"
+  },
+  "firm-knowledge/tasks/089": {
+   "difficulty_block": 3,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.6667,
+   "ahe_split": "test",
+   "our_split": "test"
+  },
+  "firm-knowledge/tasks/090": {
+   "difficulty_block": 7,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.9474,
+   "ahe_split": "val",
+   "our_split": "test"
+  },
+  "firm-knowledge/tasks/091": {
+   "difficulty_block": 4,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.6667,
+   "ahe_split": "train",
+   "our_split": "test"
+  },
+  "firm-knowledge/tasks/092": {
+   "difficulty_block": 3,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.5556,
+   "ahe_split": "train",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/093": {
+   "difficulty_block": 1,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.25,
+   "ahe_split": "train",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/094": {
+   "difficulty_block": 9,
+   "nine_b_all_pass": 1.0,
+   "nine_b_criterion_pass_rate": 1.0,
+   "ahe_split": "val",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/095": {
+   "difficulty_block": 4,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.75,
+   "ahe_split": "unused",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/096": {
+   "difficulty_block": 9,
+   "nine_b_all_pass": 1.0,
+   "nine_b_criterion_pass_rate": 1.0,
+   "ahe_split": "test",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/097": {
+   "difficulty_block": 5,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.75,
+   "ahe_split": "test",
+   "our_split": "val"
+  },
+  "firm-knowledge/tasks/098": {
+   "difficulty_block": 1,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.0,
+   "ahe_split": "val",
+   "our_split": "val"
+  },
+  "firm-knowledge/tasks/099": {
+   "difficulty_block": 4,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.6667,
+   "ahe_split": "test",
+   "our_split": "test"
+  },
+  "firm-knowledge/tasks/100": {
+   "difficulty_block": 2,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.2895,
+   "ahe_split": "unused",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/101": {
+   "difficulty_block": 8,
+   "nine_b_all_pass": 1.0,
+   "nine_b_criterion_pass_rate": 1.0,
+   "ahe_split": "unused",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/102": {
+   "difficulty_block": 2,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.4,
+   "ahe_split": "train",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/103": {
+   "difficulty_block": 3,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.6667,
+   "ahe_split": "test",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/104": {
+   "difficulty_block": 0,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.0,
+   "ahe_split": "train",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/105": {
+   "difficulty_block": 3,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.5,
+   "ahe_split": "val",
+   "our_split": "val"
+  },
+  "firm-knowledge/tasks/106": {
+   "difficulty_block": 2,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.4,
+   "ahe_split": "test",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/107": {
+   "difficulty_block": 3,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.6667,
+   "ahe_split": "unused",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/108": {
+   "difficulty_block": 9,
+   "nine_b_all_pass": 1.0,
+   "nine_b_criterion_pass_rate": 1.0,
+   "ahe_split": "unused",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/109": {
+   "difficulty_block": 4,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.6667,
+   "ahe_split": "unused",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/110": {
+   "difficulty_block": 6,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.8636,
+   "ahe_split": "unused",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/111": {
+   "difficulty_block": 8,
+   "nine_b_all_pass": 1.0,
+   "nine_b_criterion_pass_rate": 1.0,
+   "ahe_split": "train",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/112": {
+   "difficulty_block": 2,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.5,
+   "ahe_split": "unused",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/113": {
+   "difficulty_block": 6,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.8571,
+   "ahe_split": "val",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/114": {
+   "difficulty_block": 1,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.0588,
+   "ahe_split": "train",
+   "our_split": "test"
+  },
+  "firm-knowledge/tasks/115": {
+   "difficulty_block": 6,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.8333,
+   "ahe_split": "val",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/116": {
+   "difficulty_block": 2,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.4348,
+   "ahe_split": "unused",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/117": {
+   "difficulty_block": 3,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.6552,
+   "ahe_split": "unused",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/118": {
+   "difficulty_block": 3,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.5714,
+   "ahe_split": "unused",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/119": {
+   "difficulty_block": 7,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.9167,
+   "ahe_split": "unused",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/120": {
+   "difficulty_block": 8,
+   "nine_b_all_pass": 1.0,
+   "nine_b_criterion_pass_rate": 1.0,
+   "ahe_split": "unused",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/121": {
+   "difficulty_block": 2,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.3889,
+   "ahe_split": "train",
+   "our_split": "test"
+  },
+  "firm-knowledge/tasks/122": {
+   "difficulty_block": 3,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.6667,
+   "ahe_split": "unused",
+   "our_split": "val"
+  },
+  "firm-knowledge/tasks/123": {
+   "difficulty_block": 3,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.65,
+   "ahe_split": "unused",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/124": {
+   "difficulty_block": 4,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.6935,
+   "ahe_split": "test",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/125": {
+   "difficulty_block": 5,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.7931,
+   "ahe_split": "train",
+   "our_split": "val"
+  },
+  "firm-knowledge/tasks/126": {
+   "difficulty_block": 4,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.6897,
+   "ahe_split": "train",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/127": {
+   "difficulty_block": 3,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.625,
+   "ahe_split": "unused",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/128": {
+   "difficulty_block": 2,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.25,
+   "ahe_split": "unused",
+   "our_split": "test"
+  },
+  "firm-knowledge/tasks/129": {
+   "difficulty_block": 8,
+   "nine_b_all_pass": 1.0,
+   "nine_b_criterion_pass_rate": 1.0,
+   "ahe_split": "train",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/130": {
+   "difficulty_block": 2,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.3448,
+   "ahe_split": "train",
+   "our_split": "val"
+  },
+  "firm-knowledge/tasks/131": {
+   "difficulty_block": 8,
+   "nine_b_all_pass": 1.0,
+   "nine_b_criterion_pass_rate": 1.0,
+   "ahe_split": "train",
+   "our_split": "val"
+  },
+  "firm-knowledge/tasks/132": {
+   "difficulty_block": 2,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.3929,
+   "ahe_split": "train",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/133": {
+   "difficulty_block": 6,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.8462,
+   "ahe_split": "unused",
+   "our_split": "val"
+  },
+  "firm-knowledge/tasks/134": {
+   "difficulty_block": 1,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.1667,
+   "ahe_split": "unused",
+   "our_split": "val"
+  },
+  "firm-knowledge/tasks/135": {
+   "difficulty_block": 1,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.0833,
+   "ahe_split": "test",
+   "our_split": "val"
+  },
+  "firm-knowledge/tasks/136": {
+   "difficulty_block": 1,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.0222,
+   "ahe_split": "unused",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/137": {
+   "difficulty_block": 4,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.75,
+   "ahe_split": "train",
+   "our_split": "test"
+  },
+  "firm-knowledge/tasks/138": {
+   "difficulty_block": 0,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.0,
+   "ahe_split": "test",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/139": {
+   "difficulty_block": 6,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.8889,
+   "ahe_split": "unused",
+   "our_split": "val"
+  },
+  "firm-knowledge/tasks/140": {
+   "difficulty_block": 6,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.8636,
+   "ahe_split": "train",
+   "our_split": "val"
+  },
+  "firm-knowledge/tasks/141": {
+   "difficulty_block": 5,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.8276,
+   "ahe_split": "train",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/142": {
+   "difficulty_block": 5,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.7885,
+   "ahe_split": "test",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/143": {
+   "difficulty_block": 6,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.8478,
+   "ahe_split": "unused",
+   "our_split": "val"
+  },
+  "firm-knowledge/tasks/144": {
+   "difficulty_block": 5,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.7931,
+   "ahe_split": "unused",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/145": {
+   "difficulty_block": 4,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.7317,
+   "ahe_split": "unused",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/146": {
+   "difficulty_block": 4,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.7453,
+   "ahe_split": "test",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/147": {
+   "difficulty_block": 5,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.7736,
+   "ahe_split": "test",
+   "our_split": "val"
+  },
+  "firm-knowledge/tasks/148": {
+   "difficulty_block": 0,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.0,
+   "ahe_split": "train",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/149": {
+   "difficulty_block": 6,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.8548,
+   "ahe_split": "train",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/150": {
+   "difficulty_block": 5,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.8235,
+   "ahe_split": "unused",
+   "our_split": "test"
+  },
+  "firm-knowledge/tasks/151": {
+   "difficulty_block": 3,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.6667,
+   "ahe_split": "train",
+   "our_split": "test"
+  },
+  "firm-knowledge/tasks/152": {
+   "difficulty_block": 8,
+   "nine_b_all_pass": 1.0,
+   "nine_b_criterion_pass_rate": 1.0,
+   "ahe_split": "val",
+   "our_split": "val"
+  },
+  "firm-knowledge/tasks/153": {
+   "difficulty_block": 8,
+   "nine_b_all_pass": 1.0,
+   "nine_b_criterion_pass_rate": 1.0,
+   "ahe_split": "unused",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/154": {
+   "difficulty_block": 7,
+   "nine_b_all_pass": 0.5,
+   "nine_b_criterion_pass_rate": 0.8333,
+   "ahe_split": "train",
+   "our_split": "val"
+  },
+  "firm-knowledge/tasks/155": {
+   "difficulty_block": 7,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.9302,
+   "ahe_split": "train",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/156": {
+   "difficulty_block": 5,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.7917,
+   "ahe_split": "unused",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/157": {
+   "difficulty_block": 0,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.0,
+   "ahe_split": "test",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/158": {
+   "difficulty_block": 6,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.8571,
+   "ahe_split": "train",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/159": {
+   "difficulty_block": 9,
+   "nine_b_all_pass": 1.0,
+   "nine_b_criterion_pass_rate": 1.0,
+   "ahe_split": "test",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/160": {
+   "difficulty_block": 5,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.75,
+   "ahe_split": "val",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/161": {
+   "difficulty_block": 7,
+   "nine_b_all_pass": 0.5,
+   "nine_b_criterion_pass_rate": 0.75,
+   "ahe_split": "train",
+   "our_split": "test"
+  },
+  "firm-knowledge/tasks/162": {
+   "difficulty_block": 7,
+   "nine_b_all_pass": 0.5,
+   "nine_b_criterion_pass_rate": 0.875,
+   "ahe_split": "train",
+   "our_split": "test"
+  },
+  "firm-knowledge/tasks/163": {
+   "difficulty_block": 8,
+   "nine_b_all_pass": 1.0,
+   "nine_b_criterion_pass_rate": 1.0,
+   "ahe_split": "test",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/164": {
+   "difficulty_block": 7,
+   "nine_b_all_pass": 0.5,
+   "nine_b_criterion_pass_rate": 0.875,
+   "ahe_split": "val",
+   "our_split": "val"
+  },
+  "firm-knowledge/tasks/165": {
+   "difficulty_block": 7,
+   "nine_b_all_pass": 0.5,
+   "nine_b_criterion_pass_rate": 0.75,
+   "ahe_split": "test",
+   "our_split": "val"
+  },
+  "firm-knowledge/tasks/166": {
+   "difficulty_block": 8,
+   "nine_b_all_pass": 1.0,
+   "nine_b_criterion_pass_rate": 1.0,
+   "ahe_split": "test",
+   "our_split": "val"
+  },
+  "firm-knowledge/tasks/167": {
+   "difficulty_block": 1,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.2,
+   "ahe_split": "train",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/168": {
+   "difficulty_block": 0,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.0,
+   "ahe_split": "unused",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/169": {
+   "difficulty_block": 4,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.6842,
+   "ahe_split": "train",
+   "our_split": "test"
+  },
+  "firm-knowledge/tasks/170": {
+   "difficulty_block": 3,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.5556,
+   "ahe_split": "train",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/171": {
+   "difficulty_block": 1,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.1429,
+   "ahe_split": "test",
+   "our_split": "test"
+  },
+  "firm-knowledge/tasks/172": {
+   "difficulty_block": 8,
+   "nine_b_all_pass": 1.0,
+   "nine_b_criterion_pass_rate": 1.0,
+   "ahe_split": "test",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/173": {
+   "difficulty_block": 9,
+   "nine_b_all_pass": 1.0,
+   "nine_b_criterion_pass_rate": 1.0,
+   "ahe_split": "train",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/174": {
+   "difficulty_block": 4,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.75,
+   "ahe_split": "val",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/175": {
+   "difficulty_block": 6,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.8333,
+   "ahe_split": "test",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/176": {
+   "difficulty_block": 8,
+   "nine_b_all_pass": 1.0,
+   "nine_b_criterion_pass_rate": 1.0,
+   "ahe_split": "train",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/177": {
+   "difficulty_block": 9,
+   "nine_b_all_pass": 1.0,
+   "nine_b_criterion_pass_rate": 1.0,
+   "ahe_split": "unused",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/178": {
+   "difficulty_block": 7,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.913,
+   "ahe_split": "unused",
+   "our_split": "test"
+  },
+  "firm-knowledge/tasks/179": {
+   "difficulty_block": 1,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.1481,
+   "ahe_split": "train",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/180": {
+   "difficulty_block": 7,
+   "nine_b_all_pass": 1.0,
+   "nine_b_criterion_pass_rate": 1.0,
+   "ahe_split": "unused",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/181": {
+   "difficulty_block": 6,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.8333,
+   "ahe_split": "train",
+   "our_split": "val"
+  },
+  "firm-knowledge/tasks/182": {
+   "difficulty_block": 8,
+   "nine_b_all_pass": 1.0,
+   "nine_b_criterion_pass_rate": 1.0,
+   "ahe_split": "val",
+   "our_split": "val"
+  },
+  "firm-knowledge/tasks/183": {
+   "difficulty_block": 9,
+   "nine_b_all_pass": 1.0,
+   "nine_b_criterion_pass_rate": 1.0,
+   "ahe_split": "test",
+   "our_split": "test"
+  },
+  "firm-knowledge/tasks/184": {
+   "difficulty_block": 1,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.1,
+   "ahe_split": "train",
+   "our_split": "val"
+  },
+  "firm-knowledge/tasks/185": {
+   "difficulty_block": 9,
+   "nine_b_all_pass": 1.0,
+   "nine_b_criterion_pass_rate": 1.0,
+   "ahe_split": "train",
+   "our_split": "test"
+  },
+  "firm-knowledge/tasks/186": {
+   "difficulty_block": 1,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.0392,
+   "ahe_split": "test",
+   "our_split": "test"
+  },
+  "firm-knowledge/tasks/187": {
+   "difficulty_block": 7,
+   "nine_b_all_pass": 0.5,
+   "nine_b_criterion_pass_rate": 0.9167,
+   "ahe_split": "test",
+   "our_split": "test"
+  },
+  "firm-knowledge/tasks/188": {
+   "difficulty_block": 1,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.0345,
+   "ahe_split": "unused",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/189": {
+   "difficulty_block": 5,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.8108,
+   "ahe_split": "test",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/190": {
+   "difficulty_block": 1,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.0938,
+   "ahe_split": "train",
+   "our_split": "val"
+  },
+  "firm-knowledge/tasks/191": {
+   "difficulty_block": 4,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.6667,
+   "ahe_split": "val",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/192": {
+   "difficulty_block": 9,
+   "nine_b_all_pass": 1.0,
+   "nine_b_criterion_pass_rate": 1.0,
+   "ahe_split": "train",
+   "our_split": "val"
+  },
+  "firm-knowledge/tasks/193": {
+   "difficulty_block": 7,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.9471,
+   "ahe_split": "test",
+   "our_split": "val"
+  },
+  "firm-knowledge/tasks/194": {
+   "difficulty_block": 4,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.75,
+   "ahe_split": "train",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/195": {
+   "difficulty_block": 6,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.875,
+   "ahe_split": "train",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/196": {
+   "difficulty_block": 8,
+   "nine_b_all_pass": 1.0,
+   "nine_b_criterion_pass_rate": 1.0,
+   "ahe_split": "test",
+   "our_split": "val"
+  },
+  "firm-knowledge/tasks/197": {
+   "difficulty_block": 7,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.9853,
+   "ahe_split": "unused",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/198": {
+   "difficulty_block": 4,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.75,
+   "ahe_split": "train",
+   "our_split": "val"
+  },
+  "firm-knowledge/tasks/199": {
+   "difficulty_block": 8,
+   "nine_b_all_pass": 1.0,
+   "nine_b_criterion_pass_rate": 1.0,
+   "ahe_split": "train",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/200": {
+   "difficulty_block": 8,
+   "nine_b_all_pass": 1.0,
+   "nine_b_criterion_pass_rate": 1.0,
+   "ahe_split": "train",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/201": {
+   "difficulty_block": 5,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.8,
+   "ahe_split": "train",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/202": {
+   "difficulty_block": 1,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.0909,
+   "ahe_split": "val",
+   "our_split": "test"
+  },
+  "firm-knowledge/tasks/203": {
+   "difficulty_block": 8,
+   "nine_b_all_pass": 1.0,
+   "nine_b_criterion_pass_rate": 1.0,
+   "ahe_split": "test",
+   "our_split": "test"
+  },
+  "firm-knowledge/tasks/204": {
+   "difficulty_block": 3,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.6212,
+   "ahe_split": "unused",
+   "our_split": "val"
+  },
+  "firm-knowledge/tasks/205": {
+   "difficulty_block": 8,
+   "nine_b_all_pass": 1.0,
+   "nine_b_criterion_pass_rate": 1.0,
+   "ahe_split": "unused",
+   "our_split": "val"
+  },
+  "firm-knowledge/tasks/206": {
+   "difficulty_block": 9,
+   "nine_b_all_pass": 1.0,
+   "nine_b_criterion_pass_rate": 1.0,
+   "ahe_split": "train",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/207": {
+   "difficulty_block": 1,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.0,
+   "ahe_split": "test",
+   "our_split": "val"
+  },
+  "firm-knowledge/tasks/208": {
+   "difficulty_block": 7,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.9444,
+   "ahe_split": "unused",
+   "our_split": "test"
+  },
+  "firm-knowledge/tasks/209": {
+   "difficulty_block": 0,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.0,
+   "ahe_split": "train",
+   "our_split": "val"
+  },
+  "firm-knowledge/tasks/210": {
+   "difficulty_block": 8,
+   "nine_b_all_pass": 1.0,
+   "nine_b_criterion_pass_rate": 1.0,
+   "ahe_split": "train",
+   "our_split": "test"
+  },
+  "firm-knowledge/tasks/211": {
+   "difficulty_block": 0,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.0,
+   "ahe_split": "train",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/212": {
+   "difficulty_block": 0,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.0,
+   "ahe_split": "unused",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/213": {
+   "difficulty_block": 1,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.1818,
+   "ahe_split": "unused",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/214": {
+   "difficulty_block": 9,
+   "nine_b_all_pass": 1.0,
+   "nine_b_criterion_pass_rate": 1.0,
+   "ahe_split": "test",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/215": {
+   "difficulty_block": 8,
+   "nine_b_all_pass": 1.0,
+   "nine_b_criterion_pass_rate": 1.0,
+   "ahe_split": "unused",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/216": {
+   "difficulty_block": 2,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.5,
+   "ahe_split": "unused",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/217": {
+   "difficulty_block": 1,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.1364,
+   "ahe_split": "unused",
+   "our_split": "test"
+  },
+  "firm-knowledge/tasks/218": {
+   "difficulty_block": 3,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.6111,
+   "ahe_split": "unused",
+   "our_split": "test"
+  },
+  "firm-knowledge/tasks/219": {
+   "difficulty_block": 0,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.0,
+   "ahe_split": "val",
+   "our_split": "val"
+  },
+  "firm-knowledge/tasks/220": {
+   "difficulty_block": 2,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.3333,
+   "ahe_split": "unused",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/221": {
+   "difficulty_block": 9,
+   "nine_b_all_pass": 1.0,
+   "nine_b_criterion_pass_rate": 1.0,
+   "ahe_split": "train",
+   "our_split": "test"
+  },
+  "firm-knowledge/tasks/222": {
+   "difficulty_block": 4,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.6667,
+   "ahe_split": "unused",
+   "our_split": "val"
+  },
+  "firm-knowledge/tasks/223": {
+   "difficulty_block": 3,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.6429,
+   "ahe_split": "train",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/224": {
+   "difficulty_block": 6,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.8571,
+   "ahe_split": "unused",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/225": {
+   "difficulty_block": 2,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.5,
+   "ahe_split": "test",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/226": {
+   "difficulty_block": 0,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.0,
+   "ahe_split": "unused",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/227": {
+   "difficulty_block": 9,
+   "nine_b_all_pass": 1.0,
+   "nine_b_criterion_pass_rate": 1.0,
+   "ahe_split": "test",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/228": {
+   "difficulty_block": 5,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.8,
+   "ahe_split": "val",
+   "our_split": "val"
+  },
+  "firm-knowledge/tasks/229": {
+   "difficulty_block": 1,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.0,
+   "ahe_split": "unused",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/230": {
+   "difficulty_block": 4,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.6667,
+   "ahe_split": "train",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/231": {
+   "difficulty_block": 7,
+   "nine_b_all_pass": 0.5,
+   "nine_b_criterion_pass_rate": 0.8333,
+   "ahe_split": "unused",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/232": {
+   "difficulty_block": 6,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.8333,
+   "ahe_split": "test",
+   "our_split": "test"
+  },
+  "firm-knowledge/tasks/233": {
+   "difficulty_block": 9,
+   "nine_b_all_pass": 1.0,
+   "nine_b_criterion_pass_rate": 1.0,
+   "ahe_split": "unused",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/234": {
+   "difficulty_block": 4,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.75,
+   "ahe_split": "unused",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/235": {
+   "difficulty_block": 9,
+   "nine_b_all_pass": 1.0,
+   "nine_b_criterion_pass_rate": 1.0,
+   "ahe_split": "unused",
+   "our_split": "val"
+  },
+  "firm-knowledge/tasks/236": {
+   "difficulty_block": 9,
+   "nine_b_all_pass": 1.0,
+   "nine_b_criterion_pass_rate": 1.0,
+   "ahe_split": "val",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/237": {
+   "difficulty_block": 2,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.4,
+   "ahe_split": "test",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/238": {
+   "difficulty_block": 3,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.6,
+   "ahe_split": "train",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/239": {
+   "difficulty_block": 3,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.6667,
+   "ahe_split": "test",
+   "our_split": "test"
+  },
+  "firm-knowledge/tasks/240": {
+   "difficulty_block": 0,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.0,
+   "ahe_split": "train",
+   "our_split": "test"
+  },
+  "firm-knowledge/tasks/241": {
+   "difficulty_block": 2,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.5,
+   "ahe_split": "train",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/242": {
+   "difficulty_block": 1,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.25,
+   "ahe_split": "unused",
+   "our_split": "val"
+  },
+  "firm-knowledge/tasks/243": {
+   "difficulty_block": 6,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.875,
+   "ahe_split": "train",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/244": {
+   "difficulty_block": 0,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.0,
+   "ahe_split": "test",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/245": {
+   "difficulty_block": 8,
+   "nine_b_all_pass": 1.0,
+   "nine_b_criterion_pass_rate": 1.0,
+   "ahe_split": "unused",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/246": {
+   "difficulty_block": 4,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.7143,
+   "ahe_split": "unused",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/247": {
+   "difficulty_block": 1,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.0,
+   "ahe_split": "train",
+   "our_split": "test"
+  },
+  "firm-knowledge/tasks/248": {
+   "difficulty_block": 0,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.0,
+   "ahe_split": "test",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/249": {
+   "difficulty_block": 3,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.65,
+   "ahe_split": "val",
+   "our_split": "train"
+  },
+  "firm-knowledge/tasks/250": {
+   "difficulty_block": 6,
+   "nine_b_all_pass": 0.0,
+   "nine_b_criterion_pass_rate": 0.8846,
+   "ahe_split": "unused",
+   "our_split": "train"
+  }
+ }
+}

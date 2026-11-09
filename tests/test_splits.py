@@ -1,9 +1,9 @@
-"""Splits test: dsh_bench.splits and every benchmarks/*/splits.json.
+"""Splits test: dsh_bench.splits and every benchmarks/*/splits*.json.
 
 1. stratified_split on made-up groups: deterministic for a seed, every group cut 60/20/20 (val and test rounded),
    pinned tasks kept where they were pinned, a different seed gives a different split.
-2. Each committed split file: no task in two splits or twice, counts match, each group within one task of its
-   60/20/20 quotas, trainval = train + val, and `python3 -m dsh_bench.splits FILE --check` passes.
+2. Each committed split file (benchmarks/*/splits*.json): no task in two splits or twice, counts match, each group
+   within one task of the file's ratios, trainval = train + val, and `python3 -m dsh_bench.splits FILE --check` passes.
 
     python3 tests/test_splits.py
 """
@@ -42,11 +42,11 @@ def main() -> int:
     checks += [("pinned tasks keep their split", all(d[t] == s for t, s in pinned.items())),
                ("quotas still met with pinned tasks", per_d == per)]
 
-    files = sorted(REPO.glob("benchmarks/*/splits.json"))
+    files = sorted(REPO.glob("benchmarks/*/splits*.json"))
     checks.append(("at least one benchmark has a split file", bool(files)))
     for path in files:
         data = json.loads(path.read_text())
-        name = path.parent.name
+        name = f"{path.parent.name}/{path.name}"
         seen = Counter(e["task_id"] for n in NAMES for e in data["splits"][n])
         field = data.get("group_by")
         by_group = defaultdict(Counter)
@@ -61,7 +61,7 @@ def main() -> int:
             (f"{name}: no task twice or in two splits", all(v == 1 for v in seen.values())),
             (f"{name}: counts match ({len(seen)} tasks)", data["counts"]["total"] == len(seen)
              and all(data["counts"][n] == len(data["splits"][n]) for n in NAMES)),
-            (f"{name}: every {field} within one task of 60/20/20", balanced),
+            (f"{name}: every {field} within one task of its ratios", balanced),
             (f"{name}: trainval = train + val", [e["task_id"] for e in entries(path, "trainval")]
              == [e["task_id"] for e in data["splits"]["train"] + data["splits"]["val"]]),
             (f"{name}: --check passes", cli.returncode == 0),

@@ -12,6 +12,16 @@ here is on firm knowledge only), 60/20/20 = 150 / 50 / 50, task ids with their t
 ids it is given. `make_specs.py --tasks split:train` (val, test;
 `trainval` = train + val when working with only a train and a test set).
 
+AHE split (2026-11-09, user): `splits-ahe-80-20-70.json` is the split the AHE campaigns used (12, 15, 23-27, 34):
+80 train / 20 val / 70 test, imported from the AHE Harvey project's `splits-firm-knowledge-c34-80-20-70.json`
+(`import_ahe_splits.py`; all 170 task.json files byte-identical at our pin). `make_specs.py --tasks ahe:trainval` runs
+the 100 tasks AHE evolved on (= `c34-c0-100.txt`), `ahe:test` the 70 it reported on (C0 Luna 15.2% all-pass above);
+`ahe:train` / `ahe:val` separately. It is stratified by difficulty: AHE campaign 9b's result per task (gpt-5.6-sol
+high, Harvey's own harness, one trial) ranks the 250 tasks hardest first into 10 blocks of 25, and each block gives
+8 train, 2 val, 7 test, 8 unused (80 unused in all); 9b all-pass is 0.225 / 0.225 / 0.221 for train / val / test
+against 0.224 on all 250. The strata themselves, for reference: `difficulty-9b.json` (every task's block, 9b values,
+AHE split and our split). The two splits overlap (21 of our 50 test tasks are in AHE's train + val): pick one per study.
+
 Design decisions (2026-11-05, with the user): DSH's own tools as they are, except `write`, which gets Harvey's path rule
 (Harvey's tasks name deliverables without a folder and rely on the harness to put them in output/, the only folder the
 grader reads); Harvey's system prompt appended after DSH's persona, adapted only where it would be false under DSH;
