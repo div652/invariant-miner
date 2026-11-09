@@ -8,7 +8,8 @@ replaces Harbor, Mercor's runner, so that DSH's own tools can work inside the wo
 - [CHECKLIST.md](CHECKLIST.md): every decision, what changed from 1.0, pitfalls found in Mercor's 1.1 delivery
   (and what we do about each), each way we differ from Mercor's own setup.
 - [RESULTS.md](RESULTS.md): the full run (Luna max: Pass@1 34.2%).
-- Version 1 (APEX-Agents 1.0, 480 tasks): `benchmarks/apex-agents/`, tag `apex-agents-v1`.
+- APEX-Agents 1.0 (480 tasks, Archipelago f8e41cb; version 1 of this work, tag `apex-agents-v1`): kept, runnable, in
+  `benchmarks/apex-agents-1.0/`.
 
 ## Requirements
 
@@ -24,7 +25,7 @@ replaces Harbor, Mercor's runner, so that DSH's own tools can work inside the wo
 ```bash
 ./setup.sh                                  # DSH at its pin + patches (repo root)
 uv tool install harbor==0.20.0              # only for `harbor download`
-benchmarks/apex-agents-1.1/setup.sh         # tasks (Harbor Hub mercor/apex-agents-1-1@1.1.1, checked against
+benchmarks/apex-agents/setup.sh         # tasks (Harbor Hub mercor/apex-agents-1-1@1.1.1, checked against
                                             # tasks.sha256), Mercor's 32 images by digest, ripgrep; then checks
 ```
 
@@ -41,17 +42,17 @@ other keys: 1.1 has no internet apps.
 export NODE=/path/to/node22
 python3 tests/test_attach_user.py                     # DSH's tools as a container user with a umask
 python3 tests/test_tool_limits.py                     # output cap (Mercor's rule) and per-call timeout
-python3 benchmarks/apex-agents-1.1/test_plumbing.py   # one real task end to end with a scripted model: world, 74 world
+python3 benchmarks/apex-agents/test_plumbing.py   # one real task end to end with a scripted model: world, 74 world
                                                       # tools + DSH's, fence, limits, snapshots, trajectory (no model calls)
-python3 benchmarks/apex-agents-1.1/check_gold.py --out runs/apex11-gold --per-type 1
+python3 benchmarks/apex-agents/check_gold.py --out runs/apex11-gold --per-type 1
                                                       # judge calls: the experts' outputs through the whole grading path
 ```
 
 ## Splits
 
 `splits.json`: the shared train / val / test split of the 240 tasks, 60/20/20 = 144 / 48 / 48, stratified by job
-(48 / 16 / 16 each), task slugs listed (the file is the split; `benchmarks/apex-agents/make_splits.py` made it, seed
-20261109). The APEX-Agents 1.0 split (`benchmarks/apex-agents/splits.json`) follows it: each 1.1 task's 1.0 original
+(48 / 16 / 16 each), task slugs listed (the file is the split; `make_splits.py` made it, seed
+20261109). The APEX-Agents 1.0 split (`benchmarks/apex-agents-1.0/splits.json`) follows it: each 1.1 task's 1.0 original
 (`v1_task_id`) is in the same split. `run_all.py --tasks split:train` (val, test; `trainval` = train + val when working
 with only a train and a test set); `--dry-run` lists the tasks.
 
@@ -59,7 +60,7 @@ with only a train and a test set); `--dry-run` lists the tasks.
 
 ```bash
 export NODE=/path/to/node22
-python3 benchmarks/apex-agents-1.1/run_all.py --tasks all --out runs/apex11-<name> [--jobs 12] [--endpoint cao | --model models/x.json]
+python3 benchmarks/apex-agents/run_all.py --tasks all --out runs/apex11-<name> [--jobs 12] [--endpoint cao | --model models/x.json]
 ```
 
 - `--tasks all` or a file of task slugs (`smoke-3.txt`). Tasks run in parallel (default 12; 4 worlds booting at a time)

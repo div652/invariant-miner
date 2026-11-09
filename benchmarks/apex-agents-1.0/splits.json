@@ -1,5 +1,5 @@
 {
- "benchmark": "apex-agents",
+ "benchmark": "apex-agents-1.0",
  "description": "APEX-Agents 1.0 (HF mercor/apex-agents, 480 tasks), 60/20/20 by job; aligned with the 1.1 split: a 1.0 task kept in 1.1 (in_v11) is in the same split there",
  "seed": 20261109,
  "ratios": {

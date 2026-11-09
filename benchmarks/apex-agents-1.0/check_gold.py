@@ -1,6 +1,6 @@
 """Gold check for the grading pipeline: grade the experts' gold outputs as if an agent had produced them.
 
-    python3 benchmarks/apex-agents/check_gold.py --out runs/gold-check [--per-type 2] [--seed 0] [--jobs 8]
+    python3 benchmarks/apex-agents-1.0/check_gold.py --out runs/gold-check [--per-type 2] [--seed 0] [--jobs 8]
 
 For a sample of tasks (per domain for console answers, per file type for file outputs), builds run directories like
 run_task.py's: "before" = the world zip + the task's input files (filesystem/ and .apps_data/), "after" = before plus

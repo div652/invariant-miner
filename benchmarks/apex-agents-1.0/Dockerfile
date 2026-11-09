@@ -1,8 +1,8 @@
 # APEX-Agents task image: Archipelago's environment image plus what its open-source build leaves out.
 #
-#   podman build -t dsh-bench-apex-agents:f8e41cb --build-arg BASE=dsh-bench-apex-agents-env:f8e41cb benchmarks/apex-agents
+#   podman build -t dsh-bench-apex-agents:f8e41cb --build-arg BASE=dsh-bench-apex-agents-env:f8e41cb benchmarks/apex-agents-1.0
 #
-# BASE is Archipelago's environment/Dockerfile at the pinned commit, built unmodified by benchmarks/apex-agents/setup.sh.
+# BASE is Archipelago's environment/Dockerfile at the pinned commit, built unmodified by benchmarks/apex-agents-1.0/setup.sh.
 # This layer (CHECKLIST.md, "Changes from Archipelago's own setup", change 2):
 #   - code_exec's package mirror /usr/local/lib/code_execution, which code_exec's sandbox puts on PYTHONPATH (Python
 #     packages), NODE_PATH (node_modules) and first on PATH (bin/, the soffice wrapper LibreOffice needs under the
@@ -11,7 +11,7 @@
 #     hidden by `;`. Here: the exact versions of code_exec's uv.lock (--no-deps: no re-resolution), its
 #     node_tools/package-lock.json, and its sandbox_bin/soffice.
 #   - ripgrep, for DSH's glob/grep (they run in this container).
-# Helper scripts (benchmarks/apex-agents/container/) are mounted read-only at run time, not baked in.
+# Helper scripts (benchmarks/apex-agents-1.0/container/) are mounted read-only at run time, not baked in.
 ARG BASE=dsh-bench-apex-agents-env:f8e41cb
 FROM ${BASE}
 

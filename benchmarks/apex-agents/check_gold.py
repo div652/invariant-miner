@@ -1,6 +1,6 @@
 """Gold check for APEX-Agents 1.1: the experts' own outputs must pass, graded exactly like an agent run.
 
-    python3 benchmarks/apex-agents-1.1/check_gold.py --out runs/apex11-gold [--per-type 1] [--tasks SLUG ...]
+    python3 benchmarks/apex-agents/check_gold.py --out runs/apex11-gold [--per-type 1] [--tasks SLUG ...]
 
 Per task: Mercor's world boots as in run_task.py (same image, mounts, initial snapshot); the task's golden files
 (tests/golden/filesystem/...) are copied into /filesystem as an agent would leave them (then Mercor's

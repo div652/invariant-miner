@@ -1,6 +1,6 @@
 """Plumbing test for APEX-Agents 1.1: one real task end to end with the scripted model (no model calls).
 
-    python3 benchmarks/apex-agents-1.1/test_plumbing.py [--task 128-jr-1-f7f95d92]
+    python3 benchmarks/apex-agents/test_plumbing.py [--task 128-jr-1-f7f95d92]
 
 Runs run_task.py on a task with input files, with a scripted model that: runs bash (who, umask, cwd, app data, rg,
 pandas), lists the world's files through the filesystem app, runs run_shell, greps with DSH's grep, writes a file with
@@ -37,7 +37,6 @@ def tool_texts(request: dict) -> list[str]:
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--task", default="128-jr-1-f7f95d92")
-    parser.add_argument("--no-subagents", action="store_true", help="also check that subagents and their guidance are off")
     args = parser.parse_args()
     root = Path(tempfile.mkdtemp(prefix="apex11-plumbing-"))
     steps = [
@@ -67,7 +66,7 @@ def main() -> int:
             "compat": {"supportsDeveloperRole": False, "supportsStore": False, "maxTokensField": "max_tokens"}}))
         out = root / "run"
         proc = subprocess.run([sys.executable, str(HERE / "run_task.py"), "--task", args.task, "--out", str(out),
-                               "--model", str(root / "model.json")] + (["--no-subagents"] if args.no_subagents else []),
+                               "--model", str(root / "model.json")],
                               cwd=REPO, capture_output=True, text=True, timeout=1800)
     finally:
         model_proc.terminate()
@@ -133,12 +132,8 @@ def main() -> int:
     ]
     sub_tools = {"subagent", "subagent_fork", "send_message", "list_agents", "interrupt_agent"}
     everything = json.dumps(req[0]["messages"]).lower() if req else ""
-    if args.no_subagents:
-        checks += [("subagents off: no subagent tools offered", not (sub_tools & tools)),
-                   ("subagents off: no subagent guidance anywhere in the prompt", "subagent" not in everything)]
-    else:
-        checks += [("subagents on: subagent tools offered", {"subagent", "subagent_fork"} <= tools),
-                   ("subagents on: subagent guidance in the system prompt", "use subagent in the background" in everything)]
+    checks += [("no subagent tools offered (core)", not (sub_tools & tools)),
+               ("no subagent guidance anywhere in the prompt (core)", "subagent" not in everything)]
     width = max(len(name) for name, _ in checks)
     for name, ok in checks:
         print(f"{'PASS' if ok else 'FAIL'}  {name:<{width}}")

@@ -1,4 +1,7 @@
-# APEX-Agents on dsh-bench-harness
+# APEX-Agents 1.0 on dsh-bench-harness (kept)
+
+The repo's APEX-Agents benchmark is now APEX-Agents 1.1, in `benchmarks/apex-agents/`. This directory keeps version 1
+of this work (the 480-task 1.0 dataset on Archipelago f8e41cb, tag `apex-agents-v1`), runnable as before.
 
 [APEX-Agents](https://arxiv.org/abs/2601.14242) (Mercor, 480 professional-services tasks in 33 simulated worlds) run
 with DSH as the agent. Archipelago, Mercor's infrastructure, provides the environment (one container per task with the
@@ -21,7 +24,7 @@ agent.
 
 ```bash
 ./setup.sh                              # DSH at its pin + patches, built into work/; image dsh-bench-base
-benchmarks/apex-agents/setup.sh         # Archipelago at its pin, images dsh-bench-apex-agents-env + dsh-bench-apex-agents,
+benchmarks/apex-agents-1.0/setup.sh         # Archipelago at its pin, images dsh-bench-apex-agents-env + dsh-bench-apex-agents,
                                         # grader venv; then lists anything still missing
 ```
 
@@ -53,26 +56,26 @@ chmod -R a-w ~/apex-agents-data                                                 
 export NODE=/path/to/node22
 python3 tests/test_fs_podman.py                   # DSH's file tools and bash inside a container-only workspace
 python3 tests/repro_attach_exit.py                # DSH exits promptly after a one-step answer
-python3 benchmarks/apex-agents/test_plumbing.py   # one real task end to end with a scripted model: world loaded,
+python3 benchmarks/apex-agents-1.0/test_plumbing.py   # one real task end to end with a scripted model: world loaded,
                                                   # 9 apps / 73 tools behind the toolbelt, sandbox fence, snapshots
-python3 benchmarks/apex-agents/check_gold.py --out runs/gold-check --per-type 1   # judge calls: the experts' gold
+python3 benchmarks/apex-agents-1.0/check_gold.py --out runs/gold-check --per-type 1   # judge calls: the experts' gold
                                                   # outputs must pass (grading pipeline + document extraction)
 ```
 
 ## Splits
 
 `splits.json`: the shared train / val / test split of the 480 tasks, 60/20/20 = 288 / 96 / 96, stratified by job
-(96 / 32 / 32 each), task ids listed (the file is the split; `make_splits.py` made it, seed 20261109). It is aligned
-with the APEX-Agents 1.1 split (branch `bench/apex-agents`): each 1.0 task that 1.1 kept (`in_v11`) is in the same
+(96 / 32 / 32 each), task ids listed (the file is the split; `benchmarks/apex-agents/make_splits.py` made it, seed 20261109). It is
+aligned with the APEX-Agents 1.1 split (`benchmarks/apex-agents/splits.json`): each 1.0 task that 1.1 kept (`in_v11`) is in the same
 split in both, so a task tuned on in one version is never a test task in the other. Run a split with
 `run_all.py --tasks split:train` (val, test; `trainval` = train + val when working with only a train and a test set);
-`--dry-run` lists the tasks; `python3 -m dsh_bench.splits benchmarks/apex-agents/splits.json --check` shows the counts.
+`--dry-run` lists the tasks; `python3 -m dsh_bench.splits benchmarks/apex-agents-1.0/splits.json --check` shows the counts.
 
 ## Run
 
 ```bash
 export NODE=/path/to/node22
-python3 benchmarks/apex-agents/run_all.py --tasks all --out runs/apex-<name> [--jobs 12] [--endpoint cao | --model models/x.json]
+python3 benchmarks/apex-agents-1.0/run_all.py --tasks all --out runs/apex-<name> [--jobs 12] [--endpoint cao | --model models/x.json]
 ```
 
 - `--tasks all` or a file of task ids (`smoke-3.txt`, `banking-28.txt`). Tasks run in parallel (default 12) and are graded as

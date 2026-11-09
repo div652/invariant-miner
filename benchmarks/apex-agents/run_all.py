@@ -1,10 +1,10 @@
 """Run many APEX-Agents 1.1 tasks in parallel and grade each as it finishes.
 
-    python3 benchmarks/apex-agents-1.1/run_all.py --tasks all|FILE|split:NAME --out runs/<run> [--jobs 8]
+    python3 benchmarks/apex-agents/run_all.py --tasks all|FILE|split:NAME --out runs/<run> [--jobs 8]
         [--grade-jobs 6] [--setup-slots 4] [--endpoint cao | --model models/x.json] [--tasks-dir DIR] [--dry-run]
 
 FILE: task slugs (Hub task directory names), one per line. split:NAME: the shared split in splits.json (train, val,
-test, or trainval = train + val for work with only a train and a test set; benchmarks/apex-agents/make_splits.py).
+test, or trainval = train + val for work with only a train and a test set; make_splits.py).
 --dry-run lists the selected tasks and stops. Each task runs with run_task.py into <run>/tasks/<slug>/
 and is then graded with grade.py (grading/grades.json). Re-running the same command resumes: tasks with run.json are
 not run again; a task directory without run.json (killed) is moved to <run>/aborted/ and run again. A run that failed
@@ -102,7 +102,6 @@ def main() -> int:
     parser.add_argument("--retries", type=int, default=1, help="reruns of a task that failed outside the agent")
     parser.add_argument("--endpoint")
     parser.add_argument("--model")
-    parser.add_argument("--no-subagents", action="store_true", help="DSH's subagent tools and their guidance off")
     parser.add_argument("--judge", default=grade.JUDGE_MODEL)
     parser.add_argument("--effort", default=grade.JUDGE_EFFORT)
     parser.add_argument("--dry-run", action="store_true", help="list the selected tasks and stop")
@@ -137,8 +136,7 @@ def main() -> int:
             out.rename(run_dir / "aborted" / f"{slug}-{int(time.time())}")
     todo = [s for s in slugs if not (run_dir / "tasks" / s / "run.json").exists()]
     log(run_dir, f"start: {len(slugs)} tasks, {len(todo)} to run, jobs {args.jobs}, "
-                 f"model {args.model or args.endpoint or 'default (luna-cao)'}, judge {args.judge} {args.effort}, "
-                 f"subagents {'off' if args.no_subagents else 'on'}")
+                 f"model {args.model or args.endpoint or 'default (luna-cao)'}, judge {args.judge} {args.effort}")
     grade.judge_key()  # fail now, not after the first run, if the judge key is missing
     graders = concurrent.futures.ThreadPoolExecutor(args.grade_jobs)
     grading = []
@@ -154,7 +152,6 @@ def main() -> int:
                 "--lock-dir", str(run_dir / ".locks"), "--setup-slots", str(args.setup_slots)]
         argv += ["--endpoint", args.endpoint] if args.endpoint else []
         argv += ["--model", args.model] if args.model else []
-        argv += ["--no-subagents"] if args.no_subagents else []
         for attempt in range(args.retries + 1):
             t0 = time.monotonic()
             proc = subprocess.run(argv, cwd=REPO, capture_output=True, text=True)

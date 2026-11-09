@@ -1,7 +1,7 @@
 """Fingerprint of the APEX-Agents 1.1 task packages (Harbor Hub download): one sha256 per task directory.
 
-    python3 benchmarks/apex-agents-1.1/fingerprint.py --write TASKS_DIR   # (re)write tasks.sha256 (maintainers only)
-    python3 benchmarks/apex-agents-1.1/fingerprint.py --check TASKS_DIR   # setup.sh: the download is what we analysed
+    python3 benchmarks/apex-agents/fingerprint.py --write TASKS_DIR   # (re)write tasks.sha256 (maintainers only)
+    python3 benchmarks/apex-agents/fingerprint.py --check TASKS_DIR   # setup.sh: the download is what we analysed
 
 A task's hash covers every file under its directory (relative path + content, sorted), so any added, removed or changed
 file shows. tasks.sha256 was written from mercor/apex-agents-1-1@1.1.1 on 2026-11-07 (240 tasks).

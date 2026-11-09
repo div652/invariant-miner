@@ -1,6 +1,6 @@
 """Grade APEX-Agents runs with Archipelago's grader, unchanged (CHECKLIST.md, row 9).
 
-    python3 benchmarks/apex-agents/grade.py RUN_DIR [RUN_DIR ...] [--jobs 8] [--judge gemini-3.8-flash --effort low]
+    python3 benchmarks/apex-agents-1.0/grade.py RUN_DIR [RUN_DIR ...] [--jobs 8] [--judge gemini-3.8-flash --effort low]
 
 RUN_DIR is one task's run_task.py output, or a directory of them. Per task, in RUN_DIR/grading/:
   - a run that ended normally is graded: with final_answer, or with a final reply that calls no tool (DSH's own end of

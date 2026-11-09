@@ -1,6 +1,6 @@
 """Grade APEX-Agents 1.1 runs with Mercor's own 1.1 grader image (CHECKLIST.md, decision 7 and "How a task runs").
 
-    python3 benchmarks/apex-agents-1.1/grade.py RUN_DIR [RUN_DIR ...] [--jobs 6] [--regrade] [--keep-snapshots]
+    python3 benchmarks/apex-agents/grade.py RUN_DIR [RUN_DIR ...] [--jobs 6] [--regrade] [--keep-snapshots]
         [--judge gemini-3.8-flash] [--effort high]
 
 RUN_DIR is one task's run_task.py output, or a directory of them. Per task, in RUN_DIR/grading/:

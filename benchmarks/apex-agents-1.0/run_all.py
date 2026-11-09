@@ -1,10 +1,10 @@
 """Run many APEX-Agents tasks in parallel and grade each as it finishes.
 
-    python3 benchmarks/apex-agents/run_all.py --tasks all|FILE|split:NAME --out runs/<run> [--jobs 12] [--grade-jobs 6]
+    python3 benchmarks/apex-agents-1.0/run_all.py --tasks all|FILE|split:NAME --out runs/<run> [--jobs 12] [--grade-jobs 6]
         [--endpoint cao | --model models/x.json] [--dry-run]
 
 FILE: task ids, one per line. split:NAME: the shared split in splits.json (train, val, test, or trainval = train + val
-for work with only a train and a test set; make_splits.py). --dry-run lists the selected tasks and stops. Each task runs with run_task.py into <run>/tasks/<task_id>/ and is then graded with
+for work with only a train and a test set; benchmarks/apex-agents/make_splits.py). --dry-run lists the selected tasks and stops. Each task runs with run_task.py into <run>/tasks/<task_id>/ and is then graded with
 grade.py (grading/grades.json). A task whose directory already has run.json is not run again (resume after a stop by
 re-running the same command; move a broken task directory away to redo it). Tasks of the two banking worlds (Edgar SEC,
 FMP) need DSH_BENCH_EDGAR_USER_AGENT and DSH_BENCH_FMP_KEY_FILE in local.env; without them they are skipped and listed

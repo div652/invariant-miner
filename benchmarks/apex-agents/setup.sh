@@ -2,14 +2,14 @@
 # APEX-Agents 1.1 for dsh-bench-harness: the task packages (Harbor Hub), Mercor's 1.1 images by digest, ripgrep for
 # DSH's glob/grep; then checks what a run needs that is not in the repo.
 #
-#   benchmarks/apex-agents-1.1/setup.sh          (after the repo's ./setup.sh)
+#   benchmarks/apex-agents/setup.sh          (after the repo's ./setup.sh)
 #
 # - tasks: mercor/apex-agents-1-1@1.1.1 from Harbor Hub (`harbor download`; Harbor 0.20.0: `uv tool install
 #   harbor==0.20.0`), into $APEX_AGENTS_11_HUB (default ~/apex-agents-1.1-hub)/apex-agents-1-1, then checked against
 #   tasks.sha256 (the 240 packages we analysed). The Hub copy, not Hugging Face: CHECKLIST.md, pitfall 2.
 # - images: every world image and the verifier image the tasks name (public ECR, pinned by digest; ~16 GB for the
 #   first world, ~0.1-0.5 GB for each further one; layers are shared). Pulled unmodified; nothing is built.
-# - ripgrep $RG_VERSION (static musl build, checksum below) into work/apex-agents-1.1/bin: mounted read-only into the
+# - ripgrep $RG_VERSION (static musl build, checksum below) into work/apex-agents/bin: mounted read-only into the
 #   world for DSH's glob/grep only (the world image has none; run_shell's PATH does not include it).
 set -euo pipefail
 HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"; REPO="$(cd "$HERE/../.." && pwd)"
@@ -19,9 +19,9 @@ DATASET=mercor/apex-agents-1-1@1.1.1
 RUNTIME="${RUNTIME:-podman}"
 RG_VERSION=14.1.1
 RG_SHA256=4cf9f2741e6c465ffdb7c26f38056a59e2a2544b51f7cc128ef28337eeae4d8e
-RG_DIR="$REPO/work/apex-agents-1.1/bin"
-log() { echo "[apex-agents-1.1 setup] $*"; }
-die() { echo "[apex-agents-1.1 setup] ERROR: $*" >&2; exit 1; }
+RG_DIR="$REPO/work/apex-agents/bin"
+log() { echo "[apex-agents setup] $*"; }
+die() { echo "[apex-agents setup] ERROR: $*" >&2; exit 1; }
 
 # --- tasks -------------------------------------------------------------------------------------------------------------
 if [[ ! -d "$TASKS" ]]; then
@@ -78,7 +78,7 @@ sys.path.insert(0, sys.argv[1])
 from dsh_bench.endpoints import load_local_env
 load_local_env()
 if not os.environ.get("DSH_BENCH_CAO_KEY_FILE"):
-    print("[apex-agents-1.1 setup] MISSING DSH_BENCH_CAO_KEY_FILE in ~/.config/dsh-bench/local.env: agent model (CAO) "
+    print("[apex-agents setup] MISSING DSH_BENCH_CAO_KEY_FILE in ~/.config/dsh-bench/local.env: agent model (CAO) "
           "and the judge; or choose another --endpoint for the agent and DSH_BENCH_JUDGE_* for the judge")
     sys.exit(1)
 EOF

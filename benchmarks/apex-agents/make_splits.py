@@ -1,10 +1,10 @@
-"""Write the train / val / test splits (60/20/20) of APEX-Agents 1.0 and 1.1, aligned with each other.
+"""Write the train / val / test splits (60/20/20) of APEX-Agents 1.1 and 1.0, aligned with each other.
 
-    python3 benchmarks/apex-agents/make_splits.py [--dataset ~/apex-agents-data]
-        [--v11-tasks ~/apex-agents-1.1-hub/apex-agents-1-1] [--v11-out benchmarks/apex-agents-1.1/splits.json]
+    python3 benchmarks/apex-agents/make_splits.py [--v11-tasks ~/apex-agents-1.1-hub/apex-agents-1-1]
+        [--dataset ~/apex-agents-data]
 
-Maintainers only: the files are committed. Writes benchmarks/apex-agents/splits.json (1.0, 480 tasks) and, with
---v11-out, the 1.1 split (240 tasks, its benchmark directory is on the 1.1 branch).
+Maintainers only: the files are committed. Writes benchmarks/apex-agents/splits.json (1.1, 240 tasks) and
+benchmarks/apex-agents-1.0/splits.json (1.0, 480 tasks).
 
 - 1.1: stratified by job (Investment Banking, Law, Management Consulting: 80 each): within each job the task slugs,
   sorted, are shuffled with random.Random(SEED) and cut 48/16/16 (dsh_bench.splits.stratified_split).
@@ -29,6 +29,7 @@ sys.path.insert(0, str(REPO))
 from dsh_bench.splits import DEFAULT_RATIOS, NAMES, stratified_split  # noqa: E402
 
 SEED = 20261109
+V10_OUT = REPO / "benchmarks/apex-agents-1.0/splits.json"
 
 
 def norm(name: str) -> str:
@@ -45,7 +46,6 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--dataset", type=Path, default=Path.home() / "apex-agents-data")
     parser.add_argument("--v11-tasks", type=Path, default=Path.home() / "apex-agents-1.1-hub/apex-agents-1-1")
-    parser.add_argument("--v11-out", type=Path, default=None)
     args = parser.parse_args()
 
     v1 = {t["task_id"]: {"task_id": t["task_id"], "task_name": t["task_name"], "domain": t["domain"],
@@ -75,22 +75,19 @@ def main() -> None:
     fixed = {r["v1_task_id"]: a11[s] for s, r in v11.items() if r["v1_task_id"]}
     a1 = stratified_split({t: r["domain"] for t, r in v1.items()}, SEED, fixed=fixed)
 
-    common = {"seed": SEED, "ratios": DEFAULT_RATIOS, "group_by": "domain"}
-    data1 = {"benchmark": "apex-agents",
+    common = {"seed": SEED, "ratios": DEFAULT_RATIOS, "group_by": "domain", "method": "benchmarks/apex-agents/make_splits.py"}
+    data11 = {"benchmark": "apex-agents",
+              "description": "APEX-Agents 1.1.1 (Harbor Hub mercor/apex-agents-1-1@1.1.1, 240 tasks; task_id is the task "
+                             "directory), 60/20/20 by job; the 1.0 split follows this one (v1_task_id)",
+              **common, "counts": counts(v11, a11), "splits": {n: [v11[s] for s in sorted(v11) if a11[s] == n] for n in NAMES}}
+    (HERE / "splits.json").write_text(json.dumps(data11, indent=1) + "\n")
+    data1 = {"benchmark": "apex-agents-1.0",
              "description": "APEX-Agents 1.0 (HF mercor/apex-agents, 480 tasks), 60/20/20 by job; aligned with the 1.1 "
                             "split: a 1.0 task kept in 1.1 (in_v11) is in the same split there",
-             **common, "method": "benchmarks/apex-agents/make_splits.py", "counts": counts(v1, a1),
-             "splits": {n: [v1[t] for t in sorted(v1) if a1[t] == n] for n in NAMES}}
-    (HERE / "splits.json").write_text(json.dumps(data1, indent=1) + "\n")
+             **common, "counts": counts(v1, a1), "splits": {n: [v1[t] for t in sorted(v1) if a1[t] == n] for n in NAMES}}
+    V10_OUT.write_text(json.dumps(data1, indent=1) + "\n")
+    print("1.1:", {n: data11["counts"][n] for n in NAMES}, data11["counts"]["domains"])
     print("1.0:", {n: data1["counts"][n] for n in NAMES}, data1["counts"]["domains"])
-    if args.v11_out:
-        data11 = {"benchmark": "apex-agents-1.1",
-                  "description": "APEX-Agents 1.1.1 (Harbor Hub mercor/apex-agents-1-1@1.1.1, 240 tasks; task_id is "
-                                 "the task directory), 60/20/20 by job; the 1.0 split follows this one (v1_task_id)",
-                  **common, "method": "benchmarks/apex-agents/make_splits.py", "counts": counts(v11, a11),
-                  "splits": {n: [v11[s] for s in sorted(v11) if a11[s] == n] for n in NAMES}}
-        args.v11_out.write_text(json.dumps(data11, indent=1) + "\n")
-        print("1.1:", {n: data11["counts"][n] for n in NAMES}, data11["counts"]["domains"])
     moved = sum(1 for s, r in v11.items() if r["v1_task_id"] and a1[r["v1_task_id"]] != a11[s])
     print(f"aligned: {len(fixed)} task pairs, {moved} in different splits")
 

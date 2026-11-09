@@ -1,6 +1,6 @@
 """Run one APEX-Agents task: Archipelago's environment as Mercor built it, DSH in place of Archipelago's agent.
 
-    python3 benchmarks/apex-agents/run_task.py --task <task_id> --out runs/<run>/<task_id> \
+    python3 benchmarks/apex-agents-1.0/run_task.py --task <task_id> --out runs/<run>/<task_id> \
         [--dataset ~/apex-agents-data] [--endpoint cao | --model models/x.json]
 
 Steps (CHECKLIST.md has the decisions; Archipelago's examples/hugging_face_task/main.py is the reference flow):
@@ -310,7 +310,7 @@ def main() -> int:
             "toolbelt": {},
             "final_answer": True,
             "limits": {"max_steps": args.max_steps, "timeout_s": args.timeout_s, "temperature": None},
-            "meta": {"benchmark": "apex-agents", "dataset": str(dataset), "world_id": world["world_id"]},
+            "meta": {"benchmark": "apex-agents-1.0", "dataset": str(dataset), "world_id": world["world_id"]},
         }
         (out / "agent-spec.json").write_text(json.dumps(spec, indent=2) + "\n")
         t1 = time.monotonic()

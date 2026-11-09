@@ -2,13 +2,13 @@
 # APEX-Agents for dsh-bench-harness: the pinned Archipelago checkout, its environment image plus our layer, and the
 # grader's Python env.
 #
-#   benchmarks/apex-agents/setup.sh [--rebuild]       (after the repo's ./setup.sh)
+#   benchmarks/apex-agents-1.0/setup.sh [--rebuild]       (after the repo's ./setup.sh)
 #
 # - work/archipelago: Mercor-Intelligence/archipelago @ $PIN (environment, MCP app servers, grader, HF example config),
 #   from upstream or, if upstream dropped the commit, from the unmodified copy div652/archipelago-pinned.
 # - image dsh-bench-apex-agents-env:<pin>: Archipelago's environment/Dockerfile at the pin, unmodified, under our tag
 #   (~12 GB; first build ~10 min, needs network for apt/uv/npm).
-# - image dsh-bench-apex-agents:<pin>: our layer (benchmarks/apex-agents/Dockerfile): code_exec's package mirror and
+# - image dsh-bench-apex-agents:<pin>: our layer (benchmarks/apex-agents-1.0/Dockerfile): code_exec's package mirror and
 #   ripgrep (CHECKLIST.md, change 2). Images that already exist are kept unless --rebuild (a rebuild reuses podman's
 #   layer cache).
 # - work/archipelago/grading/.venv: the grader's locked environment (uv sync --locked), used by grade.py.
@@ -21,7 +21,7 @@ RUNTIME="${RUNTIME:-podman}"
 BASE="dsh-bench-apex-agents-env:${PIN:0:7}"
 IMAGE="dsh-bench-apex-agents:${PIN:0:7}"
 REBUILD=0; [[ "${1:-}" == "--rebuild" ]] && REBUILD=1
-log() { echo "[apex-agents setup] $*"; }
+log() { echo "[apex-agents-1.0 setup] $*"; }
 
 # Upstream rewrites its history on every sync from Mercor's internal repo (main is one new commit each time), so the
 # pin is fetched by hash; a plain clone would not contain it, and upstream may garbage-collect it. Fallback:
@@ -76,7 +76,7 @@ need = {"DSH_BENCH_CAO_KEY_FILE": "agent model and judge (CAO); or choose anothe
         "DSH_BENCH_EDGAR_USER_AGENT": "Edgar SEC app (banking worlds 244/246 only)"}
 bad = [k for k in need if not os.environ.get(k)]
 for k in bad:
-    print(f"[apex-agents setup] MISSING {k} in ~/.config/dsh-bench/local.env: {need[k]} (see local.env.example)")
+    print(f"[apex-agents-1.0 setup] MISSING {k} in ~/.config/dsh-bench/local.env: {need[k]} (see local.env.example)")
 sys.exit(1 if "DSH_BENCH_CAO_KEY_FILE" in bad else 0)
 EOF
 log "done: work/archipelago @ ${PIN:0:9}, images $BASE + $IMAGE, grader venv$([[ $missing == 1 ]] && echo '; fix the MISSING items above before running')"

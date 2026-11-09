@@ -7,7 +7,7 @@ answer. Checks: the world and task files were populated through Archipelago's AP
 behind the toolbelt), each tool result, the snapshots (before has the task file, after also has the written file),
 the trajectory for Archipelago's grader.
 
-    python3 benchmarks/apex-agents/test_plumbing.py [--task task_0b9134a634c14f24a6c256d034a6c130]
+    python3 benchmarks/apex-agents-1.0/test_plumbing.py [--task task_0b9134a634c14f24a6c256d034a6c130]
 """
 
 import argparse

@@ -1,5 +1,5 @@
 {
- "benchmark": "apex-agents-1.1",
+ "benchmark": "apex-agents",
  "description": "APEX-Agents 1.1.1 (Harbor Hub mercor/apex-agents-1-1@1.1.1, 240 tasks; task_id is the task directory), 60/20/20 by job; the 1.0 split follows this one (v1_task_id)",
  "seed": 20261109,
  "ratios": {

@@ -5,8 +5,9 @@ Benchmark: **APEX-Agents 1.1.1** (Mercor, September 2026; blog "Introducing APEX
 rubric criteria, gold outputs for every task; Mercor's own images by digest (31 world images, 1 verifier image).
 `tasks.sha256` fingerprints the 240 task packages we analysed (setup.sh checks every download against it).
 
-Version 1 of this work (APEX-Agents 1.0, 480 tasks, Archipelago `f8e41cb`) is `benchmarks/apex-agents/`, tag
-`apex-agents-v1`; it stays runnable. This directory is version 2.
+Version 1 of this work (APEX-Agents 1.0, 480 tasks, Archipelago `f8e41cb`) is `benchmarks/apex-agents-1.0/`, tag
+`apex-agents-v1`; it stays runnable. This directory is version 2, the APEX-Agents benchmark of the repo (moved here
+from `benchmarks/apex-agents-1.1/` when merged to main, 2026-11-09).
 
 Status (2026-11-07): **built and tested.** Core additions (attach as a user with a umask, `plugins/tool-limits`) with
 tests; plumbing 20/20 (scripted model, one real task); gold check 6/6 tasks, 32/32 criteria (one task per output type,
@@ -55,7 +56,7 @@ DSH's concurrent calls, saw 35 s), 4 worlds booting at a time.
 **Subagents** (user 2026-11-09): two full runs to separate the effects: with DSH's subagent tools off
 (`--no-subagents`: rows tool-subagent, tool-subagent-fork, tool-subagent-control, tool-subagent-list-agents; their
 paragraph leaves the system prompt with them, checked: no "subagent" anywhere in the first request), and with them on
-(the prompt unchanged). Both with the relay.
+(the prompt unchanged). Both with the relay. Since the merge to main (2026-11-09) subagents are off in the core (`harness/core.patch.yml`) for every benchmark, and `--no-subagents` is gone.
 
 **Tool schemas sent with `strict: false`** (2026-11-09): the first relay run (subagents off) was stopped after 14 of 124 runs ended in an OpenAI 400, "Invalid schema for 'function definition 28': oneOf constraints are not supported" (28 = `docs_server_create_document`, the first of three world tools with `oneOf`, in DSH's name-sorted tool list with subagents off; 30 with them on, where 240 runs had none). DSH had left `strict` out (`supportsStrictMode: false` in the model file) and OpenAI sometimes compiled the tool schemas strictly, mid-run, at random steps; not reproducible with single requests. `models/luna-max-cao.json` now sends `strict: false` on every tool (checked with tests/log_proxy.py) and retries a model request on INVALID_REQUEST too. Run discarded (`runs/apex11-full-relay-nosub-20261108T201634Z/STOPPED.txt`). In the first full run, runs that used subagents passed 24% (25/105),
 those that did not 42% (57/135).
