@@ -1,5 +1,48 @@
 # APEX-Agents 1.1: results
 
+## The same with subagents on, 2026-11-09 (`runs/apex11-full-relay-sub-20261108T235952Z`)
+
+Run A's setup exactly (below: relay, 8 in parallel, `strict: false`, Luna max via CAO, judge gemini-3.8-flash high),
+except DSH's subagent tools on, with their prompt paragraph ("Use subagent in the background by default ..."), as in
+the first full run. 13:47 IST to 00:40 IST (the last two tasks ran to the 3 h limit). It separates the two changes
+since the first run: the relay fix alone, then the relay fix plus subagents off.
+
+**Pass@1 39.2% (94 / 240), mean score 0.543.** No infrastructure or grading errors.
+
+| Run (same 240 tasks, same judge) | Pass@1 | Mean score |
+|---|---|---|
+| First full run (caching bridge, subagents on) | 34.2% (82) | 0.490 |
+| **B: relay fix, subagents on** | **39.2% (94)** | **0.543** |
+| A: relay fix, subagents off | 43.75% (105) | 0.599 |
+| Mercor's leaderboard (their agent and judge) | 43.0% | 0.578 |
+
+Paired over the 240 tasks (bootstrap 95% CI over tasks; W/T/L = tasks better / equal / worse):
+- relay fix (B - first): Pass@1 +5.0 points [+0.0, +10.0], W/T/L 26/200/14; mean score +0.053 [+0.005, +0.099]
+- subagents off (A - B): Pass@1 +4.6 points [-0.8, +10.0], W/T/L 27/197/16; mean score +0.056 [+0.006, +0.107]
+
+So each change gave about 5 points of Pass@1. The subagent effect on the mean score is clearly above zero; on Pass@1 its
+interval just touches zero.
+
+| Job | B Pass@1 | B mean | A Pass@1 | A mean |
+|---|---|---|---|---|
+| Investment Banking | 46.3% | 0.516 | 38.8% | 0.447 |
+| Law | 41.3% | 0.622 | 50.0% | 0.776 |
+| Management Consulting | 30.0% | 0.491 | 42.5% | 0.574 |
+
+Where the subagents were used: B started at least one subagent on 107 of the 240 tasks (229 subagent sessions,
+median 1 per such task). On those 107 tasks B scored 29.9% Pass@1 / 0.453 mean against A's 41.1% / 0.581 on the same
+tasks; on the other 133, where B's agent worked alone, B 46.6% / 0.615 against A 45.9% / 0.613, i.e. the same. The
+loss comes from the tasks where the agent delegated, not from the prompt paragraph by itself. (The agent chose where to
+delegate, and those tasks are a little harder for A too, so this split is suggestive, not a controlled comparison.)
+
+Endings: 236 completed, 2 at the 3 h limit (both with many subagents: 13 and 27 sessions), 1 at the 100-step limit
+(graded, as Mercor's), 1 error: OpenAI refused a request mid-run in `world434-js-03` (a Singapore lease-frustration law
+question) with "invalid_prompt: your prompt was flagged as potentially violating our usage policy"; scored 0 (A, same
+task: 0.67). Agent time per task: median 666 s, p90 1,774 s (A: 618 s, 1,381 s).
+
+Decision taken from this (user, 2026-11-09): subagents off in the core harness for every benchmark
+(`harness/core.patch.yml`).
+
 ## Full run with the fixes, subagents off, 2026-11-09 (`runs/apex11-full-relay-nosub-20261108T235952Z`)
 
 Same setup as the first full run below, with the fixes found comparing against Mercor's leaderboard (CHECKLIST.md):
@@ -30,8 +73,7 @@ Against the first full run on the same 240 tasks: 74 pass in both, 31 only here,
 World calls: 6,521, median 16.5 s (first run 35 s), none failed with "Unknown tool" (first run 14%), 19 hit the 60 s
 limit. Main agent steps: median 17.5, p90 35, none at the 100-step limit.
 
-A matching run with subagents on (prompt unchanged), to separate the two changes, followed:
-`runs/apex11-full-relay-sub-20261108T235952Z`.
+The matching run with subagents on (run B) is the section above.
 
 ## Full run, 2026-11-08 (`runs/apex11-full-lunamax-20261107T193631Z`, branch `bench/apex-agents` 9d7fa85)
 
