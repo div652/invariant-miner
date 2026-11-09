@@ -4,7 +4,8 @@
         [--model {repo}/models/luna-cao.json] [--max-steps 200] [--timeout-s 7200]
 
 --tasks: a file of task ids (e.g. firm-knowledge/tasks/001, one per line), or an AHE splits JSON with
-`:<split>` (default train), whose task_json_sha256 values are checked against the pinned tasks. Needs
+`:<split>` (default train; trainval = train + val), whose task_json_sha256 values are checked against the pinned
+tasks; `split:<name>` is the shared split, benchmarks/harvey/splits.json (make_splits.py). Needs
 benchmarks/harvey/setup.sh (pinned checkout, image, prepared prompt).
 
 Per task: documents (the task's own, or the shared corpus its `docs_dir` names) are hard-linked read-only into
@@ -29,9 +30,13 @@ PREPARED = REPO / "work/harvey-prepared"
 
 def task_ids(spec: str) -> tuple[list[str], dict[str, str]]:
     path, _, split = spec.partition(":")
+    if path == "split":  # split:NAME = the shared split, benchmarks/harvey/splits.json (make_splits.py)
+        path, split = str(HERE / "splits.json"), split
     if path.endswith(".json"):
         data = json.loads(Path(path).read_text())
-        entries = data["splits"][split or "train"]
+        split = split or "train"
+        # trainval = train + val: for work with only a train and a test set
+        entries = data["splits"]["train"] + data["splits"]["val"] if split == "trainval" else data["splits"][split]
         return [e["task_id"] for e in entries], {e["task_id"]: e["task_json_sha256"] for e in entries}
     return [line.strip() for line in Path(path).read_text().splitlines() if line.strip()], {}
 

@@ -59,6 +59,15 @@ python3 benchmarks/apex-agents/check_gold.py --out runs/gold-check --per-type 1 
                                                   # outputs must pass (grading pipeline + document extraction)
 ```
 
+## Splits
+
+`splits.json`: the shared train / val / test split of the 480 tasks, 60/20/20 = 288 / 96 / 96, stratified by job
+(96 / 32 / 32 each), task ids listed (the file is the split; `make_splits.py` made it, seed 20261109). It is aligned
+with the APEX-Agents 1.1 split (branch `bench/apex-agents`): each 1.0 task that 1.1 kept (`in_v11`) is in the same
+split in both, so a task tuned on in one version is never a test task in the other. Run a split with
+`run_all.py --tasks split:train` (val, test; `trainval` = train + val when working with only a train and a test set);
+`--dry-run` lists the tasks; `python3 -m dsh_bench.splits benchmarks/apex-agents/splits.json --check` shows the counts.
+
 ## Run
 
 ```bash
