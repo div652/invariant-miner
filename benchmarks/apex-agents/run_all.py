@@ -1,9 +1,10 @@
 """Run many APEX-Agents tasks in parallel and grade each as it finishes.
 
-    python3 benchmarks/apex-agents/run_all.py --tasks all|FILE --out runs/<run> [--jobs 20] [--grade-jobs 6]
-        [--endpoint cao | --model models/x.json]
+    python3 benchmarks/apex-agents/run_all.py --tasks all|FILE|split:NAME --out runs/<run> [--jobs 12] [--grade-jobs 6]
+        [--endpoint cao | --model models/x.json] [--dry-run]
 
-FILE: task ids, one per line. Each task runs with run_task.py into <run>/tasks/<task_id>/ and is then graded with
+FILE: task ids, one per line. split:NAME: the shared split in splits.json (train, val, test, or trainval = train + val
+for work with only a train and a test set; make_splits.py). --dry-run lists the selected tasks and stops. Each task runs with run_task.py into <run>/tasks/<task_id>/ and is then graded with
 grade.py (grading/grades.json). A task whose directory already has run.json is not run again (resume after a stop by
 re-running the same command; move a broken task directory away to redo it). Tasks of the two banking worlds (Edgar SEC,
 FMP) need DSH_BENCH_EDGAR_USER_AGENT and DSH_BENCH_FMP_KEY_FILE in local.env; without them they are skipped and listed
@@ -29,6 +30,7 @@ sys.path.insert(0, str(HERE))
 sys.path.insert(0, str(REPO))
 import grade  # noqa: E402
 from dsh_bench.endpoints import load_local_env, setting_path  # noqa: E402
+from dsh_bench.splits import task_ids as split_task_ids  # noqa: E402
 
 BANKING_APPS = {"Edgar SEC", "FMP"}
 LOCK = threading.Lock()
@@ -99,14 +101,27 @@ def main() -> int:
     parser.add_argument("--model")
     parser.add_argument("--judge", default="gemini-3.8-flash")
     parser.add_argument("--effort", default="low")
+    parser.add_argument("--dry-run", action="store_true", help="list the selected tasks and stop")
     args = parser.parse_args()
     load_local_env()
     dataset = args.dataset.expanduser().resolve()
     tasks = json.loads((dataset / "tasks_and_rubrics.json").read_text())
     worlds = {w["world_id"]: w for w in json.loads((dataset / "world_descriptions.json").read_text())}
-    ids = [t["task_id"] for t in tasks] if args.tasks == "all" else \
-        [line.strip() for line in Path(args.tasks).read_text().splitlines() if line.strip()]
+    if args.tasks == "all":
+        ids = [t["task_id"] for t in tasks]
+    elif args.tasks.startswith("split:"):
+        ids = split_task_ids(HERE / "splits.json", args.tasks.removeprefix("split:"))
+    else:
+        ids = [line.strip() for line in Path(args.tasks).read_text().splitlines() if line.strip()]
     by_id = {t["task_id"]: t for t in tasks}
+    unknown = [tid for tid in ids if tid not in by_id]
+    if unknown:
+        raise SystemExit(f"not in the dataset: {unknown[:5]}")
+    if args.dry_run:
+        domains = Counter(by_id[tid]["domain"] for tid in ids)
+        print(f"{len(ids)} tasks: {dict(sorted(domains.items()))}")
+        print("\n".join(ids))
+        return 0
     banking_ready = bool(os.environ.get("DSH_BENCH_EDGAR_USER_AGENT")) and bool(os.environ.get("DSH_BENCH_FMP_KEY_FILE"))
     deferred = [] if banking_ready else [
         tid for tid in ids if BANKING_APPS & {a["service_name"] for a in worlds[by_id[tid]["world_id"]]["apps"]}]

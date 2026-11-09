@@ -6,6 +6,11 @@ firm-knowledge tasks of `splits-firm-knowledge-c15-eval70.json`, judge gpt-5.6-s
 all via CAO: **15.2% all-pass, 0.437 mean criterion pass rate (70 tasks x 3 runs)**. The 70 task.json files are
 byte-identical at our pin (checked against the split's sha256 values).
 
+Splits (2026-11-09): `splits.json` is the shared train / val / test split of all 2,010 tasks, 60/20/20 = 1,210 / 400 /
+400, stratified by practice area (each area within one task of 60/20/20; firm-knowledge 150 / 50 / 50), task ids with
+their task.json sha256 listed (`make_splits.py`, seed 20261109). `make_specs.py --tasks split:train` (val, test;
+`trainval` = train + val when working with only a train and a test set).
+
 Design decisions (2026-11-05, with the user): DSH's own tools as they are, except `write`, which gets Harvey's path rule
 (Harvey's tasks name deliverables without a folder and rely on the harness to put them in output/, the only folder the
 grader reads); Harvey's system prompt appended after DSH's persona, adapted only where it would be false under DSH;
