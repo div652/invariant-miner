@@ -1,5 +1,26 @@
 # Harvey LAB results
 
+## Firm-knowledge, all 250 tasks, GPT-5.6 Sol high via CAO, subagents off, 2026-11-10
+
+Run `runs/hv-fk250-solhigh-20261109T194222Z` (not in git), harness main `b49f3b6` (core-v6: subagents off for every
+benchmark), model `models/sol-high-cao.json` (gpt-5.6-sol, effort high, otherwise luna-cao's shape: reasoning summaries
+on); 250 tasks x 1 run, 20 at a time, 01:12-03:24 IST; graded as below (judge gpt-5.6-sol high, helper claude-sonnet-5,
+via CAO), 0 grading errors.
+
+**All-pass 31.2%, criterion pass rate 0.764.** All 250 runs ended `completed` (agent time median 527 s, max 1,261 s;
+root steps median 35, max 92).
+
+| Tasks | Sol high, subagents off | Luna medium, subagents on (2026-11-06, below) |
+|---|---|---|
+| all 250 | **31.2%**, 0.764 | 18.8%, 0.555 |
+| `splits.json` train / val / test (150 / 50 / 50) | 30.0% / 18.0% / 48.0% | 19.3% / 14.0% / 22.0% |
+| AHE split: trainval / test (100 / 70) | 32.0% / 32.9% | 20.0% / 15.7% |
+
+Paired over the 250 tasks: all-pass +12.4 points, 95% CI [+6.8, +18.0], better/equal/worse 43/195/12. Model, effort
+and subagents all changed at once, so this is not an estimate of any one of them. Reference outside this repository: the
+AHE campaigns' c20 ran Harvey's own harness with Sol on the same 250 tasks (32.4% all-pass), graded by the AHE port of
+LAB's grader, not this one.
+
 ## Firm-knowledge, all 250 tasks, GPT-5.6 Luna via CAO (c34 endpoint), 2026-11-06
 
 Run `runs/hv-fk250-20261105T204941Z` (not in git), harness commit `c16c99e` (branch bench/harvey): 250 tasks x 1 run,
