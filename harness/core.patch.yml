@@ -47,6 +47,20 @@
 - id: workflow-worker-thread
   disabled: true
 
+# No subagents (user, 2026-11-09, for every benchmark): DSH's delegation tools (subagent, subagent_fork, send_message,
+# list_agents, interrupt_agent) are not offered, and with their rows off their paragraph leaves the system prompt
+# ("Use subagent in the background by default ..."). Measured on a 240-task benchmark run, same setup otherwise: Pass@1
+# 43.75% without them, 8-14 points lower with them (runs that delegated did worse, and the prompt line changed how the
+# model worked even when it did not delegate). Details in that benchmark's RESULTS.md.
+- id: tool-subagent
+  disabled: true
+- id: tool-subagent-fork
+  disabled: true
+- id: tool-subagent-control
+  disabled: true
+- id: tool-subagent-list-agents
+  disabled: true
+
 # No filesystem skill discovery. It scans the workspace (.dsh/skills, .agents/skills: the agent could plant skills) and
 # the host user's ~/.dsh/skills and ~/.agents/skills (host skills would leak into benchmark runs); under
 # workspace-isolated it is refused the host paths, which leaves the skill catalog incomplete, and DSH then never shows

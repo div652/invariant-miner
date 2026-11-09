@@ -1,49 +1,100 @@
-# APEX-Agents: results
+# APEX-Agents 1.1: results
 
-## Full run, 2026-11-07 (`runs/apex-full-20261106T213347Z`, branch `bench/apex-agents`)
+## Full run with the fixes, subagents off, 2026-11-09 (`runs/apex11-full-relay-nosub-20261108T235952Z`)
 
-Setup (CHECKLIST.md has every decision): Archipelago's environment and grader as built (changes 1-7 listed there), DSH
-replacing only Archipelago's agent, DSH's tools inside Archipelago's container (`fs-podman`, `sandbox-podman`), toolbelt
-on, the paper's system prompt (path sentence extended), 250 steps / 3 h. Agent `gpt-5.6-luna` via CAO, Responses API,
-reasoning effort high, summaries on (`models/luna-cao.json`). Judge `gemini-3.8-flash`, reasoning effort low, via CAO
-(paper: Gemini 3 Flash, low). One run per task (the paper: 8).
+Same setup as the first full run below, with the fixes found comparing against Mercor's leaderboard (CHECKLIST.md):
+the MCP relay instead of the caching bridge (one world call at a time, 60 s + 5 s counted at the world), 8 tasks in
+parallel, `strict: false` on every tool, and DSH's subagent tools off (their prompt paragraph with them). Agent
+gpt-5.6-luna effort max via CAO; judge gemini-3.8-flash high. 05:29-13:47 IST.
 
-**Pass@1 30.0% (144 / 480), mean criterion score 0.468.** All 480 tasks graded; no grading errors left.
+**Pass@1 43.75% (105 / 240), mean score 0.599.** All 240 runs ended with a reply; no infrastructure, model or grading
+errors. Mercor's leaderboard for GPT-5.6 Luna (max), with their own agent and judge: Pass@1 43.0% (±5.4), mean 57.8%
+(±4.9).
 
 | Job | Tasks | Pass@1 | Mean score |
 |---|---|---|---|
-| Investment Banking | 160 | 29.4% | 0.364 |
-| Law | 160 | 19.4% | 0.463 |
-| Management Consulting | 160 | 41.3% | 0.575 |
+| Investment Banking | 80 | 38.8% | 0.447 |
+| Law | 80 | 50.0% | 0.776 |
+| Management Consulting | 80 | 42.5% | 0.574 |
 
 | Output | Tasks | Pass@1 | Mean score |
 |---|---|---|---|
-| Answer in the console | 422 | 30.8% | 0.465 |
-| make_new_doc | 20 | 20.0% | 0.603 |
-| make_new_sheet | 14 | 21.4% | 0.393 |
-| make_new_slide_deck | 5 | 40.0% | 0.687 |
-| edit_existing_sheet | 16 | 25.0% | 0.327 |
-| edit_existing_doc | 2 | 0.0% | 0.603 |
-| edit_existing_slide_deck | 1 | 100.0% | 1.000 |
+| Answer in the console | 206 | 40.8% | 0.577 |
+| make_new_doc | 9 | 88.9% | 0.984 |
+| make_new_sheet | 9 | 66.7% | 0.689 |
+| edit_existing_sheet | 12 | 41.7% | 0.537 |
+| make_new_slide_deck | 3 | 66.7% | 0.933 |
+| edit_existing_doc | 1 | 0.0% | 0.571 |
 
-Endings: 373 `final_answer`, 107 a final reply without a tool call (graded like a final answer; CHECKLIST row 8). No run
-hit the step limit or the 3 h budget.
+Against the first full run on the same 240 tasks: 74 pass in both, 31 only here, 8 only in the first (+9.6 points).
+World calls: 6,521, median 16.5 s (first run 35 s), none failed with "Unknown tool" (first run 14%), 19 hit the 60 s
+limit. Main agent steps: median 17.5, p90 35, none at the 100-step limit.
 
-Paper (arXiv 2601.14242v3, Table 3), best Pass@1: 24.0% overall (Gemini 3 Flash), by job 27.3% banking, 22.7% consulting,
-25.9% law. Not a like-for-like comparison: different model, judge and harness, one run per task instead of eight.
+A matching run with subagents on (prompt unchanged), to separate the two changes, followed:
+`runs/apex11-full-relay-sub-20261108T235952Z`.
 
-### Caveats
+## Full run, 2026-11-08 (`runs/apex11-full-lunamax-20261107T193631Z`, branch `bench/apex-agents` 9d7fa85)
 
-- **FMP plan.** The FMP key used is a limited plan: Kenvue (KVUE) and Kimberly-Clark (KMB), the companies of world 246,
-  return "premium" errors; Treasury rates and some symbols work. Tasks needing their live prices could not get them from
-  FMP (Edgar SEC worked). The 28 tasks of worlds 244/246 scored 46.4% Pass@1.
-- **Infrastructure re-runs (not agent failures).** 9 task runs failed outside the agent and were re-run from scratch in
-  fresh containers: 4 setup errors and 1 failed agent start (retried automatically), 4 lost "after" snapshots (podman
-  exit 255; re-run after the snapshot retry fix). No agent tool call saw a podman error (20,391 tool results scanned).
-- **7 runs held a slot until the 3 h kill** after the agent had finished (fs-podman helper kept DSH alive; answers were
-  recorded, grading unaffected). Fixed in 8191a21 (`tests/repro_attach_exit.py`).
-- **Machine state.** During the run a VS Code file watcher held the whole per-user inotify budget (1,048,325 of
-  1,048,576 watches), and systemd/podman logged 53,534 watch failures; a plausible contributor to podman's exit-255
-  errors (unproven). Fixed 2026-11-07 with `files.watcherExclude` in `~/.vscode-server/data/Machine/settings.json`.
-- 20 tasks in parallel kept only about 10 agents working at once (the rest waited on podman-heavy setup and snapshots);
-  the default is now 12.
+Setup (CHECKLIST.md has every decision): Mercor's 1.1 world and verifier images unmodified, DSH replacing only
+Mercor's agent, DSH's tools inside the world as run_shell's user, all 74 world tools on every step, Mercor's limits
+(100 steps, 3 h, 200 lines / 32,768 characters, 60 s per tool call), Mercor's 1.1 system prompt with `code_exec` ->
+`run_shell` and the /filesystem path sentence. Agent `gpt-5.6-luna` via CAO, Responses API, reasoning effort **max**,
+summaries on (`models/luna-max-cao.json`). Judge `gemini-3.8-flash` via CAO, reasoning effort high, Mercor's judge
+prompt and temperature 0.1 (Mercor: deepseek-v4-flash-0731). One run per task. 12 tasks in parallel; 01:06-09:01 IST.
+
+**Pass@1 34.2% (82 / 240), mean score 0.490; criteria met 460 / 952.** All 240 tasks graded; no infrastructure
+errors, no grading errors, no retries.
+
+| Job | Tasks | Pass@1 | Mean score |
+|---|---|---|---|
+| Investment Banking | 80 | 36.3% | 0.420 |
+| Law | 80 | 40.0% | 0.604 |
+| Management Consulting | 80 | 26.3% | 0.446 |
+
+| Output | Tasks | Pass@1 | Mean score |
+|---|---|---|---|
+| Answer in the console | 206 | 32.5% | 0.473 |
+| make_new_doc | 9 | 77.8% | 0.825 |
+| edit_existing_sheet | 12 | 50.0% | 0.592 |
+| make_new_sheet | 9 | 22.2% | 0.319 |
+| make_new_slide_deck | 3 | 0.0% | 0.644 |
+| edit_existing_doc | 1 | 0.0% | 0.857 |
+
+Runs: 237 ended with a reply, 3 at the 100-step limit (graded: scores 0.2, 0.1, 0.0); none hit 3 h. Main agent steps:
+median 22, p90 49; 105 runs used subagents. Agent time: median 15.8 min, p90 38 min, max 99 min.
+
+Tools: 5,419 calls to world apps, 4,109 to DSH's own tools (bash 1,635; glob 476; read 426; todo_write 440). The most
+used world tools: sheets read_tab 1,407, pdf search_pdf 776, sheets list_tabs 710, docs read_document_content 543,
+pdf read_pdf_pages 512. 699 results were cut by the output cap. 90 calls in 47 runs hit the 60 s limit: 53 of them the
+world's PDF tools (read_pdf_pages 30, search_pdf 23) on large PDFs, also 9 bash, 6+5 docs reads, and 4 of DSH's
+subagent calls (the per-call limit applies to every tool, DSH's own included).
+
+Context, not like-for-like: Mercor's leaderboard for 1.1 (blog, September 2026) is led by Claude Fable 5.1 at 68.6%
+Pass@1 with their own agent and judge; our judge differs (gemini-3.8-flash high vs deepseek-v4-flash) and DSH's tools
+are added. Version 1 of this harness on APEX-Agents 1.0 (480 tasks, Luna high, a different judge) scored 30.0%.
+
+### Other runs
+
+- **Luna effort high** (`runs/apex11-full-20261107T180006Z`, `models/luna-cao.json`): stopped by the user after 43
+  graded tasks to switch to max (`STOPPED.txt`). On those same 43 tasks: high 20/43, max 20/43 all criteria met.
+- An invalid first launch of the max run (the model file given as a relative path, which the launcher resolved
+  against each task's directory: DSH never ran, no model calls) was discarded; only its log is kept
+  (`runs/INVALID-relative-model-path-...log`). Fixed in 9d7fa85: absolute model path, a launcher failure is an
+  infrastructure error, and run_all stops starting tasks after 6 infrastructure failures in a row.
+- Smoke (`runs/apex11-smoke3-20261107T161504Z`, Luna high): 3/3. Gold check (`runs/apex11-gold-*`): 6/6 tasks, 32/32
+  criteria.
+
+### Judge check: the same runs regraded by claude-haiku-5-5 (2026-11-09, `runs/apex11-regrade-haiku-20261108T190811Z`)
+
+Mercor's leaderboard reports GPT-5.6 Luna (max) at Pass@1 43.0% (±5.4), mean 57.8% (±4.9), with their own agent and
+judge (deepseek-v4-flash, not on CAO). To see whether our judge explains the gap, the 206 console-answer runs of the
+full run were regraded, unchanged, by claude-haiku-5-5 (CAO; effort high requested, Mercor's temperature 0.1 and judge
+prompt): the CAO model closest to deepseek-v4-flash on Mercor's own leaderboard (as agents: 56.1% vs 55.3% Pass@1).
+
+| Tasks | Pass@1 Gemini 3.8 Flash | Pass@1 Haiku 5.5 | Mean Gemini | Mean Haiku |
+|---|---|---|---|---|
+| 206 console-answer tasks | 32.5% | 33.0% | 0.473 | 0.484 |
+| 199 with final-answer-only criteria | 32.2% | 32.7% | 0.467 | 0.474 |
+
+Criteria: 768 graded by both, 93.8% the same verdict (Cohen's kappa 0.87); tasks: 61 pass under both, 6 only under
+Gemini, 7 only under Haiku. The judge does not explain the gap.

@@ -52,7 +52,7 @@ SPEC_DEFAULTS: dict = {
     "runtime": "podman",
     "network": "none",  # container network: "none", or a podman network mode such as "slirp4netns"
     "container_env": {},  # env inside the container for every command
-    "disable": [],  # base-profile row ids to disable (e.g. "web", "tool-subagent")
+    "disable": [],  # base-profile row ids to disable (e.g. "tool-web"; harness/core.patch.yml already disables some)
     "mcp": [],  # [{"name": str, "transport": "streamable-http"|"stdio", "url"|"command"/"args", "headers": {}}]
     "limits": {"max_steps": None, "timeout_s": 3600, "temperature": None},  # temperature: None leaves it unset
     "skills_dir": None,  # host dir of <name>/SKILL.md, registered as DSH skills (plugins/skills); outside the workspace

@@ -1,66 +1,72 @@
 #!/usr/bin/env bash
-# APEX-Agents for dsh-bench-harness: the pinned Archipelago checkout, its environment image plus our layer, and the
-# grader's Python env.
+# APEX-Agents 1.1 for dsh-bench-harness: the task packages (Harbor Hub), Mercor's 1.1 images by digest, ripgrep for
+# DSH's glob/grep; then checks what a run needs that is not in the repo.
 #
-#   benchmarks/apex-agents/setup.sh [--rebuild]       (after the repo's ./setup.sh)
+#   benchmarks/apex-agents-1.1/setup.sh          (after the repo's ./setup.sh)
 #
-# - work/archipelago: Mercor-Intelligence/archipelago @ $PIN (environment, MCP app servers, grader, HF example config),
-#   from upstream or, if upstream dropped the commit, from the unmodified copy div652/archipelago-pinned.
-# - image dsh-bench-apex-agents-env:<pin>: Archipelago's environment/Dockerfile at the pin, unmodified, under our tag
-#   (~12 GB; first build ~10 min, needs network for apt/uv/npm).
-# - image dsh-bench-apex-agents:<pin>: our layer (benchmarks/apex-agents/Dockerfile): code_exec's package mirror and
-#   ripgrep (CHECKLIST.md, change 2). Images that already exist are kept unless --rebuild (a rebuild reuses podman's
-#   layer cache).
-# - work/archipelago/grading/.venv: the grader's locked environment (uv sync --locked), used by grade.py.
-# Then checks what a run needs and is not in the repo: the dataset, node, your local.env settings.
+# - tasks: mercor/apex-agents-1-1@1.1.1 from Harbor Hub (`harbor download`; Harbor 0.20.0: `uv tool install
+#   harbor==0.20.0`), into $APEX_AGENTS_11_HUB (default ~/apex-agents-1.1-hub)/apex-agents-1-1, then checked against
+#   tasks.sha256 (the 240 packages we analysed). The Hub copy, not Hugging Face: CHECKLIST.md, pitfall 2.
+# - images: every world image and the verifier image the tasks name (public ECR, pinned by digest; ~16 GB for the
+#   first world, ~0.1-0.5 GB for each further one; layers are shared). Pulled unmodified; nothing is built.
+# - ripgrep $RG_VERSION (static musl build, checksum below) into work/apex-agents-1.1/bin: mounted read-only into the
+#   world for DSH's glob/grep only (the world image has none; run_shell's PATH does not include it).
 set -euo pipefail
 HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"; REPO="$(cd "$HERE/../.." && pwd)"
-PIN=f8e41cbb6f6158a0f3fbe81a74ecfdcf70fbfcc3
-ARCH="$REPO/work/archipelago"
+HUB="${APEX_AGENTS_11_HUB:-$HOME/apex-agents-1.1-hub}"
+TASKS="$HUB/apex-agents-1-1"
+DATASET=mercor/apex-agents-1-1@1.1.1
 RUNTIME="${RUNTIME:-podman}"
-BASE="dsh-bench-apex-agents-env:${PIN:0:7}"
-IMAGE="dsh-bench-apex-agents:${PIN:0:7}"
-REBUILD=0; [[ "${1:-}" == "--rebuild" ]] && REBUILD=1
-log() { echo "[apex-agents setup] $*"; }
+RG_VERSION=14.1.1
+RG_SHA256=4cf9f2741e6c465ffdb7c26f38056a59e2a2544b51f7cc128ef28337eeae4d8e
+RG_DIR="$REPO/work/apex-agents-1.1/bin"
+log() { echo "[apex-agents-1.1 setup] $*"; }
+die() { echo "[apex-agents-1.1 setup] ERROR: $*" >&2; exit 1; }
 
-# Upstream rewrites its history on every sync from Mercor's internal repo (main is one new commit each time), so the
-# pin is fetched by hash; a plain clone would not contain it, and upstream may garbage-collect it. Fallback:
-# div652/archipelago-pinned, an unmodified copy of Mercor's commit (Mercor's work, not ours; private, ask for access).
-# ARCHIPELAGO_URL replaces upstream as the first source.
-UPSTREAM="${ARCHIPELAGO_URL:-https://github.com/Mercor-Intelligence/archipelago.git}"
-MIRROR="https://github.com/div652/archipelago-pinned.git"
-if [[ ! -d "$ARCH/.git" ]]; then
-  git init -q "$ARCH"; got=""
-  for url in "$UPSTREAM" "$MIRROR"; do
-    log "fetching archipelago @ ${PIN:0:9} from $url"
-    if GIT_TERMINAL_PROMPT=0 git -C "$ARCH" fetch -q --depth 1 "$url" "$PIN"; then got="$url"; break; fi
-  done
-  [[ -n "$got" ]] || { rm -rf "$ARCH"; echo "cannot fetch $PIN from $UPSTREAM or $MIRROR (set ARCHIPELAGO_URL)" >&2; exit 1; }
-  git -C "$ARCH" checkout -q -B pinned FETCH_HEAD && git -C "$ARCH" remote add origin "$got"
+# --- tasks -------------------------------------------------------------------------------------------------------------
+if [[ ! -d "$TASKS" ]]; then
+  command -v harbor >/dev/null || die "harbor not found: uv tool install harbor==0.20.0"
+  version="$(harbor --version 2>/dev/null | grep -oE '[0-9]+\.[0-9]+\.[0-9]+' | head -1)"
+  [[ "$version" == "0.20.0" ]] || die "Harbor 0.20.0 needed (found ${version:-none}): uv tool install harbor==0.20.0"
+  log "downloading $DATASET into $HUB"
+  harbor download "$DATASET" -o "$HUB"
 fi
-[[ "$(git -C "$ARCH" rev-parse HEAD)" == "$PIN" ]] || { echo "work/archipelago is not at $PIN" >&2; exit 1; }
+python3 "$HERE/fingerprint.py" --check "$TASKS" || die "the task packages in $TASKS are not the analysed 1.1.1 ones"
 
-image_exists() { "$RUNTIME" image exists "$1" 2>/dev/null || "$RUNTIME" image inspect "$1" >/dev/null 2>&1; }
-if [[ $REBUILD == 1 ]] || ! image_exists "$BASE"; then
-  log "building $BASE from Archipelago's environment/Dockerfile (unmodified)"
-  (cd "$ARCH" && "$RUNTIME" build -q --format docker -f environment/Dockerfile -t "$BASE" .)
+# --- images ------------------------------------------------------------------------------------------------------------
+mapfile -t images < <(python3 - "$TASKS" <<'EOF'
+import re, sys, yaml
+from pathlib import Path
+seen = set()
+for d in sorted(Path(sys.argv[1]).iterdir()):
+    seen.add(yaml.safe_load((d / "environment/docker-compose.yaml").read_text())["services"]["world"]["image"])
+    seen.add(re.search(r"^FROM\s+(\S+)", (d / "tests/Dockerfile").read_text(), re.M).group(1))
+print("\n".join(sorted(seen)))
+EOF
+)
+have=0; pulled=0
+for image in "${images[@]}"; do
+  if "$RUNTIME" image exists "$image" 2>/dev/null; then have=$((have + 1)); continue; fi
+  log "pulling ${image##*@sha256:} (${#images[@]} images in all)"
+  for attempt in 1 2 3; do "$RUNTIME" pull -q "$image" >/dev/null && break; sleep 10; done
+  "$RUNTIME" image exists "$image" || die "could not pull $image"
+  pulled=$((pulled + 1))
+done
+log "images: ${#images[@]} named by the tasks ($have present, $pulled pulled)"
+
+# --- ripgrep -----------------------------------------------------------------------------------------------------------
+if [[ ! -x "$RG_DIR/rg" ]]; then
+  tmp="$(mktemp -d)"; trap 'rm -rf "$tmp"' EXIT
+  file="ripgrep-$RG_VERSION-x86_64-unknown-linux-musl.tar.gz"
+  curl -fsSL -o "$tmp/$file" "https://github.com/BurntSushi/ripgrep/releases/download/$RG_VERSION/$file"
+  echo "$RG_SHA256  $tmp/$file" | sha256sum -c --quiet - || die "ripgrep download does not match its checksum"
+  tar -xzf "$tmp/$file" -C "$tmp"
+  mkdir -p "$RG_DIR" && install -m 0755 "$tmp/ripgrep-$RG_VERSION-x86_64-unknown-linux-musl/rg" "$RG_DIR/rg"
 fi
-if [[ $REBUILD == 1 ]] || ! image_exists "$IMAGE"; then
-  log "building $IMAGE (our layer)"
-  "$RUNTIME" build -q --format docker --build-arg "BASE=$BASE" -t "$IMAGE" "$HERE"
-fi
+log "ripgrep: $("$RG_DIR/rg" --version | head -1)"
 
-log "grader environment (work/archipelago/grading/.venv)"
-(cd "$ARCH/grading" && env -u VIRTUAL_ENV uv sync --locked -q)
-
-# --- what the run needs that is not in the repo ------------------------------------------------------------------------
+# --- what a run needs that is not in the repo --------------------------------------------------------------------------
 missing=0
-DATASET="${APEX_AGENTS_DATASET:-$HOME/apex-agents-data}"
-if [[ ! -f "$DATASET/tasks_and_rubrics.json" ]] || ! python3 -c "import json,sys; json.load(open(sys.argv[1]))" "$DATASET/tasks_and_rubrics.json" 2>/dev/null; then
-  log "MISSING dataset at $DATASET: accept the terms of huggingface.co/datasets/mercor/apex-agents, log in (hf auth login),"
-  log "  then: hf download mercor/apex-agents --type dataset --local-dir $DATASET   (9 GB; pass --dataset if elsewhere)"
-  missing=1
-fi
 NODE_BIN="${NODE:-$(command -v node || true)}"
 if [[ -z "$NODE_BIN" ]] || ! "$NODE_BIN" -e 'const [a,b]=process.versions.node.split(".").map(Number); process.exit(a>=24||(a===22&&b>=19)?0:1)'; then
   log "MISSING node ^22.19 or >= 24: set NODE=/path/to/node when running (DSH runs on node)"
@@ -71,12 +77,9 @@ import os, sys
 sys.path.insert(0, sys.argv[1])
 from dsh_bench.endpoints import load_local_env
 load_local_env()
-need = {"DSH_BENCH_CAO_KEY_FILE": "agent model and judge (CAO); or choose another --endpoint for the agent",
-        "DSH_BENCH_FMP_KEY_FILE": "FMP app (banking worlds 244/246 only)",
-        "DSH_BENCH_EDGAR_USER_AGENT": "Edgar SEC app (banking worlds 244/246 only)"}
-bad = [k for k in need if not os.environ.get(k)]
-for k in bad:
-    print(f"[apex-agents setup] MISSING {k} in ~/.config/dsh-bench/local.env: {need[k]} (see local.env.example)")
-sys.exit(1 if "DSH_BENCH_CAO_KEY_FILE" in bad else 0)
+if not os.environ.get("DSH_BENCH_CAO_KEY_FILE"):
+    print("[apex-agents-1.1 setup] MISSING DSH_BENCH_CAO_KEY_FILE in ~/.config/dsh-bench/local.env: agent model (CAO) "
+          "and the judge; or choose another --endpoint for the agent and DSH_BENCH_JUDGE_* for the judge")
+    sys.exit(1)
 EOF
-log "done: work/archipelago @ ${PIN:0:9}, images $BASE + $IMAGE, grader venv$([[ $missing == 1 ]] && echo '; fix the MISSING items above before running')"
+log "done: ${TASKS} (240 tasks), images, ripgrep$([[ $missing == 1 ]] && echo '; fix the MISSING items above before running')"

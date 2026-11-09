@@ -1,316 +1,344 @@
-"""Run one APEX-Agents task: Archipelago's environment as Mercor built it, DSH in place of Archipelago's agent.
+"""Run one APEX-Agents 1.1 task with DSH as the agent, on Mercor's own 1.1 images (CHECKLIST.md).
 
-    python3 benchmarks/apex-agents/run_task.py --task <task_id> --out runs/<run>/<task_id> \
-        [--dataset ~/apex-agents-data] [--endpoint cao | --model models/x.json]
+    python3 benchmarks/apex-agents-1.1/run_task.py --task SLUG --out DIR [--tasks-dir DIR]
+        [--endpoint cao | --model models/x.json] [--keep-world]
 
-Steps (CHECKLIST.md has the decisions; Archipelago's examples/hugging_face_task/main.py is the reference flow):
-  1. start the environment container (image dsh-bench-apex-agents, Archipelago's gateway on :8080 inside), network
-     none, or internet for worlds with Edgar SEC / FMP;
-  2. populate it through Archipelago's /data/populate: the world zip's filesystem/ and .apps_data/, then the task's
-     input files (the example's order);
-  3. start the world's apps once over HTTP (container/start_apps.py; change 1) and point the gateway at them (/apps);
-  4. snapshot "before" (Archipelago's /data/snapshot, after the task's input files are in; change 4);
-  5. run DSH with dsh_bench.launch in attach mode: workspace /filesystem, the gateway as MCP server "apps" through
-     container/mcp_bridge.py, toolbelt on, web tools off, the paper's system prompt (path sentence extended);
-  6. snapshot "after", keep the apps' logs, remove the container; write trajectory.json for Archipelago's grader.
-
-Outputs in --out: task.json, snapshots/{before,after}.tar.gz, agent/ (the launcher's run dir: answer.json, sessions,
-run.json), trajectory.json, apps-logs/, run.json. Grade with grade.py.
+SLUG is a task directory of the Harbor Hub download (e.g. world-225-je-01-70449b2d). The steps are Harbor's, done here
+(CHECKLIST.md, "How a task runs"):
+  1. world: Mercor's world image for the task (digest from environment/docker-compose.yaml) with that file's mounts and
+     environment, plus WORLD_CAPTURE_INITIAL_SNAPSHOT=1 (pitfall 3), network none, and two read-only additions:
+     /opt/dsh-bench/lib (the MCP relay) and /opt/dsh-bench/bin (ripgrep, for DSH's glob/grep). The world seeds itself,
+     starts its 9 apps behind its gateway and takes the "before" snapshot; it is ready when the compose healthcheck
+     passes (run here with podman exec).
+  2. DSH (launcher attach mode) works in /filesystem as run_shell's user (svc_stirrup_code_execution, umask 0002,
+     run_shell's environment), with the world's 74 tools through the MCP relay (all offered on every step; one world
+     call at a time; 60 s per call from when it reaches the world), Mercor's other limits (100 steps, 3 h, tool output
+     200 lines / 32,768 characters, 60 s for DSH's own tools), no final_answer tool, and Mercor's 1.1 system prompt
+     with the two changes in CHECKLIST.md. --no-subagents turns DSH's subagent tools (and their prompt paragraph) off.
+  3. after DSH: leftover processes of that user are stopped (not the code-execution server), then Mercor's
+     /app/tools/collect_world_snapshot.py takes the "after" snapshot (pitfall 3; retried up to 3 times).
+  4. outputs in DIR: run.json (timings, finish reason, infra_error if a container step failed), agent/ (DSH's run),
+     trajectory.json (ATIF, what Mercor's grader reads), world-logs/ (initial_snapshot.tar.gz, final_snapshot.tar.gz,
+     boot.log), world.log (container output). The world container is removed (--keep-world keeps it).
 """
 
 import argparse
-import contextlib
 import fcntl
 import json
 import os
+import re
 import subprocess
 import sys
-import tarfile
-import tempfile
 import time
+import tomllib
 import uuid
-import zipfile
 from datetime import UTC, datetime
 from pathlib import Path
+
+import yaml
 
 HERE = Path(__file__).resolve().parent
 REPO = HERE.parents[1]
 sys.path.insert(0, str(REPO))
-from dsh_bench.endpoints import ENDPOINTS, load_local_env, model_for, setting_path  # noqa: E402
+from dsh_bench.endpoints import load_local_env, model_for  # noqa: E402
+from dsh_bench.launch import root_session  # noqa: E402
 
-IMAGE = "dsh-bench-apex-agents:f8e41cb"
-ARCHIPELAGO = REPO / "work/archipelago"
-EXAMPLE_MCP_CONFIG = ARCHIPELAGO / "examples/hugging_face_task/mcp_config_all_oss_servers.json"
+RUNTIME = "podman"
+TASKS_DIR = Path(os.environ.get("APEX_AGENTS_11_TASKS", Path.home() / "apex-agents-1.1-hub/apex-agents-1-1"))
+RG_DIR = REPO / "work/apex-agents-1.1/bin"  # setup.sh: static ripgrep
 WORKSPACE = "/filesystem"
-SUBSYSTEMS = ["filesystem", ".apps_data"]
-RUNTIME = os.environ.get("RUNTIME", "podman")
-
-# world_descriptions.json service names -> Archipelago's server names (examples/hugging_face_task).
-APP_SERVERS = {"Calendar": "calendar_server", "Chat": "chat_server", "Code Execution": "code_execution_server",
-               "Excel": "sheets_server", "Filesystem": "filesystem_server", "Mail": "mail_server",
-               "PDFs": "pdf_server", "Powerpoint": "slides_server", "Word": "docs_server",
-               "Edgar SEC": "edgar_sec", "FMP": "fmp_server"}
-# Individual tools (the paper's): USE_INDIVIDUAL_TOOLS for the 9 apps, GUI_ENABLED for Edgar SEC and FMP (change 3).
-INDIVIDUAL_TOOLS_ENV = {"edgar_sec": {"GUI_ENABLED": "true"}, "fmp_server": {"GUI_ENABLED": "true"}}
-DEFAULT_INDIVIDUAL_ENV = {"USE_INDIVIDUAL_TOOLS": "true"}
-NETWORKED_APPS = {"edgar_sec", "fmp_server"}
-
-# DSH's bash runs under the same sandbox as code_exec (answer 5a): code_exec's build_sandbox_env() for its default mode.
-CODE_EXEC_MIRROR = "/usr/local/lib/code_execution"
-SANDBOX_ENV = {
-    "LD_PRELOAD": "/app/lib/sandbox_fs.so",
-    "SANDBOX_BLOCKED_PATHS": "/app:/.apps_data:/proc:/sys",
-    "PATH": f"{CODE_EXEC_MIRROR}/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin",
-    "PYTHONPATH": CODE_EXEC_MIRROR,
-    "NODE_PATH": f"{CODE_EXEC_MIRROR}/node_modules",
-    "HOME": "/tmp",
-    "PYTHONUSERBASE": "/tmp",
-    "SANDBOX_EXEC_REDIRECTS": f"/usr/lib/libreoffice/program/oosplash={CODE_EXEC_MIRROR}/bin/soffice",
+EXEC_USER = "svc_stirrup_code_execution"  # the user Mercor's run_shell runs as (setpriv in the task's mcp_config.json)
+EXEC_UID = 22007
+# run_shell's environment (stirrup_code_execution: _agent_command_env), read from a running world; ripgrep last on PATH.
+RUN_SHELL_ENV = {
+    "VIRTUAL_ENV": "/opt/agent-task-venv",
+    "PATH": "/opt/agent-task-venv/bin:/app/.venv/bin:/usr/local/bin:/usr/local/sbin:/usr/sbin:/usr/bin:/sbin:/bin"
+            ":/opt/dsh-bench/bin",
+    "HOME": "/home/svc_stirrup_code_execution",
+    "NODE_PATH": "/usr/local/lib/node_modules",
+    "AGENT_TASK_VENV": "/opt/agent-task-venv",
+    "APP_FS_ROOT": "/filesystem",
+    "LC_CTYPE": "C.UTF-8",
 }
-
-# The paper's system prompt (Appendix D.2; Archipelago's react_toolbelt_agent README), verbatim except the path
-# sentence, which also names DSH's tools (approved 2026-11-06).
+# Mercor's limits (apex_loop_truncated_tools_agent v1.1 manifest: max_steps, timeout, max_output_*, tool_call_timeout).
+MAX_STEPS, TIMEOUT_S = 100, 10800
+# The 60 s per call applies to DSH's own tools here; world tools get it in the relay (container/mcp_relay.py), counted
+# from when the call reaches the world, as Mercor's agent counts it (CHECKLIST.md, change 5).
+TOOL_LIMITS = {"max_lines": 200, "max_chars": 32768, "timeout_s": 60, "timeout_exclude": ["mcp__world__*"]}
+# DSH's subagent tools (and with them their paragraph in the system prompt): off with --no-subagents.
+SUBAGENT_ROWS = ["tool-subagent", "tool-subagent-fork", "tool-subagent-control", "tool-subagent-list-agents"]
+# Mercor's 1.1 system prompt (apex_loop_truncated_tools_agent.py, _AGENT_SYSTEM_PROMPTS) with two changes
+# (CHECKLIST.md, decision 5): `code_exec` -> `run_shell` (pitfall 1: 1.1 has no code_exec tool), and the path sentence
+# also names DSH's own file and shell tools, which see the world's files at /filesystem like run_shell.
 SYSTEM_PROMPT = (
-    "You are an agent that completes tasks independently. Use the tools provided to you to complete the task to the "
-    "best of your ability. You should use the code_exec tool when needed, such as when calculating values. When "
-    "calculating numbers, unless specified otherwise, use the exact values without rounding them. You must attempt to "
-    "execute the task. You cannot ask for help or further clarification. For every tool except the code_exec, bash, "
-    "read, write, edit, read_image, glob and grep tools, you may assume that all relevant files are located under the "
-    "root path /. For those tools, however, you must explicitly use /filesystem/ as the root path to locate all "
-    "relevant files."
+    "You are an agent that completes tasks independently. Use the tools provided to you to complete the task to the best "
+    "of your ability. You should use the run_shell tool when needed, such as when calculating values. When calculating "
+    "numbers, unless specified otherwise, use the exact values without rounding them.\n\n"
+    "You must attempt to execute the task. You cannot ask for help or further clarification. You may wish to look at "
+    "files for contextual information to help solve the tasks. This includes communication channels.\n\n"
+    "You should not scattergun your answers. Scattergunning is when you provide alternate answers based on information "
+    "that is not explicitly requested in the task prompt. If you do this, it will be marked wrong. Please note, "
+    "providing answers to legitimately different cases that are explicitly requested by the prompt is NOT "
+    "scattergunning. Respond to all parts of the task, but commit to answers instead of hedging.\n\n"
+    "You do not have access to the internet. Do not try to look up the answer through requests, beautifulsoup, or any "
+    "other packages. For every tool except the run_shell, bash, read, write, edit, read_image, glob and grep tools, you "
+    "may assume that all relevant files are located under the root path /. For those tools, however, you must "
+    "explicitly use /filesystem/ as the root path to locate all relevant files."
 )
+# Ends of a DSH run, as Mercor's loop grades them: a reply without tool calls (completed) and the step limit (its
+# status "failed", still graded); the 3 h timeout is its status "error" (the trial errors, not graded: scores 0 here).
+GRADED_ENDINGS = {"completed": "completed", "benchmark:max-steps": "failed"}
+# Kill what the agent left running as EXEC_USER (background jobs), but not the code-execution server itself.
+REAP_PY = r"""
+import os, signal
+for pid in os.listdir("/proc"):
+    if not pid.isdigit():
+        continue
+    try:
+        if os.stat(f"/proc/{pid}").st_uid != %d:
+            continue
+        cmd = open(f"/proc/{pid}/cmdline", "rb").read().replace(b"\0", b" ").decode(errors="replace")
+    except OSError:
+        continue
+    if "/app/services/stirrup_code_execution/.venv/bin/python" in cmd:
+        continue
+    try:
+        os.kill(int(pid), signal.SIGKILL)
+        print(pid, cmd[:120])
+    except OSError:
+        pass
+""" % EXEC_UID
+
+
+class InfraError(RuntimeError):
+    """A container step failed (not the agent): run_all retries the task in a fresh world."""
 
 
 def now() -> str:
     return datetime.now(UTC).strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
-class InfraError(RuntimeError):
-    """A container or podman step failed; the message carries the command, exit status and its stderr."""
-
-
-def sh(argv: list[str], **kwargs) -> subprocess.CompletedProcess:
-    proc = subprocess.run(argv, capture_output=True, **kwargs)
+def sh(argv: list[str], timeout: float | None = None, input: bytes | None = None) -> subprocess.CompletedProcess:
+    proc = subprocess.run(argv, capture_output=True, timeout=timeout, input=input)
     if proc.returncode != 0:
-        err = proc.stderr.decode("utf-8", "replace") if isinstance(proc.stderr, bytes) else str(proc.stderr)
-        shown = [a if len(a) < 120 else a[:117] + "..." for a in map(str, argv[:8])]
-        raise InfraError(f"{' '.join(shown)}{' ...' if len(argv) > 8 else ''} -> exit {proc.returncode}; stderr: "
-                         f"{err.strip()[-1500:] or '(empty)'}")
+        raise InfraError(f"{' '.join(argv[:4])} ... exit {proc.returncode}: {proc.stderr.decode(errors='replace')[-800:]}")
     return proc
 
 
-def in_container(container: str, *argv: str, input: bytes | None = None) -> bytes:
-    return sh([RUNTIME, "exec", *(["-i"] if input is not None else []), container, *argv], input=input).stdout
+def load_task(tasks_dir: Path, slug: str) -> dict:
+    """A Hub task directory: metadata, instruction, the world service of its compose file, the verifier image."""
+    d = tasks_dir / slug
+    toml = tomllib.loads((d / "task.toml").read_text())
+    compose = yaml.safe_load((d / "environment/docker-compose.yaml").read_text())
+    verifier = re.search(r"^FROM\s+(\S+)", (d / "tests/Dockerfile").read_text(), re.M)
+    if verifier is None:
+        raise ValueError(f"{slug}: no FROM in tests/Dockerfile")
+    return {"slug": slug, "dir": d, "meta": toml["metadata"], "toml": toml, "world": compose["services"]["world"],
+            "verifier_image": verifier.group(1), "instruction": (d / "instruction.md").read_text()}
 
 
-def load_task(dataset: Path, task_id: str) -> tuple[dict, dict]:
-    tasks = json.loads((dataset / "tasks_and_rubrics.json").read_text())
-    task = next((t for t in tasks if t["task_id"] == task_id), None)
-    if task is None:
-        raise SystemExit(f"no task {task_id} in {dataset}")
-    world = next(w for w in json.loads((dataset / "world_descriptions.json").read_text())
-                 if w["world_id"] == task["world_id"])
-    return task, world
+def world_argv(task: dict, name: str, logs: Path) -> list[str]:
+    """`podman run` for the task's world service: its image, mounts and environment, then our additions."""
+    service = task["world"]
+    env_dir = task["dir"] / "environment"
+    argv = [RUNTIME, "run", "-d", "--name", name, "--network=none"]
+    for volume in service.get("volumes", []):
+        source, target, *mode = volume.split(":")
+        if source == "world_logs":  # the compose file's named volume; a host directory here, so the snapshots land on disk
+            host = logs
+        elif source.startswith("./"):
+            host = (env_dir / source).resolve()
+        else:
+            raise ValueError(f"{task['slug']}: unexpected volume {volume!r}")
+        argv += ["-v", ":".join([str(host), target, *mode])]
+    for key, value in (service.get("environment") or {}).items():
+        argv += ["-e", f"{key}={value}"]
+    argv += ["-e", "WORLD_CAPTURE_INITIAL_SNAPSHOT=1",
+             "-v", f"{HERE / 'container'}:/opt/dsh-bench/lib:ro", "-v", f"{RG_DIR}:/opt/dsh-bench/bin:ro"]
+    return argv + [service["image"]]
 
 
-def tar_subsystems(root: Path, label: str, into: Path) -> list[tuple[str, Path]]:
-    """One tar.gz per non-empty subsystem directory of root (as the example's populate_subsystems)."""
-    archives = []
-    for subsystem in SUBSYSTEMS:
-        directory = root / subsystem
-        entries = sorted(directory.rglob("*")) if directory.is_dir() else []
-        if not entries:
-            continue
-        archive = into / f"{label}_{subsystem.lstrip('.')}.tar.gz"
-        with tarfile.open(archive, "w:gz") as tar:
-            tar.dereference = True
-            for entry in entries:
-                tar.add(entry, arcname=str(entry.relative_to(directory)), recursive=False)
-        archives.append((subsystem, archive))
-    return archives
+def healthcheck(task: dict) -> list[str]:
+    test = task["world"]["healthcheck"]["test"]
+    if test[0] != "CMD":
+        raise ValueError(f"{task['slug']}: healthcheck {test[0]} not supported")
+    return test[1:]
 
 
-def populate(container: str, archives: list[tuple[str, Path]]) -> list[dict]:
-    results = []
-    for subsystem, archive in archives:
-        target = f"/tmp/populate-{archive.name}"
-        sh([RUNTIME, "cp", str(archive), f"{container}:{target}"])
-        reply = in_container(container, "curl", "-sS", "--fail-with-body", "-F", f"archive=@{target}",
-                             f"http://127.0.0.1:8080/data/populate?subsystem={subsystem}")
-        in_container(container, "rm", "-f", target)
-        results.append({"archive": archive.name, "subsystem": subsystem, "reply": json.loads(reply)})
-    return results
+def wait_ready(task: dict, container: str, timeout_s: float = 1500) -> float:
+    """The compose healthcheck (seeded, apps up, initial snapshot taken, MCP answers), polled until it passes."""
+    t0 = time.monotonic()
+    check = healthcheck(task)
+    while time.monotonic() - t0 < timeout_s:
+        state = subprocess.run([RUNTIME, "inspect", "-f", "{{.State.Running}}", container], capture_output=True, text=True)
+        if state.stdout.strip() != "true":
+            logs = subprocess.run([RUNTIME, "logs", "--tail", "40", container], capture_output=True, text=True)
+            raise InfraError(f"world exited during boot: {(logs.stdout + logs.stderr)[-1500:]}")
+        if subprocess.run([RUNTIME, "exec", container, *check], capture_output=True).returncode == 0:
+            return round(time.monotonic() - t0, 1)
+        time.sleep(3)
+    raise InfraError(f"world not ready after {timeout_s} s")
 
 
-def server_specs(apps: list[str]) -> dict:
-    example = json.loads(EXAMPLE_MCP_CONFIG.read_text())["mcpServers"]
-    servers = {}
-    for port, name in enumerate(apps, start=5001):
-        base = example[name]
-        env = dict(base.get("env", {})) | INDIVIDUAL_TOOLS_ENV.get(name, DEFAULT_INDIVIDUAL_ENV)
-        if name == "edgar_sec":
-            agent = os.environ.get("DSH_BENCH_EDGAR_USER_AGENT", "")
-            if not agent:
-                raise SystemExit("Edgar SEC needs DSH_BENCH_EDGAR_USER_AGENT in your local.env (SEC asks for "
-                                 "'<name> <contact email>')")
-            env["EDGAR_USER_AGENT"] = agent
-        servers[name] = {"cwd": base["cwd"], "command": base["command"], "args": base["args"], "env": env,
-                         "port": port}
-    return servers
+class SetupSlot:
+    """At most N worlds booting at once (populate + snapshot are disk- and podman-heavy); a file lock per slot."""
+
+    def __init__(self, lock_dir: Path | None, slots: int):
+        self.lock_dir, self.slots, self.handle = lock_dir, slots, None
+
+    def __enter__(self):
+        if self.lock_dir is None:
+            return self
+        self.lock_dir.mkdir(parents=True, exist_ok=True)
+        while True:
+            for i in range(self.slots):
+                handle = open(self.lock_dir / f"slot-{i}.lock", "w")
+                try:
+                    fcntl.flock(handle, fcntl.LOCK_EX | fcntl.LOCK_NB)
+                    self.handle = handle
+                    return self
+                except BlockingIOError:
+                    handle.close()
+            time.sleep(2)
+
+    def __exit__(self, *exc):
+        if self.handle is not None:
+            fcntl.flock(self.handle, fcntl.LOCK_UN)
+            self.handle.close()
+            self.handle = None
 
 
-def snapshot(container: str, path: Path, attempts: int = 3) -> list[str]:
-    """Archipelago's /data/snapshot (reads state only, so a retry is safe). Returns the errors of failed attempts;
-    raises InfraError after the last one."""
-    path.parent.mkdir(parents=True, exist_ok=True)
+def final_snapshot(container: str, attempts: int = 3) -> list[str]:
+    """Mercor's collect hook script, run as root in the world (it signs the request with the world's root-only key)."""
     errors = []
-    for attempt in range(attempts):
-        try:
-            path.write_bytes(in_container(container, "curl", "-sS", "--fail-with-body", "-X", "POST",
-                                          "http://127.0.0.1:8080/data/snapshot"))
+    for _ in range(attempts):
+        proc = subprocess.run([RUNTIME, "exec", "-w", "/app/tools", container, "python", "collect_world_snapshot.py"],
+                              capture_output=True, text=True, timeout=1200)
+        if proc.returncode == 0:
             return errors
-        except InfraError as error:
-            errors.append(str(error))
-            if attempt + 1 == attempts:
-                raise
-            time.sleep(15 * (attempt + 1))
-    return errors
+        errors.append(f"exit {proc.returncode}: {(proc.stdout + proc.stderr)[-500:]}")
+        time.sleep(5)
+    raise InfraError(f"final snapshot failed {attempts} times: {errors[-1]}")
 
 
-def wait_healthy(container: str, timeout_s: float = 120) -> None:
-    deadline = time.monotonic() + timeout_s
-    while time.monotonic() < deadline:
-        if subprocess.run([RUNTIME, "exec", container, "curl", "-sf", "http://127.0.0.1:8080/health"],
-                          capture_output=True).returncode == 0:
-            return
-        time.sleep(1)
-    raise RuntimeError("environment container did not become healthy")
+def _text(blocks) -> str:
+    if isinstance(blocks, str):
+        return blocks
+    parts = []
+    for block in blocks or []:
+        if block.get("type") == "text":
+            parts.append(block.get("text", ""))
+        elif block.get("type") == "tool-result":
+            parts.append(_text(block.get("output", {}).get("value") if isinstance(block.get("output"), dict)
+                               else block.get("content") or block.get("output")))
+        elif block.get("type") == "image":
+            parts.append("[image]")
+    return "\n".join(p for p in parts if p)
 
 
-@contextlib.contextmanager
-def setup_slot(lock_dir: Path | None, slots: int):
-    """Hold one of `slots` file locks in lock_dir (shared by every task process of a run) while populating or
-    snapshotting: twenty containers copying worlds at once made podman slow enough that DSH's MCP startup timed out."""
-    if lock_dir is None:
-        yield
-        return
-    lock_dir.mkdir(parents=True, exist_ok=True)
-    while True:
-        for i in range(slots):
-            handle = (lock_dir / f"setup-{i}.lock").open("w")
-            try:
-                fcntl.flock(handle, fcntl.LOCK_EX | fcntl.LOCK_NB)
-            except BlockingIOError:
-                handle.close()
-                continue
-            try:
-                yield
-            finally:
-                fcntl.flock(handle, fcntl.LOCK_UN)
-                handle.close()
-            return
-        time.sleep(1)
-
-
-def trajectory(prompt: str, answer: dict) -> dict:
-    """Archipelago's AgentTrajectoryOutput: the grader reads the first user message (task prompt) and the last
-    message's content (the final answer). One user message keeps the grader's single-turn path, as in the paper (the
-    judge sees prompt, final answer and file changes, not the trajectory)."""
-    status = "completed" if answer.get("finish_reason") in ("final_answer", "completed") else "failed"
-    return {"messages": [{"role": "system", "content": SYSTEM_PROMPT},
-                         {"role": "user", "content": prompt},
-                         {"role": "assistant", "content": answer.get("answer") or ""}],
-            "status": status, "time_elapsed": 0.0, "output": {"source": "dsh-bench-harness",
-                                                              "finish_reason": answer.get("finish_reason")}}
+def atif(prompt: str, home: Path, answer: dict, record: dict) -> dict:
+    """DSH's root session as an ATIF trajectory (the shape Mercor's agent writes and its grader reads, tests/atif.py):
+    system and task prompt, then one agent step per model reply with its tool calls and their results. The grader's
+    answer is the last agent message with text, as for Mercor's agent."""
+    steps = [{"step_id": 1, "source": "system", "message": SYSTEM_PROMPT},
+             {"step_id": 2, "source": "user", "message": prompt}]
+    session = root_session(home)
+    events = session[1] if session else []
+    by_call = {}
+    for event in events:
+        kind, data = event.get("type"), event.get("data") or {}
+        if kind == "assistant/message":
+            content = data.get("message", {}).get("content", [])
+            step = {"step_id": len(steps) + 1, "source": "agent", "message": _text(content)}
+            calls = [{"tool_call_id": b.get("id"), "function_name": b.get("name"),
+                      "arguments": b.get("arguments") if isinstance(b.get("arguments"), dict) else
+                      json.loads(b.get("arguments") or "{}") if isinstance(b.get("arguments"), str) else {}}
+                     for b in content if b.get("type") == "tool-call"]
+            if calls:
+                step["tool_calls"] = calls
+                step["observation"] = {"results": []}
+                for call in calls:
+                    by_call[call["tool_call_id"]] = step
+            steps.append(step)
+        elif kind == "tool/result":
+            message = data.get("message", {})
+            call_id = (message.get("source") or {}).get("callId")
+            if call_id in by_call:
+                by_call[call_id]["observation"]["results"].append(
+                    {"source_call_id": call_id, "content": _text(message.get("content"))})
+    finish = answer.get("finish_reason")
+    return {"schema_version": "ATIF-v1.5", "session_id": answer.get("root_session_id") or "dsh",
+            "agent": {"name": "dsh-bench-harness", "version": "1.1"}, "steps": steps,
+            "final_metrics": {"total_steps": len(steps)},
+            "extra": {"native_status": GRADED_ENDINGS.get(finish, "error"), "finish_reason": finish,
+                      "time_elapsed_sec": record.get("agent_s", 0.0)}}
 
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--task", required=True)
-    parser.add_argument("--out", type=Path, required=True)
-    parser.add_argument("--dataset", type=Path, default=Path("~/apex-agents-data"))
-    parser.add_argument("--endpoint", choices=sorted(ENDPOINTS))
-    parser.add_argument("--model")
-    parser.add_argument("--max-steps", type=int, default=250)
-    parser.add_argument("--timeout-s", type=int, default=10800)
-    parser.add_argument("--keep-container", action="store_true")
-    parser.add_argument("--lock-dir", type=Path, help="setup slots shared by the tasks of one run (run_all.py)")
+    parser.add_argument("--out", required=True, type=Path)
+    parser.add_argument("--tasks-dir", type=Path, default=TASKS_DIR)
+    parser.add_argument("--endpoint", default=None)
+    parser.add_argument("--model", default=None)
+    parser.add_argument("--max-steps", type=int, default=MAX_STEPS)
+    parser.add_argument("--timeout-s", type=int, default=TIMEOUT_S)
+    parser.add_argument("--lock-dir", type=Path, default=None)
     parser.add_argument("--setup-slots", type=int, default=4)
+    parser.add_argument("--keep-world", action="store_true")
+    parser.add_argument("--no-subagents", action="store_true", help="turn DSH's subagent tools and their guidance off")
     args = parser.parse_args()
     load_local_env()
-    dataset = args.dataset.expanduser().resolve()
-    task, world = load_task(dataset, args.task)
+    if args.model and not args.model.startswith("{repo}"):
+        # The launcher resolves a relative model path against the spec's directory (the task's out dir): make it
+        # absolute here, against the current directory, and fail now if it does not exist.
+        args.model = str(Path(args.model).resolve())
+        if not Path(args.model).exists():
+            raise SystemExit(f"--model {args.model}: no such file")
+    if not (RG_DIR / "rg").exists():
+        raise SystemExit(f"{RG_DIR / 'rg'} missing: run benchmarks/apex-agents-1.1/setup.sh")
+    task = load_task(args.tasks_dir, args.task)
     out = args.out.resolve()
-    if out.exists():
-        raise SystemExit(f"{out} exists; every run needs a new directory")
-    out.mkdir(parents=True)
-    (out / "task.json").write_text(json.dumps(task | {"world": world}, indent=2) + "\n")
-
-    apps = [APP_SERVERS[a["service_name"]] for a in world["apps"]]
-    networked = bool(NETWORKED_APPS & set(apps))
-    container = f"apex-{task['task_id'][5:13]}-{uuid.uuid4().hex[:6]}"
-    record = {"task_id": task["task_id"], "world_id": world["world_id"], "world": world["world_name"],
-              "domain": task["domain"], "expected_output": task["expected_output"], "apps": apps,
-              "network": "pasta" if networked else "none", "container": container, "image": IMAGE,
-              "started_at": now()}
+    out.mkdir(parents=True, exist_ok=False)
+    logs = out / "world-logs"
+    logs.mkdir()
+    container = f"apex11-{args.task[:24]}-{uuid.uuid4().hex[:6]}"
+    meta = task["meta"]
+    record = {"task": args.task, "tasks_dir": str(args.tasks_dir.resolve()), "task_id": meta["task_id"], "world_id": meta["world_id"], "world": meta["world_slug"],
+              "domain": meta["domain"], "expected_output": meta["expected_output"], "container": container,
+              "subagents": not args.no_subagents, "world_image": task["world"]["image"], "verifier_image": task["verifier_image"], "started_at": now()}
+    (out / "prompt.txt").write_text(task["instruction"])
     t0 = time.monotonic()
-    slot = setup_slot(args.lock_dir, args.setup_slots)
     try:
-        slot.__enter__()
-        record["slot_wait_s"] = round(time.monotonic() - t0, 1)
-        sh([RUNTIME, "run", "-d", "--name", container, f"--network={record['network']}",
-            "-v", f"{HERE / 'container'}:/opt/dsh-bench-apex:ro", IMAGE])
-        wait_healthy(container)
-        with tempfile.TemporaryDirectory(prefix="apex-populate-") as tmp:
-            tmp_path = Path(tmp)
-            with zipfile.ZipFile(dataset / "world_files_zipped" / f"{world['world_id']}.zip") as zf:
-                zf.extractall(tmp_path / "world")
-            archives = tar_subsystems(tmp_path / "world", "world", tmp_path)
-            task_dir = dataset / "task_files" / task["task_id"]
-            if task.get("task_input_files") and task_dir.is_dir():
-                archives += tar_subsystems(task_dir, "task", tmp_path)
-            record["populate"] = populate(container, archives)
-
-        servers = server_specs(apps)
-        secret_files = {}
-        if "fmp_server" in servers:
-            key = Path(setting_path("$DSH_BENCH_FMP_KEY_FILE")).read_text().strip()
-            in_container(container, "sh", "-c", "umask 077; mkdir -p /app/.dsh-secrets; cat > /app/.dsh-secrets/fmp.key",
-                         input=key.encode())
-            secret_files["fmp_server"] = {"FMP_API_KEY": "/app/.dsh-secrets/fmp.key"}
-        in_container(container, "sh", "-c", "cat > /tmp/apps-servers.json",
-                     input=json.dumps({"servers": servers, "secret_files": secret_files}).encode())
-        gateway = in_container(container, "python3", "/opt/dsh-bench-apex/start_apps.py", "/tmp/apps-servers.json")
-        in_container(container, "rm", "-f", "/tmp/apps-servers.json")
-        reply = in_container(container, "curl", "-sS", "--fail-with-body", "-X", "POST", "-H",
-                             "Content-Type: application/json", "--data-binary", "@-", "http://127.0.0.1:8080/apps",
-                             input=gateway)
-        record["apps_configured"] = json.loads(reply)
-        record["snapshot_retries"] = snapshot(container, out / "snapshots/before.tar.gz")
-        probe = json.loads(in_container(container, "python3", "/opt/dsh-bench-apex/gateway_probe.py",
-                                        "http://127.0.0.1:8080/mcp/", "300"))
-        record["gateway_probe"] = probe
-        slot.__exit__(None, None, None)
-        slot = None
+        with SetupSlot(args.lock_dir, args.setup_slots) as slot:
+            record["slot_wait_s"] = round(time.monotonic() - t0, 1)
+            sh(world_argv(task, container, logs), timeout=300)
+            record["boot_s"] = wait_ready(task, container)
         record["setup_s"] = round(time.monotonic() - t0, 1)
+        if not (logs / "initial_snapshot.tar.gz").exists():
+            raise InfraError("world ready but no initial snapshot")
 
         spec = {
-            "task_id": task["task_id"],
-            "prompt": task["prompt"],
+            "task_id": meta["task_id"],
+            "prompt": task["instruction"],
             "model": model_for(args.endpoint, args.model),
             "system_prompt": SYSTEM_PROMPT,
             "system_prompt_mode": "append",
-            "attach": {"container": container, "workspace": WORKSPACE},
+            "attach": {"container": container, "workspace": WORKSPACE, "user": EXEC_USER, "umask": "0002"},
             "runtime": RUNTIME,
-            "container_env": SANDBOX_ENV,
-            "disable": ["tool-web"],
-            "mcp": [{"name": "apps", "transport": "stdio", "command": RUNTIME,
-                     "args": ["exec", "-i", container, "/app/.venv/bin/python", "/opt/dsh-bench-apex/mcp_bridge.py"],
-                     "toolCallTimeoutMs": 300_000}],
-            "toolbelt": {},
-            "final_answer": True,
+            "container_env": RUN_SHELL_ENV,
+            "disable": ["tool-web"] + (SUBAGENT_ROWS if args.no_subagents else []),
+            # The relay answers a call it stopped at its own limit; DSH's MCP client only stops a call that never
+            # comes back (a world call can also wait for the one-at-a-time lock first).
+            "mcp": [{"name": "world", "transport": "stdio", "command": RUNTIME,
+                     "args": ["exec", "-i", container, "/app/.venv/bin/python", "/opt/dsh-bench/lib/mcp_relay.py"],
+                     "toolCallTimeoutMs": (args.timeout_s + 600) * 1000}],
+            "toolbelt": None,
+            "final_answer": False,
+            "tool_limits": TOOL_LIMITS,
             "limits": {"max_steps": args.max_steps, "timeout_s": args.timeout_s, "temperature": None},
-            "meta": {"benchmark": "apex-agents", "dataset": str(dataset), "world_id": world["world_id"]},
+            "meta": {"benchmark": "apex-agents-1.1", "task": args.task, "world": meta["world_slug"],
+                     "subagents": not args.no_subagents},
         }
         (out / "agent-spec.json").write_text(json.dumps(spec, indent=2) + "\n")
         t1 = time.monotonic()
@@ -321,39 +349,38 @@ def main() -> int:
             (out / "launch.log").write_text(launch.stdout + launch.stderr)
             ended = json.loads((out / "agent/answer.json").read_text()).get("finish_reason") \
                 if (out / "agent/answer.json").exists() else None
-            # DSH never started an agent (its MCP startup has 60 s; slow `podman exec` under load): the container is
-            # untouched, so start DSH again in it once instead of redoing the whole task.
+            # DSH started no agent (its MCP startup has 60 s; slow `podman exec` under load): the world is untouched,
+            # so start DSH once more in it instead of redoing the task.
             if ended != "no_session" or attempt == 1:
                 break
             (out / "agent").rename(out / f"agent-no-session-{attempt + 1}")
             record["agent_relaunches"] += 1
-            in_container(container, "python3", "/opt/dsh-bench-apex/gateway_probe.py", "http://127.0.0.1:8080/mcp/", "300")
+            wait_ready(task, container, timeout_s=300)
         record["agent_s"] = round(time.monotonic() - t1, 1)
-        try:
-            with setup_slot(args.lock_dir, args.setup_slots):
-                record["snapshot_retries"] += snapshot(container, out / "snapshots/after.tar.gz")
-        except InfraError as error:
-            # Without the "after" state the run cannot be graded: an infrastructure failure, retried by run_all.
-            record["infra_error"] = f"after snapshot failed: {error}"
-
-        subprocess.run([RUNTIME, "cp", f"{container}:/tmp/apps", str(out / "apps-logs")], capture_output=True)
-    except Exception as error:
-        record["infra_error"] = f"{type(error).__name__}: {error}"[:3000]
-        raise
-    finally:
-        if slot is not None:
-            slot.__exit__(None, None, None)
-        if not args.keep_container:
-            subprocess.run([RUNTIME, "rm", "-f", "-t", "0", container], capture_output=True)
-        record["finished_at"] = now()
-        answer_file = out / "agent/answer.json"
-        answer = json.loads(answer_file.read_text()) if answer_file.exists() else {}
+        if not (out / "agent/answer.json").exists():  # the launcher failed before DSH ran (bad spec, model file, node)
+            raise InfraError(f"DSH did not run: {(out / 'launch.log').read_text()[-1200:]}")
+        answer = json.loads((out / "agent/answer.json").read_text())
         record["finish_reason"] = answer.get("finish_reason")
-        (out / "trajectory.json").write_text(json.dumps(trajectory(task["prompt"], answer), indent=2) + "\n")
+        record["graded_ending"] = record["finish_reason"] in GRADED_ENDINGS
+
+        reaped = subprocess.run([RUNTIME, "exec", container, "python3", "-c", REAP_PY], capture_output=True, text=True)
+        record["reaped_processes"] = [line for line in reaped.stdout.splitlines() if line.strip()]
+        t2 = time.monotonic()
+        record["snapshot_retries"] = final_snapshot(container)
+        record["snapshot_s"] = round(time.monotonic() - t2, 1)
+        home = out / "agent/dsh-home"
+        (out / "trajectory.json").write_text(json.dumps(atif(task["instruction"], home, answer, record), indent=2) + "\n")
+    except (InfraError, subprocess.TimeoutExpired) as error:
+        record["infra_error"] = str(error)[-2000:]
+    finally:
+        world_log = subprocess.run([RUNTIME, "logs", container], capture_output=True, text=True)
+        (out / "world.log").write_text(world_log.stdout + world_log.stderr)
+        if not args.keep_world:
+            subprocess.run([RUNTIME, "rm", "-f", "-t", "5", container], capture_output=True)
+        record["finished_at"] = now()
         (out / "run.json").write_text(json.dumps(record, indent=2) + "\n")
-    print(json.dumps({k: record.get(k) for k in ("task_id", "finish_reason", "setup_s", "agent_s", "infra_error")}
-                     | {"out": str(out)}))
-    return 0 if record.get("finish_reason") in ("final_answer", "completed") and not record.get("infra_error") else 1
+    print(json.dumps({k: record.get(k) for k in ("task", "finish_reason", "setup_s", "agent_s", "infra_error")}))
+    return 0 if "infra_error" not in record else 3
 
 
 if __name__ == "__main__":

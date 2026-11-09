@@ -1,25 +1,29 @@
-"""Grade APEX-Agents runs with Archipelago's grader, unchanged (CHECKLIST.md, row 9).
+"""Grade APEX-Agents 1.1 runs with Mercor's own 1.1 grader image (CHECKLIST.md, decision 7 and "How a task runs").
 
-    python3 benchmarks/apex-agents/grade.py RUN_DIR [RUN_DIR ...] [--jobs 8] [--judge gemini-3.8-flash --effort low]
+    python3 benchmarks/apex-agents-1.1/grade.py RUN_DIR [RUN_DIR ...] [--jobs 6] [--regrade] [--keep-snapshots]
+        [--judge gemini-3.8-flash] [--effort high]
 
 RUN_DIR is one task's run_task.py output, or a directory of them. Per task, in RUN_DIR/grading/:
-  - a run that ended normally is graded: with final_answer, or with a final reply that calls no tool (DSH's own end of
-    a turn; the answer is that reply, as for JobBench and Harvey). A run stopped by the step limit, the timeout or an
-    error is not graded and scores 0, as in the paper;
-  - before.zip / after.zip from the run's snapshots (the grader reads zips);
-  - verifiers.json: one output_llm verifier per rubric criterion, with the grading target the paper uses: the task's
-    expected_output mapped to the grader's file-type category (Final Answer Only for message_in_console, Word /
-    Spreadsheets / Presentations for the file tasks) -- Archipelago's example passes none (change 5);
-  - Archipelago's grading runner (work/archipelago/grading, uv) with the judge through CAO (OpenAI-compatible; the key
-    goes in the environment, never into a file); no Reducto key, so documents are extracted locally. Calls pass through
-    a local relay (JudgeRelay) that strips a markdown fence around the reply when the request asked for JSON
-    (response_format): CAO does not pass response_format to Gemini, which then answers ```json ...```, and the grader's
-    artifact selector parses strictly (CHECKLIST.md, change 7);
-  - grades.json: score (mean criterion score, the grader's own "template" scoring), all_pass (every criterion met:
-    the paper's Pass@1 per run), and each criterion's grade and rationale;
-  - then, unless --keep-snapshots, the task is compacted: snapshots/changes.tar.gz (files the agent added or modified)
-    and snapshots/changes.json (added / modified / deleted) replace the full before/after snapshots and the grader's
-    zips (0.5-1.5 GB per task otherwise). A task whose grading failed keeps everything.
+  - graded only when the run ended as Mercor's loop grades it: a reply without tool calls, or the step limit (run.json
+    graded_ending). A 3 h timeout, an agent error or an infrastructure error is not graded and scores 0 (reason in
+    grades.json); run_all retries infrastructure errors first.
+  - tests/: the task's tests/ (Mercor's test.sh, grade.py, atif.py, golden files, grading_config.json), unchanged except
+    the judge in grading_config.json's grading_settings: model gemini-3.8-flash through CAO (OpenAI-compatible) and
+    extra args {temperature 0.1 (Mercor's), reasoning_effort high} instead of deepseek-v4-flash-0731 on Vercel. The judge
+    system prompt (with its scattergunning guard) and everything else stay as Mercor wrote them.
+  - Mercor's verifier image (digest from tests/Dockerfile, which Harbor builds as FROM + COPY tests: mounted here
+    instead) runs like Harbor's verifier: `sh /tests/test.sh`, with /logs/agent/trajectory.json and
+    /logs/world/{initial,final}_snapshot.tar.gz from the run, /logs/verifier and /logs/artifacts written here; 2 CPUs /
+    8 GB and 3600 s ([verifier] in task.toml); host network, to reach the judge relay on 127.0.0.1. The judge is
+    `openai/<model>` for LiteLLM with OPENAI_API_BASE (the relay) and OPENAI_API_KEY in the environment (a variable
+    task.toml passes to the verifier), never in a file. (Not LITELLM_PROXY_*: with those LiteLLM switches to its proxy
+    mode and sends the model name with its `openai/` prefix, which the endpoint rejects.)
+  - The relay (as in v1, JudgeRelay) forwards to CAO; for JSON requests (response_format) it removes a markdown fence
+    around the reply and escapes raw control characters inside strings: CAO does not pass response_format to Gemini.
+  - grades.json: score (final_score of the task's scoring config), all_pass (every criterion met: Pass@1 per run),
+    each criterion with its score and the judge's rationale.
+  - then, unless --keep-snapshots, the run is compacted: world-logs/changes.tar.gz (files added or modified in the
+    world, from the final snapshot) and changes.json replace the two full snapshots; the tests copy is removed.
 """
 
 import argparse
@@ -28,14 +32,16 @@ import hashlib
 import json
 import os
 import re
+import shutil
 import subprocess
 import sys
 import tarfile
 import threading
+import time
+import tomllib
 import urllib.error
 import urllib.request
 import uuid
-import zipfile
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 
@@ -44,18 +50,16 @@ REPO = HERE.parents[1]
 sys.path.insert(0, str(REPO))
 from dsh_bench.endpoints import load_local_env, setting_path  # noqa: E402
 
-GRADING = REPO / "work/archipelago/grading"
-EXAMPLE = REPO / "work/archipelago/examples/hugging_face_task"
-# The judge's OpenAI-compatible endpoint: CAO by default; DSH_BENCH_JUDGE_BASE_URL / DSH_BENCH_JUDGE_KEY_FILE (local.env)
-# point it elsewhere. Read when the relay starts (after local.env is loaded).
+RUNTIME = "podman"
+JUDGE_MODEL, JUDGE_EFFORT = "gemini-3.8-flash", "high"
 CAO_BASE = "http://127.0.0.1:4141/v1"
 FENCE = re.compile(r"^\s*```(?:json)?\s*\n(.*?)\n?\s*```\s*$", re.S)
 
 
 def clean_json_reply(content: str) -> str:
     """A reply to a JSON request, as JSON the grader can parse: one surrounding markdown fence removed, and raw
-    control characters inside strings (an unescaped newline in a rationale) escaped by re-serializing. The values are
-    not changed; text that is not JSON even leniently is returned as it came (after fence removal)."""
+    control characters inside strings escaped by re-serializing. Values are not changed; text that is not JSON even
+    leniently is returned as it came (after fence removal)."""
     match = FENCE.match(content)
     text = match.group(1).strip() if match else content
     try:
@@ -70,11 +74,7 @@ def clean_json_reply(content: str) -> str:
 
 
 class JudgeRelay:
-    """Local OpenAI-compatible relay to CAO for the grader (one per process, started on first use).
-
-    Forwards every request unchanged. When the request carries response_format, each reply's message content goes
-    through clean_json_reply (fence removed, control characters inside strings escaped); nothing else changes.
-    """
+    """Local OpenAI-compatible relay to the judge endpoint (one per process, started on first use)."""
 
     _lock = threading.Lock()
     _base: str | None = None
@@ -104,6 +104,8 @@ class _RelayHandler(BaseHTTPRequestHandler):
                 status, headers, payload = upstream.status, upstream.headers, upstream.read()
         except urllib.error.HTTPError as error:
             status, headers, payload = error.code, error.headers, error.read()
+        except (urllib.error.URLError, TimeoutError, ConnectionError) as error:
+            status, headers, payload = 502, {}, json.dumps({"error": {"message": f"relay: {error}"}}).encode()
         if body and status == 200:
             try:
                 if json.loads(body).get("response_format"):
@@ -114,9 +116,9 @@ class _RelayHandler(BaseHTTPRequestHandler):
                             choice["message"]["content"] = clean_json_reply(content)
                     payload = json.dumps(reply).encode()
             except (ValueError, AttributeError):
-                pass  # not JSON on either side: pass the reply through as it came
+                pass
         self.send_response(status)
-        self.send_header("Content-Type", headers.get("Content-Type", "application/json"))
+        self.send_header("Content-Type", headers.get("Content-Type", "application/json") if headers else "application/json")
         self.send_header("Content-Length", str(len(payload)))
         self.end_headers()
         self.wfile.write(payload)
@@ -135,174 +137,147 @@ def judge_key() -> str:
     return Path(setting_path(name)).read_text().strip()
 
 
-def judge_env(cao_key: str) -> dict[str, str]:
-    """Environment for the grader process: the judge goes through the relay, the key stays in the environment."""
-    base = JudgeRelay.base_url()
-    return os.environ | {"OPENAI_API_KEY": cao_key, "OPENAI_API_BASE": base, "OPENAI_BASE_URL": base}
+def judge_settings(original: dict, model: str, effort: str) -> dict:
+    """Mercor's grading_settings with our judge: model and extra args replaced, the system prompt kept."""
+    extra = dict(original.get("llm_judge_extra_args") or {})
+    extra |= {"reasoning_effort": effort, "allowed_openai_params": ["reasoning_effort"]}
+    return original | {"llm_judge_model": f"openai/{model}", "llm_judge_extra_args": extra}
 
 
-# Run endings that carry an answer: the final_answer tool, or DSH's normal turn end (a reply with no tool call).
-ANSWERED = {"final_answer", "completed"}
-# Task expected_output -> the grader's grading target (output_llm artifact_filters.FileTypeCategory).
-GRADING_TARGET = {
-    "message_in_console": "Final Answer Only (No Files)",
-    "make_new_doc": "Word Documents (.docx, .doc, .odt)",
-    "edit_existing_doc": "Word Documents (.docx, .doc, .odt)",
-    "make_new_sheet": "Spreadsheets (.xlsx, .xls, .xlsm, .ods)",
-    "edit_existing_sheet": "Spreadsheets (.xlsx, .xls, .xlsm, .ods)",
-    "make_new_slide_deck": "Presentations (.pptx, .ppt, .odp)",
-    "edit_existing_slide_deck": "Presentations (.pptx, .ppt, .odp)",
-}
-
-
-def tar_to_zip(tar_gz: Path, zip_path: Path) -> None:
-    """Regular files only, names as in the archive (Archipelago example's tar_gz_to_zip)."""
-    with tarfile.open(tar_gz, "r:gz") as tar, zipfile.ZipFile(zip_path, "w", zipfile.ZIP_DEFLATED) as zf:
-        for member in tar.getmembers():
-            if member.isfile():
-                data = tar.extractfile(member)
-                if data is not None:
-                    zf.writestr(member.name.removeprefix("./"), data.read())
-
-
-def tar_digests(tar_gz: Path) -> dict[str, str]:
+def tar_digests(path: Path) -> dict[str, str]:
     digests = {}
-    with tarfile.open(tar_gz, "r:gz") as tar:
+    with tarfile.open(path, "r:gz") as tar:
         for member in tar.getmembers():
             if member.isfile():
                 data = tar.extractfile(member)
-                digests[member.name.removeprefix("./")] = hashlib.sha256(data.read() if data else b"").hexdigest()
+                digests[member.name] = hashlib.sha256(data.read() if data else b"").hexdigest()
     return digests
 
 
 def compact(run_dir: Path) -> None:
-    """Keep only the agent's changes (added/modified files + a list); drop full snapshots and grader zips."""
-    snaps = run_dir / "snapshots"
-    before, after = snaps / "before.tar.gz", snaps / "after.tar.gz"
-    if not (before.exists() and after.exists()):
-        return
-    old, new = tar_digests(before), tar_digests(after)
-    added = sorted(n for n in new if n not in old)
-    modified = sorted(n for n in new if n in old and new[n] != old[n])
-    deleted = sorted(n for n in old if n not in new)
-    keep = set(added) | set(modified)
-    with tarfile.open(after, "r:gz") as src, tarfile.open(snaps / "changes.tar.gz", "w:gz") as dst:
-        for member in src.getmembers():
-            if member.isfile() and member.name.removeprefix("./") in keep:
-                dst.addfile(member, src.extractfile(member))
-    (snaps / "changes.json").write_text(json.dumps(
-        {"added": added, "modified": modified, "deleted": deleted, "before_files": len(old), "after_files": len(new),
-         "after_sha256": {n: new[n] for n in sorted(keep)}}, indent=2) + "\n")
-    for path in (before, after, run_dir / "grading/before.zip", run_dir / "grading/after.zip"):
-        path.unlink(missing_ok=True)
+    """Keep what the agent changed in the world (added / modified files and the list of deleted ones), drop the two
+    full snapshots (each the whole world: 20-450 MB) and the tests copy."""
+    logs = run_dir / "world-logs"
+    initial, final = logs / "initial_snapshot.tar.gz", logs / "final_snapshot.tar.gz"
+    if initial.exists() and final.exists():
+        before, after = tar_digests(initial), tar_digests(final)
+        added = sorted(set(after) - set(before))
+        modified = sorted(n for n in set(after) & set(before) if after[n] != before[n])
+        deleted = sorted(set(before) - set(after))
+        keep = set(added) | set(modified)
+        with tarfile.open(final, "r:gz") as src, tarfile.open(logs / "changes.tar.gz", "w:gz") as dst:
+            for member in src.getmembers():
+                if member.name in keep:
+                    dst.addfile(member, src.extractfile(member))
+        (logs / "changes.json").write_text(json.dumps({"added": added, "modified": modified, "deleted": deleted},
+                                                      indent=2) + "\n")
+        initial.unlink()
+        final.unlink()
+    shutil.rmtree(run_dir / "grading/tests", ignore_errors=True)
 
 
-def verifiers(task: dict) -> list[dict]:
-    target = GRADING_TARGET[task["expected_output"]]
-    return [{"verifier_id": c["verifier_id"], "verifier_version": 1, "world_id": task["world_id"],
-             "task_id": task["task_id"], "eval_config_id": "ec_output_llm",
-             "verifier_values": {"criteria": c["criteria"], "is_primary_objective": i == 0,
-                                 "expected_file_type": target},
-             "verifier_index": i, "verifier_dependencies": None}
-            for i, c in enumerate(task["rubric"])]
-
-
-def grade_task(run_dir: Path, judge: str, effort: str, env: dict[str, str], keep_snapshots: bool = False) -> dict:
-    result = grade_once(run_dir, judge, effort, env)
-    # Compact a graded task, or one that could not be graded (a limit hit); never one whose grading failed.
-    gradable_done = result.get("graded") is True or "reason" in result
-    if not keep_snapshots and gradable_done and not result.get("error"):
-        compact(run_dir)
-    return result
-
-
-def grade_once(run_dir: Path, judge: str, effort: str, env: dict[str, str]) -> dict:
-    task = json.loads((run_dir / "task.json").read_text())
-    record = json.loads((run_dir / "run.json").read_text())
+def grade_task(run_dir: Path, model: str = JUDGE_MODEL, effort: str = JUDGE_EFFORT, regrade: bool = False,
+               keep_snapshots: bool = False, tasks_dir: Path | None = None) -> dict:
+    run_dir = run_dir.resolve()  # podman takes a relative mount source for a named volume
     out = run_dir / "grading"
-    out.mkdir(exist_ok=True)
-    base = {"task_id": task["task_id"], "domain": task["domain"], "expected_output": task["expected_output"],
-            "criteria_count": len(task["rubric"]), "finish_reason": record.get("finish_reason")}
-    if record.get("finish_reason") not in ANSWERED:
-        result = base | {"graded": False, "score": 0.0, "all_pass": False,
-                         "reason": f"run ended {record.get('finish_reason')!r} without an answer (counts as failed)"}
-        (out / "grades.json").write_text(json.dumps(result, indent=2) + "\n")
-        return result
-    missing = [n for n in ("before.tar.gz", "after.tar.gz") if not (run_dir / "snapshots" / n).exists()]
-    if missing or record.get("infra_error"):
-        result = base | {"graded": False, "error": f"cannot grade: missing snapshot(s) {missing}; "
-                                                    f"{record.get('infra_error') or ''}"[:500]}
-        (out / "grades.json").write_text(json.dumps(result, indent=2) + "\n")
-        return result
-    tar_to_zip(run_dir / "snapshots/before.tar.gz", out / "before.zip")
-    tar_to_zip(run_dir / "snapshots/after.tar.gz", out / "after.zip")
-    (out / "verifiers.json").write_text(json.dumps(verifiers(task), indent=2) + "\n")
-    (out / "grading_settings.json").write_text(json.dumps(
-        {"llm_judge_model": f"openai/{judge}",
-         # LiteLLM's openai provider refuses reasoning_effort for models it has no entry for (gemini-3.8-flash);
-         # allowed_openai_params passes it through to CAO, which accepts it.
-         "llm_judge_extra_args": {"reasoning_effort": effort, "allowed_openai_params": ["reasoning_effort"]}},
-        indent=2) + "\n")
-    raw = out / "grades-raw.json"
-    argv = ["uv", "run", "--no-sync", "python", "-m", "runner.main",
-            "--grading-run-id", f"gr_{uuid.uuid4().hex[:8]}", "--trajectory-id", f"dshb_{task['task_id']}",
-            "--initial-snapshot", str(out / "before.zip"), "--final-snapshot", str(out / "after.zip"),
-            "--trajectory", str(run_dir / "trajectory.json"),
-            "--grading-settings", str(out / "grading_settings.json"), "--verifiers", str(out / "verifiers.json"),
-            "--eval-configs", str(EXAMPLE / "eval_configs.json"), "--scoring-config", str(EXAMPLE / "scoring_config.json"),
-            "--output", str(raw)]
-    proc = subprocess.run(argv, cwd=GRADING, env=env, capture_output=True, text=True)
-    (out / "grader.log").write_text(proc.stdout + proc.stderr)
-    if proc.returncode != 0 or not raw.exists():
-        result = base | {"graded": False, "error": f"grader exit {proc.returncode}; see grading/grader.log"}
-        (out / "grades.json").write_text(json.dumps(result, indent=2) + "\n")
-        return result
-    grades = json.loads(raw.read_text())
-    by_id = {v["verifier_id"]: v for v in grades.get("verifier_results", [])}
+    if (out / "grades.json").exists() and not regrade:
+        return json.loads((out / "grades.json").read_text())
+    record = json.loads((run_dir / "run.json").read_text())
+    if out.exists():
+        shutil.rmtree(out)
+    out.mkdir(parents=True)
+    grades = {"task": record["task"], "task_id": record["task_id"], "graded": False}
+    if record.get("infra_error") or not record.get("graded_ending"):
+        grades |= {"score": 0.0, "all_pass": False,
+                   "reason": "infra_error" if record.get("infra_error") else f"not graded: {record.get('finish_reason')}"}
+        (out / "grades.json").write_text(json.dumps(grades, indent=2) + "\n")
+        return grades
+    sys.path.insert(0, str(HERE))
+    import run_task  # noqa: PLC0415 (task loading is defined once, in run_task)
+    task = run_task.load_task(tasks_dir or Path(record.get("tasks_dir") or run_task.TASKS_DIR), record["task"])
+    tests = out / "tests"
+    shutil.copytree(task["dir"] / "tests", tests)
+    config = json.loads((tests / "grading_config.json").read_text())
+    config["grading_settings"] = judge_settings(config["grading_settings"], model, effort)
+    (tests / "grading_config.json").write_text(json.dumps(config, indent=2) + "\n")
+    shutil.copy(tests / "grading_config.json", out / "grading_config.json")
+    (out / "verifier").mkdir()
+    (out / "artifacts").mkdir()
+    verifier_env = task["toml"]["verifier"].get("environment", {})
+    timeout_s = int(task["toml"]["verifier"].get("timeout_sec", 3600))
+    name = f"apex11-grade-{record['task'][:20]}-{uuid.uuid4().hex[:6]}"
+    argv = [RUNTIME, "run", "--rm", "--name", name, "--network=host",
+            f"--cpus={verifier_env.get('cpus', 2)}", f"--memory={verifier_env.get('memory_mb', 8192)}m",
+            "-e", "OPENAI_API_KEY", "-e", f"OPENAI_API_BASE={JudgeRelay.base_url()}",
+            "-e", f"OPENAI_BASE_URL={JudgeRelay.base_url()}",
+            "-v", f"{tests}:/tests:ro",
+            "-v", f"{run_dir / 'trajectory.json'}:/logs/agent/trajectory.json:ro",
+            "-v", f"{run_dir / 'world-logs'}:/logs/world:ro",
+            "-v", f"{out / 'verifier'}:/logs/verifier", "-v", f"{out / 'artifacts'}:/logs/artifacts",
+            task["verifier_image"], "sh", "/tests/test.sh"]
+    t0 = time.monotonic()
+    try:
+        proc = subprocess.run(argv, capture_output=True, text=True, timeout=timeout_s + 300,
+                              env=os.environ | {"OPENAI_API_KEY": judge_key()})
+        rc, log = proc.returncode, proc.stdout + proc.stderr
+    except subprocess.TimeoutExpired as error:
+        subprocess.run([RUNTIME, "rm", "-f", "-t", "0", name], capture_output=True)
+        rc, log = -1, f"verifier timed out after {timeout_s + 300} s\n{error.stdout or ''}"
+    (out / "verifier.log").write_text(log)
+    grades["grade_s"] = round(time.monotonic() - t0, 1)
+    details_path = out / "verifier/grade_details.json"
+    details = json.loads(details_path.read_text()) if details_path.exists() else {}
+    error_path = out / "verifier/grading_error.json"
+    if rc != 0 or error_path.exists() or not (out / "verifier/reward.json").exists():
+        detail = json.loads(error_path.read_text()).get("detail") if error_path.exists() else f"verifier exit {rc}"
+        grades |= {"score": None, "all_pass": False, "error": detail}
+        (out / "grades.json").write_text(json.dumps(grades, indent=2) + "\n")
+        return grades  # not compacted: everything stays for a look and a --regrade
+    texts = {v["verifier_id"]: v["verifier_values"].get("criteria") for v in config["verifiers"]}
     criteria = []
-    for c in task["rubric"]:
-        v = by_id.get(c["verifier_id"], {})
-        values = v.get("verifier_result_values") or {}
-        criteria.append({"verifier_id": c["verifier_id"], "criteria": c["criteria"], "score": v.get("score"),
-                         "status": v.get("status"), "judge_grade": values.get("judge_grade"),
-                         "rationale": values.get("grade_rationale"), "auto_failed": values.get("auto_failed", False)})
-    errors = [c for c in criteria if c["score"] is None or c["status"] == "error"]
-    run_failed = grades.get("grading_run_status") == "error"
-    scores = [c["score"] for c in criteria if c["score"] is not None]
-    result = base | {"graded": not errors and not run_failed, "grading_run_status": grades.get("grading_run_status"),
-                     "score": (grades.get("scoring_results") or {}).get("final_score"),
-                     "all_pass": bool(scores) and not errors and not run_failed and all(s >= 1.0 for s in scores),
-                     "criteria": criteria}
-    if errors or run_failed:
-        first = next((v.get("message") for v in grades.get("verifier_results", []) if v.get("status") == "error"), "")
-        result["error"] = f"{len(errors)} criteria errored (grading run {grades.get('grading_run_status')}): {str(first)[:300]}"
-    (out / "grades.json").write_text(json.dumps(result, indent=2) + "\n")
-    return result
+    for result in details.get("verifier_results") or []:
+        values = result.get("verifier_result_values") or {}
+        criteria.append({"verifier_id": result.get("verifier_id"), "criteria": texts.get(result.get("verifier_id")),
+                         "score": result.get("score"), "status": result.get("status"),
+                         "judge_grade": values.get("judge_grade"), "artifacts": values.get("evaluated_artifacts"),
+                         "rationale": values.get("grade_rationale") or values.get("rationale")})
+    score = (details.get("scoring_results") or {}).get("final_score")
+    grades |= {"graded": True, "score": score, "all_pass": bool(criteria) and all((c["score"] or 0) >= 1.0 for c in criteria),
+               "criteria": criteria, "judge": {"model": model, "effort": effort}}
+    (out / "grades.json").write_text(json.dumps(grades, indent=2) + "\n")
+    if not keep_snapshots:
+        compact(run_dir)
+    return grades
 
 
 def task_dirs(paths: list[Path]) -> list[Path]:
-    found = []
+    out = []
     for path in paths:
-        found += [path] if (path / "task.json").exists() else sorted(p.parent for p in path.glob("*/task.json"))
-    return found
+        if (path / "run.json").exists():
+            out.append(path)
+        else:
+            out += sorted(p.parent for p in path.glob("*/run.json"))
+    return out
 
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument("runs", type=Path, nargs="+")
-    parser.add_argument("--judge", default="gemini-3.8-flash")
-    parser.add_argument("--effort", default="low")
-    parser.add_argument("--jobs", type=int, default=8)
-    parser.add_argument("--regrade", action="store_true", help="grade tasks that already have grading/grades.json")
-    parser.add_argument("--keep-snapshots", action="store_true", help="do not compact graded tasks")
+    parser.add_argument("runs", nargs="+", type=Path)
+    parser.add_argument("--jobs", type=int, default=6)
+    parser.add_argument("--judge", default=JUDGE_MODEL)
+    parser.add_argument("--effort", default=JUDGE_EFFORT)
+    parser.add_argument("--regrade", action="store_true")
+    parser.add_argument("--keep-snapshots", action="store_true")
+    parser.add_argument("--tasks-dir", type=Path, default=None)
     args = parser.parse_args()
     load_local_env()
-    env = judge_env(judge_key())
-    dirs = [d for d in task_dirs([p.resolve() for p in args.runs])
-            if args.regrade or not (d / "grading/grades.json").exists()]
+    dirs = task_dirs(args.runs)
     with concurrent.futures.ThreadPoolExecutor(args.jobs) as pool:
-        for result in pool.map(lambda d: grade_task(d, args.judge, args.effort, env, args.keep_snapshots), dirs):
-            print(json.dumps({k: result.get(k) for k in ("task_id", "graded", "score", "all_pass", "error")}))
+        futures = {pool.submit(grade_task, d, args.judge, args.effort, args.regrade, args.keep_snapshots, args.tasks_dir): d
+                   for d in dirs}
+        for future in concurrent.futures.as_completed(futures):
+            g = future.result()
+            print(json.dumps({k: g.get(k) for k in ("task", "graded", "score", "all_pass", "error", "reason", "grade_s")}))
     return 0
 
 

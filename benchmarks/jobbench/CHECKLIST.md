@@ -19,7 +19,7 @@ setup differs from the reference, the row says so.
 | 3 | Resource limits | None set (the reference had none). | yes |
 | 4 | Container network | `pasta` (internet on): the reference agents' bash had the host network and some tasks fetch external data. Checked: the container cannot reach the host's loopback services (CAO :4141, model proxy :8018, Exa relay :8010, judge :8019). `make_specs.py --network none` turns it off. | yes |
 | 4 | Web tools | On: `web_search` (Exa through the relay on :8010, `EXA_API_KEY` = the relay's client key, from the file `DSH_BENCH_EXA_KEY_FILE` in your `local.env`) and `web_fetch` (HTTP, PDF text from DSH patch 0002), as the reference. They run on the host. | yes |
-| 5 | Native tools | All of the headless profile, as the reference (bash, read/write/edit, glob/grep, web, todo, skill, subagents, workflow, goal, jobs). | yes |
+| 5 | Native tools | All of the headless profile, as the reference (bash, read/write/edit, glob/grep, web, todo, skill, subagents, workflow, goal, jobs). Since 2026-11-09 subagents are off in the core for every benchmark (`harness/core.patch.yml`); the parity run had them. | yes |
 | 5 | MCP servers | None. | yes |
 | 5 | Non-MCP tools | None. | yes |
 | 5 | Side effects / back doors | Grading reads only output files; nothing to bypass. | yes |

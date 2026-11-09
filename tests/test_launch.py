@@ -101,6 +101,9 @@ def main() -> int:
         ("run.json: DSH commit, image id, patches", bool(record["dsh"]["commit"]) and record["image"]["id"]
          and [Path(p["path"]).name for p in record["patches"]] == ["core.patch.yml", "run.patch.yml"]),
         ("final_answer offered to the model", "final_answer" in requests[0]["tools"] and "bash" in requests[0]["tools"]),
+        ("no subagent tools and no subagent guidance (core)",
+         not {"subagent", "subagent_fork", "send_message", "list_agents", "interrupt_agent"} & set(requests[0]["tools"])
+         and "subagent" not in json.dumps(requests[0]["messages"]).lower()),
         ("system prompt reached the model", "BENCHMARK-SYSTEM-PROMPT-MARKER" in system and "coding agent" in system),
         ("prompt has the real workspace path", str(out / "workspace") in (out / "prompt.txt").read_text()),
         ("container removed", containers == ""),

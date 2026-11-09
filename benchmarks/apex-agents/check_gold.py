@@ -1,95 +1,98 @@
-"""Gold check for the grading pipeline: grade the experts' gold outputs as if an agent had produced them.
+"""Gold check for APEX-Agents 1.1: the experts' own outputs must pass, graded exactly like an agent run.
 
-    python3 benchmarks/apex-agents/check_gold.py --out runs/gold-check [--per-type 2] [--seed 0] [--jobs 8]
+    python3 benchmarks/apex-agents-1.1/check_gold.py --out runs/apex11-gold [--per-type 1] [--tasks SLUG ...]
 
-For a sample of tasks (per domain for console answers, per file type for file outputs), builds run directories like
-run_task.py's: "before" = the world zip + the task's input files (filesystem/ and .apps_data/), "after" = before plus
-the gold files (file tasks), the gold response as the final answer (console tasks; file tasks answer "Done."). Then
-grades them with grade.py. The paper reports its judge graded every gold criterion as met; failures here point at the
-judge, the grading target or local document extraction (CHECKLIST.md: "check local extraction for errors").
+Per task: Mercor's world boots as in run_task.py (same image, mounts, initial snapshot); the task's golden files
+(tests/golden/filesystem/...) are copied into /filesystem as an agent would leave them (then Mercor's
+fix_permissions.sh); Mercor's collect script takes the final snapshot; the trajectory's final answer is the expert's
+(solution/answer.txt). Then grade.py grades it (snapshots kept). Every criterion should be met: a failure points at
+the grading path (judge, relay, extraction, snapshots) or at the judge's own error rate. --per-type N picks N tasks of
+each expected output type (default 1: 6 tasks); --tasks names them.
 """
 
 import argparse
-import io
+import collections
 import json
-import random
+import subprocess
 import sys
-import tarfile
-import zipfile
+import tomllib
+import uuid
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
+REPO = HERE.parents[1]
 sys.path.insert(0, str(HERE))
+sys.path.insert(0, str(REPO))
 import grade  # noqa: E402
-from run_task import trajectory  # noqa: E402
+import run_task  # noqa: E402
+from dsh_bench.endpoints import load_local_env  # noqa: E402
 
 
-def snapshot(path: Path, world_zip: Path, overlays: list[Path]) -> None:
-    """tar.gz with filesystem/ and .apps_data/ at the top, later overlays replacing earlier files."""
-    files: dict[str, bytes] = {}
-    with zipfile.ZipFile(world_zip) as zf:
-        for name in zf.namelist():
-            if not name.endswith("/") and name.split("/")[0] in ("filesystem", ".apps_data"):
-                files[name] = zf.read(name)
-    for overlay in overlays:
-        for source in sorted(overlay.rglob("*")):
-            rel = str(source.relative_to(overlay))
-            if source.is_file() and rel.split("/")[0] in ("filesystem", ".apps_data"):
-                files[rel] = source.read_bytes()
-    with tarfile.open(path, "w:gz") as tar:
-        for name, data in sorted(files.items()):
-            info = tarfile.TarInfo(name)
-            info.size = len(data)
-            tar.addfile(info, io.BytesIO(data))
+def pick(tasks_dir: Path, per_type: int) -> list[str]:
+    by_type = collections.defaultdict(list)
+    for d in sorted(tasks_dir.iterdir()):
+        by_type[tomllib.loads((d / "task.toml").read_text())["metadata"]["expected_output"]].append(d.name)
+    return [slug for _, slugs in sorted(by_type.items()) for slug in slugs[:per_type]]
+
+
+def gold_run(tasks_dir: Path, slug: str, out: Path) -> dict:
+    task = run_task.load_task(tasks_dir, slug)
+    out.mkdir(parents=True)
+    logs = out / "world-logs"
+    logs.mkdir()
+    container = f"apex11-gold-{slug[:24]}-{uuid.uuid4().hex[:6]}"
+    meta = task["meta"]
+    record = {"task": slug, "tasks_dir": str(tasks_dir), "task_id": meta["task_id"], "domain": meta["domain"],
+              "expected_output": meta["expected_output"], "container": container, "gold": True,
+              "finish_reason": "completed", "graded_ending": True}
+    try:
+        run_task.sh(run_task.world_argv(task, container, logs), timeout=300)
+        record["boot_s"] = run_task.wait_ready(task, container)
+        golden = task["dir"] / "tests/golden/filesystem"
+        if golden.is_dir():
+            files = sorted(str(p.relative_to(golden)) for p in golden.rglob("*") if p.is_file())
+            pack = subprocess.run(["tar", "-C", str(golden), "-cf", "-", *files], capture_output=True, check=True).stdout
+            run_task.sh([run_task.RUNTIME, "exec", "-i", container, "tar", "--no-same-owner", "-C", "/filesystem", "-xf", "-"], input=pack)
+            run_task.sh([run_task.RUNTIME, "exec", container, "/app/tools/fix_permissions.sh"])
+            record["golden_files"] = files
+        run_task.final_snapshot(container)
+        answer = (task["dir"] / "solution/answer.txt").read_text().strip()
+        trajectory = {"schema_version": "ATIF-v1.5", "session_id": "gold", "agent": {"name": "gold", "version": "1"},
+                      "steps": [{"step_id": 1, "source": "system", "message": run_task.SYSTEM_PROMPT},
+                                {"step_id": 2, "source": "user", "message": task["instruction"]},
+                                {"step_id": 3, "source": "agent", "message": answer}],
+                      "final_metrics": {"total_steps": 3}, "extra": {"native_status": "completed"}}
+        (out / "trajectory.json").write_text(json.dumps(trajectory, indent=2) + "\n")
+    except run_task.InfraError as error:
+        record["infra_error"] = str(error)
+    finally:
+        subprocess.run([run_task.RUNTIME, "rm", "-f", "-t", "5", container], capture_output=True)
+        (out / "run.json").write_text(json.dumps(record, indent=2) + "\n")
+    return record
 
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument("--out", type=Path, required=True)
-    parser.add_argument("--dataset", type=Path, default=Path("~/apex-agents-data"))
-    parser.add_argument("--per-type", type=int, default=2)
-    parser.add_argument("--seed", type=int, default=0)
-    parser.add_argument("--jobs", type=int, default=8)
+    parser.add_argument("--out", required=True, type=Path)
+    parser.add_argument("--tasks-dir", type=Path, default=run_task.TASKS_DIR)
+    parser.add_argument("--per-type", type=int, default=1)
+    parser.add_argument("--tasks", nargs="*")
     args = parser.parse_args()
-    dataset = args.dataset.expanduser().resolve()
-    tasks = json.loads((dataset / "tasks_and_rubrics.json").read_text())
-    worlds = {w["world_id"]: w for w in json.loads((dataset / "world_descriptions.json").read_text())}
-    rng = random.Random(args.seed)
-    groups: dict[str, list[dict]] = {}
-    for t in tasks:
-        key = t["domain"] if t["expected_output"] == "message_in_console" else grade.GRADING_TARGET[t["expected_output"]]
-        groups.setdefault(key, []).append(t)
-    sample = [t for key in sorted(groups) for t in rng.sample(groups[key], min(args.per_type, len(groups[key])))]
-    out = args.out.resolve()
-    for t in sample:
-        run_dir = out / t["task_id"]
-        if (run_dir / "run.json").exists():
-            continue
-        (run_dir / "snapshots").mkdir(parents=True, exist_ok=True)
-        (run_dir / "task.json").write_text(json.dumps(t | {"world": worlds[t["world_id"]]}, indent=2) + "\n")
-        (run_dir / "run.json").write_text(json.dumps({"task_id": t["task_id"], "finish_reason": "final_answer",
-                                                      "gold_check": True}) + "\n")
-        world_zip = dataset / "world_files_zipped" / f"{t['world_id']}.zip"
-        task_files = dataset / "task_files" / t["task_id"]
-        overlays = [task_files] if task_files.is_dir() else []
-        snapshot(run_dir / "snapshots/before.tar.gz", world_zip, overlays)
-        gold = dataset / "gold_files" / t["task_id"]
-        snapshot(run_dir / "snapshots/after.tar.gz", world_zip, overlays + ([gold] if gold.is_dir() else []))
-        answer = t["gold_response"] if t["gold_response_type"] == "text" else "Done."
-        (run_dir / "trajectory.json").write_text(json.dumps(
-            trajectory(t["prompt"], {"finish_reason": "final_answer", "answer": answer}), indent=2) + "\n")
-    sys.argv = ["grade.py", str(out), "--jobs", str(args.jobs), "--regrade", "--keep-snapshots"]
-    grade.main()
-    results = [json.loads((out / t["task_id"] / "grading/grades.json").read_text()) for t in sample]
-    print()
-    for r in results:
-        failed = [c["criteria"][:90] for c in r.get("criteria", []) if c["score"] != 1.0]
-        print(f"{'PASS' if r.get('all_pass') else 'FAIL'}  {r['task_id']}  {r['expected_output']:<22} "
-              f"{r['criteria_count']} criteria  {'; '.join(failed)[:160] or r.get('error', '')}")
-    print(f"\ngold all-pass: {sum(bool(r.get('all_pass')) for r in results)}/{len(results)}; "
-          f"criteria met: {sum(c['score'] == 1.0 for r in results for c in r.get('criteria', []))}/"
-          f"{sum(r['criteria_count'] for r in results)}")
-    return 0
+    load_local_env()
+    slugs = args.tasks or pick(args.tasks_dir, args.per_type)
+    results = []
+    for slug in slugs:
+        record = gold_run(args.tasks_dir.resolve(), slug, args.out.resolve() / slug)
+        g = grade.grade_task(args.out.resolve() / slug, keep_snapshots=True)
+        met = sum((c.get("score") or 0) >= 1.0 for c in g.get("criteria") or [])
+        results.append((slug, record["expected_output"], met, len(g.get("criteria") or []), g.get("error")))
+        print(f"{slug}: {record['expected_output']}: {met}/{len(g.get('criteria') or [])} criteria met"
+              f"{'; error: ' + str(g.get('error')) if g.get('error') else ''}", flush=True)
+    total_met = sum(r[2] for r in results)
+    total = sum(r[3] for r in results)
+    print(f"gold: {sum(r[2] == r[3] and r[3] > 0 for r in results)}/{len(results)} tasks all met, "
+          f"{total_met}/{total} criteria met")
+    return 0 if total_met == total and total > 0 else 1
 
 
 if __name__ == "__main__":

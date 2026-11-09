@@ -43,6 +43,7 @@ cannot work, the fallback of running DSH inside the container.
 | Container | rootless podman, `--network=none --cap-drop=ALL --security-opt=no-new-privileges --userns=keep-id` (runs as the host uid), workspace mounted at its host path, read-only subdirectories mounted `:ro`, `HOME=/tmp` |
 | DSH sandbox | `harness/core.patch.yml`: the base `sandbox` row disabled, `sandbox-podman` inserted; `DSH_PERMISSION_MODE=workspace-isolated` plus a `permission` preset with `sandbox: workspace-isolated, approval: never` (DSH refuses to boot if the defaults match no preset) |
 | File tools | `workspace-isolated`: they resolve real paths, so paths and symlinks outside the workspace are refused |
+| Subagents | off for every benchmark (`harness/core.patch.yml`, 2026-11-09): the delegation tools and their prompt paragraph are gone; on a 240-task benchmark run they cost 8-14 points |
 | Read-only directories | `:ro` in the container AND read-only permissions on the host (the file tools run on the host) |
 | Killing commands | `podman-exec.sh` runs each command in its own process group and kills that group inside the container when DSH stops the command (tool timeout, `job_kill`) |
 | Collection | copies symlinks as links, never their targets (the agent can create links to host paths) |
