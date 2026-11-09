@@ -20,6 +20,9 @@
 //           env: { WORKSPACE_DIR: /abs/ws }  # set inside the container for every command
 //           hostCwd: /abs/host/dir           # optional: host directory the wrapper starts in, for a workspace that
 //                                            # exists only in the container (default: the workspace path itself)
+//           user: svc_x                      # optional: container user (name or uid[:gid]) commands run as; a name
+//                                            # also gets that user's groups (default: the container's user)
+//           umask: "0002"                    # optional: umask of every command (default: the container's, 0022)
 //
 // The DSH checkout is found through $DSH_BENCH_DSH_ROOT, else ../../work/deepseek-harness from this file.
 import { fileURLToPath, pathToFileURL } from 'node:url'
@@ -48,23 +51,32 @@ export default class PodmanSandboxProvider extends SandboxProvider {
         throw new Error(`sandbox-podman: env entry ${JSON.stringify(key)} must be a NAME with a string value`)
       }
     }
+    if (config.user !== undefined && (typeof config.user !== 'string' || !/^[A-Za-z0-9_][A-Za-z0-9_.:-]*$/.test(config.user))) {
+      throw new Error('sandbox-podman: config.user must be a user name or uid[:gid]')
+    }
+    if (config.umask !== undefined && (typeof config.umask !== 'string' || !/^[0-7]{3,4}$/.test(config.umask))) {
+      throw new Error('sandbox-podman: config.umask must be an octal string such as "0002"')
+    }
     this.settings = {
       container: config.container,
       runtime: config.runtime ?? 'podman',
       wrapper: config.wrapper ?? resolve(HERE, 'podman-exec.sh'),
       env,
       hostCwd: config.hostCwd,
+      user: config.user,
+      umask: config.umask,
     }
   }
 
   confine(argv, policy) {
-    const { container, runtime, wrapper, env, hostCwd } = this.settings
+    const { container, runtime, wrapper, env, hostCwd, user, umask } = this.settings
     const workdir = policy.workingDirectory ?? policy.workspaceRoot
     let [program, ...args] = argv
     // glob/grep launch DSH's bundled ripgrep by its host path; the image provides `rg`.
     if (isAbsolute(program) && basename(program) === 'rg') program = 'rg'
     return {
-      argv: [wrapper, runtime, container, workdir, ...Object.entries(env).map(([k, v]) => `${k}=${v}`), '--', program, ...args],
+      argv: [wrapper, runtime, container, workdir, ...(user === undefined ? [] : [`--user=${user}`]),
+        ...(umask === undefined ? [] : [`--umask=${umask}`]), ...Object.entries(env).map(([k, v]) => `${k}=${v}`), '--', program, ...args],
       cwd: hostCwd ?? policy.workspaceRoot,
       enforcement: 'full',
       denialSignatures: DENIAL_SIGNATURES,

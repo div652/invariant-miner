@@ -1,0 +1,1963 @@
+{
+ "benchmark": "apex-agents-1.1",
+ "description": "APEX-Agents 1.1.1 (Harbor Hub mercor/apex-agents-1-1@1.1.1, 240 tasks; task_id is the task directory), 60/20/20 by job; the 1.0 split follows this one (v1_task_id)",
+ "seed": 20261109,
+ "ratios": {
+  "train": 0.6,
+  "val": 0.2,
+  "test": 0.2
+ },
+ "group_by": "domain",
+ "method": "benchmarks/apex-agents/make_splits.py",
+ "counts": {
+  "total": 240,
+  "train": 144,
+  "val": 48,
+  "test": 48,
+  "domains": {
+   "Investment Banking": {
+    "val": 16,
+    "train": 48,
+    "test": 16
+   },
+   "Law": {
+    "train": 48,
+    "test": 16,
+    "val": 16
+   },
+   "Management Consulting": {
+    "train": 48,
+    "test": 16,
+    "val": 16
+   }
+  }
+ },
+ "splits": {
+  "train": [
+   {
+    "task_id": "128-jr-1-f7f95d92",
+    "mercor_task_id": "task_f7f95d92959345919cb2d7b9b3ef4e77",
+    "task_name": "128_JR_1",
+    "domain": "Management Consulting",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_e958a027aeab49dcbbe2b229c9b4b553"
+   },
+   {
+    "task_id": "analyze-effect-of-anti-slapp-suit-against-bluelng-on-pre-sui-4b81f3b2",
+    "mercor_task_id": "task_4b81f3b23d614c3e8ac9f58533e030a1",
+    "task_name": "Analyze Effect of Anti-SLAPP Suit Against BlueLNG on Pre-Suit Discovery",
+    "domain": "Law",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_4d143fb2608745848a8f1096667996be"
+   },
+   {
+    "task_id": "cw134-aditi-03-64426b4e",
+    "mercor_task_id": "task_64426b4ed31f4808b6ce9c329552291e",
+    "task_name": "CW134 Aditi 03",
+    "domain": "Management Consulting",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_21b14fd7ec454ab38e07d2c4055d1fff"
+   },
+   {
+    "task_id": "law-world-423-dm-03-726ce1ed",
+    "mercor_task_id": "task_726ce1edbf674d82a60f4b9203f1ae64",
+    "task_name": "Law_World_423_DM_03",
+    "domain": "Law",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_39431bef81164cd2843e9369b8f7fdc5"
+   },
+   {
+    "task_id": "lawworld417-ab-01-c07832b1",
+    "mercor_task_id": "task_c07832b1fd774993997ce1aa98087c32",
+    "task_name": "LawWorld417_AB_01",
+    "domain": "Law",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_b16c92248f9a43398791e6587a560730"
+   },
+   {
+    "task_id": "lawworld417-anb-04-06729721",
+    "mercor_task_id": "task_0672972139c44ce586b082e2e0fe1a47",
+    "task_name": "LawWorld417_ANB_04",
+    "domain": "Law",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_075c6f8ffb1548508e94e67e4ba04bbb"
+   },
+   {
+    "task_id": "lawworld417-as-03-343937d4",
+    "mercor_task_id": "task_343937d4a9da41a885431dc8867eff32",
+    "task_name": "LawWorld417_AS_03",
+    "domain": "Law",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_01fef67b5576468d854319d4d8a84988"
+   },
+   {
+    "task_id": "lawworld417-ne-06-7d454c39",
+    "mercor_task_id": "task_7d454c3977394b6fa1e0f630b5537df3",
+    "task_name": "LawWorld417_NE_06",
+    "domain": "Law",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_76c43bb44ab54ab8b42269303dedf83a"
+   },
+   {
+    "task_id": "lawworld433-anb-05-16cf8300",
+    "mercor_task_id": "task_16cf8300c8644c5294b6f24c6c9383ec",
+    "task_name": "LawWorld433_ANB_05",
+    "domain": "Law",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_3caff6fe3a9f4a9f95e57f371a16b601"
+   },
+   {
+    "task_id": "lawworld433-naf-01-8a2d1647",
+    "mercor_task_id": "task_8a2d1647da404db3b5efcb1f6f2ba327",
+    "task_name": "LawWorld433_NAF_01",
+    "domain": "Law",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_4fa914d8cc0f4010bb661d3e688a4c61"
+   },
+   {
+    "task_id": "lawworld433-naf-02-7cff5581",
+    "mercor_task_id": "task_7cff5581254f49deb56fa577204093d6",
+    "task_name": "LawWorld433_NAF_02",
+    "domain": "Law",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_ccee33f3839a412f91ea0821a487a26b"
+   },
+   {
+    "task_id": "shiva-task-01-world-129-fc919d98",
+    "mercor_task_id": "task_fc919d984fb746d3a6b00b1e3610ff42",
+    "task_name": "Shiva Task 01 World 129",
+    "domain": "Management Consulting",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_f69f5d19990b4292809009a331e1bbe9"
+   },
+   {
+    "task_id": "sp-task-02-wold-135-8429838a",
+    "mercor_task_id": "task_8429838aafae4e54b302e3e35df90d88",
+    "task_name": "SP Task 02 Wold 135",
+    "domain": "Management Consulting",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_93a6a24649ce48e99b8197a38425a56b"
+   },
+   {
+    "task_id": "sp-task-03-world-135-8617355f",
+    "mercor_task_id": "task_8617355fb091470b8ab42902b4085dba",
+    "task_name": "SP Task 03 World 135",
+    "domain": "Management Consulting",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_618ae695767944c1bcc964105be877e0"
+   },
+   {
+    "task_id": "sp-task-07-world-135-0a861743",
+    "mercor_task_id": "task_0a86174386684ecca293f7d12c01d368",
+    "task_name": "SP Task 07 World 135",
+    "domain": "Management Consulting",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_d5b4cc5e50b74ad68cca42cd737f1e9b"
+   },
+   {
+    "task_id": "task-14-24dc5ca2",
+    "mercor_task_id": "task_24dc5ca2fab54bdaac1f1f3e324032f9",
+    "task_name": "Task 14",
+    "domain": "Management Consulting",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_0cc6381ab1db4902bdac1c95b3ffcc45"
+   },
+   {
+    "task_id": "task-3uy1546e-ac21a454",
+    "mercor_task_id": "task_ac21a454792c492a9e72929774d4ec1d",
+    "task_name": "Task 3uy1546e",
+    "domain": "Management Consulting",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_2c27b6c0f390410aa6f561e1733faf6a"
+   },
+   {
+    "task_id": "task-5vd1ebb0-c4e34a72",
+    "mercor_task_id": "task_c4e34a72bf5d4b73a30db7cf75234d40",
+    "task_name": "Task 5vd1ebb0",
+    "domain": "Law",
+    "expected_output": "edit_existing_sheet",
+    "v1_task_id": "task_b952b8a8034a4affaaca6d3be7a2d8f7"
+   },
+   {
+    "task_id": "task-awys8050-cd3c370b",
+    "mercor_task_id": "task_cd3c370bc1fa48c6ad639b183151d354",
+    "task_name": "Task awys8050",
+    "domain": "Law",
+    "expected_output": "make_new_doc",
+    "v1_task_id": "task_0cf6902f9ef341328e3261f7055918ee"
+   },
+   {
+    "task_id": "task-o88f1452-c5369dfe",
+    "mercor_task_id": "task_c5369dfea62c45ffab0298ed2d6a1e2c",
+    "task_name": "Task o88f1452",
+    "domain": "Management Consulting",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_cb7189ae4502436085b4367bf7c64169"
+   },
+   {
+    "task_id": "task-seed-13-f7969453",
+    "mercor_task_id": "task_f796945371c941bc86bbb74b8f377259",
+    "task_name": "Task Seed #13",
+    "domain": "Law",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_ada7c5e9d1a149e780af8d519a9171f6"
+   },
+   {
+    "task_id": "task-w135-camille-moingeon-5-91534276",
+    "mercor_task_id": "task_91534276676c419ab9b27a1bde154e75",
+    "task_name": "Task_W135_Camille_Moingeon_5",
+    "domain": "Management Consulting",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_d6877e04140d411b901b04342ca94feb"
+   },
+   {
+    "task_id": "task-w135-camille-moingeon-6-98904e4b",
+    "mercor_task_id": "task_98904e4bbe1247498a30eb84396ddb78",
+    "task_name": "Task_W135_Camille_Moingeon_6",
+    "domain": "Management Consulting",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_0be9d2d5771a49a097de9e7d22fac74b"
+   },
+   {
+    "task_id": "task-world130-camillemoingeon-4-995235e6",
+    "mercor_task_id": "task_995235e64c9e4e4287f347227b34f99c",
+    "task_name": "Task_World130_CamilleMoingeon_4",
+    "domain": "Management Consulting",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_2516425094194379af7c5b6d5180a608"
+   },
+   {
+    "task_id": "task-ymtecb81-c206b308",
+    "mercor_task_id": "task_c206b308d1be4efe9a1abeac4868d3c7",
+    "task_name": "Task ymtecb81",
+    "domain": "Law",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_bf18a6d6ff44489daf0b1c80b5d4a3a8"
+   },
+   {
+    "task_id": "taskworld130-camillemoingeon-5-0d2a857d",
+    "mercor_task_id": "task_0d2a857d5b824ca8bd5a678776089bbd",
+    "task_name": "TaskWorld130_CamilleMoingeon_5",
+    "domain": "Management Consulting",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_a0d3895b47a04ae0bba65caa932f6fac"
+   },
+   {
+    "task_id": "w127-ah-task-7-d04aba36",
+    "mercor_task_id": "task_d04aba36f5d94dfd89b5c8996061fd40",
+    "task_name": "W127_AH_Task 7",
+    "domain": "Management Consulting",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_56364690260243039485520251995f57"
+   },
+   {
+    "task_id": "w134-nancy-task-09-98c5b529",
+    "mercor_task_id": "task_98c5b529039b4a0f8f5e820b0afffd72",
+    "task_name": "W134 Nancy Task 09",
+    "domain": "Management Consulting",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_56967ae9f77e42eeb5a0a5a272b34fe5"
+   },
+   {
+    "task_id": "w134-nancy-task-10-1bb0218b",
+    "mercor_task_id": "task_1bb0218b2a7c4df7b7e008444f854007",
+    "task_name": "W134 Nancy Task 10",
+    "domain": "Management Consulting",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_2bd66e1e194a4ce89ccf6432cbdce451"
+   },
+   {
+    "task_id": "world-127-ah-task-2-fe2ade3d",
+    "mercor_task_id": "task_fe2ade3d354b4989b2a902e67ab7b4c5",
+    "task_name": "World 127_AH_Task 2",
+    "domain": "Management Consulting",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_47f6033c9a1d4a38af9edf059793720b"
+   },
+   {
+    "task_id": "world-127-hlv-task-01-37bd2041",
+    "mercor_task_id": "task_37bd204198aa4ad4a142cb02761aff80",
+    "task_name": "World 127_HLV_Task 01",
+    "domain": "Management Consulting",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_600e75dad14c46c68fcd52a43f6446ca"
+   },
+   {
+    "task_id": "world-127-hlv-task-03-de0803e6",
+    "mercor_task_id": "task_de0803e622464957b7275ee80513b1ea",
+    "task_name": "World 127_HLV_Task 03",
+    "domain": "Management Consulting",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_626333c69ffb46d0ad041a2dd6916fdf"
+   },
+   {
+    "task_id": "world-127-hlv-task-04-31c097b3",
+    "mercor_task_id": "task_31c097b3eac94bf4b186ea62d5836811",
+    "task_name": "World 127_HLV_Task 04",
+    "domain": "Management Consulting",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_993a38dad72045b88ccdccadfc2f879f"
+   },
+   {
+    "task_id": "world-127-tj-task-1-0-078e2b30",
+    "mercor_task_id": "task_078e2b30d6a8458dabd0b12513a1bee2",
+    "task_name": "World 127 TJ Task 1.0",
+    "domain": "Management Consulting",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_ed417907f78a4277ade5e6e7b1b564c4"
+   },
+   {
+    "task_id": "world-128-sf-task-2-7bab9d72",
+    "mercor_task_id": "task_7bab9d72fa384ccdb671e9a88d8d87ca",
+    "task_name": "World 128 - SF - Task 2",
+    "domain": "Management Consulting",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_cf6e24d767f24ebda4d962ee34e6a50b"
+   },
+   {
+    "task_id": "world-129-cy-task-3-2bcdc3db",
+    "mercor_task_id": "task_2bcdc3dbc0784f3d99dcd6244839ba5e",
+    "task_name": "World 129_CY_Task 3",
+    "domain": "Management Consulting",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_66b157482bf640cbb5c1725765e6ca9e"
+   },
+   {
+    "task_id": "world-129-cy-task-5-f9ad7ab3",
+    "mercor_task_id": "task_f9ad7ab37e8c4b59931b80a9fd2a3657",
+    "task_name": "World 129_CY_Task 5",
+    "domain": "Management Consulting",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_1e19e170dbac46ae98a24930a70b4b73"
+   },
+   {
+    "task_id": "world-131-jr-1-2930a41b",
+    "mercor_task_id": "task_2930a41bdf0d489b9354e5f42335ec53",
+    "task_name": "World_131_JR_1",
+    "domain": "Management Consulting",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_1dba146a5da645b3a27ea3212c0bffc4"
+   },
+   {
+    "task_id": "world-131-mk-task-4-bd07e017",
+    "mercor_task_id": "task_bd07e017554242eea89141429c316546",
+    "task_name": "World 131_MK_Task 4",
+    "domain": "Management Consulting",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_1f6c5b8814fa40bdb25ae11bbd48b6ea"
+   },
+   {
+    "task_id": "world-133-el-task-03-4657445f",
+    "mercor_task_id": "task_4657445f35804361b07bf274f336ead0",
+    "task_name": "World 133 EL Task 03",
+    "domain": "Management Consulting",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_d01a20f9321341b39059a7629a365232"
+   },
+   {
+    "task_id": "world-133-nk-task-1-f0bbc839",
+    "mercor_task_id": "task_f0bbc839f8cd4406a4f053e17105eea5",
+    "task_name": "World 133 - NK Task #1",
+    "domain": "Management Consulting",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_effa0ae896284b07984dd5cc7151e10f"
+   },
+   {
+    "task_id": "world-134-nancy-task-02-3f38c565",
+    "mercor_task_id": "task_3f38c565dc4b441588e6a6fea6bf9a10",
+    "task_name": "World 134 Nancy Task 02",
+    "domain": "Management Consulting",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_3763fab0373b4f59a98f11a97eedcb15"
+   },
+   {
+    "task_id": "world-134-rg-03-92e95834",
+    "mercor_task_id": "task_92e9583490094056aaee09a7871ce156",
+    "task_name": "World 134_RG_03",
+    "domain": "Management Consulting",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_a1449f78d0c3427e9b34e65a08621976"
+   },
+   {
+    "task_id": "world-221-hy-05-fa5120b0",
+    "mercor_task_id": "task_fa5120b0de5b44c6a06dce976e5005c1",
+    "task_name": "World 221_HY_05",
+    "domain": "Investment Banking",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_4f291b8b066e413f8cd0a99c593b89e8"
+   },
+   {
+    "task_id": "world-415-cd-02-c04aeb09",
+    "mercor_task_id": "task_c04aeb094177407d9063814f12fa163f",
+    "task_name": "World 415-CD-02",
+    "domain": "Law",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_5b434b51e4de4ad398fa8d9f59321b6e"
+   },
+   {
+    "task_id": "world-418-apa-01-a9e837e3",
+    "mercor_task_id": "task_a9e837e393224b8793d899b06b2b7672",
+    "task_name": "World_418_APA_01",
+    "domain": "Law",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_8fb97fca07244d6f843a9a9328084b76"
+   },
+   {
+    "task_id": "world-419-um-01-ddd3e22e",
+    "mercor_task_id": "task_ddd3e22e6e6b4521ab2b56fd05f2c163",
+    "task_name": "World 419_UM_01",
+    "domain": "Law",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_ef71da92049944b4b9985c776b72d3bf"
+   },
+   {
+    "task_id": "world-420-lb-03-6e37bd28",
+    "mercor_task_id": "task_6e37bd28c9b047b6ad661600cd6fc709",
+    "task_name": "World 420_LB_03",
+    "domain": "Law",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_e9c600e0ce46420eb983f8f1ed4d15d9"
+   },
+   {
+    "task_id": "world-420-lb-06-4c9d88b3",
+    "mercor_task_id": "task_4c9d88b3d256406f9bb173b0e34e3637",
+    "task_name": "World 420_LB_06",
+    "domain": "Law",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_3ff7f71e606840d09b4d64bd88398799"
+   },
+   {
+    "task_id": "world-420-zt-02-e3d12861",
+    "mercor_task_id": "task_e3d12861bac945a5a0a5bd2cef417602",
+    "task_name": "World 420_ZT_02",
+    "domain": "Law",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_4fe676ac270b404c9104c758bd3964dc"
+   },
+   {
+    "task_id": "world-421-anb-02-2da2824a",
+    "mercor_task_id": "task_2da2824a6422421f8088b1b17671672b",
+    "task_name": "World_421_ANB_02",
+    "domain": "Law",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_ed8356c4f4c146b58d2cd869924fdfe3"
+   },
+   {
+    "task_id": "world112-1-task05-na-cf44bbb8",
+    "mercor_task_id": "task_cf44bbb8f8eb4f3e90f3dea74e01313c",
+    "task_name": "World112-1_Task05_NA",
+    "domain": "Management Consulting",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_b63eb63a9b964203bb7033ed3682f06e"
+   },
+   {
+    "task_id": "world112-1-tk-04-b26de1cb",
+    "mercor_task_id": "task_b26de1cb9b1a4dfe9aa692aabae4c3ac",
+    "task_name": "World112-1_TK_04",
+    "domain": "Management Consulting",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_854fefdbea5740a3a238c5930c2721e7"
+   },
+   {
+    "task_id": "world126-efa-01-9bf2f9d9",
+    "mercor_task_id": "task_9bf2f9d93e8a4b71835b3d964cc21148",
+    "task_name": "World126_EFA_01",
+    "domain": "Management Consulting",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_d06ed610563a4dcebc39edbb17b1b757"
+   },
+   {
+    "task_id": "world126-efa-04-bbf2e15f",
+    "mercor_task_id": "task_bbf2e15fd28e46f9b822a5843f108761",
+    "task_name": "World126_EFA_04",
+    "domain": "Management Consulting",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_d91bfafb62c647e9a341d5a14864041b"
+   },
+   {
+    "task_id": "world126-efa-05-501b62f6",
+    "mercor_task_id": "task_501b62f63c6345a0be24b86c7cd3b4d0",
+    "task_name": "World126_EFA_05",
+    "domain": "Management Consulting",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_7cec4caf8ace406da19eeb72688f43f6"
+   },
+   {
+    "task_id": "world126-tk-04-f9002145",
+    "mercor_task_id": "task_f900214574cf4503bef335770ba935fe",
+    "task_name": "World126_TK_04",
+    "domain": "Management Consulting",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_01bf3f1cdf6c432f822f91666047e38c"
+   },
+   {
+    "task_id": "world127-ak-task03-09619393",
+    "mercor_task_id": "task_09619393d72d4a7eb0c097fc68df5ae7",
+    "task_name": "World127_AK_Task03",
+    "domain": "Management Consulting",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_799bb0f9ca444c7d9c2fff7aaa4885a9"
+   },
+   {
+    "task_id": "world127-am-task03-cab85eb0",
+    "mercor_task_id": "task_cab85eb0f0954baaa50594defb9bdc38",
+    "task_name": "World127_AM_Task03",
+    "domain": "Management Consulting",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_c50984179bb64d288e409c0f1370fdda"
+   },
+   {
+    "task_id": "world130-al-zhoheir-hajim-04-f7f9a788",
+    "mercor_task_id": "task_f7f9a7883f3147f0b45e0340a9065475",
+    "task_name": "World130_Al-Zhoheir_Hajim_04",
+    "domain": "Management Consulting",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_632105b2a93445ac8c4e16d6b17b836a"
+   },
+   {
+    "task_id": "world130-al-zhoheir-hajim-3-6f313e08",
+    "mercor_task_id": "task_6f313e081fb04345a349bca2c8a58b67",
+    "task_name": "World130_Al-Zhoheir_Hajim_3",
+    "domain": "Management Consulting",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_88469a82ab624b0084d2381fbaeb38d1"
+   },
+   {
+    "task_id": "world131-dv-03-152afeb3",
+    "mercor_task_id": "task_152afeb31a334df0a31f5a44da06bd2c",
+    "task_name": "World131_DV_03",
+    "domain": "Management Consulting",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_a179d38b095f46eba5eff7baf8f7fd87"
+   },
+   {
+    "task_id": "world132-da-task05-a025ddde",
+    "mercor_task_id": "task_a025dddee419416ab0688eb8939932fe",
+    "task_name": "World132_DA_Task05",
+    "domain": "Management Consulting",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_3e7800abdba24ed5bbc956024114d229"
+   },
+   {
+    "task_id": "world132-da-task07-d7bf24d6",
+    "mercor_task_id": "task_d7bf24d69a4f488aa2a39bbf64e9f393",
+    "task_name": "World132_DA_Task07",
+    "domain": "Management Consulting",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_9e9514d5f4914c8fabe9734b242aed3a"
+   },
+   {
+    "task_id": "world132-da-task08-15096439",
+    "mercor_task_id": "task_150964396467446fa5529dc0839a5a61",
+    "task_name": "World132_DA_Task08",
+    "domain": "Management Consulting",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_5ed3c6dd4464400282ec21096513bf00"
+   },
+   {
+    "task_id": "world132-pm-task03-e3766de4",
+    "mercor_task_id": "task_e3766de4c4c64cb5a7fff0181d24088a",
+    "task_name": "World132_PM_Task03",
+    "domain": "Management Consulting",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_0f43cdc217ae4d1b87a2023800167f74"
+   },
+   {
+    "task_id": "world132-pm-task04-7cc783d8",
+    "mercor_task_id": "task_7cc783d832bd45fa8428cf878e2e45d3",
+    "task_name": "World132_PM_Task04",
+    "domain": "Management Consulting",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_168d9c26180d4ad1b87d3ad7482c1982"
+   },
+   {
+    "task_id": "world132-pm-task07-b206dfe1",
+    "mercor_task_id": "task_b206dfe1595d435aaf20c44318410c92",
+    "task_name": "World132_PM_Task07",
+    "domain": "Management Consulting",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_f33062743dc84f4abc1691a8a5f2c0ba"
+   },
+   {
+    "task_id": "world132-sf-task03-d7ca6183",
+    "mercor_task_id": "task_d7ca618339044a5b94870168d0a50ef0",
+    "task_name": "World132_SF_Task03",
+    "domain": "Management Consulting",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_3f5efb251f4c45199512b7e4085c7b50"
+   },
+   {
+    "task_id": "world219-ff-task2-8e52be5a",
+    "mercor_task_id": "task_8e52be5acc8045d2afb7bf4e5061c97e",
+    "task_name": "World219_FF_task2",
+    "domain": "Investment Banking",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_583c24a9cc6d432c9159b6e4380fe428"
+   },
+   {
+    "task_id": "world219-oa-task1-318342af",
+    "mercor_task_id": "task_318342aff3d44cb1bffa5e798f680ac7",
+    "task_name": "World219_OA_Task1",
+    "domain": "Investment Banking",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_8985fd777093438eb1e1a51af2ca6142"
+   },
+   {
+    "task_id": "world219-seed-task-06-334dea71",
+    "mercor_task_id": "task_334dea7120aa4c4aa61a3894a3b16ca8",
+    "task_name": "World219_Seed Task_06",
+    "domain": "Investment Banking",
+    "expected_output": "edit_existing_sheet",
+    "v1_task_id": "task_0de09be0daf242208f7a60ee83bf8717"
+   },
+   {
+    "task_id": "world219-tg-01-8c93245b",
+    "mercor_task_id": "task_8c93245b5697439e970c7f08ab361985",
+    "task_name": "world219_tg_01",
+    "domain": "Investment Banking",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_ad52b80191404ec2afc47fc1c29604b4"
+   },
+   {
+    "task_id": "world219-tg-04-d08a16f0",
+    "mercor_task_id": "task_d08a16f0e7264095947e410f0a5a863d",
+    "task_name": "world219_tg_04",
+    "domain": "Investment Banking",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_95a11015406f43a597c0b68c0b2e429a"
+   },
+   {
+    "task_id": "world219-tg-05-9854aa2d",
+    "mercor_task_id": "task_9854aa2d06fd437cbe774f266d5e9aa2",
+    "task_name": "world219_tg_05",
+    "domain": "Investment Banking",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_6ed4c4d326c04e3c9ef66be237b8dcbe"
+   },
+   {
+    "task_id": "world219-tg-06-45c556b3",
+    "mercor_task_id": "task_45c556b37fb14e53a16c77a317e12b60",
+    "task_name": "world219_tg_06",
+    "domain": "Investment Banking",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_1da4eacde8434166b08bd64d9011095c"
+   },
+   {
+    "task_id": "world221-oa-3-d4497b80",
+    "mercor_task_id": "task_d4497b80bc014c59b787f7fcee6ab1c0",
+    "task_name": "World221_oa_3",
+    "domain": "Investment Banking",
+    "expected_output": "edit_existing_sheet",
+    "v1_task_id": "task_b2d58a02b48b4b5abd886aafac8b1c7e"
+   },
+   {
+    "task_id": "world221-oa-4-7d9c6888",
+    "mercor_task_id": "task_7d9c6888032c4d6b9e4849089a5e929b",
+    "task_name": "World221_oa_4",
+    "domain": "Investment Banking",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_c846c91af4b4424f9684d0c7e4559d28"
+   },
+   {
+    "task_id": "world221-oa-9-f98a186a",
+    "mercor_task_id": "task_f98a186afe704f7b8d7a50c24bef6edb",
+    "task_name": "World221_oa_9",
+    "domain": "Investment Banking",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_260818eebc2a4366af65fe8f3f17910f"
+   },
+   {
+    "task_id": "world221-tr-01-d4fc3833",
+    "mercor_task_id": "task_d4fc3833f7ba4f04bbf2f7ec3574a0bd",
+    "task_name": "World221_TR_01",
+    "domain": "Investment Banking",
+    "expected_output": "edit_existing_sheet",
+    "v1_task_id": "task_9ba58a6197114140877a1df1754d2993"
+   },
+   {
+    "task_id": "world223-av-01-abaf6982",
+    "mercor_task_id": "task_abaf69827e6c4eeeb6b1423555d2aea2",
+    "task_name": "World223_AV_01",
+    "domain": "Investment Banking",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_3724da87dc9644ddb2844a5b58ee5f27"
+   },
+   {
+    "task_id": "world223-av-03-5e929377",
+    "mercor_task_id": "task_5e9293776a194f79845d7779308de5d8",
+    "task_name": "World223_AV_03",
+    "domain": "Investment Banking",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_1ada04b9f9814985a1a7b11180268a0b"
+   },
+   {
+    "task_id": "world223-es-01-4e64f4e3",
+    "mercor_task_id": "task_4e64f4e364cf498c925ef60eccec6903",
+    "task_name": "WORLD223_ES_01",
+    "domain": "Investment Banking",
+    "expected_output": "make_new_sheet",
+    "v1_task_id": "task_60519c5af2d44d06a5f6885622195d50"
+   },
+   {
+    "task_id": "world223-es-02-965b01c7",
+    "mercor_task_id": "task_965b01c74286470dab87302c03a57734",
+    "task_name": "WORLD223_ES_02",
+    "domain": "Investment Banking",
+    "expected_output": "edit_existing_sheet",
+    "v1_task_id": "task_0ea7fa030cbe4d8ca517b48da89086e2"
+   },
+   {
+    "task_id": "world223-es-05-e6fedd35",
+    "mercor_task_id": "task_e6fedd357188495682ae0fbec87b9494",
+    "task_name": "WORLD223_ES_05",
+    "domain": "Investment Banking",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_340d128cb49e4df5952885b707a1cddd"
+   },
+   {
+    "task_id": "world223-smn-02-088bee6c",
+    "mercor_task_id": "task_088bee6c663144e599458b1b87e3db10",
+    "task_name": "World223_SMN_02",
+    "domain": "Investment Banking",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_6e327fec5b334e25914662e45765f2b8"
+   },
+   {
+    "task_id": "world223-smn-04-c38a392f",
+    "mercor_task_id": "task_c38a392f1f9b49c0ac71d06aec85ca63",
+    "task_name": "World223_SMN_04",
+    "domain": "Investment Banking",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_973f357750e2416c90f45be924d87d7f"
+   },
+   {
+    "task_id": "world224-hs-10-4f232c35",
+    "mercor_task_id": "task_4f232c358ade48f0aaf859b477c07d33",
+    "task_name": "World224-HS-10",
+    "domain": "Investment Banking",
+    "expected_output": "edit_existing_sheet",
+    "v1_task_id": "task_c2af27a3fa04496387b05d81bac29222"
+   },
+   {
+    "task_id": "world224-hs-11-7bf318b0",
+    "mercor_task_id": "task_7bf318b0d8b24fd484fed46688e78c33",
+    "task_name": "World224-HS-11",
+    "domain": "Investment Banking",
+    "expected_output": "edit_existing_sheet",
+    "v1_task_id": "task_2299b89dcaf64a4da4f3d03f8aac7215"
+   },
+   {
+    "task_id": "world224-os-task02-a3a73f46",
+    "mercor_task_id": "task_a3a73f46f4454d34b7e84828714e9e51",
+    "task_name": "World224_OS_Task02",
+    "domain": "Investment Banking",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_db355b58e80749a1879a9d79681d05cc"
+   },
+   {
+    "task_id": "world224-os-task04-c5d0e9d7",
+    "mercor_task_id": "task_c5d0e9d7f2904eab8bc5d55267131f66",
+    "task_name": "World224_OS_Task04",
+    "domain": "Investment Banking",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_4d14c729a28c4ece86aefc1ba97e89c4"
+   },
+   {
+    "task_id": "world224-os-task05-16446237",
+    "mercor_task_id": "task_1644623709aa4c03b440c75c62b7671f",
+    "task_name": "World224_OS_Task05",
+    "domain": "Investment Banking",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_6cd51f118d214bb8b1fab9e3100f32e5"
+   },
+   {
+    "task_id": "world225-av-02-55d8f94f",
+    "mercor_task_id": "task_55d8f94f217b48039fdc6dc67d7ac527",
+    "task_name": "world225_AV_02",
+    "domain": "Investment Banking",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_a9ce195e45104521ac830136c86d0f69"
+   },
+   {
+    "task_id": "world225-dk-01-013dab88",
+    "mercor_task_id": "task_013dab88d408416ca06896bdaebb1ed6",
+    "task_name": "World225_DK_01",
+    "domain": "Investment Banking",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_bab7ecdcc5ea4263b7c389d9b5496c68"
+   },
+   {
+    "task_id": "world225-km-06-19899d4e",
+    "mercor_task_id": "task_19899d4eb7cd45f1a4705d9fd4f30659",
+    "task_name": "World225_km_06",
+    "domain": "Investment Banking",
+    "expected_output": "make_new_sheet",
+    "v1_task_id": "task_9b9cc4e93ba6412b893d88d6d59f0181"
+   },
+   {
+    "task_id": "world225-mb-03-9e4a1b17",
+    "mercor_task_id": "task_9e4a1b1767f64752b8242540d22d6dfd",
+    "task_name": "World225_MB_03",
+    "domain": "Investment Banking",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_da02bbee7c574ac4b73a630d0b53c221"
+   },
+   {
+    "task_id": "world225-rl-task01-45ba9aaf",
+    "mercor_task_id": "task_45ba9aafcc2c4bed9e2a9f48bd8b85ff",
+    "task_name": "World225_RL_Task01",
+    "domain": "Investment Banking",
+    "expected_output": "edit_existing_sheet",
+    "v1_task_id": "task_baf778f717af41a880538e1f85bdde12"
+   },
+   {
+    "task_id": "world225-rl-task02-56fc4617",
+    "mercor_task_id": "task_56fc4617d06b4c548f9a011dfe1a28ce",
+    "task_name": "World225_RL_Task02",
+    "domain": "Investment Banking",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_d2bd4721fff0492bb51cb73ddd300534"
+   },
+   {
+    "task_id": "world226-rm-02-08c62dec",
+    "mercor_task_id": "task_08c62decf61449d289937b322e341385",
+    "task_name": "World226_RM_02",
+    "domain": "Investment Banking",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_ffb8c59f52344a9494b3f14f06af692d"
+   },
+   {
+    "task_id": "world226-rm-04-8d085d2b",
+    "mercor_task_id": "task_8d085d2bdf5d4bd5a897aa979a307db3",
+    "task_name": "World226_RM_04",
+    "domain": "Investment Banking",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_06a33a12bddc482fbbb01ae1752e1907"
+   },
+   {
+    "task_id": "world226-sk-task03-a0be269a",
+    "mercor_task_id": "task_a0be269a345a4ee2af392a87144fabae",
+    "task_name": "World226_SK_Task03",
+    "domain": "Investment Banking",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_9c300623b46a4b09b40f4976208bf8af"
+   },
+   {
+    "task_id": "world226-td-01-eb948f85",
+    "mercor_task_id": "task_eb948f8583dc4261bb2f042a8692ca66",
+    "task_name": "World226_TD_01",
+    "domain": "Investment Banking",
+    "expected_output": "make_new_sheet",
+    "v1_task_id": "task_658948aa7e6a4ad8af4a73bd76df287c"
+   },
+   {
+    "task_id": "world226-td-02-02f66e09",
+    "mercor_task_id": "task_02f66e099e264563b792d42e597f2b57",
+    "task_name": "World226_TD_02",
+    "domain": "Investment Banking",
+    "expected_output": "make_new_sheet",
+    "v1_task_id": "task_254e0680ec0e4adeaa5f8303d5aa5f76"
+   },
+   {
+    "task_id": "world226-td-03-a329bd13",
+    "mercor_task_id": "task_a329bd13cce0498baf1280503ada3dc9",
+    "task_name": "World226_TD_03",
+    "domain": "Investment Banking",
+    "expected_output": "make_new_sheet",
+    "v1_task_id": "task_1d14f807c7bc4c1da0befaa8d52bf93e"
+   },
+   {
+    "task_id": "world227-sk-task03-8ad609bc",
+    "mercor_task_id": "task_8ad609bcffcc4c31801494107a7d3ada",
+    "task_name": "World227_SK_Task03",
+    "domain": "Investment Banking",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_13ced851b9914058b39c89c8b5ba7c84"
+   },
+   {
+    "task_id": "world227-sk-task06-ad8e3628",
+    "mercor_task_id": "task_ad8e36288b8449f7870fe0c3045afb67",
+    "task_name": "World227_SK_Task06",
+    "domain": "Investment Banking",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_26f6f89af455429dabf2318469bf05ef"
+   },
+   {
+    "task_id": "world227-sk-task07-d2f6c00c",
+    "mercor_task_id": "task_d2f6c00ca78248e8a1d0ede36f136e45",
+    "task_name": "World227_SK_Task07",
+    "domain": "Investment Banking",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_35fdfa4a534f453596a6c565f619ceb1"
+   },
+   {
+    "task_id": "world227-tg-02-04c3b6c7",
+    "mercor_task_id": "task_04c3b6c75bcc4ae1bfe5af2311c193fe",
+    "task_name": "world227_tg_02",
+    "domain": "Investment Banking",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_9b9afdd77d4240a5bb3c13e83182b91b"
+   },
+   {
+    "task_id": "world227-tg-07-c2f84823",
+    "mercor_task_id": "task_c2f848232f2a48f5be7ab79677c6feab",
+    "task_name": "world227_tg_07",
+    "domain": "Investment Banking",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_c5e7a9bdd82444c9aeb0cead96d8f5bd"
+   },
+   {
+    "task_id": "world227-tg-08-58b05f68",
+    "mercor_task_id": "task_58b05f688ec6494f87383468f8cf9568",
+    "task_name": "world227_tg_08",
+    "domain": "Investment Banking",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_da562f15d91a4d4290026386d2aa1c47"
+   },
+   {
+    "task_id": "world228-ia-02-eae0b563",
+    "mercor_task_id": "task_eae0b56317ae45baba6b368c339c2593",
+    "task_name": "World228_IA_02",
+    "domain": "Investment Banking",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_baf672af7af44162b5c53c01fe2e2b90"
+   },
+   {
+    "task_id": "world228-jk-01-08d7bf2c",
+    "mercor_task_id": "task_08d7bf2c3aac4022b125c80fc6b6c4ec",
+    "task_name": "World228_JK_01",
+    "domain": "Investment Banking",
+    "expected_output": "edit_existing_sheet",
+    "v1_task_id": "task_741cc3b250234af1bd641e1bd2a523d7"
+   },
+   {
+    "task_id": "world228-jp-01-9700a477",
+    "mercor_task_id": "task_9700a477d33d4d0cb99f2399a8d4ddc5",
+    "task_name": "World228_JP_01",
+    "domain": "Investment Banking",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_326a170f1d6440988779b2ef1dac919f"
+   },
+   {
+    "task_id": "world228-jp-02-141aa009",
+    "mercor_task_id": "task_141aa0098274401b8939f00bafc85321",
+    "task_name": "World228_JP_02",
+    "domain": "Investment Banking",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_6a1f6778265e4fc99811f7ebf71c205c"
+   },
+   {
+    "task_id": "world228-sm-task04-2add8328",
+    "mercor_task_id": "task_2add8328c8b443a492e9a02462527ac5",
+    "task_name": "World228_SM_Task04",
+    "domain": "Investment Banking",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_00db129e3bd9497da0acf6470a1d33d2"
+   },
+   {
+    "task_id": "world228-sm-task10-d0d1a118",
+    "mercor_task_id": "task_d0d1a118c2d448f0a620cd0d330e748a",
+    "task_name": "World228_SM_Task10",
+    "domain": "Investment Banking",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_d7b5f95b42104cb1af46a381fa6d8bd3"
+   },
+   {
+    "task_id": "world415-im-01-84006694",
+    "mercor_task_id": "task_8400669410344bcbae5ae730161a43c0",
+    "task_name": "World415_im_01",
+    "domain": "Law",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_4723cf79c09048f684a8a870bf96d187"
+   },
+   {
+    "task_id": "world416-js-02-029d3e95",
+    "mercor_task_id": "task_029d3e95c42541d48605b63f414eff08",
+    "task_name": "World416_JS_02",
+    "domain": "Law",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_0097f20dd1744647a5a6e76db215a467"
+   },
+   {
+    "task_id": "world418-ah-01-88f58446",
+    "mercor_task_id": "task_88f584460c9c44b994dd61cc51cf0129",
+    "task_name": "World418_AH_01",
+    "domain": "Law",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_4c76ef32414a490ebdf5a68aac57e6ca"
+   },
+   {
+    "task_id": "world418-tk-02-8ca3247c",
+    "mercor_task_id": "task_8ca3247c5f73490081b6abf69be81d2a",
+    "task_name": "World418-TK-02",
+    "domain": "Law",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_3bb0664007a140a981193fb43ba1be7b"
+   },
+   {
+    "task_id": "world418-tk-03-c03b8f6a",
+    "mercor_task_id": "task_c03b8f6a8e564e5ab37fdd47231147b7",
+    "task_name": "World418-Tk-03",
+    "domain": "Law",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_f1998108c25b4e448ec6cdce9f40321e"
+   },
+   {
+    "task_id": "world419-ah-02-1a47e5fd",
+    "mercor_task_id": "task_1a47e5fd731a457fa10df98dd93e8949",
+    "task_name": "World419_AH_02",
+    "domain": "Law",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_a28445db856341ecb5c47d86e488b3d4"
+   },
+   {
+    "task_id": "world419-um-04-d0f9f0ee",
+    "mercor_task_id": "task_d0f9f0eeef77474da371479d4148b350",
+    "task_name": "World419_UM_04",
+    "domain": "Law",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_01ca29fd17b04f43b09cc07d7b1a2ad0"
+   },
+   {
+    "task_id": "world420-am-02-0e29a58c",
+    "mercor_task_id": "task_0e29a58cd7d648dab88dc5c103bac41a",
+    "task_name": "World420_AM_02",
+    "domain": "Law",
+    "expected_output": "message_in_console",
+    "v1_task_id": null
+   },
+   {
+    "task_id": "world420-ro-01-49039ba3",
+    "mercor_task_id": "task_49039ba3df8040caa4e0f866b30c6575",
+    "task_name": "World420_RO_01",
+    "domain": "Law",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_bdd8216b4e864b9a81d0b9d7af624497"
+   },
+   {
+    "task_id": "world420-sf-02-a71743f3",
+    "mercor_task_id": "task_a71743f3d0834e9ab02407302681f61c",
+    "task_name": "World420_SF_02",
+    "domain": "Law",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_d06f10ebd2ad4bb19ba47b00a590dd54"
+   },
+   {
+    "task_id": "world421-ap-02-930732dc",
+    "mercor_task_id": "task_930732dcca71418281224e18143164f5",
+    "task_name": "World421_AP_02",
+    "domain": "Law",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_a128ae61064c45b7b018d066e9838fcc"
+   },
+   {
+    "task_id": "world421-el-03-abf41e5b",
+    "mercor_task_id": "task_abf41e5bcb6841e193ec0c33411cf41a",
+    "task_name": "World421_EL_03",
+    "domain": "Law",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_8a22b80c7b2b49c59d6deed5b94d6857"
+   },
+   {
+    "task_id": "world421-oo-02-13543200",
+    "mercor_task_id": "task_13543200aea243ea886a5a11acda2f84",
+    "task_name": "World421_OO_02",
+    "domain": "Law",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_fe573b8ce38d4a9f9642fbe7b8f11358"
+   },
+   {
+    "task_id": "world421-tg-03-860d1b66",
+    "mercor_task_id": "task_860d1b66e78f4ff7bec0b49b0b7b5090",
+    "task_name": "World421_TG_03",
+    "domain": "Law",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_b3b22cc6374e42f39cb07b5aa0a6d0f3"
+   },
+   {
+    "task_id": "world423-dpm-01-178fcb61",
+    "mercor_task_id": "task_178fcb6174734b1fae9cef2735d26951",
+    "task_name": "World423_DPM_01",
+    "domain": "Law",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_73363f7afa084f98aeb61ff19ecfabad"
+   },
+   {
+    "task_id": "world423-dpm-02-4263f118",
+    "mercor_task_id": "task_4263f118e3744693b23ecf6761292677",
+    "task_name": "World423_DPM_02",
+    "domain": "Law",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_327f2507ef39488d9dfc3fbf05ef4c2f"
+   },
+   {
+    "task_id": "world423-js-01-9efac80a",
+    "mercor_task_id": "task_9efac80ade0b45a295fc483eea5afcd0",
+    "task_name": "World423_JS_01",
+    "domain": "Law",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_afcdcb040d924d4289b2a739e6ac4c49"
+   },
+   {
+    "task_id": "world425-jcf-02-9f502d4d",
+    "mercor_task_id": "task_9f502d4dd3114d789131ab4a232436db",
+    "task_name": "World425_jcf_02",
+    "domain": "Law",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_0dab65657186412983c2c04e363fe40e"
+   },
+   {
+    "task_id": "world425-jcf-03-09bdbd1a",
+    "mercor_task_id": "task_09bdbd1ad83b417197be27d03453cb83",
+    "task_name": "World425_jcf-03",
+    "domain": "Law",
+    "expected_output": "make_new_doc",
+    "v1_task_id": "task_b68a970f95ea48019176f0be1f73e61b"
+   },
+   {
+    "task_id": "world425-tas-02-ac7e521e",
+    "mercor_task_id": "task_ac7e521e2d9a41fd9970ea790db3d712",
+    "task_name": "World425_tas_02",
+    "domain": "Law",
+    "expected_output": "make_new_doc",
+    "v1_task_id": "task_ce4a398d9cf64e63aa54cb88b6615c93"
+   },
+   {
+    "task_id": "world425-tas-05-2c185600",
+    "mercor_task_id": "task_2c1856003b3644c29de569749afc1425",
+    "task_name": "World425_tas_05",
+    "domain": "Law",
+    "expected_output": "make_new_doc",
+    "v1_task_id": "task_ed6f8d835b0141309442d2c373d1c5da"
+   },
+   {
+    "task_id": "world431-amk-01-5840c72a",
+    "mercor_task_id": "task_5840c72abae64b228274d3d98e8d042e",
+    "task_name": "World431_amk_01",
+    "domain": "Law",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_c7fc2009b5b849b4b769f0eafe64f461"
+   },
+   {
+    "task_id": "world431-amk-02-78a4d3ea",
+    "mercor_task_id": "task_78a4d3ea5cc2415b8ae0e8bb5ea7b964",
+    "task_name": "World431_amk_02",
+    "domain": "Law",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_76585a8b9eb3423895795c8715f924c7"
+   },
+   {
+    "task_id": "world431-avk-01-4e761f5b",
+    "mercor_task_id": "task_4e761f5b51984d7fab3d07e3a9b3e954",
+    "task_name": "World431_AVK_01",
+    "domain": "Law",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_611b910ce2514004993effe836ef3d74"
+   },
+   {
+    "task_id": "world431-dm-01-b4b1d7a0",
+    "mercor_task_id": "task_b4b1d7a03c9b4de5ae6d6032ed2c32c0",
+    "task_name": "World431_DM_01",
+    "domain": "Law",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_286b3c8f3efc44299eaa62dd70054bad"
+   },
+   {
+    "task_id": "world431-jcf-01-3d85cec9",
+    "mercor_task_id": "task_3d85cec9ff9f43318bb623ab2c798bd1",
+    "task_name": "World431_jcf_01",
+    "domain": "Law",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_55636a0feecb473bbc8d6a447261aec4"
+   },
+   {
+    "task_id": "world431task-el-01-6ec3da62",
+    "mercor_task_id": "task_6ec3da621abe41fd9cac65add2a4ee44",
+    "task_name": "World431Task_EL_01",
+    "domain": "Law",
+    "expected_output": "make_new_doc",
+    "v1_task_id": "task_323b4e29af5e4c7f86eaf4a24c4487ad"
+   },
+   {
+    "task_id": "world434-js-04-2212abef",
+    "mercor_task_id": "task_2212abef688d4abab4fcaf994f46dd23",
+    "task_name": "World434_JS_04",
+    "domain": "Law",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_7b0900ec821f4aafa9d1d1f02fa5c330"
+   }
+  ],
+  "val": [
+   {
+    "task_id": "law-world-423-dm-04-1a9a5de6",
+    "mercor_task_id": "task_1a9a5de699fa47e6b15ea091b5b1434e",
+    "task_name": "Law_World_423_DM_04",
+    "domain": "Law",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_3e4eba49c9cd4d3fa0de912ab1b1501e"
+   },
+   {
+    "task_id": "law433-mk-01-ec4c48f7",
+    "mercor_task_id": "task_ec4c48f7329b48f7911c2273cfb3662a",
+    "task_name": "Law433_mk-01",
+    "domain": "Law",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_908f411c435d4ebf8fcfc4a08e7dce5b"
+   },
+   {
+    "task_id": "sp-task-02-world-129-7c901287",
+    "mercor_task_id": "task_7c9012872e8f43939de10c54752e00b2",
+    "task_name": "SP Task 02 World 129",
+    "domain": "Management Consulting",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_4372ee27c60f4589884be8cc9d6d8bd8"
+   },
+   {
+    "task_id": "sp-task-03-world-129-13560b57",
+    "mercor_task_id": "task_13560b5788a548bb84cfbee9934364f4",
+    "task_name": "SP Task 03 World 129",
+    "domain": "Management Consulting",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_aac22560bcdc434eb7942bce0631d8bb"
+   },
+   {
+    "task_id": "task-4-c12de7ba",
+    "mercor_task_id": "task_c12de7ba941c4dc985fc1440bc7bbcbe",
+    "task_name": "Task 4",
+    "domain": "Management Consulting",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_0a4ad19b76cf4602914e6b8a4f263690"
+   },
+   {
+    "task_id": "task-world130-camillemoingeon-3-2f162fcc",
+    "mercor_task_id": "task_2f162fcc09d641f5bec2b8785876373c",
+    "task_name": "Task_World130_CamilleMoingeon_3",
+    "domain": "Management Consulting",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_9363f85adf864ccaa8dbff72d38225cb"
+   },
+   {
+    "task_id": "task-yhzc9d1a-531a5446",
+    "mercor_task_id": "task_531a5446cf37498ea22ee650c80920b0",
+    "task_name": "Task yhzc9d1a",
+    "domain": "Law",
+    "expected_output": "make_new_sheet",
+    "v1_task_id": "task_107a64a2aeb8439fb41c5e16d25a5326"
+   },
+   {
+    "task_id": "w134-nancy-task-07-5f476e2b",
+    "mercor_task_id": "task_5f476e2b2d124a6489d18c8594914686",
+    "task_name": "W134 Nancy Task 07",
+    "domain": "Management Consulting",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_d46f8183d88541c8ab7f2692aca28b5f"
+   },
+   {
+    "task_id": "world-131-mk-task-3-cbb8798f",
+    "mercor_task_id": "task_cbb8798f4f25417cb48e2f5653360542",
+    "task_name": "World 131_MK_Task 3",
+    "domain": "Management Consulting",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_ee6e8c8f7075427ba5381c453a14c71c"
+   },
+   {
+    "task_id": "world-134-nancy-task-04-7fbb9e35",
+    "mercor_task_id": "task_7fbb9e3555e34b4cb8b9121e481c4af7",
+    "task_name": "World 134 Nancy Task 04",
+    "domain": "Management Consulting",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_b7b8e91422ef483f8464df1538f575e8"
+   },
+   {
+    "task_id": "world-134-nancy-task-05-2aa85715",
+    "mercor_task_id": "task_2aa857150340492f8387effcdb37b50f",
+    "task_name": "World 134 Nancy Task 05",
+    "domain": "Management Consulting",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_683366bd76004f968ebfc93828c076bc"
+   },
+   {
+    "task_id": "world-134-rg-04-4498da8f",
+    "mercor_task_id": "task_4498da8f8bd3441499ee67141a0f578b",
+    "task_name": "World 134_RG_04",
+    "domain": "Management Consulting",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_d87f70c7f8d74665ac3ddcbef5a8d67a"
+   },
+   {
+    "task_id": "world-134-rg-05-0b032d90",
+    "mercor_task_id": "task_0b032d90bdaa4d3d8337fd2dec8ec3bd",
+    "task_name": "World 134_RG_05",
+    "domain": "Management Consulting",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_f029be9cd145432599e5627d4111af24"
+   },
+   {
+    "task_id": "world-135-cd-01-e5cc5e24",
+    "mercor_task_id": "task_e5cc5e2409394f5ba959f7961f389a54",
+    "task_name": "World 135_CD_01",
+    "domain": "Management Consulting",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_e8b80949477a401cafb325db4956e5cb"
+   },
+   {
+    "task_id": "world-219-ae-task-4-af0bc0f9",
+    "mercor_task_id": "task_af0bc0f916e743bba11244c98e4c799f",
+    "task_name": "World 219 - AE Task #4",
+    "domain": "Investment Banking",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_de8a536c2c52446b98d0b9e2e8c43308"
+   },
+   {
+    "task_id": "world-225-je-01-70449b2d",
+    "mercor_task_id": "task_70449b2dd0f448e1a287a9a89f012b6c",
+    "task_name": "World 225_JE_01",
+    "domain": "Investment Banking",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_915931c8aa7840ef9359ce9a50583e3d"
+   },
+   {
+    "task_id": "world-420-lb-02-d6b33bef",
+    "mercor_task_id": "task_d6b33bef91e644a5b73e65a8cff5245d",
+    "task_name": "World 420_LB_02",
+    "domain": "Law",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_1918e229773b46699fe5576f1b11d7a2"
+   },
+   {
+    "task_id": "world-421-oo-01-9398ad52",
+    "mercor_task_id": "task_9398ad526260490d89ef5a19a05c710d",
+    "task_name": "World 421_OO_01",
+    "domain": "Law",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_8702e946cbad4a56886fcd7ea18cd5b2"
+   },
+   {
+    "task_id": "world126-jd-04-dc4fd808",
+    "mercor_task_id": "task_dc4fd808acd54655834fa24bbe477f00",
+    "task_name": "World126_JD_04",
+    "domain": "Management Consulting",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_c5080c2d60fa457faeb309841b8b442a"
+   },
+   {
+    "task_id": "world131-dv-05-591f7fcf",
+    "mercor_task_id": "task_591f7fcfe05b4dfa8717577f4853a96e",
+    "task_name": "World131_DV_05",
+    "domain": "Management Consulting",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_9d99126a403e41838e1473d33884ed2f"
+   },
+   {
+    "task_id": "world131-ib-05-3c0a977d",
+    "mercor_task_id": "task_3c0a977da4b448d48863c5d248670a7b",
+    "task_name": "World131_IB_05",
+    "domain": "Management Consulting",
+    "expected_output": "make_new_slide_deck",
+    "v1_task_id": "task_699ea5ca3b0243a5852ad33e33043f12"
+   },
+   {
+    "task_id": "world132-da-task03-3db0b339",
+    "mercor_task_id": "task_3db0b3391ae64975bd7ce84c1ae1119c",
+    "task_name": "World132_DA_Task03",
+    "domain": "Management Consulting",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_63dbfbfa09ea47ea839c99343129196a"
+   },
+   {
+    "task_id": "world133-ln-04-009ff905",
+    "mercor_task_id": "task_009ff905dc2644e9b17bccabfaa73613",
+    "task_name": "World133_ln_04",
+    "domain": "Management Consulting",
+    "expected_output": "make_new_slide_deck",
+    "v1_task_id": "task_40c59502fc744e85a83bf87dfe8977da"
+   },
+   {
+    "task_id": "world221-hy-01-e2ae04a7",
+    "mercor_task_id": "task_e2ae04a71b8f462394e0815c2603e1a4",
+    "task_name": "World221_HY_01",
+    "domain": "Investment Banking",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_d10510edb921439dbd84d6a88b58b040"
+   },
+   {
+    "task_id": "world221-oa-2-44073f52",
+    "mercor_task_id": "task_44073f52d8044e4fb60ea5af5c0b1300",
+    "task_name": "World221_oa_2",
+    "domain": "Investment Banking",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_00cd552ee51b4254bae8ee3b0add42fa"
+   },
+   {
+    "task_id": "world221-oa-8-67be0af1",
+    "mercor_task_id": "task_67be0af14f4645c481319a4bc6a18f06",
+    "task_name": "World221_oa_8",
+    "domain": "Investment Banking",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_ffdcc07950ab47418648fbcf5a8fea25"
+   },
+   {
+    "task_id": "world223-av-04-3397c759",
+    "mercor_task_id": "task_3397c759d58c43b28d68e4bdfa762776",
+    "task_name": "World223_AV_04",
+    "domain": "Investment Banking",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_a7c1e23437d1451ca11f4ff27105fa40"
+   },
+   {
+    "task_id": "world223-ob-04-c69e2b2a",
+    "mercor_task_id": "task_c69e2b2ad393456e940c5f86796293ce",
+    "task_name": "World223_OB_04",
+    "domain": "Investment Banking",
+    "expected_output": "make_new_slide_deck",
+    "v1_task_id": "task_0896a8bf7ee3473d81baa594c05814b3"
+   },
+   {
+    "task_id": "world224-hs-02-2ba35245",
+    "mercor_task_id": "task_2ba352455b0846e0a315a96336a5fa08",
+    "task_name": "World224-HS-02",
+    "domain": "Investment Banking",
+    "expected_output": "edit_existing_sheet",
+    "v1_task_id": "task_5b9b275a458340e790f8ed88580737fa"
+   },
+   {
+    "task_id": "world224-hs-05-f8ba862f",
+    "mercor_task_id": "task_f8ba862fe79c44aebf002a69a4e3dacc",
+    "task_name": "World224-HS-05",
+    "domain": "Investment Banking",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_6137ed8e71c541119bfc2b842364beea"
+   },
+   {
+    "task_id": "world224-hs-09-56aefeb6",
+    "mercor_task_id": "task_56aefeb62f2d4e319be2deb7203bc330",
+    "task_name": "World224-HS-09",
+    "domain": "Investment Banking",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_ea4d33144e2642fbbb6880c8bbd7f290"
+   },
+   {
+    "task_id": "world224-sk-task03-dfcbb713",
+    "mercor_task_id": "task_dfcbb7135cac4d949557c3b3f7de339f",
+    "task_name": "World224_SK_Task03",
+    "domain": "Investment Banking",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_fc00cc903585441cbdb295dc9e5582ec"
+   },
+   {
+    "task_id": "world225-rl-task04-04cd11af",
+    "mercor_task_id": "task_04cd11afdf504ff5bb5630ddde101ed9",
+    "task_name": "World225_RL_Task04",
+    "domain": "Investment Banking",
+    "expected_output": "edit_existing_sheet",
+    "v1_task_id": "task_5d446011d7a44614896a8cfdee07f572"
+   },
+   {
+    "task_id": "world226-ta-01-c945f64f",
+    "mercor_task_id": "task_c945f64f276542ea8b30908db037df19",
+    "task_name": "World226_TA_01",
+    "domain": "Investment Banking",
+    "expected_output": "make_new_sheet",
+    "v1_task_id": "task_7d1f9f2c011742dc91dea6e09a29858a"
+   },
+   {
+    "task_id": "world227-jz-task03-135a8483",
+    "mercor_task_id": "task_135a8483ae334795b504500a7ee58412",
+    "task_name": "World227_JZ_Task03",
+    "domain": "Investment Banking",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_fc96166d8f374e4eb8d4d15784904b8e"
+   },
+   {
+    "task_id": "world227-sk-task08-b138d09f",
+    "mercor_task_id": "task_b138d09f9a754d3b99f9ffea2b43a1d2",
+    "task_name": "World227_SK_Task08",
+    "domain": "Investment Banking",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_dd96690dde6f4cbf9094070249749128"
+   },
+   {
+    "task_id": "world228-sm-task08-11f60d76",
+    "mercor_task_id": "task_11f60d768a7a4d2b9a43dc5736007211",
+    "task_name": "World228_SM_Task08",
+    "domain": "Investment Banking",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_bfd79e55d1104d3e92486de9b3c4de12"
+   },
+   {
+    "task_id": "world416-js-01-44b9046f",
+    "mercor_task_id": "task_44b9046f0952402d876aa97a55d6b1dc",
+    "task_name": "World416_JS_01",
+    "domain": "Law",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_2b5df2b5a0eb423e998099a9fcd8e262"
+   },
+   {
+    "task_id": "world416-tk-02-9ff1dc24",
+    "mercor_task_id": "task_9ff1dc249adc4db6ac93f750e5923ff2",
+    "task_name": "World416_TK_02",
+    "domain": "Law",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_3a57257634404d0584a5bd7ce7846b89"
+   },
+   {
+    "task_id": "world418-tk-01-50b3b6a8",
+    "mercor_task_id": "task_50b3b6a880174953aed62be42300e22a",
+    "task_name": "World418-TK-01",
+    "domain": "Law",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_3413464bd2b14df6bd2ee15c36d3abf1"
+   },
+   {
+    "task_id": "world419-ah-03-79e0977c",
+    "mercor_task_id": "task_79e0977c876d49cbbec0037fa8ce9c3b",
+    "task_name": "World419_AH_03",
+    "domain": "Law",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_c24da23b0e1042238997125c77506557"
+   },
+   {
+    "task_id": "world423-js-02-28821806",
+    "mercor_task_id": "task_28821806b1c742bf9e48c795f9e765e4",
+    "task_name": "World423_JS_02",
+    "domain": "Law",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_7e51ed8994924d8d9f92938fd8cf9fd2"
+   },
+   {
+    "task_id": "world423-js-03-ee6e557e",
+    "mercor_task_id": "task_ee6e557ee1bc4e6c82267e57ffd0f9d6",
+    "task_name": "World423_JS_03",
+    "domain": "Law",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_28f0924227374bcea8d59b13e605be90"
+   },
+   {
+    "task_id": "world433-js-05-bc0d94bf",
+    "mercor_task_id": "task_bc0d94bf315d4d07a2affa328ab7e363",
+    "task_name": "World433_JS_05",
+    "domain": "Law",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_828f11b8209f4b53bdf1e836762363d8"
+   },
+   {
+    "task_id": "world433-sg-01-a23ecfdf",
+    "mercor_task_id": "task_a23ecfdf070e4d1abfe9e29030047e15",
+    "task_name": "World433_SG_01",
+    "domain": "Law",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_f40a571a80e944cead66ecf1d3f0de93"
+   },
+   {
+    "task_id": "world434-ah-01-f0eb6d9f",
+    "mercor_task_id": "task_f0eb6d9fd3174e7b91e11a558489af5c",
+    "task_name": "World434_AH_01",
+    "domain": "Law",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_d1aff11dbf4e4d16a79401ce07b1f15c"
+   },
+   {
+    "task_id": "world434-ah-05-0ad4be07",
+    "mercor_task_id": "task_0ad4be07bb3b4b2f89990834a103198e",
+    "task_name": "World434_AH_05",
+    "domain": "Law",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_bcea61e250194df59ff2eaf59c5b1320"
+   },
+   {
+    "task_id": "world434-js-01-aedf3ab0",
+    "mercor_task_id": "task_aedf3ab0a53e474ab860a06b5c570d13",
+    "task_name": "World434_JS_01",
+    "domain": "Law",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_45c2f4ca9ee742c5ac9ca281d4bc5195"
+   }
+  ],
+  "test": [
+   {
+    "task_id": "cw134-aditi-01-6914a79e",
+    "mercor_task_id": "task_6914a79e8fac4210b15e79a3b9cf9506",
+    "task_name": "CW134 Aditi 01",
+    "domain": "Management Consulting",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_11c9d4cb0cf3401b8de7cff9969fc223"
+   },
+   {
+    "task_id": "law-433-ac-02-c26a646e",
+    "mercor_task_id": "task_c26a646e1f4f48aba2f0d06fd6dcfce7",
+    "task_name": "Law 433_AC_02",
+    "domain": "Law",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_1d7f4e0be1274b069ad86be4ed813c46"
+   },
+   {
+    "task_id": "lawworld417-as-02-b4b20204",
+    "mercor_task_id": "task_b4b20204b619463f92b850737c03a379",
+    "task_name": "LawWorld417_AS_02",
+    "domain": "Law",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_43de2db73b5a4d899660f13394e80085"
+   },
+   {
+    "task_id": "lawworld417-ne-03-5f5862ef",
+    "mercor_task_id": "task_5f5862ef331741afad7acc8a2ff55775",
+    "task_name": "LawWorld417_NE_03",
+    "domain": "Law",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_384b35183b374b5482edfff4f071c834"
+   },
+   {
+    "task_id": "lawworld433-anb-01-5d12cf8d",
+    "mercor_task_id": "task_5d12cf8d9fde43508970a26c33f8fce9",
+    "task_name": "LawWorld433_ANB_01",
+    "domain": "Law",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_de1ec76029b54126ae1105921e4202d4"
+   },
+   {
+    "task_id": "lawworld433-anb-04-23234013",
+    "mercor_task_id": "task_2323401315a04c9ab83c43e3eedb8ab1",
+    "task_name": "LawWorld433_ANB_04",
+    "domain": "Law",
+    "expected_output": "make_new_doc",
+    "v1_task_id": "task_ea50530a09d5440996d0328aa3fbaa70"
+   },
+   {
+    "task_id": "sp-task-01-world-135-840af889",
+    "mercor_task_id": "task_840af889fcb045dba5e6d52e90f3cc0b",
+    "task_name": "SP Task 01 World 135",
+    "domain": "Management Consulting",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_8bd0a44c2c154bb3a089f5f19c9e0a23"
+   },
+   {
+    "task_id": "task-128-pj-04-a1434323",
+    "mercor_task_id": "task_a1434323d7a249c79fa5375fd7b1fa3b",
+    "task_name": "Task_128_PJ_04",
+    "domain": "Management Consulting",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_f14e5c8e67ba4b018f537c990ea96d71"
+   },
+   {
+    "task_id": "task-acg14a6c-c782f25e",
+    "mercor_task_id": "task_c782f25e2ed64fa297ede51268231085",
+    "task_name": "Task acg14a6c",
+    "domain": "Law",
+    "expected_output": "make_new_doc",
+    "v1_task_id": "task_5c14b248c88842b1a3442152671cbb18"
+   },
+   {
+    "task_id": "task-ncwq9a4b-87065bf9",
+    "mercor_task_id": "task_87065bf987d141569c398c5d1be8701f",
+    "task_name": "Task ncwq9a4b",
+    "domain": "Management Consulting",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_2c7f210d3ffd4052a31decef4c4c6668"
+   },
+   {
+    "task_id": "task-unc2be9c-em-ef98d006",
+    "mercor_task_id": "task_ef98d00600d84ad795c7ed0f86a6baa2",
+    "task_name": "Task unc2be9c - EM",
+    "domain": "Management Consulting",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_8f47fc64814943c2a782a2b8704a3ba3"
+   },
+   {
+    "task_id": "task-w135-camille-moingeon-4-1cf93f93",
+    "mercor_task_id": "task_1cf93f9373574cffb507e3291dd6e303",
+    "task_name": "Task_W135_Camille_Moingeon_4",
+    "domain": "Management Consulting",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_3c1d25173f094dd987651bdc31ac77cf"
+   },
+   {
+    "task_id": "world-127-am-task-02-ec3c5eb0",
+    "mercor_task_id": "task_ec3c5eb0e52644589d15b253022362d3",
+    "task_name": "World 127_AM_Task 02",
+    "domain": "Management Consulting",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_4c9bf439a5224cf090ea3b3e8966a020"
+   },
+   {
+    "task_id": "world-127-tj-task-2-0-2a1410cf",
+    "mercor_task_id": "task_2a1410cf589a45acb47053371ad2d25f",
+    "task_name": "World 127 TJ Task 2.0",
+    "domain": "Management Consulting",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_8e592b2a3061410ebafea3183c960ff9"
+   },
+   {
+    "task_id": "world-127-tj-task-4-0-bbc81ebc",
+    "mercor_task_id": "task_bbc81ebc5fbf4f86ac6c5c57a89a2ae4",
+    "task_name": "World 127 TJ Task 4.0",
+    "domain": "Management Consulting",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_55f7611b8cff4448b9a88c86ef96b28a"
+   },
+   {
+    "task_id": "world-128-nk-task-1-c49d8b70",
+    "mercor_task_id": "task_c49d8b700fee45189c7b0be464e7f839",
+    "task_name": "World 128 - NK - Task 1",
+    "domain": "Management Consulting",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_11d91f7c17424faa8f89a5a46c47b76f"
+   },
+   {
+    "task_id": "world-129-cy-task-6-13a7957a",
+    "mercor_task_id": "task_13a7957a55084e21be6b51da52bb79fe",
+    "task_name": "World 129_CY_Task 6",
+    "domain": "Management Consulting",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_d8d2c6bd61d548cba10f59af2d6c9559"
+   },
+   {
+    "task_id": "world-131-mk-task-1-421d35da",
+    "mercor_task_id": "task_421d35daa16c45df8c1803aef01791cd",
+    "task_name": "World 131_MK_Task 1",
+    "domain": "Management Consulting",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_ec97a505112645f9b266df1954f2738d"
+   },
+   {
+    "task_id": "world-223-ae-task-01-0e08a3d7",
+    "mercor_task_id": "task_0e08a3d7fb804017aa6bff49a33902f1",
+    "task_name": "World 223_AE_Task_01",
+    "domain": "Investment Banking",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_70af094f3ba54789a4436c4757edf43c"
+   },
+   {
+    "task_id": "world-225-je-06-d1f7e2bc",
+    "mercor_task_id": "task_d1f7e2bce36c4073995760bceaa12de0",
+    "task_name": "World 225_JE_06",
+    "domain": "Investment Banking",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_0b98625e02d34f888a76254fd8ce9f75"
+   },
+   {
+    "task_id": "world130-ho-08-991a7efc",
+    "mercor_task_id": "task_991a7efc7f3c4073b136ff8802404c11",
+    "task_name": "world130_HO_08",
+    "domain": "Management Consulting",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_1e19b26b91804fe386ef911e347df0f8"
+   },
+   {
+    "task_id": "world131-md-01-28df6b25",
+    "mercor_task_id": "task_28df6b250f31478483544cdd22348b35",
+    "task_name": "World131_MD_01",
+    "domain": "Management Consulting",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_55a201bd877a42eeb0e1868fb6a84230"
+   },
+   {
+    "task_id": "world133-ln-05-b989446d",
+    "mercor_task_id": "task_b989446d49804f09af88764780ac4e31",
+    "task_name": "World133_ln_05",
+    "domain": "Management Consulting",
+    "expected_output": "make_new_doc",
+    "v1_task_id": "task_b95db15ad91d4883b23e79d1c1573eb1"
+   },
+   {
+    "task_id": "world135-sf-task03-5716be6e",
+    "mercor_task_id": "task_5716be6e3ea7405f8be3c6423a806c5d",
+    "task_name": "World135_SF_Task03",
+    "domain": "Management Consulting",
+    "expected_output": "make_new_doc",
+    "v1_task_id": "task_a30290ac68fb47128b1917d3fc226aba"
+   },
+   {
+    "task_id": "world219-seed-task-04-559be363",
+    "mercor_task_id": "task_559be363389b43eab74f44fe538d3e4b",
+    "task_name": "World219_Seed Task_04",
+    "domain": "Investment Banking",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_eb001a3a7d59493f8541aba607e3f255"
+   },
+   {
+    "task_id": "world219-seed-task-09-ff-9da08494",
+    "mercor_task_id": "task_9da08494f5a548aaab8f8a451fa66c52",
+    "task_name": "World219_Seed Task_09_FF",
+    "domain": "Investment Banking",
+    "expected_output": "edit_existing_sheet",
+    "v1_task_id": "task_9627f5be91db4334a3f3b5d9a2747460"
+   },
+   {
+    "task_id": "world221-tr-10-39f4923f",
+    "mercor_task_id": "task_39f4923faaa34f77a10cb55b88b1a32e",
+    "task_name": "World221_TR_10",
+    "domain": "Investment Banking",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_2b2666310e7e4712be0f2c0e4240d5a2"
+   },
+   {
+    "task_id": "world223-smn-05-b00d08c1",
+    "mercor_task_id": "task_b00d08c12a7549319e29aa7a3f61cef5",
+    "task_name": "World223_SMN_05",
+    "domain": "Investment Banking",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_6caba0e23298489cbfc7732bf26ff1e3"
+   },
+   {
+    "task_id": "world223-smn-08-a0a05e88",
+    "mercor_task_id": "task_a0a05e88a725448d9cc867df520a7eb4",
+    "task_name": "World223_SMN_08",
+    "domain": "Investment Banking",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_8a0a32869f0946778e60441c0f179867"
+   },
+   {
+    "task_id": "world224-jr-02-a4bb5a54",
+    "mercor_task_id": "task_a4bb5a54ec8e42a487d9efcd3fc88feb",
+    "task_name": "World224-JR-02",
+    "domain": "Investment Banking",
+    "expected_output": "make_new_sheet",
+    "v1_task_id": "task_80a7d5ad40cc4ed18e859cb9edf4d180"
+   },
+   {
+    "task_id": "world224-sk-task01-f8b6f40d",
+    "mercor_task_id": "task_f8b6f40dbf7a4b6eab0fb8172dc7002c",
+    "task_name": "World224_SK_Task01",
+    "domain": "Investment Banking",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_9244a2b59db64d708a35fe0ae2d6c8b3"
+   },
+   {
+    "task_id": "world225-dk-02-1f9714bb",
+    "mercor_task_id": "task_1f9714bbde9342eea6ace3d94aea4d4f",
+    "task_name": "World225_DK_02",
+    "domain": "Investment Banking",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_37b6798e55064707aebe9b0817434404"
+   },
+   {
+    "task_id": "world225-nb-04-ad89d7af",
+    "mercor_task_id": "task_ad89d7af91a749f8a8916f5b9bbd53ab",
+    "task_name": "World225_NB_04",
+    "domain": "Investment Banking",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_cf18d5136e084c26acdc7054403b22ef"
+   },
+   {
+    "task_id": "world226-rm-06-17f6c991",
+    "mercor_task_id": "task_17f6c991eff2407e90ec9e561577cd1a",
+    "task_name": "World226_RM_06",
+    "domain": "Investment Banking",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_54ae828f3195491cbcce187e3890a2f0"
+   },
+   {
+    "task_id": "world228-jk-02-78243c40",
+    "mercor_task_id": "task_78243c40eb514bacaf83a82cad2be19a",
+    "task_name": "World228_JK_02",
+    "domain": "Investment Banking",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_ce1ce39d22c34426a152f6f432cd5cfb"
+   },
+   {
+    "task_id": "world228-jp-05-8f936239",
+    "mercor_task_id": "task_8f936239d6404b03bbee38ff40f42da1",
+    "task_name": "World228_JP_05",
+    "domain": "Investment Banking",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_a7571304d554476498169424570451e3"
+   },
+   {
+    "task_id": "world228-sm-task02-b0448b54",
+    "mercor_task_id": "task_b0448b54a301438ebbe48f92275ebf64",
+    "task_name": "World228_SM_Task02",
+    "domain": "Investment Banking",
+    "expected_output": "make_new_sheet",
+    "v1_task_id": "task_3e2e533b49374381acf2056fe479e3ba"
+   },
+   {
+    "task_id": "world228-sm-task06-148a274e",
+    "mercor_task_id": "task_148a274ef97541aa837da83542eff14b",
+    "task_name": "World228_SM_Task06",
+    "domain": "Investment Banking",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_f58e573d229d46aeaa3edbaf35b7b95b"
+   },
+   {
+    "task_id": "world415-dm-01-b7605edf",
+    "mercor_task_id": "task_b7605edfd5b94b82b271898632ae93b7",
+    "task_name": "World415_DM_01",
+    "domain": "Law",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_3fa64829d31f43348113cc74f457b3ec"
+   },
+   {
+    "task_id": "world417-tg-03-83b4a9e2",
+    "mercor_task_id": "task_83b4a9e2ac3344768a3868c6c1612560",
+    "task_name": "World417_TG_03",
+    "domain": "Law",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_2f209bd1a8974f5fad59377f8e315910"
+   },
+   {
+    "task_id": "world417-ts-04-ba4d7322",
+    "mercor_task_id": "task_ba4d7322ade443ca9e1853b0a8067a20",
+    "task_name": "World417_TS_04",
+    "domain": "Law",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_6caf6e9032174bac8f69edf07deb06f0"
+   },
+   {
+    "task_id": "world418-ek-01-13050e0a",
+    "mercor_task_id": "task_13050e0a433c42739ea31bb7b1926450",
+    "task_name": "World418_EK_01",
+    "domain": "Law",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_08c22c6bd072423284c2da7fb190b8bd"
+   },
+   {
+    "task_id": "world421-tg-02-f7dea046",
+    "mercor_task_id": "task_f7dea046a80442338f99f15a03763504",
+    "task_name": "World421_TG_02",
+    "domain": "Law",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_0ae01f72a4e34633855686b7b0e8d455"
+   },
+   {
+    "task_id": "world425-jcf-01-e1dfe9ed",
+    "mercor_task_id": "task_e1dfe9eda1b24d22a2e79de9b6c835a5",
+    "task_name": "World425_jcf_01",
+    "domain": "Law",
+    "expected_output": "edit_existing_doc",
+    "v1_task_id": "task_8705d28530a94c2880fbfd7190e257d4"
+   },
+   {
+    "task_id": "world425-tas-01-82e745dd",
+    "mercor_task_id": "task_82e745ddc9b34ea584f0a160ece3abd5",
+    "task_name": "World425_tas_01",
+    "domain": "Law",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_876ace32decb4f26a3f7a7c3bf50bab7"
+   },
+   {
+    "task_id": "world433-js-04-b2ea95d5",
+    "mercor_task_id": "task_b2ea95d55da14a91a0c7cfd0e0da880a",
+    "task_name": "World433_JS_04",
+    "domain": "Law",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_fe1efa5d3aaa43469f135b53fe02b6a2"
+   },
+   {
+    "task_id": "world434-dpm-01-69a99cb9",
+    "mercor_task_id": "task_69a99cb931704df3979125d4e438148e",
+    "task_name": "World434_DPM_01",
+    "domain": "Law",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_85f48fa8ecc04d9eb5a56a6e95aa3a88"
+   },
+   {
+    "task_id": "world434-js-03-306ae67e",
+    "mercor_task_id": "task_306ae67e371d4b6f9b7beecff1b05ea7",
+    "task_name": "World434_JS_03",
+    "domain": "Law",
+    "expected_output": "message_in_console",
+    "v1_task_id": "task_c31f5ccdfdd948ac8142f47890aec9e1"
+   }
+  ]
+ }
+}

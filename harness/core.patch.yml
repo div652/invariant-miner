@@ -66,6 +66,8 @@
         runtime: !!js process.env.DSH_BENCH_RUNTIME ?? 'podman'
         env: !!js JSON.parse(process.env.DSH_BENCH_CONTAINER_ENV ?? '{}')
         hostCwd: !!js process.env.DSH_BENCH_HOST_CWD
+        user: !!js process.env.DSH_BENCH_EXEC_USER
+        umask: !!js process.env.DSH_BENCH_EXEC_UMASK
 
     # --- Budgets: step limit, wall-clock timeout, temperature (each optional) ------------------------------------------
     - id: benchmark-limits
