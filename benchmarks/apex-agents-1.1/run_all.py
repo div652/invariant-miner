@@ -1,9 +1,11 @@
 """Run many APEX-Agents 1.1 tasks in parallel and grade each as it finishes.
 
-    python3 benchmarks/apex-agents-1.1/run_all.py --tasks all|FILE --out runs/<run> [--jobs 12] [--grade-jobs 6]
-        [--setup-slots 4] [--endpoint cao | --model models/x.json] [--tasks-dir DIR]
+    python3 benchmarks/apex-agents-1.1/run_all.py --tasks all|FILE|split:NAME --out runs/<run> [--jobs 8]
+        [--grade-jobs 6] [--setup-slots 4] [--endpoint cao | --model models/x.json] [--tasks-dir DIR] [--dry-run]
 
-FILE: task slugs (Hub task directory names), one per line. Each task runs with run_task.py into <run>/tasks/<slug>/
+FILE: task slugs (Hub task directory names), one per line. split:NAME: the shared split in splits.json (train, val,
+test, or trainval = train + val for work with only a train and a test set; benchmarks/apex-agents/make_splits.py).
+--dry-run lists the selected tasks and stops. Each task runs with run_task.py into <run>/tasks/<slug>/
 and is then graded with grade.py (grading/grades.json). Re-running the same command resumes: tasks with run.json are
 not run again; a task directory without run.json (killed) is moved to <run>/aborted/ and run again. A run that failed
 outside the agent (world boot, DSH never started, the final snapshot: run.json infra_error or no agent session) is
@@ -30,6 +32,7 @@ sys.path.insert(0, str(REPO))
 import grade  # noqa: E402
 import run_task  # noqa: E402
 from dsh_bench.endpoints import load_local_env  # noqa: E402
+from dsh_bench.splits import task_ids as split_task_ids  # noqa: E402
 
 LOCK = threading.Lock()
 ABORT_AFTER = 6
@@ -102,6 +105,7 @@ def main() -> int:
     parser.add_argument("--no-subagents", action="store_true", help="DSH's subagent tools and their guidance off")
     parser.add_argument("--judge", default=grade.JUDGE_MODEL)
     parser.add_argument("--effort", default=grade.JUDGE_EFFORT)
+    parser.add_argument("--dry-run", action="store_true", help="list the selected tasks and stop")
     args = parser.parse_args()
     load_local_env()
     if args.model and not args.model.startswith("{repo}"):
@@ -109,11 +113,20 @@ def main() -> int:
         if not Path(args.model).exists():
             raise SystemExit(f"--model {args.model}: no such file")
     tasks_dir = args.tasks_dir.expanduser().resolve()
-    slugs = sorted(d.name for d in tasks_dir.iterdir() if d.is_dir()) if args.tasks == "all" else \
-        [line.strip() for line in Path(args.tasks).read_text().splitlines() if line.strip()]
+    if args.tasks == "all":
+        slugs = sorted(d.name for d in tasks_dir.iterdir() if d.is_dir())
+    elif args.tasks.startswith("split:"):
+        slugs = split_task_ids(HERE / "splits.json", args.tasks.removeprefix("split:"))
+    else:
+        slugs = [line.strip() for line in Path(args.tasks).read_text().splitlines() if line.strip()]
     unknown = [s for s in slugs if not (tasks_dir / s).is_dir()]
     if unknown:
         raise SystemExit(f"not in {tasks_dir}: {unknown[:5]}")
+    if args.dry_run:
+        domains = Counter(run_task.load_task(tasks_dir, s)["meta"]["domain"] for s in slugs)
+        print(f"{len(slugs)} tasks: {dict(sorted(domains.items()))}")
+        print("\n".join(slugs))
+        return 0
     run_dir = args.out.resolve()
     (run_dir / "tasks").mkdir(parents=True, exist_ok=True)
     (run_dir / "tasks.txt").write_text("\n".join(slugs) + "\n")

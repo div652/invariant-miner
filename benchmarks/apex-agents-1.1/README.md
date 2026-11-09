@@ -47,6 +47,14 @@ python3 benchmarks/apex-agents-1.1/check_gold.py --out runs/apex11-gold --per-ty
                                                       # judge calls: the experts' outputs through the whole grading path
 ```
 
+## Splits
+
+`splits.json`: the shared train / val / test split of the 240 tasks, 60/20/20 = 144 / 48 / 48, stratified by job
+(48 / 16 / 16 each), task slugs listed (the file is the split; `benchmarks/apex-agents/make_splits.py` made it, seed
+20261109). The APEX-Agents 1.0 split (`benchmarks/apex-agents/splits.json`) follows it: each 1.1 task's 1.0 original
+(`v1_task_id`) is in the same split. `run_all.py --tasks split:train` (val, test; `trainval` = train + val when working
+with only a train and a test set); `--dry-run` lists the tasks.
+
 ## Run
 
 ```bash
