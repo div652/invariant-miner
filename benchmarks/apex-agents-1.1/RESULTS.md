@@ -1,5 +1,38 @@
 # APEX-Agents 1.1: results
 
+## Full run with the fixes, subagents off, 2026-11-09 (`runs/apex11-full-relay-nosub-20261108T235952Z`)
+
+Same setup as the first full run below, with the fixes found comparing against Mercor's leaderboard (CHECKLIST.md):
+the MCP relay instead of the caching bridge (one world call at a time, 60 s + 5 s counted at the world), 8 tasks in
+parallel, `strict: false` on every tool, and DSH's subagent tools off (their prompt paragraph with them). Agent
+gpt-5.6-luna effort max via CAO; judge gemini-3.8-flash high. 05:29-13:47 IST.
+
+**Pass@1 43.75% (105 / 240), mean score 0.599.** All 240 runs ended with a reply; no infrastructure, model or grading
+errors. Mercor's leaderboard for GPT-5.6 Luna (max), with their own agent and judge: Pass@1 43.0% (±5.4), mean 57.8%
+(±4.9).
+
+| Job | Tasks | Pass@1 | Mean score |
+|---|---|---|---|
+| Investment Banking | 80 | 38.8% | 0.447 |
+| Law | 80 | 50.0% | 0.776 |
+| Management Consulting | 80 | 42.5% | 0.574 |
+
+| Output | Tasks | Pass@1 | Mean score |
+|---|---|---|---|
+| Answer in the console | 206 | 40.8% | 0.577 |
+| make_new_doc | 9 | 88.9% | 0.984 |
+| make_new_sheet | 9 | 66.7% | 0.689 |
+| edit_existing_sheet | 12 | 41.7% | 0.537 |
+| make_new_slide_deck | 3 | 66.7% | 0.933 |
+| edit_existing_doc | 1 | 0.0% | 0.571 |
+
+Against the first full run on the same 240 tasks: 74 pass in both, 31 only here, 8 only in the first (+9.6 points).
+World calls: 6,521, median 16.5 s (first run 35 s), none failed with "Unknown tool" (first run 14%), 19 hit the 60 s
+limit. Main agent steps: median 17.5, p90 35, none at the 100-step limit.
+
+A matching run with subagents on (prompt unchanged), to separate the two changes, followed:
+`runs/apex11-full-relay-sub-20261108T235952Z`.
+
 ## Full run, 2026-11-08 (`runs/apex11-full-lunamax-20261107T193631Z`, branch `bench/apex-agents` 9d7fa85)
 
 Setup (CHECKLIST.md has every decision): Mercor's 1.1 world and verifier images unmodified, DSH replacing only
