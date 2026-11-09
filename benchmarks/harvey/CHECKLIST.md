@@ -1,5 +1,7 @@
 # Harvey LAB: checklist answers
 
+How to set up, check and run: [README.md](README.md).
+
 Benchmark: `harveyai/harvey-labs` @ `4743403` (2,010 tasks; grader `lab_core.evaluation`). Reference for validation:
 C0 of the AHE campaigns (Harvey's own harness, ported as `harness_lab`; campaign 34 is the reference Luna run: reasoning summaries on): GPT-5.6 Luna on the 70
 firm-knowledge tasks of `splits-firm-knowledge-c15-eval70.json`, judge gpt-5.6-sol high, helper claude-sonnet-5,
