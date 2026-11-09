@@ -1,0 +1,37 @@
+{
+  "provider": "sol-high-cao",
+  "display_name": "GPT-5.6 Sol (CAO, c34 endpoint shape, effort high)",
+  "model": "gpt-5.6-sol",
+  "api": "openai-responses",
+  "base_url": "http://127.0.0.1:4141/v1",
+  "api_key_file": "$DSH_BENCH_CAO_KEY_FILE",
+  "reasoning": "high",
+  "reasoning_efforts": {
+    "low": "low",
+    "medium": "medium",
+    "high": "high",
+    "xhigh": "xhigh"
+  },
+  "context_window": 922000,
+  "max_tokens": 128000,
+  "input": [
+    "text",
+    "image"
+  ],
+  "compat": {
+    "supportsStrictMode": true
+  },
+  "stream_idle_timeout_ms": 1800000,
+  "retry_policy": {
+    "mode": "normal",
+    "maxRetries": 5,
+    "retryableCodes": [
+      "EMPTY_RESPONSE",
+      "RATE_LIMIT",
+      "SERVER",
+      "TIMEOUT",
+      "TRANSPORT",
+      "INVALID_REQUEST"
+    ]
+  }
+}
