@@ -19,7 +19,19 @@
     "image"
   ],
   "compat": {
-    "supportsStrictMode": false
+    "supportsStrictMode": true
   },
-  "stream_idle_timeout_ms": 1800000
+  "stream_idle_timeout_ms": 1800000,
+  "retry_policy": {
+    "mode": "normal",
+    "maxRetries": 5,
+    "retryableCodes": [
+      "EMPTY_RESPONSE",
+      "RATE_LIMIT",
+      "SERVER",
+      "TIMEOUT",
+      "TRANSPORT",
+      "INVALID_REQUEST"
+    ]
+  }
 }
