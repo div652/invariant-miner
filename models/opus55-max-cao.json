@@ -1,0 +1,38 @@
+{
+  "provider": "opus55-cao",
+  "display_name": "Claude Opus 5.5 (CAO, Messages API, effort max, adaptive thinking)",
+  "model": "claude-opus-5-5",
+  "api": "anthropic-messages",
+  "base_url": "http://127.0.0.1:4141",
+  "api_key_file": "$DSH_BENCH_CAO_KEY_FILE",
+  "reasoning": "max",
+  "reasoning_efforts": {
+    "low": "low",
+    "medium": "medium",
+    "high": "high",
+    "xhigh": "xhigh",
+    "max": "max"
+  },
+  "context_window": 1000000,
+  "max_tokens": 128000,
+  "input": [
+    "text",
+    "image"
+  ],
+  "compat": {
+    "forceAdaptiveThinking": true
+  },
+  "stream_idle_timeout_ms": 1800000,
+  "retry_policy": {
+    "mode": "normal",
+    "maxRetries": 5,
+    "retryableCodes": [
+      "EMPTY_RESPONSE",
+      "RATE_LIMIT",
+      "SERVER",
+      "TIMEOUT",
+      "TRANSPORT",
+      "INVALID_REQUEST"
+    ]
+  }
+}
