@@ -32,7 +32,8 @@
       "SERVER",
       "TIMEOUT",
       "TRANSPORT",
-      "INVALID_REQUEST"
+      "INVALID_REQUEST",
+      "PI_AI_ERROR"
     ]
   }
 }
