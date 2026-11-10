@@ -1,0 +1,30 @@
+{
+  "task": "mechanical_engineering_technicians/task2",
+  "score": "0/70",
+  "goal": "Act as a petrochemical equipment technician evaluating impeller rework on CP-150 pump P-2401A: reconcile contractual (API 610 Table 8, 3.8 mm/s) vs ISO 10816-7 / Europump POR-AOR limits, compare the Jan 15 test with the Jan 17 retest point by point, use sister pump P-2401B field/CMMS history to predict field behaviour, and issue accept/conditional/reject. Deliverables: an NCR CSV and an integrated report with executive summary, delta/zone table, field prediction, commissioning setpoints, pre-installation requirements and two plots.",
+  "delivered": "A 6-page PDF report (P2401A_integrated_vibration_assessment.pdf) recommending CONDITIONAL ACCEPT, a 4-row NCR CSV, a 33-row shared-point comparison CSV with deltas and Category I zones, and two PNG plots (pump-end overlay, sister trend projection). The agent found and read the Europump guideline via web search (step 6) and parsed all staged data.",
+  "what_went_wrong": "The judge scores each rubric item all-or-nothing, and every item missed at least one specific detail, so the score is 0/70 despite a broadly sound report. The agent had all the needed facts (the Europump search result in step 6 contained the Category I alarm 5.0 / trip 8.3 mm/s values, the 'POR is in general 70% to 120% of BEP' sentence and the 'ISO 10816-3 superseded by part 7' note; the staged CSVs held the run-up/coast-down peaks, MDE_A FFT, pre-failure trend and CMMS details), but wrote a compressed report: commissioning setpoints were set to 3.0/3.8 mm/s instead of ISO 10816-7 5.0/8.3 or baseline-based; 110% rated flow was never converted to ~122% BEP / AOR; the resonance got one line with no 34% margin; the bearing failure write-up omitted 6316 C3, ~7920 h, the 1.45->2.35 pre-failure trend and oil analysis; the missing 80% point was noted without discussing its original values.",
+  "primary_class": "M",
+  "secondary_classes": [],
+  "lost_weight_by_class": {"M": 70, "R": 0, "L": 0, "I": 0, "S": 0, "H": 0, "G": 0},
+  "failed_items": [
+    {"rubric": "R0", "weight": 10, "lost": 10, "class": "M",
+     "why": "PDF section 2 treats 3.8 mm/s as a blanket contract cap and labels the 3.0/3.9 POR/AOR values as 'context'; it never states 3.8 is a customised limit sitting between POR 3.0 and AOR 3.9 or which limit governs in each region (only 'Contract 3.8/2.5 is slightly tighter than AOR'). Interpretation choice by the agent; the values were all in hand."},
+    {"rubric": "R1", "weight": 10, "lost": 10, "class": "M",
+     "why": "Category I and zones A/B/C were stated, but the alarm 5.0 / trip 8.3 mm/s values (present in the Europump table the agent retrieved at step 6) were omitted, and the CSV header's 'Group 2 - medium machines rigid foundation' 4.5 mm/s was not identified as superseded ISO 10816-3 (the 'superseded by part 7' text was also in the step-6 result)."},
+    {"rubric": "R2", "weight": 6, "lost": 6, "class": "M",
+     "why": "MDE_A 3.90->2.68 (-31.3%) was reported, but the report never says MDE_A 2.85 is the highest motor-end reading at 110% and never cites the staged MDE_A FFT (1X 2.65, 2X 1.12 mm/s, 'possible angular misalignment') to diagnose misalignment; it only says MDE axial 'warrants alignment/thrust monitoring'."},
+    {"rubric": "R3", "weight": 8, "lost": 8, "class": "M",
+     "why": "The agent computed 110% = 275 m3/h and BEP = 225 m3/h (PDF p1) but never derived 275/225 ~ 122% BEP or placed it outside the 70-120% BEP POR, and never stated that PDE_H 3.78 passes AOR 3.9 but fails POR 3.0; it used a 70-105% of rated envelope instead."},
+    {"rubric": "R4", "weight": 10, "lost": 10, "class": "M",
+     "why": "PDF section 6 sets alarm 3.0 / trip 3.8 mm/s from contract/POR values rather than the ISO 10816-7 Category I 5.0/8.3 limits (which it had) or a baseline multiplier, and omits the 82 C bearing-temperature alarm from the spec's Test Requirements sheet."},
+    {"rubric": "R5", "weight": 10, "lost": 10, "class": "M",
+     "why": "Run-up/coast-down got a single bullet (PDF p4: 'resonance near 1,950 rpm is below 2,960 rpm'); no 2.68/2.72 mm/s peaks, no run-up vs coast-down confirmation, no (2960-1950)/2960 = 34% margin and no phase-stability statement, although all of these were in vibration_test_data.csv Section 3 and 5, which the agent read at step 3."},
+    {"rubric": "R6", "weight": 8, "lost": 8, "class": "M",
+     "why": "Root cause and desiccant breather were captured, but the 6316 C3 bearing, ~7920 h failure, the pre-failure 1.45->1.48->1.52->1.68->2.35 trend (the agent fitted these exact points at step 13 but reported only the post-repair trend) and an oil-analysis recommendation are missing."},
+    {"rubric": "R7", "weight": 8, "lost": 8, "class": "M",
+     "why": "The report notes the 80% original readings have no retest counterpart (PDF p1) but does not discuss the original 80% values (max PDE_H 2.56 mm/s) or say the gap is low risk and should be recorded for completeness."}
+  ],
+  "subagent_notes": "No subagents were used (0 subagent sessions); the root agent did everything in 33 steps / 390 s.",
+  "confidence": "high"
+}

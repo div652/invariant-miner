@@ -1,0 +1,30 @@
+{
+  "task": "management_analysts/task3",
+  "score": "6/72",
+  "goal": "As a City of Greenfield management analyst, prepare the Council decision package on restructuring five departments (Proposal A consolidate vs Proposal B targeted fix): a 6-10 page decision memo with NYC benchmark comparison and a recommendation, a four-tab cost-benefit workbook (Baseline Metrics, Proposal A Model, Proposal B Model, Comparison Summary), and an 8-12 slide council presentation, all internally consistent and benchmarked against NYC MMR indicators and the NYS Comptroller staffing report.",
+  "delivered": "A decision memo .docx recommending Proposal B plus a Public Works shared-fleet pilot, a four-tab .xlsx (department scorecard with red flags, Proposal A merged filled/OT model, Proposal B triggers/pools, comparison scores), and a 12-slide .pptx. A subagent pulled live MMR data via the NYC Open Data API and figures from OSC Report 2-2025.",
+  "what_went_wrong": "Almost every item failed on omitted specifics that sat in the staged data the agent had loaded. It reported department-level summaries instead of the detailed views the rubric checks: only the five worst processes rather than all nine below 70% on-time, annual OT % rather than Fire's 13.0-15.8% monthly range or Sanitation's 6.8-14.4% seasonal swing, vacancy instead of the Turnover_Rate_Pct column (19.4-26.1% Health, 15.2-24.6% Transportation), and no authorized-position column on the Proposal A tab. It mapped DHS to Health Services only inside its scripts, never explicitly in the deliverables. The MMR benchmark item failed only because the agent's live-API values (e.g. DPR 30% vs 85%) differ from the rubric's snapshot values, which do not even appear in the reference sample file.",
+  "primary_class": "M",
+  "secondary_classes": ["G"],
+  "lost_weight_by_class": {"M": 56, "R": 0, "L": 0, "I": 0, "S": 0, "H": 0, "G": 10},
+  "failed_items": [
+    {"rubric": "R0", "weight": 8, "lost": 8, "class": "M",
+     "why": "The agent's scripts used {'DHS':'Health Services'} (session), but no deliverable states the five code mappings or explains that DHS means Health Services (not Homeland Security) using the Rodent Sighting/Food Safety categories; slides list NYC analogs as DOHMH instead."},
+    {"rubric": "R1", "weight": 8, "lost": 8, "class": "M",
+     "why": "Fire's $2,085,312 OT and 14.6% annual rate are reported, but the monthly 13.0-15.8% range (Monthly_Overtime sheet) is never shown, although the agent computed monthly flags for Sanitation and Transportation."},
+    {"rubric": "R2", "weight": 6, "lost": 6, "class": "M",
+     "why": "All 8 divisions above 12% vacancy are listed, but the memo never discusses that centralized hiring for credentialed clinical roles differs from hiring road-maintenance workers; credential remarks address cross-training only."},
+    {"rubric": "R3", "weight": 10, "lost": 10, "class": "G",
+     "why": "The deliverables benchmark DPR, DSNY, DOT, DOHMH and FDNY with specific MMR indicators fetched from the live rbed-zzin API (slide 4: DPR 30% vs 85%, DOT 66% vs 80%, FDNY 8:16 vs 6:55), satisfying the item's question; the failed criterion demands the rubric's snapshot values (5%, 54%, 67%, 4:33), most of which are absent even from the reference NYC_MMR_Selected_Agencies.csv sample (only an FY2026 FDNY 4.37 row exists)."},
+    {"rubric": "R5", "weight": 10, "lost": 10, "class": "M",
+     "why": "The memo and workbook name only the five department-worst SLAs (<65%); Transit Route Change, Sidewalk Repair, Bulk Pickup (58.1%) and Seasonal Hiring Onboarding (68.5%) are not enumerated, although Process_Metrics, which the agent loaded, lists all nine below 70%."},
+    {"rubric": "R6", "weight": 8, "lost": 8, "class": "M",
+     "why": "Workforce feasibility uses vacancy only; the Turnover_Rate_Pct column (Health 19.4-26.1%, Transportation 15.2-24.6%) in Staffing_Summary was loaded but never cited, so there is no turnover-instability argument for A, no attrition constraint on B's cross-training pools, and no retention strategy in the recommendation."},
+    {"rubric": "R7", "weight": 6, "lost": 6, "class": "M",
+     "why": "The Proposal A Model tab has correct filled (190/215/137) and OT ($979,350 / $1,289,856 / $2,085,312) figures but no authorized-positions column (212/242/142), though the task asked it to 'project merged-department headcount'."},
+    {"rubric": "R8", "weight": 10, "lost": 10, "class": "M",
+     "why": "The workbook says 'Sanitation exceeds 10% in Nov-Mar' but never gives the winter 12.7-14.4% vs summer 6.8-7.3% monthly rates, and Proposal A's Public Works merger is not linked to pooling winter surge capacity."}
+  ],
+  "subagent_notes": "Two subagents: one researched NYC benchmarks (live MMR API queries and OSC Report 2-2025) and its figures were used correctly (R4 passed); the other computed department-level metrics from the staffing and 311 files. The metrics subagent's department-level summary may have encouraged the aggregate-only framing behind R1, R5, R6 and R8, but the root agent also had the raw sheets.",
+  "confidence": "medium"
+}

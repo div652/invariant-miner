@@ -1,0 +1,28 @@
+{
+  "task": "computer_and_information_systems_managers/task2",
+  "score": "0/62",
+  "goal": "As IT Director, reconcile the Q4 ITSM incident log with the asset inventory, then build a risk-weighted migration plan for underutilized or aging on-prem assets. The plan uses the 2010 AWS EC2 cost calculator for TCO, sequences candidates around Zero Trust PRJ-2024-042 and accounts for remaining PRJ-2024-041 budget. Map high-reassignment categories to NIST CSF 2.0 gaps, then deliver gap_register.csv and Q4_Infrastructure_Rationalization.xlsx with Reconciliation, Migration_Plan, Gap_Register and Executive_Summary sheets.",
+  "delivered": "Q4_Infrastructure_Rationalization.xlsx with all four sheets: Reconciliation (676 CI rows), Migration_Plan (84 on-prem assets, 56 flagged candidates, 3-yr reserved EC2 TCO), Gap_Register (6 gaps, red conditional formatting for High gaps with a blank project) and Executive_Summary (6 prioritized recommendations with quarter and dollar impact). It also delivered gap_register.csv with the same 6 gaps.",
+  "what_went_wrong": "The judge saw a truncated workbook dump: only Reconciliation and the first rows of Migration_Plan. It therefore failed R3 and R4 for 'missing' Gap_Register and Executive_Summary sheets, which do exist and satisfy those items. Several real gaps remain. The candidate filter used <35% avg CPU/memory, age >=5y and >=10 incidents instead of the rubric's CPU<25% OR warranty expired with a median-5 Critical exception (R0). TCO uses only 3-year reserved prices, with no on-demand, 1-year or monthly cloud cost (R1). Security/DNS assets SRV-042 and SRV-044 are gated on cost rather than Zero Trust (R2). Actions are free text, not Migrate/Defer/Decommission (R5). GAP-004's $85,000 has no basis and no unallocated-budget analysis exists (R6).",
+  "primary_class": "M",
+  "secondary_classes": ["G", "I"],
+  "lost_weight_by_class": {"M": 38, "R": 0, "L": 0, "I": 10, "S": 0, "H": 0, "G": 14},
+  "failed_items": [
+    {"rubric": "R0", "weight": 10, "lost": 10, "class": "I",
+     "why": "The Migration_Plan header defines candidates as '<35% average CPU/memory, age >=5 years, expired warranty, or >=10 Q4 incidents', with Critical assets included at >=10 incidents. That yields 56 candidates, not 47-53, though SRV-017/051/054/009 are included and NET-002/NET-008/STR-002 excluded. The rubric's CPU<25% and fleet-median-5 thresholds appear nowhere in the prompt ('underutilized or aging', 'unless incident frequency justifies')."},
+    {"rubric": "R1", "weight": 10, "lost": 10, "class": "M",
+     "why": "The agent downloaded the 2010 calculator (step 10) but priced only the '3-year reserved Linux/Unix baseline'. It has no on-demand or 1-yr reserved tier and no monthly cloud cost column, only annual and 3-yr, and its sizing is odd (e.g. SRV-015 = Standard Large x35)."},
+    {"rubric": "R2", "weight": 8, "lost": 8, "class": "M",
+     "why": "The full Migration_Plan gates SRV-041 and NET-004 on PRJ-2024-042, but Security Operations SRV-042 and DNS/DHCP SRV-044 get 'Cost gate before PRJ-2024-041'. Zero Trust sequencing was keyed to Asset_Type control-plane, not Associated_Service, even though the subagent recommended deferring SRV-044 until PRJ-042. The $600K/segmentation rationale appears only in Executive_Summary rec 5, without status or timeline."},
+    {"rubric": "R3", "weight": 6, "lost": 6, "class": "G",
+     "why": "Executive_Summary exists and has 6 prioritized recommendations, each with evidence, a quarter (Q1 2025, Q1-Q2 2025, ...) and a dollar impact ($578,370 headroom, $289,908 avoided, $85,000 unbudgeted, $600,000 ZT). Together they cover migration, unbudgeted gaps, reassignment, Zero Trust and budget. The judge said 'No Executive Summary sheet exists' because its workbook dump was truncated."},
+    {"rubric": "R4", "weight": 8, "lost": 8, "class": "G",
+     "why": "openpyxl shows exactly four sheets (Reconciliation, Migration_Plan, Gap_Register, Executive_Summary). Gap_Register has a red CF rule AND($D5=\"High\",$E5=\"\") on A5:G10 that highlights unbudgeted GAP-004. The judge said 'The workbook dump only shows two sheets' and passed the other two sub-criteria."},
+    {"rubric": "R5", "weight": 10, "lost": 10, "class": "M",
+     "why": "Action_Recommendation is free text ('Do not migrate at benchmark price; refresh, decommission, or right-size first', 'Migrate in controlled production wave', 'Retain...'). No Defer or Decommission category is ever assigned. Critical inclusions are flagged 'Critical-HA/rollback required', not as a criticality override."},
+    {"rubric": "R6", "weight": 10, "lost": 10, "class": "M",
+     "why": "No sheet relates the $5.15M pending portfolio to the overall budget. GAP-004's Estimated_Cost 85000 is hard-coded in build_deliverables.py line 224 with no benchmark or rationale, and the other gaps carry cost 0."}
+  ],
+  "subagent_notes": "One 'Analyze source datasets' subagent profiled the CSV and xlsx inputs, found the NIST CSF 2.0 and AWS calculator URLs, and sent many findings: budget conflicts, ERP/SAP semantic link, and sequencing advice to defer SRV-044 AD/DNS until PRJ-042. It helped with reconciliation and budget framing, but the root did not apply its SRV-044 Zero Trust advice. Its '<40% CPU and memory + age>=5' framing likely pushed the filter away from the rubric's CPU<25% OR warranty rule.",
+  "confidence": "medium"
+}

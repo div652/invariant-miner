@@ -1,0 +1,30 @@
+{
+  "task": "financial_managers_branch_or_department/task1",
+  "score": "24/90",
+  "goal": "As Riverside Branch Financial Manager, (1) re-derive risk ratings for all 80 loans rated 3 or worse in the portfolio DB in a three-sheet reconciliation workbook (summary, migration matrix, material downgrades), (2) write a PDF credit memo scoring the competing CRE applications APP-2025-001/004 with the CDFI Fund risk-rating-system-for-re-sample.xls (from cdfifund.gov), stress-testing them and benchmarking against FDIC QBP Q4 2024 data, and (3) build a Loan Decision Matrix workbook for the six other applications using the right framework per loan type, with term sheets for approved loans.",
+  "delivered": "Riverside_Risk_Rating_Reconciliation.xlsx (Reconciliation Summary, Migration Matrix, Material Downgrades for 19 loans, plus an extra Methodology Notes sheet), Senior_Credit_Committee_Credit_Memo_CRE.pdf (scores via the local NESDCAP sheet, stress tests, FDIC PDNA benchmarks, concentration analysis), and a Loan Decision Matrix workbook with dedicated sheets for approved/conditional loans.",
+  "what_went_wrong": "The re-rating work passed (R0-R2), but the memo and decision matrix lost most points. The agent ran one web search for the CDFI CRE template, did not fetch it from cdfifund.gov, and wrongly declared the staged NESDCAP sheet to be 'the local copy' of it, so the CRE scoring (36/45/5/11/3 weights) was never done; it then used product-specific scorecards instead of NESDCAP for the three consumer loans. The memo cites real FDIC PDNA figures but never compares the branch's 2.8% delinquency (quarterly_branch_metrics) to national rates. Several rationales dropped facts a subagent had already reported (APP-002 revenue -8% and 12% AR >60 days; APP-005 $87.5k net exposure and positive factors). Material-downgrade next steps were copy-pasted across all 19 loans, and Deliverable 1 had a fourth sheet.",
+  "primary_class": "M",
+  "secondary_classes": ["L", "R"],
+  "lost_weight_by_class": {"M": 44, "R": 10, "L": 12, "I": 0, "S": 0, "H": 0, "G": 0},
+  "failed_items": [
+    {"rubric": "R3", "weight": 10, "lost": 10, "class": "M",
+     "why": "All 19 Material Downgrades write-ups reuse the same 'Escalate to Loan Review... Confirm updated financials, repayment source, collateral valuation...' text, including for unsecured nonaccrual PCB-RB-50010 (6->8), instead of loan-specific actions (appraisal, workout, Special Assets)."},
+    {"rubric": "R4", "weight": 10, "lost": 10, "class": "R",
+     "why": "The agent made one web_search for risk-rating-system-for-re-sample.xls (step 13), never fetched it from cdfifund.gov, and the memo states 'The supplied loan-risk-rating-sheet-nesdcap.xls is the local copy of the CDFI-style risk-rating template', so neither CRE application was scored on the weighted CRE matrix and no lease/tenant assumptions were made."},
+    {"rubric": "R5", "weight": 10, "lost": 10, "class": "M",
+     "why": "The memo cites real FDIC Loan Performance figures (nonfarm nonresidential CRE PDNA 1.65%, total 1.60%) rather than the rubric's total-RE 1.21%/0.51% or C&D 0.76%/0.42% (these were in subagent 3's raw output but not relayed). More decisively, it never compares the branch's 2.8% 30+ day delinquency from quarterly_branch_metrics to national rates or uses that gap in the CRE decision."},
+    {"rubric": "R6", "weight": 10, "lost": 10, "class": "M",
+     "why": "For APP-003/006/007 the Decision Matrix uses 'product-specific scorecards' (AUS/policy limits) rather than the staged NESDCAP sheet's four objective factors and 0-5/6-9/10-13/14-18/19+ band mapping; the agent instead applied NESDCAP to the CRE memo."},
+    {"rubric": "R7", "weight": 8, "lost": 8, "class": "M",
+     "why": "APP-003 was declined/conditioned with FICO, DTI, utilization and late payment cited, but the 5-month 2022 employment gap and only 2 years at the current employer from the applicant notes in pending_loan_applications.csv were omitted."},
+    {"rubric": "R8", "weight": 6, "lost": 6, "class": "L",
+     "why": "Subagent 2 reported to the root 'Revenue down 8% after lost contract... AR >60d 12%' and called them material, but the Decision Matrix and APP-2025-002 sheet only cite the 85% collateral shortfall."},
+    {"rubric": "R9", "weight": 6, "lost": 6, "class": "L",
+     "why": "Subagent 2's result listed the startup status, 'net bank exposure $87.5k', 3-year assistant-manager experience, veteran status, spouse $82k income, $185k assets and franchisor training, but the APP-2025-005 rationale and term sheet mention only DSCR, startup risk and the $262,500 guaranteed portion."},
+    {"rubric": "R10", "weight": 6, "lost": 6, "class": "M",
+     "why": "The instructions specified the reconciliation workbook's three sheets; the agent added a fourth 'Methodology Notes' sheet, failing the 'exactly three sheets' criterion (a strict but literal reading of the instruction)."}
+  ],
+  "subagent_notes": "Three subagents: (1) DB inspection of the 80 rated loans, (2) summary of the six applications and the PDF framework, (3) FDIC research, which worked around web_fetch's xlsx limitation by downloading the real QBP XLSX files with urllib. They supplied accurate data, but the root agent dropped key subagent-reported facts from the decision matrix (R8, R9) and did not relay the total-RE/C&D delinquency rows (R5). No subagent was asked to fetch the CDFI CRE template, which caused the R4 loss.",
+  "confidence": "medium"
+}

@@ -1,0 +1,22 @@
+{
+  "task": "computer_user_support_specialists/task1",
+  "score": "28/56",
+  "goal": "As IT support lead for a multi-week AcmeCorp VPN outage, reconcile a 30-session gateway diagnostic log, the acmecorp_it_inventory.db SQLite database and a helpdesk CSV, using Cisco Secure Client troubleshooting docs. Deliver a reconciliation report (docx), two CAB change requests (CSV template) and an executive dashboard SQLite DB with root-cause summary, daily failure and client-version tables.",
+  "delivered": "vpn_incident_reconciliation_report.docx (method, 5 error patterns, session-to-ticket mapping with duplicates and unreported sessions, client-version findings, cert vs handshake, split-tunnel/DNS), cab_change_requests.csv (RADIUS and DNS CRs with session, ticket and DB incident IDs) and vpn_executive_dashboard.db (root_cause_summary, daily_failure_breakdown, client_version_correlation, error_pattern_summary, dashboard_metadata).",
+  "what_went_wrong": "Because gateway hostnames (laptop-LT044) did not match inventory hostnames (acme-lt0044), the agent declared '0/30 exact joins'. It then left root_cause_summary departments as 'Unspecified in source', although vpn_incidents.device_id joins devices.department for all 120 incidents (R1, 10). The report never mentions the acme.co vs acmecorp.com email-domain mismatch (R4, 6). It never explicitly ties the 2.3 Mbps DTLS/TLS-only throughput to the Engineering CI/CD complaint (R6, 6). It cited ssl_cert_expiry=2024-11-01 but not config_id 12's 'CRITICAL: VPN gateway cert expired!' note or the log's 'expired 14 days ago. Needs renewal' message (R7, 6). All of these were in data the agent queried.",
+  "primary_class": "M",
+  "secondary_classes": [],
+  "lost_weight_by_class": {"M": 28, "R": 0, "L": 0, "I": 0, "S": 0, "H": 0, "G": 0},
+  "failed_items": [
+    {"rubric": "R1", "weight": 10, "lost": 10, "class": "M",
+     "why": "The agent queried both devices (department column) and vpn_incidents (device_id) and mapped DB incident IDs to root-cause families, but it treated the gateway-to-inventory hostname mismatch as blocking any department attribution. The departments field reads 'Unspecified in source; ...', while a vpn_incidents-devices join on device_id matches 120/120 rows."},
+    {"rubric": "R4", "weight": 6, "lost": 6, "class": "M",
+     "why": "The mapping, unreported sessions and duplicates all passed, but the limitations discussion covers only hostname mismatches. The helpdesk requesterEmail values are @acme.co while inventory and CAB use @acmecorp.com, and the report never flags this."},
+    {"rubric": "R6", "weight": 6, "lost": 6, "class": "M",
+     "why": "The 2.3 Mbps, UDP 443 blocked and TLS-only fallback findings are present, but CI/CD appears only in a catch-all business-exposure row, and the DTLS departments field says just 'Engineering explicitly reported'. There is no causal statement linking DTLS fallback to the escalation email's CI/CD pipeline failures."},
+    {"rubric": "R7", "weight": 6, "lost": 6, "class": "M",
+     "why": "Report section 2 cites 'ssl_cert_expiry=2024-11-01 (last updated 2024-01-15)' but not config_id 12 or its 'CRITICAL: VPN gateway cert expired!' note. It uses CERT_HAS_EXPIRED/0x800B0101 instead of the log's 'Server cert issued by AcmeCorp-CA, expired 14 days ago. Needs renewal.' (3 occurrences in vpn_diagnostic_log.txt) and never frames the issue as a certificate-lifecycle failure."}
+  ],
+  "subagent_notes": "",
+  "confidence": "high"
+}

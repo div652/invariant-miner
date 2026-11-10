@@ -1,0 +1,24 @@
+{
+  "task": "social_science_research_assistants/task2",
+  "score": "28/68",
+  "goal": "Clean a 30-country climate-opinion survey, merge in OWID CO2/energy indicators (downloaded from GitHub) and UNDP HDR23-24 HDI components, build a 2x2 emissions-by-development typology on sample medians, run two OLS models (Model 2 adds HDI x extreme-weather and CO2 x consumption-CO2 interactions) and interpret them. Deliver Climate_Attitudes_Analysis.xlsx (Clean_Data, Data_Cleaning_Log, Merged_Data, Country_Indicators, Typology_Summary, Descriptive_Stats, Regression_Results) and a strictly numeric country_indicators_for_gis.csv.",
+  "delivered": "Climate_Attitudes_Analysis.xlsx with 9 sheets: all 7 requested plus OWID_Codebook and Sources_Methods. It includes 500 cleaned rows, medians CO2 3.7395 / HDI 0.7955, a climate_worry 1-5 distribution, quadrant means and an extreme-weather crosstab, a side-by-side HC3 OLS table with R2, adjusted R2, AIC, BIC and a nested F test, and an interpretation. Also a 30-row numeric country_indicators_for_gis.csv.",
+  "what_went_wrong": "The workbook's text extract is 272,804 chars, but judge.py cuts each file at MAX_CHARS_PER_FILE=200,000. The judge therefore saw only Clean_Data, Data_Cleaning_Log and Merged_Data (500 rows x 33 cols) and failed R3-R7 as 'sheet not present'. R4 and R5 are fully satisfied in Descriptive_Stats, so they are grading losses. The rest would likely still fail on content. Typology_Summary has only quadrant-level aggregates: no per-country assignment, and the medians are only in Sources_Methods. Model 1 codes education as categorical dummies rather than ordinal and adds many extra country covariates. The interpretation hedges ('Model 2 is preferred on fit only if...') and never explains what the HDI x weather interaction means.",
+  "primary_class": "M",
+  "secondary_classes": ["G"],
+  "lost_weight_by_class": {"M": 24, "R": 0, "L": 0, "I": 0, "S": 0, "H": 0, "G": 16},
+  "failed_items": [
+    {"rubric": "R3", "weight": 8, "lost": 8, "class": "M",
+     "why": "The judge never saw Typology_Summary because of truncation. Even so, the sheet holds only 4 aggregate rows (n_countries, mean CO2/HDI/worry), with no per-country quadrant, CO2 or HDI values. The two medians appear only in Sources_Methods and the chat message, and Country_Indicators has no typology column. The classification itself is correct (13/2/2/13)."},
+    {"rubric": "R4", "weight": 8, "lost": 8, "class": "G",
+     "why": "Descriptive_Stats has climate_worry 1-5 counts 22/61/127/166/117 (n=493 valid of 500 cleaned) with percentages summing to 100. The judge said the sheet was absent because judge.py truncated the 272.8K-char workbook extract at 200K chars."},
+    {"rubric": "R5", "weight": 8, "lost": 8, "class": "G",
+     "why": "Descriptive_Stats has mean climate_worry for all 4 quadrants (3.42/3.52/3.70/3.78) and an extreme_weather Yes/No crosstab by quadrant with counts, row percentages summing to 100, and denominators. The judge missed it because of the 200K-char truncation."},
+    {"rubric": "R6", "weight": 8, "lost": 8, "class": "M",
+     "why": "Truncation hid Regression_Results. The content does have side-by-side coefficients, SE, p, R2, adjusted R2, AIC, BIC and both interactions. However, Model 1 enters education_level as categorical dummies (C(education_level)[T.*]) rather than ordinal and adds energy, log population, log GDP, HDI sub-components and GNI, so the specification criterion would still fail."},
+    {"rubric": "R7", "weight": 8, "lost": 8, "class": "M",
+     "why": "Truncation also hid the interpretation. It reports R2 0.052->0.070, AIC 1478->1473 and nested F p=0.014 and lists HDI x weather as significant. But it never concludes which model fits better ('preferred on fit only if...'), ignores the BIC increase (1561.8->1565.2), and gives no substantive reading of the negative HDI x weather interaction. Borderline: a lenient judge might pass it."}
+  ],
+  "subagent_notes": "",
+  "confidence": "medium"
+}

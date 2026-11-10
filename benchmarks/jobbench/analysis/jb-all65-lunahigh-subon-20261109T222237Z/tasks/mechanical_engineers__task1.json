@@ -1,0 +1,30 @@
+{
+  "task": "mechanical_engineers/task1",
+  "score": "6/66",
+  "goal": "As a pressure-vessel engineer, reconcile the V-101 amine contactor spec with Rev-1 (F&D bottom head, 144 in shell, new N5 nozzle, hydrotest basis) and produce an ASME VIII-1 2019 calculation package. It covers shell/head thickness, external-pressure checks with ring-vs-thickness economics (pveng.com worked examples), N1/M1/N5 reinforcement including Appendix 1-7 for M1, and sour-service material checks (HIC, UCS-66 impact, PWHT) using the Macsteel A516 datasheet. Deliverables are thickness_calculations.csv, design_audit.json and design_summary_report.txt.",
+  "delivered": "All three files. The CSV covers shell 0.625 in, top SE head 0.5 in and bottom F&D 0.75 in with MAWPs. The JSON holds the reconciliation, the hydrotest discrepancy (1.3 x MAWP = 458 psig vs 371), external-pressure screening values (shell about 16.9 psi, head about 38 psi), N1/M1/N5 area-replacement results with M1 appendix_1_7_required=true, and material findings. The report is a 16 KB text file with a Sample-5-style summary table, BOM and conclusions.",
+  "what_went_wrong": "The run was short (269 s, 28 steps, no subagents) and left most of the required code procedures shallow or deferred. It fetched only the pveng.com HTML page, which points to 'companion calculations starting on page 9', and never opened the worked-examples PDF. So external pressure was 'chart-screened' by extrapolating the PVEng 48x96 example, with no Do/t, Factor A/B, Ro or Aa/Ba, and the ring-vs-plate economics stayed qualitative (R1-R3, 18). It flagged M1 for Appendix 1-7 but deferred the actual 1-7 stress and moment-of-inertia checks (R4, 10). It used the full-head tr instead of the 0.9D crown-radius tr for N5 (R5, 10). It judged impact adequacy by comparing -46 C to MDMT with no UCS-66 Curve D exemption check (R7, 10), and omitted SSC/SOHIC (R6, 6). The bottom-head miss (R0) comes only from including a 6.2 psi liquid static head (SG 1.04 is in the CSV), which is defensible under UG-22.",
+  "primary_class": "M",
+  "secondary_classes": ["R", "S", "G"],
+  "lost_weight_by_class": {"M": 26, "R": 18, "L": 0, "I": 0, "S": 10, "H": 0, "G": 6},
+  "failed_items": [
+    {"rubric": "R0", "weight": 6, "lost": 6, "class": "G",
+     "why": "The report uses L=48, r=2.88, M=1.7706 correctly and gets 't_pressure = 291.2 x 48 x 1.7706 / (40,000 - 0.2 x 291.2) = 0.6196 in'. The only difference from the rubric's 0.606 is P = 285 + 6.2 psi static head (h about 13.8 ft x 0.433 x SG 1.04 from the CSV), a UG-22 load the judge's 0.60-0.61 band ignores."},
+    {"rubric": "R1", "weight": 6, "lost": 6, "class": "R",
+     "why": "The agent fetched only https://www.pveng.com/home/asme-code-design/external-pressure-methods/ (step 13), which refers to 'companion calculations starting on page 9', and never retrieved the External_Pressure_Calculations PDF with the step-by-step UG-28 examples. Step-13 thinking shows it estimated t_ext by scaling the '48x96 t=.225' example, so the report gives a screening Pa of about 16.9 psi without Do/t, Factor A/B or Pa=4B/(3Do/t). Its L_eff of 151.1 in (head depth/3 added) is itself code-correct; the missing step-by-step procedure is also a model rigor gap."},
+    {"rubric": "R2", "weight": 6, "lost": 6, "class": "R",
+     "why": "Same missing worked-example source. The bottom head gets a 'UG-33 spherical-equivalent screening' of about 38 psi with no Ro = L + t, Aa = 0.125/(Ro/t), Ba or Pa = Ba/(Ro/t) anywhere in the outputs."},
+    {"rubric": "R3", "weight": 6, "lost": 6, "class": "R",
+     "why": "The ring-vs-thickness economics the instructions asked for come from the PDF's pages 9-12, which the agent never fetched. It cites only the HTML page's '0.25 x 2.5 in bar' remark and concludes 'the 0.625-in shell is the simpler and more robust selection' with no 144-in plate weight vs ring weight/cost comparison and no midspan-ring halving of L. Shallow reasoning (M) contributed."},
+    {"rubric": "R4", "weight": 10, "lost": 10, "class": "S",
+     "why": "M1 is flagged via '2Rn = 23.25 in is greater than 20 in, so Appendix 1-7 is required', a valid UG-36(b)(1) size-limit route. The report then says 'Complete the Appendix 1-7 force/stress calculation... before release', so no Sm, Sm+Sb or moment-of-inertia check was done even though staged Sample 5 (read via pdftotext at step 8) demonstrates the method."},
+    {"rubric": "R5", "weight": 10, "lost": 10, "class": "M",
+     "why": "N5 A_required = 2.697 in2 = 7.875 x 0.3425, using the full 2:1 head thickness (D=48, K=1) instead of the UG-37 tr for a sphere of radius K1*D = 0.9 x 48 = 43.2 in. No adjusted local tr is shown, so this is a code-method error."},
+    {"rubric": "R6", "weight": 6, "lost": 6, "class": "M",
+     "why": "HIC was correctly made mandatory (S7/NACE TM0284) despite ASTM's supplementary status, but NACE MR0175 appears only as 'controls: low-hydrogen welding, controlled hardness'. The required resistance to HIC, SSC and SOHIC is never stated."},
+    {"rubric": "R7", "weight": 10, "lost": 10, "class": "M",
+     "why": "Impact adequacy rests only on '20 J at -46 C covers MDMT because -46 C is colder than -20 F'. SA-516-70N is never assigned to UCS-66 Curve D and no exemption temperature is computed for the governing thickness; section 8 leaves 'the final UCS-66/UG-20 review' as a caveat, which is the wrong or incomplete code method."}
+  ],
+  "subagent_notes": "",
+  "confidence": "medium"
+}

@@ -1,0 +1,26 @@
+{
+  "task": "bookkeeping_accounting_and_auditing_clerks/task2",
+  "score": "12/52",
+  "goal": "Close December 2024 books for Greenfield Landscaping: three-way match the Chase statement, cash book and vendor invoices, roll AP forward from the Nov 30 aging, post adjusting entries, and map corrected expenses to 2024 Schedule C lines with budget variances. Deliver December_2024_Month_End_Close.xlsx (five named sheets) and December_2024_Variance_Memo.txt.",
+  "delivered": "Both files in output/. The workbook has Reconciliation (both sides tie to a 'true cash' of $32,289.70), Discrepancies (D-001 to D-120), AP Reconciliation, Journal Entries (bank-only postings, fees, interest, the Ace/Elite accruals) and a Schedule C Summary with correct line numbers; the memo summarises the dollar totals and the Acme dispute.",
+  "what_went_wrong": "The agent matched cash-book and bank lines by payee/amount and ignored the check-number column that both sources carry (cash book 'Check #', bank 'Check or Slip #' for 1086-1089). So checks #1086-#1089 were never paired: Al's Auto $1,287.50 and Google $350 stayed as 'provisional outstanding' book payments, while Mike's Auto $485 and Premier $1,250 were posted as new bank-only debits. As a result it missed the $802.50 #1086 correction and its JE, the #1087 three-way conflict and the #1088/#1089 mismatches, and it misclassified outstanding checks (e.g., State Farm treated as cleared). The memo also gives no count of reconciling items.",
+  "primary_class": "M",
+  "secondary_classes": [],
+  "lost_weight_by_class": {"M": 40, "R": 0, "L": 0, "I": 0, "S": 0, "H": 0, "G": 0},
+  "failed_items": [
+    {"rubric": "R0", "weight": 6, "lost": 6, "class": "M",
+     "why": "Bank checks #1086-#1089 were labelled 'Bank statement only' (D-023, D-028, D-048) or force-matched to a different book item (D-007 maps the $780 #1089 debit to the $87.32 City Water line), and State Farm/SiteOne/Duke/Staples were treated as cleared instead of outstanding; check numbers were available in both files."},
+    {"rubric": "R1", "weight": 6, "lost": 6, "class": "M",
+     "why": "The $1,520 invoice and $1,250 #1087 bank payment are noted (D-114), but the cash-book line 'check 1087, Google LLC, $350, Advertising' is left as a provisional outstanding payment (D-092) instead of being flagged as the same check with wrong payee, amount and category."},
+    {"rubric": "R2", "weight": 6, "lost": 6, "class": "M",
+     "why": "Cash book 1086 Al's Auto $1,287.50 (D-090) and bank 1086 Mike's Auto $485 (D-023) were treated as two unrelated items, so the wrong payee/amount/date and the $802.50 book error were never identified."},
+    {"rubric": "R5", "weight": 10, "lost": 10, "class": "M",
+     "why": "JEs are balanced and use chart-of-accounts names, and the fee, interest and accrual entries are present, but the required Dr Cash / Cr Repairs & Maintenance $802.50 #1086 correction is missing (JE-B18 instead posts Mike's $485 as a new expense)."},
+    {"rubric": "R6", "weight": 6, "lost": 6, "class": "M",
+     "why": "The agent recognised the divergent book-only and bank-only populations but never treated #1086-#1089 as appearing in both with different payees/amounts; #1088 and #1089 are never mentioned anywhere."},
+    {"rubric": "R7", "weight": 6, "lost": 6, "class": "M",
+     "why": "The memo states the $32,289.70 true balance and the bank-side vs book-side categories by dollar total, but never states how many reconciling items there are, although the Discrepancies sheet enumerates them (D-001 to D-120)."}
+  ],
+  "subagent_notes": "",
+  "confidence": "high"
+}

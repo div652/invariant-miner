@@ -1,0 +1,28 @@
+{
+  "task": "computer_and_information_research_scientists/task1",
+  "score": "12/66",
+  "goal": "As technical review lead, reconcile a $12.5M GPU cluster proposal with a revised provost memo ($10.8M, $4.2M/$3.6M/$3.0M caps, 380 kW, 280 kW summer cooling, 340 sq ft, Year-2 net-zero) and updated vendor quotes, then design an Option D. Deliver revised_feasibility_report.docx, a 4-sheet resource_allocation.xlsx (Project Schedule, Migration Plan, Utilization Forecast, Cost Comparison), workload_impact.sql (delay risk, shortfall, urgency ranking) and executive_memo.md with Epoch AI peer benchmarking.",
+  "delivered": "All four files. Option D is 48 H100 + 24 A100 with a modeled TCO of about $6.2M, a $324K contingency and a 276 kW draw. The workbook has a 36-month priority-share schedule with a 20% Month-13 reservation, the SQL script has delay-risk, shortfall and urgency queries, and the memo benchmarks against five Epoch AI public systems.",
+  "what_went_wrong": "Nearly every loss is a reasoning or interpretation miss on data the agent had read in full. It called the proposal's 1,979 TFLOPS 'sparsity-boosted' instead of noting that ml_hardware.csv lists 1,979 as the H100 INT8 figure (R0). It used the db's current_resources fleet and June-2025 figures instead of the proposal's Cedar 24-V100 / 8-A100 description (R3). Its SQL flagged 'start_date before delayed readiness' rather than end_date deadline misses and had no zero-division guard (R4, R5). It ignored preferred_time_slot (R2) and gave the A100 card's 6-week lead time instead of the 4-week A100 node it actually priced (R7). It assessed Options A-C with budget_constraints.csv average draws (280/350/310 kW) instead of the proposal's facility draws (350/380/365 kW), with no per-option floor-space or throttling estimate (R8).",
+  "primary_class": "M",
+  "secondary_classes": [],
+  "lost_weight_by_class": {"M": 54, "R": 0, "L": 0, "I": 0, "S": 0, "H": 0, "G": 0},
+  "failed_items": [
+    {"rubric": "R0", "weight": 10, "lost": 10, "class": "M",
+     "why": "ml_hardware.csv's H100 SXM5 row (notes 'Listed performance figures are without sparsity') has Tensor-FP16 989.4T and INT8 1979T, but the report says it 'resolves the original proposal/budget use of sparsity-boosted figures (1,979/780 TFLOPS)'. It never mentions INT8, the 624 TFLOPS A100 sparsity figure, or that the proposal's 126.7/83.3 PFLOPS peaks were overstated."},
+    {"rubric": "R2", "weight": 8, "lost": 8, "class": "M",
+     "why": "The agent queried scheduling_constraints (root step with tables workload_specs/scheduling_constraints/...), but the Project Schedule notes are uniformly 'Priority-weighted share' and preferred_time_slot (anytime/business_hours/night_weekend/off_peak) never appears in any output."},
+    {"rubric": "R3", "weight": 10, "lost": 10, "class": "M",
+     "why": "The proposal (read in full at step ~429) describes Cedar with 24 V100s, 72 h average and >168 h peak waits, and an 8x A100 40GB departmental cluster. The Migration Plan instead uses the db's '64 GPUs nominal' fleet with no reconciliation. It cites the June-2025 values (98.5%, 168.4 h) where the rubric wanted May-2025 Legacy A 97.8%/112.5 h. That part is a defensible latest-month choice, but the Cedar omission is a real miss."},
+    {"rubric": "R4", "weight": 8, "lost": 8, "class": "M",
+     "why": "Query 1's at_risk is 'date(d.start_date) < delayed ready date OR monthly demand > current capacity'. end_date is selected but never compared against the shifted deployment, and remaining time is never checked against required GPU-hours, so the deadline-miss logic is wrong."},
+    {"rubric": "R5", "weight": 6, "lost": 6, "class": "M",
+     "why": "The urgency formula and ordering were correct, but the query uses 1.0/deadline_flexibility_days with no NULLIF/CASE guard. The judge failed the item on the zero-division sub-check."},
+    {"rubric": "R7", "weight": 6, "lost": 6, "class": "M",
+     "why": "The memo timeline has H100 18, NDR 14 and DLC 12 weeks right, but says 'A100 six weeks'. Option D is costed with bundled Supermicro A100 nodes (AS-4125GS-TNRT, 4 weeks), so the system lead time should have been 4 weeks."},
+    {"rubric": "R8", "weight": 6, "lost": 6, "class": "M",
+     "why": "The Cost Comparison uses budget_constraints.csv 'Average sustained draw' of 280/350/310 kW and never reconciles it with the proposal's comparison table (~350/~380/~365 kW). It labels B and C INFEASIBLE rather than quantifying summer throttling, and it never assesses the 340 sq ft room per option."}
+  ],
+  "subagent_notes": "One subagent researched the Epoch AI gpu_clusters dataset. It worked: R6 passed with five public comparators from the processed CSV. It had no bearing on the failed items, which all stem from the root agent's own analysis.",
+  "confidence": "high"
+}

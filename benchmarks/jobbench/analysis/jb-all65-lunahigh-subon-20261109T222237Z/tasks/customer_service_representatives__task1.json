@@ -1,0 +1,32 @@
+{
+  "task": "customer_service_representatives/task1",
+  "score": "6/76",
+  "goal": "As a CSR at Lake Erie Electric Cooperative, independently investigate six January 2025 polar-vortex billing disputes, checking the supervisor's preliminary notes against billing, weather, EIA and PA PUC data. Deliver a four-sheet investigation workbook (cross-source validation, kWh/HDD weather correlation with EIA benchmarks, PUC compliance with business days, resolution matrix), six individualized response letters (.docx) with quantified weather data and PUC disclosures, and a supervisor briefing PDF (prioritized matrix, divergences from the notes, systemic issues, policy recommendations).",
+  "delivered": "Dispute_Investigation_Workbook.xlsx with the four requested sheets (HDD ratios, EIA $145.17 / 17.77 cents benchmarks found via web search, NETWORKDAYS deadlines, dispositions), Customer_Response_Letters.docx with six templated letters, and a 2-page January2025_Dispute_Briefing.pdf with a 6-row action matrix, per-dispute divergence notes, systemic issues and three policy recommendations.",
+  "what_went_wrong": "The agent read every staged file in full (steps 4-8, 11) and found the EIA benchmarks, but its analysis stayed generic and missed the specific checks the task designers planted. It copied the supervisor's '$289' December figure for DSP-4002 into the workbook without flagging it as wrong vs $302.29, and never addressed the unsupported 'heating type mismatch' flag for DSP-4001. The letters gave HDD totals but not the 8 sub-zero days or the departure from normal (both in the weather CSV), stopped the PUC escalation path at the informal complaint although the guide's Step 3 (formal complaint, hearing before a PUC judge) was read, and Nguyen's letter did not frame true-up spreading as her PUC right. It also did not break down Foster's $336.27 into energy/delivery/tax, used only an Oct-Dec baseline for Nguyen, ranked DSP-4001 last despite its Feb 24 deadline, and did not flag senior-discount application or a Budget Billing failure as systemic issues.",
+  "primary_class": "M",
+  "secondary_classes": [],
+  "lost_weight_by_class": {"M": 70, "R": 0, "L": 0, "I": 0, "S": 0, "H": 0, "G": 0},
+  "failed_items": [
+    {"rubric": "R0", "weight": 6, "lost": 6, "class": "M",
+     "why": "Workbook Cross-Source Validation quotes the supervisor note 'her Dec bill was already elevated at $289' next to 'Dec alone 1,723 kWh / $302.29' but never flags the mismatch, although the task warned the notes may be factually unsupported."},
+    {"rubric": "R1", "weight": 6, "lost": 6, "class": "M",
+     "why": "The analysis compared Nguyen's 2,364 kWh only to an Oct-Dec baseline (3,275 kWh / HDD ratio) and never to her ~997 kWh/month 2024 average, which was computable from the Billing History sheet the agent loaded at step 4."},
+    {"rubric": "R2", "weight": 10, "lost": 10, "class": "M",
+     "why": "The letter and briefing say Foster's rate stayed at 10.98 cents but never decompose the $336.27 bill (211.69 energy + 100.42 delivery + 24.16 tax in the Billing History columns) to show the discount was applied and explain the ~17.4 cents effective rate."},
+    {"rubric": "R3", "weight": 10, "lost": 10, "class": "M",
+     "why": "All six letters cite 1,517 HDD and the Jan 7-11 warning but not the 8 days with lows below 0 F or the ~11 F departure from normal, both directly derivable from Erie_PA_Weather_Oct2024_Jan2025.csv (Low_Temp_F and Departure_From_Normal_F columns) that the agent read at step 4."},
+    {"rubric": "R4", "weight": 10, "lost": 10, "class": "M",
+     "why": "The templated consumer-rights paragraph covers the utility response and informal BCS complaint only; Step 3 'Filing a Formal Complaint ... a PUC judge will listen to both sides' is in PA_Utility_Consumer_Rights.pdf, which the agent read in full at steps 6-8, but was left out of every letter."},
+    {"rubric": "R5", "weight": 10, "lost": 10, "class": "M",
+     "why": "Nguyen's letter says 'A valid true-up should be offered over time rather than demanded as a lump sum' but does not tell her she has a right under PUC rules to ask for this (guide p.8 budget billing text the agent had read); borderline strict grading but the right was not stated."},
+    {"rubric": "R6", "weight": 6, "lost": 6, "class": "M",
+     "why": "The briefing matrix used a composite urgency order 4004, 4002, 4006, 4005, 4003, 4001, putting DSP-4001 (Feb 24) after Feb 25 and Feb 27 deadlines; the rubric expected deadline proximity as an explicit ranking dimension. A defensible judgement, but no deadline-order ranking was shown."},
+    {"rubric": "R7", "weight": 6, "lost": 6, "class": "M",
+     "why": "The systemic-issues section lists communication and control-data gaps but does not flag senior-discount application across both seniors (it concluded 'no confirmed tariff-rate error') or that Budget Billing failed to shield DSP-4003; it treated Nguyen as an open true-up audit."},
+    {"rubric": "R8", "weight": 6, "lost": 6, "class": "M",
+     "why": "The briefing's divergence section uses $302.29 but never says the supervisor's $289 was wrong, and for DSP-4001 never notes that the 'Heating type mismatch' flag is unsupported because the claim and account both say Natural Gas Furnace (the workbook only says 'Gas heat is confirmed')."}
+  ],
+  "subagent_notes": "No subagents were used (0 subagent sessions); the root agent finished in 28 steps / 313 s with a single build script.",
+  "confidence": "high"
+}

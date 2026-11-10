@@ -1,0 +1,28 @@
+{
+  "task": "technical_writers/task3",
+  "score": "32/84",
+  "goal": "Reconcile TaskFlow's ad-hoc Markdown API docs with an OpenAPI v2 extract, a webhook delivery log and a doc audit tracker, and deliver a discrepancy CSV, a 1500+ word API style guide, rewritten v2 Markdown docs, an HTML webhook event catalog and a v1-to-v2 migration guide.",
+  "delivered": "Five files in output/: taskflow_v2_discrepancy_report.csv (D001-D04x rows with columns id, scope, endpoint, method, aspect, current_markdown, openapi_spec, audit_tracker_signal, decision_or_resolution), taskflow_api_documentation_style_guide.md, taskflow_api_v2.md, taskflow_webhook_event_catalog.html and taskflow_v1_to_v2_migration.md.",
+  "what_went_wrong": "Every expected discrepancy (per_page 25/200 vs 20/100, status 'blocked', priority 'urgent', title max 200 vs 255, role 'viewer') was found and resolved in favour of the spec. Four items still failed only because the CSV has no 'discrepancy_type' column with labels like enum_mismatch/value_mismatch, which the prompt and inputs never mention (32 points). The rest were judgement misses. The style guide picked ISO 8601 without justifying it and named the Unix-timestamp fields only vaguely. Its glossary did not list callback URL/destination as rejected terms or name rejected forms for most conflicts. The v2 docs deliberately kept the data/meta, projects and user envelopes 'exactly as observed' without acknowledging that they are inconsistent.",
+  "primary_class": "I",
+  "secondary_classes": ["M"],
+  "lost_weight_by_class": {"M": 20, "R": 0, "L": 0, "I": 32, "S": 0, "H": 0, "G": 0},
+  "failed_items": [
+    {"rubric": "R0", "weight": 8, "lost": 8, "class": "I",
+     "why": "D003 records per_page default 25/max 200 vs 20/100 and favours the spec; the only failed criterion is a missing discrepancy_type of 'default_mismatch'/'value_mismatch', a column and vocabulary that neither TASK_INSTRUCTIONS.txt nor any staged file defines (grep finds none)."},
+    {"rubric": "R1", "weight": 10, "lost": 10, "class": "I",
+     "why": "D002 (status adds blocked) and D008 (priority adds urgent) are present and correct; the item fails only because they are labelled aspect='status enum'/'priority enum' rather than discrepancy_type='enum_mismatch', an unstated schema."},
+    {"rubric": "R2", "weight": 8, "lost": 8, "class": "I",
+     "why": "D007 captures title max 200 vs 255 and prefers 200; it fails only on the unstated 'value_mismatch' discrepancy_type label."},
+    {"rubric": "R3", "weight": 6, "lost": 6, "class": "M",
+     "why": "Style guide section 3 says 'Use ISO 8601 UTC timestamps' with no rationale and only notes 'some legacy examples use Unix timestamps for project created or user last_login', without contrasting tasks/ISO vs projects/Unix or users/me created_at vs last_login, although the current docs (lines 202-211, 238, 268) show both."},
+    {"rubric": "R4", "weight": 8, "lost": 8, "class": "M",
+     "why": "The audit tracker lists 'callback URL'/'webhook URL'/'destination' for POST /webhooks, but the guide only says 'Call it a webhook URL' and keeps task ID/taskId/task_id and user/assignee as context rules without naming a rejected term."},
+    {"rubric": "R5", "weight": 6, "lost": 6, "class": "M",
+     "why": "The agent chose to 'Keep a response envelope exactly as observed (data, meta, or projects) rather than normalizing it' (style guide section 4), and taskflow_api_v2.md reprints the three wrappers without flagging or justifying the inconsistency."},
+    {"rubric": "R11", "weight": 6, "lost": 6, "class": "I",
+     "why": "D015 records the GET /projects role enum missing 'viewer'; it fails only because it is labelled 'role enum' and not discrepancy_type='enum_mismatch', which the inputs never specify."}
+  ],
+  "subagent_notes": "Three parallel subagents: one diffed OpenAPI vs Markdown + audit tracker, one drafted the style guide, and one analysed webhooks and migration. Their tool errors (read limit >2000) were retried successfully. The discrepancy and webhook/migration work helped (R6-R10 passed), and the style-guide subagent's draft fed the guide that lost R3/R4.",
+  "confidence": "medium"
+}

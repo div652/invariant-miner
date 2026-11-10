@@ -1,0 +1,24 @@
+{
+  "task": "personal_financial_advisors/task1",
+  "score": "32/78",
+  "goal": "As a CFP for Robert and Linda Chen, audit the portfolio and macro files, fetch 2024 Treasury yields, FRED SP500 monthly values and IRS Pub 590-B tables, and build data_quality_notes.csv. Also deliver a four-sheet rebalancing_analysis.xlsx (market environment, $150K gift liquidation, post-gift rebalancing, RMD vs Roth conversion 2025-2040) and a client_memo.pdf of at most four pages with a Roth recommendation, concentration trades and a Q2-Q4 2025 timeline.",
+  "delivered": "data_quality_notes.csv (13 issues, including the $419,111.20 account gap and the CPI Oct-2025 interpolation), rebalancing_analysis.xlsx with the four required sheets, built from fetched Treasury and FRED data and Table III factors, and a 3-page client_memo.pdf. The memo funds the gift from the assumed residual cash plus VMFXX, models Scenario B as costing $26,833 more in federal tax than Scenario A through 2040, and recommends selling QQQ in the Roth plus buying VXUS and VB.",
+  "what_went_wrong": "All losses come from analysis and write-up choices made with data the agent already had. It applied a flat 85%-of-Social-Security assumption and explicitly excluded the conversion's effect on SS taxation instead of computing provisional income (R6, 10). It gave a hedged, conditional Roth recommendation and held 2025 brackets flat with no TCJA-sunset discussion (R8, 10). It never called the Dec-2024 S&P average of 6010.91 the recent high (R5, 10), omitted the 30Y yield of 4.78% even though the fetched Treasury CSV had a 30 Yr column (R3, 8), and reported the mega-cap group as an aggregate (8.38% for four names) without per-holding amounts or the VOO and VTI large-cap exposure (R1, 8).",
+  "primary_class": "M",
+  "secondary_classes": [],
+  "lost_weight_by_class": {"M": 46, "R": 0, "L": 0, "I": 0, "S": 0, "H": 0, "G": 0},
+  "failed_items": [
+    {"rubric": "R1", "weight": 8, "lost": 8, "class": "M",
+     "why": "The memo says 'QQQ+AAPL+MSFT+NVDA total $199,458 (8.38% of listed holdings) ... adding AMZN raises the mega-cap/tech group to $221,396', but gives no per-holding values (AAPL $39,016, etc.) and no VOO or VTI large-cap amounts. All of these were in the staged holdings sheet."},
+    {"rubric": "R3", "weight": 8, "lost": 8, "class": "M",
+     "why": "The root agent fetched the Treasury 2024 CSV with a '30 Yr' column (python fetch output, header 'Date,...,\"10 Yr\",\"20 Yr\",\"30 Yr\"'), but Market_Environment and the memo report only 2Y and 10Y. The judge failed the item solely for the missing 30Y yield of 4.78%."},
+    {"rubric": "R5", "weight": 10, "lost": 10, "class": "M",
+     "why": "The 24.46% 12-month return was correct, and Market_Environment lists 2024-12 = 6010.91, but neither the sheet nor the memo identifies it as the recent high. The judge failed the item on that sub-check."},
+    {"rubric": "R6", "weight": 10, "lost": 10, "class": "M",
+     "why": "data_quality_notes.csv says 'For tax model use 85% of Social Security as taxable assumption', and the memo says the model 'excludes ... the feedback of conversions on Social Security taxation'. No provisional-income computation (AGI + 50% SS against the $44K MFJ threshold), with or without the conversion, appears anywhere."},
+    {"rubric": "R8", "weight": 10, "lost": 10, "class": "M",
+     "why": "The memo finds B is '$26,833 higher, not lower' and gives a two-handed recommendation ('If the priority is strictly lowest tax ... do not force all four conversions; if legacy ... the staged plan is reasonable') instead of a definitive choice. It also holds 2025 brackets flat and never discusses the TCJA sunset that makes 2025 conversions attractive."}
+  ],
+  "subagent_notes": "Two parallel subagents ran: one inspected the workbook and macro CSVs (found the $419K gap, the CPI gap and the VMFXX encoding, which fed the passing R7), and one researched the Treasury, FRED and IRS sources. FRED CSV fetches errored in the subagent, but the root agent fetched the data directly. Both helped with data gathering, and none of the lost points trace to them.",
+  "confidence": "high"
+}

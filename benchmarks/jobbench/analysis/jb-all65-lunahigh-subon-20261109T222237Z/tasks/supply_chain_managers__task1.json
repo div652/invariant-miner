@@ -1,0 +1,28 @@
+{
+  "task": "supply_chain_managers/task1",
+  "score": "6/64",
+  "goal": "Act as Supply Chain Manager for a Montgomery County beverage DC and build an integrated package: a 3-sheet interlinked Excel workbook (ABC-by-supplier cross-tab with dead stock, A-item demand volatility and reorder-point misalignment, weighted supplier scorecard with renewal calls), a contract negotiation brief for Republic National and Winebow, and a redlined replenishment SOP with dynamic ROPs referencing actual supplier lead times.",
+  "delivered": "Montgomery_County_Supply_Chain_QBR.xlsx (ABC by Supplier, Demand Volatility, Supplier Scorecard), Contract_Negotiation_Brief_Republic_Winebow.docx (bridge/transition for Republic, conditional renewal for Winebow) and Redline_Replenishment_SOP_v3.docx ([DELETE]/[ADD] redline with KI-01..KI-10 crosswalk). All analysis rests on the 233-SKU inventory snapshot ranked by ANNUAL_COGS_2020, not on the 3,047-SKU warehouse sales file.",
+  "what_went_wrong": "At steps 9-11 the agent saw that warehouse_sales_2019_2020.csv has 3,047 item codes versus 233 in the snapshot, yet built ABC on the snapshot's COGS; the rubric's figures (Gallo 42.7% of warehouse sales and ~205 A items, Republic 814 SKUs / 14.5%, Winebow 794 SKUs / 12.6%) come straight from the sales file, so R0, the CV item set in R2 and the SKU/spend figures in R4 all miss. It also left out content the inputs made available: no named dead-stock examples and no working-capital/space link (R1), no caveat on sparse months or CV=0 (R2), no Feb/Jun zero-order months (R4), and no supplier-specific lead times or seasonality in the SOP (R5). It used PO-level lead times (5.07/7.14/12.63) and a requested/actual lead score that put Winebow above Republic (R3), and Sheet 2 misalignment does not feed the scorecard (R7).",
+  "primary_class": "M",
+  "secondary_classes": [],
+  "lost_weight_by_class": {"M": 58, "R": 0, "L": 0, "I": 0, "S": 0, "H": 0, "G": 0},
+  "failed_items": [
+    {"rubric": "R0", "weight": 10, "lost": 10, "class": "M",
+     "why": "ABC was built on the 233-SKU snapshot by COGS (Gallo 38 A items, 61% share; Republic 42 SKUs), even though the agent noticed at step 9 that the sales file has 3,047 codes. Recomputing from warehouse_sales gives Republic 814 SKUs / 14.5%, Winebow 794 / 12.6% and Gallo 42.7%, exactly the rubric figures."},
+    {"rubric": "R1", "weight": 8, "lost": 8, "class": "M",
+     "why": "Dead stock was flagged correctly (DEAD_FLAG, Republic 17, Winebow 9), and the SOP subagent even listed Cardinale Napa Cab and Seacrets Vodka as top examples. But the brief names no items and never ties dead stock to working capital or warehouse space (judge: 'only buried in the raw SKU listing')."},
+    {"rubric": "R2", "weight": 10, "lost": 10, "class": "M",
+     "why": "CV was computed for the snapshot's 56 A items, not the sales-based A class, so Barossa Valley Estate GSM, Sunseeker Rose and Lagunitas Sumpin 4/6 NR are absent. CVs (1.28-3.87, which look zero-filled) contradict the sheet's 'missing months not treated as zero' note, and the sheet has no 2020 Jan/Mar/Jul/Sep caveat or CV=0 caveat even though the agent found the 15-period coverage at step 10."},
+    {"rubric": "R3", "weight": 10, "lost": 10, "class": "M",
+     "why": "Weights were right and Gallo/SG ranked #1/#2, but the agent replaced the monthly-table lead times (Republic 5.4, Winebow 7.31, Legends 13.37, which it computed at step 12) with PO-level days (5.07/7.14/12.63) and a requested/actual lead score, putting Winebow 84.06 above Republic 80.65. The rubric's order depends on the scoring normalization, so this is a judgment call (medium confidence)."},
+    {"rubric": "R4", "weight": 8, "lost": 8, "class": "M",
+     "why": "The Winebow recommendation uses the 33-SKU snapshot count instead of the 794 SKUs / lowest-spend framing, names no dead-stock items, and omits the Feb and Jun 2020 zero-order months. Those months are visible in delivery_performance_monthly, which the agent queried."},
+    {"rubric": "R5", "weight": 6, "lost": 6, "class": "M",
+     "why": "The task explicitly asked for ROPs 'referencing actual supplier lead times', but the SOP gives only 'lead times range from 2-14 days' and has no seasonal adjustment, although the subagent's step-19 message recommended a seasonal factor and supplier lead-time means."},
+    {"rubric": "R7", "weight": 6, "lost": 6, "class": "M",
+     "why": "Sheet 3 carries dead-stock counts from Sheet 1, but Sheet 2's 44-of-56 misalignment results never enter the scorecard. The cross-sheet linkage block also shows 0 for Winebow (a name-matching bug)."}
+  ],
+  "subagent_notes": "Two subagents ran in parallel at step 4: 'Analyze datasets' and 'Inspect SOP structure'. The SOP subagent gave an accurate section map and the KI-01..KI-10 crosswalk, which helped R6 pass. The data subagent explicitly advised using the snapshot's COGS as the revenue proxy and called rtl_sales 'not joined to 233 inventory reliably', which reinforced the root's snapshot-only ABC that sank R0/R2/R4. Neither subagent pushed toward a sales-file ABC.",
+  "confidence": "high"
+}

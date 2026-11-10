@@ -1,0 +1,24 @@
+{
+  "task": "reporters_and_correspondents/task1",
+  "score": "20/60",
+  "goal": "As a Connecticut investigative reporter, prepare a pre-publication package on lead in drinking water and childhood health: a pitch memo of at most two pages (thesis, FOIA water data including infrastructure columns, state surveillance report, a numerical Waterbury-Newark parallel, fact-checked Martinez quotes, LCRI timing), a three-sheet workbook (Water Lead Trends, CT vs National using the CDC 2017-2022 dataset, City Cross-Reference), and a source verification log with at least 15 entries.",
+  "delivered": "pitch_memo.docx (one page: thesis, evidence backbone, quote discipline, Newark parallel, reporting plan), data_analysis.xlsx (50-row water detail with source-reported and calculated 15/10 ppb flags plus a trend summary, CT vs National from the downloaded CDC workbook, City Cross-Reference with town counts and ranks) and source_log.csv (about 20 rows in the required 5-column format).",
+  "what_went_wrong": "The losses are model omissions of facts the agent had in hand. The extracted CT report text (task_folder/ct_report.txt) names Public Act 22-49 (effective Jan 1, 2023, 5 to 3.5 ug/dL), gives the high-risk criteria (newly poisoned children, housing age, income) and lists the five other high-risk towns, yet none of this reached the deliverables. The trend summary gives absolute ppb changes and slopes but no 2020-to-2024 percent change. The CT vs National sheet does not flag the 2017 small-sample anomaly (1,666 tested, 5.6%). The one-page memo cites lead-service-line counts only for Hartford and Waterbury, with no populations, ratios or link to the LCRI 10-year replacement mandate, which appears in the staged Martinez notes.",
+  "primary_class": "M",
+  "secondary_classes": [],
+  "lost_weight_by_class": {"M": 40, "R": 0, "L": 0, "I": 0, "S": 0, "H": 0, "G": 0},
+  "failed_items": [
+    {"rubric": "R0", "weight": 8, "lost": 8, "class": "M",
+     "why": "All five cities and their ranks were mapped correctly, but no output explains that high-risk status rests on newly poisoned children, housing age and income, or names New Britain, Norwich, West Haven, Stamford and Manchester as missing from the water data. Both facts are in ct_report.txt lines 122-136, which the agent extracted."},
+    {"rubric": "R1", "weight": 8, "lost": 8, "class": "M",
+     "why": "The Water Lead Trends summary has First_to_Last_Change_ppb (e.g. Hartford 2.2) and a linear slope but no percent change (Hartford +26.8%, Waterbury +31.6%, etc.); the agent chose absolute-change metrics for the required trend calculation."},
+    {"rubric": "R2", "weight": 10, "lost": 10, "class": "M",
+     "why": "CT 2017-2019 figures and the 2020-22 non-submission are correct, but the sheet never flags that 2017 had only 1,666 children tested, which makes the 5.6% rate unreliable. The agent had the downloaded CDC workbook (step 10)."},
+    {"rubric": "R5", "weight": 6, "lost": 6, "class": "M",
+     "why": "ct_report.txt lines 3-4, 37-38 and 77 state 'Effective January 1, 2023 ... from 5 ug/dL to 3.5 ug/dL, per Public Act 22-49', but no deliverable names the act, the date or the threshold change; the memo only uses 3.5 ug/dL as a cutoff."},
+    {"rubric": "R6", "weight": 8, "lost": 8, "class": "M",
+     "why": "The memo cites lead-service-line counts only for Hartford (3,420 to 2,500) and Waterbury, gives no population-served ratios and no ranking of Hartford as the largest burden, and treats the LCRI only as the 10 ppb action level from 2027. The 10-year replacement mandate is in the staged Martinez interview notes and in the agent's EPA search results."}
+  ],
+  "subagent_notes": "One review subagent (step 21) checked the deliverables against the instructions. It caught the 1,887 vs 1,871 denominator mismatch and the missing email entry in the source log, and the root agent fixed both. It did not flag the missing percent changes, Public Act 22-49, the five missing high-risk towns or the LCRI replacement mandate. It helped a little and did not hurt.",
+  "confidence": "high"
+}

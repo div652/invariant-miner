@@ -1,0 +1,26 @@
+{
+  "task": "lawyers/task1",
+  "score": "12/48",
+  "goal": "As NC land-use counsel for six STR properties, evaluate the Town of Millbrook's settlement offer under Ordinance 2025-14 using Hignell-Stark (5th Cir. 2022), the Penn St. L. Rev. Penn Central article, the Belvidere ordinance and the 8-table client DB. Deliver a <=6-page memo PDF (per-property economics, fines, R-1 Property 4), a comparative regulation CSV (Millbrook / Belvidere / New Orleans with legal significance) and a counter-proposal TXT covering transition length, R-1 inclusion, cap review and preservation of litigation rights.",
+  "delivered": "settlement_evaluation_memo.pdf (5 pages: offer summary, per-property decision snapshot, Hignell-Stark takings and DCC discussion, Penn Central factor table, economics, R-1 and sale analysis). comparative_str_regulations.csv (dimension-by-jurisdiction table with a legal-significance column, which passed). settlement_counterproposal.txt (permits to Dec 1, 2029, R-1 inclusion or binding rezoning track, cap floor and objective review, fine waiver, no-waiver plus 120-day enforcement standstill, dismissal only without prejudice).",
+  "what_went_wrong": "The agent had both authorities in full (it fetched the 19-page CA5 opinion and the 46-page Eagle article itself) and the full DB, but its legal analysis stayed high-level and cautious. It never engaged the Town's amortization cases AVR and Gage, which are named in the letter. It never stated the DCC standard (strict scrutiny / 'virtually per se invalid') and called the DCC point only 'possible leverage'. It applied Penn Central without the historical STR-vs-LTR figures ($47,130-$67,860 vs $21,000-$33,600). Its claims clause says negotiations 'do not ... toll' any claim instead of requesting a mutual tolling agreement. The counter-proposal's extension rationale omitted the $198k-$385k mortgages and 2017 permit history, which appear only in the memo.",
+  "primary_class": "M",
+  "secondary_classes": [],
+  "lost_weight_by_class": {"M": 36, "R": 0, "L": 0, "I": 0, "S": 0, "H": 0, "G": 0},
+  "failed_items": [
+    {"rubric": "R2", "weight": 6, "lost": 6, "class": "M",
+     "why": "The counter-proposal extends permits to Dec 1, 2029 and cites 120-night nets ($25,471-$32,835). Its justification mentions only the $245,000 Seaside mortgage and 'debt-service runway'. The $198k-$385k mortgage range and the 2017-2021 registrations are in the memo but were not carried into the TXT the rubric checks."},
+    {"rubric": "R3", "weight": 6, "lost": 6, "class": "M",
+     "why": "§5 says negotiations 'do not waive, release, toll, or impair any claim' and asks for an enforcement standstill. There is no mutual SOL tolling request, no deadline-pressure rationale, and no link between with-prejudice dismissal and an expiring §1983 limitations period."},
+    {"rubric": "R4", "weight": 6, "lost": 6, "class": "M",
+     "why": "Memo §4 names all three Penn Central factors, and the character factor passed. Economic impact is argued only qualitatively and with 120-night projections, not the DB's historical STR net $47,130-$67,860 vs LTR $21,000-$33,600. Expectations are generic ('prior registrations, years of operations'), with no 2016-2021 purchase timing and no pre-2023 regulatory climate."},
+    {"rubric": "R5", "weight": 6, "lost": 6, "class": "M",
+     "why": "The analogy and the nondiscriminatory alternatives passed, but no file mentions strict scrutiny vs Pike or 'virtually per se invalid', although the agent fetched the full opinion (root step 17, 19 pages)."},
+    {"rubric": "R6", "weight": 6, "lost": 6, "class": "M",
+     "why": "The with-prejudice term is flagged and refused, but the memo never explains that it permanently extinguishes the Takings/DCC/Due Process claims. It calls DCC 'possible leverage ... rather than assume it wins the case' instead of a claim that could invalidate the whole ordinance."},
+    {"rubric": "R7", "weight": 6, "lost": 6, "class": "M",
+     "why": "The letter cites AVR (1-year, adult entertainment) and Gage (5-year, plumbing/industrial), but no output names either case or compares their longer periods. The CSV says only that the 'Town's citation to amortization cases does not establish that 180 days is reasonable', and 180-day adequacy is never tied to investment-backed expectations or mortgages. The Belvidere contrast passed."}
+  ],
+  "subagent_notes": "Three subagents: legal research on Hignell-Stark and the Eagle article, a DB analysis of all 8 tables, and a comparative-ordinance draft. The DB and comparison work fed the passing fine-exposure (R0) and comparative-table (R1) items. The legal-research subagent struggled (403/202 fetches, repeated searches for the Penn State article) and duplicated the root's own full fetches of both authorities, so it added little. The failures stem from the root's cautious drafting, not lost subagent output.",
+  "confidence": "high"
+}

@@ -1,0 +1,22 @@
+{
+  "task": "sociology_teachers_postsecondary/task2",
+  "score": "30/66",
+  "goal": "Act as Dr. Michael Torres: compute weighted Final_Grade and Letter_Grade for 35 SOC 101 students in the gradebook, adjudicate two grade appeals (Sullivan, Xu) in grade_dispute_decisions.csv, and write an assessment report to the chair with grade distributions, assignment-level stats by section, a benchmark of Course_Eval_Summary against the OpenIntro evals dataset, an at-risk summary, an essay rubric review with a Spring 2025 change, and a reflection.",
+  "delivered": "output/ holds the updated SOC101_Fall2024_Gradebook.xlsx (correct Final_Grade/Letter_Grade, Sullivan 42.85% F, Mitchell 55.83% F), grade_dispute_decisions.csv (Sullivan Incomplete, Xu denied at 47.41% F), and SOC101_Fall2024_Assessment_Report.docx with 7 sections and tables. Grades, distributions, letters, signature and the reflection are correct.",
+  "what_went_wrong": "The assignment table in report section 3 gives only mean and SD per component per section, with no medians. The eval benchmark (section 4) compares only 5 of the 10 Course_Eval_Summary items against the 4.175 OpenIntro mean, leaving out Learning objectives 3.7 and Would recommend 4.6. The essay review lists all six rubric dimensions but never ties the Midterm/Final essay score distributions to them. Mitchell is flagged at-risk only for grade < 70%: the report omits his two missing assignments and his 2024-11-07 family-emergency office-hours visit, although the agent had all this data.",
+  "primary_class": "M",
+  "secondary_classes": [],
+  "lost_weight_by_class": {"M": 36, "R": 0, "L": 0, "I": 0, "S": 0, "H": 0, "G": 0},
+  "failed_items": [
+    {"rubric": "R1", "weight": 10, "lost": 10, "class": "M",
+     "why": "Section 3 table columns are 'Section A mean (SD)' / 'Section B mean (SD)' only. The agent computed no per-assignment medians and did not discuss variance from extreme performers, although it had the full Assignments sheet (step 5)."},
+    {"rubric": "R2", "weight": 8, "lost": 8, "class": "M",
+     "why": "The agent fetched evals.csv (step 8) and read all of Course_Eval_Summary (step 6), but the benchmark table includes only 5 of the 10 items. Judge: no statement that Learning objectives 3.7 is below or Would recommend 4.6 is above the benchmark."},
+    {"rubric": "R3", "weight": 10, "lost": 10, "class": "M",
+     "why": "Section 6 names all six Berkeley categories and proposes a specific 0-4 scoring key. Judge: it never links the Midterm_Essay/Final_Essay distributions (A 75.07% vs B 70.52%, etc.) to performance on those dimensions."},
+    {"rubric": "R6", "weight": 8, "lost": 8, "class": "M",
+     "why": "Mitchell's 55.83% F is correct. However, at-risk is defined only as grade < 70%, so his two missing assignments and 4 absences plus 3 lates are not used as criteria. The OH visit is shown only as count 1, without the 11-07 family-emergency context, even though the log was read."}
+  ],
+  "subagent_notes": "",
+  "confidence": "medium"
+}

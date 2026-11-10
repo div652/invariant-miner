@@ -1,0 +1,22 @@
+{
+  "task": "petroleum_engineers/task1",
+  "score": "16/50",
+  "goal": "Build an integrated pre-drill package. It needs an interval-segmented ROP regression for the FORGE Pason data (2-sigma anomalies, CV, 75th-percentile envelope) and BOEM OGOR-A 2024 decline parameters with a weighted top-15 intervention ranking. It also needs OU/OGS mud-log/core matching by API (with >50 ft flags and formation tops) and a risk matrix plus a personnel gap check. Deliver an Excel workbook and a technical memo with executive summary, data quality issues, recommendations with confidence levels, and a sources appendix.",
+  "delivered": "output/ holds integrated_pre_drill_technical_package.xlsx (README, ROP_Model with 9 intervals, ROP_Anomalies, ROP_Envelope, Production_Decline, Intervention_Top15, OGS_Matches, Formation_Tops, Risk_Matrix, Personnel_Gaps, Data_Lineage) and technical_memo.docx. Both use real BOEM 2019-2024 and OU/OGS downloads.",
+  "what_went_wrong": "Production decline was fitted as log-linear exponential (annual decline = 1 - exp(12 x slope)), so the Arps Di and b the rubric expects were never estimated. ROP envelopes were computed per interval (q75 from 9.54 to 389 ft/hr), not as one global 75th-percentile threshold. That global value is 44.3 ft/hr and easy to compute, and the prompt can be read either way. Memo recommendations carry High/Moderate labels with no stated R-squared or corroboration criteria. The API item failed because BOEM Gulf APIs were not truncated to a key shared with the Oklahoma OGS data, although those wells cannot overlap.",
+  "primary_class": "M",
+  "secondary_classes": ["G", "I"],
+  "lost_weight_by_class": {"M": 16, "R": 0, "L": 0, "I": 8, "S": 0, "H": 0, "G": 10},
+  "failed_items": [
+    {"rubric": "R0", "weight": 8, "lost": 8, "class": "I",
+     "why": "The prompt says 'For each interval, perform multivariate regression ... then identify the operating envelope where ROP exceeds the 75th percentile'. The agent read this per interval and ROP_Envelope gives P10-P90 WOB/RPM/pump ranges per interval. The rubric expects a single global q75 of 44.3 ft/hr (it is 44.295 on drilling_data_processed.csv), a reading the prompt does not state."},
+    {"rubric": "R1", "weight": 8, "lost": 8, "class": "M",
+     "why": "README and memo: 'decline is log-linear on positive oil months'. Production_Decline has only oil_log_slope_per_month and annual_decline_rate, with no Di or b. The agent chose an exponential fit instead of the standard Arps hyperbolic and never mentions Arps in the trajectory."},
+    {"rubric": "R4", "weight": 8, "lost": 8, "class": "M",
+     "why": "The executive summary is quantified and the data-quality section exists. The recommendations table assigns High/Moderate, but the memo never defines confidence levels by R-squared bands or cross-source corroboration (judge)."},
+    {"rubric": "R5", "weight": 10, "lost": 10, "class": "G",
+     "why": "Mud-log (10-digit) to core (14-digit) matching on the first 10 digits is done and documented. The criterion fails only because BOEM 12-digit Gulf APIs were not truncated to a key shared with the Oklahoma OGS wells, and those datasets cannot share wells. The drilling DB has named wells (WD-031-L013) and no APIs, so no conversion would have enabled a match, as the memo documents."}
+  ],
+  "subagent_notes": "Two background subagents ran at the start: one profiled the local CSV and DB schemas, the other researched public BOEM/OGS download URLs (6 tool errors from failed fetches). The root then downloaded the BOEM and OGS data itself. Both were helpful scouting and not linked to any failed item.",
+  "confidence": "medium"
+}

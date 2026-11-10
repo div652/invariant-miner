@@ -1,0 +1,24 @@
+{
+  "task": "mechanical_engineering_technicians/task1",
+  "score": "32/78",
+  "goal": "As a mechanical engineering technician, investigate premature seal failures on HC-63/40-250 cylinders (about 38,000 cycles against the 50,000 spec) and deliver an Engineering Investigation Report PDF. It needs an executive summary with the root cause, leakage, dimensional and endurance analysis matrices, root-cause correlation, and a corrective action plan with immediate actions, process modifications, HAWE seal-kit recommendations and Degelman 143367 rod reconditioning and torque procedures, plus STL dimensional verification.",
+  "delivered": "A single PDF report (about 13 pages) covering the executive summary (rod Ra 0.28 against 0.25 um as the primary cause), leakage, dimensional, endurance and pressure-cycle analysis, the 250 bar = 25 MPa check, a corrective action plan with quarantine and profilometer reinspection, the HAWE seal-kit table, Degelman emery-cloth and locknut-torque procedures, and STL verification.",
+  "what_went_wrong": "The losses are interpretation and completeness misses on data the agent had already extracted. It refused to name a closest HAWE kit for the 40 mm rod and called for a custom IHC 63/40 kit, even though the instructions asked for 'specific seal kit recommendations from manufacturer documentation' (R0, 10). It read the cycle 16/33 WARN and cycle 24 REVIEW rows as process or test-control instability, never as intermittent seal performance or friction/seal binding, and measured cycle 24 against the sheet mean rather than the normal range (R2, R3; 16). It never compared the test-spec operating range of -20 to +80 C with HAWE's -25 to +70 C fluid and -30 to +70 C ambient limits, although both were in its extracted text (R5, 10). Its recurrence-prevention actions omitted any review of machining parameters such as feed, speed or tooling (R8, 10).",
+  "primary_class": "M",
+  "secondary_classes": [],
+  "lost_weight_by_class": {"M": 46, "R": 0, "L": 0, "I": 0, "S": 0, "H": 0, "G": 0},
+  "failed_items": [
+    {"rubric": "R0", "weight": 10, "lost": 10, "class": "M",
+     "why": "The report lists HC01030/HC02030/HC01031/HC02031 and flags the 40 mm rod, but page 11 says 'obtain IHC-approved 63/40 seal kit... Do not substitute HC01030/HC02030 or HC01031/HC02031 without written approval'. That deliberately declines the closest-match recommendation the instructions asked for."},
+    {"rubric": "R2", "weight": 6, "lost": 6, "class": "M",
+     "why": "Cycles 16 (17.8 MPa / 18.5 L/min) and 33 (13.5 MPa / 29.5 L/min) are reported correctly, but page 5 says 'This supports process instability' and page 8 calls them 'control failures'. They are never linked to intermittent seal performance."},
+    {"rubric": "R3", "weight": 10, "lost": 10, "class": "M",
+     "why": "Cycle 24's 12.63 MPa is given as '+12.51%' over the 50-row sheet mean of 11.2254 MPa, not over the 10.8-11.5 MPa normal band. It is labelled a 'retraction outlier' with no friction or seal-binding interpretation."},
+    {"rubric": "R5", "weight": 10, "lost": 10, "class": "M",
+     "why": "Subagent 1 reported 'Operating temperature: -20 to +80 C' from Test_Specifications, and the root agent ran pdftotext on the whole HAWE datasheet, which contains 'hydraulic fluid temperature -25 to +70 C' and 'ambient temperature -30 to +70 C'. The report discusses only the 82 C seal temperature and the 48-49 C fluid temperature and never makes the +80 against +70 compatibility check."},
+    {"rubric": "R8", "weight": 10, "lost": 10, "class": "M",
+     "why": "Section 8 adds in-process finish gates, SPC and inspection, but the judge found no mention of feed rate, cutting speed, tool selection or other machining-parameter review for the rod finishing process. An expected element of a recurrence-prevention plan was left out."}
+  ],
+  "subagent_notes": "Two parallel subagents ran. One summarized the test workbook (including the -20 to +80 C operating range the root agent then did not use), and one found and extracted the official Degelman 143367 PDF, which enabled the passing R4 emery-cloth and R9 locknut-torque items. Both helped, and none of the lost points come from them.",
+  "confidence": "high"
+}

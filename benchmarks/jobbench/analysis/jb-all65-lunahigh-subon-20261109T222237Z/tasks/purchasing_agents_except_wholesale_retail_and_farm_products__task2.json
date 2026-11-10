@@ -1,0 +1,28 @@
+{
+  "task": "purchasing_agents_except_wholesale_retail_and_farm_products/task2",
+  "score": "24/78",
+  "goal": "As Maplewood County purchasing agent, evaluate four vendor bids for an 85-workstation refresh after an IT addendum (monitor mix, VGA adapters, April 7 deadline, $8,200 carryover expiring March 31), using the City of Addison 2024 purchasing manual as policy. Deliver a Bid Analysis Workbook (tabulation, weighted scoring, TCO), PO-2025-0412, a Risk & Compliance workbook (delivery risk, compliance review, budget sensitivity) and a 1-2 page award memo.",
+  "delivered": "Bid_Analysis_Workbook.xlsx, Purchase_Order_PO-2025-0412.xlsx (dual budget codes, separable carryover section, April 7 deadline, Commissioners Court dependency), Risk_Compliance_Assessment.xlsx and Award_Recommendation_Memo.docx recommending OfficePro Direct (90.44/100, $173,135). Spec-gap flagging, warranty normalization and the >$50k approval passed.",
+  "what_went_wrong": "Root treated the Addison manual as an 'external benchmark only' and used little of what its subagent found: no LGC 252 HUB citation, no Ch2 Subch B §2 non-performing-vendor/disqualification analysis, no statement that cooperative/state contracts (DataEdge's Texas DIR) are valid vehicles (it labeled DataEdge a 'vehicle mismatch'), and no Net 30 Prompt Payment Act term on the PO. PrimeByte's flags were summarized generically, with no CF-2024-001 details (PO-2024-0145, 2024-12-20 CAP deadline), no closed CF-2024-002/CF-2023-001, and no explanation of how the flag offset its lowest TCO. The memo also called carryover loss 'not a budget shortfall' and gave no March 10-31 execution plan or descope fallback.",
+  "primary_class": "M",
+  "secondary_classes": [],
+  "lost_weight_by_class": {"M": 54, "R": 0, "L": 0, "I": 0, "S": 0, "H": 0, "G": 0},
+  "failed_items": [
+    {"rubric": "R0", "weight": 6, "lost": 6, "class": "M",
+     "why": "vendor_compliance_flags.csv lists CF-2024-001 (open; PO-2024-0145, UPS 7 days late, Section 8.2, CAP window expired 2024-12-20) plus closed CF-2024-002 and CF-2023-001 for PrimeByte. The Compliance Review only says 'CF-2024-001 open (late delivery; corrective action pending)' and never mentions the two closed flags."},
+    {"rubric": "R1", "weight": 6, "lost": 6, "class": "M",
+     "why": "Delivery Risk rates PrimeByte 'High' on its 50-day maximum (-22 buffer), but proposes an 'expediting plan' rather than flagging the lead time as a potential disqualifier. It never states that the 45-day minimum exceeds the 28-day window by 17 days. OfficePro's '5/5 completed' comes from purchase_orders, while contract_compliance gives 6/6; that part is defensible."},
+    {"rubric": "R2", "weight": 10, "lost": 10, "class": "M",
+     "why": "HUB statuses and scoring were correct; the item failed only for not citing Texas LGC 252. The Addison research subagent reported 'LGC §252.0215' HUB provisions, but root framed Addison as a benchmark that 'seeks HUB participation but does not give vendor preferences' and left the statute out."},
+    {"rubric": "R3", "weight": 8, "lost": 8, "class": "M",
+     "why": "The PO's codes, separable carryover section and April 7 deadline passed, but it has no payment terms. The Addison manual the agent downloaded sets 30-day payment under the Prompt Payment Act (GC 2251.025), and payment terms are a standard PO field."},
+    {"rubric": "R4", "weight": 8, "lost": 8, "class": "M",
+     "why": "The memo only says 'PrimeByte has an unresolved late-delivery compliance flag... do not award while corrective action remains open'. It names no CF-2024-001, PO-2024-0145 or VPN/CAP dates and cites Ch.2 Subch.A rather than the Non-Performing Vendors / Vendor Disqualification section (Ch2 SubB S2) the subagent located. It never explains why PrimeByte's cheapest TCO ($126,180) was outweighed."},
+    {"rubric": "R6", "weight": 6, "lost": 6, "class": "M",
+     "why": "The memo states the March 31 expiry but does not analyze the March 10-31 execution window, does not recommend executing the carryover portion immediately on award, and calls loss of carryover 'a timing/control risk rather than a budget shortfall' instead of a Scenario B descope contingency."},
+    {"rubric": "R9", "weight": 10, "lost": 10, "class": "M",
+     "why": "The Compliance Review lists GSA vs DIR vehicles and number mismatches but marks everything 'mismatch; validate' and the memo calls DataEdge a 'vehicle mismatch'. The manual's Interlocal/Cooperative Purchasing and State and Federal Contracts sections, which make DIR purchases valid, were found by the subagent's pdftotext grep but never applied."}
+  ],
+  "subagent_notes": "Two subagents: 'Research Addison purchasing policy' got past several 404s and a redirect error, curled the real 2024 manual and reported exact provisions (HUB/LGC 252.0215, non-performing vendors, interlocal/cooperative, >$50k approval). 'Analyze procurement source data' summarized the CSVs and DB. The research subagent helped, since R7 passed on its findings, but root then downgraded the manual to a non-binding benchmark and dropped most of what it found, causing R2, R4 and R9.",
+  "confidence": "medium"
+}

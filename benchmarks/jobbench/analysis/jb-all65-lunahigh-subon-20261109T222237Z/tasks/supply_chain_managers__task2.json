@@ -1,0 +1,24 @@
+{
+  "task": "supply_chain_managers/task2",
+  "score": "6/40",
+  "goal": "Assess a $1.2M San Juan DC expansion request for the CFO: build a four-sheet Excel workbook (capacity utilization actual vs theoretical, demand allocation by warehouse-region, reorder calibration, two-scenario investment/payback) and a revised warehouse SOP (.docx) whose sections cite quantitative findings, with a phased timeline, capacity-recovery table and KPI governance. Two supplementary 'Just In Time' files (inventory.csv, fulfillment.csv) had to be found online.",
+  "delivered": "GlobalSport_Network_Efficiency_Analysis.xlsx with the four requested sheets (capacity model built on reported 91%/73% utilization plus waste/safety-stock recovery proxies, corridor table of 46 DC-region pairs, reorder scenario, defer-vs-approve payback) and GlobalSport_Revised_Warehouse_SOP.docx (9 sections with change justifications, a 24-week five-phase rollout, KPI framework). The JIT files were found and downloaded by a subagent.",
+  "what_went_wrong": "The capacity model never computed a theoretical throughput capacity; it restated the master-data utilization, and the rubric's specific formula (pallets x 22 days x 1.5 turns = 396,000/594,000) is not in any input. The agent had all 23 Service_Region_Mapping rows below target OTD but never called it a systemic network-wide failure, and it treated both DCs shipping to all regions as a mapping/data defect rather than a routing-rationalization capacity lever. The SOP cited stockout gaps in pp rather than the Department_Targets rates (Fitness omitted), gave no numeric turn gaps, and did not list the current SOP's documented gaps. The timeline was a 24-week five-phase plan, not the rubric's 30/60/90-day three-phase structure.",
+  "primary_class": "M",
+  "secondary_classes": ["I"],
+  "lost_weight_by_class": {"M": 18, "R": 0, "L": 0, "I": 16, "S": 0, "H": 0, "G": 0},
+  "failed_items": [
+    {"rubric": "R0", "weight": 10, "lost": 10, "class": "I",
+     "why": "Rubric requires Capacity_Pallets x 22 working days x 1.5 turns/month = 396,000/594,000 pallet-days; neither the 22-day nor the 1.5-turn parameter appears in TASK_INSTRUCTIONS.txt, warehouse_master_data.xlsx or the current SOP. The agent also skipped any theoretical-throughput calculation (judge: 'restates the master-data 91% and 73%'), but the specific values were unreachable regardless."},
+    {"rubric": "R1", "weight": 6, "lost": 6, "class": "M",
+     "why": "Service_Region_Mapping (all 23 rows read by subagent 1, reported to root at step 25) shows every one of the 23 regions below target, yet the Demand_Allocation_Analysis sheet reports only an aggregate 74.3%/87.5% and even flags six below-target regions as 'No mapped gap'; it never frames OTD shortfall as systemic."},
+    {"rubric": "R2", "weight": 6, "lost": 6, "class": "M",
+     "why": "SOP §4 cites stockout gaps as '+8.2 pp' etc. instead of the Department_Targets rates, omits Fitness 8.8%, mentions turns only as 'every department is below its target turns', and does not state the current SOP's documented gaps (no cycle counting, no forecasting, no RCA) even though the source SOP lists them."},
+    {"rubric": "R3", "weight": 6, "lost": 6, "class": "I",
+     "why": "Prompt only asks for 'a phased implementation timeline with dependencies'; the rubric demands a specific 30/60/90-day three-phase structure with cycle counting in Phase 1. Agent produced a 24-week five-phase plan (§9) with explicit dependencies, which the judge failed on structure."},
+    {"rubric": "R5", "weight": 6, "lost": 6, "class": "M",
+     "why": "Agent found that both DCs ship to all 23 regions (46 observed pairs) but treated it as a mapping defect ('Correct the mapping first', SOP §7; Gate 1 reconcile mapping) rather than evaluating routing rationalization as a lever, and never stated the macro-region assignments (LATAM/Europe/Africa vs North America/Pacific Asia/West Asia) from the mapping sheet."}
+  ],
+  "subagent_notes": "Three parallel subagents at step 4: local data analysis (warehouse master + orders), web search for the JIT dataset, and current-SOP review. The web subagent located and downloaded inventory.csv and fulfillment.csv (helped); the data subagent surfaced the mapping crossover but framed it as a data-quality issue, which the root agent carried into the deliverables.",
+  "confidence": "medium"
+}

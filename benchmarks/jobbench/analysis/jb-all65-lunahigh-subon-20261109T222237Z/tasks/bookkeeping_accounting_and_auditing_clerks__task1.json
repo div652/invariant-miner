@@ -1,0 +1,30 @@
+{
+  "task": "bookkeeping_accounting_and_auditing_clerks/task1",
+  "score": "20/88",
+  "goal": "As bookkeeper, reconcile the Q1 2024 bank statement against a GL that has no cash account and against the AP subledger, propose adjusting entries, run a vendor payment integrity audit with March 31 aging, and deliver a 4-sheet reconciliation workbook (incl. a Schedule C draft), a Schedule C expense-mapping CSV and an exceptions-log CSV.",
+  "delivered": "Three files in output/: Q1_2024_Reconciliation_Workbook.xlsx (bank reconciliation with AJE-01..AJE-xx, vendor audit + aging, Schedule C draft, GL detail), Q1_2024_Schedule_C_Expense_Summary.csv (per-entry mapping with line subtotals) and Q1_2024_Reconciliation_Exceptions.csv (EX-001..EX-019, statuses 'Open'/'Proposed AJE').",
+  "what_went_wrong": "The agent found most anomalies but stopped short of the specific investigations the rubric wanted. CHK-1402 was booked as a provisional COGS AJE, not tied to AP10003 Partial (remaining ~$2,585.55). AP10274 was flagged without stating the correction to Paid/2024-02-10. The $51,000 bank payroll was posted on top of the $5,861.39 GL payroll instead of stating the $45,138.61 gap. The DEP-0129 $45 fee was not assigned an expense treatment. CHK-1401 vs AP10758 got no cause analysis. Schedule C line labels were written from memory (24a 'Car and truck', 24b 'Travel and meals', 27): the agent downloaded f1040sc--2024.pdf but never read it, so travel went to 24b instead of 24a. Line 7 gross income also omitted the $37.56 interest in the GL column.",
+  "primary_class": "M",
+  "secondary_classes": ["R"],
+  "lost_weight_by_class": {"M": 60, "R": 8, "L": 0, "I": 0, "S": 0, "H": 0, "G": 0},
+  "failed_items": [
+    {"rubric": "R0", "weight": 10, "lost": 10, "class": "M",
+     "why": "CHK-1402 is shown as 'NO AP MATCH' with provisional COGS AJE-10/EX-014; AP10003 ($4,433.05, Partial) appears only in the aging as 'payment amount unavailable for Partial', so the agent had the data but never tested the partial-payment hypothesis or computed $2,585.55."},
+    {"rubric": "R1", "weight": 10, "lost": 10, "class": "M",
+     "why": "EX-015/Vendor Audit identify EFT-2210 vs AP10274 Open but resolve only 'Investigate missing AP settlement and update status'; the explicit correction to Paid with PaidDate 2024-02-10 is never stated even though the bank date was in hand."},
+    {"rubric": "R4", "weight": 8, "lost": 8, "class": "R",
+     "why": "The agent downloaded f1040sc--2024.pdf (step 11) but never extracted it; its hard-coded line list in build_deliverables.py labels 24a 'Car and truck expenses' and 24b 'Travel and meals', so $7,534.42 travel landed on 24b instead of the form's 24a (Travel)."},
+    {"rubric": "R5", "weight": 8, "lost": 8, "class": "M",
+     "why": "AJE-05 posts the full $51,000 Dr Payroll/Cr Cash and Schedule C line 26 adds it to $5,861.39 (=$56,861.39); the $45,138.61 bank-vs-GL gap is never computed or explained, and payroll is not flagged as the largest discrepancy."},
+    {"rubric": "R6", "weight": 6, "lost": 6, "class": "M",
+     "why": "The agent's own reasoning (step 15) inferred gross $4,172.26 less a $45 fee, yet EX-017 says 'Flag as possible merchant fee only; do not post' and AJE-01 books only net cash/AR, with no expense account for the fee."},
+    {"rubric": "R7", "weight": 10, "lost": 10, "class": "M",
+     "why": "EX-016 notes the CHK-1401 (01/10) vs AP10758 PaidDate (02/09) mismatch but only says 'Tie AP paid date to bank clearing date; investigate cutoff', with no analysis of plausible causes."},
+    {"rubric": "R8", "weight": 6, "lost": 6, "class": "M",
+     "why": "The log has 19 rows covering 7 of 8 expected issues, but logs payroll as $51,000 bank-only instead of the $45,138.61 GL gap, leaves EX-001 Amount blank, and uses Status 'Open'/'Proposed AJE' (no Resolved/Unresolved; that vocabulary is not in the prompt, but the payroll miss is the root)."},
+    {"rubric": "R9", "weight": 10, "lost": 10, "class": "M",
+     "why": "Part I Line 7 never equals $36,173.98 (the GL column omits $37.56 interest; the tax-ready column also deducts the $1,847.50 CHK-1402 AJE) and Part II puts $0 on Line 15 Insurance by booking the premium to prepaid; the wrong 24a/27a labels (unread form, R) also contributed."}
+  ],
+  "subagent_notes": "",
+  "confidence": "medium"
+}

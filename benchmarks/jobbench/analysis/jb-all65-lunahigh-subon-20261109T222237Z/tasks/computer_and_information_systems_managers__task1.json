@@ -1,0 +1,26 @@
+{
+  "task": "computer_and_information_systems_managers/task1",
+  "score": "12/56",
+  "goal": "As CIO of Meridian Technologies, reconcile the budget, server inventory, ITSM incidents and risk/DR/compliance DB before a cloud migration. Deliver three files: a 'IT Operations Reconciliation & Cloud Readiness Assessment' .docx (exec summary with vendor pick, category/subcategory Q4 variance, server tiering with right-sized AWS instances, risk-incident/DR analysis, vendor TCO sensitivity); a 4-sheet Operational Intelligence Dashboard .xlsx; and reconciliation_flags.csv.",
+  "delivered": "All three files are in output/ with the correct names and sheet names. The docx covers every section and picks Google Cloud ($4.696M discounted TCO). The xlsx has Reconciled Budget, Server Migration Matrix (30/1/44 tiers), Risk-Incident Correlation and NIST CSF Posture. reconciliation_flags.csv has 17 flags with columns flag_id, source_systems, entity, discrepancy, quantification, impact, recommended_action, materiality.",
+  "what_went_wrong": "About half the lost weight comes from specs the prompt never states. The rubric wants a fixed 9-column schema for reconciliation_flags.csv with High/Medium/Low severity, penalised twice (R3, R7). It also wants AWS sizing by 'smallest instance with vCPU >= cores and RAM >= current RAM', while the agent right-sized from utilization plus 30% headroom. The rest are agent omissions with the data in hand. Vendor migration timelines (18-22/16-20/20-24 months) were never cited. There is no compliance roll-up naming CTL-007/CTL-015 as Non-Compliant and the 7 Partial controls, or linking them to RSK-006/RSK-016. Cloud Services at 11% was not called out as the highest category deviation.",
+  "primary_class": "I",
+  "secondary_classes": ["M"],
+  "lost_weight_by_class": {"M": 20, "R": 0, "L": 0, "I": 24, "S": 0, "H": 0, "G": 0},
+  "failed_items": [
+    {"rubric": "R0", "weight": 8, "lost": 8, "class": "I",
+     "why": "The prompt asks only for a 'right-sized AWS replacement instance'. The agent sized from observed utilization plus 30% headroom (docx section 3), so SRV-012 (64 cores) got m6i.12xlarge with 48 vCPU. The rubric's 'smallest instance covering current cores and RAM' rule is neither stated nor implied, and utilization-based sizing is a standard reading of right-sizing."},
+    {"rubric": "R3", "weight": 6, "lost": 6, "class": "I",
+     "why": "The flags themselves cover budget vs asset ($2.013M vs $758,210), risks with no ITSM match, and controls with no NIST mapping (all passed). The item failed on a column schema (Source_System_1/2, Value_System_1/2, Discrepancy_Type, Severity) and H/M/L severity that the task never specifies. The agent's uniform 'Material' tag added nothing, but severity was not requested either."},
+    {"rubric": "R4", "weight": 6, "lost": 6, "class": "M",
+     "why": "The vendor pick uses the correct discounted TCOs and CUDs. Vendor_Cloud_Proposals has a 'Migration Timeline (months)' row (AWS 18-22, Azure 16-20, GCP 20-24), but no deliverable cites it (judge)."},
+    {"rubric": "R5", "weight": 8, "lost": 8, "class": "M",
+     "why": "compliance_status clearly lists CTL-007 and CTL-015 as Non-Compliant and 7 controls as Partial. The outputs only show statuses per NIST question, mixing controls (e.g. 'CTL-007, CTL-016'). They never enumerate the control statuses or link CTL-007 to RSK-006 and CTL-010 to RSK-016."},
+    {"rubric": "R6", "weight": 6, "lost": 6, "class": "M",
+     "why": "The category and subcategory analysis is right (Penetration Testing -100%, Network Refresh -20.3%). Cloud Services 11.0% sits in the table but is never called out as the highest category-level deviation approaching 15% (judge)."},
+    {"rubric": "R7", "weight": 10, "lost": 10, "class": "I",
+     "why": "The docx title and sections and the 4 xlsx sheet names are all correct. The item failed only because reconciliation_flags.csv lacks the rubric's 9 column names, which the prompt never gives. This is the same hidden schema penalised in R3."}
+  ],
+  "subagent_notes": "One subagent independently profiled all three local inputs and returned exact figures. The root used it as a cross-check while building the deliverables itself. It had no visible effect on the failed items.",
+  "confidence": "medium"
+}

@@ -1,0 +1,30 @@
+{
+  "task": "training_and_development_specialists/task1",
+  "score": "6/54",
+  "goal": "As a T&D specialist at a 350-person manufacturer, produce five linked deliverables: an OSHA SHP checklist gap analysis (PDF), a Q2 2025 schedule covering 180 employees in Safety Orientation with instructor-continuity handling and reinforcement sessions, a Kirkpatrick evaluation plan adapted for the floor with ERP diagnostics, an ROI workbook (cost-effectiveness, 200-employee Q2 budget, break-even), and an instructor capacity risk matrix.",
+  "delivered": "OSHA_Gap_Analysis_Completed.pdf, Q2_2025_Training_Schedule.xlsx (8 sessions S-01..S-08 plus attendance register), Q2_Evaluation_Strategy.docx (Safety Orientation plan with a generic diagnostic module), Training_ROI_Analysis.xlsx (incident-based cost-effectiveness, Q2 budget, break-even) and Instructor_Risk_Matrix.xlsx (SPOF/expiry/coverage/action plan). The ROI workbook's computed cells are openpyxl formulas with no cached values, so they read as blank.",
+  "what_went_wrong": "Most points were lost to design choices and omissions rather than missing data. The schedule has David Lee teaching a drill, not his own recertification (R0); safety cohorts are in TR-106 rather than equipped TR-105 (R7). The evaluation plan lacks pictorial scales (R1), ERP-specific diagnostic questions (R2) and a justified, shift-aware delayed-survey timeline (R8). ROI uses an incident/$25k-per-incident frame with no productivity-per-cost ranking, no Leadership NA note and no allocation percentages (R3). Training_ROI_Analysis.xlsx was saved with live formulas (=B7*C7, =SUM(...)) that were never recalculated, so the judge saw empty budget totals (R4). The risk matrix omits Max_Weekly_Hours and any demand-vs-capacity check, although the subagent reported Martinez 12h and Wilson 10h (R6).",
+  "primary_class": "M",
+  "secondary_classes": ["L"],
+  "lost_weight_by_class": {"M": 42, "R": 0, "L": 6, "I": 0, "S": 0, "H": 0, "G": 0},
+  "failed_items": [
+    {"rubric": "R0", "weight": 6, "lost": 6, "class": "M",
+     "why": "Backup coverage via Robert Johnson passed, but S-07 (2025-06-18) is an Emergency Response 'Continuity drill' with David Lee as instructor. No session schedules Lee's own recertification before 2025-07-15; it appears only as an Action Plan line in the risk matrix."},
+    {"rubric": "R1", "weight": 6, "lost": 6, "class": "M",
+     "why": "Plain language, verbal administration and shift-friendly timing are present, but the instruments use only numeric 1-5 / 1-4 Likert scales. There are no visual or pictorial rating aids for varying literacy."},
+    {"rubric": "R2", "weight": 6, "lost": 6, "class": "M",
+     "why": "The agent identified Software/ERP as lowest L3 (69.0%), but its 'diagnostic module' is generic barrier interviews and observation of 5 ERP transactions. It has no ERP-specific questions on system access, workflow fit, supervisor requirement, reference materials or practice opportunities."},
+    {"rubric": "R3", "weight": 6, "lost": 6, "class": "M",
+     "why": "Historical Cost Effectiveness lists L4 averages but computes only incident-based cost metrics (as uncached formulas). It never derives productivity-per-cost ROI, never ranks Equipment Operation highest, never notes Leadership L4 is NA, and gives no ROI-based allocation percentages."},
+    {"rubric": "R4", "weight": 6, "lost": 6, "class": "L",
+     "why": "Q2 Budget holds formulas (D7 '=B7*C7', G9 '=SUM(G7:G8)', sensitivity B14 '=A14*125') with no cached values, so totals render empty. The subagent had already computed Safety 200 = $25,000 and Quality $55,000. The sheet also has no optimal-allocation recommendation, so the item would still be at risk after recalculation (medium confidence)."},
+    {"rubric": "R6", "weight": 6, "lost": 6, "class": "M",
+     "why": "Instructor_Risk_Matrix columns cover ID, specialization, expiry, days to expiry and coverage roles, but no Max_Weekly_Hours and no Q2 demand-hours estimate. Martinez's 12h cap and Wilson's lowest 10h cap are never flagged, though both came from the staged CSV and the subagent summary."},
+    {"rubric": "R7", "weight": 6, "lost": 6, "class": "M",
+     "why": "Equipment Operation is correctly in TR-103, but the three 60-person Safety Orientation cohorts are in TR-106 ('avoids TR-105 cap 40', portable PPE kit) instead of the PPE/first-aid-equipped TR-105. Software/ERP was not scheduled at all, which the prompt did not strictly require since ERP L3 was rising (medium confidence)."},
+    {"rubric": "R8", "weight": 6, "lost": 6, "class": "M",
+     "why": "The delayed survey runs at day 30 and day 60, but the timing is not justified as time for on-the-job application. Distribution is a uniform day-30/60 send with day-3/7 reminders, not planned around shifts."}
+  ],
+  "subagent_notes": "One 'Analyze source data' subagent summarized every input accurately: program L3/L4 trends, QC decline, ERP lowest, all instructor caps and expiries, room equipment, and $25,000/$55,000 budget figures. The root used it for SPOF/expiry (R5 passed) but dropped its capacity-hours and budget-value details from the deliverables.",
+  "confidence": "medium"
+}

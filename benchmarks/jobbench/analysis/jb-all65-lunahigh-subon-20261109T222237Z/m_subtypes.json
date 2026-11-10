@@ -1,0 +1,2046 @@
+[
+ {
+  "task": "biostatisticians/task1",
+  "rubric": "R3",
+  "lost": 10,
+  "subtype": "wrong",
+  "why": "Subgroup_Event_Rates lists 'Baseline risk score | Not estimable: score variable absent'. At step 16 the agent reasoned that HDL is missing and so produced no tertiles, though the rubric accepts an approximated score and a BMI-based Framingham score needs only fields present in framingham.csv."
+ },
+ {
+  "task": "biostatisticians/task2",
+  "rubric": "R1",
+  "lost": 8,
+  "subtype": "omitted",
+  "why": "An embedded forest-plot image with a zero reference line does exist (xl/media/image1.png on Subgroup Forest), which the text-only judge could not see, but both the plot and the table show only Age <65, Age >=65, Female, Male and omit the required Overall effect row, so the item fails regardless."
+ },
+ {
+  "task": "biostatisticians/task2",
+  "rubric": "R3",
+  "lost": 6,
+  "subtype": "omitted",
+  "why": "RWE sheet correctly reports metformin 19.6% and insulin 53.4% and says the UCI extract 'contains no GLP-1 medication variables', but never states that the 1999-2008 data predate widespread GLP-1 adoption, which the criterion requires (borderline strict judging)."
+ },
+ {
+  "task": "biostatisticians/task2",
+  "rubric": "R4",
+  "lost": 6,
+  "subtype": "omitted",
+  "why": "Audit flags observed pooled SD 0.669% vs assumed 1.2% as 'Yes (lower)' but only says 'both affect power and extension sizing'; it never concludes the original 90%-power design was effectively overpowered."
+ },
+ {
+  "task": "bookkeeping_accounting_and_auditing_clerks/task1",
+  "rubric": "R0",
+  "lost": 10,
+  "subtype": "depth",
+  "why": "CHK-1402 is shown as 'NO AP MATCH' with provisional COGS AJE-10/EX-014; AP10003 ($4,433.05, Partial) appears only in the aging as 'payment amount unavailable for Partial', so the agent had the data but never tested the partial-payment hypothesis or computed $2,585.55."
+ },
+ {
+  "task": "bookkeeping_accounting_and_auditing_clerks/task1",
+  "rubric": "R1",
+  "lost": 10,
+  "subtype": "omitted",
+  "why": "EX-015/Vendor Audit identify EFT-2210 vs AP10274 Open but resolve only 'Investigate missing AP settlement and update status'; the explicit correction to Paid with PaidDate 2024-02-10 is never stated even though the bank date was in hand."
+ },
+ {
+  "task": "bookkeeping_accounting_and_auditing_clerks/task1",
+  "rubric": "R5",
+  "lost": 8,
+  "subtype": "wrong",
+  "why": "AJE-05 posts the full $51,000 Dr Payroll/Cr Cash and Schedule C line 26 adds it to $5,861.39 (=$56,861.39); the $45,138.61 bank-vs-GL gap is never computed or explained, and payroll is not flagged as the largest discrepancy."
+ },
+ {
+  "task": "bookkeeping_accounting_and_auditing_clerks/task1",
+  "rubric": "R6",
+  "lost": 6,
+  "subtype": "omitted",
+  "why": "The agent's own reasoning (step 15) inferred gross $4,172.26 less a $45 fee, yet EX-017 says 'Flag as possible merchant fee only; do not post' and AJE-01 books only net cash/AR, with no expense account for the fee."
+ },
+ {
+  "task": "bookkeeping_accounting_and_auditing_clerks/task1",
+  "rubric": "R7",
+  "lost": 10,
+  "subtype": "depth",
+  "why": "EX-016 notes the CHK-1401 (01/10) vs AP10758 PaidDate (02/09) mismatch but only says 'Tie AP paid date to bank clearing date; investigate cutoff', with no analysis of plausible causes."
+ },
+ {
+  "task": "bookkeeping_accounting_and_auditing_clerks/task1",
+  "rubric": "R8",
+  "lost": 6,
+  "subtype": "wrong",
+  "why": "The log has 19 rows covering 7 of 8 expected issues, but logs payroll as $51,000 bank-only instead of the $45,138.61 GL gap, leaves EX-001 Amount blank, and uses Status 'Open'/'Proposed AJE' (no Resolved/Unresolved; that vocabulary is not in the prompt, but the payroll miss is the root)."
+ },
+ {
+  "task": "bookkeeping_accounting_and_auditing_clerks/task1",
+  "rubric": "R9",
+  "lost": 10,
+  "subtype": "wrong",
+  "why": "Part I Line 7 never equals $36,173.98 (the GL column omits $37.56 interest; the tax-ready column also deducts the $1,847.50 CHK-1402 AJE) and Part II puts $0 on Line 15 Insurance by booking the premium to prepaid; the wrong 24a/27a labels (unread form, R) also contributed."
+ },
+ {
+  "task": "bookkeeping_accounting_and_auditing_clerks/task2",
+  "rubric": "R0",
+  "lost": 6,
+  "subtype": "wrong",
+  "why": "Bank checks #1086-#1089 were labelled 'Bank statement only' (D-023, D-028, D-048) or force-matched to a different book item (D-007 maps the $780 #1089 debit to the $87.32 City Water line), and State Farm/SiteOne/Duke/Staples were treated as cleared instead of outstanding; check numbers were available in both files."
+ },
+ {
+  "task": "bookkeeping_accounting_and_auditing_clerks/task2",
+  "rubric": "R1",
+  "lost": 6,
+  "subtype": "wrong",
+  "why": "The $1,520 invoice and $1,250 #1087 bank payment are noted (D-114), but the cash-book line 'check 1087, Google LLC, $350, Advertising' is left as a provisional outstanding payment (D-092) instead of being flagged as the same check with wrong payee, amount and category."
+ },
+ {
+  "task": "bookkeeping_accounting_and_auditing_clerks/task2",
+  "rubric": "R2",
+  "lost": 6,
+  "subtype": "wrong",
+  "why": "Cash book 1086 Al's Auto $1,287.50 (D-090) and bank 1086 Mike's Auto $485 (D-023) were treated as two unrelated items, so the wrong payee/amount/date and the $802.50 book error were never identified."
+ },
+ {
+  "task": "bookkeeping_accounting_and_auditing_clerks/task2",
+  "rubric": "R5",
+  "lost": 10,
+  "subtype": "wrong",
+  "why": "JEs are balanced and use chart-of-accounts names, and the fee, interest and accrual entries are present, but the required Dr Cash / Cr Repairs & Maintenance $802.50 #1086 correction is missing (JE-B18 instead posts Mike's $485 as a new expense)."
+ },
+ {
+  "task": "bookkeeping_accounting_and_auditing_clerks/task2",
+  "rubric": "R6",
+  "lost": 6,
+  "subtype": "wrong",
+  "why": "The agent recognised the divergent book-only and bank-only populations but never treated #1086-#1089 as appearing in both with different payees/amounts; #1088 and #1089 are never mentioned anywhere."
+ },
+ {
+  "task": "bookkeeping_accounting_and_auditing_clerks/task2",
+  "rubric": "R7",
+  "lost": 6,
+  "subtype": "omitted",
+  "why": "The memo states the $32,289.70 true balance and the bank-side vs book-side categories by dollar total, but never states how many reconciling items there are, although the Discrepancies sheet enumerates them (D-001 to D-120)."
+ },
+ {
+  "task": "civil_engineers/task1",
+  "rubric": "R5",
+  "lost": 6,
+  "subtype": "wrong",
+  "why": "Material_Labor_Unit_Costs_2024.csv lists 8% for $1M-$5M and 10% for <$1M; UC-01 says 'Selected local 8.00% for $1M-$5M project' while its own base subtotal is $396,831, so the wrong tier was applied."
+ },
+ {
+  "task": "civil_engineers/task1",
+  "rubric": "R6",
+  "lost": 6,
+  "subtype": "instruction",
+  "why": "Unit Cost Analysis headers (row 91 of extract) include Local Total, WSDOT Engineer Est., WSDOT Low Bid, Selected Unit Price and a text 'Variance / Pricing Rationale', but no computed (WSDOT-Local)/Local percentage despite the prompt asking to address significant variances."
+ },
+ {
+  "task": "civil_engineers/task2",
+  "rubric": "R0",
+  "lost": 8,
+  "subtype": "instruction",
+  "why": "The memo says 'The memo's 8,928 SF paint area is accepted: 186 ft x 4 girders x 12-ft average perimeter'. There is no reasonableness check against plate girders at 9 ft spacing on 54-78-54 ft spans, although the task explicitly asks to reconcile memo quantities with independent calculations, as the agent did for rebar."
+ },
+ {
+  "task": "civil_engineers/task2",
+  "rubric": "R5",
+  "lost": 10,
+  "subtype": "wrong",
+  "why": "The 175.67 CY volume is correct, but the Detailed Estimate prices it at CDOT 601-03040 Conc CL D (Bridge) $1,592.03/CY, labelled a 'Class D bridge concrete proxy', rather than local M-001 Class H at $185/CY. This is defensible because CDOT 2024 has no Class H item, but it is the wrong-class pricing the rubric explicitly penalises."
+ },
+ {
+  "task": "civil_engineers/task2",
+  "rubric": "R6",
+  "lost": 6,
+  "subtype": "omitted",
+  "why": "The memo clearly recommends Option A, with cost, budget and 15- vs 40-year life-cycle arguments. It never mentions the deck rating '4 - Poor' with exposed reinforcement, the 1978 construction or the 2,850 ADT, although all are in the prompt and scope memo (judge)."
+ },
+ {
+  "task": "civil_engineers/task3",
+  "rubric": "R2",
+  "lost": 10,
+  "subtype": "depth",
+  "why": "The CSV gives pier caps Condition 5 with 'localized spalling at bearing seats' and a 48 SF patch, and Michigan LAP (downloaded) has Substructure Patching $360/CFT. The agent only wrote 'Not in authorized scope... excluded from estimate, retain as design/inspection follow-up', with no add-alternate decision, rationale or cost."
+ },
+ {
+  "task": "civil_engineers/task3",
+  "rubric": "R4",
+  "lost": 10,
+  "subtype": "depth",
+  "why": "The VE CSV uses $46/SF + 15% Region 1 correctly but assumes overlay renewal at year 15 and shows the overlay cheaper over 30 years ($2.02M vs $3.10M). It never contrasts 50-75 year replacement life with 20-30 year overlay life, and recommends replacement only on deck condition."
+ },
+ {
+  "task": "civil_engineers/task3",
+  "rubric": "R5",
+  "lost": 8,
+  "subtype": "wrong",
+  "why": "The memo and CSV state 6 BT-54 girders per span, but the takeoff assumed a 1.0-ft haunch width ('supplied data do not define haunch width') rather than the ~42-in BT-54 top flange. That gave 17.9 CY and a false FLAG on the CSV's roughly correct 21.5 CY."
+ },
+ {
+  "task": "civil_engineers/task3",
+  "rubric": "R8",
+  "lost": 8,
+  "subtype": "omitted",
+  "why": "The memo covers the April-June aquatic window and detour, but misses mountainous 'M' terrain access, pier-cap bearing-seat spalling expanding scope, and hidden deck deterioration as design risks, although all appear in the staged CSV and memo."
+ },
+ {
+  "task": "computer_and_information_research_scientists/task1",
+  "rubric": "R0",
+  "lost": 10,
+  "subtype": "wrong",
+  "why": "ml_hardware.csv's H100 SXM5 row (notes 'Listed performance figures are without sparsity') has Tensor-FP16 989.4T and INT8 1979T, but the report says it 'resolves the original proposal/budget use of sparsity-boosted figures (1,979/780 TFLOPS)'. It never mentions INT8, the 624 TFLOPS A100 sparsity figure, or that the proposal's 126.7/83.3 PFLOPS peaks were overstated."
+ },
+ {
+  "task": "computer_and_information_research_scientists/task1",
+  "rubric": "R2",
+  "lost": 8,
+  "subtype": "omitted",
+  "why": "The agent queried scheduling_constraints (root step with tables workload_specs/scheduling_constraints/...), but the Project Schedule notes are uniformly 'Priority-weighted share' and preferred_time_slot (anytime/business_hours/night_weekend/off_peak) never appears in any output."
+ },
+ {
+  "task": "computer_and_information_research_scientists/task1",
+  "rubric": "R3",
+  "lost": 10,
+  "subtype": "omitted",
+  "why": "The proposal (read in full at step ~429) describes Cedar with 24 V100s, 72 h average and >168 h peak waits, and an 8x A100 40GB departmental cluster. The Migration Plan instead uses the db's '64 GPUs nominal' fleet with no reconciliation. It cites the June-2025 values (98.5%, 168.4 h) where the rubric wanted May-2025 Legacy A 97.8%/112.5 h. That part is a defensible latest-month choice, but the Cedar omission is a real miss."
+ },
+ {
+  "task": "computer_and_information_research_scientists/task1",
+  "rubric": "R4",
+  "lost": 8,
+  "subtype": "wrong",
+  "why": "Query 1's at_risk is 'date(d.start_date) < delayed ready date OR monthly demand > current capacity'. end_date is selected but never compared against the shifted deployment, and remaining time is never checked against required GPU-hours, so the deadline-miss logic is wrong."
+ },
+ {
+  "task": "computer_and_information_research_scientists/task1",
+  "rubric": "R5",
+  "lost": 6,
+  "subtype": "wrong",
+  "why": "The urgency formula and ordering were correct, but the query uses 1.0/deadline_flexibility_days with no NULLIF/CASE guard. The judge failed the item on the zero-division sub-check."
+ },
+ {
+  "task": "computer_and_information_research_scientists/task1",
+  "rubric": "R7",
+  "lost": 6,
+  "subtype": "wrong",
+  "why": "The memo timeline has H100 18, NDR 14 and DLC 12 weeks right, but says 'A100 six weeks'. Option D is costed with bundled Supermicro A100 nodes (AS-4125GS-TNRT, 4 weeks), so the system lead time should have been 4 weeks."
+ },
+ {
+  "task": "computer_and_information_research_scientists/task1",
+  "rubric": "R8",
+  "lost": 6,
+  "subtype": "wrong",
+  "why": "The Cost Comparison uses budget_constraints.csv 'Average sustained draw' of 280/350/310 kW and never reconciles it with the proposal's comparison table (~350/~380/~365 kW). It labels B and C INFEASIBLE rather than quantifying summer throttling, and it never assesses the 340 sq ft room per option."
+ },
+ {
+  "task": "computer_and_information_research_scientists/task2",
+  "rubric": "R0",
+  "lost": 10,
+  "subtype": "depth",
+  "why": "Audit A3 gives Dell 1.83 kW component sum vs 3.50 kW system total next to the DGX case and says 'rows are not additive', but it never states this is the inverse of the DGX error or suggests missing components/unexplained overhead (borderline judge strictness)."
+ },
+ {
+  "task": "computer_and_information_research_scientists/task2",
+  "rubric": "R1",
+  "lost": 8,
+  "subtype": "wrong",
+  "why": "Correct 36/45 rows >500 GPU-h, but no high-demand researchers are named, although subagent 4 returned per-researcher totals with names. Hybrid was sized up to 19 DGX ($7,847,969 capital) and compared against the undersized quote ($3,129,950), so hybrid capital is not lower than on-prem."
+ },
+ {
+  "task": "computer_and_information_research_scientists/task2",
+  "rubric": "R3",
+  "lost": 8,
+  "subtype": "omitted",
+  "why": "A12 compares GPU memory only (640/320 GB envelopes) and never cites the 2 TB DGX / 1 TB R760xa system memory. It mentions an unnamed 640-GB row but not Tanaka or the 512-GB rows needing 7 H100s, and storage risk is aggregate only (624.5/700 TB), with no Kowalski or Johansson flags."
+ },
+ {
+  "task": "computer_and_information_research_scientists/task2",
+  "rubric": "R4",
+  "lost": 8,
+  "subtype": "instruction",
+  "why": "Capital Costs starts from $2,767,000 because the agent raised the UPS count from 3 to 6 (A5). It ignored the instruction anchoring on the $2,713,000 subtotal, so the discount is $138,350 and contingency $262,865, and the expected $2,577,350 / $2,835,085 never appear."
+ },
+ {
+  "task": "computer_and_information_research_scientists/task2",
+  "rubric": "R7",
+  "lost": 6,
+  "subtype": "omitted",
+  "why": "Wait times are given as p25 18 / median 40 / p90 127.2 / max 168 h, but the 2-hour minimum is missing and the extremes (Kowalczyk Inference, Kowalski Simulation 7 days) are not named."
+ },
+ {
+  "task": "computer_and_information_research_scientists/task2",
+  "rubric": "R9",
+  "lost": 8,
+  "subtype": "omitted",
+  "why": "A13 summarises current_infrastructure only as '64 GPUs at 95.88% weighted utilization, 24 operational, 16 degraded, 24 EOL'. It never lists the 10 systems, named EOL/degraded systems or GPU models (V100, RTX), and never computes the existing fleet's ~43,500 GPU-h/month vs 75,800 demand deficit."
+ },
+ {
+  "task": "computer_and_information_systems_managers/task1",
+  "rubric": "R4",
+  "lost": 6,
+  "subtype": "omitted",
+  "why": "The vendor pick uses the correct discounted TCOs and CUDs. Vendor_Cloud_Proposals has a 'Migration Timeline (months)' row (AWS 18-22, Azure 16-20, GCP 20-24), but no deliverable cites it (judge)."
+ },
+ {
+  "task": "computer_and_information_systems_managers/task1",
+  "rubric": "R5",
+  "lost": 8,
+  "subtype": "omitted",
+  "why": "compliance_status clearly lists CTL-007 and CTL-015 as Non-Compliant and 7 controls as Partial. The outputs only show statuses per NIST question, mixing controls (e.g. 'CTL-007, CTL-016'). They never enumerate the control statuses or link CTL-007 to RSK-006 and CTL-010 to RSK-016."
+ },
+ {
+  "task": "computer_and_information_systems_managers/task1",
+  "rubric": "R6",
+  "lost": 6,
+  "subtype": "omitted",
+  "why": "The category and subcategory analysis is right (Penetration Testing -100%, Network Refresh -20.3%). Cloud Services 11.0% sits in the table but is never called out as the highest category-level deviation approaching 15% (judge)."
+ },
+ {
+  "task": "computer_and_information_systems_managers/task2",
+  "rubric": "R1",
+  "lost": 10,
+  "subtype": "instruction",
+  "why": "The agent downloaded the 2010 calculator (step 10) but priced only the '3-year reserved Linux/Unix baseline'. It has no on-demand or 1-yr reserved tier and no monthly cloud cost column, only annual and 3-yr, and its sizing is odd (e.g. SRV-015 = Standard Large x35)."
+ },
+ {
+  "task": "computer_and_information_systems_managers/task2",
+  "rubric": "R2",
+  "lost": 8,
+  "subtype": "wrong",
+  "why": "The full Migration_Plan gates SRV-041 and NET-004 on PRJ-2024-042, but Security Operations SRV-042 and DNS/DHCP SRV-044 get 'Cost gate before PRJ-2024-041'. Zero Trust sequencing was keyed to Asset_Type control-plane, not Associated_Service, even though the subagent recommended deferring SRV-044 until PRJ-042. The $600K/segmentation rationale appears only in Executive_Summary rec 5, without status or timeline."
+ },
+ {
+  "task": "computer_and_information_systems_managers/task2",
+  "rubric": "R5",
+  "lost": 10,
+  "subtype": "instruction",
+  "why": "Action_Recommendation is free text ('Do not migrate at benchmark price; refresh, decommission, or right-size first', 'Migrate in controlled production wave', 'Retain...'). No Defer or Decommission category is ever assigned. Critical inclusions are flagged 'Critical-HA/rollback required', not as a criticality override."
+ },
+ {
+  "task": "computer_and_information_systems_managers/task2",
+  "rubric": "R6",
+  "lost": 10,
+  "subtype": "wrong",
+  "why": "No sheet relates the $5.15M pending portfolio to the overall budget. GAP-004's Estimated_Cost 85000 is hard-coded in build_deliverables.py line 224 with no benchmark or rationale, and the other gaps carry cost 0."
+ },
+ {
+  "task": "computer_user_support_specialists/task1",
+  "rubric": "R1",
+  "lost": 10,
+  "subtype": "wrong",
+  "why": "The agent queried both devices (department column) and vpn_incidents (device_id) and mapped DB incident IDs to root-cause families, but it treated the gateway-to-inventory hostname mismatch as blocking any department attribution. The departments field reads 'Unspecified in source; ...', while a vpn_incidents-devices join on device_id matches 120/120 rows."
+ },
+ {
+  "task": "computer_user_support_specialists/task1",
+  "rubric": "R4",
+  "lost": 6,
+  "subtype": "omitted",
+  "why": "The mapping, unreported sessions and duplicates all passed, but the limitations discussion covers only hostname mismatches. The helpdesk requesterEmail values are @acme.co while inventory and CAB use @acmecorp.com, and the report never flags this."
+ },
+ {
+  "task": "computer_user_support_specialists/task1",
+  "rubric": "R6",
+  "lost": 6,
+  "subtype": "depth",
+  "why": "The 2.3 Mbps, UDP 443 blocked and TLS-only fallback findings are present, but CI/CD appears only in a catch-all business-exposure row, and the DTLS departments field says just 'Engineering explicitly reported'. There is no causal statement linking DTLS fallback to the escalation email's CI/CD pipeline failures."
+ },
+ {
+  "task": "computer_user_support_specialists/task1",
+  "rubric": "R7",
+  "lost": 6,
+  "subtype": "omitted",
+  "why": "Report section 2 cites 'ssl_cert_expiry=2024-11-01 (last updated 2024-01-15)' but not config_id 12 or its 'CRITICAL: VPN gateway cert expired!' note. It uses CERT_HAS_EXPIRED/0x800B0101 instead of the log's 'Server cert issued by AcmeCorp-CA, expired 14 days ago. Needs renewal.' (3 occurrences in vpn_diagnostic_log.txt) and never frames the issue as a certificate-lifecycle failure."
+ },
+ {
+  "task": "computer_user_support_specialists/task2",
+  "rubric": "R1",
+  "lost": 8,
+  "subtype": "wrong",
+  "why": "Finance (5 Yes / 1 Partial / 5 No, $6,100) and the March 31 priority passed. Legal costs $3,900 because MFS-PC-054 is treated as a $1,400 Replace instead of a potentially remediable TPM-only device. This is the same root cause as R9."
+ },
+ {
+  "task": "computer_user_support_specialists/task2",
+  "rubric": "R3",
+  "lost": 6,
+  "subtype": "wrong",
+  "why": "The DB has a subcategory column (Driver Compatibility 15, Application Compatibility 10), but the analysis reports category counts (Software 16 / OS Migration 15 on 59 'pilot' tickets). Subagent 1 even noted 'Driver Compatibility 15'. There are no per-staff ticket counts or averages, and Sarah is not flagged as a critical Tier 2 bottleneck; the doc concludes 'current headcount can deliver'."
+ },
+ {
+  "task": "computer_user_support_specialists/task2",
+  "rubric": "R4",
+  "lost": 10,
+  "subtype": "wrong",
+  "why": "Lisa Chen's departure and the 5 remaining staff are correct, but the staffing section works only in hours (48h Sarah, 32h Priya, ~21h/sprint) and never projects per-staff weekly ticket volumes from the 61 pilot tickets."
+ },
+ {
+  "task": "computer_user_support_specialists/task2",
+  "rubric": "R6",
+  "lost": 6,
+  "subtype": "wrong",
+  "why": "A Tier 1 tree with escalation paths exists, but it is built on its own buckets (Driver/peripheral, Application, Network, Identity). It has no User Interface branch, no distinct Network Printer path and no subcategory counts. This follows from using category instead of subcategory."
+ },
+ {
+  "task": "computer_user_support_specialists/task2",
+  "rubric": "R8",
+  "lost": 8,
+  "subtype": "wrong",
+  "why": "L/M/H bands come from each device's own readiness class and flags ('Zero-ticket candidates receive no ticket points'). There is no similarity matching to pilot problem devices and no CPU-generation, manufacturer or laptop-vs-desktop incident-rate factors."
+ },
+ {
+  "task": "computer_user_support_specialists/task2",
+  "rubric": "R9",
+  "lost": 10,
+  "subtype": "wrong",
+  "why": "The inventory shows 054 with i7-8665U, UEFI/Secure Boot Yes, and 'TPM 1.2 only' as the sole reason, the same as Partial 002/059 ('firmware update available'). The register still lists 'MFS-PC-054 ... No | Replace | $1,400', with no firmware investigation or Legal-risk argument."
+ },
+ {
+  "task": "court_clerks/task1",
+  "rubric": "R0",
+  "lost": 8,
+  "subtype": "wrong",
+  "why": "The Barnett DOB mismatch was found, but pre_entry_audit.csv says 'Use CMS date provisionally only after certified record confirms it' and the order/register keep 03/15/1989 instead of treating the Judge's 03/14/1989 as authoritative for the order."
+ },
+ {
+  "task": "court_clerks/task1",
+  "rubric": "R1",
+  "lost": 6,
+  "subtype": "omitted",
+  "why": "Both SID values were recorded, but the audit and register only say the SIDs 'conflict' and never identify the 65/56 digit transposition."
+ },
+ {
+  "task": "court_clerks/task1",
+  "rubric": "R2",
+  "lost": 8,
+  "subtype": "depth",
+  "why": "The Simmons DOB conflict (09/03/1984 vs 09/22/1997, memo corroborating CMS) was flagged as an identity issue but not as affecting age at offense or the criminal-history/juvenile-lookback analysis the agent performed separately."
+ },
+ {
+  "task": "court_clerks/task1",
+  "rubric": "R3",
+  "lost": 6,
+  "subtype": "wrong",
+  "why": "fee_reconciliation.csv marks the $75 vs $400 PD user fee as 'CORRECTED\u2014UNDERASSESSMENT' for Henderson, Foster and Simmons and assesses $400, although the fee schedule marks PD_USER_FEE 'Conditional'; no recommendation to verify imposition with the Judge."
+ },
+ {
+  "task": "court_clerks/task1",
+  "rubric": "R5",
+  "lost": 10,
+  "subtype": "instruction",
+  "why": "The register table's columns are Case, Defendant, Disposition/sentence, Fine, Assessments, Probation supervision, Restitution, Corrected total: no Charges, Departure (Y/N + reason code) or Assignment columns. The rubric's fee totals (Judge-ordered amounts, e.g. Barnett $3,065) also differ from the agent's corrected totals, which is a defensible choice, but the missing columns alone fail the item."
+ },
+ {
+  "task": "court_clerks/task1",
+  "rubric": "R6",
+  "lost": 8,
+  "subtype": "depth",
+  "why": "Register annotations cover Barnett, Morales, Tran and Simmons but omit the Henderson filing-date inconsistency (cases.filing_date 2024-12-20 vs docket 'Case Filed' 2024-12-02). Subagent 3 had reported 'Henderson 12/02/24 filed' from the docket table, so the data was retrieved but not cross-checked."
+ },
+ {
+  "task": "court_clerks/task1",
+  "rubric": "R8",
+  "lost": 6,
+  "subtype": "wrong",
+  "why": "The audit prefers 'James T. Crawford, Appointed' over 'Public Defender Office', but never says this affects whether PD user fees apply; fee_reconciliation.csv still assesses Simmons a $400 PD user fee citing 'appointed public-defender representation', contradicting its own finding."
+ },
+ {
+  "task": "customer_service_representatives/task1",
+  "rubric": "R0",
+  "lost": 6,
+  "subtype": "depth",
+  "why": "Workbook Cross-Source Validation quotes the supervisor note 'her Dec bill was already elevated at $289' next to 'Dec alone 1,723 kWh / $302.29' but never flags the mismatch, although the task warned the notes may be factually unsupported."
+ },
+ {
+  "task": "customer_service_representatives/task1",
+  "rubric": "R1",
+  "lost": 6,
+  "subtype": "depth",
+  "why": "The analysis compared Nguyen's 2,364 kWh only to an Oct-Dec baseline (3,275 kWh / HDD ratio) and never to her ~997 kWh/month 2024 average, which was computable from the Billing History sheet the agent loaded at step 4."
+ },
+ {
+  "task": "customer_service_representatives/task1",
+  "rubric": "R2",
+  "lost": 10,
+  "subtype": "omitted",
+  "why": "The letter and briefing say Foster's rate stayed at 10.98 cents but never decompose the $336.27 bill (211.69 energy + 100.42 delivery + 24.16 tax in the Billing History columns) to show the discount was applied and explain the ~17.4 cents effective rate."
+ },
+ {
+  "task": "customer_service_representatives/task1",
+  "rubric": "R3",
+  "lost": 10,
+  "subtype": "depth",
+  "why": "All six letters cite 1,517 HDD and the Jan 7-11 warning but not the 8 days with lows below 0 F or the ~11 F departure from normal, both directly derivable from Erie_PA_Weather_Oct2024_Jan2025.csv (Low_Temp_F and Departure_From_Normal_F columns) that the agent read at step 4."
+ },
+ {
+  "task": "customer_service_representatives/task1",
+  "rubric": "R4",
+  "lost": 10,
+  "subtype": "omitted",
+  "why": "The templated consumer-rights paragraph covers the utility response and informal BCS complaint only; Step 3 'Filing a Formal Complaint ... a PUC judge will listen to both sides' is in PA_Utility_Consumer_Rights.pdf, which the agent read in full at steps 6-8, but was left out of every letter."
+ },
+ {
+  "task": "customer_service_representatives/task1",
+  "rubric": "R5",
+  "lost": 10,
+  "subtype": "omitted",
+  "why": "Nguyen's letter says 'A valid true-up should be offered over time rather than demanded as a lump sum' but does not tell her she has a right under PUC rules to ask for this (guide p.8 budget billing text the agent had read); borderline strict grading but the right was not stated."
+ },
+ {
+  "task": "customer_service_representatives/task1",
+  "rubric": "R6",
+  "lost": 6,
+  "subtype": "depth",
+  "why": "The briefing matrix used a composite urgency order 4004, 4002, 4006, 4005, 4003, 4001, putting DSP-4001 (Feb 24) after Feb 25 and Feb 27 deadlines; the rubric expected deadline proximity as an explicit ranking dimension. A defensible judgement, but no deadline-order ranking was shown."
+ },
+ {
+  "task": "customer_service_representatives/task1",
+  "rubric": "R7",
+  "lost": 6,
+  "subtype": "depth",
+  "why": "The systemic-issues section lists communication and control-data gaps but does not flag senior-discount application across both seniors (it concluded 'no confirmed tariff-rate error') or that Budget Billing failed to shield DSP-4003; it treated Nguyen as an open true-up audit."
+ },
+ {
+  "task": "customer_service_representatives/task1",
+  "rubric": "R8",
+  "lost": 6,
+  "subtype": "depth",
+  "why": "The briefing's divergence section uses $302.29 but never says the supervisor's $289 was wrong, and for DSP-4001 never notes that the 'Heating type mismatch' flag is unsupported because the claim and account both say Natural Gas Furnace (the workbook only says 'Gas heat is confirmed')."
+ },
+ {
+  "task": "data_entry_keyers/task1",
+  "rubric": "R3",
+  "lost": 10,
+  "subtype": "wrong",
+  "why": "ERR-006 Error_Type='Other' although the template offers 'Format', and its note ('scan, ERP, and master use Italy') does not cite Customer_Master_List.csv/CUST-006 Mediterranean Trade Co; the agent had the master row (reconciled master shows CUST-006 Registered-Active)."
+ },
+ {
+  "task": "data_entry_keyers/task1",
+  "rubric": "R6",
+  "lost": 6,
+  "subtype": "omitted",
+  "why": "ERR-010 was otherwise correct (Typo, ERP, Canada) but its note says only 'exact master value is Canada', with no Customer_Master_List.csv/CUST-010 reference; this is a level-of-detail choice in the log, since the agent had CUST-010 in its reconciled master."
+ },
+ {
+  "task": "data_entry_keyers/task1",
+  "rubric": "R11",
+  "lost": 10,
+  "subtype": "omitted",
+  "why": "CRT-005 is marked Fail, but Evidence_Comments give only 'CRM 29/30 and ERP 24/30 pass, 53/60 (88.3%)' and do not name ORD-202507-0002 or ORD-202508-0015, both already logged as ERR-002 and ERR-012 with variances."
+ },
+ {
+  "task": "data_entry_keyers/task2",
+  "rubric": "R3",
+  "lost": 8,
+  "subtype": "wrong",
+  "why": "error_log.xlsx rows 5 and 20 log BF-0013 R05.9->R05.1 and BF-0044 R05.9->R05.2 as Wrong Code, and neither form is in flagged_for_review.csv. The memo (section 1a 'as documented by the provider', section 5 REQUIRES REVIEW example) and the instruction that source forms may be internally inconsistent support flagging rather than correcting, so this is a misapplied protocol."
+ },
+ {
+  "task": "data_entry_keyers/task2",
+  "rubric": "R6",
+  "lost": 8,
+  "subtype": "wrong",
+  "why": "corrected_billing_data.csv changes BF-0013/0044 cough codes plus 8 rows where entered equals source (M54.5->M54.50 x6, K21.0->K21.9 x2), so it is not 'exactly the 20 CLEAR ERROR fields corrected to their source values'. M54.5 and K21.0 really are absent from the FY2025 file, so flagging them was reasonable, but choosing a replacement code without provider input and logging it as a clear error contradicts the template's 'Correct_Value from the source document'."
+ },
+ {
+  "task": "financial_managers_branch_or_department/task1",
+  "rubric": "R3",
+  "lost": 10,
+  "subtype": "depth",
+  "why": "All 19 Material Downgrades write-ups reuse the same 'Escalate to Loan Review... Confirm updated financials, repayment source, collateral valuation...' text, including for unsecured nonaccrual PCB-RB-50010 (6->8), instead of loan-specific actions (appraisal, workout, Special Assets)."
+ },
+ {
+  "task": "financial_managers_branch_or_department/task1",
+  "rubric": "R5",
+  "lost": 10,
+  "subtype": "depth",
+  "why": "The memo cites real FDIC Loan Performance figures (nonfarm nonresidential CRE PDNA 1.65%, total 1.60%) rather than the rubric's total-RE 1.21%/0.51% or C&D 0.76%/0.42% (these were in subagent 3's raw output but not relayed). More decisively, it never compares the branch's 2.8% 30+ day delinquency from quarterly_branch_metrics to national rates or uses that gap in the CRE decision."
+ },
+ {
+  "task": "financial_managers_branch_or_department/task1",
+  "rubric": "R6",
+  "lost": 10,
+  "subtype": "wrong",
+  "why": "For APP-003/006/007 the Decision Matrix uses 'product-specific scorecards' (AUS/policy limits) rather than the staged NESDCAP sheet's four objective factors and 0-5/6-9/10-13/14-18/19+ band mapping; the agent instead applied NESDCAP to the CRE memo."
+ },
+ {
+  "task": "financial_managers_branch_or_department/task1",
+  "rubric": "R7",
+  "lost": 8,
+  "subtype": "omitted",
+  "why": "APP-003 was declined/conditioned with FICO, DTI, utilization and late payment cited, but the 5-month 2022 employment gap and only 2 years at the current employer from the applicant notes in pending_loan_applications.csv were omitted."
+ },
+ {
+  "task": "financial_managers_branch_or_department/task1",
+  "rubric": "R10",
+  "lost": 6,
+  "subtype": "instruction",
+  "why": "The instructions specified the reconciliation workbook's three sheets; the agent added a fourth 'Methodology Notes' sheet, failing the 'exactly three sheets' criterion (a strict but literal reading of the instruction)."
+ },
+ {
+  "task": "financial_managers_branch_or_department/task2",
+  "rubric": "R1",
+  "lost": 8,
+  "subtype": "instruction",
+  "why": "All 14 adverse loans and objective factors are correct, but the Adverse Watch List shows only numeric Subjective_1/Subjective_2 values (+2/+2, +2/+1) with no per-loan explanation, although the task asks for subjective adjustments."
+ },
+ {
+  "task": "financial_managers_branch_or_department/task2",
+  "rubric": "R2",
+  "lost": 6,
+  "subtype": "omitted",
+  "why": "Decline and FICO/bankruptcy/DTI are right, but the memo (PDF p.8) omits 'No prior banking relationship' and $78,500 existing debt vs $52K income, both in pending_loan_applications.csv, and labels it CDFI Projected Loss instead of the OCC 'well-defined weaknesses/inadequate repayment capacity' framing."
+ },
+ {
+  "task": "financial_managers_branch_or_department/task2",
+  "rubric": "R3",
+  "lost": 10,
+  "subtype": "wrong",
+  "why": "The memo recommends 'DEFER' for APP-2025-001 and commits $0, offering only hypothetical post-relief structuring; it does not propose the Board waiver, reduced amount or participation sell-down that would allow conditional approval."
+ },
+ {
+  "task": "financial_managers_branch_or_department/task2",
+  "rubric": "R4",
+  "lost": 6,
+  "subtype": "omitted",
+  "why": "The Asset Quality cross-tab reports dollar balances only (e.g., Current 1-Pass $30,849,348) with no loan counts (49/16/5/8/5/1) and no commentary that worse delinquency maps to worse ratings; the agent had the full portfolio CSV."
+ },
+ {
+  "task": "financial_managers_branch_or_department/task2",
+  "rubric": "R5",
+  "lost": 6,
+  "subtype": "omitted",
+  "why": "The positive adjustment mentions 'nine years of restaurant management' and a 'strong co-guarantor (FICO 765; $585K residence)' but omits the 4 years as GM of a $2.1M restaurant, Elena Delgado and the ~$320K equity, all of which are in the application's Additional_Notes."
+ },
+ {
+  "task": "financial_managers_branch_or_department/task2",
+  "rubric": "R6",
+  "lost": 10,
+  "subtype": "omitted",
+  "why": "The APP-2025-004 analysis covers DTI, PMI, reserves and mitigants but never states the $28,000 student loan and $14,500 auto loan balances given in the application notes."
+ },
+ {
+  "task": "financial_managers_branch_or_department/task2",
+  "rubric": "R7",
+  "lost": 6,
+  "subtype": "omitted",
+  "why": "Ironbridge is shown in the watch list (LTV 1.38, DSCR 0.96, Projected Loss) but never called the largest problem credit, its $704K shortfall and NPA contribution are not stated, and actions are generic ('Workout / classify / collateral review'). The OCC fetch (69 pp.) was truncated and the spill file was never read, so the Substandard definition text was also missed (minor R)."
+ },
+ {
+  "task": "financial_managers_branch_or_department/task2",
+  "rubric": "R8",
+  "lost": 6,
+  "subtype": "omitted",
+  "why": "Memo p.4 says 'relationship deposits' but omits 'customer since 2020' and '$210K personal savings at Meridian', and gives LTV 0.78 without the $448K collateral value or any equipment-depreciation risk, though all are in the CSV row."
+ },
+ {
+  "task": "human_resources_specialists/task1",
+  "rubric": "R0",
+  "lost": 8,
+  "subtype": "omitted",
+  "why": "The report and the 'Attrition Overtime by Role' sheet show Lab Tech 50.0% vs 15.7%, but not the 31/62 and 31/197 counts. The only multiplier highlighted is the company-wide 2.93x, not the ~3x Lab Tech ratio (judge). The agent had computed these from the CSV but presented them only as rates."
+ },
+ {
+  "task": "human_resources_specialists/task1",
+  "rubric": "R3",
+  "lost": 6,
+  "subtype": "depth",
+  "why": "Positions_Open and Priority_Level appear only in the xlsx reference tables. The report's priority findings and recommendations group Lab Tech and Research Scientist with Sales Exec and HR under retention and workload, and never rank them as top hiring priorities with 4 and 3 openings. The agent had all three inputs but did not synthesize them."
+ },
+ {
+  "task": "human_resources_specialists/task1",
+  "rubric": "R5",
+  "lost": 10,
+  "subtype": "omitted",
+  "why": "Substantively met: 'Freeze unapproved overtime' and 'For labs and research, add cross-training, predictable schedules, staffing buffers'. It failed on two criteria. (1) No 'Section D': a rubric artifact, since the task specifies no lettered sections. (2) Research Scientist counts 33/97 vs 14/195 are missing; only 34.0%/7.2% is given. Criterion (2) alone fails the item, so the root cause is the agent's rates-only reporting."
+ },
+ {
+  "task": "lawyers/task1",
+  "rubric": "R2",
+  "lost": 6,
+  "subtype": "omitted",
+  "why": "The counter-proposal extends permits to Dec 1, 2029 and cites 120-night nets ($25,471-$32,835). Its justification mentions only the $245,000 Seaside mortgage and 'debt-service runway'. The $198k-$385k mortgage range and the 2017-2021 registrations are in the memo but were not carried into the TXT the rubric checks."
+ },
+ {
+  "task": "lawyers/task1",
+  "rubric": "R3",
+  "lost": 6,
+  "subtype": "depth",
+  "why": "\u00a75 says negotiations 'do not waive, release, toll, or impair any claim' and asks for an enforcement standstill. There is no mutual SOL tolling request, no deadline-pressure rationale, and no link between with-prejudice dismissal and an expiring \u00a71983 limitations period."
+ },
+ {
+  "task": "lawyers/task1",
+  "rubric": "R4",
+  "lost": 6,
+  "subtype": "depth",
+  "why": "Memo \u00a74 names all three Penn Central factors, and the character factor passed. Economic impact is argued only qualitatively and with 120-night projections, not the DB's historical STR net $47,130-$67,860 vs LTR $21,000-$33,600. Expectations are generic ('prior registrations, years of operations'), with no 2016-2021 purchase timing and no pre-2023 regulatory climate."
+ },
+ {
+  "task": "lawyers/task1",
+  "rubric": "R5",
+  "lost": 6,
+  "subtype": "omitted",
+  "why": "The analogy and the nondiscriminatory alternatives passed, but no file mentions strict scrutiny vs Pike or 'virtually per se invalid', although the agent fetched the full opinion (root step 17, 19 pages)."
+ },
+ {
+  "task": "lawyers/task1",
+  "rubric": "R6",
+  "lost": 6,
+  "subtype": "depth",
+  "why": "The with-prejudice term is flagged and refused, but the memo never explains that it permanently extinguishes the Takings/DCC/Due Process claims. It calls DCC 'possible leverage ... rather than assume it wins the case' instead of a claim that could invalidate the whole ordinance."
+ },
+ {
+  "task": "lawyers/task1",
+  "rubric": "R7",
+  "lost": 6,
+  "subtype": "omitted",
+  "why": "The letter cites AVR (1-year, adult entertainment) and Gage (5-year, plumbing/industrial), but no output names either case or compares their longer periods. The CSV says only that the 'Town's citation to amortization cases does not establish that 180 days is reasonable', and 180-day adequacy is never tied to investment-backed expectations or mortgages. The Belvidere contrast passed."
+ },
+ {
+  "task": "licensing_examiners_and_inspectors/task1",
+  "rubric": "R1",
+  "lost": 6,
+  "subtype": "omitted",
+  "why": "DENY is correct, but the PDF/workbook omit VIO-2022-0711 ($4,000), the 'OPEN - REFERRED TO AG' status of VIO-2023-0402, complaint 5006 and the application's 'FLAGGED - Civil judgment unpaid' background, all in the DB/CSV the agent queried at step 5."
+ },
+ {
+  "task": "licensing_examiners_and_inspectors/task1",
+  "rubric": "R2",
+  "lost": 6,
+  "subtype": "omitted",
+  "why": "Deficiency D-03 says 'Only 2 years self-reported' but never contrasts it with the 4-year minimum, even though #2025013's Notes field states 'Specialty requires minimum 4 years per WAC 296-200A-015'."
+ },
+ {
+  "task": "licensing_examiners_and_inspectors/task1",
+  "rubric": "R3",
+  "lost": 6,
+  "subtype": "omitted",
+  "why": "The Henderson duplicate is caught and #2025015 held, but the agent presents it as its own finding and never cites the #2025015 Notes field ('Principal name matches App #2025001'), which the criterion requires."
+ },
+ {
+  "task": "licensing_examiners_and_inspectors/task1",
+  "rubric": "R4",
+  "lost": 8,
+  "subtype": "omitted",
+  "why": "The HOLD for insurance expired 10/31/2024 is right, but the summary says only '$12,000 bond ... otherwise appear adequate' without stating the 11/20/2024 BondFiledDate that distinguishes valid bond from lapsed insurance."
+ },
+ {
+  "task": "licensing_examiners_and_inspectors/task1",
+  "rubric": "R6",
+  "lost": 10,
+  "subtype": "omitted",
+  "why": "Item 1 says 'I have attached receipts and photos but they are not included in this log'; the disposition (PDF p.3) only says 'Preserve receipts/photos when received' and never flags the missing attachments as a verification gap. Items 2-4 passed."
+ },
+ {
+  "task": "licensing_examiners_and_inspectors/task1",
+  "rubric": "R7",
+  "lost": 6,
+  "subtype": "omitted",
+  "why": "Four actionable recommendations are given (effective-date bond controls, adverse-status queue, field/complaint matching, experience evidence at intake), but none names a batch case such as Lakewood, Sound Fencing, Henderson or Westside."
+ },
+ {
+  "task": "management_analysts/task1",
+  "rubric": "R0",
+  "lost": 10,
+  "subtype": "omitted",
+  "why": "FRED average (75.835%) and all four plant comparisons are correct, but the interpretation only says all plants exceed FRED; it never frames Phoenix (rank 4, 91.5%) as underperforming internal targets rather than the industry."
+ },
+ {
+  "task": "management_analysts/task1",
+  "rubric": "R3",
+  "lost": 10,
+  "subtype": "wrong",
+  "why": "Trend Diagnostics gives only Portland's OTD slope (-1.44 pp/month) and month-level WATCH rows, with no monthly OTD progression, no explicit flag of the downward slope, no VP-memo/92% SLA tie-in and no 'systemic' characterisation. At steps 37-41 the agent also switched to volume-weighted OTD (93.0 to 85.6), away from the simple averages (92.7 to 86.4)."
+ },
+ {
+  "task": "management_analysts/task1",
+  "rubric": "R4",
+  "lost": 10,
+  "subtype": "omitted",
+  "why": "The memo recommends against consolidation and cites Phoenix's lowest OEE and additive capability, but omits Phoenix's highest cost per unit (~$81), uses 20.7% weighted turnover with no tenure or 'ramp-up not structural' framing, and does not say Columbus's $2.66M capex is needed regardless of consolidation."
+ },
+ {
+  "task": "management_analysts/task1",
+  "rubric": "R6",
+  "lost": 10,
+  "subtype": "wrong",
+  "why": "The memo reports headcount-weighted Phoenix turnover of 20.7% (not the 23.2% departmental average), no 2.4-year tenure and no 18/171 part-time split, and attributes training not translating into quality to missing certification rather than turnover. The subagent had supplied 23.18% and 2.42 y (L component)."
+ },
+ {
+  "task": "management_analysts/task2",
+  "rubric": "R0",
+  "lost": 8,
+  "subtype": "wrong",
+  "why": "Composite_Score weights are demand/utilization/WhCost/port redundancy/evidence coverage. Late-shipment rate and Survey CSAT are not scored ('Customer risk is a go/no-go gate in Risk_Matrix'), even though the memo's problem statement centres on late shipments and dissatisfaction and both data sources were loaded."
+ },
+ {
+  "task": "management_analysts/task2",
+  "rubric": "R2",
+  "lost": 10,
+  "subtype": "depth",
+  "why": "Consolidation_Scenarios gives only a 'Feasible at average-day demand proxy' flag based on orders over a 260-day year. It shows no before/after utilization of receiving plants from OrderList units against WhCapacities, and does not test PLANT03 or PLANT13 absorption numerically."
+ },
+ {
+  "task": "management_analysts/task2",
+  "rubric": "R3",
+  "lost": 10,
+  "subtype": "depth",
+  "why": "Risk_Matrix lists only the five candidates (four with 0 complaints), so the Complaint_Log distribution across PLANT03/08/09/12/13/16/04 is never shown. It also omits average severity, unresolved rate and most frequent category, though the attrition flag for PLANT09 was right."
+ },
+ {
+  "task": "management_analysts/task2",
+  "rubric": "R5",
+  "lost": 6,
+  "subtype": "depth",
+  "why": "The Methodology Statement lists the 30/25/20/15/10 weights without explaining how they were derived. Coverage limits (7 of 19 plants) appear only in a later 'Data limitations' paragraph, and the FreightRates-to-route mapping caveat is never stated."
+ },
+ {
+  "task": "management_analysts/task2",
+  "rubric": "R6",
+  "lost": 10,
+  "subtype": "omitted",
+  "why": "The ranked table shows only score, volume, topology plan, cost impact and action. Per-candidate utilization, cost/unit (given only for PLANT18 and PLANT09), late rate and CSAT (PLANT09 only) are missing, as are per-candidate retention counterarguments. PLANT08 (17.65% late, capacity 14) was kept out of the candidate pool."
+ },
+ {
+  "task": "management_analysts/task2",
+  "rubric": "R8",
+  "lost": 8,
+  "subtype": "wrong",
+  "why": "Subagent 2's step output computed 'PLANT03 n% 92.69 units% 96.94 ... late% 2.037', but build_deliverables.py writes '8,541/9,215 historical orders (96.94%)', pairing the unit share with order counts. The 2.04% late rate and the diversify-away-from-PLANT03 argument never appear."
+ },
+ {
+  "task": "management_analysts/task3",
+  "rubric": "R0",
+  "lost": 8,
+  "subtype": "omitted",
+  "why": "The agent's scripts used {'DHS':'Health Services'} (session), but no deliverable states the five code mappings or explains that DHS means Health Services (not Homeland Security) using the Rodent Sighting/Food Safety categories; slides list NYC analogs as DOHMH instead."
+ },
+ {
+  "task": "management_analysts/task3",
+  "rubric": "R1",
+  "lost": 8,
+  "subtype": "omitted",
+  "why": "Fire's $2,085,312 OT and 14.6% annual rate are reported, but the monthly 13.0-15.8% range (Monthly_Overtime sheet) is never shown, although the agent computed monthly flags for Sanitation and Transportation."
+ },
+ {
+  "task": "management_analysts/task3",
+  "rubric": "R2",
+  "lost": 6,
+  "subtype": "depth",
+  "why": "All 8 divisions above 12% vacancy are listed, but the memo never discusses that centralized hiring for credentialed clinical roles differs from hiring road-maintenance workers; credential remarks address cross-training only."
+ },
+ {
+  "task": "management_analysts/task3",
+  "rubric": "R5",
+  "lost": 10,
+  "subtype": "omitted",
+  "why": "The memo and workbook name only the five department-worst SLAs (<65%); Transit Route Change, Sidewalk Repair, Bulk Pickup (58.1%) and Seasonal Hiring Onboarding (68.5%) are not enumerated, although Process_Metrics, which the agent loaded, lists all nine below 70%."
+ },
+ {
+  "task": "management_analysts/task3",
+  "rubric": "R6",
+  "lost": 8,
+  "subtype": "omitted",
+  "why": "Workforce feasibility uses vacancy only; the Turnover_Rate_Pct column (Health 19.4-26.1%, Transportation 15.2-24.6%) in Staffing_Summary was loaded but never cited, so there is no turnover-instability argument for A, no attrition constraint on B's cross-training pools, and no retention strategy in the recommendation."
+ },
+ {
+  "task": "management_analysts/task3",
+  "rubric": "R7",
+  "lost": 6,
+  "subtype": "instruction",
+  "why": "The Proposal A Model tab has correct filled (190/215/137) and OT ($979,350 / $1,289,856 / $2,085,312) figures but no authorized-positions column (212/242/142), though the task asked it to 'project merged-department headcount'."
+ },
+ {
+  "task": "management_analysts/task3",
+  "rubric": "R8",
+  "lost": 10,
+  "subtype": "omitted",
+  "why": "The workbook says 'Sanitation exceeds 10% in Nov-Mar' but never gives the winter 12.7-14.4% vs summer 6.8-7.3% monthly rates, and Proposal A's Public Works merger is not linked to pooling winter surge capacity."
+ },
+ {
+  "task": "mechanical_engineering_technicians/task1",
+  "rubric": "R0",
+  "lost": 10,
+  "subtype": "instruction",
+  "why": "The report lists HC01030/HC02030/HC01031/HC02031 and flags the 40 mm rod, but page 11 says 'obtain IHC-approved 63/40 seal kit... Do not substitute HC01030/HC02030 or HC01031/HC02031 without written approval'. That deliberately declines the closest-match recommendation the instructions asked for."
+ },
+ {
+  "task": "mechanical_engineering_technicians/task1",
+  "rubric": "R2",
+  "lost": 6,
+  "subtype": "depth",
+  "why": "Cycles 16 (17.8 MPa / 18.5 L/min) and 33 (13.5 MPa / 29.5 L/min) are reported correctly, but page 5 says 'This supports process instability' and page 8 calls them 'control failures'. They are never linked to intermittent seal performance."
+ },
+ {
+  "task": "mechanical_engineering_technicians/task1",
+  "rubric": "R3",
+  "lost": 10,
+  "subtype": "wrong",
+  "why": "Cycle 24's 12.63 MPa is given as '+12.51%' over the 50-row sheet mean of 11.2254 MPa, not over the 10.8-11.5 MPa normal band. It is labelled a 'retraction outlier' with no friction or seal-binding interpretation."
+ },
+ {
+  "task": "mechanical_engineering_technicians/task1",
+  "rubric": "R5",
+  "lost": 10,
+  "subtype": "depth",
+  "why": "Subagent 1 reported 'Operating temperature: -20 to +80 C' from Test_Specifications, and the root agent ran pdftotext on the whole HAWE datasheet, which contains 'hydraulic fluid temperature -25 to +70 C' and 'ambient temperature -30 to +70 C'. The report discusses only the 82 C seal temperature and the 48-49 C fluid temperature and never makes the +80 against +70 compatibility check."
+ },
+ {
+  "task": "mechanical_engineering_technicians/task1",
+  "rubric": "R8",
+  "lost": 10,
+  "subtype": "depth",
+  "why": "Section 8 adds in-process finish gates, SPC and inspection, but the judge found no mention of feed rate, cutting speed, tool selection or other machining-parameter review for the rod finishing process. An expected element of a recurrence-prevention plan was left out."
+ },
+ {
+  "task": "mechanical_engineering_technicians/task2",
+  "rubric": "R0",
+  "lost": 10,
+  "subtype": "wrong",
+  "why": "PDF section 2 treats 3.8 mm/s as a blanket contract cap and labels the 3.0/3.9 POR/AOR values as 'context'; it never states 3.8 is a customised limit sitting between POR 3.0 and AOR 3.9 or which limit governs in each region (only 'Contract 3.8/2.5 is slightly tighter than AOR'). Interpretation choice by the agent; the values were all in hand."
+ },
+ {
+  "task": "mechanical_engineering_technicians/task2",
+  "rubric": "R1",
+  "lost": 10,
+  "subtype": "omitted",
+  "why": "Category I and zones A/B/C were stated, but the alarm 5.0 / trip 8.3 mm/s values (present in the Europump table the agent retrieved at step 6) were omitted, and the CSV header's 'Group 2 - medium machines rigid foundation' 4.5 mm/s was not identified as superseded ISO 10816-3 (the 'superseded by part 7' text was also in the step-6 result)."
+ },
+ {
+  "task": "mechanical_engineering_technicians/task2",
+  "rubric": "R2",
+  "lost": 6,
+  "subtype": "omitted",
+  "why": "MDE_A 3.90->2.68 (-31.3%) was reported, but the report never says MDE_A 2.85 is the highest motor-end reading at 110% and never cites the staged MDE_A FFT (1X 2.65, 2X 1.12 mm/s, 'possible angular misalignment') to diagnose misalignment; it only says MDE axial 'warrants alignment/thrust monitoring'."
+ },
+ {
+  "task": "mechanical_engineering_technicians/task2",
+  "rubric": "R3",
+  "lost": 8,
+  "subtype": "wrong",
+  "why": "The agent computed 110% = 275 m3/h and BEP = 225 m3/h (PDF p1) but never derived 275/225 ~ 122% BEP or placed it outside the 70-120% BEP POR, and never stated that PDE_H 3.78 passes AOR 3.9 but fails POR 3.0; it used a 70-105% of rated envelope instead."
+ },
+ {
+  "task": "mechanical_engineering_technicians/task2",
+  "rubric": "R4",
+  "lost": 10,
+  "subtype": "wrong",
+  "why": "PDF section 6 sets alarm 3.0 / trip 3.8 mm/s from contract/POR values rather than the ISO 10816-7 Category I 5.0/8.3 limits (which it had) or a baseline multiplier, and omits the 82 C bearing-temperature alarm from the spec's Test Requirements sheet."
+ },
+ {
+  "task": "mechanical_engineering_technicians/task2",
+  "rubric": "R5",
+  "lost": 10,
+  "subtype": "omitted",
+  "why": "Run-up/coast-down got a single bullet (PDF p4: 'resonance near 1,950 rpm is below 2,960 rpm'); no 2.68/2.72 mm/s peaks, no run-up vs coast-down confirmation, no (2960-1950)/2960 = 34% margin and no phase-stability statement, although all of these were in vibration_test_data.csv Section 3 and 5, which the agent read at step 3."
+ },
+ {
+  "task": "mechanical_engineering_technicians/task2",
+  "rubric": "R6",
+  "lost": 8,
+  "subtype": "omitted",
+  "why": "Root cause and desiccant breather were captured, but the 6316 C3 bearing, ~7920 h failure, the pre-failure 1.45->1.48->1.52->1.68->2.35 trend (the agent fitted these exact points at step 13 but reported only the post-repair trend) and an oil-analysis recommendation are missing."
+ },
+ {
+  "task": "mechanical_engineering_technicians/task2",
+  "rubric": "R7",
+  "lost": 8,
+  "subtype": "omitted",
+  "why": "The report notes the 80% original readings have no retest counterpart (PDF p1) but does not discuss the original 80% values (max PDE_H 2.56 mm/s) or say the gap is low risk and should be recorded for completeness."
+ },
+ {
+  "task": "mechanical_engineering_technicians/task3",
+  "rubric": "R2",
+  "lost": 8,
+  "subtype": "wrong",
+  "why": "The step-5 search result contained the Cat II <=200 kW zone table (A 3.2, B 5.1, C 8.5, D >8.5), but the script used the 4.2 factory-acceptance POR limit as the Zone A boundary, labelling 3.5 mm/s at point 6 'Zone A' and never stating A <=3.2."
+ },
+ {
+  "task": "mechanical_engineering_technicians/task3",
+  "rubric": "R5",
+  "lost": 6,
+  "subtype": "wrong",
+  "why": "1x 1.73->2.72 mm/s and 2x peaks are reported, but memo section 4 says the 1x increase 'requires checks for balance, alignment, looseness...' without explaining that a flow-dependent 1x rise points to off-BEP hydraulic radial thrust rather than unbalance/misalignment."
+ },
+ {
+  "task": "mechanical_engineering_technicians/task3",
+  "rubric": "R8",
+  "lost": 6,
+  "subtype": "wrong",
+  "why": "Same misread of the Europump table as R2: the API vs ISO comparison uses 'Cat II factory POR 4.2 / AOR 5.1' instead of the zone set, so the API 3.0 POR limit is never compared with the 3.2 Zone A/B boundary."
+ },
+ {
+  "task": "mechanical_engineers/task1",
+  "rubric": "R5",
+  "lost": 10,
+  "subtype": "wrong",
+  "why": "N5 A_required = 2.697 in2 = 7.875 x 0.3425, using the full 2:1 head thickness (D=48, K=1) instead of the UG-37 tr for a sphere of radius K1*D = 0.9 x 48 = 43.2 in. No adjusted local tr is shown, so this is a code-method error."
+ },
+ {
+  "task": "mechanical_engineers/task1",
+  "rubric": "R6",
+  "lost": 6,
+  "subtype": "omitted",
+  "why": "HIC was correctly made mandatory (S7/NACE TM0284) despite ASTM's supplementary status, but NACE MR0175 appears only as 'controls: low-hydrogen welding, controlled hardness'. The required resistance to HIC, SSC and SOHIC is never stated."
+ },
+ {
+  "task": "mechanical_engineers/task1",
+  "rubric": "R7",
+  "lost": 10,
+  "subtype": "wrong",
+  "why": "Impact adequacy rests only on '20 J at -46 C covers MDMT because -46 C is colder than -20 F'. SA-516-70N is never assigned to UCS-66 Curve D and no exemption temperature is computed for the governing thickness; section 8 leaves 'the final UCS-66/UG-20 review' as a caveat, which is the wrong or incomplete code method."
+ },
+ {
+  "task": "medical_and_health_services_managers/task1",
+  "rubric": "R0",
+  "lost": 10,
+  "subtype": "wrong",
+  "why": "Dental/Medicaid is $91.31, FAIL (-41.9%), which is correct. However, the memo's structural caveat concerns only Medicare dental being outside PPS ('validate whether dental encounters are outside PPS scope'). Medicaid dental still gets the $157.27 facility PPS proxy with no note that it is paid at encounter- or procedure-specific rates. Borderline."
+ },
+ {
+  "task": "medical_and_health_services_managers/task1",
+  "rubric": "R1",
+  "lost": 8,
+  "subtype": "wrong",
+  "why": "The CSV Medicare benchmark is 196.98 (CY2025 $202.65 x 0.972), and the memo says 'Medicare uses the CY2025 CMS base rate' as a 'forward-looking FY2025 audit control'. Memo \u00a74 shows the agent knew CY2024 $195.99 x 0.931 = $182.47 but did not use the rate applicable to Oct 2023-Sep 2024 dates of service. The subagent's CY2025-focused research reinforced this."
+ },
+ {
+  "task": "medical_and_health_services_managers/task1",
+  "rubric": "R3",
+  "lost": 10,
+  "subtype": "depth",
+  "why": "The agent extracted all 29 PDF pages with pypdf (step 7), and Note 7 lists gross charges $7,478,288 and contractual adjustments $2,884,264. The Peer Benchmark sheet still uses only operating-revenue ratios: no 38.6% rate, no Riverside estimate, and no note that Riverside lacks gross charges."
+ },
+ {
+  "task": "medical_and_health_services_managers/task1",
+  "rubric": "R4",
+  "lost": 10,
+  "subtype": "depth",
+  "why": "The memo gives a 340B recommendation and cites $1.514M and $8.555M separately, but never computes the 17.7% share. It also does not discuss whether Riverside's 55% Medicaid mix supports similar 340B revenue; it says only 'should not assume comparable 340B economics'."
+ },
+ {
+  "task": "medical_and_health_services_managers/task1",
+  "rubric": "R6",
+  "lost": 10,
+  "subtype": "depth",
+  "why": "Salaries (57.5% vs 54.0%) and benefits (15.2% vs 11.4%) are reported only as separate rows. The combined personnel ratio of 72.7% vs HealthFirst 65.4% (+7.3 pp) is never stated. The workforce strategy sub-criterion passed."
+ },
+ {
+  "task": "medical_and_health_services_managers/task1",
+  "rubric": "R7",
+  "lost": 10,
+  "subtype": "omitted",
+  "why": "The Revenue Variance sheet shows Feb Medicaid 246,020 vs 319,894 (-23.1%) and Mar -17.3%. The memo instead cites only total-revenue misses (Feb ($81,946) -10.5%). It gives no Medicaid-specific monthly figures, no causes (MCO payment delays, denials, retro rates), and no link to the BH/Dental Medicaid audit flags."
+ },
+ {
+  "task": "medical_and_health_services_managers/task2",
+  "rubric": "R2",
+  "lost": 10,
+  "subtype": "omitted",
+  "why": "45.8% government share and the peer comparison are correct. The sheet never notes that government payers are ~54.8% of visit volume but 45.8% of revenue, although the Payer Mix & Volume sheet the agent used has both."
+ },
+ {
+  "task": "medical_and_health_services_managers/task2",
+  "rubric": "R4",
+  "lost": 10,
+  "subtype": "wrong",
+  "why": "Memo section 3 says PT salaries 'finished $19,192 favorable for the year', but the budget FY2024 TOTAL row shows $19,192 unfavorable (10 of 12 months unfavorable). Because of this sign error PT was excluded, and action 2 targeted supplies and equipment instead of PT/OT salaries."
+ },
+ {
+  "task": "medical_and_health_services_managers/task2",
+  "rubric": "R5",
+  "lost": 10,
+  "subtype": "wrong",
+  "why": "The budget sheet gives total revenue +$4,218 and total expenses -$51,631 versus budget, but the memo never states either. It attributes the shortfall mainly to Medicaid rates below 120% of cost (judge evidence: executive summary)."
+ },
+ {
+  "task": "medical_and_health_services_managers/task2",
+  "rubric": "R6",
+  "lost": 10,
+  "subtype": "wrong",
+  "why": "'Financial Benchmark' gives a VG department proxy only for operating margin and rev/bed, with no above/below flags against P25, median and P75. It omits total margin and days cash on hand for the peers entirely and chose other ratios instead. Part of this reflects department-only VG data, but the presentation and ratio choice are the agent's."
+ },
+ {
+  "task": "medical_and_health_services_managers/task2",
+  "rubric": "R7",
+  "lost": 10,
+  "subtype": "omitted",
+  "why": "The memo mentions only a July trough (-$15,890). It never ties the June/July revenue drop ($317,409/$302,228; PT $217,322 to $159,773) to expenses that stayed at $318-324K, although the monthly sheet the agent read shows all of this."
+ },
+ {
+  "task": "medical_secretaries/task1",
+  "rubric": "R1",
+  "lost": 10,
+  "subtype": "depth",
+  "why": "The REF-0210 mismatch, the correct M84.452A code and the Dr. Patel/fax contact all passed. The item failed only because no file explains that laterality errors risk wrong-site procedures; the Discrepancy Report just says 'Laterality mismatch / urgent clinical clarification'."
+ },
+ {
+  "task": "medical_secretaries/task1",
+  "rubric": "R3",
+  "lost": 10,
+  "subtype": "depth",
+  "why": "The staged CSV shows AET-5567201 on REF-0202, REF-0218 (Thompson) and REF-0217 (Washington, a different patient). The agent imported these rows but never checked for ID collisions; the Discrepancy Report issue types cover no insurance-ID anomaly."
+ },
+ {
+  "task": "medical_secretaries/task1",
+  "rubric": "R4",
+  "lost": 8,
+  "subtype": "omitted",
+  "why": "REF-0210 is correctly in Tier 1 with oncology coordination and the Patel contact, but the action text ('Coordinate oncology referral noted; no appointment scheduled') never ties urgency to the suspected malignancy in the CSV's Referral_Reason."
+ },
+ {
+  "task": "medical_secretaries/task1",
+  "rubric": "R5",
+  "lost": 6,
+  "subtype": "omitted",
+  "why": "A subagent retrieved the pacortho.org release form (step 485), yet the template only has a 45 CFR 164.508(c) checklist 'not itself a patient authorization'. It names no attached HIPAA Authorization Release Form and has no fax confidentiality notice; letterhead, merge fields and the 10-day deadline passed."
+ },
+ {
+  "task": "medical_secretaries/task1",
+  "rubric": "R9",
+  "lost": 6,
+  "subtype": "wrong",
+  "why": "All entries carry contact, practice and fax, but the duplicate REF-0202/0218 actions say 'confirm second-opinion workflow' rather than recommending consolidation with the paired REF-ID. The CSV note does say the patient seeks a second opinion, so this is a judgment miss."
+ },
+ {
+  "task": "online_merchants/task1",
+  "rubric": "R0",
+  "lost": 6,
+  "subtype": "wrong",
+  "why": "SKU-007 metrics are right, but at step 16 the agent switched portfolio_return_mean from perf['return_pct'].mean() (4.28%) to a units-weighted 3.8% and used Tops 4.34%/4.27 rating, so the catalog averages 4.28%/4.25 never appear."
+ },
+ {
+  "task": "online_merchants/task1",
+  "rubric": "R2",
+  "lost": 6,
+  "subtype": "omitted",
+  "why": "SKU-005 appears as Moderate with 'return >= P75; conversion <= 2.8%' indicators, but the agent never states that it mirrors the Dark Denim Top pattern or should be monitored despite having no escalated complaint."
+ },
+ {
+  "task": "online_merchants/task1",
+  "rubric": "R5",
+  "lost": 8,
+  "subtype": "wrong",
+  "why": "Supplier_Quality_Notice.pdf states 8.2%, 3.5 and 178 units but benchmarks them to the Tops average 4.34% and weighted rating 4.27 rather than the catalog 4.28%/4.25; this came from the same deliberate weighting choice."
+ },
+ {
+  "task": "online_merchants/task2",
+  "rubric": "R0",
+  "lost": 10,
+  "subtype": "omitted",
+  "why": "store_policies.docx names each section (1. Shipping Policy, 2. Return & Exchange Policy, 3. Pricing & Promotions Policy, 6. Product Quality Guarantee) and the agent read it, but the responses only say 'under our guarantee' (docx line 36). The 7-day rule appears only in an internal note, and the original-shipping refund and 60- vs 30-day window are omitted."
+ },
+ {
+  "task": "online_merchants/task2",
+  "rubric": "R2",
+  "lost": 8,
+  "subtype": "depth",
+  "why": "The audit maps class themes to generic catalog gaps ('no measurements', avoid 'premium'/'perfect') and never quotes listing text against review text. The Yellow Wool-Blend Jumper appears only as a fit recommendation (PDF line 130), with no wool-quality contradiction. The inputs had both listings and reviews; Sweaters is outside the agent's three selected classes, which partly explains that miss."
+ },
+ {
+  "task": "online_merchants/task2",
+  "rubric": "R5",
+  "lost": 6,
+  "subtype": "depth",
+  "why": "PDF format, length and sections 1, 2 and 4 passed. The criterion fails on the same Section 3 weakness as R2: no SKU- or class-level listing-vs-review language comparison, and the PDF itself says review SKUs cannot be mapped to store products."
+ },
+ {
+  "task": "online_merchants/task2",
+  "rubric": "R6",
+  "lost": 6,
+  "subtype": "depth",
+  "why": "Each triage note ends with the identical 'Portfolio proxy is 12.47% overall margin; use it for prioritization, not item economics' (e.g. docx lines 57, 69). It gives no category/sub-category lookup or directional proxy (Leather Tote as high-price item, Clay Plant Pot as home goods), and margin never drives the retain/remove call. The domain mismatch was correctly acknowledged."
+ },
+ {
+  "task": "personal_financial_advisors/task1",
+  "rubric": "R1",
+  "lost": 8,
+  "subtype": "omitted",
+  "why": "The memo says 'QQQ+AAPL+MSFT+NVDA total $199,458 (8.38% of listed holdings) ... adding AMZN raises the mega-cap/tech group to $221,396', but gives no per-holding values (AAPL $39,016, etc.) and no VOO or VTI large-cap amounts. All of these were in the staged holdings sheet."
+ },
+ {
+  "task": "personal_financial_advisors/task1",
+  "rubric": "R3",
+  "lost": 8,
+  "subtype": "omitted",
+  "why": "The root agent fetched the Treasury 2024 CSV with a '30 Yr' column (python fetch output, header 'Date,...,\"10 Yr\",\"20 Yr\",\"30 Yr\"'), but Market_Environment and the memo report only 2Y and 10Y. The judge failed the item solely for the missing 30Y yield of 4.78%."
+ },
+ {
+  "task": "personal_financial_advisors/task1",
+  "rubric": "R5",
+  "lost": 10,
+  "subtype": "omitted",
+  "why": "The 24.46% 12-month return was correct, and Market_Environment lists 2024-12 = 6010.91, but neither the sheet nor the memo identifies it as the recent high. The judge failed the item on that sub-check."
+ },
+ {
+  "task": "personal_financial_advisors/task1",
+  "rubric": "R6",
+  "lost": 10,
+  "subtype": "depth",
+  "why": "data_quality_notes.csv says 'For tax model use 85% of Social Security as taxable assumption', and the memo says the model 'excludes ... the feedback of conversions on Social Security taxation'. No provisional-income computation (AGI + 50% SS against the $44K MFJ threshold), with or without the conversion, appears anywhere."
+ },
+ {
+  "task": "personal_financial_advisors/task1",
+  "rubric": "R8",
+  "lost": 10,
+  "subtype": "wrong",
+  "why": "The memo finds B is '$26,833 higher, not lower' and gives a two-handed recommendation ('If the priority is strictly lowest tax ... do not force all four conversions; if legacy ... the staged plan is reasonable') instead of a definitive choice. It also holds 2025 brackets flat and never discusses the TCJA sunset that makes 2025 conversions attractive."
+ },
+ {
+  "task": "petroleum_engineers/task1",
+  "rubric": "R1",
+  "lost": 8,
+  "subtype": "wrong",
+  "why": "README and memo: 'decline is log-linear on positive oil months'. Production_Decline has only oil_log_slope_per_month and annual_decline_rate, with no Di or b. The agent chose an exponential fit instead of the standard Arps hyperbolic and never mentions Arps in the trajectory."
+ },
+ {
+  "task": "petroleum_engineers/task1",
+  "rubric": "R4",
+  "lost": 8,
+  "subtype": "depth",
+  "why": "The executive summary is quantified and the data-quality section exists. The recommendations table assigns High/Moderate, but the memo never defines confidence levels by R-squared bands or cross-source corroboration (judge)."
+ },
+ {
+  "task": "police_fire_and_ambulance_dispatchers/task1",
+  "rubric": "R0",
+  "lost": 10,
+  "subtype": "wrong",
+  "why": "Prioritized Queue assigns 'RS1 (water rescue/high-angle squad); BC6' and says E2 is ENROUTE so cannot be double-booked; no recall of E2 and no explicit mutual-aid escalation. The agent's own Unit Match Matrix and Resource Depletion sheet say only E2 has Swift Water Rescue (RS1 is High-angle in unit_status.csv). The geojson does list swift water at the Engine 2 station, so the choice is partly defensible, but it contradicts the agent's own matrix."
+ },
+ {
+  "task": "police_fire_and_ambulance_dispatchers/task1",
+  "rubric": "R1",
+  "lost": 10,
+  "subtype": "omitted",
+  "why": "conflict_report.csv lists only true anomalies (E11 status mismatch, A15/M5/EMS3 unlinked, related pairs). It never records E4/T6/BC4/EMS4 as ON_SCENE at A02 and unavailable, even though the agent excluded them from dispatch. The agent chose to report only anomalies. The rubric expected all committed units to be listed."
+ },
+ {
+  "task": "police_fire_and_ambulance_dispatchers/task1",
+  "rubric": "R2",
+  "lost": 10,
+  "subtype": "omitted",
+  "why": "The Resource Depletion sheet gives Battalion 2 as aggregates only (7 units, 2 OOS, flag LOW from post-dispatch depletion of 80%) and never names E7/M7 maintenance as the reason. It also flags ALS 'ZERO AFTER DISPATCH'. The rubric's 8-unit roster is itself wrong: A19 is Battalion 3 in unit_status.csv, so the agent's count of 7 is correct."
+ },
+ {
+  "task": "police_fire_and_ambulance_dispatchers/task1",
+  "rubric": "R3",
+  "lost": 10,
+  "subtype": "wrong",
+  "why": "Stroke IC-014 is P1 with M4, but A11 (a BLS ambulance at 0.09 mi) is the Primary Unit, and no file mentions tPA or the 3-4.5 h treatment window. The justification only says 'time-sensitive transport is prioritized'."
+ },
+ {
+  "task": "police_fire_and_ambulance_dispatchers/task1",
+  "rubric": "R4",
+  "lost": 10,
+  "subtype": "wrong",
+  "why": "The agent downloaded the same 663,522-row montcoalert data (step 11-13), but it ranked title suffixes, so the top type appears as 'VEHICLE ACCIDENT -' (148,372, which is 'Traffic: VEHICLE ACCIDENT -'), with a separate 'VEHICLE ACCIDENT' at rank 4. It also states 'Context only; not a D.C. deployment model', so the finding never informs positioning. The judge was wrong that the agent did not use the sample data, but the labeling and framing are the agent's choices."
+ },
+ {
+  "task": "police_fire_and_ambulance_dispatchers/task1",
+  "rubric": "R9",
+  "lost": 10,
+  "subtype": "wrong",
+  "why": "COPD call IC-010 is P1 but gets only A14 (BLS) as primary ('mutual-aid ALS requested'). All five available medics went to other calls, including M8 sent 5.86 mi to chest pain IC-005, so the ALS shortage came from the agent's own allocation."
+ },
+ {
+  "task": "producers/task1",
+  "rubric": "R1",
+  "lost": 10,
+  "subtype": "wrong",
+  "why": "The roster's Production Team sheet says Choreographer Samira Hassan 'Available Mon/Wed/Sat only'. It appears in root's own read and in subagent d09afbb5's report, yet the Daily Schedule puts staging/transitions/Act II runs on Tue 9/16, Thu 9/18, Fri 9/19, Thu 9/25, Fri 9/26 and never mentions dance or the choreographer."
+ },
+ {
+  "task": "producers/task1",
+  "rubric": "R5",
+  "lost": 6,
+  "subtype": "depth",
+  "why": "The memo states 30.1% utilization, the $2,625 vs $24,400 revenue gap and a conditional tranche recommendation, but gives no spend-rate-vs-timeline analysis and omits the uncommitted costumes $2,500, lighting $800, sound $1,200 and orchestra $1,800 that are in the budget tracker."
+ },
+ {
+  "task": "producers/task1",
+  "rubric": "R6",
+  "lost": 10,
+  "subtype": "omitted",
+  "why": "The memo's action table uses Priority/Owner/Action/Due with no Status column and has no Sep 20 Youth Soccer Banquet venue item. The Production Team's missing emergency contacts are not flagged anywhere: the directory leaves those cells blank with 'No personnel issue recorded'."
+ },
+ {
+  "task": "purchasing_agents_except_wholesale_retail_and_farm_products/task1",
+  "rubric": "R1",
+  "lost": 10,
+  "subtype": "wrong",
+  "why": "All 15 items and suppliers are consolidated correctly, but specialized items were mapped to generic medians (LED fixture vs ELECTRICAL MATERIALS $9.31, metering pump/HDPE vs PLUMBING $10.62) and flagged Above Benchmark; zero 'No Benchmark' flags, although the agent considered that option in its reasoning at step 27."
+ },
+ {
+  "task": "purchasing_agents_except_wholesale_retail_and_farm_products/task1",
+  "rubric": "R2",
+  "lost": 10,
+  "subtype": "wrong",
+  "why": "Both scenarios and the freight thresholds are modeled, but the TCO columns are Base, Freight and Conditional Discounts only: early-pay discounts are applied at face value with no NPV, and Pacific's extended pump warranty has no value in the TCO."
+ },
+ {
+  "task": "purchasing_agents_except_wholesale_retail_and_farm_products/task1",
+  "rubric": "R3",
+  "lost": 10,
+  "subtype": "depth",
+  "why": "Outputs call TriState's '14\u201321 business days' a safety risk but never convert it to ~2.8\u20134.2 calendar weeks against the 3-week OSHA window stated in TASK_INSTRUCTIONS, and never call the 14-day lower bound borderline."
+ },
+ {
+  "task": "purchasing_agents_except_wholesale_retail_and_farm_products/task1",
+  "rubric": "R4",
+  "lost": 10,
+  "subtype": "wrong",
+  "why": "PO-2025-0112A shows a single 14,717.75 subtotal with no Electrical/Safety breakout, and PO-2025-0112B shows SHIPPING/HANDLING 0 although supplier_bid_proposals lists TriState freight as an estimated $385 flat rate, FOB Origin; the $385 is mentioned only in remarks."
+ },
+ {
+  "task": "purchasing_agents_except_wholesale_retail_and_farm_products/task1",
+  "rubric": "R6",
+  "lost": 10,
+  "subtype": "depth",
+  "why": "Dollar discounts ($1,013.66 Apex, $664.55 Pacific) are correct, but there is no days-early calculation or annualized return (~31% / ~49% APR) and no statement that the discounts are high-return opportunities."
+ },
+ {
+  "task": "purchasing_agents_except_wholesale_retail_and_farm_products/task1",
+  "rubric": "R8",
+  "lost": 10,
+  "subtype": "depth",
+  "why": "Warranty enters only as a 1-5 score. Pacific's extra pump warranty is never valued against the $1,198\u2013$1,345 pump price or the diaphragm failures cited in PR-2025-0042, and plumbing was awarded to TriState over a $14.50 difference."
+ },
+ {
+  "task": "purchasing_agents_except_wholesale_retail_and_farm_products/task1",
+  "rubric": "R9",
+  "lost": 10,
+  "subtype": "depth",
+  "why": "TriState (14\u201321 business days) is awarded plumbing, yet the memo offers only written delivery confirmation: no not-to-exceed date or penalty clause, no backup supplier, and no note that Apex's 10\u201314 days could be tight."
+ },
+ {
+  "task": "purchasing_agents_except_wholesale_retail_and_farm_products/task2",
+  "rubric": "R0",
+  "lost": 6,
+  "subtype": "omitted",
+  "why": "vendor_compliance_flags.csv lists CF-2024-001 (open; PO-2024-0145, UPS 7 days late, Section 8.2, CAP window expired 2024-12-20) plus closed CF-2024-002 and CF-2023-001 for PrimeByte. The Compliance Review only says 'CF-2024-001 open (late delivery; corrective action pending)' and never mentions the two closed flags."
+ },
+ {
+  "task": "purchasing_agents_except_wholesale_retail_and_farm_products/task2",
+  "rubric": "R1",
+  "lost": 6,
+  "subtype": "wrong",
+  "why": "Delivery Risk rates PrimeByte 'High' on its 50-day maximum (-22 buffer), but proposes an 'expediting plan' rather than flagging the lead time as a potential disqualifier. It never states that the 45-day minimum exceeds the 28-day window by 17 days. OfficePro's '5/5 completed' comes from purchase_orders, while contract_compliance gives 6/6; that part is defensible."
+ },
+ {
+  "task": "purchasing_agents_except_wholesale_retail_and_farm_products/task2",
+  "rubric": "R2",
+  "lost": 10,
+  "subtype": "omitted",
+  "why": "HUB statuses and scoring were correct; the item failed only for not citing Texas LGC 252. The Addison research subagent reported 'LGC \u00a7252.0215' HUB provisions, but root framed Addison as a benchmark that 'seeks HUB participation but does not give vendor preferences' and left the statute out."
+ },
+ {
+  "task": "purchasing_agents_except_wholesale_retail_and_farm_products/task2",
+  "rubric": "R3",
+  "lost": 8,
+  "subtype": "depth",
+  "why": "The PO's codes, separable carryover section and April 7 deadline passed, but it has no payment terms. The Addison manual the agent downloaded sets 30-day payment under the Prompt Payment Act (GC 2251.025), and payment terms are a standard PO field."
+ },
+ {
+  "task": "purchasing_agents_except_wholesale_retail_and_farm_products/task2",
+  "rubric": "R4",
+  "lost": 8,
+  "subtype": "omitted",
+  "why": "The memo only says 'PrimeByte has an unresolved late-delivery compliance flag... do not award while corrective action remains open'. It names no CF-2024-001, PO-2024-0145 or VPN/CAP dates and cites Ch.2 Subch.A rather than the Non-Performing Vendors / Vendor Disqualification section (Ch2 SubB S2) the subagent located. It never explains why PrimeByte's cheapest TCO ($126,180) was outweighed."
+ },
+ {
+  "task": "purchasing_agents_except_wholesale_retail_and_farm_products/task2",
+  "rubric": "R6",
+  "lost": 6,
+  "subtype": "wrong",
+  "why": "The memo states the March 31 expiry but does not analyze the March 10-31 execution window, does not recommend executing the carryover portion immediately on award, and calls loss of carryover 'a timing/control risk rather than a budget shortfall' instead of a Scenario B descope contingency."
+ },
+ {
+  "task": "purchasing_agents_except_wholesale_retail_and_farm_products/task2",
+  "rubric": "R9",
+  "lost": 10,
+  "subtype": "wrong",
+  "why": "The Compliance Review lists GSA vs DIR vehicles and number mismatches but marks everything 'mismatch; validate' and the memo calls DataEdge a 'vehicle mismatch'. The manual's Interlocal/Cooperative Purchasing and State and Federal Contracts sections, which make DIR purchases valid, were found by the subagent's pdftotext grep but never applied."
+ },
+ {
+  "task": "purchasing_agents_except_wholesale_retail_and_farm_products/task3",
+  "rubric": "R6",
+  "lost": 6,
+  "subtype": "omitted",
+  "why": "The Pinnacle quote states the 50% deposit is due at PO with 50% on delivery and becomes non-refundable after production starts. budget_amendment_memo item 4 states the Net 30/45 preference and a possible 2-3 week CFO delay. The root read both, but the memo says only '50% deposit creates CFO risk'."
+ },
+ {
+  "task": "purchasing_agents_except_wholesale_retail_and_farm_products/task3",
+  "rubric": "R7",
+  "lost": 10,
+  "subtype": "omitted",
+  "why": "The $378,940 total and $68,940 overage plus VP Ops escalation are stated. The counter-offer is Atlas-only and the memo never clearly says Meridian cannot be brought under the cap. The Meridian 5% conference discount (~$3,027) appeared in the subagent's result but was left out of the memo."
+ },
+ {
+  "task": "purchasing_agents_except_wholesale_retail_and_farm_products/task3",
+  "rubric": "R9",
+  "lost": 10,
+  "subtype": "omitted",
+  "why": "warranty_claims holds #9 (PO-2024-0205, weld crack, desk unstable) and #10 (PO-2024-0680, gas cylinder drop while occupied), and the agent queried that table. The memo only says '2 open safety/structural claims' and never names the incidents or explains the occupant-injury and workplace-hazard implications."
+ },
+ {
+  "task": "reporters_and_correspondents/task1",
+  "rubric": "R0",
+  "lost": 8,
+  "subtype": "omitted",
+  "why": "All five cities and their ranks were mapped correctly, but no output explains that high-risk status rests on newly poisoned children, housing age and income, or names New Britain, Norwich, West Haven, Stamford and Manchester as missing from the water data. Both facts are in ct_report.txt lines 122-136, which the agent extracted."
+ },
+ {
+  "task": "reporters_and_correspondents/task1",
+  "rubric": "R1",
+  "lost": 8,
+  "subtype": "wrong",
+  "why": "The Water Lead Trends summary has First_to_Last_Change_ppb (e.g. Hartford 2.2) and a linear slope but no percent change (Hartford +26.8%, Waterbury +31.6%, etc.); the agent chose absolute-change metrics for the required trend calculation."
+ },
+ {
+  "task": "reporters_and_correspondents/task1",
+  "rubric": "R2",
+  "lost": 10,
+  "subtype": "omitted",
+  "why": "CT 2017-2019 figures and the 2020-22 non-submission are correct, but the sheet never flags that 2017 had only 1,666 children tested, which makes the 5.6% rate unreliable. The agent had the downloaded CDC workbook (step 10)."
+ },
+ {
+  "task": "reporters_and_correspondents/task1",
+  "rubric": "R5",
+  "lost": 6,
+  "subtype": "omitted",
+  "why": "ct_report.txt lines 3-4, 37-38 and 77 state 'Effective January 1, 2023 ... from 5 ug/dL to 3.5 ug/dL, per Public Act 22-49', but no deliverable names the act, the date or the threshold change; the memo only uses 3.5 ug/dL as a cutoff."
+ },
+ {
+  "task": "reporters_and_correspondents/task1",
+  "rubric": "R6",
+  "lost": 8,
+  "subtype": "omitted",
+  "why": "The memo cites lead-service-line counts only for Hartford (3,420 to 2,500) and Waterbury, gives no population-served ratios and no ranking of Hartford as the largest burden, and treats the LCRI only as the 10 ppb action level from 2027. The 10-year replacement mandate is in the staged Martinez interview notes and in the agent's EPA search results."
+ },
+ {
+  "task": "sales_agents_securities_and_commodities/task1",
+  "rubric": "R0",
+  "lost": 6,
+  "subtype": "omitted",
+  "why": "Commission_Audit gives each agent's name, tier, rate, the Fidelity Online $0 benchmark and the classification, but leaves out the Rep-Assisted $32.95 rate. The PDF says the FAST and rep-assisted rates 'are disclosed but not used', so the agent had them."
+ },
+ {
+  "task": "sales_agents_securities_and_commodities/task1",
+  "rubric": "R3",
+  "lost": 10,
+  "subtype": "wrong",
+  "why": "The Volatility sheet correctly finds 'No supplied ticker exceeds 2.5% daily stdev' (GOOGL 1.85%). The agent then substituted a relative median-volatility screen and a '>2.5% of gross portfolio value' exposure rule, flagging Elena Vasquez, Catherine O'Brien and Diane Moretti when no flags should fire."
+ },
+ {
+  "task": "sales_agents_securities_and_commodities/task1",
+  "rubric": "R4",
+  "lost": 10,
+  "subtype": "omitted",
+  "why": "The scorecard performs bidirectional verification and notes the missing clawbacks for #85 ($135.48) and #89 ($172.35) individually, but never states or flags the $307.83 combined un-reversed commission as the discrepancy."
+ },
+ {
+  "task": "sales_agents_securities_and_commodities/task1",
+  "rubric": "R5",
+  "lost": 8,
+  "subtype": "wrong",
+  "why": "Retention is defined as 'clients with at least one settled Q4 trade' (4 of 4) rather than repeat clients with 2+ settled trades, and there is no repeat vs one-time breakdown, though the DB supports it."
+ },
+ {
+  "task": "sales_representatives_wholesale_and_manufacturing_technical_and_scientific_products/task1",
+  "rubric": "R2",
+  "lost": 10,
+  "subtype": "omitted",
+  "why": "TCO quantifies Rosemount's no-field-calibration advantage but contrasts it against a generic 'GasTech all-Honeywell quote' with assumed labor hours; it never states that Searchpoint Optima Plus requires periodic field calibration (judge)."
+ },
+ {
+  "task": "sales_representatives_wholesale_and_manufacturing_technical_and_scientific_products/task1",
+  "rubric": "R3",
+  "lost": 10,
+  "subtype": "omitted",
+  "why": "Deck adopts SafeGuard's own 'Five-day commissioning + SAT dossier' (slide 12) and never flags GasTech's 5 days for 36 detectors across two sites (one greenfield) as under-scoped, despite the competitor CSV note 'Seemed low to Bobby'."
+ },
+ {
+  "task": "sales_representatives_wholesale_and_manufacturing_technical_and_scientific_products/task1",
+  "rubric": "R4",
+  "lost": 10,
+  "subtype": "omitted",
+  "why": "Vendor-diversified recommendation is present, but the rationale omits the 15-year IR source warranty (which the Emerson subagent reported at step 21) and never argues that multiple vendors give NovaPetro pricing and support leverage."
+ },
+ {
+  "task": "sales_representatives_wholesale_and_manufacturing_technical_and_scientific_products/task1",
+  "rubric": "R5",
+  "lost": 10,
+  "subtype": "wrong",
+  "why": "Timeline cites only the 8-week controller path, ignores the 4-week Rosemount/Polytron lead times from Internal_Product_Pricing (the memo wrongly says Polytron 6 weeks), gives no early-April PO or receipt date, and accepts GasTech's 6-week delivery claim without question (matrix GEN-08 marks it PASS)."
+ },
+ {
+  "task": "sales_representatives_wholesale_and_manufacturing_technical_and_scientific_products/task1",
+  "rubric": "R6",
+  "lost": 10,
+  "subtype": "omitted",
+  "why": "Comparison sheet only says 'GasTech 5-day amount appears low; SafeGuard prices 5 engineer-days'; it does not contrast the $8,500 with the pricing sheet's $1,800/day x 8-10 days, does not flag the 6-week delivery as aggressive, and does not attribute the 'seemed low' note to Bobby Kim."
+ },
+ {
+  "task": "sales_representatives_wholesale_and_manufacturing_technical_and_scientific_products/task1",
+  "rubric": "R7",
+  "lost": 10,
+  "subtype": "depth",
+  "why": "Memo mentions the unexplained gap between the $209,330 line items and the ~$198K total and dismisses the 18% discount as unsupported, but never assesses thin margins, under-scoped commissioning, change-order risk (Building C conduit) or aggressive delivery."
+ },
+ {
+  "task": "sales_representatives_wholesale_and_manufacturing_technical_and_scientific_products/task1",
+  "rubric": "R8",
+  "lost": 10,
+  "subtype": "omitted",
+  "why": "The subagent's datasheet extract (step 21) listed the E1/E5/E6/KS codes and the QT SIL2 option, but matrix row IR-05 cites the quick-start guide MS-00825 and leaves those codes out, and IR-06 does not quote the datasheet's SIL2 statement."
+ },
+ {
+  "task": "sales_representatives_wholesale_and_manufacturing_technical_and_scientific_products/task1",
+  "rubric": "R9",
+  "lost": 10,
+  "subtype": "wrong",
+  "why": "RFQ prefers HART 7; matrix row IR-08 marks Rosemount PASS on generic 'HART' without noting whether HART 7 is supported, although the agent flagged the missing HART revision for the Honeywell competitor."
+ },
+ {
+  "task": "sales_representatives_wholesale_and_manufacturing_technical_and_scientific_products/task1",
+  "rubric": "R10",
+  "lost": 10,
+  "subtype": "wrong",
+  "why": "Deliverables cite only the 5-year limited warranty, omitting the 15-year IR source warranty that the subagent reported, and they compute warranty savings on 36 units / SafeGuard's optional $28,800 rather than 24 IR units x $700 = $16,800."
+ },
+ {
+  "task": "sales_representatives_wholesale_and_manufacturing_technical_and_scientific_products/task2",
+  "rubric": "R0",
+  "lost": 10,
+  "subtype": "wrong",
+  "why": "Memo \u00a7B: 'Spare capacity is 48 \u2212 38 = 10 channels, or 10 \u00f7 38 = 26.3% above the current point count'. That uses the point count as the denominator rather than installed capacity (20.83%), so the tight margin over 20% is never noted. CP-64 spare (26/64) is not computed. The subagent's 'implies >=45.6 points' framing seeded this reading (medium confidence: the RFQ wording allows it, but the conclusion that it complies is unchanged)."
+ },
+ {
+  "task": "sales_representatives_wholesale_and_manufacturing_technical_and_scientific_products/task2",
+  "rubric": "R1",
+  "lost": 10,
+  "subtype": "wrong",
+  "why": "SentinelGas replacement counts were correct, but competitor replacement costs are invented 'budgetary' figures (MSA $700/$900/$1,100; Honeywell $600/$650) rather than a stated SentinelGas proxy. The TCO tab also never notes that XCD electrochemical sensor life is unspecified, applying a 24-month cadence silently."
+ },
+ {
+  "task": "sales_representatives_wholesale_and_manufacturing_technical_and_scientific_products/task2",
+  "rubric": "R4",
+  "lost": 8,
+  "subtype": "omitted",
+  "why": "Memo \u00a7A recommends H2S-300X on sensor life, TruCal/XCell and IP rating. All the needed prices were in the staged price list, yet it never cites $2,650/$395 vs $3,420/$725 or computes the 6-unit 5-year TCO ($18,270 vs $20,520), so cost is not weighed."
+ },
+ {
+  "task": "sales_representatives_wholesale_and_manufacturing_technical_and_scientific_products/task2",
+  "rubric": "R6",
+  "lost": 6,
+  "subtype": "wrong",
+  "why": "The step-8 web_search result (XCD technical manual) listed EC and catalytic sensors at '-20\u00b0C / -4\u00b0F 55\u00b0C / 131\u00b0F'. The matrix still writes 'XCD -40\u00b0C to +75\u00b0C transmitter; sensor-dependent' and gives XCD no Partial/Non-compliant mark against the RFQ's -29\u00b0C."
+ },
+ {
+  "task": "sales_representatives_wholesale_and_manufacturing_technical_and_scientific_products/task2",
+  "rubric": "R9",
+  "lost": 10,
+  "subtype": "wrong",
+  "why": "The 625IR (SIL2) and S5000 ('suitable for SIL 2') were correct, but the XCD was described as 'certification is configuration-dependent'; the retrieved XCD manual makes no SIL claim. SIL 2 was also dismissed as 'a preference' rather than treated as a differentiator."
+ },
+ {
+  "task": "secretaries_and_administrative_assistants_except_legal_medical_and_executive/task2",
+  "rubric": "R0",
+  "lost": 10,
+  "subtype": "wrong",
+  "why": "The attendance log codes Andre's Jan 8 and Mar 6 absences as 'Personal', but every absence in the LR-2025-003 date range was treated as FMLA-protected (Reconciliation: FMLA 9, adjusted 0). The subagent's step-14 message called the medical-only option 'not computable... don't invent it', and the root adopted it."
+ },
+ {
+  "task": "secretaries_and_administrative_assistants_except_legal_medical_and_executive/task2",
+  "rubric": "R1",
+  "lost": 10,
+  "subtype": "omitted",
+  "why": "Count of 9 and the letter are correct and the 5 tardies are noted, but Samantha's 2 No Call/No Show absences (2025-02-12, 2025-03-12 in the log and in the subagent's date audit) appear nowhere in the letter, report or spreadsheet."
+ },
+ {
+  "task": "secretaries_and_administrative_assistants_except_legal_medical_and_executive/task2",
+  "rubric": "R3",
+  "lost": 10,
+  "subtype": "omitted",
+  "why": "The narrative covers all 5 departments and gives Sick Leave as the top reason (34), but it never discusses FMLA's effect on attendance figures; Youth Programs' FMLA deductions appear only in tables and employee notes."
+ },
+ {
+  "task": "social_science_research_assistants/task1",
+  "rubric": "R4",
+  "lost": 6,
+  "subtype": "depth",
+  "why": "Notebook cell 1 merges on responder_id with validate='one_to_one' and gets the full 3,019 rows, but it never prints the source row counts or unmatched IDs. Judge: 'no indicator column, no len() comparison'. This is a documentation check the agent could easily have added."
+ },
+ {
+  "task": "social_science_research_assistants/task2",
+  "rubric": "R3",
+  "lost": 8,
+  "subtype": "instruction",
+  "why": "The judge never saw Typology_Summary because of truncation. Even so, the sheet holds only 4 aggregate rows (n_countries, mean CO2/HDI/worry), with no per-country quadrant, CO2 or HDI values. The two medians appear only in Sources_Methods and the chat message, and Country_Indicators has no typology column. The classification itself is correct (13/2/2/13)."
+ },
+ {
+  "task": "social_science_research_assistants/task2",
+  "rubric": "R6",
+  "lost": 8,
+  "subtype": "wrong",
+  "why": "Truncation hid Regression_Results. The content does have side-by-side coefficients, SE, p, R2, adjusted R2, AIC, BIC and both interactions. However, Model 1 enters education_level as categorical dummies (C(education_level)[T.*]) rather than ordinal and adds energy, log population, log GDP, HDI sub-components and GNI, so the specification criterion would still fail."
+ },
+ {
+  "task": "social_science_research_assistants/task2",
+  "rubric": "R7",
+  "lost": 8,
+  "subtype": "depth",
+  "why": "Truncation also hid the interpretation. It reports R2 0.052->0.070, AIC 1478->1473 and nested F p=0.014 and lists HDI x weather as significant. But it never concludes which model fits better ('preferred on fit only if...'), ignores the BIC increase (1561.8->1565.2), and gives no substantive reading of the negative HDI x weather interaction. Borderline: a lenient judge might pass it."
+ },
+ {
+  "task": "social_science_research_assistants/task3",
+  "rubric": "R0",
+  "lost": 10,
+  "subtype": "instruction",
+  "why": "Country_Benchmarks has ess_belief_changing_pct (96.3/95.4/93.6) but no ESS human-caused (93.8/94.8/91.0) or bad-impacts (73.7/77.4/66.0) values, though the fetched PDF contained Table 1. Non-overlap ESS cells are None, not 'N/A' as the prompt required. The wide, non-'Variable' layout also failed the rubric's schema criterion, which the prompt did not specify."
+ },
+ {
+  "task": "social_science_research_assistants/task3",
+  "rubric": "R1",
+  "lost": 6,
+  "subtype": "depth",
+  "why": "Every flag row has the same text, 'likely reflects different question wording, response threshold, sampling/frame, and (for ESS) fieldwork timing', with only the pp value changing. It gives no country-specific factor and no mention of local n of 40-72, though the agent had those counts."
+ },
+ {
+  "task": "social_science_research_assistants/task3",
+  "rubric": "R5",
+  "lost": 8,
+  "subtype": "depth",
+  "why": "The memo recommends CIs, ranks comparisons and hedges >15pp gaps (3 of 4 sub-criteria passed). For ESS it only says 'Label every external comparison with the fieldwork year' and still calls ESS a benchmark, never advising historical-context framing for the 6-7 year gap the prompt highlighted."
+ },
+ {
+  "task": "sociology_teachers_postsecondary/task1",
+  "rubric": "R1",
+  "lost": 10,
+  "subtype": "depth",
+  "why": "Subagent 1 step 6 printed the attendance date range ('2024-08-27', '2024-11-28', 26 dates), so the agent had the data, but neither it nor the root agent connected 11-28 to Thanksgiving. The Data_Quality sheet only says to exclude all dates after 10/21, and the judge found no mention of Thanksgiving or non-class days."
+ },
+ {
+  "task": "sociology_teachers_postsecondary/task1",
+  "rubric": "R5",
+  "lost": 6,
+  "subtype": "omitted",
+  "why": "The docx states the data is 'a historical secondary-school sample from two Portuguese schools, not a postsecondary SOCI201 population', but the judge required a note that studytime, famsize, Pstatus and the G1-G3 0-20 scale may not translate to SOCI201. Only 'G3>=10 ... not a SOCI201 standard' came close, and studytime was never discussed, which is an incomplete caveat by the model."
+ },
+ {
+  "task": "sociology_teachers_postsecondary/task2",
+  "rubric": "R1",
+  "lost": 10,
+  "subtype": "depth",
+  "why": "Section 3 table columns are 'Section A mean (SD)' / 'Section B mean (SD)' only. The agent computed no per-assignment medians and did not discuss variance from extreme performers, although it had the full Assignments sheet (step 5)."
+ },
+ {
+  "task": "sociology_teachers_postsecondary/task2",
+  "rubric": "R2",
+  "lost": 8,
+  "subtype": "omitted",
+  "why": "The agent fetched evals.csv (step 8) and read all of Course_Eval_Summary (step 6), but the benchmark table includes only 5 of the 10 items. Judge: no statement that Learning objectives 3.7 is below or Would recommend 4.6 is above the benchmark."
+ },
+ {
+  "task": "sociology_teachers_postsecondary/task2",
+  "rubric": "R3",
+  "lost": 10,
+  "subtype": "depth",
+  "why": "Section 6 names all six Berkeley categories and proposes a specific 0-4 scoring key. Judge: it never links the Midterm_Essay/Final_Essay distributions (A 75.07% vs B 70.52%, etc.) to performance on those dimensions."
+ },
+ {
+  "task": "sociology_teachers_postsecondary/task2",
+  "rubric": "R6",
+  "lost": 8,
+  "subtype": "wrong",
+  "why": "Mitchell's 55.83% F is correct. However, at-risk is defined only as grade < 70%, so his two missing assignments and 4 absences plus 3 lates are not used as criteria. The OH visit is shown only as count 1, without the 11-07 family-emergency context, even though the log was read."
+ },
+ {
+  "task": "sociology_teachers_postsecondary/task3",
+  "rubric": "R4",
+  "lost": 10,
+  "subtype": "wrong",
+  "why": "The step-7 search result for the Berkeley rubric included the Syracuse-hosted analytical-essay rubric with its Originality text ('goes substantially beyond...', 'plays it safe', 'expository rather than analytical'). At steps 10-11 the agent fetched and cited a different Berkeley grading-expectations PDF instead, and its ruling denies the appeal for lack of the essay rather than analysing the 4/10 across rubric criteria."
+ },
+ {
+  "task": "statisticians/task1",
+  "rubric": "R3",
+  "lost": 10,
+  "subtype": "depth",
+  "why": "No VIF is computed anywhere. The memo mentions SES collinearity only qualitatively, and neither audit_analysis.py nor the notebook has VIF code, although the prompt flags model-specification concerns."
+ },
+ {
+  "task": "statisticians/task1",
+  "rubric": "R4",
+  "lost": 10,
+  "subtype": "depth",
+  "why": "Model_Comparison reports R2, AIC, BIC and coefficient p-values only. No likelihood-ratio chi-square, df or p-value is reported for the nested bivariate vs adjusted models."
+ },
+ {
+  "task": "statisticians/task1",
+  "rubric": "R5",
+  "lost": 10,
+  "subtype": "depth",
+  "why": "Sensitivity drops five Cook's D > 4/n states and reports beta -0.240 (p=0.248) with no CI. It gives no >20% / sign / significance change rule, and the memo only says the coefficient 'remains attenuated', never stating whether the effect is robust."
+ },
+ {
+  "task": "statisticians/task1",
+  "rubric": "R6",
+  "lost": 10,
+  "subtype": "depth",
+  "why": "No residuals-vs-fitted, Q-Q or leverage plot exists in the notebook, workbook or memo. Diagnostics are a Cook's D table only (notebook section 3)."
+ },
+ {
+  "task": "statisticians/task1",
+  "rubric": "R7",
+  "lost": 10,
+  "subtype": "depth",
+  "why": "Correlation_Matrix holds point estimates from pandas .corr() only, with no Fisher-z or bootstrap 95% CIs."
+ },
+ {
+  "task": "statisticians/task1",
+  "rubric": "R9",
+  "lost": 10,
+  "subtype": "wrong",
+  "why": "Descriptive_Stats gives overall N=51 stats rather than stats by Census region, and Correlation_Matrix has no CIs. The Florida/49-50 row count criterion follows from the unstated 2021 year (I), but the other two gaps are the agent's own choices."
+ },
+ {
+  "task": "statisticians/task1",
+  "rubric": "R11",
+  "lost": 10,
+  "subtype": "depth",
+  "why": "There is no data-quality section: no duplicate check (only an assert of 51 rows and zero NAs), no screen for implausible percentages, and no missing-data accounting. The Florida-missing and 49-50 sample-size parts depend on the unstated 2021 year."
+ },
+ {
+  "task": "statisticians/task2",
+  "rubric": "R0",
+  "lost": 10,
+  "subtype": "wrong",
+  "why": "The staged CSV has US BMI 6.1, 6.9, then 61.7-69.6, but the notebook only renames BMI and uses it as a model covariate. The PDF says only that 'WHO BMI ... are country aggregates', with no scale or data-entry diagnosis. The ecological-mismatch sub-criterion passed."
+ },
+ {
+  "task": "statisticians/task2",
+  "rubric": "R1",
+  "lost": 8,
+  "subtype": "wrong",
+  "why": "PCA(n_components=3) is hard-coded. Explained-variance ratios appear only as biplot axis labels, and there is no scree, Kaiser or cumulative-variance retention rule. Subset choice, missingness handling, scaling and the biplot all passed."
+ },
+ {
+  "task": "statisticians/task2",
+  "rubric": "R2",
+  "lost": 10,
+  "subtype": "depth",
+  "why": "k=3 was chosen by silhouette and labels were given, but the choice of k-means over hierarchical clustering is never argued. The notebook has no 'hierarch' mention, and the PDF says only 'K-means selected k=3 by the largest silhouette (0.55)'."
+ },
+ {
+  "task": "statisticians/task2",
+  "rubric": "R5",
+  "lost": 8,
+  "subtype": "wrong",
+  "why": "latest_question() takes each state's most recent non-null year, so Tennessee enters the 2024 ranking with 2023 data ('TN,Tennessee,2023,37.6'). The PDF and notebook never disclose the missing 2024 TN value."
+ },
+ {
+  "task": "statisticians/task2",
+  "rubric": "R7",
+  "lost": 8,
+  "subtype": "wrong",
+  "why": "US Adult Mortality is 111-115 in 2000-06 and 11-18 in 2007-15 in the staged file. The code averages it (us_who.adult_mortality.mean()) and feeds it to PCA and mixedlm without any year-level check, and the PDF reports adult_mortality -1.74 as a top predictor with no anomaly note."
+ },
+ {
+  "task": "statisticians/task3",
+  "rubric": "R4",
+  "lost": 6,
+  "subtype": "depth",
+  "why": "State-averaged residuals, queen weights with isolates and Moran's I with a 999-permutation p-value were all done, but moran() returns only I, p and n. The null expectation E[I] = -1/(n-1), a standard part of reporting Moran's I, appears nowhere."
+ },
+ {
+  "task": "statisticians/task3",
+  "rubric": "R5",
+  "lost": 6,
+  "subtype": "instruction",
+  "why": "The prompt explicitly asks for 'patterns among flagged outlier counties'. The memo's outlier paragraph (page 3) only points to the Excel sheet, with no flag count and no observed clusters (e.g. WV/TN depression outliers visible in the sheet). Limitations cover ecological inference and temporal alignment but give no next-step recommendations."
+ },
+ {
+  "task": "statisticians/task3",
+  "rubric": "R6",
+  "lost": 6,
+  "subtype": "wrong",
+  "why": "The notebook uses rucc_2023 as one numeric slope (no dummies or justification, although the memo calls it categorical). It has no .corr() or VIF for poverty, income, unemployment and education, and prints only n/AIC/BIC/LR rather than coefficient, SE, p and R-squared tables."
+ },
+ {
+  "task": "supply_chain_managers/task1",
+  "rubric": "R0",
+  "lost": 10,
+  "subtype": "wrong",
+  "why": "ABC was built on the 233-SKU snapshot by COGS (Gallo 38 A items, 61% share; Republic 42 SKUs), even though the agent noticed at step 9 that the sales file has 3,047 codes. Recomputing from warehouse_sales gives Republic 814 SKUs / 14.5%, Winebow 794 / 12.6% and Gallo 42.7%, exactly the rubric figures."
+ },
+ {
+  "task": "supply_chain_managers/task1",
+  "rubric": "R1",
+  "lost": 8,
+  "subtype": "omitted",
+  "why": "Dead stock was flagged correctly (DEAD_FLAG, Republic 17, Winebow 9), and the SOP subagent even listed Cardinale Napa Cab and Seacrets Vodka as top examples. But the brief names no items and never ties dead stock to working capital or warehouse space (judge: 'only buried in the raw SKU listing')."
+ },
+ {
+  "task": "supply_chain_managers/task1",
+  "rubric": "R2",
+  "lost": 10,
+  "subtype": "wrong",
+  "why": "CV was computed for the snapshot's 56 A items, not the sales-based A class, so Barossa Valley Estate GSM, Sunseeker Rose and Lagunitas Sumpin 4/6 NR are absent. CVs (1.28-3.87, which look zero-filled) contradict the sheet's 'missing months not treated as zero' note, and the sheet has no 2020 Jan/Mar/Jul/Sep caveat or CV=0 caveat even though the agent found the 15-period coverage at step 10."
+ },
+ {
+  "task": "supply_chain_managers/task1",
+  "rubric": "R3",
+  "lost": 10,
+  "subtype": "wrong",
+  "why": "Weights were right and Gallo/SG ranked #1/#2, but the agent replaced the monthly-table lead times (Republic 5.4, Winebow 7.31, Legends 13.37, which it computed at step 12) with PO-level days (5.07/7.14/12.63) and a requested/actual lead score, putting Winebow 84.06 above Republic 80.65. The rubric's order depends on the scoring normalization, so this is a judgment call (medium confidence)."
+ },
+ {
+  "task": "supply_chain_managers/task1",
+  "rubric": "R4",
+  "lost": 8,
+  "subtype": "wrong",
+  "why": "The Winebow recommendation uses the 33-SKU snapshot count instead of the 794 SKUs / lowest-spend framing, names no dead-stock items, and omits the Feb and Jun 2020 zero-order months. Those months are visible in delivery_performance_monthly, which the agent queried."
+ },
+ {
+  "task": "supply_chain_managers/task1",
+  "rubric": "R5",
+  "lost": 6,
+  "subtype": "instruction",
+  "why": "The task explicitly asked for ROPs 'referencing actual supplier lead times', but the SOP gives only 'lead times range from 2-14 days' and has no seasonal adjustment, although the subagent's step-19 message recommended a seasonal factor and supplier lead-time means."
+ },
+ {
+  "task": "supply_chain_managers/task1",
+  "rubric": "R7",
+  "lost": 6,
+  "subtype": "wrong",
+  "why": "Sheet 3 carries dead-stock counts from Sheet 1, but Sheet 2's 44-of-56 misalignment results never enter the scorecard. The cross-sheet linkage block also shows 0 for Winebow (a name-matching bug)."
+ },
+ {
+  "task": "supply_chain_managers/task2",
+  "rubric": "R1",
+  "lost": 6,
+  "subtype": "wrong",
+  "why": "Service_Region_Mapping (all 23 rows read by subagent 1, reported to root at step 25) shows every one of the 23 regions below target, yet the Demand_Allocation_Analysis sheet reports only an aggregate 74.3%/87.5% and even flags six below-target regions as 'No mapped gap'; it never frames OTD shortfall as systemic."
+ },
+ {
+  "task": "supply_chain_managers/task2",
+  "rubric": "R2",
+  "lost": 6,
+  "subtype": "wrong",
+  "why": "SOP \u00a74 cites stockout gaps as '+8.2 pp' etc. instead of the Department_Targets rates, omits Fitness 8.8%, mentions turns only as 'every department is below its target turns', and does not state the current SOP's documented gaps (no cycle counting, no forecasting, no RCA) even though the source SOP lists them."
+ },
+ {
+  "task": "supply_chain_managers/task2",
+  "rubric": "R5",
+  "lost": 6,
+  "subtype": "wrong",
+  "why": "Agent found that both DCs ship to all 23 regions (46 observed pairs) but treated it as a mapping defect ('Correct the mapping first', SOP \u00a77; Gate 1 reconcile mapping) rather than evaluating routing rationalization as a lever, and never stated the macro-region assignments (LATAM/Europe/Africa vs North America/Pacific Asia/West Asia) from the mapping sheet."
+ },
+ {
+  "task": "technical_writers/task1",
+  "rubric": "R7",
+  "lost": 6,
+  "subtype": "omitted",
+  "why": "TROUBLESHOOTING_GUIDE.md 'Common migration pitfalls' (line 185) lists sync, 202, hard delete, dataset.deleted and rate-limit pitfalls but not the API-key-deprecation pitfall from SUP-78234, which the agent had read. Each entry is a short note without symptoms or resolution steps, unlike its own escalated-ticket sections."
+ },
+ {
+  "task": "technical_writers/task1",
+  "rubric": "R8",
+  "lost": 6,
+  "subtype": "omitted",
+  "why": "api_endpoints_data.csv gives version 2.1.0 for /auth/login, /auth/refresh, /auth/logout and /me/usage, but API_REFERENCE.md (GET /me/usage at line 645) records no version-added info, so these endpoints are not tied to v2.1.0 anywhere."
+ },
+ {
+  "task": "technical_writers/task2",
+  "rubric": "R0",
+  "lost": 6,
+  "subtype": "wrong",
+  "why": "OAuth and orderId are ordered correctly with metrics, but PUT /pet 405-to-422 is not a breaking-change section; the guide says 'These are the two breaking changes recorded for v3.1.0', and 71% migration appears in no output. Borderline: the changelog dates this change to 3.0.1, but the metrics file groups it with the v3.1.0 breaking changes."
+ },
+ {
+  "task": "technical_writers/task2",
+  "rubric": "R1",
+  "lost": 10,
+  "subtype": "instruction",
+  "why": "The guide has only after-state snippets (an HTTP POST with a Bearer token, and a curl DELETE /store/order/5), no 'before' code and zero Python (grep finds no 'python'), and nothing for PUT /pet, even though subagent 2 advised 'concrete curl+Python examples'."
+ },
+ {
+  "task": "technical_writers/task2",
+  "rubric": "R2",
+  "lost": 6,
+  "subtype": "omitted",
+  "why": "SUP-4422 and SUP-4401 are cited only in 'Who is affected' text, with no pitfall subsections presenting them as real-world scenarios; SUP-4438 is absent from the guide because PUT /pet was excluded."
+ },
+ {
+  "task": "technical_writers/task2",
+  "rubric": "R4",
+  "lost": 10,
+  "subtype": "wrong",
+  "why": "P0 and P1 assignments are right, but findByTags (0.9% error) is P1 instead of P3, and lastLoginDate, reserved and X-Token-Type are P1 instead of P2; about 15 justifications (e.g., DRAFT-BASE-URL, R005, TERM-T001) cite no metric."
+ },
+ {
+  "task": "technical_writers/task2",
+  "rubric": "R5",
+  "lost": 6,
+  "subtype": "depth",
+  "why": "The guide gives only narrative 'SDK compatibility check' checklists for two changes, with no table by language/SDK, no affected or minimum version ranges, no workaround for consumers who cannot upgrade, and no PUT /pet row."
+ },
+ {
+  "task": "technical_writers/task2",
+  "rubric": "R7",
+  "lost": 6,
+  "subtype": "instruction",
+  "why": "Intro, base URL and auth context are good, but the 'At a glance' table lists only 2 of the 3 breaking changes and there are no paired before/after examples, so the guide is not fully standalone."
+ },
+ {
+  "task": "technical_writers/task3",
+  "rubric": "R3",
+  "lost": 6,
+  "subtype": "omitted",
+  "why": "Style guide section 3 says 'Use ISO 8601 UTC timestamps' with no rationale and only notes 'some legacy examples use Unix timestamps for project created or user last_login', without contrasting tasks/ISO vs projects/Unix or users/me created_at vs last_login, although the current docs (lines 202-211, 238, 268) show both."
+ },
+ {
+  "task": "technical_writers/task3",
+  "rubric": "R4",
+  "lost": 8,
+  "subtype": "omitted",
+  "why": "The audit tracker lists 'callback URL'/'webhook URL'/'destination' for POST /webhooks, but the guide only says 'Call it a webhook URL' and keeps task ID/taskId/task_id and user/assignee as context rules without naming a rejected term."
+ },
+ {
+  "task": "technical_writers/task3",
+  "rubric": "R5",
+  "lost": 6,
+  "subtype": "wrong",
+  "why": "The agent chose to 'Keep a response envelope exactly as observed (data, meta, or projects) rather than normalizing it' (style guide section 4), and taskflow_api_v2.md reprints the three wrappers without flagging or justifying the inconsistency."
+ },
+ {
+  "task": "training_and_development_specialists/task1",
+  "rubric": "R0",
+  "lost": 6,
+  "subtype": "omitted",
+  "why": "Backup coverage via Robert Johnson passed, but S-07 (2025-06-18) is an Emergency Response 'Continuity drill' with David Lee as instructor. No session schedules Lee's own recertification before 2025-07-15; it appears only as an Action Plan line in the risk matrix."
+ },
+ {
+  "task": "training_and_development_specialists/task1",
+  "rubric": "R1",
+  "lost": 6,
+  "subtype": "instruction",
+  "why": "Plain language, verbal administration and shift-friendly timing are present, but the instruments use only numeric 1-5 / 1-4 Likert scales. There are no visual or pictorial rating aids for varying literacy."
+ },
+ {
+  "task": "training_and_development_specialists/task1",
+  "rubric": "R2",
+  "lost": 6,
+  "subtype": "depth",
+  "why": "The agent identified Software/ERP as lowest L3 (69.0%), but its 'diagnostic module' is generic barrier interviews and observation of 5 ERP transactions. It has no ERP-specific questions on system access, workflow fit, supervisor requirement, reference materials or practice opportunities."
+ },
+ {
+  "task": "training_and_development_specialists/task1",
+  "rubric": "R3",
+  "lost": 6,
+  "subtype": "wrong",
+  "why": "Historical Cost Effectiveness lists L4 averages but computes only incident-based cost metrics (as uncached formulas). It never derives productivity-per-cost ROI, never ranks Equipment Operation highest, never notes Leadership L4 is NA, and gives no ROI-based allocation percentages."
+ },
+ {
+  "task": "training_and_development_specialists/task1",
+  "rubric": "R6",
+  "lost": 6,
+  "subtype": "omitted",
+  "why": "Instructor_Risk_Matrix columns cover ID, specialization, expiry, days to expiry and coverage roles, but no Max_Weekly_Hours and no Q2 demand-hours estimate. Martinez's 12h cap and Wilson's lowest 10h cap are never flagged, though both came from the staged CSV and the subagent summary."
+ },
+ {
+  "task": "training_and_development_specialists/task1",
+  "rubric": "R7",
+  "lost": 6,
+  "subtype": "wrong",
+  "why": "Equipment Operation is correctly in TR-103, but the three 60-person Safety Orientation cohorts are in TR-106 ('avoids TR-105 cap 40', portable PPE kit) instead of the PPE/first-aid-equipped TR-105. Software/ERP was not scheduled at all, which the prompt did not strictly require since ERP L3 was rising (medium confidence)."
+ },
+ {
+  "task": "training_and_development_specialists/task1",
+  "rubric": "R8",
+  "lost": 6,
+  "subtype": "depth",
+  "why": "The delayed survey runs at day 30 and day 60, but the timing is not justified as time for on-the-job application. Distribution is a uniform day-30/60 send with day-3/7 reminders, not planned around shifts."
+ },
+ {
+  "task": "training_and_development_specialists/task2",
+  "rubric": "R3",
+  "lost": 10,
+  "subtype": "omitted",
+  "why": "Q3 Analysis rows flag WVP (23/33, 3.04) and Cultural Competency correctly, but the sheet has no qualitative comment evidence (e.g. 'This topic cannot be adequately covered in e-learning format'); the agent had the comments column loaded (step 7, 10) and used such themes in the redesign, but not on this sheet. Somewhat strict, since the instructions list only quantitative content for this sheet."
+ },
+ {
+  "task": "training_and_development_specialists/task2",
+  "rubric": "R5",
+  "lost": 6,
+  "subtype": "omitted",
+  "why": "The memo gives Nursing 96.4%, Facilities 71.2%, Classroom/Blended/Self-paced rates and instructor scores, but omits Administration 83.9%, Lab/Diagnostics 84.5%, Virtual 87.9% and WVP 69.7%, all of which the agent computed at step 10 and put in the workbook."
+ },
+ {
+  "task": "training_and_development_specialists/task3",
+  "rubric": "R0",
+  "lost": 10,
+  "subtype": "instruction",
+  "why": "Agent knew virtual hands-on adequacy was only 30.2% (Executive Summary) yet added no virtual-specific item and wrote 'Do not compare virtual and in-person' (PDF p.3); its retrospective item is a 0-4 behaviour pair although subagent cf2895a4 had fetched ttt14m5handouts2pdf.pdf containing the Tool-1A 1-5 before/after knowledge matrix (pp.17-18), which the prompt named explicitly."
+ },
+ {
+  "task": "training_and_development_specialists/task3",
+  "rubric": "R4",
+  "lost": 6,
+  "subtype": "wrong",
+  "why": "PDF p.7 ROI uses 'FIRE + HAZ: 7 recordables; 45 lost days', $12,000/recordable and $1,200/lost day, and divides by the $18,500 planned spend; the agent had the full-log totals (52 incidents, 23 recordables, 129 lost days, computed in subagent step 18) but chose a subset and a below-benchmark unit cost."
+ },
+ {
+  "task": "training_and_development_specialists/task3",
+  "rubric": "R5",
+  "lost": 10,
+  "subtype": "instruction",
+  "why": "The prompt lists five standing types (completions, failures, overdue, upcoming expirations, never attempted), but the matrix legend uses seven states incl. Expired and Incomplete and a Q2-end window, with Never Attempted cells lacking an N/A date; the exact '60 days' threshold is not in the inputs (partly I), but not collapsing to five states was the agent's choice."
+ },
+ {
+  "task": "training_and_development_specialists/task3",
+  "rubric": "R6",
+  "lost": 6,
+  "subtype": "wrong",
+  "why": "The agent's self-designed score (gap + exposure + recency points, heavily driven by Expired/Never Attempted cells) ranked only 4 of the top 10 from Paint Shop/Warehouse/Assembly Line B (judge: Paint 3, Warehouse 1, ALB 0), even though the agent itself identified Paint Shop as the top-priority department."
+ },
+ {
+  "task": "web_administrators/task1",
+  "rubric": "R1",
+  "lost": 6,
+  "subtype": "omitted",
+  "why": "The 1c row cites '/.env returned 200 (487 bytes) at line 24 and /.git/config ... line 29' but does not name the Nikto scanner 198.51.100.77. The agent knew it, since findings_summary and the report timeline attribute these hits to 198.51.100.77. 1e, 1f and 2a-2d passed."
+ },
+ {
+  "task": "web_administrators/task1",
+  "rubric": "R3",
+  "lost": 6,
+  "subtype": "omitted",
+  "why": "All four TLS defects were found. However, payments.shopvault.example.com (4096-bit, TLSv1.2, the only compliant cert in ssl_cert_audit.csv) appears in no output file (grep count 0)."
+ },
+ {
+  "task": "web_administrators/task1",
+  "rubric": "R4",
+  "lost": 6,
+  "subtype": "omitted",
+  "why": "The exec summary links only the nginx gaps (dotfiles, debug, headers) and explicitly says firewall, TLS and SSH gaps 'are not claimed as direct causes'. It names no CR items (1c, 1e, 2a-2d), no IPs and no exposed ports. Part of the rubric (CR 2e SSH rate limit -> HTTP brute force) is a stretch, since the CR has no web rate-limit item, but the agent's own hedging lost the rest."
+ },
+ {
+  "task": "web_administrators/task1",
+  "rubric": "R5",
+  "lost": 6,
+  "subtype": "wrong",
+  "why": "The timeline covers all three IPs with correct times, but 45.33.32.156's 08:17 Nmap and 08:28 Shellshock are merged into one final row after the 08:25 events, so the table is not chronological."
+ },
+ {
+  "task": "web_administrators/task1",
+  "rubric": "R6",
+  "lost": 6,
+  "subtype": "wrong",
+  "why": "The XSS row says 'A07:2021 XSS' and 'browser execution/callback unverified'. The staged threat_indicators.json mislabels XSS as A07:2021, and the agent copied that rather than using A03:2021-Injection. It also did not classify the 200/201 XSS requests as successful. The other categories passed."
+ },
+ {
+  "task": "web_administrators/task1",
+  "rubric": "R7",
+  "lost": 6,
+  "subtype": "wrong",
+  "why": "The template provides P1/P2/P3, but section 7 lists almost everything as P1, has a single P2 row ('Verify and reopen CR') and no P3 row; WAF and monitoring appear only as section 9 bullets. P1 omits restoring products 1042-1044, reverting the config PUT and resetting users 1-2."
+ }
+]

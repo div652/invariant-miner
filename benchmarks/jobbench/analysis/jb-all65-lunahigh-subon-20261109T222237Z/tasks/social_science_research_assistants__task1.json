@@ -1,0 +1,18 @@
+{
+  "task": "social_science_research_assistants/task1",
+  "score": "54/66",
+  "goal": "Validate a 200-row raw remote-work survey file against the codebook and three clean NSW reference datasets, and write Data_Validation_Report.xlsx with three sheets. Reconcile the clean productivity distribution with the published 64/22/14 split and run three chi-square tests in Benchmark_Reconciliation.ipynb. Package the findings in a 4-section Policy_Briefing_Package.docx.",
+  "delivered": "All three files are in output/. The xlsx has Error_Classification (102 issues, keyed to reference values), Coding_Discrepancies and Summary_Matrix. The executed notebook has the 58.69/25.41/15.90 distribution, three chi-square tests on a 3,019-row merge and a comparison chart. The docx has four sections, the benchmark table and the embedded figure.",
+  "what_went_wrong": "Only two small items failed. R0: the three 1890 birth years are labelled 'Impossible/outlier birth year; Cross-reference mismatch' and corrected to the reference values (1992, 1985, 1979), not called typos for 1980/1990. The respondents.csv values for those IDs contradict the rubric's 1980/1990 guess. R4: the notebook merges correctly (all three files have 3,019 rows; inner join with validate='one_to_one') but does not show input-versus-merged counts or list unmatched IDs.",
+  "primary_class": "M",
+  "secondary_classes": ["G"],
+  "lost_weight_by_class": {"M": 6, "R": 0, "L": 0, "I": 0, "S": 0, "H": 0, "G": 6},
+  "failed_items": [
+    {"rubric": "R0", "weight": 6, "lost": 6, "class": "G",
+     "why": "All 9 out-of-range years were found. For the 1890 rows (IDs 511, 2570, 283), respondents.csv gives 1992, 1985 and 1979, so the 'typo for 1980/1990' the rubric expects is not supported by the data. The agent's evidence-based error type and correction meet the task's 'distinguish true errors from outliers' instruction, but not the rubric's own labels."},
+    {"rubric": "R4", "weight": 6, "lost": 6, "class": "M",
+     "why": "Notebook cell 1 merges on responder_id with validate='one_to_one' and gets the full 3,019 rows, but it never prints the source row counts or unmatched IDs. Judge: 'no indicator column, no len() comparison'. This is a documentation check the agent could easily have added."}
+  ],
+  "subagent_notes": "",
+  "confidence": "medium"
+}

@@ -1,0 +1,26 @@
+{
+  "task": "management_analysts/task2",
+  "score": "28/80",
+  "goal": "As a consultant to NovaTrans, design a weighted composite model to rank all 19 plants for closure/consolidation and pick 3-5 candidates. Deliver a 4-tab workbook (Composite_Score, Consolidation_Scenarios with topology-constrained redistribution and net cost, Risk_Matrix from complaint data, Data_Reconciliation of memo claims) and a <=5-page Board Decision Brief with Methodology, per-candidate Consolidation Recommendation, Implementation Risk and a Go/No-Go Matrix.",
+  "delivered": "NovaTrans_Plant_Consolidation_Scoring_Model.xlsx: Composite_Score weighted 30% low demand, 25% low utilization, 20% WhCost, 15% port redundancy and 10% evidence coverage. Its Consolidation_Scenarios move PLANT09 to PLANT13 and flag zero-volume plants, Risk_Matrix covers the 5 candidates only, and Data_Reconciliation finds 192/9,215 = 2.08% late. NovaTrans_Board_Decision_Brief.docx ranks PLANT18/19/11/15/09 and has a Go/No-Go matrix.",
+  "what_went_wrong": "The composite model left out late-shipment rate and customer satisfaction, both central in the memo and data, using customer risk only as a gate and adding an 'evidence coverage' factor (R0). Capacity checks use an orders/day proxy with no before/after utilization for receiving plants (R2). Risk_Matrix covers only the 5 candidates and lacks per-plant complaint counts, average severity, unresolved rate and top category (R3). The brief reports PLANT03 at 96.94%, its unit share, beside '8,541/9,215 orders', although the agent's own calculation gave 92.69%; it also omits PLANT03's 2.04% late rate and the diversification argument (R8). The brief also lacks per-candidate utilization, cost/unit, late rate and CSAT (R6), and its methodology gives no weight derivation or FreightRates mapping caveat (R5).",
+  "primary_class": "M",
+  "secondary_classes": [],
+  "lost_weight_by_class": {"M": 52, "R": 0, "L": 0, "I": 0, "S": 0, "H": 0, "G": 0},
+  "failed_items": [
+    {"rubric": "R0", "weight": 8, "lost": 8, "class": "M",
+     "why": "Composite_Score weights are demand/utilization/WhCost/port redundancy/evidence coverage. Late-shipment rate and Survey CSAT are not scored ('Customer risk is a go/no-go gate in Risk_Matrix'), even though the memo's problem statement centres on late shipments and dissatisfaction and both data sources were loaded."},
+    {"rubric": "R2", "weight": 10, "lost": 10, "class": "M",
+     "why": "Consolidation_Scenarios gives only a 'Feasible at average-day demand proxy' flag based on orders over a 260-day year. It shows no before/after utilization of receiving plants from OrderList units against WhCapacities, and does not test PLANT03 or PLANT13 absorption numerically."},
+    {"rubric": "R3", "weight": 10, "lost": 10, "class": "M",
+     "why": "Risk_Matrix lists only the five candidates (four with 0 complaints), so the Complaint_Log distribution across PLANT03/08/09/12/13/16/04 is never shown. It also omits average severity, unresolved rate and most frequent category, though the attrition flag for PLANT09 was right."},
+    {"rubric": "R5", "weight": 6, "lost": 6, "class": "M",
+     "why": "The Methodology Statement lists the 30/25/20/15/10 weights without explaining how they were derived. Coverage limits (7 of 19 plants) appear only in a later 'Data limitations' paragraph, and the FreightRates-to-route mapping caveat is never stated."},
+    {"rubric": "R6", "weight": 10, "lost": 10, "class": "M",
+     "why": "The ranked table shows only score, volume, topology plan, cost impact and action. Per-candidate utilization, cost/unit (given only for PLANT18 and PLANT09), late rate and CSAT (PLANT09 only) are missing, as are per-candidate retention counterarguments. PLANT08 (17.65% late, capacity 14) was kept out of the candidate pool."},
+    {"rubric": "R8", "weight": 8, "lost": 8, "class": "M",
+     "why": "Subagent 2's step output computed 'PLANT03 n% 92.69 units% 96.94 ... late% 2.037', but build_deliverables.py writes '8,541/9,215 historical orders (96.94%)', pairing the unit share with order counts. The 2.04% late rate and the diversify-away-from-PLANT03 argument never appear."}
+  ],
+  "subagent_notes": "Two subagents ran. One researched the Brunel/Figshare dataset and returned verified CSV/XLSX sources plus full WhCapacities and WhCosts values, which helped the passing cost-impact item R4. The other profiled the local memo, survey, OrderList and PlantPorts files; its output already contained the correct PLANT03 92.69% order share and 2.04% late rate, which the root then misreported. Overall they helped retrieval but did not prevent the scoring-design and reporting errors.",
+  "confidence": "high"
+}

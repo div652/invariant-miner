@@ -1,0 +1,28 @@
+{
+  "task": "sales_agents_securities_and_commodities/task1",
+  "score": "10/74",
+  "goal": "As a Meridian Securities sales agent, build an audit-ready Q4 2024 reconciliation: a fee audit workbook (recompute SEC Section 31 and TAF fees on settled sells, plus a commission tier audit against Fidelity's schedule), a portfolio risk workbook (net positions, Dec-31 CSV closes or VWAP proxies, 40%/30% concentration thresholds, IRA/Trust suitability flags at 2.5% volatility), and a per-agent PDF scorecard with a bidirectional clawback-vs-cancellation check.",
+  "delivered": "fee_audit_q4_2024.xlsx (Readme, Fee_Summary, Fee_Reconciliation with 30 settled sells and SEC/TAF columns, Commission_Audit, inputs, sources), portfolio_risk_analysis_q4_2024.xlsx (Client_Summary, Position_Analysis with weights and 40/30% flags, Volatility, Price_Basis with correct CSV closes and VWAP proxies, inputs) and agent_scorecard_q4_2024.pdf (per-agent pages with monthly volume, net commission, retention, cancel ratios and clawback verification).",
+  "what_went_wrong": "Twenty points were lost because the rubric expects named sheets ('SEC Fee Validation', 'TAF Fee Validation', 'Commission Tier Audit', 'Position Valuation', 'Concentration Risk', 'Account Suitability Flags') and column sets that the prompt never specifies. The agent combined the content into differently named sheets. The model errors were these. The agent computed volatilities correctly (all below 2.5%) but then invented a relative screen plus a 2.5% portfolio-exposure rule and flagged three clients. It defined retention as 1+ settled trades rather than repeat (2+) clients. It listed the two missing clawbacks individually but never gave the $307.83 combined total. It omitted Fidelity's Rep-Assisted rate from the commission audit. R1 failed only on per-row price-source labels, which sit on the Price_Basis sheet; the judge accepted the same layout for R2.",
+  "primary_class": "M",
+  "secondary_classes": ["I", "G"],
+  "lost_weight_by_class": {"M": 34, "R": 0, "L": 0, "I": 20, "S": 0, "H": 0, "G": 10},
+  "failed_items": [
+    {"rubric": "R0", "weight": 6, "lost": 6, "class": "M",
+     "why": "Commission_Audit gives each agent's name, tier, rate, the Fidelity Online $0 benchmark and the classification, but leaves out the Rep-Assisted $32.95 rate. The PDF says the FAST and rep-assisted rates 'are disclosed but not used', so the agent had them."},
+    {"rubric": "R1", "weight": 10, "lost": 10, "class": "G",
+     "why": "Prices are exactly right (AAPL 249.292, MSFT 421.5, GOOGL 189.3), and Price_Basis labels each ticker 'Provided market data closing price' with its source CSV. The judge failed it for having no per-row label in Position_Analysis, yet passed R2's identical VWAP labeling on the same Price_Basis sheet."},
+    {"rubric": "R3", "weight": 10, "lost": 10, "class": "M",
+     "why": "The Volatility sheet correctly finds 'No supplied ticker exceeds 2.5% daily stdev' (GOOGL 1.85%). The agent then substituted a relative median-volatility screen and a '>2.5% of gross portfolio value' exposure rule, flagging Elena Vasquez, Catherine O'Brien and Diane Moretti when no flags should fire."},
+    {"rubric": "R4", "weight": 10, "lost": 10, "class": "M",
+     "why": "The scorecard performs bidirectional verification and notes the missing clawbacks for #85 ($135.48) and #89 ($172.35) individually, but never states or flags the $307.83 combined un-reversed commission as the discrepancy."},
+    {"rubric": "R5", "weight": 8, "lost": 8, "class": "M",
+     "why": "Retention is defined as 'clients with at least one settled Q4 trade' (4 of 4) rather than repeat clients with 2+ settled trades, and there is no repeat vs one-time breakdown, though the DB supports it."},
+    {"rubric": "R6", "weight": 10, "lost": 10, "class": "I",
+     "why": "The rubric requires sheets named 'SEC Fee Validation', 'TAF Fee Validation' and 'Commission Tier Audit' with fixed columns (Client, Agent, Shares Sold...). The prompt names no sheets or columns. The agent's Fee_Reconciliation does cover all 30 settled sells with recorded, expected and variance values for SEC and TAF."},
+    {"rubric": "R7", "weight": 10, "lost": 10, "class": "I",
+     "why": "The rubric requires sheets named 'Position Valuation', 'Concentration Risk' and 'Account Suitability Flags', none of which the prompt specifies. The content exists in Position_Analysis and Client_Summary, including correct 40%/30% flags, though the suitability logic is also wrong (see R3)."}
+  ],
+  "subagent_notes": "",
+  "confidence": "medium"
+}

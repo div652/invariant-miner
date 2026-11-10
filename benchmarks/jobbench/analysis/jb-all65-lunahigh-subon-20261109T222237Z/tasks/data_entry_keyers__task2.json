@@ -1,0 +1,18 @@
+{
+  "task": "data_entry_keyers/task2",
+  "score": "44/60",
+  "goal": "QC 75 entered billing records against the source forms, validate ICD-10 code-description pairs against the CMS FY2025 icd10cm_codes_2025.txt, and apply the Q1 2025 policy memo and fee schedule to sort findings into CLEAR ERROR or REQUIRES REVIEW. Deliver an error log (template), flagged_for_review.csv, a corrected billing CSV that fixes only clear errors, and a reconciliation report with summary, provider, facility and flagged-detail sheets.",
+  "delivered": "error_log.xlsx (30 clear errors), flagged_for_review.csv (12 rows: 2 fee-schedule amounts, 9 post-02/01 M79.3 cross-references, BF-0068 cough), corrected_billing_data.csv (75 rows) and reconciliation_report.xlsx (Summary, Provider_View, Facility_View, Flagged_Review_Detail). The 30 clear errors are the 20 designed transcription errors, 8 CMS recodes of source-and-entered codes (M54.5 to M54.50, K21.0 to K21.9) and BF-0013/0044 R05.9 changed to R05.1/R05.2.",
+  "what_went_wrong": "The agent treated BF-2025-0013 and BF-2025-0044 (R05.9 paired with 'Acute cough'/'Subacute cough' in both source and entry, service dates after 02/01) as clear Wrong Code errors and changed them to R05.1/R05.2. Memo section 5 lists 'code valid before the policy change but service date after' as a REQUIRES REVIEW example, so these should have been flagged instead (R3, 8). For the same reason, and because it also recoded 8 source-matching M54.5/K21.0 rows away from source values, the corrected CSV had 30 changes instead of the 20 clear errors (R6, 8). The subagent's inference that the template's 30 blank rows meant 30 clear errors were 'intended' pushed the root agent toward this count.",
+  "primary_class": "M",
+  "secondary_classes": [],
+  "lost_weight_by_class": {"M": 16, "R": 0, "L": 0, "I": 0, "S": 0, "H": 0, "G": 0},
+  "failed_items": [
+    {"rubric": "R3", "weight": 8, "lost": 8, "class": "M",
+     "why": "error_log.xlsx rows 5 and 20 log BF-0013 R05.9->R05.1 and BF-0044 R05.9->R05.2 as Wrong Code, and neither form is in flagged_for_review.csv. The memo (section 1a 'as documented by the provider', section 5 REQUIRES REVIEW example) and the instruction that source forms may be internally inconsistent support flagging rather than correcting, so this is a misapplied protocol."},
+    {"rubric": "R6", "weight": 8, "lost": 8, "class": "M",
+     "why": "corrected_billing_data.csv changes BF-0013/0044 cough codes plus 8 rows where entered equals source (M54.5->M54.50 x6, K21.0->K21.9 x2), so it is not 'exactly the 20 CLEAR ERROR fields corrected to their source values'. M54.5 and K21.0 really are absent from the FY2025 file, so flagging them was reasonable, but choosing a replacement code without provider input and logging it as a clear error contradicts the template's 'Correct_Value from the source document'."}
+  ],
+  "subagent_notes": "One subagent (37 steps) did the full diff and CMS validation and correctly found all 20 designed errors, the fee-schedule cases and the invalid FY2025 codes. Its message 'template Error Log has exactly 30 blank data rows ... Likely intended clear-error log count = 20 + 8 invalid FY25 ICD + 2 post-2/1 cough code errors = 30' steered the root agent to log the cough and CMS recodes as clear errors, which is the direct cause of both lost items, so it helped on recall but hurt on classification.",
+  "confidence": "high"
+}

@@ -1,0 +1,30 @@
+{
+  "task": "court_clerks/task1",
+  "score": "16/76",
+  "goal": "As Clerk R. Patterson of Jefferson County Circuit Court (Arkansas), process Judge Whitfield's six June 9, 2025 sentencings: run a pre-entry audit (notes vs CMS vs Simmons defense memo) into pre_entry_audit.csv, complete six official Sentencing Orders per the AOC instructions (online), reconcile fees against the county schedule (fee_reconciliation.csv), update the SQLite CMS (status, dispositions, charges, docket entries, fees), and produce a Sentencing Register PDF with a totals table and annotations.",
+  "delivered": "pre_entry_audit.csv, fee_reconciliation.csv (34 rows with corrected/missing fee statuses), jefferson_county_cms_updated.db (dispositions, charge outcomes, six docket entries, 39 fees_payments rows), six filled Sentencing_Order_*.pdf files, and a 2-page Sentencing Register PDF with a fine/assessment/supervision/restitution totals table and annotations on audit items, fee corrections and the Simmons CHS challenge.",
+  "what_went_wrong": "The agent caught most planted discrepancies but lost whole items on resolution details. It kept CMS values provisionally (Barnett DOB 03/15/1989) where the rubric wanted the Judge's notes treated as authoritative, never called the Morales SID mismatch a transposition, did not tie the Simmons DOB conflict to age-at-offense/criminal-history impact, and treated the conditional PD user fee as a mandatory $400 correction (even for Simmons, whose counsel it concluded was appointed private counsel) instead of referring it to the Judge. The register table lacks charges, departure/reason-code and assignment columns, and the annotations omit the Henderson filing-date inconsistency (cases 2024-12-20 vs docket 'Case Filed' 2024-12-02), which a subagent had surfaced. The fees_payments rows use status 'ASSESSED' rather than the rubric's unstated 'Pending'.",
+  "primary_class": "M",
+  "secondary_classes": ["I"],
+  "lost_weight_by_class": {"M": 52, "R": 0, "L": 0, "I": 8, "S": 0, "H": 0, "G": 0},
+  "failed_items": [
+    {"rubric": "R0", "weight": 8, "lost": 8, "class": "M",
+     "why": "The Barnett DOB mismatch was found, but pre_entry_audit.csv says 'Use CMS date provisionally only after certified record confirms it' and the order/register keep 03/15/1989 instead of treating the Judge's 03/14/1989 as authoritative for the order."},
+    {"rubric": "R1", "weight": 6, "lost": 6, "class": "M",
+     "why": "Both SID values were recorded, but the audit and register only say the SIDs 'conflict' and never identify the 65/56 digit transposition."},
+    {"rubric": "R2", "weight": 8, "lost": 8, "class": "M",
+     "why": "The Simmons DOB conflict (09/03/1984 vs 09/22/1997, memo corroborating CMS) was flagged as an identity issue but not as affecting age at offense or the criminal-history/juvenile-lookback analysis the agent performed separately."},
+    {"rubric": "R3", "weight": 6, "lost": 6, "class": "M",
+     "why": "fee_reconciliation.csv marks the $75 vs $400 PD user fee as 'CORRECTED—UNDERASSESSMENT' for Henderson, Foster and Simmons and assesses $400, although the fee schedule marks PD_USER_FEE 'Conditional'; no recommendation to verify imposition with the Judge."},
+    {"rubric": "R5", "weight": 10, "lost": 10, "class": "M",
+     "why": "The register table's columns are Case, Defendant, Disposition/sentence, Fine, Assessments, Probation supervision, Restitution, Corrected total: no Charges, Departure (Y/N + reason code) or Assignment columns. The rubric's fee totals (Judge-ordered amounts, e.g. Barnett $3,065) also differ from the agent's corrected totals, which is a defensible choice, but the missing columns alone fail the item."},
+    {"rubric": "R6", "weight": 8, "lost": 8, "class": "M",
+     "why": "Register annotations cover Barnett, Morales, Tran and Simmons but omit the Henderson filing-date inconsistency (cases.filing_date 2024-12-20 vs docket 'Case Filed' 2024-12-02). Subagent 3 had reported 'Henderson 12/02/24 filed' from the docket table, so the data was retrieved but not cross-checked."},
+    {"rubric": "R8", "weight": 6, "lost": 6, "class": "M",
+     "why": "The audit prefers 'James T. Crawford, Appointed' over 'Public Defender Office', but never says this affects whether PD user fees apply; fee_reconciliation.csv still assesses Simmons a $400 PD user fee citing 'appointed public-defender representation', contradicting its own finding."},
+    {"rubric": "R9", "weight": 8, "lost": 8, "class": "I",
+     "why": "All 39 fees_payments rows have balance_due = amount_assessed and amount_paid 0, failing only because payment_status is 'ASSESSED' instead of 'Pending'; the task, schema and empty source table give no status vocabulary, so 'Pending' was not inferable."}
+  ],
+  "subagent_notes": "Three read-only subagents summarised the Judge's notes DOCX, the order form/defense memo/fee schedule, and the CMS database. Their summaries were accurate and used; subagent 3 surfaced the Henderson 12/02/24 docket filing date but neither it nor the root agent compared it with cases.filing_date (2024-12-20), so the delegation lost that detail in handoff.",
+  "confidence": "medium"
+}

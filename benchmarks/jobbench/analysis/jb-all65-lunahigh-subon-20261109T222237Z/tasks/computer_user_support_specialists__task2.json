@@ -1,0 +1,30 @@
+{
+  "task": "computer_user_support_specialists/task2",
+  "score": "14/82",
+  "goal": "As IT support lead at Meridian Financial Services, produce three deliverables. (1) A budget-constrained Windows 11 migration plan (.docx) classifying all 75 devices as Ready/Remediable/Replace/Decommission with costs, deferrals and Jan-Jun 2026 sprints that resolve the manager's email constraints. (2) An incident correlation analysis (.docx) with root cause for MFS-PC-046/049, hardware-ticket patterns, Low/Med/High burden scores, staffing capacity and a Tier 1 decision tree. (3) A 12-15 slide CTO deck opening with post-EOL risk for financial services.",
+  "delivered": "MFS_Windows11_Migration_Plan.docx (per-device register, department envelopes, sprint plan, budget within $39,500 with deferrals), MFS_Incident_Correlation_Analysis.docx (RCA for 046/049, category-level pilot load, burden table, hours-based staffing, Tier 1 decision tree) and MFS_Windows11_Executive_Briefing.pptx.",
+  "what_went_wrong": "The agent analysed tickets by category (Software 16, OS Migration 15) instead of the subcategory field (Driver Compatibility 15, Application Compatibility 10, ...). It never computed per-staff ticket counts or averages (Sarah 15 / 10.7h, etc.) and projected staffing in hours rather than weekly tickets per person. It took the inventory 'No' flag for MFS-PC-054 at face value and budgeted a $1,400 replacement, never noticing that its only blocker is TPM 1.2 like the 'Partial' 002/059. It never searched for the named external 'Windows 10 EOL Guide', so the deck lacks PCI DSS and cyber-insurance risk. Burden scores came from each device's own readiness class, not similarity to pilot problem devices. R0's premise is factually wrong: the i5-9500 is on Microsoft's supported list, which the agent verified by web search, and the inventory already marks 049 'No'.",
+  "primary_class": "M",
+  "secondary_classes": ["R", "G"],
+  "lost_weight_by_class": {"M": 48, "R": 10, "L": 0, "I": 0, "S": 0, "H": 0, "G": 10},
+  "failed_items": [
+    {"rubric": "R0", "weight": 10, "lost": 10, "class": "G",
+     "why": "The rubric asserts that the i5-9500 is not on the Windows 11 supported CPU list and that 049 was flagged 'migration ready'. The i5-9500 (9th-gen Coffee Lake) is on Microsoft's list, which the agent checked by web search (step 15), and the inventory row already reads 'No, CPU not supported'. The agent's RCA (stale CPU flag, ticket 1054 split-tunnel after the Win11 upgrade) is correct. It did omit the ticket's GlobalProtect/DNS fix and Marcus Thompson, a minor gap."},
+    {"rubric": "R1", "weight": 8, "lost": 8, "class": "M",
+     "why": "Finance (5 Yes / 1 Partial / 5 No, $6,100) and the March 31 priority passed. Legal costs $3,900 because MFS-PC-054 is treated as a $1,400 Replace instead of a potentially remediable TPM-only device. This is the same root cause as R9."},
+    {"rubric": "R3", "weight": 6, "lost": 6, "class": "M",
+     "why": "The DB has a subcategory column (Driver Compatibility 15, Application Compatibility 10), but the analysis reports category counts (Software 16 / OS Migration 15 on 59 'pilot' tickets). Subagent 1 even noted 'Driver Compatibility 15'. There are no per-staff ticket counts or averages, and Sarah is not flagged as a critical Tier 2 bottleneck; the doc concludes 'current headcount can deliver'."},
+    {"rubric": "R4", "weight": 10, "lost": 10, "class": "M",
+     "why": "Lisa Chen's departure and the 5 remaining staff are correct, but the staffing section works only in hours (48h Sarah, 32h Priya, ~21h/sprint) and never projects per-staff weekly ticket volumes from the 61 pilot tickets."},
+    {"rubric": "R5", "weight": 10, "lost": 10, "class": "R",
+     "why": "TASK_INSTRUCTIONS names an external 'Windows 10 EOL Guide: 5-Step Migration Plan to Windows 11' for compliance risks. The agent's only web search was the Intel CPU list, and it never looked for this guide. No output mentions PCI DSS, ISO 27001, cyber insurance or ransomware, and slide 2 gives only a generic 'higher exploit and audit exposure'."},
+    {"rubric": "R6", "weight": 6, "lost": 6, "class": "M",
+     "why": "A Tier 1 tree with escalation paths exists, but it is built on its own buckets (Driver/peripheral, Application, Network, Identity). It has no User Interface branch, no distinct Network Printer path and no subcategory counts. This follows from using category instead of subcategory."},
+    {"rubric": "R8", "weight": 8, "lost": 8, "class": "M",
+     "why": "L/M/H bands come from each device's own readiness class and flags ('Zero-ticket candidates receive no ticket points'). There is no similarity matching to pilot problem devices and no CPU-generation, manufacturer or laptop-vs-desktop incident-rate factors."},
+    {"rubric": "R9", "weight": 10, "lost": 10, "class": "M",
+     "why": "The inventory shows 054 with i7-8665U, UEFI/Secure Boot Yes, and 'TPM 1.2 only' as the sole reason, the same as Partial 002/059 ('firmware update available'). The register still lists 'MFS-PC-054 ... No | Replace | $1,400', with no firmware investigation or Legal-risk argument."}
+  ],
+  "subagent_notes": "Two subagents. Subagent 1 analysed the DB and inventory and returned schema, category and subcategory hints (incl. 'Driver Compatibility 15'), the ticket 1054 GlobalProtect details and a suggested burden score. The root adopted its category framing and readiness-based scoring, which contributed to R3, R6 and R8, and dropped the subcategory and resolution details. Subagent 2 summarised Windows11_Enterprise_Briefing.pdf (one tool-argument error, no impact). Neither was used to fetch the external EOL guide.",
+  "confidence": "medium"
+}

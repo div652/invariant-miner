@@ -1,0 +1,26 @@
+{
+  "task": "technical_writers/task2",
+  "score": "16/60",
+  "goal": "Overhaul Petstore v3.1.0 documentation after undocumented breaking changes caused a ticket spike. Deliver a standalone customer migration guide covering every breaking change (prioritised by usage and ticket impact, with SDK compatibility guidance), a revised API reference aligned to Google/Microsoft style and company terminology, and doc_impact_analysis.csv mapping every gap to tickets, metrics and a data-justified P0-P3 priority.",
+  "delivered": "Three files in output/: migration_guide_v3.1.0.md (two 'Breaking change' sections, OAuth and orderId, each with prose, one after-state snippet and SDK checklists, plus an 'Other v3.1.0 changes' section and rollout checklists), revised_api_reference.md (full endpoint reference including all four login response headers) and doc_impact_analysis.csv (10 required columns, about 30 rows with correct ticket/metric mappings).",
+  "what_went_wrong": "The agent treated only the two changelog rows marked v3.1.0 + breaking as breaking changes and stated 'These are the two breaking changes recorded for v3.1.0'. It did so even though api_usage_metrics.json lists put_pet_status_code beside them under breaking_change_impact, SUP-4438 (Enterprise, 405 vs 422) post-dates the release, and both subagents flagged PUT 422 for inclusion. As a result PUT /pet is missing from the ordering, the summary table, the code examples, the pitfalls and the SDK matrix. The guide also has no before/after code pairs and no Python at all, although subagent 2 recommended curl+Python. There is no SDK version matrix and no 'pitfalls' sections. In the CSV, findByTags (0.9%) and lastLoginDate were rated P1, and many justifications lack metrics.",
+  "primary_class": "M",
+  "secondary_classes": [],
+  "lost_weight_by_class": {"M": 44, "R": 0, "L": 0, "I": 0, "S": 0, "H": 0, "G": 0},
+  "failed_items": [
+    {"rubric": "R0", "weight": 6, "lost": 6, "class": "M",
+     "why": "OAuth and orderId are ordered correctly with metrics, but PUT /pet 405-to-422 is not a breaking-change section; the guide says 'These are the two breaking changes recorded for v3.1.0', and 71% migration appears in no output. Borderline: the changelog dates this change to 3.0.1, but the metrics file groups it with the v3.1.0 breaking changes."},
+    {"rubric": "R1", "weight": 10, "lost": 10, "class": "M",
+     "why": "The guide has only after-state snippets (an HTTP POST with a Bearer token, and a curl DELETE /store/order/5), no 'before' code and zero Python (grep finds no 'python'), and nothing for PUT /pet, even though subagent 2 advised 'concrete curl+Python examples'."},
+    {"rubric": "R2", "weight": 6, "lost": 6, "class": "M",
+     "why": "SUP-4422 and SUP-4401 are cited only in 'Who is affected' text, with no pitfall subsections presenting them as real-world scenarios; SUP-4438 is absent from the guide because PUT /pet was excluded."},
+    {"rubric": "R4", "weight": 10, "lost": 10, "class": "M",
+     "why": "P0 and P1 assignments are right, but findByTags (0.9% error) is P1 instead of P3, and lastLoginDate, reserved and X-Token-Type are P1 instead of P2; about 15 justifications (e.g., DRAFT-BASE-URL, R005, TERM-T001) cite no metric."},
+    {"rubric": "R5", "weight": 6, "lost": 6, "class": "M",
+     "why": "The guide gives only narrative 'SDK compatibility check' checklists for two changes, with no table by language/SDK, no affected or minimum version ranges, no workaround for consumers who cannot upgrade, and no PUT /pet row."},
+    {"rubric": "R7", "weight": 6, "lost": 6, "class": "M",
+     "why": "Intro, base URL and auth context are good, but the 'At a glance' table lists only 2 of the 3 breaking changes and there are no paired before/after examples, so the guide is not fully standalone."}
+  ],
+  "subagent_notes": "Two subagents. Subagent 1 proposed a full doc_impact_analysis matrix and a priority rubric that the root largely adopted; the CSV ticket and metric mappings passed (R3), but its liberal P1 rule (3-10% errors or v4 deprecation) produced the over-prioritised findByTags and lastLoginDate rows (R4). Subagent 2 built a completeness checklist that flagged PUT /pet 405-to-422 as a breaking change to cover and recommended curl+Python examples; the root ignored both points. The subagents helped the CSV and reference, but their correct migration-guide advice was not used.",
+  "confidence": "medium"
+}

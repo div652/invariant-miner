@@ -1,0 +1,26 @@
+{
+  "task": "police_fire_and_ambulance_dispatchers/task1",
+  "score": "34/94",
+  "goal": "Act as DC FEMS dispatch shift supervisor at 09:00 on 2025-01-15: re-triage 15 incoming calls against unit_status.csv, station geography and the CAD database, and assign units. Deliver dispatch_decisions.xlsx (prioritized queue + capability/proximity matrix), conflict_report.csv plus CAD inserts, and shift_handover.xlsx (GIS map data, battalion/specialty depletion, Montgomery County 911 call-pattern analysis, operational notes).",
+  "delivered": "Four files in output/: dispatch_decisions.xlsx (Prioritized Queue for all 15 calls, Unit Match Matrix), shift_handover.xlsx (4 sheets incl. battalion table, specialty coverage table and Kaggle montcoalert pattern stats on 663,522 records), conflict_report.csv (10 anomaly rows: E11 status conflict, unlinked A15/M5/EMS3, related-incident pairs, end-of-shift, sync count) and dispatch_cad_synced.db with 15 calls / 26 assignments.",
+  "what_went_wrong": "All six failures are dispatch-judgment or write-up choices made with full information. The agent sent RS1+BC6 (High-angle Rescue per unit_status.csv) to the water rescue instead of recalling E2 or escalating the Swift Water gap, gave the COPD call only BLS A14 while spending M8 on a chest-pain call 5.86 mi away, and made BLS A11 the primary unit on the stroke call without any tPA-window reasoning. The conflict report omitted the ON_SCENE A02 units (E4/T6/BC4/EMS4), the battalion sheet never named E7/M7 as the cause of Battalion 2's reduced coverage, and the call-pattern sheet stripped the 'Traffic:' prefix (rank 1 'VEHICLE ACCIDENT -', 148,372) and labeled the Kaggle data 'context only', so it was not tied to resource positioning.",
+  "primary_class": "M",
+  "secondary_classes": [],
+  "lost_weight_by_class": {"M": 60, "R": 0, "L": 0, "I": 0, "S": 0, "H": 0, "G": 0},
+  "failed_items": [
+    {"rubric": "R0", "weight": 10, "lost": 10, "class": "M",
+     "why": "Prioritized Queue assigns 'RS1 (water rescue/high-angle squad); BC6' and says E2 is ENROUTE so cannot be double-booked; no recall of E2 and no explicit mutual-aid escalation. The agent's own Unit Match Matrix and Resource Depletion sheet say only E2 has Swift Water Rescue (RS1 is High-angle in unit_status.csv). The geojson does list swift water at the Engine 2 station, so the choice is partly defensible, but it contradicts the agent's own matrix."},
+    {"rubric": "R1", "weight": 10, "lost": 10, "class": "M",
+     "why": "conflict_report.csv lists only true anomalies (E11 status mismatch, A15/M5/EMS3 unlinked, related pairs). It never records E4/T6/BC4/EMS4 as ON_SCENE at A02 and unavailable, even though the agent excluded them from dispatch. The agent chose to report only anomalies. The rubric expected all committed units to be listed."},
+    {"rubric": "R2", "weight": 10, "lost": 10, "class": "M",
+     "why": "The Resource Depletion sheet gives Battalion 2 as aggregates only (7 units, 2 OOS, flag LOW from post-dispatch depletion of 80%) and never names E7/M7 maintenance as the reason. It also flags ALS 'ZERO AFTER DISPATCH'. The rubric's 8-unit roster is itself wrong: A19 is Battalion 3 in unit_status.csv, so the agent's count of 7 is correct."},
+    {"rubric": "R3", "weight": 10, "lost": 10, "class": "M",
+     "why": "Stroke IC-014 is P1 with M4, but A11 (a BLS ambulance at 0.09 mi) is the Primary Unit, and no file mentions tPA or the 3-4.5 h treatment window. The justification only says 'time-sensitive transport is prioritized'."},
+    {"rubric": "R4", "weight": 10, "lost": 10, "class": "M",
+     "why": "The agent downloaded the same 663,522-row montcoalert data (step 11-13), but it ranked title suffixes, so the top type appears as 'VEHICLE ACCIDENT -' (148,372, which is 'Traffic: VEHICLE ACCIDENT -'), with a separate 'VEHICLE ACCIDENT' at rank 4. It also states 'Context only; not a D.C. deployment model', so the finding never informs positioning. The judge was wrong that the agent did not use the sample data, but the labeling and framing are the agent's choices."},
+    {"rubric": "R9", "weight": 10, "lost": 10, "class": "M",
+     "why": "COPD call IC-010 is P1 but gets only A14 (BLS) as primary ('mutual-aid ALS requested'). All five available medics went to other calls, including M8 sent 5.86 mi to chest pain IC-005, so the ALS shortage came from the agent's own allocation."}
+  ],
+  "subagent_notes": "",
+  "confidence": "medium"
+}

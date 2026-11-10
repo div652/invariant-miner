@@ -1,0 +1,20 @@
+{
+  "task": "human_resources_specialists/task1",
+  "score": "40/64",
+  "goal": "As an HR Specialist at MedTech Solutions, analyse attrition (by role, compensation versus current bands, and overtime) and screen 20 applicants against the requirements matrix. Deliver Workforce_Planning_Report.docx (executive summary with three priority findings, compensation equity analysis, screening matrix and recommendations, strategic recommendations covering compensation and non-compensation factors) and Applicant_Screening_Results.xlsx (qualification matrix, summary stats, license follow-up tracker).",
+  "delivered": "Both files are in output/. The docx covers attrition and overtime (overall 127/416 vs 110/1,054), a compensation gap table, screening dispositions and phased recommendations. The xlsx has the 20-row screening matrix, summary statistics, a license follow-up sheet and an 'Attrition Overtime by Role' sheet that gives rates only.",
+  "what_went_wrong": "The computed numbers were right (Lab Tech 50.0% OT vs 15.7% no-OT; Research Scientist 34.0% vs 7.2%), but per-role results were reported as rates only, without the headcounts (31/62, 31/197, 33/97, 14/195) the rubric requires. The Lab Tech ~3x role-specific ratio was not called out. The report never combined Positions_Open (Lab Tech 4, Research Scientist 3) and Priority_Level=High with attrition into explicit top hiring priorities: it framed those roles around retention and workload. R5 was also failed partly because the report has no 'Section D', a structure the task never specified.",
+  "primary_class": "M",
+  "secondary_classes": [],
+  "lost_weight_by_class": {"M": 24, "R": 0, "L": 0, "I": 0, "S": 0, "H": 0, "G": 0},
+  "failed_items": [
+    {"rubric": "R0", "weight": 8, "lost": 8, "class": "M",
+     "why": "The report and the 'Attrition Overtime by Role' sheet show Lab Tech 50.0% vs 15.7%, but not the 31/62 and 31/197 counts. The only multiplier highlighted is the company-wide 2.93x, not the ~3x Lab Tech ratio (judge). The agent had computed these from the CSV but presented them only as rates."},
+    {"rubric": "R3", "weight": 6, "lost": 6, "class": "M",
+     "why": "Positions_Open and Priority_Level appear only in the xlsx reference tables. The report's priority findings and recommendations group Lab Tech and Research Scientist with Sales Exec and HR under retention and workload, and never rank them as top hiring priorities with 4 and 3 openings. The agent had all three inputs but did not synthesize them."},
+    {"rubric": "R5", "weight": 10, "lost": 10, "class": "M",
+     "why": "Substantively met: 'Freeze unapproved overtime' and 'For labs and research, add cross-training, predictable schedules, staffing buffers'. It failed on two criteria. (1) No 'Section D': a rubric artifact, since the task specifies no lettered sections. (2) Research Scientist counts 33/97 vs 14/195 are missing; only 34.0%/7.2% is given. Criterion (2) alone fails the item, so the root cause is the agent's rates-only reporting."}
+  ],
+  "subagent_notes": "One background subagent re-ran the full attrition and screening analysis without writing files. The root used its result only as a cross-check (step ~33 noticed an A008 disposition mismatch), so it neither helped nor hurt the failed items.",
+  "confidence": "medium"
+}

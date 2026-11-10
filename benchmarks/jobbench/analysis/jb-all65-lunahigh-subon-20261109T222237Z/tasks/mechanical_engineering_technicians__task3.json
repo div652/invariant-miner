@@ -1,0 +1,26 @@
+{
+  "task": "mechanical_engineering_technicians/task3",
+  "score": "18/58",
+  "goal": "Investigate FAT results for Flowserve pump P-2415A: speed-correct performance to 2970 RPM and judge it against the datasheet/API 610, assess all 7 vibration points against API 610 and the applicable ISO 10816 framework (reconciling standards via Europump guidance), compute SKF 6313/6311 bearing defect frequencies and cross-check FFT spectra. Deliver P-2415A_FAT_Acceptance_Matrix.xlsx and P-2415A_Disposition_Memo.pdf with an accept/reject recommendation.",
+  "delivered": "Both files in output/: a multi-sheet acceptance-matrix workbook (performance, vibration acceptance, bearing/FFT, standards basis, disposition) and a 2-page PDF memo recommending REJECT/HOLD. Performance table, API POR/AOR limits per point, FFT cross-reference and operating restrictions are all present.",
+  "what_went_wrong": "The agent had the Europump Cat II <=200 kW zone table (A 3.2, B 5.1, C 8.5) in its step-5 search result but used the factory-acceptance limits 4.2/5.1 as zone boundaries (build_deliverables.py lines 115-118), so 3.5 mm/s was labelled Zone A and 3.2 never appears (R2, R8). It never searched for the ISO 10816-3:2009 text, so it could not cite the Foreword's scope exclusion of pumps (R1). The 1x rise was not attributed to off-BEP hydraulic radial thrust (R5). Two further losses are rubric/judge issues: the rubric's 6313 ball diameter (22.23 mm) differs from the SKF catalog value the agent retrieved (23.812 mm), and R0 failed only for not writing out '3.8 percentage points'.",
+  "primary_class": "M",
+  "secondary_classes": ["G", "R"],
+  "lost_weight_by_class": {"M": 20, "R": 8, "L": 0, "I": 0, "S": 0, "H": 0, "G": 12},
+  "failed_items": [
+    {"rubric": "R0", "weight": 6, "lost": 6, "class": "G",
+     "why": "Memo table and Disposition sheet state 68.20% raw / 68.18% corrected vs '>=72% guaranteed' FAIL, attributed to the datasheet; the judge failed it only because the 3.8 percentage-point gap was not written out."},
+    {"rubric": "R1", "weight": 8, "lost": 8, "class": "R",
+     "why": "The agent only fetched the Europump guide (step 6) and never searched for ISO 10816-3:2009, so it never saw the Foreword's removal of rotodynamic pumps from scope; the deliverable cites only 'Europump notes ISO 10816-3 is superseded for pumps by Part 7'."},
+    {"rubric": "R2", "weight": 8, "lost": 8, "class": "M",
+     "why": "The step-5 search result contained the Cat II <=200 kW zone table (A 3.2, B 5.1, C 8.5, D >8.5), but the script used the 4.2 factory-acceptance POR limit as the Zone A boundary, labelling 3.5 mm/s at point 6 'Zone A' and never stating A <=3.2."},
+    {"rubric": "R3", "weight": 6, "lost": 6, "class": "G",
+     "why": "The agent retrieved SKF catalog data (Z=8, Dw=23.812 mm) and used SKF kinematic orders, giving BSF 100.72 Hz; the rubric's Dw 22.23 mm (BSF ~109 Hz) does not match the manufacturer geometry, and BPFO/BPFI/FTF are within tolerance."},
+    {"rubric": "R5", "weight": 6, "lost": 6, "class": "M",
+     "why": "1x 1.73->2.72 mm/s and 2x peaks are reported, but memo section 4 says the 1x increase 'requires checks for balance, alignment, looseness...' without explaining that a flow-dependent 1x rise points to off-BEP hydraulic radial thrust rather than unbalance/misalignment."},
+    {"rubric": "R8", "weight": 6, "lost": 6, "class": "M",
+     "why": "Same misread of the Europump table as R2: the API vs ISO comparison uses 'Cat II factory POR 4.2 / AOR 5.1' instead of the zone set, so the API 3.0 POR limit is never compared with the 3.2 Zone A/B boundary."}
+  ],
+  "subagent_notes": "",
+  "confidence": "medium"
+}

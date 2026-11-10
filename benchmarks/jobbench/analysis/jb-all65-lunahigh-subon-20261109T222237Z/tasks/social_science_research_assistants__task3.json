@@ -1,0 +1,20 @@
+{
+  "task": "social_science_research_assistants/task3",
+  "score": "26/50",
+  "goal": "Harmonize a raw 15-country climate-attitudes survey with Meta/Yale 2023 and ESS Round 8 (Poortinga et al. 2018) benchmarks. Deliver harmonized_survey.db (cleaned_responses with quality flags, variable_crosswalk, country_metadata), a 5-sheet cross_study_analysis.xlsx (Country_Benchmarks with differences and N/A for non-overlap, descriptives, correlations, two OLS models, Divergence_Flags with explanations), and a reconciliation memo with specific recommendations for qualifying comparisons.",
+  "delivered": "harmonized_survey.db: 4 misspellings and 3 blanks handled, codebook-exact crosswalk, 15-country metadata. cross_study_analysis.xlsx: a wide Country_Benchmarks with belief and worry vs Meta/Yale and ESS 'changing' only, plus Descriptive_Stats, Correlation_Matrix, Regression_Models and 29 Divergence_Flags rows. reconciliation_memo.docx covers mapping imperfections, the three-country alignment and recommendations.",
+  "what_went_wrong": "The agent fetched the full ESS PDF (step 8, 20 pages) but took only Table 1's 'climate changing' column. It omitted the human-caused and bad-impacts ESS values for France/Germany/UK even though the local survey has cc_cause. It also left non-overlapping countries' ESS cells blank despite the explicit 'marked N/A' instruction (R0). All 29 Divergence_Flags rows share one boilerplate sentence, even citing '(for ESS) fieldwork timing' on Meta/Yale rows (R1). The memo labels fieldwork years but never recommends treating 2016-17 ESS as historical context rather than a direct benchmark (R5).",
+  "primary_class": "M",
+  "secondary_classes": [],
+  "lost_weight_by_class": {"M": 24, "R": 0, "L": 0, "I": 0, "S": 0, "H": 0, "G": 0},
+  "failed_items": [
+    {"rubric": "R0", "weight": 10, "lost": 10, "class": "M",
+     "why": "Country_Benchmarks has ess_belief_changing_pct (96.3/95.4/93.6) but no ESS human-caused (93.8/94.8/91.0) or bad-impacts (73.7/77.4/66.0) values, though the fetched PDF contained Table 1. Non-overlap ESS cells are None, not 'N/A' as the prompt required. The wide, non-'Variable' layout also failed the rubric's schema criterion, which the prompt did not specify."},
+    {"rubric": "R1", "weight": 6, "lost": 6, "class": "M",
+     "why": "Every flag row has the same text, 'likely reflects different question wording, response threshold, sampling/frame, and (for ESS) fieldwork timing', with only the pp value changing. It gives no country-specific factor and no mention of local n of 40-72, though the agent had those counts."},
+    {"rubric": "R5", "weight": 8, "lost": 8, "class": "M",
+     "why": "The memo recommends CIs, ranks comparisons and hedges >15pp gaps (3 of 4 sub-criteria passed). For ESS it only says 'Label every external comparison with the fieldwork year' and still calls ESS a benchmark, never advising historical-context framing for the 6-7 year gap the prompt highlighted."}
+  ],
+  "subagent_notes": "",
+  "confidence": "high"
+}

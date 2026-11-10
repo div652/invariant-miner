@@ -1,0 +1,20 @@
+{
+  "task": "sociology_teachers_postsecondary/task3",
+  "score": "44/72",
+  "goal": "As a Rutgers SOC 101 instructor at Week 11, build a midterm report workbook (Current Grades for 35 students with prorated weighted grades and discrepancy flags, and an At-Risk Analysis cross-referenced with the Office Hours Log), adjudicate four grade appeals in Appeal_Decisions.docx (citing syllabus policy and, for the writing appeal, UC Berkeley's sociology analytical essay rubric), and produce a Quiz 3 blueprint CSV mapping Weeks 9-14 to CLEP categories and weights, plus a CLEP-organized study guide.",
+  "delivered": "SOC101_Midterm_Report.xlsx (Current Grades with all required columns and correct letters; At-Risk Analysis with triggers, office-hour visit counts and notes, tailored interventions and priority), Appeal_Decisions.docx (four rulings with all required components), Quiz3_Assessment_Blueprint.csv (Weeks 9-14 mapped to CLEP categories using the current College Board web page weights) and Quiz3_Study_Guide.docx.",
+  "what_went_wrong": "Three items failed. For the Writing Assignment 1 appeal (R4), the agent's step-7 search returned the correct Syracuse-hosted Berkeley 'Rubric Used for Grading an Analytical Essay (Sociology)', with the Originality levels visible in the result. The agent instead fetched and cited a different Berkeley 'Expectations: Great, Good, Fair, and Poor Writing' guide and denied the appeal for lack of the essay, without a multi-criterion rationale. The At-Risk sheet (R1) assessed engagement through visit counts and notes but did not use the rubric's Active/Partial/No Contact labels, which appear nowhere in the prompt or inputs. The blueprint (R6) used the weights on the current clep.collegeboard.org page (Social Processes 25%, Social Patterns 10%, Stratification 25%), as the prompt directs, while the rubric expects older fact-sheet weights (20/15/30). M and I tie at 10 points lost each; M is listed as primary because it is the clear agent error.",
+  "primary_class": "M",
+  "secondary_classes": ["I", "G"],
+  "lost_weight_by_class": {"M": 10, "R": 0, "L": 0, "I": 10, "S": 0, "H": 0, "G": 8},
+  "failed_items": [
+    {"rubric": "R1", "weight": 10, "lost": 10, "class": "I",
+     "why": "The rubric requires 'Active'/'Partial'/'No Contact' labels with a specific academic vs non-academic rule. Neither the prompt ('assess prior engagement') nor the gradebook or syllabus defines this taxonomy. The agent did record each student's visits and reasons (e.g. Brown's 9/3 grade clarification and 10/29 quiz prep; Martinez's career-only visit) and used them in interventions (R2 passed)."},
+    {"rubric": "R4", "weight": 10, "lost": 10, "class": "M",
+     "why": "The step-7 search result for the Berkeley rubric included the Syracuse-hosted analytical-essay rubric with its Originality text ('goes substantially beyond...', 'plays it safe', 'expository rather than analytical'). At steps 10-11 the agent fetched and cited a different Berkeley grading-expectations PDF instead, and its ruling denies the appeal for lack of the essay rather than analysing the 4/10 across rubric criteria."},
+    {"rubric": "R6", "weight": 8, "lost": 8, "class": "G",
+     "why": "The topic mappings passed. The weights failed only because the rubric expects older fact-sheet values (20/15/20/30/15). The prompt directs the agent to the College Board website, and the clep.collegeboard.org page fetched at step 10 lists Institutions 20%, Social Patterns 10%, Social Processes 25%, Stratification 25% and Sociological Perspective 20%, which the CSV reproduces exactly."}
+  ],
+  "subagent_notes": "",
+  "confidence": "medium"
+}

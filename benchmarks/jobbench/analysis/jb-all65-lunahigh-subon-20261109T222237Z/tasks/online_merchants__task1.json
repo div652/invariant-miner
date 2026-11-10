@@ -1,0 +1,24 @@
+{
+  "task": "online_merchants/task1",
+  "score": "18/58",
+  "goal": "As e-commerce operations manager, decide whether three escalated complaints (INQ-001, INQ-003, INQ-006) reflect systemic quality, fulfillment or listing problems by cross-referencing Q4 product metrics, the Kaggle women's clothing reviews and Shopify apparel.csv; deliver a 3-sheet Incident_Analysis_Report.xlsx (decision matrix, response templates, risk dashboard with a visualization) and a Supplier Quality Notice or Quality Assessment Memo PDF.",
+  "delivered": "Incident_Analysis_Report.xlsx (Executive Summary decision matrix, Customer Response Protocols for the three inquiries, Product Risk Dashboard with risk scores, colour-coded levels and an openpyxl bar chart 'Risk score by product') and Supplier_Quality_Notice.pdf for the Dark Denim Top (fade + hem tear, 'ripped hem effect' listing, 8.2% returns, 3.5 rating, corrective actions).",
+  "what_went_wrong": "The agent reached the right verdicts but lost points on benchmarks and on secondary at-risk products. At step 16 it replaced the simple catalog mean (4.28% returns) with volume-weighted benchmarks (3.8% portfolio, Tops 4.34%/4.27), so the 4.28%/4.25 catalog averages appear nowhere. A subagent explicitly linked SKU-016 Olive Green Jacket to INQ-011's colour complaint, but that finding never reached the workbook. SKU-005 was flagged Moderate without being compared to the Dark Denim Top pattern. The dashboard does contain a bar chart (xl/charts/chart1.xml, anchored on sheet 3), but the judge saw only text and failed R7.",
+  "primary_class": "M",
+  "secondary_classes": ["L", "G"],
+  "lost_weight_by_class": {"M": 20, "R": 0, "L": 10, "I": 0, "S": 0, "H": 0, "G": 10},
+  "failed_items": [
+    {"rubric": "R0", "weight": 6, "lost": 6, "class": "M",
+     "why": "SKU-007 metrics are right, but at step 16 the agent switched portfolio_return_mean from perf['return_pct'].mean() (4.28%) to a units-weighted 3.8% and used Tops 4.34%/4.27 rating, so the catalog averages 4.28%/4.25 never appear."},
+    {"rubric": "R1", "weight": 10, "lost": 10, "class": "L",
+     "why": "SKU-016 is on the dashboard as High, and the data-analysis subagent reported it 'Directly corroborates INQ-011 color mismatch - high priority listing color/content' (root step 14), but no output file mentions INQ-011 or a listing-accuracy framing for SKU-016."},
+    {"rubric": "R2", "weight": 6, "lost": 6, "class": "M",
+     "why": "SKU-005 appears as Moderate with 'return >= P75; conversion <= 2.8%' indicators, but the agent never states that it mirrors the Dark Denim Top pattern or should be monitored despite having no escalated complaint."},
+    {"rubric": "R5", "weight": 8, "lost": 8, "class": "M",
+     "why": "Supplier_Quality_Notice.pdf states 8.2%, 3.5 and 178 units but benchmarks them to the Tops average 4.34% and weighted rating 4.27 rather than the catalog 4.28%/4.25; this came from the same deliberate weighting choice."},
+    {"rubric": "R7", "weight": 10, "lost": 10, "class": "G",
+     "why": "The xlsx contains xl/drawings/drawing1.xml + xl/charts/chart1.xml (barChart 'Risk score by product' over 'Product Risk Dashboard'!$I$9:$I$25) linked from sheet3, plus red/amber/green fills on risk levels; the judge read only extracted text and said no chart exists."}
+  ],
+  "subagent_notes": "Two subagents: one analysed the local CSVs (correctly found SKU-016/INQ-011, SKU-005 and others), and one researched the Kaggle and Shopify datasets (downloaded both, which supported the passing R4/R6). The root ignored the subagent's INQ-011 link, so the subagent helped but its key finding was dropped.",
+  "confidence": "high"
+}

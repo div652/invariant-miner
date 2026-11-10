@@ -1,0 +1,30 @@
+{
+  "task": "financial_managers_branch_or_department/task2",
+  "score": "8/66",
+  "goal": "As Westfield branch financial manager, build an Enhanced Q4 2024 Risk Report in Excel (portfolio dashboard, delinquency x rating cross-tab, NPA vs FDIC benchmark, 20% sector ceiling, CDFI-scored watch list with OCC actions, +200bp DSCR stress) and a PDF with six credit decision memoranda under a $3.0M cap plus a 1-2 page executive summary for the CCO/Board.",
+  "delivered": "Meridian_Westfield_Q4_2024_Enhanced_Risk_Report.xlsx (8 sheets: dashboard, loan type summary, asset quality, sector concentration, top 5, adverse watch list, pending decisions, sources) and a 9-page Meridian_Westfield_Q1_2025_Credit_Decision_Memoranda.pdf (executive summary, six memos with CDFI scoring, watch-list appendix).",
+  "what_went_wrong": "Only the NPA benchmark item passed; the other eight items failed one or two criteria each, almost all by leaving out specifics that were in pending_loan_applications.csv or by making a judgement call the rubric did not accept. APP-2025-001 (FICO 790, DSCR 1.85) was DEFERRED instead of conditionally approved with a Board waiver, reduced amount or participation. Memos left out stated facts such as Bowman's $78,500 debt and lack of a banking relationship, Thornton's $28K student and $14.5K auto loans, Elena Delgado's $320K equity and the GM tenure, and Kowalski's $210K savings and $448K collateral. The watch list gave numeric subjective adjustments without rationale. The cross-tab had dollars only, with no counts or migration commentary. Ironbridge was not named the largest problem credit, its workout actions were generic, and it was not linked to the 5.6% NPA.",
+  "primary_class": "M",
+  "secondary_classes": [],
+  "lost_weight_by_class": {"M": 58, "R": 0, "L": 0, "I": 0, "S": 0, "H": 0, "G": 0},
+  "failed_items": [
+    {"rubric": "R1", "weight": 8, "lost": 8, "class": "M",
+     "why": "All 14 adverse loans and objective factors are correct, but the Adverse Watch List shows only numeric Subjective_1/Subjective_2 values (+2/+2, +2/+1) with no per-loan explanation, although the task asks for subjective adjustments."},
+    {"rubric": "R2", "weight": 6, "lost": 6, "class": "M",
+     "why": "Decline and FICO/bankruptcy/DTI are right, but the memo (PDF p.8) omits 'No prior banking relationship' and $78,500 existing debt vs $52K income, both in pending_loan_applications.csv, and labels it CDFI Projected Loss instead of the OCC 'well-defined weaknesses/inadequate repayment capacity' framing."},
+    {"rubric": "R3", "weight": 10, "lost": 10, "class": "M",
+     "why": "The memo recommends 'DEFER' for APP-2025-001 and commits $0, offering only hypothetical post-relief structuring; it does not propose the Board waiver, reduced amount or participation sell-down that would allow conditional approval."},
+    {"rubric": "R4", "weight": 6, "lost": 6, "class": "M",
+     "why": "The Asset Quality cross-tab reports dollar balances only (e.g., Current 1-Pass $30,849,348) with no loan counts (49/16/5/8/5/1) and no commentary that worse delinquency maps to worse ratings; the agent had the full portfolio CSV."},
+    {"rubric": "R5", "weight": 6, "lost": 6, "class": "M",
+     "why": "The positive adjustment mentions 'nine years of restaurant management' and a 'strong co-guarantor (FICO 765; $585K residence)' but omits the 4 years as GM of a $2.1M restaurant, Elena Delgado and the ~$320K equity, all of which are in the application's Additional_Notes."},
+    {"rubric": "R6", "weight": 10, "lost": 10, "class": "M",
+     "why": "The APP-2025-004 analysis covers DTI, PMI, reserves and mitigants but never states the $28,000 student loan and $14,500 auto loan balances given in the application notes."},
+    {"rubric": "R7", "weight": 6, "lost": 6, "class": "M",
+     "why": "Ironbridge is shown in the watch list (LTV 1.38, DSCR 0.96, Projected Loss) but never called the largest problem credit, its $704K shortfall and NPA contribution are not stated, and actions are generic ('Workout / classify / collateral review'). The OCC fetch (69 pp.) was truncated and the spill file was never read, so the Substandard definition text was also missed (minor R)."},
+    {"rubric": "R8", "weight": 6, "lost": 6, "class": "M",
+     "why": "Memo p.4 says 'relationship deposits' but omits 'customer since 2020' and '$210K personal savings at Meridian', and gives LTV 0.78 without the $448K collateral value or any equipment-depreciation risk, though all are in the CSV row."}
+  ],
+  "subagent_notes": "",
+  "confidence": "high"
+}

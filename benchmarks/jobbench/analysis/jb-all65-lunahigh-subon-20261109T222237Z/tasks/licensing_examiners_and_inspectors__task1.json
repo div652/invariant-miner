@@ -1,0 +1,28 @@
+{
+  "task": "licensing_examiners_and_inspectors/task1",
+  "score": "24/72",
+  "goal": "As a senior WA L&I licensing examiner, adjudicate 15 Q1 2025 contractor applications (APPROVE/DENY/HOLD) against four new bulletins, a violations DB, bonds, field notes, correspondence and data.wa.gov datasets; deliver a 3-sheet Eligibility Review Workbook and a 3-4 page Senior Examiner Case Report PDF with executive summary, high-risk profiles, correspondence disposition and process-improvement recommendations.",
+  "delivered": "Q1_2025_Eligibility_Review_Workbook.xlsx (Eligibility Summary: 3 APPROVE, 2 DENY, 10 HOLD; Deficiency Detail with 22 cited deficiencies; Regulatory Impact Analysis for RB-2025-001..004) and a 4-page Q1_2025_Contractor_License_Application_Batch_Senior_Examiner_Case_Report.pdf.",
+  "what_went_wrong": "All determinations were defensible (executive summary counts passed), but write-ups left out specific facts that were in the staged files. For Westside, the AG referral (VIO-2023-0402 / complaint 5006), the resolved VIO-2022-0711 and the FLAGGED 'Civil judgment unpaid' background were never mentioned. For NextGen, the 4-year minimum stated in its application note was not contrasted with its 2 years. Other omissions: the #2025015 note that already flagged the Henderson match, Rainier's valid 11/20/2024 bond date, Olsen's receipts/photos 'not included in this log' as a verification gap, and case references in the process recommendations. Puget Sound HVAC was held for bond plus RB-2025-004 experience documentation, a literal reading of the bulletin that the rubric did not expect.",
+  "primary_class": "M",
+  "secondary_classes": ["I"],
+  "lost_weight_by_class": {"M": 42, "R": 0, "L": 0, "I": 6, "S": 0, "H": 0, "G": 0},
+  "failed_items": [
+    {"rubric": "R1", "weight": 6, "lost": 6, "class": "M",
+     "why": "DENY is correct, but the PDF/workbook omit VIO-2022-0711 ($4,000), the 'OPEN - REFERRED TO AG' status of VIO-2023-0402, complaint 5006 and the application's 'FLAGGED - Civil judgment unpaid' background, all in the DB/CSV the agent queried at step 5."},
+    {"rubric": "R2", "weight": 6, "lost": 6, "class": "M",
+     "why": "Deficiency D-03 says 'Only 2 years self-reported' but never contrasts it with the 4-year minimum, even though #2025013's Notes field states 'Specialty requires minimum 4 years per WAC 296-200A-015'."},
+    {"rubric": "R3", "weight": 6, "lost": 6, "class": "M",
+     "why": "The Henderson duplicate is caught and #2025015 held, but the agent presents it as its own finding and never cites the #2025015 Notes field ('Principal name matches App #2025001'), which the criterion requires."},
+    {"rubric": "R4", "weight": 8, "lost": 8, "class": "M",
+     "why": "The HOLD for insurance expired 10/31/2024 is right, but the summary says only '$12,000 bond ... otherwise appear adequate' without stating the 11/20/2024 BondFiledDate that distinguishes valid bond from lapsed insurance."},
+    {"rubric": "R6", "weight": 10, "lost": 10, "class": "M",
+     "why": "Item 1 says 'I have attached receipts and photos but they are not included in this log'; the disposition (PDF p.3) only says 'Preserve receipts/photos when received' and never flags the missing attachments as a verification gap. Items 2-4 passed."},
+    {"rubric": "R7", "weight": 6, "lost": 6, "class": "M",
+     "why": "Four actionable recommendations are given (effective-date bond controls, adverse-status queue, field/complaint matching, experience evidence at intake), but none names a batch case such as Lakewood, Sound Fencing, Henderson or Westside."},
+    {"rubric": "R8", "weight": 6, "lost": 6, "class": "I",
+     "why": "HOLD and the $12K vs $20K RB-2025-001 shortfall are correct; the item fails because the agent also applied RB-2025-004 ('18 years self-reported; no third-party evidence appears in packet'). No staged file shows that #2025005 has third-party verification, so the rubric's 'bond as sole factor / otherwise fully compliant' premise is not derivable from the inputs (borderline G)."}
+  ],
+  "subagent_notes": "",
+  "confidence": "medium"
+}

@@ -1,0 +1,20 @@
+{
+  "task": "training_and_development_specialists/task2",
+  "score": "18/44",
+  "goal": "As the training specialist at a ~120-person healthcare organization, combine the director's Q4 memo, Q3 evaluation data and a Q4 instructor-availability sheet (plus externally sourced Kirkpatrick form samples and a Smartsheet onboarding feedback form) into three deliverables: a four-sheet Excel workbook (Q3 Analysis, Instructor Scorecard, Q4 Schedule, Budget Projection), a Kirkpatrick-aligned evaluation redesign (.docx) that audits existing instruments, and a director briefing memo PDF with risk matrix, consultant recommendations and three quick wins.",
+  "delivered": "Meridian_Q3_Q4_Readiness_Assessment.xlsx (four sheets with department/module/format metrics and flags, reconciled instructor scorecard, 40-session Q4 calendar with constraint checks, budget projection), Meridian_Kirkpatrick_Evaluation_Redesign.docx (evaluator instructions, audit of the Q3 CSV and EIF template, Level 1-3 instrument with targeted diagnostic items), and a 2-page Meridian_Director_Briefing_Memo.pdf.",
+  "what_went_wrong": "The biggest single loss (R4, 10 pts) is retrieval: the instructions said the organization had downloaded Kirkpatrick form samples and a Smartsheet onboarding form, but the agent decided at step 7 not to search for them ('I can simply note that no Smartsheet artifact is supplied') and made no web_search or web_fetch call, so the audit only covers the Q3 CSV and EIF template. The other losses are omissions: the Q3 Analysis sheet flags Workplace Violence Prevention (69.7%/3.04) and Cultural Competency (77.1%/3.41) numerically but cites none of the 'should be taught in person' comments, and the concise memo leaves out Administration, Lab/Diagnostics and Virtual completion rates and the WVP 69.7% figure.",
+  "primary_class": "M",
+  "secondary_classes": ["R"],
+  "lost_weight_by_class": {"M": 16, "R": 10, "L": 0, "I": 0, "S": 0, "H": 0, "G": 0},
+  "failed_items": [
+    {"rubric": "R3", "weight": 10, "lost": 10, "class": "M",
+     "why": "Q3 Analysis rows flag WVP (23/33, 3.04) and Cultural Competency correctly, but the sheet has no qualitative comment evidence (e.g. 'This topic cannot be adequately covered in e-learning format'); the agent had the comments column loaded (step 7, 10) and used such themes in the redesign, but not on this sheet. Somewhat strict, since the instructions list only quantitative content for this sheet."},
+    {"rubric": "R4", "weight": 10, "lost": 10, "class": "R",
+     "why": "The agent never searched for the Kirkpatrick evaluation-form samples or the Smartsheet onboarding form named in TASK_INSTRUCTIONS (no web_search/web_fetch calls; step 7 thinking chose to note the form as 'not supplied'), so the redesign cannot analyse the Participant Survey, Delayed Post-Training Survey, Performance-Based Rubric or the Level-1-only onboarding form."},
+    {"rubric": "R5", "weight": 6, "lost": 6, "class": "M",
+     "why": "The memo gives Nursing 96.4%, Facilities 71.2%, Classroom/Blended/Self-paced rates and instructor scores, but omits Administration 83.9%, Lab/Diagnostics 84.5%, Virtual 87.9% and WVP 69.7%, all of which the agent computed at step 10 and put in the workbook."}
+  ],
+  "subagent_notes": "One background subagent read and summarised the two staged DOCX files (director memo and EIF template) for the root agent; the summary was accurate and used, so it helped slightly. It had no role in the failed items.",
+  "confidence": "high"
+}

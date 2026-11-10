@@ -1,0 +1,20 @@
+{
+  "task": "sociology_teachers_postsecondary/task1",
+  "score": "42/68",
+  "goal": "Acting as Dr. Chen at Week 10 (2024-10-21) of SOCI 201, validate the migrated SQLite gradebook, compute projected grades from the rubric weights, flag at-risk students on the eight At_Risk_Criteria with a priority-weighted composite score, and list students in a monitoring range. Also analyse the UCI Portuguese student-por.csv family-background patterns with caveats, and deliver SOCI201_EarlyAlert_Week10.xlsx plus Holistic_Intervention_Plan.docx with a WWC-aligned tiered intervention plan and outreach templates.",
+  "delivered": "SOCI201_EarlyAlert_Week10.xlsx (Read_Me, Data_Quality, Projected_Grades, Criteria_Matrix, Risk_Scores with High=3/Medium=2/Low=1 weights, Monitoring, Sociology_Analysis, Inputs) and Holistic_Intervention_Plan.docx (data-quality findings, grade method, individual summaries, UCI Medu/Fedu analysis with limits, WWC R1-R4 citations, tiers, outreach templates).",
+  "what_went_wrong": "The data audit framed the attendance anomaly only as post-cutoff 'temporal contamination' (10 dates after 10/21) and never noticed that 2024-11-28, the last attendance date it printed in subagent 1 step 6, is Thanksgiving (R1, 10 pts). The monitoring list used roughly 10% bands (projected grade 70-79.9, exam 60-69.9, completion 75-84.9) plus count-based extras, while the rubric expected a 5% buffer that the instructions never specified, and the list was not framed as preventive (R3, 10 pts). The UCI caveats covered country, level and causality but never said that variables such as studytime, famsize, Pstatus or the 0-20 grades may not translate to SOCI201 (R5, 6 pts).",
+  "primary_class": "M",
+  "secondary_classes": ["I"],
+  "lost_weight_by_class": {"M": 16, "R": 0, "L": 0, "I": 10, "S": 0, "H": 0, "G": 0},
+  "failed_items": [
+    {"rubric": "R1", "weight": 10, "lost": 10, "class": "M",
+     "why": "Subagent 1 step 6 printed the attendance date range ('2024-08-27', '2024-11-28', 26 dates), so the agent had the data, but neither it nor the root agent connected 11-28 to Thanksgiving. The Data_Quality sheet only says to exclude all dates after 10/21, and the judge found no mention of Thanksgiving or non-class days."},
+    {"rubric": "R3", "weight": 10, "lost": 10, "class": "I",
+     "why": "TASK_INSTRUCTIONS.txt only asks for students 'within monitoring range of thresholds' and the At_Risk_Criteria sheet defines no buffer, so the rubric's 5% band (e.g. 70-75% attendance) is not given. The agent chose about 10% bands ('projected grade 70-79.9%; midterm exam 60-69.9%'). The judge also faulted the missing preventive framing, which was a minor model omission."},
+    {"rubric": "R5", "weight": 6, "lost": 6, "class": "M",
+     "why": "The docx states the data is 'a historical secondary-school sample from two Portuguese schools, not a postsecondary SOCI201 population', but the judge required a note that studytime, famsize, Pstatus and the G1-G3 0-20 scale may not translate to SOCI201. Only 'G3>=10 ... not a SOCI201 standard' came close, and studytime was never discussed, which is an incomplete caveat by the model."}
+  ],
+  "subagent_notes": "The root agent started three parallel subagents at the start: rubric+DB analysis (36 steps), advising-guide extraction (17 steps) and the UCI dataset analysis (5 steps). They helped with coverage, and the R4 parental-education construct passed. Subagent 1 surfaced the 2024-11-28 end date but framed the anomaly only as post-cutoff leakage, and the root agent adopted that framing unchanged, so the delegation carried the Thanksgiving miss forward.",
+  "confidence": "medium"
+}

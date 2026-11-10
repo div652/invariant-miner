@@ -1,0 +1,22 @@
+{
+  "task": "training_and_development_specialists/task3",
+  "score": "22/54",
+  "goal": "Act as training specialist at a manufacturer and deliver (1) an Excel cross-source OSHA compliance gap matrix with composite risk scores, top-10 risk employees and a department dashboard, (2) a 13-week budget-constrained Q2 2025 training plan under a $38,000 cap, and (3) a 6-10 page evaluation framework PDF with a redesigned survey (incl. Tool-1A-style retrospective pre/post), knowledge tests, observation checklist, KPIs and ROI.",
+  "delivered": "Three files in output/: Cross_Source_Compliance_Gap_Matrix.xlsx (45 employees x 9 OSHA courses, date-aware statuses, composite risk score with top-10 shaded, department dashboard), Budget_Constrained_Q2_2025_Training_Plan.xlsx (26 sessions, $18,500 planned, monthly coverage of 6 incident-linked courses) and an 8-page Integrated_Evaluation_Framework.pdf (divergence analysis, redesigned survey, FIRE/HAZ tests, 90-day checklist, KPIs, ROI).",
+  "what_went_wrong": "All losses are judgement/interpretation choices on data the agent had. The matrix used its own 7-state taxonomy (Expired, Current-expires Q2, Current-after Q2, Incomplete, Never Attempted, Failed, Overdue) instead of the five states the prompt lists (completions, failures, overdue, upcoming expirations, never attempted). The ROI used only the FIRE+HAZ subset (7 recordables, 45 lost days), $12k/recordable planning costs and the $18,500 planned spend rather than the full log (23 recordables, 129 lost days) and the $38,000 investment. The redesigned survey had no virtual-specific item (the PDF even says not to compare virtual vs in-person) and its retrospective item is a 0-4 behaviour pair, not the Tool-1A 1-5 knowledge before/after matrix that a subagent had fetched. Its composite score put only 3 Paint Shop and 1 Warehouse employee in the top 10.",
+  "primary_class": "M",
+  "secondary_classes": [],
+  "lost_weight_by_class": {"M": 32, "R": 0, "L": 0, "I": 0, "S": 0, "H": 0, "G": 0},
+  "failed_items": [
+    {"rubric": "R0", "weight": 10, "lost": 10, "class": "M",
+     "why": "Agent knew virtual hands-on adequacy was only 30.2% (Executive Summary) yet added no virtual-specific item and wrote 'Do not compare virtual and in-person' (PDF p.3); its retrospective item is a 0-4 behaviour pair although subagent cf2895a4 had fetched ttt14m5handouts2pdf.pdf containing the Tool-1A 1-5 before/after knowledge matrix (pp.17-18), which the prompt named explicitly."},
+    {"rubric": "R4", "weight": 6, "lost": 6, "class": "M",
+     "why": "PDF p.7 ROI uses 'FIRE + HAZ: 7 recordables; 45 lost days', $12,000/recordable and $1,200/lost day, and divides by the $18,500 planned spend; the agent had the full-log totals (52 incidents, 23 recordables, 129 lost days, computed in subagent step 18) but chose a subset and a below-benchmark unit cost."},
+    {"rubric": "R5", "weight": 10, "lost": 10, "class": "M",
+     "why": "The prompt lists five standing types (completions, failures, overdue, upcoming expirations, never attempted), but the matrix legend uses seven states incl. Expired and Incomplete and a Q2-end window, with Never Attempted cells lacking an N/A date; the exact '60 days' threshold is not in the inputs (partly I), but not collapsing to five states was the agent's choice."},
+    {"rubric": "R6", "weight": 6, "lost": 6, "class": "M",
+     "why": "The agent's self-designed score (gap + exposure + recency points, heavily driven by Expired/Never Attempted cells) ranked only 4 of the top 10 from Paint Shop/Warehouse/Assembly Line B (judge: Paint 3, Warehouse 1, ALB 0), even though the agent itself identified Paint Shop as the top-priority department."}
+  ],
+  "subagent_notes": "Root spawned a data-analysis subagent, a survey+web-research subagent and a design fork (which spawned another analyst). The research subagent fetched the correct Kirkpatrick handout including Tool-1A and worked around the OSHA 2254 403 via searches; the analysts supplied correct baselines (52/23/129). The root did not carry the Tool-1A format or the full-log ROI baselines into the deliverables, so subagents helped data accuracy but their key findings were not used.",
+  "confidence": "medium"
+}

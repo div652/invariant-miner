@@ -1,0 +1,20 @@
+{
+  "task": "data_entry_keyers/task1",
+  "score": "66/92",
+  "goal": "Three-way reconcile 30 Q3 2025 sales orders across a CRM export, ERP entries and 10 scanned order forms (scan > CRM > ERP), validate customers against the 35-customer master, and deliver a filled error log (type, source system, systematic/random, formula/variance), a reconciled master, an executive audit findings report and a completed compliance checklist.",
+  "delivered": "Five files in output/: Error_Log_Q3_2025.xlsx (24 entries ERR-001..ERR-024 incl. formula checks and 2 unregistered customers), Reconciled_Master_Q3_2025.csv/.xlsx (30 rows with Customer_ID, status and conflicts), Executive_Audit_Findings_Q3_2025.md (metrics such as 13/30 clean = 43.3%, patterns, recommendations) and Compliance_Checklist_Q3_2025.xlsx (8 criteria, 4 Fail, 50% overall, FAILED).",
+  "what_went_wrong": "All discrepancies were found and reconciled correctly; points were lost only on how three entries were written up. ERR-006 (Italia) was typed 'Other' rather than 'Format', and ERR-006/ERR-010 (Canda) notes say only 'master uses Italy/Canada' without citing Customer_Master_List.csv or CUST-006/CUST-010 (those IDs appear only in the reconciled master). CRT-005 was correctly marked Fail but its comment gives only aggregate rates (53/60) and does not name ORD-202507-0002 ($6794.25 vs $6749.25) or ORD-202508-0015 ($4480 vs $4880), although both are in the error log as ERR-002 and ERR-012.",
+  "primary_class": "M",
+  "secondary_classes": [],
+  "lost_weight_by_class": {"M": 26, "R": 0, "L": 0, "I": 0, "S": 0, "H": 0, "G": 0},
+  "failed_items": [
+    {"rubric": "R3", "weight": 10, "lost": 10, "class": "M",
+     "why": "ERR-006 Error_Type='Other' although the template offers 'Format', and its note ('scan, ERP, and master use Italy') does not cite Customer_Master_List.csv/CUST-006 Mediterranean Trade Co; the agent had the master row (reconciled master shows CUST-006 Registered-Active)."},
+    {"rubric": "R6", "weight": 6, "lost": 6, "class": "M",
+     "why": "ERR-010 was otherwise correct (Typo, ERP, Canada) but its note says only 'exact master value is Canada', with no Customer_Master_List.csv/CUST-010 reference; this is a level-of-detail choice in the log, since the agent had CUST-010 in its reconciled master."},
+    {"rubric": "R11", "weight": 10, "lost": 10, "class": "M",
+     "why": "CRT-005 is marked Fail, but Evidence_Comments give only 'CRM 29/30 and ERP 24/30 pass, 53/60 (88.3%)' and do not name ORD-202507-0002 or ORD-202508-0015, both already logged as ERR-002 and ERR-012 with variances."}
+  ],
+  "subagent_notes": "Root used three subagents: one summarised the spreadsheets/master/templates, one read the 10 scanned forms, and one independently enumerated discrepancies. They gave accurate extraction (every error the rubric expects was found) and did not cause any lost item.",
+  "confidence": "high"
+}

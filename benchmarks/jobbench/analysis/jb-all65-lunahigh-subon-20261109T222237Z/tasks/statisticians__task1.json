@@ -1,0 +1,30 @@
+{
+  "task": "statisticians/task1",
+  "score": "36/116",
+  "goal": "As an NCHS senior statistician, audit a claim that obesity is the strongest predictor of state life expectancy: merge the staged obesity, life-expectancy and demographics files with USDA ERS poverty/unemployment, a CDC Dec-2021 vaccination snapshot and Census regions, compare bivariate and SES-adjusted models, assess regional clustering and high-leverage sensitivity, and deliver a reproducible notebook, a five-sheet workbook and a 2-3 page memo with a DAG, limitations and a policy recommendation.",
+  "delivered": "state_life_expectancy_audit.ipynb (9 cells: harmonization, z-scored OLS with region fixed effects and HC3, mixed model ICC, Cook's D flagging, correlation matrix), state_life_expectancy_audit.xlsx (Clean_Data, Descriptive_Stats, Correlation_Matrix, Model_Comparison, Sensitivity; N=51 using 2022 obesity) and technical_memo_obesity_life_expectancy.docx (conclusion that obesity attenuates from beta -0.75 to -0.45 after adjustment, DAG, limitations, recommendation).",
+  "what_went_wrong": "The modeling core was sound (harmonization, ICC, PCTPOVALL extraction and the memo answer passed), but the analysis lacked the standard peer-review diagnostics: no VIF, no likelihood-ratio tests (only R2/AIC/BIC), no residual, Q-Q or leverage plots, no CIs on the correlations, and no data-quality checks for duplicates or implausible values. The sensitivity analysis dropped five Cook's D > 4/n states but reported no post-removal CI, gave no rule for a substantive change and stated no robustness conclusion. The rubric also expected 2021 obesity data (Florida missing, N=49-50), but the prompt names no obesity year and the staged file runs to 2024; the agent used 2022, the latest year covering all 51 jurisdictions.",
+  "primary_class": "M",
+  "secondary_classes": ["I"],
+  "lost_weight_by_class": {"M": 70, "R": 0, "L": 0, "I": 10, "S": 0, "H": 0, "G": 0},
+  "failed_items": [
+    {"rubric": "R0", "weight": 10, "lost": 10, "class": "I",
+     "why": "Rubric requires YearStart=2021 with Florida missing and range 24.7-40.6%. TASK_INSTRUCTIONS gives no obesity year, and the staged state_obesity_data.csv covers 2011-2024 (the task card wrongly assumes it ends in 2021). The agent documented its choice of 2022, 'the latest complete year for all 51 jurisdictions' (notebook cell 1)."},
+    {"rubric": "R3", "weight": 10, "lost": 10, "class": "M",
+     "why": "No VIF is computed anywhere. The memo mentions SES collinearity only qualitatively, and neither audit_analysis.py nor the notebook has VIF code, although the prompt flags model-specification concerns."},
+    {"rubric": "R4", "weight": 10, "lost": 10, "class": "M",
+     "why": "Model_Comparison reports R2, AIC, BIC and coefficient p-values only. No likelihood-ratio chi-square, df or p-value is reported for the nested bivariate vs adjusted models."},
+    {"rubric": "R5", "weight": 10, "lost": 10, "class": "M",
+     "why": "Sensitivity drops five Cook's D > 4/n states and reports beta -0.240 (p=0.248) with no CI. It gives no >20% / sign / significance change rule, and the memo only says the coefficient 'remains attenuated', never stating whether the effect is robust."},
+    {"rubric": "R6", "weight": 10, "lost": 10, "class": "M",
+     "why": "No residuals-vs-fitted, Q-Q or leverage plot exists in the notebook, workbook or memo. Diagnostics are a Cook's D table only (notebook section 3)."},
+    {"rubric": "R7", "weight": 10, "lost": 10, "class": "M",
+     "why": "Correlation_Matrix holds point estimates from pandas .corr() only, with no Fisher-z or bootstrap 95% CIs."},
+    {"rubric": "R9", "weight": 10, "lost": 10, "class": "M",
+     "why": "Descriptive_Stats gives overall N=51 stats rather than stats by Census region, and Correlation_Matrix has no CIs. The Florida/49-50 row count criterion follows from the unstated 2021 year (I), but the other two gaps are the agent's own choices."},
+    {"rubric": "R11", "weight": 10, "lost": 10, "class": "M",
+     "why": "There is no data-quality section: no duplicate check (only an assert of 51 rows and zero NAs), no screen for implausible percentages, and no missing-data accounting. The Florida-missing and 49-50 sample-size parts depend on the unstated 2021 year."}
+  ],
+  "subagent_notes": "",
+  "confidence": "medium"
+}

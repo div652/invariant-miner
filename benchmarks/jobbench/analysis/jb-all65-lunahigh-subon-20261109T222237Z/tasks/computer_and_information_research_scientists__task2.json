@@ -1,0 +1,28 @@
+{
+  "task": "computer_and_information_research_scientists/task2",
+  "score": "26/82",
+  "goal": "As Director of Research Computing, settle an on-prem vs cloud-only GPU cluster debate. Deliver data_audit.md (cross-file consistency audit of vendor quote, WBS schedule, survey DB and NSF data, with severity and resolutions), strategy_analysis.md (workload profiling, cloud-only and hybrid costing, weighted 6-criterion matrix grounded in LBNL 2024 PUE data, NSF HERD benchmark), adjusted_budget.xlsx (capital with 5% discount then 10% contingency on the $2,713,000 subtotal, operating costs, funding, TCO/break-even dashboard) and revised_schedule.csv within nine months.",
+  "delivered": "All four files in output/. The audit has 14 findings (A1-A14) on a Critical/High/Medium/Low scale with a correct 86.22 kW baseline. The strategy analysis has workload stats, 36/45 sustained rows, a hybrid of 19 DGX nodes, LBNL PUE values and an NSF peer context. The budget workbook includes a dashboard (break-even 133.1%), and the revised schedule adds critical_path, risk_level and audit_note columns.",
+  "what_went_wrong": "Power, PUE, LBNL and break-even work was strong; losses came from omitted specifics and a few method choices. The agent 'corrected' the quote to six UPS units, so the discount and contingency were applied to $2,767,000 instead of the instructed $2,713,000 (no $2,835,085). The audit and analysis stay at aggregate level: no researcher names (Tanaka 640 GB, Kowalski/Johansson storage), no 2 TB/1 TB node system memory, no 2-hour minimum wait, and no named current systems, GPU models or existing-fleet capacity deficit. Subagent 4 had already returned per-researcher names and Tanaka's 640 GB row. The hybrid was sized above the quoted cluster ($7.85M capital vs $3.13M), and the discrepancy table used its own columns and a 4-level severity scale rather than the rubric's unstated 7-column Critical/Minor format.",
+  "primary_class": "M",
+  "secondary_classes": ["I"],
+  "lost_weight_by_class": {"M": 48, "R": 0, "L": 0, "I": 8, "S": 0, "H": 0, "G": 0},
+  "failed_items": [
+    {"rubric": "R0", "weight": 10, "lost": 10, "class": "M",
+     "why": "Audit A3 gives Dell 1.83 kW component sum vs 3.50 kW system total next to the DGX case and says 'rows are not additive', but it never states this is the inverse of the DGX error or suggests missing components/unexplained overhead (borderline judge strictness)."},
+    {"rubric": "R1", "weight": 8, "lost": 8, "class": "M",
+     "why": "Correct 36/45 rows >500 GPU-h, but no high-demand researchers are named, although subagent 4 returned per-researcher totals with names. Hybrid was sized up to 19 DGX ($7,847,969 capital) and compared against the undersized quote ($3,129,950), so hybrid capital is not lower than on-prem."},
+    {"rubric": "R3", "weight": 8, "lost": 8, "class": "M",
+     "why": "A12 compares GPU memory only (640/320 GB envelopes) and never cites the 2 TB DGX / 1 TB R760xa system memory. It mentions an unnamed 640-GB row but not Tanaka or the 512-GB rows needing 7 H100s, and storage risk is aggregate only (624.5/700 TB), with no Kowalski or Johansson flags."},
+    {"rubric": "R4", "weight": 8, "lost": 8, "class": "M",
+     "why": "Capital Costs starts from $2,767,000 because the agent raised the UPS count from 3 to 6 (A5). It ignored the instruction anchoring on the $2,713,000 subtotal, so the discount is $138,350 and contingency $262,865, and the expected $2,577,350 / $2,835,085 never appear."},
+    {"rubric": "R7", "weight": 6, "lost": 6, "class": "M",
+     "why": "Wait times are given as p25 18 / median 40 / p90 127.2 / max 168 h, but the 2-hour minimum is missing and the extremes (Kowalczyk Inference, Kowalski Simulation 7 days) are not named."},
+    {"rubric": "R8", "weight": 8, "lost": 8, "class": "I",
+     "why": "The rubric requires exactly the columns Source_A/Source_B/Field/Value_A/Value_B/Severity/Recommended_Resolution and a Critical/Minor scale, which neither the prompt nor any staged file specifies. The agent's table (ID, Severity, Evidence, Resolution) with Critical/High/Medium/Low is a reasonable reading of 'severity classification and resolution recommendations'; its DGX lead-time conflict was rated High, not Critical."},
+    {"rubric": "R9", "weight": 8, "lost": 8, "class": "M",
+     "why": "A13 summarises current_infrastructure only as '64 GPUs at 95.88% weighted utilization, 24 operational, 16 degraded, 24 EOL'. It never lists the 10 systems, named EOL/degraded systems or GPU models (V100, RTX), and never computes the existing fleet's ~43,500 GPU-h/month vs 75,800 demand deficit."}
+  ],
+  "subagent_notes": "Four subagents: (1) vendor quote and WBS recalculation with a proposed 9-month schedule; (2) a cross-file audit; (3) the LBNL PUE search, which supplied exact figures and helped R2 pass; (4) survey DB statistics with per-researcher names, totals and Tanaka's 640-GB row. They supplied correct numbers for power, PUE, the schedule and workload stats (R2, R5, R6 passed), but the researcher-level detail from subagent 4 was compressed away in the root's write-up, contributing to R1, R3 and R7. No subagent examined current_infrastructure at the system level.",
+  "confidence": "medium"
+}

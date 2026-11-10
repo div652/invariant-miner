@@ -1,0 +1,30 @@
+{
+  "task": "medical_and_health_services_managers/task2",
+  "score": "6/86",
+  "goal": "As Director of Outpatient Rehab at Valley General (320 beds, Northern California), explain the FY2024 $47,413 net-income shortfall. Deliver Payer_Service_Profitability.csv (top-10 CPT x payer margins with a 120%-of-cost flag and a monthly trend indicator), Peer_Benchmark_Analysis.xlsx (HCAI 2025 Q1 peer ratios with percentiles, and a government payer share comparison), and Recovery_Plan_Memo.docx (5 worst charge-to-reimbursement gaps with charge actions, consistent expense variances, two cost-containment actions).",
+  "delivered": "All three files are in output/. The CSV has 90 rows (10 CPT x 9 payers) and flags only Medicaid, correctly. The xlsx has 'Financial Benchmark' (61 HCAI 'Comparable' hospitals with 250-399 beds; operating margin, ROA, current ratio, debt-to-assets, rev/bed, occupancy) and 'Government Payer Share' (VG 45.8% vs peer median 62.5%). The memo frames the shortfall around Medicaid rates and gives charge actions and two cost actions.",
+  "what_went_wrong": "The memo never compares total revenue (+$4,218 vs budget) with total expenses (-$51,631), so it misses that the shortfall is expense-driven and blames Medicaid rates instead. It also misreads PT salaries as '$19,192 favorable for the year' when they were $19,192 unfavorable (actual 1,166,462 vs budget 1,147,270), so PT was dropped from cost containment. It ignores the June-July revenue trough against fixed costs and omits total margin, days cash on hand and above/below flags in the benchmark. Smaller losses come from defensible choices the rubric did not accept: the peer filter ('Comparable', 250-399 beds; median -1.15% vs expected 1-3%) and payer-mix-weighted gaps instead of best-payer gaps. Sheet names the task never specified also cost points.",
+  "primary_class": "M",
+  "secondary_classes": ["I", "G"],
+  "lost_weight_by_class": {"M": 50, "R": 0, "L": 0, "I": 20, "S": 0, "H": 0, "G": 10},
+  "failed_items": [
+    {"rubric": "R1", "weight": 10, "lost": 10, "class": "I",
+     "why": "The operating margin formula is right and P25 is negative, but the peer median is -1.15% against an expected 1-3%. In the expected HCAI file, 200-400 beds with all hospital types gives a median of 2.7%. The agent's defensible 'Comparable'-type filter gives -0.5% at 200-400 beds and -1.15% at 250-399. The prompt does not specify the peer filter that the rubric's number depends on."},
+    {"rubric": "R2", "weight": 10, "lost": 10, "class": "M",
+     "why": "45.8% government share and the peer comparison are correct. The sheet never notes that government payers are ~54.8% of visit volume but 45.8% of revenue, although the Payer Mix & Volume sheet the agent used has both."},
+    {"rubric": "R3", "weight": 10, "lost": 10, "class": "I",
+     "why": "The memo names exactly the right 5 CPT codes (97163, 97167, 92523, 92610, 97162). It measures each gap as charge minus payer-mix-weighted reimbursement ($203.01 etc.), while the rubric wants charge minus the Workers' Comp best-payer rate ($170.16 etc.). The task says only 'worst charge-to-reimbursement gap' and does not imply the best-payer basis."},
+    {"rubric": "R4", "weight": 10, "lost": 10, "class": "M",
+     "why": "Memo section 3 says PT salaries 'finished $19,192 favorable for the year', but the budget FY2024 TOTAL row shows $19,192 unfavorable (10 of 12 months unfavorable). Because of this sign error PT was excluded, and action 2 targeted supplies and equipment instead of PT/OT salaries."},
+    {"rubric": "R5", "weight": 10, "lost": 10, "class": "M",
+     "why": "The budget sheet gives total revenue +$4,218 and total expenses -$51,631 versus budget, but the memo never states either. It attributes the shortfall mainly to Medicaid rates below 120% of cost (judge evidence: executive summary)."},
+    {"rubric": "R6", "weight": 10, "lost": 10, "class": "M",
+     "why": "'Financial Benchmark' gives a VG department proxy only for operating margin and rev/bed, with no above/below flags against P25, median and P75. It omits total margin and days cash on hand for the peers entirely and chose other ratios instead. Part of this reflects department-only VG data, but the presentation and ratio choice are the agent's."},
+    {"rubric": "R7", "weight": 10, "lost": 10, "class": "M",
+     "why": "The memo mentions only a July trough (-$15,890). It never ties the June/July revenue drop ($317,409/$302,228; PT $217,322 to $159,773) to expenses that stayed at $318-324K, although the monthly sheet the agent read shows all of this."},
+    {"rubric": "R8", "weight": 10, "lost": 10, "class": "G",
+     "why": "All file names and formats are right and the xlsx has exactly two sheets. It failed only because the sheets are not named 'Valley General vs. Peers' and 'Payer Mix Comparison', names the task instructions never give."}
+  ],
+  "subagent_notes": "",
+  "confidence": "medium"
+}

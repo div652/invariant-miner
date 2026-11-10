@@ -1,0 +1,22 @@
+{
+  "task": "online_merchants/task2",
+  "score": "24/54",
+  "goal": "As Haven & Hearth's online store manager, produce four linked deliverables: a Word complaint-response package with an internal Triage Note per ticket (catalog cross-check, margin context, action); an Excel dashboard with Profit Margin Analysis, Traffic-to-Sales Funnel and Underperformer Crosswalk sheets; a 2-3 page PDF sentiment audit of the reviews dataset that cross-checks listing copy against complaint themes; and optimized_product_listings.csv with justified rewrites.",
+  "delivered": "complaint_triage_response_package.docx (responses + triage notes for all open tickets), integrated_performance_dashboard.xlsx (three correctly named sheets), customer_sentiment_catalog_alignment_audit.pdf (3 pages; Trend/Dresses/Blouses correctly chosen with the >=30-review rule) and optimized_product_listings.csv with rewrites and a justification column.",
+  "what_went_wrong": "Customer responses applied the policies in substance but never named the policy sections (Shipping Policy, Return & Exchange Policy, Product Quality Guarantee, etc.) and dropped some terms (original shipping refund, 60-day defective window). The PDF cross-check stayed at category level, quoting no listing phrase against review phrases and never flagging the Yellow Wool Jumper 'soft wool blend' copy; this one gap cost both R2 and R5. Every triage note used the same 12.47% portfolio margin line and made no per-product category mapping or margin-driven recommendation.",
+  "primary_class": "M",
+  "secondary_classes": [],
+  "lost_weight_by_class": {"M": 30, "R": 0, "L": 0, "I": 0, "S": 0, "H": 0, "G": 0},
+  "failed_items": [
+    {"rubric": "R0", "weight": 10, "lost": 10, "class": "M",
+     "why": "store_policies.docx names each section (1. Shipping Policy, 2. Return & Exchange Policy, 3. Pricing & Promotions Policy, 6. Product Quality Guarantee) and the agent read it, but the responses only say 'under our guarantee' (docx line 36). The 7-day rule appears only in an internal note, and the original-shipping refund and 60- vs 30-day window are omitted."},
+    {"rubric": "R2", "weight": 8, "lost": 8, "class": "M",
+     "why": "The audit maps class themes to generic catalog gaps ('no measurements', avoid 'premium'/'perfect') and never quotes listing text against review text. The Yellow Wool-Blend Jumper appears only as a fit recommendation (PDF line 130), with no wool-quality contradiction. The inputs had both listings and reviews; Sweaters is outside the agent's three selected classes, which partly explains that miss."},
+    {"rubric": "R5", "weight": 6, "lost": 6, "class": "M",
+     "why": "PDF format, length and sections 1, 2 and 4 passed. The criterion fails on the same Section 3 weakness as R2: no SKU- or class-level listing-vs-review language comparison, and the PDF itself says review SKUs cannot be mapped to store products."},
+    {"rubric": "R6", "weight": 6, "lost": 6, "class": "M",
+     "why": "Each triage note ends with the identical 'Portfolio proxy is 12.47% overall margin; use it for prioritization, not item economics' (e.g. docx lines 57, 69). It gives no category/sub-category lookup or directional proxy (Leather Tote as high-price item, Clay Plant Pot as home goods), and margin never drives the retain/remove call. The domain mismatch was correctly acknowledged."}
+  ],
+  "subagent_notes": "",
+  "confidence": "medium"
+}
