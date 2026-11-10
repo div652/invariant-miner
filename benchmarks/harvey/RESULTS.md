@@ -1,5 +1,25 @@
 # Harvey LAB results
 
+## Firm-knowledge, all 250 tasks, GPT-5.6 Sol high via CAO, subagents ON, 2026-11-10
+
+Run `runs/hv-fk250-solhigh-subon-20261109T225727Z` (not in git): the run below with DSH's subagent tools turned back on
+by a run-local patch (`subagents-on.patch.yml`, with their prompt paragraph), harness main `8fad9af` (no code change
+until the resume at `ee176b0`). 20 at a time; started 04:27 IST, stopped by the disk filling at 05:50 IST (47 tasks
+done; the 34 it broke parked in `aborted-enospc/` and re-run), resumed 10:51-16:43 IST; graded like the run below,
+0 grading errors.
+
+**All-pass 30.0%, criterion pass rate 0.766.** 247 runs `completed`; 3 ended in an infrastructure error and are scored
+as they stand: 151 (CAO 429 through all 5 retries, no answer), 152 (a 429, then DSH's subagent registry failed:
+"agent ... cannot read inbox state: its projection registration is not active", no answer), 136 (the same registry
+failure after 87 steps, no `response.md`). Agent time median 28.0 min, root steps median 53 (subagents off: 8.8 min, 35).
+
+| Paired over tasks (on - off), 95% bootstrap CI, W/T/L | All-pass | Criterion pass rate |
+|---|---|---|
+| all 250 | 30.0% vs 31.2%: -1.2 points [-6.4, +4.0], 20/207/23 | 0.766 vs 0.764: +0.002 [-0.030, +0.034], 62/133/55 |
+| 247 without the 3 error tasks | 30.4% vs 31.6%: -1.2 points [-6.5, +4.0], 20/204/23 | 0.774 vs 0.763: +0.010 [-0.019, +0.040], 62/133/52 |
+
+Subagents on makes no measurable difference to the score with Sol high on Harvey, at about 3x the agent time.
+
 ## Firm-knowledge, all 250 tasks, GPT-5.6 Sol high via CAO, subagents off, 2026-11-10
 
 Run `runs/hv-fk250-solhigh-20261109T194222Z` (not in git), harness main `b49f3b6` (core-v6: subagents off for every
