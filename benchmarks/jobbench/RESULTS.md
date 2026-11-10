@@ -1,5 +1,26 @@
 # JobBench results
 
+## All 65 tasks, Qwen3.8-27B (local vLLM), subagents on, 2 h limit, 2026-11-09/11
+
+Run `runs/jb-all65-qwen38-xhigh-subon-2h-p5-20261109T181320Z` (not in git): `models/qwen38-vllm.json` (Qwen3.8-27B
+FP8 on one A100 80GB, thinking on at the model's default effort), DSH's subagent tools on (run-local patch), time
+limit 2 h (the default is 1 h), 5 tasks at a time (10 thrashed vLLM's KV cache). Started 23:43 IST 11-09; the disk
+filled at 05:50 IST 11-10 (15 tasks done; the 14 it broke and 36 never started re-run from 10:51), agents done 04:40
+IST 11-11, graded with the same grade.sh judge on the original rubrics.
+
+**Macro 0.360, pooled 0.349.** 25 runs completed, 40 hit the 2 h limit (16 of them with no deliverable, scored 0).
+Agent time median 120 min (the limit), 113 h in total; ~94% of it model generation (median ~32 s per call on the
+shared GPU, vs ~4 s for Luna through CAO). Qwen never used a subagent tool.
+
+| Paired over the 65 tasks, 95% bootstrap CI, W/T/L | Mean score |
+|---|---|
+| Qwen - Luna high, subagents on (0.338) | +0.022 [-0.042, +0.084], 31/8/26 |
+| Qwen - Luna high, subagents off (0.313) | +0.047 [-0.026, +0.120], 34/7/24 |
+| completed in time (25 tasks) | Qwen 0.546 vs Luna on 0.421 / off 0.373 |
+| hit the 2 h limit (40 tasks) | Qwen 0.243 vs Luna on 0.286 / off 0.275 |
+
+Equal to Luna high overall (both CIs span 0); better when it finishes, worse when the time limit cuts it off.
+
 ## Model swap probe on 2 tasks: Claude Opus 5.5 max and Gemini 4 Argon high, 2026-11-10
 
 Same harness as the Luna-high subagents-off all-65 run below (core, subagents off, 2 h limit, original rubrics, the
