@@ -1,5 +1,28 @@
 # Harvey LAB results
 
+## Firm-knowledge, all 250 tasks, GPT-5.6 Luna high via CAO, subagents off, 2026-11-11
+
+Run `runs/hv-fk250-lunahigh-20261110T175632Z` (not in git), harness main `5f908f7` (core-v6: subagents off for every
+benchmark; = the base of branch `invariant-system-prompt`), model `models/luna-cao.json` (gpt-5.6-luna, effort high,
+reasoning summaries on); 250 tasks x 1 run, 20 at a time, 23:26-01:21 IST; graded like the Sol runs (judge
+gpt-5.6-sol high, helper claude-sonnet-5, via CAO), 0 grading errors. The Luna-high, subagents-off baseline.
+
+**All-pass 22.4%, criterion pass rate 0.651.** All 250 runs ended `completed` (agent time median 434 s, max 2,106 s;
+root steps median 32.5, max 84; no subagent sessions).
+
+| Tasks | Luna high, off (this run) | Sol high, off | Luna medium (11-05, subagents on) |
+|---|---|---|---|
+| all 250 | 22.4% / 0.651 | 31.2% / 0.764 | 18.8% / 0.555 |
+| AHE test (`ahe:test`, 70) | 24.3% / 0.641 | 32.9% / 0.763 | - |
+| AHE train+val (`ahe:trainval`, 100) | 22.0% / 0.660 | 32.0% / 0.758 | - |
+| our test (`split:test`, 50) | 28.0% / 0.620 | 48.0% / 0.823 | - |
+
+Paired over the 250 tasks (bootstrap over tasks):
+- vs Sol high, off (same harness, other model): all-pass -0.088, 95% CI [-0.144, -0.036], better/equal/worse 14/200/36;
+  criterion -0.113 [-0.151, -0.076].
+- vs Luna medium of 11-05 (effort, harness and subagent setting all differ): all-pass +0.036 [-0.004, +0.080],
+  19/221/10; criterion +0.096 [+0.060, +0.133].
+
 ## Firm-knowledge, all 250 tasks, GPT-5.6 Sol high via CAO, subagents ON, 2026-11-10
 
 Run `runs/hv-fk250-solhigh-subon-20261109T225727Z` (not in git): the run below with DSH's subagent tools turned back on
