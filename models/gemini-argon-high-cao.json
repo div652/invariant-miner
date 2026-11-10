@@ -1,0 +1,40 @@
+{
+  "provider": "gemini-argon-cao",
+  "display_name": "Gemini 4 Argon (CAO, Chat Completions, effort high = max offered)",
+  "model": "gemini-4-argon",
+  "api": "openai-completions",
+  "base_url": "http://127.0.0.1:4141/v1",
+  "api_key_file": "$DSH_BENCH_CAO_KEY_FILE",
+  "reasoning": "high",
+  "reasoning_efforts": {
+    "low": "low",
+    "medium": "medium",
+    "high": "high"
+  },
+  "context_window": 983040,
+  "max_tokens": 65536,
+  "input": [
+    "text",
+    "image"
+  ],
+  "compat": {
+    "supportsReasoningEffort": true,
+    "supportsStore": false,
+    "supportsDeveloperRole": false,
+    "maxTokensField": "max_tokens",
+    "supportsStrictMode": false
+  },
+  "stream_idle_timeout_ms": 1800000,
+  "retry_policy": {
+    "mode": "normal",
+    "maxRetries": 5,
+    "retryableCodes": [
+      "EMPTY_RESPONSE",
+      "RATE_LIMIT",
+      "SERVER",
+      "TIMEOUT",
+      "TRANSPORT",
+      "INVALID_REQUEST"
+    ]
+  }
+}
