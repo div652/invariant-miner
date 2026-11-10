@@ -8,15 +8,19 @@ until the resume at `ee176b0`). 20 at a time; started 04:27 IST, stopped by the 
 done; the 34 it broke parked in `aborted-enospc/` and re-run), resumed 10:51-16:43 IST; graded like the run below,
 0 grading errors.
 
-**All-pass 30.0%, criterion pass rate 0.766.** 247 runs `completed`; 3 ended in an infrastructure error and are scored
-as they stand: 151 (CAO 429 through all 5 retries, no answer), 152 (a 429, then DSH's subagent registry failed:
-"agent ... cannot read inbox state: its projection registration is not active", no answer), 136 (the same registry
-failure after 87 steps, no `response.md`). Agent time median 28.0 min, root steps median 53 (subagents off: 8.8 min, 35).
+**All-pass 30.4%, criterion pass rate 0.774** (after re-running 3 tasks, below). All 250 runs `completed`. In the
+first pass 3 tasks ended in an error (30.0% / 0.766 with them scored as they stood): 136, 151 and 152, where the main
+agent ran out of its 5 retries on GitHub Copilot 429s at 13:41-13:42 IST (Sol throttled: ~310-330 Sol sessions alive
+at once with subagents on, against 28 with them off, plus an interim grading's judge calls at 13:40); in 136 and 152
+the teardown then crashed in DSH's subagent settlement watcher (fixed by DSH patch 0009). The three were re-run on
+the patched build at 17:19-17:34 IST (no 429s; first attempts kept in `superseded-429/`), graded with the same judge
+(`grading-rerun3/`) and merged into `grading/scores.json` (`scores-before-rerun3.*` keep the first pass): 136 33/45,
+151 2/3, 152 19/19 all-pass. Agent time median 28.0 min, root steps median 53 (subagents off: 8.8 min, 35).
 
-| Paired over tasks (on - off), 95% bootstrap CI, W/T/L | All-pass | Criterion pass rate |
+| Paired over the 250 tasks (on - off), 95% bootstrap CI, W/T/L | All-pass | Criterion pass rate |
 |---|---|---|
-| all 250 | 30.0% vs 31.2%: -1.2 points [-6.4, +4.0], 20/207/23 | 0.766 vs 0.764: +0.002 [-0.030, +0.034], 62/133/55 |
-| 247 without the 3 error tasks | 30.4% vs 31.6%: -1.2 points [-6.5, +4.0], 20/204/23 | 0.774 vs 0.763: +0.010 [-0.019, +0.040], 62/133/52 |
+| with the 3 re-runs | 30.4% vs 31.2%: -0.8 points [-6.0, +4.4], 21/206/23 | 0.774 vs 0.764: +0.010 [-0.020, +0.040], 63/134/53 |
+| first pass (3 error runs scored as they stood) | 30.0% vs 31.2%: -1.2 points [-6.4, +4.0], 20/207/23 | 0.766 vs 0.764: +0.002 [-0.030, +0.034], 62/133/55 |
 
 Subagents on makes no measurable difference to the score with Sol high on Harvey, at about 3x the agent time.
 
