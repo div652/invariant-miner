@@ -14,7 +14,7 @@ This repo holds what goes on top of it:
 
 ```
 upstream deepseek-ai/deepseek-harness @ c389f96          the harness
-  + patches/deepseek-harness/   8 patches (see below)    -> built into work/deepseek-harness by setup.sh
+  + patches/deepseek-harness/   9 patches (see below)    -> built into work/deepseek-harness by setup.sh
   + harness/core.patch.yml      the harness configuration used for every run: which DSH plugins are on or off,
                                 the isolation settings, and our three plugins
   + plugins/                    our DSH plugins: sandbox-podman (commands run in the task container),
@@ -40,7 +40,7 @@ previous: `harness/core.patch.yml` (same for every run) -> the run's generated `
 benchmark's system prompt, disabled rows, MCP servers) -> the benchmark's `benchmarks/<name>/*.yml`. A run directory
 keeps its `run.patch.yml`, and `run.json` records every patch file with its sha256.
 
-**The 8 DSH patches** (0001-0007 from `agentic-evolution`, so the build is the one their results came from; 0008 ours):
+**The 9 DSH patches** (0001-0007 from `agentic-evolution`, so the build is the one their results came from; 0008-0009 ours):
 
 | Patch | Kind | Used here |
 |---|---|---|
@@ -52,6 +52,7 @@ keeps its `run.patch.yml`, and `run.json` records every patch file with its sha2
 | 0006 `DSH_SANDBOX_DISABLE_RUNNERS` | code | no: the local sandbox it configures is replaced by `sandbox-podman` |
 | 0007 `maxTokensRetries` | code | off by default (0) |
 | 0008 `DSH_HEADLESS_SESSION_CWD` | code | only in launcher attach mode: the session cwd is a path in the container (it does not exist on the host); unset, the process cwd as before |
+| 0009 subagent settlement watcher | code | only on the error path with subagents on: when host teardown disposes a child agent before the continuation registry closes it, the watcher logs a warning instead of an unhandled rejection that ended the process as a fatal load failure (Harvey FK-250, Sol, subagents on, 2026-11-10: tasks 136 and 152) |
 
 None changes behaviour for one benchmark only; 0004 mentions JobBench in README text.
 
@@ -95,7 +96,7 @@ key files for the endpoints you use (CAO, the JobBench Exa relay), your TRAPI in
 judge script. Nothing in this repository points at anyone's credentials.
 
 ```bash
-./setup.sh          # clones DSH @ c389f96, applies patches/deepseek-harness (8), builds it; builds the dsh-bench-base image
+./setup.sh          # clones DSH @ c389f96, applies patches/deepseek-harness (9), builds it; builds the dsh-bench-base image
 ```
 
 Needs Linux, git, node >= 22.19 with corepack, and rootless podman (or `RUNTIME=docker`).

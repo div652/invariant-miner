@@ -1,0 +1,42 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: div652 <div652@users.noreply.github.com>
+Date: Tue, 10 Nov 2026 11:48:42 +0000
+Subject: [PATCH] fix(subagent): a settlement watcher failure no longer ends
+ the process
+
+Host teardown can dispose a child's session projections before the continuation
+registry closes its Activation. The watcher's next settlement read of the child's
+Inbox then throws ('cannot read inbox state: its projection registration is not
+active'); the watcher ran as an unawaited async IIFE, so the rejection was
+unhandled and the CLI exited with a fatal load failure. Catch it and log a warning:
+the watcher has nothing left to settle.
+
+Seen on Harvey FK-250 with Sol high and subagents on (tasks 136 and 152): the root
+agent ran out of 429 retries and its teardown crashed instead of exiting cleanly.
+---
+ .../subagent/subagent/src/continuation-activation.ts     | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
+
+diff --git a/packages/subagent/subagent/src/continuation-activation.ts b/packages/subagent/subagent/src/continuation-activation.ts
+index 782332b..b0d5ecb 100644
+--- a/packages/subagent/subagent/src/continuation-activation.ts
++++ b/packages/subagent/subagent/src/continuation-activation.ts
+@@ -728,7 +728,14 @@ export class ContinuableActivationRegistry {
+         }
+         return
+       }
+-    })()
++    })().catch((error: unknown) => {
++      // Host teardown can dispose the child's session projections before this registry closes the
++      // Activation; the settlement read of its Inbox then throws. The watcher has nothing left to
++      // settle, and an unhandled rejection here would end the whole process as a fatal load failure.
++      this.ctx.logger.warn(
++        `subagent "${activation.childId}" settlement watcher stopped: ${errorChain(error)}`,
++      )
++    })
+   }
+ 
+   /** Classify one Inbox and owned-child observation without reading Agent execution state. */
+-- 
+2.43.0
+

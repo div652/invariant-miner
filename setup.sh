@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Build the DeepSeek Harness (DSH) used by dsh-bench-harness from the public upstream plus the patch series.
 #
-#   deepseek-harness  https://github.com/deepseek-ai/deepseek-harness  @ c389f96  + patches/deepseek-harness (8)
+#   deepseek-harness  https://github.com/deepseek-ai/deepseek-harness  @ c389f96  + patches/deepseek-harness (9)
 #
 # Usage: ./setup.sh [WORK_DIR]     (default: ./work; the checkout goes to WORK_DIR/deepseek-harness)
 # Needs: git, node >= 22.19 (or >= 24) with corepack. Env: NODE=/path/to/node to pick a node binary.
