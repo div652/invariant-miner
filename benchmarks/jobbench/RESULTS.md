@@ -1,5 +1,24 @@
 # JobBench results
 
+## Model swap probe on 2 tasks: Claude Opus 5.5 max and Gemini 4 Argon high, 2026-11-10
+
+Same harness as the Luna-high subagents-off all-65 run below (core, subagents off, 2 h limit, original rubrics, the
+same grade.sh judge); only the model changes. Tasks: biostatisticians/task1 and
+computer_and_information_research_scientists/task1. Two tasks: a probe, not an estimate.
+
+| Model (run) | biostatisticians/task1 | computer_and_information_research_scientists/task1 | Mean | Agent time |
+|---|---|---|---|---|
+| Claude Opus 5.5, effort max (`runs/jb-2tasks-opus55-max-20261110T111413Z`) | **0.861** (62/72) | 0.394 (26/66) | **0.628** | 64 / 93 min |
+| GPT-5.6 Luna high, subagents off (run below) | 0.528 | 0.394 | 0.461 | ~7 min |
+| GPT-5.6 Luna high, subagents on (run below) | 0.611 | 0.182 | 0.396 | ~7 min |
+| Gemini 4 Argon, effort high (`runs/jb-2tasks-gemini-argon-high-20261110T100447Z`) | 0.278 | 0 | 0.139 | 30 / 10 min |
+
+Opus (`models/opus55-max-cao.json`): both runs completed; 2 and 3 CAO mid-stream `api_error`s retried (the first
+attempt, kept as `...-FAILED-cao-stream-error`, ended on the first such error before `PI_AI_ERROR` was made
+retryable). Argon (`models/gemini-argon-high-cao.json`) is not a valid measure: one run ended when CAO's stream closed
+six times without a finish reason at ~177K tokens, the other when one response used the whole 65,536-token output
+cap with no visible text (no output-cap regeneration was configured).
+
 ## All 65 tasks, GPT-5.6 Luna high via CAO, subagents off vs on, 2026-11-10
 
 Runs `runs/jb-all65-lunahigh-suboff-20261109T215439Z` and `runs/jb-all65-lunahigh-subon-20261109T222237Z` (not in
