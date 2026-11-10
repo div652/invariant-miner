@@ -15,11 +15,20 @@ original rubrics), all 65 graded in both.
 | endings | 65 completed | 65 completed |
 | agent time per task, median | 380 s | 404 s |
 | tasks that delegated | - | 40 (79 subagent sessions) |
+| task-instruction-aligned v1 rubrics, macro (pooled) | - | **0.419** (0.412) |
 
 Paired over the 65 tasks: on - off = +0.025, 95% CI [-0.007, +0.056], better/equal/worse 28/16/21: no clear effect.
 The difference is the same where the agent delegated (40 tasks: 0.322 vs 0.297) and where it did not (25 tasks: 0.364
 vs 0.339), so it looks like run-to-run noise (per-task SD ~0.13-0.15), not delegation. On APEX-Agents the same switch
 cost about 5 points, all on the tasks where the agent delegated (benchmarks/apex-agents/RESULTS.md).
+
+v1 rubrics (graded 2026-11-10, `grading-v1/`): the "on" run scores 0.419 vs 0.414 for the 11-06 all-65 run (older
+core, subagents on by default): paired +0.004, 95% CI [-0.034, +0.044], 26/13/26. Original rubrics 0.338 vs 0.347.
+
+Failure analysis of the "on" run (original rubrics, every task and failed rubric item):
+`benchmarks/jobbench/analysis/jb-all65-lunahigh-subon-20261109T222237Z/REPORT.md`. Model mistakes 79% of lost points
+(wrong analysis 37%, facts it had but left out 35%, missing professional checks 22%, ignored instructions 6%),
+insufficient information 8.6%, grading problems 6.2% (pooled 0.373 if those had passed), logging 2.5%, retrieval 2.5%.
 
 ## train-20, Luna via CAO, 2026-11-05 (core-v0)
 
