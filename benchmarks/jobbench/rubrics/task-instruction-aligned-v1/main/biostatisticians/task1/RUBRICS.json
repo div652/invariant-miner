@@ -1,0 +1,118 @@
+{
+  "rubrics": [
+    {
+      "rubric": "Does Eligibility_Analysis.xlsx derive the required eligibility flow and empirical event-rate comparison from the named study inputs?",
+      "weight": 12,
+      "criterion": [
+        "The population-flow table applies the required filters in this order: full framingham.csv dataset, age 45–70 inclusive, sysBP 130–159 inclusive, prevalentStroke=0, and diabetes=0.",
+        "Each population-flow step reports source-derived subjects remaining.",
+        "Each population-flow step reports source-derived subjects excluded.",
+        "The workbook states that chronic kidney disease cannot be evaluated because the field is unavailable.",
+        "The workbook states that prior cardiovascular disease beyond prevalentStroke cannot be evaluated because a broader indicator is unavailable.",
+        "The final population's TenYearCHD event count is correct for the applied filters.",
+        "The final population's event rate is reported as events divided by N.",
+        "The observed event rate is compared with the proposal control-rate assumption in percentage points."
+      ]
+    },
+    {
+      "rubric": "Does Sample_Size_Justification.xlsx provide a reproducible primary sample-size calculation that uses the protocol parameters and accounts for the planned interim looks?",
+      "weight": 11,
+      "criterion": [
+        "The primary calculation uses the proposal control rate.",
+        "The primary calculation uses the proposal treatment rate.",
+        "The primary calculation uses the proposal two-sided alpha.",
+        "The primary calculation uses the proposal power.",
+        "The primary calculation uses the proposal dropout rate.",
+        "The primary calculation uses the proposal allocation ratio.",
+        "The calculation method is stated sufficiently to reproduce the per-group result.",
+        "The workbook reports per-group and total sample sizes.",
+        "Rounding and dropout inflation are applied transparently.",
+        "The planned looks at 50% and 75% information use the proposal-specified O'Brien-Fleming spending method or a documented mathematically equivalent implementation.",
+        "The workbook displays an independent cross-check with Wan Nor Arifin's calculator, including the entered inputs, resulting per-group sample size, and any difference from the primary calculation."
+      ]
+    },
+    {
+      "rubric": "Does the empirical recalculation correctly use the eligible cohort's observed control rate while preserving the protocol absolute risk reduction?",
+      "weight": 9,
+      "criterion": [
+        "The recalculation uses the event rate derived from the final operationally eligible population.",
+        "The treatment rate preserves the protocol absolute risk reduction from the empirical control rate.",
+        "The recalculation uses the same transparent sample-size method as the primary calculation.",
+        "The recalculation reports per-group sample size.",
+        "The recalculation reports total sample size.",
+        "The change from the primary calculation is reported.",
+        "Any group-sequential adjustment is applied consistently with the primary calculation.",
+        "The workbook distinguishes an external-cohort validation scenario from an observed treatment effect."
+      ]
+    },
+    {
+      "rubric": "Does the sensitivity matrix contain the eight instructed, correctly calculated design scenarios?",
+      "weight": 8,
+      "criterion": [
+        "The matrix contains exactly eight scenarios.",
+        "The matrix covers 80% and 90% power.",
+        "The matrix covers absolute risk reductions of 3 and 5 percentage points from the protocol control rate.",
+        "The matrix contains a fixed or unadjusted design for every power and effect-size combination.",
+        "The matrix contains a two-interim-look adjusted design for every power and effect-size combination.",
+        "Every scenario reports per-group sample size.",
+        "Every scenario reports total sample size.",
+        "The adjusted scenarios use the proposal-specified O'Brien-Fleming spending at 50% and 75% information or a documented mathematically equivalent implementation."
+      ]
+    },
+    {
+      "rubric": "Does Baseline_Subgroup_Analysis.xlsx provide the complete requested characterization of the final eligible population?",
+      "weight": 12,
+      "criterion": [
+        "All subgroup analyses use the final operationally eligible population.",
+        "Age is stratified into clearly defined groups covering ages 45–70.",
+        "Gender is stratified using the male variable.",
+        "Baseline risk is divided into tertiles using a documented calculation or approximation.",
+        "Smoking status is stratified using currentSmoker.",
+        "Every stratum reports N.",
+        "Every stratum reports TenYearCHD events.",
+        "Every stratum reports events divided by N.",
+        "Every stratum reports mean and standard deviation of sysBP.",
+        "Every stratum reports mean and standard deviation of totChol.",
+        "Every stratum reports mean and standard deviation of BMI.",
+        "Limitations of any approximated Framingham risk score are stated."
+      ]
+    },
+    {
+      "rubric": "Does the subgroup flags analysis identify interpretable event-rate signals and handle the small-stratum rule conditionally?",
+      "weight": 7,
+      "criterion": [
+        "Strata with notable event-rate differences are identified as potential effect-modification signals.",
+        "The analysis does not present observational event-rate differences as proof of a treatment interaction.",
+        "Every stratum with fewer than 30 subjects is flagged as insufficient for meaningful subgroup analysis.",
+        "If no stratum has fewer than 30 subjects, the workbook explicitly states that none meets the insufficiency rule.",
+        "The subgroup interpretation cites a relevant ICH E9 section.",
+        "The discussion treats subgroup findings as exploratory unless stronger evidence is available."
+      ]
+    },
+    {
+      "rubric": "Does the missing-data analysis quantify missingness, evaluate outcome association, and recommend a defensible handling strategy?",
+      "weight": 8,
+      "criterion": [
+        "Every variable in the eligible population has a missing-value count.",
+        "Every variable in the eligible population has a missing-value percentage.",
+        "The variable with the highest missingness is identified from the source data.",
+        "Association between that variable's missingness indicator and TenYearCHD is evaluated with a stated method.",
+        "The association result is reported.",
+        "The interpretation acknowledges that one association test does not establish a missingness mechanism.",
+        "A handling strategy is recommended for the trial analysis.",
+        "The handling strategy is justified with the proposal and relevant regulatory guidance."
+      ]
+    },
+    {
+      "rubric": "Does the written recommendation use ICH E9 to address empirical versus assumed event rates and the planned interim analyses?",
+      "weight": 5,
+      "criterion": [
+        "The recommendation explains how the empirical event rate should inform sample-size planning without treating it as automatically definitive.",
+        "The recommendation cites ICH E9 by section number for sample-size assumptions or adjustment.",
+        "The recommendation cites ICH E9 by section number for interim or group-sequential analyses.",
+        "The recommendation addresses preservation of the overall Type I error.",
+        "The recommendation is consistent with the calculations and documented uncertainty."
+      ]
+    }
+  ]
+}

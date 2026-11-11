@@ -1,0 +1,89 @@
+{
+  "rubrics": [
+    {
+      "rubric": "Does the notebook's analytical memo make a defensible U.S.-to-Cleveland comparison and document consequential data-quality issues?",
+      "weight": 8,
+      "criterion": [
+        "The memo compares U.S. WHO macro indicators with the UCI Cleveland cohort without treating national aggregates and selected patient records as directly equivalent.",
+        "At least two specific discrepancies are identified, and each discrepancy has a plausible documented hypothesis.",
+        "Any implausible scale, unit, coding, or year-to-year discontinuity in a variable used by the analysis is identified and is not interpreted uncritically.",
+        "Exclusions, corrections, or qualifications arising from source screening are documented with their downstream effect; if no material anomaly is retained, the screening performed is stated.",
+        "The memo states how each material source anomaly was handled in downstream analysis and communicates the resulting uncertainty."
+      ]
+    },
+    {
+      "rubric": "Are the PCA burden score and country clustering reproducible, quantitatively justified, and substantively labeled?",
+      "weight": 10,
+      "criterion": [
+        "The PCA uses a defensible documented subset of WHO indicators selected with attention to meaning, redundancy, and missingness.",
+        "The missing-data method is documented and variables are standardized before PCA.",
+        "The number of retained components is justified with a quantitative criterion.",
+        "A readable PCA biplot shows country scores and variable loadings.",
+        "The clustering algorithm is justified and the number of clusters is chosen with a quantitative method.",
+        "A silhouette plot is provided and each cluster receives a descriptive label grounded in loadings, centroids, or member characteristics."
+      ]
+    },
+    {
+      "rubric": "Does the country reconciliation produce a traceable, duplicate-free WHO–World Bank panel for 2000–2015?",
+      "weight": 8,
+      "criterion": [
+        "World Bank life expectancy and income-group metadata are obtained from the required public source and restricted to the applicable 2000–2015 years.",
+        "Country names are reconciled programmatically using codes or documented mapping rules.",
+        "Name_Reconciliation_Log records every mapping decision and every unmatched or dropped country with a reason.",
+        "The merged data contain WHO predictors, World Bank life expectancy, and World Bank income group at one row per country-year.",
+        "The analysis verifies that no duplicate country-year keys were introduced and reports countries merged versus dropped."
+      ]
+    },
+    {
+      "rubric": "Does the mixed-effects analysis correctly fit and compare the required income-group random-intercept model with pooled OLS?",
+      "weight": 12,
+      "criterion": [
+        "The mixed model predicts life expectancy from documented WHO indicators with a random intercept for World Bank income group.",
+        "Mixed_Model_Results reports each fixed-effect coefficient, standard error, p-value, and 95-percent confidence interval.",
+        "Mixed_Model_Results reports the random-intercept variance.",
+        "Mixed_Model_Results reports log-likelihood, AIC, and BIC for the mixed model and pooled OLS fitted to a comparable analysis sample.",
+        "A likelihood-ratio comparison reports the test statistic, degrees of freedom, p-value, and any boundary-test caveat or equivalent valid comparison method.",
+        "Regression diagnostics and interpretation distinguish association from causal inference.",
+        "The forest plot has one labeled row per fixed effect, a point estimate, a 95-percent confidence interval, a zero reference line, axis labels, and a title."
+      ]
+    },
+    {
+      "rubric": "Does the obesity analysis use the latest valid state data, an honest adjustment strategy, and a complete crude-versus-adjusted rank comparison?",
+      "weight": 12,
+      "criterion": [
+        "The analysis recognizes that the CDC file contains only overall rows and empty demographic fields, so direct demographic standardization is not performed without external subgroup data.",
+        "The chosen alternative adjustment is documented with its fields, external source if any, assumptions, and limitations.",
+        "The ranking uses the specified obesity question and identifies 2024 as the most recent year.",
+        "The ranking covers the 50 states and District of Columbia only, excludes territories and national aggregates, and explicitly handles Tennessee's missing 2024 value.",
+        "Adjusted_Obesity_Rankings includes State, Crude_Rank, Adjusted_Rank, Rank_Shift, and an absolute-shift-at-least-3 flag with correct arithmetic.",
+        "The analysis identifies states shifting at least three positions and provides a rank-shift dot plot.",
+        "The requested inference about whether adjusted-versus-crude Spearman correlation is less than 1 is reported with a documented statistically valid procedure or a justified boundary-null alternative."
+      ]
+    },
+    {
+      "rubric": "Does the weighted least squares analysis use the required state predictors, weights, income control, and robust inference?",
+      "weight": 8,
+      "criterion": [
+        "State obesity prevalence is modeled using fruit consumption, vegetable consumption, and physical activity measures from the CDC source.",
+        "The model controls for a documented income bracket or justified income proxy.",
+        "CDC sample size is used as the WLS weight.",
+        "Robust standard errors and coefficient inference are reported.",
+        "Year alignment, missing states, and complete-case or other missing-data handling are documented.",
+        "Regression diagnostics are included and material model limitations are interpreted."
+      ]
+    },
+    {
+      "rubric": "Are the executed notebook, exact workbook, and two-page executive brief complete and mutually consistent?",
+      "weight": 8,
+      "criterion": [
+        "The submitted notebook is executed with visible outputs, contains no unresolved execution errors, and includes all required analyses and plots.",
+        "Integrated_Analysis_Report.xlsx contains exactly Country_Clusters, Name_Reconciliation_Log, Mixed_Model_Results, and Adjusted_Obesity_Rankings.",
+        "Country_Clusters contains PCA loadings, country cluster assignments, and descriptive labels.",
+        "The other workbook sheets contain the reconciliation, model-comparison, and ranking fields required by the instructions.",
+        "Cross_Level_Health_Analysis.pdf is exactly two pages.",
+        "The PDF covers the key cross-level finding, important mixed-model predictors versus pooled OLS, and the states most misrepresented by crude obesity ranks.",
+        "Material numbers and conclusions agree across the notebook, workbook, and PDF."
+      ]
+    }
+  ]
+}

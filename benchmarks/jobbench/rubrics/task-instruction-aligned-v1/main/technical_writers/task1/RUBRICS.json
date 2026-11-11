@@ -1,0 +1,103 @@
+{
+  "rubrics": [
+    {
+      "rubric": "Does the migration guide provide a complete, source-grounded v2.0-to-v2.2 upgrade path and resolve each escalated ticket?",
+      "weight": 12,
+      "criterion": [
+        "The migration guide is delivered as MIGRATION_GUIDE_v2.0_to_v2.2.md.",
+        "The guide explains the status of API keys and JWT in v2.0, v2.1, and v2.2.",
+        "The guide states whether API keys and JWT can be used in parallel during the transition.",
+        "The guide states the documented API-key removal version.",
+        "The guide gives decision criteria and a phased strategy for enterprises migrating multiple services.",
+        "The guide contains a concrete resolution section for SUP-78234.",
+        "The guide contains a concrete resolution section for SUP-78456.",
+        "The guide contains a concrete resolution section for SUP-78512.",
+        "The guide explains incremental sync.",
+        "The guide shows relevant before-and-after request or code patterns."
+      ]
+    },
+    {
+      "rubric": "Does API_REFERENCE.md comprehensively document the public endpoints and their source-defined behavior?",
+      "weight": 16,
+      "criterion": [
+        "The API reference is delivered as API_REFERENCE.md.",
+        "Production and sandbox base URLs are stated with the documented sandbox caveat.",
+        "The application/json requirement for POST, PUT, and PATCH request bodies is stated.",
+        "All public endpoints in api_endpoints_data.csv are documented and grouped by resource.",
+        "Each endpoint includes method and path.",
+        "Each endpoint includes its parameters and request-body fields as defined in api_endpoints_data.csv; broader or conflicting developer-note statements are not presented as confirmed public behavior.",
+        "Source-defined validation constraints are documented, including name length, bulk-record maximum, and pagination maximum.",
+        "Each endpoint includes its documented response codes.",
+        "Each endpoint includes its rate-limit category.",
+        "Each endpoint includes its added version.",
+        "Legacy API-key endpoints are marked deprecated.",
+        "The reference does not add undocumented endpoint behavior as fact."
+      ]
+    },
+    {
+      "rubric": "Does the sync and job-status documentation cover the complete asynchronous workflow and version history?",
+      "weight": 6,
+      "criterion": [
+        "POST /datasets/{id}/sync documents all supported mode values.",
+        "The introduction version of each sync mode is stated.",
+        "The 202 response and returned job identifier are documented.",
+        "GET /jobs/{job_id} is identified as the polling endpoint.",
+        "All documented job status values are listed.",
+        "The progress field and its range are documented."
+      ]
+    },
+    {
+      "rubric": "Does the webhook documentation list only valid events and explain signing and soft deletion correctly?",
+      "weight": 8,
+      "criterion": [
+        "Every valid webhook event from the supplied sources is listed.",
+        "dataset.deleted is explicitly identified as invalid.",
+        "DELETE /datasets/{id} is described as a soft delete or archive operation.",
+        "The event triggered by dataset soft deletion is identified correctly.",
+        "Webhook signature verification explains the X-Webhook-Signature header and HMAC-SHA256 over the request body.",
+        "Verification guidance is concrete enough for an implementer and does not invent an undocumented wire format."
+      ]
+    },
+    {
+      "rubric": "Does TROUBLESHOOTING_GUIDE.md address the escalated cases, rate limits, migration pitfalls, and authentication diagnostics?",
+      "weight": 12,
+      "criterion": [
+        "The troubleshooting guide is delivered as TROUBLESHOOTING_GUIDE.md.",
+        "A troubleshooting section is provided for each escalated ticket ID.",
+        "The rate-limiting section maps standard, bulk, and sync categories to the documented endpoints.",
+        "Every published per-tier per-minute or daily limit is stated accurately.",
+        "Undocumented category-and-tier limits are identified as unspecified rather than guessed.",
+        "The Common Migration Pitfalls section includes authentication-transition, webhook-deletion, and category-specific rate-limit pitfalls grounded in the support patterns.",
+        "Each migration pitfall includes Symptoms.",
+        "Each migration pitfall includes Resolution steps.",
+        "The HTTP 401 entry explains failed authentication and gives diagnostic steps.",
+        "The HTTP 403 entry explains authenticated-but-unauthorized access and gives diagnostic steps."
+      ]
+    },
+    {
+      "rubric": "Do the v2.2 release notes use the required structure and accurately synthesize the supplied changelog?",
+      "weight": 6,
+      "criterion": [
+        "The release notes are delivered as RELEASE_NOTES_v2.2.md.",
+        "The release notes contain Upgrade Steps with action-required items.",
+        "The release notes contain Breaking Changes, New Features, Bug Fixes, and Improvements sections.",
+        "The release notes accurately describe the v2.2 webhook addition.",
+        "The release notes accurately describe the stuck-sync-job fix.",
+        "The release notes accurately describe the bulk-insert performance improvement.",
+        "Semantically appropriate placement of an item is accepted when all required sections remain present."
+      ]
+    },
+    {
+      "rubric": "Are all four documents suitable for public use and consistent with the supplied public facts?",
+      "weight": 6,
+      "criterion": [
+        "No internal bug or JIRA identifiers are exposed.",
+        "No internal TODO notes or internal discussion are exposed.",
+        "The JS SDK, Java SDK, and internal references are not documented.",
+        "Version claims are consistent with the v2.0.0, v2.1.0, and v2.2.0 changelog.",
+        "The four documents do not contradict one another on authentication, webhooks, rate limits, sync, or endpoint behavior.",
+        "Extra examples or analysis do not introduce unsupported product claims."
+      ]
+    }
+  ]
+}

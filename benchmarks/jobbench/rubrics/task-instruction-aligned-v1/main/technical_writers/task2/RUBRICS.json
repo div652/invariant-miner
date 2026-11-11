@@ -1,0 +1,96 @@
+{
+  "rubrics": [
+    {
+      "rubric": "Does the migration guide independently identify every v3.1.0 breaking change and organize a standalone migration path by customer impact?",
+      "weight": 8,
+      "criterion": [
+        "The deliverable is readable Markdown named exactly migration_guide_v3.1.0.md.",
+        "The introduction explains the v3.1.0 context, migration urgency, current base URL, and authentication context needed for the covered changes.",
+        "The summary table follows the introduction, precedes all detailed change sections, and contains one row for every breaking change whose changelog release is v3.1.0.",
+        "Each v3.1.0 breaking change has its own migration section.",
+        "The section order is justified with error rate, affected consumers, and migration completion from the supplied metrics.",
+        "The impact-ordering method is stated or inferable and is applied consistently.",
+        "A cumulative older undocumented change may be included if it is clearly labeled and does not replace a v3.1.0 change."
+      ]
+    },
+    {
+      "rubric": "Does each v3.1.0 breaking-change section provide complete, accurate code migration examples and ticket-grounded pitfalls?",
+      "weight": 10,
+      "criterion": [
+        "Each breaking change has a before-and-after curl pair.",
+        "Each breaking change has a before-and-after Python pair.",
+        "The examples use the source-grounded endpoint, parameter type, authentication flow, status behavior, base URL, and authorization URL applicable to the change.",
+        "Each breaking-change section contains a Common Migration Pitfalls subsection.",
+        "Each pitfalls subsection cites the matching support ticket ID and accurately describes its specific request or client behavior and observed error.",
+        "The after examples give enough context for a developer to implement the migration without consulting the old draft."
+      ]
+    },
+    {
+      "rubric": "Does the client SDK compatibility matrix cover every v3.1.0 breaking change without inventing unsupported package-version facts?",
+      "weight": 6,
+      "criterion": [
+        "The matrix has coverage for every v3.1.0 breaking change.",
+        "Each entry identifies affected SDK versions or contract generations.",
+        "Each entry identifies the minimum compatible version or the evidence needed to determine it.",
+        "Each entry provides a workable temporary workaround.",
+        "Each version statement names its basis in the supplied release or contract data.",
+        "If package-specific version numbers are unavailable, the matrix explicitly states that limitation and uses verifiable contract compatibility rather than fabricated versions."
+      ]
+    },
+    {
+      "rubric": "Does the revised API reference replace the draft with complete, source-grounded endpoint documentation?",
+      "weight": 12,
+      "criterion": [
+        "The deliverable is readable Markdown named exactly revised_api_reference.md.",
+        "Every endpoint in the supplied OpenAPI source has a reference section.",
+        "Each endpoint documents every path and query parameter with type, constraints, and description.",
+        "Each endpoint documents the request body, media type, fields, constraints, and description when a request body applies; examples are required when supplied by the contract or requested by review or ticket evidence.",
+        "Each endpoint documents the success and error responses present in the source contract or required corrections.",
+        "Every response header is documented with type or format, description, and example value.",
+        "Authentication requirements and scopes are stated at the applicable endpoints.",
+        "The reference uses the changelog and review feedback to correct stale OpenAPI or draft content rather than reproducing a known contradiction."
+      ]
+    },
+    {
+      "rubric": "Does the revised API reference resolve every review item and undocumented changelog entry while using ticket evidence, troubleshooting, terminology, and external style guidance appropriately?",
+      "weight": 10,
+      "criterion": [
+        "Every review_id in doc_review_feedback.csv is referenced at the endpoint or cross-cutting section that resolves it.",
+        "Every changelog row marked Not Documented is incorporated into the relevant reference section.",
+        "Each support ticket that reveals a documentation-caused failure is cited at the relevant endpoint with the failure details needed to avoid recurrence.",
+        "The reference states and consistently applies a data-based method for selecting elevated-impact endpoints for enhanced troubleshooting, using error rate, trend, affected consumers, or an equivalent documented combination.",
+        "Deprecated endpoints or parameters state timing and a supported alternative where the sources provide one.",
+        "Company preferred terms are used consistently.",
+        "The reference follows the required Google and Microsoft guidance for concise, scannable, action-oriented reference content."
+      ]
+    },
+    {
+      "rubric": "Does doc_impact_analysis.csv contain one accurate row per required documentation gap with the exact requested structure?",
+      "weight": 8,
+      "criterion": [
+        "The deliverable is a readable CSV named exactly doc_impact_analysis.csv.",
+        "The CSV header contains exactly issue_source, issue_id, endpoint, description, related_tickets, affected_consumers, error_rate_pct, priority, priority_justification, and terminology_violation in that order.",
+        "Every review-feedback item appears exactly once as a source gap.",
+        "Every changelog entry marked Not Documented appears exactly once as a source gap.",
+        "Each row preserves the source issue ID and affected endpoint.",
+        "Related ticket IDs are mapped from the ticket evidence and are left empty or explicitly unavailable when no matching ticket exists.",
+        "Endpoint consumer counts and error rates come from the matching usage-metrics entry.",
+        "Breaking-change impact values come from the supplied breaking_change_impact data where applicable.",
+        "Cross-endpoint metrics are not presented as deduplicated consumer counts when the source cannot support that interpretation.",
+        "terminology_violation is Yes only when the gap concerns a term governed by company_terminology.csv and No otherwise."
+      ]
+    },
+    {
+      "rubric": "Are CSV priorities and migration-guide ordering quantitatively justified and internally consistent without relying on a hidden fixed ranking?",
+      "weight": 6,
+      "criterion": [
+        "Every priority is one of P0, P1, P2, or P3.",
+        "Each priority justification cites the available error rate and affected-consumer count for its endpoint.",
+        "Migration completion is cited for breaking changes when that metric is available.",
+        "The prioritization method accounts for missing endpoint-specific metrics without inventing values.",
+        "Issues with comparable evidence are treated consistently under the stated method.",
+        "The migration guide's ordering rationale is compatible with the same impact evidence used in the CSV."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,57 @@
+{
+  "schemaVersion": 1,
+  "name": "task-instruction-aligned-v1",
+  "split": "main",
+  "taskCount": 65,
+  "sourceDataset": "runs/gpt56-luna-high-exa-main-refined-256k-32k-landlock-20260930T055414Z/dataset/main",
+  "instructionFile": "task_folder/TASK_INSTRUCTIONS.txt",
+  "sourceRubricFile": "RUBRICS.json",
+  "variantRubricPattern": "main/<occupation>/taskN/RUBRICS.json",
+  "reviewNotesPattern": "main/<occupation>/taskN/REFINEMENT_NOTES.md",
+  "originalRubricsModified": false,
+  "preservesPerTaskTotalWeight": true,
+  "finalRubricRowCount": 521,
+  "finalCriterionCount": 3288,
+  "totalWeight": 4500,
+  "availableJudgeReportsIndexed": 2417,
+  "neverFullTaskCount": 13,
+  "neverFullTasks": [
+    "biostatisticians/task1",
+    "biostatisticians/task2",
+    "bookkeeping_accounting_and_auditing_clerks/task2",
+    "civil_engineers/task3",
+    "court_clerks/task1",
+    "management_analysts/task1",
+    "medical_and_health_services_managers/task2",
+    "online_merchants/task1",
+    "personal_financial_advisors/task1",
+    "police_fire_and_ambulance_dispatchers/task1",
+    "sales_representatives_wholesale_and_manufacturing_technical_and_scientific_products/task1",
+    "social_science_research_assistants/task3",
+    "training_and_development_specialists/task1"
+  ],
+  "filesPerTask": [
+    "RUBRICS.json",
+    "REFINEMENT_NOTES.md"
+  ],
+  "validationReport": "validation-report.json",
+  "neverFullAnalysis": "NEVER_FULL_ANALYSIS.md",
+  "secondPassAudit": "SECOND_PASS_AUDIT.md",
+  "secondPass": {
+    "taskReviewGroups": 10,
+    "taskReviews": 65,
+    "initialVerdicts": {
+      "pass": 18,
+      "passWithChanges": 42,
+      "fail": 5
+    },
+    "initialTaskIssues": 83,
+    "initialCorpusIssues": 15,
+    "judgeabilityFindings": 105,
+    "appliedFixes": 109,
+    "deferredEvaluatorInfrastructure": 97,
+    "changedTasks": 52,
+    "finalActionableIssues": 0,
+    "postFixValidation": "audits/second-pass/post-fix-validation.json"
+  }
+}

@@ -1,0 +1,101 @@
+{
+  "rubrics": [
+    {
+      "rubric": "Are all three legal deliverables usable, source-grounded, and within the stated format limits?",
+      "weight": 6,
+      "criterion": [
+        "The settlement evaluation memo is a readable PDF of no more than six pages.",
+        "The comparative regulatory analysis is a valid CSV.",
+        "The settlement counter-proposal is a readable TXT file.",
+        "The analysis uses the SQLite database and the named local and external legal sources rather than unsupported figures or holdings."
+      ]
+    },
+    {
+      "rubric": "Does the memo accurately quantify fine exposure and compare the six properties economically?",
+      "weight": 4,
+      "criterion": [
+        "Each property accruing fines is identified with its daily rate and database start date.",
+        "Fine days are counted inclusively through the Town Attorney letter date.",
+        "Per-property and aggregate fine exposure are projected inclusively through January 31, 2026.",
+        "All six properties compare capped transitional STR income, historical annual STR net income, annual LTR comparables, fine exposure, and mortgage balance.",
+        "Each income figure is labeled as gross or net and annual."
+      ]
+    },
+    {
+      "rubric": "Does the memo give Sandra Whitfield a usable, qualified sale-or-hold analysis for her properties?",
+      "weight": 2,
+      "criterion": [
+        "Sandra Whitfield's properties are evaluated using their database market values, mortgage balances, and the operating alternatives developed in the memo.",
+        "Any estimated sale equity or net proceeds state the transaction-cost, tax, appraisal, or timing assumptions used; unavailable inputs are identified rather than invented.",
+        "The analysis explains how a sale alternative compares with accepting, counter-proposing, or litigating without prescribing a required client decision."
+      ]
+    },
+    {
+      "rubric": "Does the memo accurately evaluate the cited precedents and available constitutional claims?",
+      "weight": 6,
+      "criterion": [
+        "The memo evaluates the actual Hignell-Stark holdings relevant to takings and other constitutional claims.",
+        "The memo evaluates each amortization precedent cited in the Town Attorney letter on its own facts and holding.",
+        "The Penn Central discussion uses the assigned Penn State Law Review source accurately.",
+        "The memo explains material similarities and differences between those authorities and the clients' property interests.",
+        "The memo identifies the constitutional claims reasonably available on the supplied facts.",
+        "The strength assessment distinguishes binding authority from persuasive authority and acknowledges material uncertainty."
+      ]
+    },
+    {
+      "rubric": "Does the memo apply each Penn Central factor to the clients' specific evidence?",
+      "weight": 6,
+      "criterion": [
+        "Economic impact is analyzed with property-specific STR, transitional, LTR, debt, or value evidence.",
+        "Investment-backed expectations are analyzed with purchase dates, permit history, and regulatory history.",
+        "The character of the government action is analyzed in light of the ordinance's operation and public-welfare rationale.",
+        "The analysis reaches a supported, qualified assessment rather than treating any one factor as automatically controlling."
+      ]
+    },
+    {
+      "rubric": "Does the memo review the complete settlement framework and the Property 4 rezoning issue?",
+      "weight": 6,
+      "criterion": [
+        "Sections 1 through 4 of the Town's proposal are each addressed.",
+        "The implications of permit duration, annual review, fine waiver, fees, and claim disposition are explained.",
+        "The effect of any release or dismissal term on litigation rights is accurately described.",
+        "Property 4's R-1 exclusion is evaluated using its financial profile.",
+        "The proposed rezoning path is assessed for timing, uncertainty, and practical economic value."
+      ]
+    },
+    {
+      "rubric": "Does the comparative CSV accurately compare the three regulatory schemes and explain their legal significance?",
+      "weight": 6,
+      "criterion": [
+        "The CSV includes the required columns or clearly equivalent columns containing the same information.",
+        "The CSV includes owner occupancy, permit caps, night limits, spacing, amortization or grandfathering, fines, and zoning restrictions.",
+        "Each required provision is compared across Millbrook, Belvidere Township, and New Orleans as described in Hignell-Stark.",
+        "A missing provision is stated explicitly rather than left ambiguous.",
+        "The legal-significance column connects each comparison to the clients' negotiating or litigation position without overstating the cited authority."
+      ]
+    },
+    {
+      "rubric": "Does the counter-proposal state specific, supported terms for the required negotiation subjects?",
+      "weight": 6,
+      "criterion": [
+        "The proposal uses numbered terms and gives a legal rationale for each material term.",
+        "The proposal gives a financial rationale for each material term.",
+        "A specific transitional duration is proposed using mortgage, permit-history, and STR-versus-LTR evidence.",
+        "The proposal addresses inclusion or interim treatment of the R-1 property.",
+        "The proposal provides an objective annual-review mechanism for the night cap.",
+        "The proposal preserves litigation rights during negotiations through a clearly described mechanism."
+      ]
+    },
+    {
+      "rubric": "Does the work product give a coherent settlement recommendation tied to deadlines, risks, and property-level outcomes?",
+      "weight": 6,
+      "criterion": [
+        "The memo clearly advises whether to accept, reject, or counter-propose.",
+        "The recommendation integrates the economic and legal analysis rather than relying on a hidden expected conclusion.",
+        "The January 5 response deadline and January 31 fine-waiver deadline are incorporated into the strategy.",
+        "The memo distinguishes property-specific consequences where the proposed terms affect properties differently.",
+        "The memo states material litigation and settlement uncertainties."
+      ]
+    }
+  ]
+}

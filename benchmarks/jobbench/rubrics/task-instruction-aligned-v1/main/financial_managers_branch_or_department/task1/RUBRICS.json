@@ -1,0 +1,121 @@
+{
+  "rubrics": [
+    {
+      "rubric": "Does the Risk Rating Reconciliation Workbook re-derive every in-scope loan using the multi-factor framework and the actual portfolio data?",
+      "weight": 14,
+      "criterion": [
+        "The Reconciliation Summary contains one row for every branch_loans record whose current risk_rating is 3 or worse.",
+        "Each row reports the current balance, current rating, DSCR, LTV or collateral coverage, delinquency, and every other framework factor available in the database.",
+        "Collateral coverage is calculated as 1 divided by LTV when LTV is available.",
+        "The re-derived rating applies the numerical thresholds and qualitative factors in sample-risk-rating-definitions.pdf rather than relying on DSCR alone.",
+        "Each justification cites the specific source threshold or framework factor that controls the rating.",
+        "Any judgment required by conflicting or missing factors is documented instead of presented as a hidden assumption."
+      ]
+    },
+    {
+      "rubric": "Does the Migration Matrix accurately cross-tabulate current and re-derived ratings for the complete reconciliation population?",
+      "weight": 8,
+      "criterion": [
+        "Rows include every current rating from 3 through the worst rating represented on the portfolio scale.",
+        "Columns include every re-derived rating represented in the reconciliation.",
+        "Each matrix cell reports loan count.",
+        "Each matrix cell reports aggregate current-balance exposure.",
+        "Row totals reconcile to the Reconciliation Summary.",
+        "Column totals reconcile to the Reconciliation Summary.",
+        "Diagonal cells represent loans whose ratings were confirmed."
+      ]
+    },
+    {
+      "rubric": "Does the Material Downgrades sheet completely and accurately explain every loan re-derived two or more notches worse?",
+      "weight": 8,
+      "criterion": [
+        "Every loan whose re-derived rating is at least two notches worse than its current rating is included.",
+        "Each write-up cites the loan's relevant database metrics.",
+        "Each write-up explains why the current rating is inconsistent with the cited framework criteria.",
+        "Each write-up identifies the re-derived rating and its supporting source criteria.",
+        "Each write-up recommends loan-specific next steps proportionate to severity."
+      ]
+    },
+    {
+      "rubric": "Does the CRE credit memo score APP-2025-001 and APP-2025-004 with the actual CDFI CRE template and transparent assumptions?",
+      "weight": 12,
+      "criterion": [
+        "Both applications are scored using the factor categories, score scale, and weights in risk-rating-system-for-re-sample.xls.",
+        "Every available application field relevant to a template factor is mapped to that factor.",
+        "Each factor score is shown for each application.",
+        "Each weighted factor contribution is shown for each application.",
+        "The weighted total is shown for each application.",
+        "The resulting score interpretation is shown for each application.",
+        "Every missing template input is paired with a stated and reasonable assumption.",
+        "The memo distinguishes source facts from analyst assumptions."
+      ]
+    },
+    {
+      "rubric": "Does the credit memo perform the required combined stress test with reproducible numerical results?",
+      "weight": 10,
+      "criterion": [
+        "The stress test applies a 200-basis-point rate increase and a 15% revenue decline simultaneously to each CRE application.",
+        "The stressed revenue or NOI calculation is shown for each application.",
+        "The stressed debt-service calculation is shown for each application.",
+        "The stressed DSCR is shown for each application.",
+        "Any amortization, margin, or construction-to-stabilization assumption needed for the calculation is stated.",
+        "The recommendation uses the stressed result rather than only the base-case DSCR."
+      ]
+    },
+    {
+      "rubric": "Does the credit memo use the required FDIC and branch data to assess delinquency, balance-sheet context, CRE concentration, and the approval recommendation?",
+      "weight": 12,
+      "criterion": [
+        "The memo cites Q4 2024 noncurrent rates for the relevant real-estate categories from the FDIC QBP Loan Performance dataset.",
+        "The memo cites Q4 2024 30–89 day past-due rates for the relevant real-estate categories from the FDIC QBP Loan Performance dataset.",
+        "The memo cites relevant Q4 2024 national balance-sheet figures from the FDIC QBP Balance Sheet dataset.",
+        "The memo compares the FDIC figures with the Q4 2024 branch 30-plus-day delinquency rate from quarterly_branch_metrics.",
+        "The memo calculates post-approval CRE exposure for each considered approval scenario using concentration_limits.",
+        "The memo calculates post-approval CRE concentration for each considered approval scenario using concentration_limits.",
+        "The memo compares each projected concentration with the applicable policy limit.",
+        "The recommendation on which application, if either, to approve follows from the scoring, stress, benchmark, and concentration evidence."
+      ]
+    },
+    {
+      "rubric": "Does the Decision Matrix evaluate all six remaining applications with a framework appropriate to each loan type and show the complete scoring logic?",
+      "weight": 12,
+      "criterion": [
+        "The Decision Matrix contains APP-2025-002, APP-2025-003, APP-2025-005, APP-2025-006, APP-2025-007, and APP-2025-008.",
+        "The selected framework for each application is justified from the stated scope of the NESDCAP workbook or the commercial and institutional PDF.",
+        "Every applicable factor score is shown for each application.",
+        "Each total score is mapped to the rating scale of the selected framework.",
+        "Key risks are tied to fields in pending_loan_applications.csv and applicable bank guidelines.",
+        "Key mitigants are tied to fields in pending_loan_applications.csv and applicable bank guidelines.",
+        "Missing inputs are explicitly identified.",
+        "Non-applicable factors are explicitly identified."
+      ]
+    },
+    {
+      "rubric": "Are the application decisions and dedicated approval sheets supported by the analysis and complete enough for credit action?",
+      "weight": 8,
+      "criterion": [
+        "Each of the six applications has an Approve, Conditional Approval, or Decline decision.",
+        "Each decision is consistent with the displayed rating, risk factors, mitigants, and policy limits.",
+        "Every approved or conditionally approved application has a dedicated sheet.",
+        "Each dedicated sheet includes proposed terms.",
+        "Each dedicated sheet includes financial covenants appropriate to the identified risks.",
+        "Each dedicated sheet includes reporting covenants appropriate to the identified risks.",
+        "Each dedicated sheet includes collateral requirements.",
+        "Each dedicated sheet includes conditions precedent."
+      ]
+    },
+    {
+      "rubric": "Do the three deliverables meet the required formats, sheet structures, and source-traceability requirements?",
+      "weight": 6,
+      "criterion": [
+        "The reconciliation deliverable is an Excel workbook with exactly the three required sheet names.",
+        "The credit memo is a PDF addressed to the Senior Credit Committee.",
+        "The decision deliverable is an Excel workbook with a Decision Matrix sheet and all required dedicated sheets.",
+        "Displayed totals can be traced to the named local or external source.",
+        "Displayed ratings can be traced to the named local or external source.",
+        "Displayed recommendations can be traced to the named local or external source.",
+        "No required deliverable is missing or substituted with a different format."
+      ]
+    }
+  ]
+}

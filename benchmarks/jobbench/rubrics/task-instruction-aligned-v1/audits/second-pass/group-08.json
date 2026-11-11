@@ -1,0 +1,115 @@
+{
+  "group": "group-08",
+  "reviewedTasks": [
+    "bookkeeping_accounting_and_auditing_clerks/task1",
+    "computer_user_support_specialists/task2",
+    "management_analysts/task2",
+    "mechanical_engineering_technicians/task1",
+    "producers/task1",
+    "technical_writers/task3"
+  ],
+  "taskReviews": [
+    {
+      "task": "bookkeeping_accounting_and_auditing_clerks/task1",
+      "verdict": "pass_with_changes",
+      "summary": "The rubric covers the three deliverables, reconciliation, journal entries, vendor matching, aging, Schedule C work, exceptions, and cross-file consistency without retaining the original fixed transaction answers. Two scope and method problems remain: the Schedule C population is undefined in a multi-currency ledger, and category aggregation is required even when a complete transaction-level reconciliation would satisfy the instructions.",
+      "alternativeSolutionProbe": "A submission could reasonably map only Q1 USD expenses because the bank account and AP scope are USD and no exchange rates are supplied, or map all Q1 currencies using a disclosed external conversion method. The phrase \"in-scope\" does not tell the judge which is acceptable. Separately, a fully quantified transaction-by-transaction reconciliation with a materiality ranking could unfairly fail solely because it does not add category-level bank-versus-GL totals.",
+      "issues": [
+        {
+          "severity": "high",
+          "category": "source_scope_ambiguity",
+          "location": "rubrics[4].criterion[1] (0-based)",
+          "finding": "The criterion requires every \"in-scope\" Q1 GL expense but never defines the currency scope, leaving a hidden and consequential population choice.",
+          "evidence": "TASK_INSTRUCTIONS.txt limits Currency USD only for the AP audit and aging, while the Schedule C instruction says to map every Q1 expense from the GL. General_Ledger_Sample.xlsx contains 124 Q1 debit expense rows: 23 USD and 101 across CAD, AUD, GBP, and EUR. No exchange rates or conversion date convention are provided. The representative judged output used only the USD rows, showing that the intended subset is not recoverable from the refined instruction alone.",
+          "recommendedChange": "Define the intended Schedule C population explicitly, or accept any clearly documented, consistently applied treatment that either limits the mapping to USD because no FX basis is supplied or converts non-USD entries using cited rates and dates. Require the scope decision and excluded-row reconciliation to be disclosed."
+        },
+        {
+          "severity": "medium",
+          "category": "unsupported_rubric_only_requirement",
+          "location": "rubrics[0].criterion[8] (0-based)",
+          "finding": "Mandatory category-level bank-versus-GL difference totals prescribe an analysis method that the task does not require.",
+          "evidence": "The refined instructions require an explanation for every unmatched bank transaction, quantification of every discrepancy, and a materiality ranking. They do not require category aggregation. A source-complete transaction table can quantify and rank every discrepancy without grouping disbursements by category.",
+          "recommendedChange": "Accept category-level totals or an equivalent complete transaction-level reconciliation that quantifies all differences and supports the materiality ranking. Require aggregation only when the submission relies on a category-level conclusion."
+        }
+      ]
+    },
+    {
+      "task": "computer_user_support_specialists/task2",
+      "verdict": "pass_with_changes",
+      "summary": "The rubric correctly removes the original hidden device classifications and fixed ticket conclusions, covers all substantive plan, incident-analysis, and briefing content, and appropriately requires independent hardware verification. It still omits explicit output-format checks and makes two optional example sets mandatory for the burden model and triage tree.",
+      "alternativeSolutionProbe": "A reproducible burden model could use ticket-linked device class, manufacturer, remediation complexity, and observed resolution time while omitting CPU generation because the pilot data does not establish that relationship. It could still fail unless it separately explains every listed example factor. A tree that covers the actual top five subcategories could also fail for lacking two extra branches, while otherwise correct content delivered as PDFs could pass because the required DOCX and PPTX formats are not checked.",
+      "issues": [
+        {
+          "severity": "medium",
+          "category": "deliverable_structure",
+          "location": "rubrics[0].criterion[0], rubrics[3].criterion[0], and rubrics[7].criterion[0] (0-based)",
+          "finding": "No criterion enforces that the migration plan and incident analysis are DOCX files and that the executive deck is a PPTX file.",
+          "evidence": "TASK_INSTRUCTIONS.txt explicitly requires a migration plan (.docx), incident correlation analysis (.docx), and executive briefing deck (.pptx). The rubric checks plan tables, analysis content, and a 12-15-slide deck, but a PDF or other extracted format could satisfy all current criteria.",
+          "recommendedChange": "Add a deliverable-level criterion requiring exactly two DOCX files for the named plan and analysis roles and one PPTX file containing the 12-15-slide executive briefing."
+        },
+        {
+          "severity": "medium",
+          "category": "unsupported_rubric_only_requirement",
+          "location": "rubrics[5].criterion[2] (0-based)",
+          "finding": "The burden-score criterion turns every illustrative factor in the task into a mandatory factor-or-explanation checklist.",
+          "evidence": "TASK_INSTRUCTIONS.txt says the methodology should use factors \"such as\" CPU generation, TPM version, device type, manufacturer, and remediation-step count. That wording permits a different data-driven feature set. The current criterion requires all five to appear or be individually explained, so an equally reproducible model using stronger observed predictors can lose credit for its method choice.",
+          "recommendedChange": "Require a transparent, reproducible feature set tied to pilot ticket counts and resolution times, with hardware and remediation factors justified by available evidence. Treat the listed factors as examples rather than individually mandatory fields."
+        },
+        {
+          "severity": "low",
+          "category": "unsupported_rubric_only_requirement",
+          "location": "rubrics[6].criterion[4] (0-based)",
+          "finding": "The decision tree is required to add hardware-eligibility and remote-network paths even if neither is among the five highest-volume subcategories.",
+          "evidence": "The deliverable specification requires the tree to cover at least the top five pilot subcategories with actions, diagnostics, and escalation. Hardware readiness investigation and VPN scheduling are required elsewhere in the plan, but the instructions do not require them as extra tree branches.",
+          "recommendedChange": "Make these paths optional examples, or require them only when they fall within the derived top five or the submission identifies them as material triage categories."
+        }
+      ]
+    },
+    {
+      "task": "management_analysts/task2",
+      "verdict": "pass_with_changes",
+      "summary": "The analytic and decision criteria are source-consistent, accept documented uncertainty in missing activity and route data, and cover the scoring model, scenarios, risk matrix, reconciliation, brief, recommendations, risks, and Go/No-Go decisions. The remaining gap is the workbook-level requirement for an XLSX with exactly the four instructed tabs.",
+      "alternativeSolutionProbe": "A workbook containing all four required sheets plus an extra calculations or raw-data sheet would satisfy every current criterion despite violating the exact-tab instruction. The same extracted sheet content could also be packaged outside an XLSX without an explicit format failure.",
+      "issues": [
+        {
+          "severity": "medium",
+          "category": "deliverable_structure",
+          "location": "rubrics[0].criterion[0], rubrics[1].criterion[0], rubrics[2].criterion[0], and rubrics[3].criterion[0] (0-based)",
+          "finding": "The rubric checks each named sheet independently but never requires one XLSX workbook containing exactly Composite_Score, Consolidation_Scenarios, Risk_Matrix, and Data_Reconciliation.",
+          "evidence": "TASK_INSTRUCTIONS.txt requires the Plant Consolidation Scoring Model as an .xlsx workbook with exactly those four tabs. No aligned criterion rejects extra sheets, separated workbooks, or a non-XLSX spreadsheet artifact.",
+          "recommendedChange": "Add a workbook-level criterion requiring a single XLSX file with exactly the four instructed tab names and no additional tabs."
+        }
+      ]
+    },
+    {
+      "task": "mechanical_engineering_technicians/task1",
+      "verdict": "pass_with_changes",
+      "summary": "The rubric comprehensively checks report structure, source comparisons, every test-data section, evidence-based root cause, corrective actions, safe uncertainty around locknut torque, and STL limitations. Its custom-rod seal-kit criterion avoids the original unsafe direct-fit assumption but no longer requires an actual recommendation.",
+      "alternativeSolutionProbe": "A report could list both 63 mm bore standard kit pairs, state that neither 36 mm nor 45 mm kit is a supported direct fit for the 40 mm rod, and stop there. That would satisfy the current compatibility wording while omitting the explicit deliverable requirement to recommend a kit or a concrete procurement disposition.",
+      "issues": [
+        {
+          "severity": "medium",
+          "category": "coverage",
+          "location": "rubrics[5].criterion[3] (0-based)",
+          "finding": "Addressing custom-rod compatibility is not equivalent to making the required actionable seal-kit recommendation.",
+          "evidence": "TASK_INSTRUCTIONS.txt requires the report to recommend a kit for the 40 mm rod configuration. The aligned criterion only requires that compatibility be addressed without presenting an unsupported standard kit as a direct fit, so a disclaimer with no recommended path can pass.",
+          "recommendedChange": "Require an actionable, source-bounded recommendation, such as obtaining a manufacturer-confirmed 63/40 custom standard or low-friction kit and assigned part number, or holding release until the manufacturer confirms compatibility. Continue to prohibit claiming either listed 36 mm or 45 mm kit is a direct fit without evidence."
+        }
+      ]
+    },
+    {
+      "task": "producers/task1",
+      "verdict": "pass",
+      "summary": "The rubric covers all four deliverables, every schedule and UCF compliance rule, venue and personnel constraints, complete budget reconciliation, cash-flow assumptions, reimbursement edge cases, memo decisions, personnel compliance, script status, and cross-file consistency without preserving hidden dates, receipts, totals, or recommendations.",
+      "alternativeSolutionProbe": "Different rehearsal-day selections, conflict resolutions, cash-timing assumptions, and second-tranche recommendations can pass when they remain within venue, personnel, handbook, and source-finance constraints. Either the ordinary weekend meal-break structure or a properly documented straight-six option is accepted, and uncertainty must be resolved through source-grounded actions rather than a fixed hidden schedule.",
+      "issues": []
+    },
+    {
+      "task": "technical_writers/task3",
+      "verdict": "pass",
+      "summary": "The rubric fully covers the five requested artifacts, exhaustive YAML-versus-doc reconciliation, audit-tracker-only signals, style-guide length and standards, endpoint completeness, error documentation, webhook union and provenance, migration mappings, publication quality, and uncertainty without retaining the original fixed discrepancy or event answers.",
+      "alternativeSolutionProbe": "A submission can choose its own consistent approved terminology, timestamp explanation, and response-envelope policy when those choices are source-grounded and exceptions are documented. Unresolvable YAML, Markdown, tracker, and delivery-log conflicts can be escalated rather than forced into hidden behavior, while every operation, event, and identifiable v1 change remains judgeable.",
+      "issues": []
+    }
+  ]
+}

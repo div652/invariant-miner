@@ -1,0 +1,91 @@
+{
+  "group": "group-09",
+  "reviewedTasks": [
+    "financial_managers_branch_or_department/task1",
+    "mechanical_engineering_technicians/task3",
+    "mechanical_engineers/task1",
+    "online_merchants/task1",
+    "social_science_research_assistants/task2",
+    "social_science_research_assistants/task3"
+  ],
+  "taskReviews": [
+    {
+      "task": "financial_managers_branch_or_department/task1",
+      "verdict": "pass",
+      "summary": "The aligned rubric covers all three deliverables and their material analyses without retaining the original rubric's loan-specific answers, fixed decisions, or exact benchmark values. It accepts documented judgment where multi-factor ratings, missing CDFI inputs, construction-versus-stabilized stress assumptions, and approval scenarios permit more than one defensible method. Criteria are traceable to the refined instructions and supplied portfolio, application, framework, and concentration data, and the weight allocation sensibly emphasizes reconciliation, CRE underwriting, and the six remaining applications.",
+      "alternativeSolutionProbe": "A valid submission that resolves conflicting DSCR, collateral, and qualitative factors through a documented dominant-factor judgment; uses different but stated construction and amortization assumptions in the two CRE stress tests; and evaluates one-at-a-time and combined concentration scenarios would still satisfy the rubric.",
+      "issues": []
+    },
+    {
+      "task": "mechanical_engineering_technicians/task3",
+      "verdict": "pass_with_changes",
+      "summary": "The technical criteria are substantially task-aligned, source-consistent, atomic, and tolerant of documented uncertainty in bearing geometry, FFT matching, ISO applicability, and causal diagnosis. The rubric correctly separates contractual API acceptance from ISO severity and avoids hard-coding the original rubric's numerical answers. It nevertheless omits an explicit check for the required output filenames and workbook structure.",
+      "alternativeSolutionProbe": "A technically valid submission can use corroborated bearing geometry labeled as inferred, reject a nearby defect-frequency peak because harmonics and sidebands are absent, and distinguish hydraulic excitation from mechanical hypotheses; the rubric accepts those alternatives. Conversely, the same analyses in renamed files or without the three instructed sheet names could receive full credit under the current criteria.",
+      "issues": [
+        {
+          "severity": "medium",
+          "category": "deliverable_coverage",
+          "location": "RUBRICS.json: rubrics[0].criterion[0] through rubrics[6].criterion[5] (coverage gap; no indexed deliverable-structure criterion)",
+          "finding": "No criterion verifies the exact filenames P-2415A_FAT_Acceptance_Matrix.xlsx and P-2415A_Disposition_Memo.pdf or confirms that the workbook contains the three instructed sheets under their required names.",
+          "evidence": "The refined instructions make both filenames exact and name Speed-Corrected Performance, Vibration Acceptance, and Bearing Frequency Analysis as workbook sheets. The rubric evaluates content described as being on sheets and in a memo, but none of its 41 criteria checks the two artifact names or the complete named-sheet set. A renamed artifact or structurally noncompliant workbook could therefore score as fully compliant.",
+          "recommendedChange": "Add a low-weight deliverable criterion that checks both exact filenames, confirms the workbook contains all three required sheet names, and confirms the PDF is the requested technical memorandum; keep the existing substantive criteria unchanged."
+        }
+      ]
+    },
+    {
+      "task": "mechanical_engineers/task1",
+      "verdict": "pass",
+      "summary": "The aligned rubric comprehensively covers reconciliation, internal and external pressure, hydrotest, nozzle reinforcement, material suitability, stiffening economics, machine-readable outputs, and report consistency. It is notably method-neutral where ASME chart values or opening geometry may be uncertain: conditional external-pressure conclusions are accepted, the Appendix 1-7 flag follows displayed geometry rather than a prescribed answer, and repads are required only when supported. Criteria remain judgeable from the CSV, JSON, and text report and do not preserve the original rubric's hidden computed values or mandated conclusions.",
+      "alternativeSolutionProbe": "A valid package that leaves external-pressure adequacy conditional because controlled chart factors are unavailable, reaches a different Appendix 1-7 flag from a documented finished-opening assumption, or recommends either rings or thicker shell from a reproducible cost comparison would still pass.",
+      "issues": []
+    },
+    {
+      "task": "online_merchants/task1",
+      "verdict": "pass_with_changes",
+      "summary": "Most criteria accurately cover the conditional PDF choice, escalated-inquiry decisions, response consistency, full-catalog dashboard, visualization, external-source limits, and supplier communication. One dashboard criterion, however, reintroduces a hidden expected answer and overrides the task's open-ended risk-classification method by naming the additional SKUs that must be selected.",
+      "alternativeSolutionProbe": "A defensible risk model could combine return-rate and rating deviations with units sold, review count, inquiry evidence, or explicit statistical thresholds and consequently flag a different non-escalated set. The current rubric would still require SKU-005 and SKU-016 even when the alternative rule is consistently stated and applied.",
+      "issues": [
+        {
+          "severity": "high",
+          "category": "hidden_answer_and_method_neutrality",
+          "location": "RUBRICS.json: rubrics[3].criterion[3]",
+          "finding": "The criterion hard-codes SKU-005 and SKU-016 as required additional risk products even though the refined instructions do not define a risk algorithm or prescribe those products.",
+          "evidence": "The task asks the dashboard to identify additional non-escalated products sharing similar risk indicators and allows the analyst to define a reproducible risk level from the supplied metrics. REFINEMENT_NOTES.md explicitly lists the identities of the additional at-risk SKUs among the answers deliberately withheld. Although the local metrics make these SKUs plausible selections, other consistent methods can weight sales volume, review count, listing evidence, or threshold distance differently.",
+          "recommendedChange": "Remove the SKU identifiers. Require the submission to state and consistently apply a source-grounded risk rule, identify every non-escalated product meeting that rule, and explain how inquiry or listing evidence changes the classification. Judge the resulting set against the stated method rather than a hidden fixed list."
+        }
+      ]
+    },
+    {
+      "task": "social_science_research_assistants/task2",
+      "verdict": "pass_with_changes",
+      "summary": "The rubric otherwise provides strong coverage of cleaning, conditional imputation, typology, descriptive tables, model specifications, interpretation, GIS usability, and cross-sheet consistency while accepting documented handling of ambiguous categories and dates. Its OWID extraction rule nevertheless exposes a deliberately withheld method and rejects a plausible temporally aligned alternative that the refined instruction does not clearly exclude.",
+      "alternativeSolutionProbe": "For every survey country, a submission could use 2022, the latest year in the supplied OWID file with all five requested indicators jointly non-missing, to preserve cross-indicator comparability. The rubric instead requires mixing 2024 CO2/population/usually energy, 2023 consumption CO2, and 2022 GDP values and would fail the documented common-year solution.",
+      "issues": [
+        {
+          "severity": "high",
+          "category": "arbitrary_method",
+          "location": "RUBRICS.json: rubrics[1].criterion[1]",
+          "finding": "The criterion mandates the most recent non-missing year separately for each country and indicator, an interpretation not unambiguously required by the refined task and explicitly identified in the refinement notes as a withheld task-card trap.",
+          "evidence": "The refined instruction says to extract the most recent available year per country for the listed variables, which can reasonably mean either each indicator's latest observation or the latest common year for a comparable indicator vector. In the supplied OWID file, most countries have CO2, population, and energy through 2024, consumption CO2 through 2023, GDP through 2022, and a latest complete common year of 2022. Both policies are reproducible, but only one passes the current criterion.",
+          "recommendedChange": "Either clarify the task instructions to require per-indicator latest values, or revise the criterion to accept a documented, consistently applied policy using either per-indicator latest observations or the latest common non-missing year. Require source years to be reported so either method is judgeable."
+        }
+      ]
+    },
+    {
+      "task": "social_science_research_assistants/task3",
+      "verdict": "pass_with_changes",
+      "summary": "The substantive criteria are well aligned and unusually careful about construct comparability, exact Meta/Yale variable names, ESS coverage, signed divergence calculations, documented data quality, and source-specific memo qualifications. They accept equivalent cross-study selections and recommendations rather than restoring the original rubric's exact mappings, country values, or prescribed wording. The rubric does not, however, enforce the explicit artifact filenames or the workbook's exact five-sheet set.",
+      "alternativeSolutionProbe": "A submission selecting only defensibly comparable climate constructs, marking unsupported ESS cells N/A, and excluding unresolvable-country records from country analysis would pass as intended. A submission with the same content in renamed artifacts or with extra or renamed workbook sheets could also pass, despite violating the deliverable specification.",
+      "issues": [
+        {
+          "severity": "medium",
+          "category": "deliverable_coverage",
+          "location": "RUBRICS.json: rubrics[0].criterion[0] through rubrics[5].criterion[4] (coverage gap; no indexed deliverable-structure criterion)",
+          "finding": "No criterion checks the exact three filenames or enforces that cross_study_analysis.xlsx has exactly the five instructed sheet names and no extras.",
+          "evidence": "The refined task requires harmonized_survey.db, cross_study_analysis.xlsx, and reconciliation_memo.docx by exact name, and says the workbook sheets are exactly Country_Benchmarks, Descriptive_Stats, Correlation_Matrix, Regression_Models, and Divergence_Flags. The rubric evaluates the tables and named analyses individually but has no artifact-level structure criterion, so renamed files or an extra-sheet workbook can receive full substantive credit.",
+          "recommendedChange": "Add a low-weight structural criterion checking all three exact filenames, the exact five-sheet workbook set, and the presence of the three required SQLite tables and three required memo sections; retain the existing content criteria for their substantive evaluation."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,110 @@
+{
+  "rubrics": [
+    {
+      "rubric": "Does dispatch_decisions.xlsx provide a complete, source-grounded prioritized dispatch queue for all 15 incoming calls?",
+      "weight": 18,
+      "criterion": [
+        "The Dispatch Queue sheet contains exactly one row for each of the 15 incoming call IDs.",
+        "The queue is ordered by the submission's adjusted P1/P2/P3 dispatch priority.",
+        "Each row includes the instructed call, location, suggested priority, adjusted priority, assigned units, capability level, and justification fields.",
+        "Priority decisions and justifications use the caller descriptions and do not introduce unsupported patient or incident facts.",
+        "Assigned primary resources provide the required level of service, or the row documents an explicit escalation, recall, redirect, or coverage limitation.",
+        "Simultaneous high-acuity medical calls are allocated without silently double-booking the same unit."
+      ]
+    },
+    {
+      "rubric": "Does the dispatch correctly handle specialty incidents and unavailable specialty resources using the named unit and CAD inputs?",
+      "weight": 10,
+      "criterion": [
+        "The water-rescue decision identifies the Swift Water Rescue capability required by the incident.",
+        "The water-rescue decision reconciles the capable unit's current commitment in unit_status.csv and dispatch_cad.db.",
+        "Any recall, redirect, mutual-aid request, or interim support response for the water rescue is explicit and operationally coherent.",
+        "The symptomatic gas-leak decision accounts for HazMat capability and the actual availability of HazMat-capable resources.",
+        "Support units may accompany a specialty response, but the submission does not treat a non-specialty support unit as a substitute for a required specialty capability."
+      ]
+    },
+    {
+      "rubric": "Does the Unit Matching Matrix distinguish capability eligibility from availability-and-proximity recommendations for every call?",
+      "weight": 10,
+      "criterion": [
+        "The sheet is named Unit Matching Matrix and covers every incoming call using either every unit in unit_status.csv or a stated reproducible candidate-selection rule that includes the assigned unit, the closest eligible AVAILABLE alternatives, and relevant unavailable or specialty-capable units.",
+        "Candidate rows include the instructed unit identity, type, specialty, status, distance, CAN respond, SHOULD respond, and reason fields.",
+        "CAN respond reflects capability eligibility from unit_type and specialty rather than proximity alone.",
+        "SHOULD respond reflects current availability, existing commitments, distance, and competing demand.",
+        "Distances use a stated reproducible method and the named coordinate sources.",
+        "Unavailable units are not marked as ordinary recommendations unless a documented recall or redirect is proposed."
+      ]
+    },
+    {
+      "rubric": "Does conflict_report.csv comprehensively document source conflicts, existing commitments, duplicate or related incidents, and assignment anomalies?",
+      "weight": 12,
+      "criterion": [
+        "The report is a parseable CSV with at least conflict_type, call_id(s), unit_id(s), description, and resolution fields.",
+        "It reconciles non-cleared assignments in dispatch_cad.db with current_status values in unit_status.csv.",
+        "It identifies source disagreements that could make a unit appear available in one input while committed in another.",
+        "It flags every new assignment that would double-book or use a non-AVAILABLE unit without an explicit recall or redirect.",
+        "It assesses overlapping addresses and plausible related incidents without declaring different incidents duplicates solely because they share a category or neighborhood.",
+        "It records end-of-shift constraints when supported by the inputs and states when the supplied data cannot establish them."
+      ]
+    },
+    {
+      "rubric": "Is dispatch_cad.db a valid synchronized copy containing all new calls and internally consistent assignment records?",
+      "weight": 12,
+      "criterion": [
+        "The deliverable is named dispatch_cad.db and opens as a valid SQLite database.",
+        "All 15 incoming calls are inserted into call_records without deleting the pre-existing records.",
+        "Each dispatched or explicitly queued assignment is represented consistently in unit_assignments.",
+        "dispatch_log entries agree with the selected assignments, priorities, and stated statuses.",
+        "Primary and foreign identifiers remain unique and referentially coherent.",
+        "The synchronized database does not silently record a redirected unit as simultaneously active on incompatible incidents."
+      ]
+    },
+    {
+      "rubric": "Does Active Incident Map Data provide complete GIS-ready records for the incoming and pre-existing active incidents?",
+      "weight": 10,
+      "criterion": [
+        "The sheet is named Active Incident Map Data.",
+        "It contains all 15 incoming calls plus every pre-existing call whose CAD status is active.",
+        "Incoming-call latitude and longitude values match incoming_calls_queue.csv without transposition.",
+        "Pre-existing incident coordinates come from dispatch_cad.db.",
+        "Each row includes call_id, lat, lng, incident_type, priority, units_assigned, and status.",
+        "Assigned units and statuses agree with the synchronized CAD and the documented dispatch decisions."
+      ]
+    },
+    {
+      "rubric": "Does Resource Depletion Analysis calculate battalion availability and specialty coverage from the actual roster without imposing an unstated coverage conclusion?",
+      "weight": 10,
+      "criterion": [
+        "The sheet is named Resource Depletion Analysis.",
+        "Every unit in unit_status.csv is assigned to its source battalion exactly once.",
+        "Per-battalion totals, AVAILABLE counts, committed or out-of-service counts, and availability percentages are arithmetically correct.",
+        "The submission states the criterion used for each coverage flag.",
+        "Specialty-capability available counts use only units whose current_status is AVAILABLE, except for separately identified recall scenarios.",
+        "Every specialty with zero available coverage is clearly flagged.",
+        "Coverage conclusions follow the stated criterion rather than a hidden expected label."
+      ]
+    },
+    {
+      "rubric": "Does Call Pattern Analysis accurately summarize the required Montgomery County 911 data and connect the findings to cautious operational implications?",
+      "weight": 8,
+      "criterion": [
+        "The sheet is named Call Pattern Analysis and identifies the historical dataset or dataset version used.",
+        "Category counts use the title prefix before the colon.",
+        "Top incident-type counts use the full title, with any normalization of whitespace or trailing punctuation documented.",
+        "Geographic clustering is reported by the twp field.",
+        "Counts are reproducible from the identified source or are accompanied by a clear limitation when a documented subset is used.",
+        "Operational implications are presented as historical planning context rather than as unsupported predictions about Washington, D.C."
+      ]
+    },
+    {
+      "rubric": "Do the workbooks use the required sheet names and document every departure from closest-unit dispatch consistently?",
+      "weight": 4,
+      "criterion": [
+        "dispatch_decisions.xlsx contains the two required sheets in the instructed order.",
+        "shift_handover.xlsx contains the four required sheets in the instructed order.",
+        "Operational Notes identifies each assignment that departs from the closest eligible AVAILABLE unit.",
+        "Each operational-note rationale agrees with the queue, matrix, conflict report, and synchronized CAD."
+      ]
+    }
+  ]
+}

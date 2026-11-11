@@ -1,0 +1,80 @@
+{
+  "rubrics": [
+    {
+      "rubric": "Are the three instructed deliverables present under the exact filenames and does the workbook use exactly the required sheet set?",
+      "weight": 4,
+      "criterion": [
+        "harmonized_survey.db, cross_study_analysis.xlsx, and reconciliation_memo.docx are all present under those exact filenames.",
+        "cross_study_analysis.xlsx contains exactly Country_Benchmarks, Descriptive_Stats, Correlation_Matrix, Regression_Models, and Divergence_Flags, with no missing, renamed, or extra sheets.",
+        "Each required deliverable uses the instructed SQLite, Excel, or Word format rather than a substitute."
+      ]
+    },
+    {
+      "rubric": "Does harmonized_survey.db preserve the source data, apply auditable cleaning, and retain the original country metadata?",
+      "weight": 9,
+      "criterion": [
+        "The database contains cleaned_responses, variable_crosswalk, and country_metadata tables.",
+        "cleaned_responses combines the respondent and survey-response fields needed for the requested analyses, and every retained row remains traceable to the source records.",
+        "Each correction, exclusion, or unresolved quality issue is recorded in data_quality_flag with the original and corrected value or a specific reason.",
+        "Country spelling errors are corrected using source-grounded evidence, while missing or otherwise unresolvable countries are explicitly flagged and excluded from country-level calculations rather than silently assigned.",
+        "country_metadata contains every original country and all original columns and values unchanged."
+      ]
+    },
+    {
+      "rubric": "Does variable_crosswalk map the local survey variables to defensible Meta/Yale and ESS constructs without inventing equivalence?",
+      "weight": 8,
+      "criterion": [
+        "The table has the required columns our_variable, meta_yale_variable, ess_construct, comparability_assessment, and notes.",
+        "Each local survey variable is represented once, including variables for which no external equivalent exists.",
+        "Every claimed Meta/Yale mapping uses the exact varname from the supplied codebook; N/A is used when no defensible equivalent exists.",
+        "Each ESS mapping names the actual Table 1 construct or uses N/A when the local item is not comparable.",
+        "Comparability assessments and notes identify material wording, response-scale, aggregation, coverage, or fieldwork-time differences."
+      ]
+    },
+    {
+      "rubric": "Does Country_Benchmarks provide an accurate long-format country-by-country comparison using only defensibly comparable measures?",
+      "weight": 9,
+      "criterion": [
+        "The sheet uses the required columns Country, Variable, Our_Survey_Pct, MetaYale_Pct, ESS_Pct, Difference_MetaYale, and Difference_ESS.",
+        "Rows cover each survey country and each climate-opinion variable selected for cross-study comparison.",
+        "Our_Survey_Pct is calculated from the cleaned local data using a stated, reproducible response-level rule.",
+        "MetaYale_Pct is taken from the supplied pct field for the matching exact variable and country, with any combined response levels stated and summed correctly.",
+        "ESS_Pct reproduces Table 1 values for covered countries only when the crosswalk supports the construct comparison; N/A is used for uncovered countries or non-equivalent constructs.",
+        "Difference_MetaYale and Difference_ESS equal Our_Survey_Pct minus the corresponding available benchmark in percentage points."
+      ]
+    },
+    {
+      "rubric": "Does the workbook complete the requested descriptive, correlation, and regression analyses from the cleaned and merged data?",
+      "weight": 8,
+      "criterion": [
+        "Descriptive_Stats reports mean, standard deviation, and median by country and overall for the Likert-scale variables.",
+        "Correlation_Matrix reports Pearson correlations among the requested Likert-scale variables using valid cleaned observations.",
+        "Regression_Models includes the carbon_tax_support model with exactly the instructed predictors.",
+        "Regression_Models includes the personal_action_willingness model with exactly the instructed predictors.",
+        "Each model reports every coefficient, standard error, p-value, N, and R-squared, and uses the preserved country-level macro indicators."
+      ]
+    },
+    {
+      "rubric": "Does Divergence_Flags completely and accurately identify benchmark differences greater than 15 percentage points?",
+      "weight": 6,
+      "criterion": [
+        "The sheet uses the required columns Country, Variable, Benchmark_Source, Our_Survey_Pct, Benchmark_Pct, Difference, and Explanation.",
+        "Every available country-variable comparison whose absolute difference exceeds 15 percentage points appears once for each benchmark source that crosses the threshold.",
+        "Difference is calculated as Our_Survey_Pct minus Benchmark_Pct and retains its sign.",
+        "Each explanation names at least one specific, plausible factor grounded in the compared sources, such as sample size or sampling method, response scale, question wording, fieldwork timing, response style, or country context.",
+        "Rows without an available benchmark are not treated as divergences."
+      ]
+    },
+    {
+      "rubric": "Does reconciliation_memo.docx provide the requested source-specific interpretation and practical qualifications without imposing unsupported conclusions?",
+      "weight": 6,
+      "criterion": [
+        "The memo contains the sections Variable Mapping Imperfections, Alignment for Countries in All Three Datasets, and Recommendations for Qualifying Cross-Study Comparisons.",
+        "The mapping section discusses the actual local, Meta/Yale, and ESS response definitions and identifies which comparisons are direct, partial, or unavailable.",
+        "The alignment section analyzes the countries that genuinely occur in all three sources and distinguishes substantive agreement or divergence from measurement mismatch.",
+        "Recommendations name specific variables, countries, and sources and explain how the manuscript should qualify the affected comparisons.",
+        "Recommendations address the limitations evidenced by the data, such as sampling uncertainty, wording or scale differences, temporal gaps, and source coverage, while accepting any equivalent source-grounded guidance rather than requiring prescribed wording, a fixed ranking, or a particular confidence-interval example."
+      ]
+    }
+  ]
+}

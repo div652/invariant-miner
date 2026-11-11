@@ -1,0 +1,212 @@
+{
+  "group": "group-02",
+  "reviewedTasks": [
+    "bookkeeping_accounting_and_auditing_clerks/task2",
+    "computer_and_information_research_scientists/task2",
+    "data_entry_keyers/task2",
+    "financial_managers_branch_or_department/task2",
+    "sales_representatives_wholesale_and_manufacturing_technical_and_scientific_products/task2",
+    "statisticians/task1",
+    "technical_writers/task2"
+  ],
+  "taskReviews": [
+    {
+      "task": "bookkeeping_accounting_and_auditing_clerks/task2",
+      "verdict": "pass",
+      "summary": "The aligned rubric covers both required files, the exact workbook structure, all five sheet-specific deliverables, source-grounded reconciliation and rollforward logic, journal-entry constraints, Schedule C mapping, memo content, uncertainty handling, and the task-defined variance convention without retaining the original rubric's hidden transaction answers.",
+      "alternativeSolutionProbe": "A plausible alternative can use a cash-basis or accountant-deferred treatment for unpaid December invoices, choose source-supported chart-of-accounts classifications, and leave disputed or ambiguous applications unresolved with explanation. The criteria grade the adopted treatment, traceability, and documented uncertainty rather than forcing the original rubric's accrual answer.",
+      "issues": []
+    },
+    {
+      "task": "computer_and_information_research_scientists/task2",
+      "verdict": "pass_with_changes",
+      "summary": "The aligned rubric removes the original hidden numerical answers and broadly covers the four deliverables, but it adds an unsupported system-memory comparison, leaves a subjective capacity threshold undefined, under-specifies two required schedule columns and the Funding Sources sheet, and uses an inapplicable installed-GPU denominator for cloud cost per GPU-hour.",
+      "alternativeSolutionProbe": "A valid analysis can interpret computing_needs.memory_gb_required as GPU memory, as the cloud-tier instruction does, and can report cloud cost per consumed GPU-hour rather than an installed-GPU denominator because cloud-only has no installed cluster. It can also produce a defensible schedule with populated critical-path and risk fields and a funding sheet that transparently marks unknown sources. The current criteria could fail the first two choices while allowing empty or meaningless versions of the latter fields.",
+      "issues": [
+        {
+          "severity": "high",
+          "category": "unsupported source requirement",
+          "location": "rubrics[1].criterion[1]",
+          "finding": "The rubric requires every workload to be compared with each node type's system-memory capacity, but the survey database provides only memory_gb_required, and the task explicitly uses that field as the GPU-memory requirement for cloud tiering. There is no independent system-RAM requirement to compare.",
+          "evidence": "researcher_computing_survey.db computing_needs has gpu_hours_monthly, memory_gb_required, storage_tb_required, priority_level, current_wait_time_hours, and satisfaction_score, with no system-memory field; TASK_INSTRUCTIONS.txt says >48 GB memory maps to H100-equivalent GPU pricing.",
+          "recommendedChange": "Remove the system-memory criterion, or condition it on a clearly identified source field. Grade memory_gb_required against aggregate GPU memory while separately auditing only capacities supported by explicit survey fields."
+        },
+        {
+          "severity": "medium",
+          "category": "ambiguous threshold",
+          "location": "rubrics[1].criterion[4]",
+          "finding": "The phrase 'nearly exhausts' has no numerical threshold or accepted method, so judges can impose an arbitrary hidden cutoff and disagree about which workloads must be flagged.",
+          "evidence": "The instructions require listing workloads that exceed capacity, but neither they nor the inputs define near-capacity. The rubric expands this to 'exceeds or nearly exhausts' without defining a reserve percentage or headroom rule.",
+          "recommendedChange": "Require all exceedances and require the submission to state and consistently apply its own documented headroom threshold; accept equivalent justified thresholds."
+        },
+        {
+          "severity": "medium",
+          "category": "incomplete deliverable coverage",
+          "location": "rubrics[5].criterion[0]",
+          "finding": "The Funding Sources sheet is graded only for existence. An empty sheet or unsupported invented funding plan can satisfy the rubric even though funding sources are an explicit workbook deliverable.",
+          "evidence": "TASK_INSTRUCTIONS.txt requires adjusted_budget.xlsx to include a Funding Sources sheet, while rubric 5 has no criterion for its entries, totals, assumptions, or treatment of unavailable source data.",
+          "recommendedChange": "Add a criterion that the sheet identifies proposed or confirmed sources, reconciles amounts to strategy funding needs, distinguishes assumptions from source-backed amounts, and documents unavailable information without fabrication."
+        },
+        {
+          "severity": "medium",
+          "category": "method ambiguity",
+          "location": "rubrics[5].criterion[13]",
+          "finding": "Requiring cost per GPU-hour to use the installed GPU count appropriate to each strategy is not applicable to cloud-only and is ambiguous for hybrid, which combines installed capacity with metered cloud hours.",
+          "evidence": "The task asks for cost per GPU-hour for all strategies but cloud-only has no installed GPUs; the instructed cloud calculation is based on workload GPU-hours purchased, while hybrid combines on-premises capacity and burst-cloud usage.",
+          "recommendedChange": "Define accepted denominators by strategy: served or purchased workload GPU-hours for cloud-only; a clearly documented combination of utilized on-prem GPU-hours and cloud GPU-hours for hybrid; and installed capacity times stated utilization for on-premises. Accept equivalent consistent denominators."
+        },
+        {
+          "severity": "medium",
+          "category": "incomplete deliverable coverage",
+          "location": "rubrics[6].criterion[1]",
+          "finding": "The rubric checks only that critical_path and risk_level columns exist, not that rows contain valid, consistent values, so blank or arbitrary columns can pass.",
+          "evidence": "TASK_INSTRUCTIONS.txt requires revised_schedule.csv to add critical_path, risk_level, and audit_note. Other criteria assess audit_note and timing, but none assess completeness or validity of critical_path or risk_level values.",
+          "recommendedChange": "Require populated, defined values for applicable activities, a critical path consistent with dates and dependencies, and risk levels supported by identified timing or delivery risks; allow documented N/A only where appropriate."
+        }
+      ]
+    },
+    {
+      "task": "data_entry_keyers/task2",
+      "verdict": "pass_with_changes",
+      "summary": "The aligned rubric removes hidden Form_ID answers and gives strong end-to-end coverage of full-field comparison, evidence-based classification, selective correction, cross-deliverable reconciliation, and equivalent review-category wording. It needs two input-alignment fixes: the error-log template metadata requirements are not actually graded, and the date rule is phrased too broadly for a memo provision that is effective immediately.",
+      "alternativeSolutionProbe": "A valid submission can leave all source-inconsistent and policy-review fields unchanged, use an equivalent clearly explained review-category label, and aggregate provider and facility results from the internal directory; the rubric accepts these choices. However, a submission can also leave Error_Number, Date_Identified, or Corrected_By blank and still satisfy the listed criteria, while an otherwise correct treatment of an immediately effective insurer-name rule could be judged through the wrong service-date lens.",
+      "issues": [
+        {
+          "severity": "medium",
+          "category": "incomplete input-template coverage",
+          "location": "rubrics[2].criterion[0]",
+          "finding": "Preserving the eight Error Log columns does not require the template's mandatory metadata to be completed: sequential Error_Number, Date_Identified in MM/DD/YYYY, and a nonblank Corrected_By value.",
+          "evidence": "error_log_template.xlsx Instructions says 'Fill in all columns,' requires Error_Number sequential from 1, Date_Identified as today in MM/DD/YYYY, and Corrected_By as a name or employee ID. The aligned rubric checks columns and finding rows but never checks those values.",
+          "recommendedChange": "Add criteria requiring unique sequential Error_Number values starting at 1, populated Date_Identified values in the template format, and a populated reviewer name or employee ID for every clear-error row."
+        },
+        {
+          "severity": "medium",
+          "category": "source-rule inconsistency",
+          "location": "rubrics[0].criterion[3]",
+          "finding": "The criterion can be read to make every policy-memo rule depend on the record's Service_Date and 02/01/2025, but the memo's insurance-provider standardization rule is explicitly effective immediately rather than service-date dependent.",
+          "evidence": "coding_policy_update_memo.txt section 2 says 'Effective immediately' for insurer names, whereas sections 1 and 3 tie ICD and fee-schedule changes to service dates on or after 02/01/2025.",
+          "recommendedChange": "Limit the service-date criterion to the ICD and fee-schedule provisions that expressly use 02/01/2025, and add a separate criterion applying the insurer-name standardization according to its immediate effective date."
+        }
+      ]
+    },
+    {
+      "task": "financial_managers_branch_or_department/task2",
+      "verdict": "pass_with_changes",
+      "summary": "The aligned rubric successfully removes predetermined application outcomes and hidden portfolio totals, accepts provisional CDFI scores when source inputs are missing, and covers both deliverables, the cap, stress method disclosure, uncertainty, and cross-source reconciliation. It still weakens the Board's treatment of incremental exposure in an already-breached sector and adds an unstated mandatory benchmark-qualification requirement; it also leaves the scope of largest problem credits subjective.",
+      "alternativeSolutionProbe": "A plausible valid allocation can decline the strongest-looking application because its sector is already above 20%, approve a different mix within $3.0 million, use documented amortization assumptions for the +200 bp shock, and label CDFI categories provisional where liquidity or debt-to-asset data are absent. The rubric generally accepts these alternatives. Conversely, its current wording can allow an approval that further increases a grandfathered breach merely because the increase is discussed.",
+      "issues": [
+        {
+          "severity": "high",
+          "category": "constraint under-enforcement",
+          "location": "rubrics[6].criterion[4]",
+          "finding": "The rubric requires an increase to an already-grandfathered sector breach only to be explicitly addressed, not prevented or offset. That can award compliance to new exposure that is not grandfathered and leaves the sector above 20%.",
+          "evidence": "TASK_INSTRUCTIONS.txt says only existing exposures above 20% are grandfathered until annual review and aggregate approvals must respect the concentration constraint. A new approval is not an existing exposure. rubrics[6].criterion[3] covers only creation of a new breach, while criterion[4] permits a further increase if discussed.",
+          "recommendedChange": "Require every funded increment to keep the post-closing sector at or below 20%, unless a binding participation, paydown, or sell-down closes contemporaneously and produces a compliant net exposure. Discussion alone must not satisfy the criterion."
+        },
+        {
+          "severity": "medium",
+          "category": "rubric-only requirement",
+          "location": "rubrics[1].criterion[9]",
+          "finding": "An explicit benchmark limitation or comparability qualification is made mandatory even though the task asks for the FDIC benchmark, variance, and commentary but does not require a separate limitations statement.",
+          "evidence": "The asset-quality deliverable specifies the branch NPA ratio, FDIC industry noncurrent rate, variance in basis points, and commentary. No instruction makes an explicit comparability disclaimer a required deliverable.",
+          "recommendedChange": "Fold comparability into the quality of variance commentary or make it optional credit; do not fail an otherwise accurate benchmark analysis solely for lacking a separately labeled limitation."
+        },
+        {
+          "severity": "medium",
+          "category": "ambiguous scope",
+          "location": "rubrics[3].criterion[14]",
+          "finding": "The phrase 'largest problem credits' is not operationally defined, so judges may silently expect one loan, the top few by balance, all Substandard/Doubtful loans, or another cutoff.",
+          "evidence": "Both the task and aligned rubric use the plural phrase without a count, balance threshold, rating cutoff, or accepted selection method. The original rubric singled out one hidden loan, which the aligned version correctly removed but did not replace with a judgeable selection rule.",
+          "recommendedChange": "Require collateral and workout analysis for all 4-Substandard and 5-Doubtful loans, or let the submission state and consistently apply a documented materiality threshold that must include the largest adversely rated exposure."
+        }
+      ]
+    },
+    {
+      "task": "sales_representatives_wholesale_and_manufacturing_technical_and_scientific_products/task2",
+      "verdict": "pass_with_changes",
+      "summary": "The aligned rubric covers the exact workbook, all five tabs, the 38-point BOM, both H2S conflicts, controller arithmetic, five-year replacement logic, technical-source wording, data gaps, discounts, and cross-deliverable consistency without locking in the hidden numerical answers. Remaining problems concern an ungraded memo filename/format, unverifiable company details, and unresolved treatment of competitor equipment pricing and non-applicable product cells.",
+      "alternativeSolutionProbe": "A plausible valid proposal can recommend either premium Area 3 H2S model, choose either controller after pricing both, use source-cited competitor specifications, and disclose competitor pricing gaps or a documented market-price method. The rubric accepts most of this professional judgment, but its proxy wording can unfairly reject a reasonable competitor-equipment pricing method, while a wrongly named memo can pass.",
+      "issues": [
+        {
+          "severity": "medium",
+          "category": "incomplete deliverable coverage",
+          "location": "rubrics[1].criterion[0]",
+          "finding": "The memo content is graded, but no criterion checks that it is delivered as Internal_Memo_Clearwater_Product_Selection.docx with the exact required filename and Word format.",
+          "evidence": "TASK_INSTRUCTIONS.txt names the memo deliverable and exact filename. rubrics[0].criterion[0] checks only the workbook filename; rubrics 1, 2, and 6 assume memo sections without validating the memo artifact.",
+          "recommendedChange": "Add an artifact criterion requiring exactly one readable DOCX named Internal_Memo_Clearwater_Product_Selection.docx containing sections (a), (b), and (c)."
+        },
+        {
+          "severity": "medium",
+          "category": "unsupported pricing method",
+          "location": "rubrics[3].criterion[7]",
+          "finding": "Any proxy pricing is required to use the SentinelGas-price assumption, but the task limits that proxy rule to unpublished competitor replacement-sensor prices. It provides no required method for unpublished competitor Year 1 detector prices.",
+          "evidence": "The TCO must include competitor Year 1 equipment cost, while the local MSA datasheet and named Honeywell/Emerson manufacturer information are specification sources rather than price schedules. The convention says only competitor replacement-sensor price or sensor life may use the SentinelGas proxy.",
+          "recommendedChange": "Limit the SentinelGas proxy requirement to replacement sensors. For competitor detector equipment, accept a cited public/distributor price, a documented quote, or a clearly labeled data gap/range; require the TCO limitation to be stated rather than imposing an unstated proxy."
+        },
+        {
+          "severity": "medium",
+          "category": "unverifiable source requirement",
+          "location": "rubrics[0].criterion[2]",
+          "finding": "SentinelGas information is required on the cover, but the supplied sources identify only the company name and do not provide a company address, phone, email, or legal entity details, so completeness is not objectively judgeable.",
+          "evidence": "The RFQ provides full customer data, and the internal price list and briefing name SentinelGas Technologies but contain no verifiable corporate contact block.",
+          "recommendedChange": "Define the minimum source-supported vendor information as the company name, or allow additional details only if cited or provided by the submitter and permit unavailable fields to be marked not provided."
+        },
+        {
+          "severity": "low",
+          "category": "status vocabulary ambiguity",
+          "location": "rubrics[4].criterion[1]",
+          "finding": "Rosemount 625IR applies only to IR combustible points, but the allowed status vocabulary has no Not Applicable value. It is unclear how toxic-gas rows in the Rosemount column should be scored without mislabeling non-applicability as Non-Compliant or Not Specified.",
+          "evidence": "TASK_INSTRUCTIONS.txt says to use Rosemount 625IR where applicable and mandates only Compliant, Partially Compliant, Non-Compliant, and Not Specified; Not Specified is specifically reserved for missing documentation, not an inapplicable product category.",
+          "recommendedChange": "Allow Not Applicable for product/specification combinations outside the product's intended gas/application, or explicitly permit blank cells labeled N/A while retaining the four-status vocabulary for applicable comparisons."
+        }
+      ]
+    },
+    {
+      "task": "statisticians/task1",
+      "verdict": "pass",
+      "summary": "The aligned rubric comprehensively covers the executed notebook, source extraction and harmonization, data-quality accounting, all five workbook sheets, the three instructed models, standardized effects, VIF, ICC, likelihood-ratio tests, diagnostics, sensitivity rules, causal communication, and the memo. It removes the original hidden 2021/Florida/value-range answers and explicitly accepts justified year choice, bootstrap correlation intervals, region or division structure, and a documented non-model role for vaccination.",
+      "alternativeSolutionProbe": "A plausible valid analysis may choose a survey year other than the original rubric's 2021 if temporal alignment is justified, use Fisher-z or bootstrap correlation intervals, model regional structure with region or division effects, and conclude that any predictor is strongest if the standardized estimates support it. The criteria accept these alternatives and require uncertainty and sensitivity evidence rather than a predetermined substantive conclusion.",
+      "issues": []
+    },
+    {
+      "task": "technical_writers/task2",
+      "verdict": "pass_with_changes",
+      "summary": "The aligned rubric correctly recognizes only the v3.1.0 breaking changes, removes the original hidden ordering and priority answers, accepts contract-level SDK compatibility when package versions are unavailable, and thoroughly covers source reconciliation, ticket evidence, endpoint reference content, impact rows, terminology, quantitative justification, and missing metrics. It omits exact artifact filenames, adds request-body examples for every applicable endpoint beyond the task, and leaves elevated-error troubleshooting and the required migration-guide top ordering subjective or unchecked.",
+      "alternativeSolutionProbe": "A plausible valid guide can cover the two v3.1.0 breaking changes, optionally label the older v3.0.1 status change as cumulative, use contract generations instead of invented SDK package versions, and derive any consistent P0-P3 method from the metrics. The rubric accepts those alternatives. An otherwise complete reference without examples for every request body could fail, while correctly named artifacts and a top summary are not guaranteed by the criteria.",
+      "issues": [
+        {
+          "severity": "medium",
+          "category": "incomplete artifact coverage",
+          "location": "rubrics[0].criterion[0]; rubrics[3].criterion[0]; rubrics[5].criterion[0]",
+          "finding": "No criterion verifies the three exact required filenames, and the Markdown artifact formats are only implied. Content placed in wrongly named files can satisfy the rubric.",
+          "evidence": "TASK_INSTRUCTIONS.txt requires migration_guide_v3.1.0.md, revised_api_reference.md, and doc_impact_analysis.csv exactly. The rubric checks guide/reference/CSV content and the CSV header but never checks artifact names.",
+          "recommendedChange": "Add a deliverable-presence criterion requiring exactly the three named readable files in Markdown, Markdown, and CSV formats respectively."
+        },
+        {
+          "severity": "medium",
+          "category": "rubric-only requirement",
+          "location": "rubrics[3].criterion[2]",
+          "finding": "The rubric requires examples for every applicable request body, but the task requires request-body documentation generally and specifically requests examples only where review feedback calls for them, notably POST /store/order.",
+          "evidence": "The revised-reference specification says to document parameters, request body, responses, and headers. doc_review_feedback.csv R003 explicitly requests curl and Python examples for POST /store/order; no source requires request-body examples for every body-bearing endpoint.",
+          "recommendedChange": "Require request-body media type, fields, constraints, and descriptions for every applicable endpoint; require examples where the OpenAPI source provides one or a review or ticket specifically identifies the need, and treat other examples as optional quality credit."
+        },
+        {
+          "severity": "medium",
+          "category": "ambiguous threshold",
+          "location": "rubrics[4].criterion[3]",
+          "finding": "The phrases 'elevated error rate' and 'proportionate troubleshooting' are undefined, allowing judges to impose a hidden cutoff or require different endpoint coverage from equally defensible submissions.",
+          "evidence": "api_usage_metrics.json supplies error rates, consumer counts, and trends but no elevated flag or threshold. The task says endpoints with elevated error rates warrant enhanced troubleshooting without defining the selection rule.",
+          "recommendedChange": "Require the submission to state and consistently apply a data-based troubleshooting threshold or ranking method, and accept equivalent methods using error rate, trend, and consumer impact."
+        },
+        {
+          "severity": "low",
+          "category": "incomplete structure check",
+          "location": "rubrics[0].criterion[1]",
+          "finding": "The summary table is required to contain every breaking change, but the rubric does not verify that it appears at the top immediately after the introduction as the instructed document order requires.",
+          "evidence": "TASK_INSTRUCTIONS.txt specifies Introduction, then Summary table at the top, then one section per breaking change. The aligned criteria check all three elements but not their order.",
+          "recommendedChange": "State that the summary table must follow the introduction and precede all detailed breaking-change sections."
+        }
+      ]
+    }
+  ]
+}

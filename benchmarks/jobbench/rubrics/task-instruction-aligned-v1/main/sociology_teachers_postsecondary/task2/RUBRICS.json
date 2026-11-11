@@ -1,0 +1,142 @@
+{
+  "rubrics": [
+    {
+      "rubric": "Are the three required deliverables present and named exactly as instructed?",
+      "weight": 2,
+      "criterion": [
+        "The updated gradebook is delivered as SOC101_Fall2024_Gradebook.xlsx.",
+        "The dispute decisions are delivered as grade_dispute_decisions.csv.",
+        "The assessment report is delivered as SOC101_Fall2024_Assessment_Report.docx."
+      ]
+    },
+    {
+      "rubric": "Does the updated gradebook correctly normalize and calculate Final_Grade and Letter_Grade for all 35 students?",
+      "weight": 8,
+      "criterion": [
+        "The Assignments sheet contains a Final_Grade column.",
+        "The Assignments sheet contains a Letter_Grade column.",
+        "All 35 students have a Final_Grade.",
+        "Component maximum scores are derived from the gradebook data.",
+        "Each component is normalized to a percentage before weighting.",
+        "The seven instructed weights are applied.",
+        "Blank component scores count as zero.",
+        "Final_Grade is reported on a 0–100 scale.",
+        "Letter_Grade uses only A, B, C, D, or F.",
+        "Letter boundaries are applied to the unrounded percentage.",
+        "The calculated values agree with the source assignment scores."
+      ]
+    },
+    {
+      "rubric": "Do the grade-dispute decisions adjudicate both named appeals from the available records without imposing an unsupported outcome?",
+      "weight": 8,
+      "criterion": [
+        "The CSV uses exactly the eight required columns.",
+        "The CSV contains one row for SOC24008.",
+        "The CSV contains one row for SOC24023.",
+        "Each Current_Letter_Grade agrees with the unadjusted gradebook calculation.",
+        "The SOC24008 decision considers both missing high-weight components.",
+        "The SOC24008 justification uses comparable academic performance and documented office-hours engagement.",
+        "The SOC24008 decision explains why an Incomplete, estimated scores, or no adjustment is supported by the available evidence.",
+        "The SOC24023 decision does not apply an attendance penalty absent from the published weights.",
+        "The SOC24023 justification checks the claimed proximity to a grade boundary against the calculated percentage.",
+        "Adjusted_Grade clearly states the resulting grade or temporary status."
+      ]
+    },
+    {
+      "rubric": "Does the assessment report present source-correct grade distributions by section and overall?",
+      "weight": 8,
+      "criterion": [
+        "Section A reports its student count.",
+        "Section B reports its student count.",
+        "Overall reports the total student count.",
+        "Counts are reported for A, B, C, D, and F in each group.",
+        "Percentages are reported for A, B, C, D, and F in each group.",
+        "Counts reconcile to each group's N.",
+        "Percentages are calculated from the displayed counts.",
+        "The distributions agree with the updated gradebook."
+      ]
+    },
+    {
+      "rubric": "Does the assignment-level section report the required normalized statistics and accurately identify the largest inter-section gaps?",
+      "weight": 10,
+      "criterion": [
+        "Exam1 mean, median, and standard deviation are reported by section.",
+        "Exam2 mean, median, and standard deviation are reported by section.",
+        "Midterm_Essay mean, median, and standard deviation are reported by section.",
+        "Final_Essay mean, median, and standard deviation are reported by section.",
+        "Quiz_Avg mean, median, and standard deviation are reported by section.",
+        "Discussion_Posts mean, median, and standard deviation are reported by section.",
+        "Research_Proposal mean, median, and standard deviation are reported by section.",
+        "All descriptive statistics use normalized percentages.",
+        "Population or sample standard deviation is accepted when the same convention is applied consistently to every component and section.",
+        "The largest mean gap is identified from the submitted calculations.",
+        "Relevant differences in central tendency are discussed.",
+        "Relevant differences in spread are discussed without requiring named example students."
+      ]
+    },
+    {
+      "rubric": "Does the course-evaluation benchmarking section correctly compare all ten SOC 101 items with the OpenIntro evals baseline?",
+      "weight": 8,
+      "criterion": [
+        "The institutional baseline is calculated from the evals.csv score column.",
+        "The baseline calculation uses the available non-missing records.",
+        "Each of the ten Course_Eval_Summary items is compared with the baseline.",
+        "A numeric difference is reported for each item.",
+        "Items above the baseline are identified.",
+        "Items below the baseline are identified.",
+        "The analysis acknowledges that the external overall-score dataset is not a perfectly matched item-level comparator.",
+        "The reported values agree with the two named input files."
+      ]
+    },
+    {
+      "rubric": "Does the At-Risk Student Summary identify every student meeting the instructed rule and provide complete support information?",
+      "weight": 8,
+      "criterion": [
+        "Every student with an F-range Final_Grade is included.",
+        "Every student with four or more absences is included.",
+        "Every student with two or more missing assignments is included.",
+        "Each listed student has Final_Grade.",
+        "Each listed student has an absence count.",
+        "Late marks are reported.",
+        "Missing assignments are identified.",
+        "Office-hours visit count is reported.",
+        "Office-hours dates are reported.",
+        "Office-hours topics are reported.",
+        "Each student has a source-responsive recommended intervention."
+      ]
+    },
+    {
+      "rubric": "Does the Essay Assessment Quality Review use every provided rubric category and propose a specific evidence-based Spring 2025 modification?",
+      "weight": 8,
+      "criterion": [
+        "Thesis is referenced by name.",
+        "Argumentation is referenced by name.",
+        "Originality is referenced by name.",
+        "Organization and Writing is referenced by name.",
+        "Use of Evidence is referenced by name.",
+        "Application of Readings or Concepts is referenced by name.",
+        "Midterm_Essay score distributions are discussed.",
+        "Final_Essay score distributions are discussed.",
+        "The report does not infer category-level performance from aggregate essay scores without qualification.",
+        "The Spring 2025 modification is specific.",
+        "The Spring 2025 modification is actionable.",
+        "The modification responds to the observed assessment evidence."
+      ]
+    },
+    {
+      "rubric": "Does the assessment report meet the required audience, section order, reflection, and presentation requirements?",
+      "weight": 6,
+      "criterion": [
+        "The report is addressed to Dr. Patricia Hernandez as Department Chair.",
+        "The report is signed by Dr. Michael Torres as Assistant Professor of Sociology.",
+        "The six required headed sections appear in the instructed order.",
+        "The Reflection contains two or three substantive paragraphs.",
+        "The Reflection identifies what went well using specific evidence.",
+        "The Reflection identifies what needs improvement using specific evidence.",
+        "The Reflection proposes one concrete data-informed pedagogical change.",
+        "The report has a clear title or header identifying the SOC 101 Fall 2024 assessment.",
+        "The required grade-distribution table and any other tables used have readable row and column labels and values."
+      ]
+    }
+  ]
+}

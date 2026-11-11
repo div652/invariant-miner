@@ -2,7 +2,8 @@
 
 Rubric sets: runs are graded on JobBench's **original** rubrics (`grade.sh RUN`, results in `RUN/grading/`) and, where a
 table says so, on agentic-evolution's **task-instruction-aligned v1** rubrics (`grade.sh --rubrics v1 RUN`, results in
-`RUN/grading-v1/`). What differs between them: CHECKLIST.md, row 9 "Rubric sets".
+`RUN/grading-v1/`; the v1 files are in this repository, `rubrics/`). What differs between them: CHECKLIST.md, row 9
+"Rubric sets".
 
 ## All 65 tasks, Qwen3.8-27B (local vLLM), subagents on, 2 h limit, 2026-11-09/11
 

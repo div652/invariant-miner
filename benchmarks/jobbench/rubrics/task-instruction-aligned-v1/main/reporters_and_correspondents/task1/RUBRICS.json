@@ -1,0 +1,67 @@
+{
+  "rubrics": [
+    {
+      "rubric": "Does City Cross-Reference correctly connect all five water systems to the state surveillance data and high-risk list?",
+      "weight": 14,
+      "criterion": [
+        "The sheet contains one row for each of the five water-system service cities.",
+        "Each row reports total confirmed tests and counts at the 3.5, 5, 10, 15, and 20 µg/dL thresholds from the state report.",
+        "Each row states whether the city appears on the report's 2024 high-risk list and gives its rank when listed.",
+        "The city mapping and reported values are traceable to the supplied CSV and state surveillance report without adding an unrequested requirement about other towns."
+      ]
+    },
+    {
+      "rubric": "Does Water Lead Trends correctly present the monitoring series, threshold flags, and 2020-to-2024 changes?",
+      "weight": 14,
+      "criterion": [
+        "The sheet contains one row for every water system × Sample_Year × Sample_Period record, preserving both source fields, the 90th-percentile value, and the source CSV's Action_Level_Exceedance value.",
+        "Independent flags correctly distinguish readings above 15 ppb from readings above 10 ppb but not above 15 ppb.",
+        "A 2020-to-2024 percentage change is calculated for every system using a clearly stated endpoint or averaging method and correct arithmetic.",
+        "Any disagreement between the source Action_Level_Exceedance field and the independently calculated threshold flags is disclosed rather than silently reconciled.",
+        "The sheet states whether the LCRI 10 ppb level is enforceable for the monitoring periods being analyzed."
+      ]
+    },
+    {
+      "rubric": "Does CT vs National provide the requested annual comparison and responsible data-quality caveats?",
+      "weight": 10,
+      "criterion": [
+        "The file is named data_analysis.xlsx and contains exactly the three required worksheets named Water Lead Trends, CT vs National, and City Cross-Reference.",
+        "For every year 2017–2022, each Connecticut and national children-tested and at-or-above-5-µg/dL field contains the sourced value or a specific source-grounded reason that no value is reported.",
+        "For every year 2017–2022, each Connecticut and national number and percentage at or above 3.5 µg/dL contains the sourced value or a specific source-grounded reason that no value is reported.",
+        "The figures are extracted from the supplied CDC dataset using the correct Connecticut and national records.",
+        "The sheet explains material missingness, denominator changes, anomalous coverage, or threshold changes that limit year-to-year or Connecticut-to-national comparison."
+      ]
+    },
+    {
+      "rubric": "Does source_log.csv provide a usable audit trail for every source used?",
+      "weight": 8,
+      "criterion": [
+        "The filename is source_log.csv and the header is exactly Data_Point, Source_File, Page_or_Location, Verified, Notes.",
+        "The file contains at least 15 distinct data-point entries.",
+        "Entries cover the water CSV, CT surveillance report, CDC dataset, EPA LCRI factsheet, NRDC Newark factsheet, and Dr. Martinez interview notes.",
+        "Every entry uses Yes, No, or Partial in Verified and gives a specific row, sheet, page, or equivalent location."
+      ]
+    },
+    {
+      "rubric": "Does the pitch memo accurately present Connecticut's threshold change and verify interview claims?",
+      "weight": 6,
+      "criterion": [
+        "The memo states the act number, effective date, old threshold, and new threshold for Connecticut's lowered blood lead reference value.",
+        "Any quotation or factual claim attributed to Dr. Martinez is paired with a verifiable data point or is clearly labeled as personal observation.",
+        "The claimed increase in referrals is checked against available state surveillance data and is labeled Verified, Partial, or unverified with an explanation.",
+        "Threshold units are stated correctly and consistently."
+      ]
+    },
+    {
+      "rubric": "Does pitch_memo.docx meet the editor's requested evidentiary and editorial scope?",
+      "weight": 8,
+      "criterion": [
+        "The file is named pitch_memo.docx, is no more than two pages, and states a clear thesis and evidentiary backbone.",
+        "The memo reports 2024 lead service line count, population served, and their ratio for all five systems, identifies the largest burdens, and connects them to the EPA replacement deadline.",
+        "The memo draws a specific numerical Waterbury-to-Newark parallel while explaining relevant differences or limits.",
+        "The memo addresses the water-versus-paint evidence without claiming that system-level water data prove an individual child's exposure source.",
+        "The memo accurately distinguishes the LCRI rule's announced requirements from their enforcement timing for existing monitoring cycles."
+      ]
+    }
+  ]
+}

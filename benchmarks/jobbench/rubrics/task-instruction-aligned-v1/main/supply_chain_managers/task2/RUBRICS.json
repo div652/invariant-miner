@@ -1,0 +1,84 @@
+{
+  "rubrics": [
+    {
+      "rubric": "Does the Excel deliverable have the required structure and a correct, transparent capacity-utilization model?",
+      "weight": 10,
+      "criterion": [
+        "The workbook contains exactly Capacity_Utilization_Model, Demand_Allocation_Analysis, Reorder_Optimization_Scenario, and Investment_Recommendation.",
+        "Capacity_Pallets for each DC comes from Warehouse_Config.",
+        "Theoretical monthly throughput is shown as Capacity_Pallets times 22 working days times 1.5 turns, including intermediate steps.",
+        "Actual monthly volume for each DC is derived from orders_and_shipments.csv using a stated aggregation and is labeled in its source unit of product units.",
+        "The specified actual-volume divided by theoretical-throughput calculation includes an explicit unit analysis: it is presented as physical utilization only after a documented conversion to pallet-days, or otherwise as a clearly labeled throughput proxy with the missing conversion data stated.",
+        "A product-unit throughput proxy is not compared with Current_Utilization_Pct or used for capital conclusions as if both measures had compatible units.",
+        "Current_Utilization_Pct from the master data is shown alongside, not substituted for, modeled utilization.",
+        "Recoverable capacity from waste and safety-stock improvements is quantified with transparent assumptions and compatible units."
+      ]
+    },
+    {
+      "rubric": "Does Demand_Allocation_Analysis evaluate warehouse-region demand and service performance across the supplied period?",
+      "weight": 6,
+      "criterion": [
+        "Shipment volume is reported for every observed warehouse-region pair in each of the three years.",
+        "Volume uses a stated measure derived from orders_and_shipments.csv.",
+        "Every Service_Region_Mapping region is listed with assigned Warehouse_ID and Customer_Market.",
+        "Every listed region includes target OTD, current OTD, and the calculated gap.",
+        "Growth-corridor and OTD conclusions follow from the reported yearly volumes and mapping values without requiring a predetermined conclusion."
+      ]
+    },
+    {
+      "rubric": "Does Reorder_Optimization_Scenario evaluate department-warehouse stocking policy and quantify capacity recovery?",
+      "weight": 6,
+      "criterion": [
+        "Every department-warehouse combination in Reorder_Parameters is evaluated.",
+        "Safety_Stock_Days, Reorder_Point_Days, Lead_Time_Days, and EOQ_Units are used in the scenario logic.",
+        "The analysis identifies over-stocking or miscalibration with a reproducible rule derived from demand, lead time, the supplied reorder parameters, and relevant department targets, with sensitivity analysis for material uncertain assumptions.",
+        "Department_Targets current-versus-target stockout, waste, and inventory-turn values inform the scenario.",
+        "inventory.csv and fulfillment.csv are used where their product fields can be defensibly joined, with join limitations stated.",
+        "Capacity or holding-cost recovery estimates show formulas and assumptions."
+      ]
+    },
+    {
+      "rubric": "Does Investment_Recommendation compare the two instructed capital scenarios with supportable impact and payback analysis?",
+      "weight": 6,
+      "criterion": [
+        "One scenario evaluates the stated $1.2M request for 3,000 pallet positions and 12 additional staff as proposed.",
+        "One scenario evaluates deferring expansion while implementing operational improvements.",
+        "Each scenario includes quantified capacity, operating, and financial impacts.",
+        "The payback comparison uses stated costs, benefits, timing, and assumptions, reconciles its capital baseline to the $1.2M request, and states whether the 12 hires are included in that amount or modeled separately.",
+        "The recommendation follows from the workbook's demand, service, utilization, and recovery evidence."
+      ]
+    },
+    {
+      "rubric": "Does the revised SOP connect each process change to the supplied operational evidence and establish capacity and KPI governance?",
+      "weight": 6,
+      "criterion": [
+        "The SOP identifies the specific gap in the current SOP that each revised section fixes.",
+        "Each revised section cites a relevant current-versus-target metric or quantified finding from the task inputs.",
+        "The SOP includes a capacity recovery projection table linking each improvement to a quantified impact.",
+        "The KPI framework states a metric owner for each governed KPI.",
+        "The KPI framework states escalation thresholds and review cadence.",
+        "KPI reviews are tied to rollout milestones."
+      ]
+    },
+    {
+      "rubric": "Does revised Section 3.2 replace judgment-based reordering with the instructed data-driven process?",
+      "weight": 3,
+      "criterion": [
+        "Section 3.2 replaces manual manager judgment with defined reorder triggers.",
+        "The section cites the source-data ranges for Safety_Stock_Days, Reorder_Point_Days, Lead_Time_Days, and EOQ_Units.",
+        "The workflow explains how inventory position, demand, lead time, safety stock, EOQ, and minimum order quantity produce a reorder.",
+        "Exceptions and ownership are defined."
+      ]
+    },
+    {
+      "rubric": "Does the revised SOP provide the required dependent 30/60/90-day implementation plan?",
+      "weight": 3,
+      "criterion": [
+        "The plan contains Phase 1 at 30 days, Phase 2 at 60 days, and Phase 3 at 90 days.",
+        "Each phase lists its process changes.",
+        "Each phase assigns responsible roles.",
+        "Each later phase states prerequisites or dependencies on earlier phases."
+      ]
+    }
+  ]
+}

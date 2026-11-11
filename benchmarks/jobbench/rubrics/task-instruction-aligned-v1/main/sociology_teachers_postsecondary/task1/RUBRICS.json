@@ -1,0 +1,121 @@
+{
+  "rubrics": [
+    {
+      "rubric": "Does SOCI201_EarlyAlert_Week10.xlsx calculate every student's projected grade correctly as of October 21, 2024?",
+      "weight": 10,
+      "criterion": [
+        "Every student in the students table appears in the projected-grades area.",
+        "All eight grading components are shown with their Grading_Criteria weight.",
+        "All eight grading components are shown with their Grading_Criteria point value.",
+        "Attendance & Participation is treated as an interim Completed component when a score can be calculated from valid attendance and participation records through October 21, 2024, notwithstanding its Ongoing due-period label.",
+        "Each of the other seven components is marked Completed only when its dated due date is on or before October 21, 2024 and a grade is present.",
+        "Every other component is marked Pending.",
+        "Every Pending component is excluded from the projected-grade denominator.",
+        "The projected-grade calculation uses the displayed completed-component scores and weights consistently.",
+        "The treatment of Attendance & Participation is documented from the attendance and participation records.",
+        "Each student row displays any data-quality flag that affects the calculation."
+      ]
+    },
+    {
+      "rubric": "Does the workbook validate the attendance and assignment records and document every material anomaly with its calculation effect?",
+      "weight": 10,
+      "criterion": [
+        "Every attendance record is linked to a rostered student.",
+        "Every attendance record has a usable class date.",
+        "Every attendance record has a recognized attendance status.",
+        "Every attendance record is checked for duplication.",
+        "Every attendance record is checked against the October 21, 2024 report date.",
+        "Every attendance record is checked for consistency with the course data.",
+        "Attendance records after October 21, 2024 are not used in the Week 10 attendance calculation.",
+        "Every material attendance anomaly is logged with table, record, field, value, issue, resolution, and effect on calculations.",
+        "Every assignment submitted_date is compared with its due_date.",
+        "A submitted_date after due_date is counted as late.",
+        "A missing submitted_date is counted as unsubmitted or missing.",
+        "Every material assignment anomaly or resolution is recorded in the data-quality documentation."
+      ]
+    },
+    {
+      "rubric": "Does the at-risk matrix evaluate every student against all eight source thresholds exactly as written?",
+      "weight": 10,
+      "criterion": [
+        "Every rostered student has a measured value and triggered status for Attendance Rate.",
+        "Every rostered student has a measured value and triggered status for Assignment Completion.",
+        "Every rostered student has a measured value and triggered status for Current Grade.",
+        "Every rostered student has a measured value and triggered status for Midterm Exam Score.",
+        "Every rostered student has a measured value and triggered status for Participation Score.",
+        "Every rostered student has a measured value and triggered status for Missing Assignments.",
+        "Every rostered student has a measured value and triggered status for Late Submissions.",
+        "Every rostered student has a measured value and triggered status for No Office Hours Visits after the Midterm Exam date.",
+        "Each triggered status applies the threshold in the At_Risk_Criteria sheet without changing its comparison operator."
+      ]
+    },
+    {
+      "rubric": "Does the workbook provide a visible priority-weighted composite risk score and usable severity tiers?",
+      "weight": 8,
+      "criterion": [
+        "A numeric weight is stated for each High, Medium, and Low priority level.",
+        "Higher-priority indicators receive at least as much weight as lower-priority indicators.",
+        "Each student's component contributions are visible.",
+        "Each student's composite score can be reproduced from the displayed contributions.",
+        "At least three non-overlapping risk-score ranges are defined.",
+        "Every student is assigned to the tier corresponding to the displayed score."
+      ]
+    },
+    {
+      "rubric": "Does the monitoring list apply the instructed buffer ranges without duplicating students already at risk on the same indicator?",
+      "weight": 6,
+      "criterion": [
+        "Percentage-based indicators use a range from the at-risk threshold through five percentage points above it.",
+        "Participation uses the 5.0 through 5.5 range.",
+        "A student already at risk on an indicator is not also listed as monitoring-only for that indicator.",
+        "Each monitoring entry includes the student, indicator, measured value, and applicable range.",
+        "The monitoring population is derived from the same source values used in the at-risk matrix."
+      ]
+    },
+    {
+      "rubric": "Does the sociological analysis use student-por.csv correctly and state the limits of applying it to SOCI 201?",
+      "weight": 8,
+      "criterion": [
+        "The analysis identifies the UCI Machine Learning Repository Portuguese secondary-school dataset as its source.",
+        "Family-background variables are related to G1, G2, and G3 using displayed calculations or summaries.",
+        "First-generation status is operationalized as Medu and Fedu both less than or equal to 1.",
+        "The Medu and Fedu coding is stated.",
+        "The first-generation operationalization is identified as a proxy.",
+        "The analysis explains the educational-level limit on generalization.",
+        "The analysis explains the country-context limit on generalization.",
+        "The analysis explains the meaning limits of studytime, famsize, Pstatus, and the 0–20 grade scale.",
+        "Findings are framed as group patterns rather than predictions for individual SOCI 201 students."
+      ]
+    },
+    {
+      "rubric": "Does Holistic_Intervention_Plan.docx connect individual risk evidence to cited WWC practices and feasible tiered supports?",
+      "weight": 10,
+      "criterion": [
+        "Every at-risk student has an individual summary of triggered indicators.",
+        "Every at-risk student has an individual summary of the composite score.",
+        "Every at-risk student has an individual summary of relevant data-quality caveats.",
+        "Intervention strategies cite specific recommendations from Effective_Advising_Practice_Guide.pdf.",
+        "Academic and non-academic support services are distinguished.",
+        "Support intensity increases with the workbook's risk tier.",
+        "Each tier has concrete actions.",
+        "Each tier has a stated intervention timing.",
+        "Each tier identifies an owner.",
+        "Each tier defines follow-up.",
+        "The plan addresses realistic staffing, scheduling, privacy, or student-engagement constraints.",
+        "The sociological findings inform program design without being used to predict an individual student's outcome."
+      ]
+    },
+    {
+      "rubric": "Do both deliverables contain the required content areas, plan sections, and differentiated outreach materials?",
+      "weight": 6,
+      "criterion": [
+        "The workbook contains clearly labeled projected grades, data-quality documentation, at-risk matrix, risk scores, and monitoring list content areas.",
+        "The workbook uses the exact required filename.",
+        "The intervention plan contains all six required sections.",
+        "The intervention plan uses the exact required filename.",
+        "Outreach templates are differentiated for materially different student risk or support needs.",
+        "No required deliverable or content area is replaced by a summary-only placeholder."
+      ]
+    }
+  ]
+}

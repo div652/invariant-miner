@@ -1,0 +1,77 @@
+{
+  "rubrics": [
+    {
+      "rubric": "Does the reconciled donor workbook import every Q4 gift exactly once and maintain complete, deduplicated donor records?",
+      "weight": 14,
+      "criterion": [
+        "The deliverable is named Heartland_Donor_Database_Q4_Reconciled.xlsx and contains the required Donors and Gifts sheet roles plus a clearly labeled Reconciliation Summary sheet or block.",
+        "The Gifts sheet contains one row for every source Q4 donation with no omissions or duplicate gift rows.",
+        "For every source Q4 donation, the workbook as a whole preserves the donor, date, donor type, email, phone, full address, amount, payment method, campaign, and notes, and the gift row links unambiguously to the corresponding donor record.",
+        "The Donors sheet contains one consolidated row per donor with all required contact and total-donation fields.",
+        "Donor totals reconcile to the imported gift rows."
+      ]
+    },
+    {
+      "rubric": "Does the donor workbook correctly classify donor type, preserve special circumstances, and identify volunteer-donors?",
+      "weight": 10,
+      "criterion": [
+        "Each donor is classified as Individual or Organization from the source evidence.",
+        "Corporate sponsorship, partnership, first-gift, memorial, matching-gift, new-donor, and other source circumstances are preserved in donor Notes where applicable.",
+        "The workbook or Reconciliation Summary states the contact key or keys used to identify volunteer-donors.",
+        "Every registered volunteer who matches a Q4 donor by the stated contact keys is identified.",
+        "Each matched volunteer-donor's Notes contains the literal Staff/Volunteer Donor and the applicable registration ID.",
+        "Ambiguous or conflicting identity data is preserved for management review rather than merged without explanation."
+      ]
+    },
+    {
+      "rubric": "Does the reconciliation summary fully and accurately describe the database changes and unresolved conflicts?",
+      "weight": 8,
+      "criterion": [
+        "A clearly labeled Reconciliation Summary sheet or block is present.",
+        "The summary reports Total New Donors Added.",
+        "The summary reports Existing Donors Updated.",
+        "The summary reports the count of Data Conflicts Requiring Management Review.",
+        "Each management-review conflict is listed with a description.",
+        "Every donor record already present in the template is explicitly identified as matched or not matched to a Q4 donor.",
+        "The reported counts reconcile to the final donor and gift data."
+      ]
+    },
+    {
+      "rubric": "Does the attendance workbook use the required structure, include the complete December session header, and list every registrant?",
+      "weight": 8,
+      "criterion": [
+        "The deliverable is named Volunteer_Orientation_Attendance_Dec16.xlsx and contains a clearly labeled session header and volunteer roster.",
+        "The header gives the session title, date, time, location, and trainer from the source files.",
+        "Every registration row appears exactly once with registration ID, full name, and contact information.",
+        "A Comments/Notes field is present for every volunteer.",
+        "The registration details reconcile to Volunteer_Registration_List.csv."
+      ]
+    },
+    {
+      "rubric": "Does the attendance workbook apply donor-history and professional-background flags completely and only to qualifying volunteers?",
+      "weight": 8,
+      "criterion": [
+        "Each volunteer who matches a Q4 donor has Q4 Donor and the correct donation amount in Comments/Notes.",
+        "No non-donor volunteer is labeled as a Q4 donor.",
+        "Each volunteer whose registration notes show an IT, legal, healthcare, or accounting background has Priority Training Track in Comments/Notes.",
+        "No volunteer without a qualifying professional background receives Priority Training Track.",
+        "A volunteer who qualifies for both flags receives both flags."
+      ]
+    },
+    {
+      "rubric": "Does the acknowledgment PDF include exactly the qualifying donors, use the required tier order, and customize eligible special circumstances?",
+      "weight": 12,
+      "criterion": [
+        "The deliverable is named Q4_Donor_Acknowledgment_Letters_Tiered.pdf.",
+        "Every donor with a qualifying Q4 contribution receives exactly one letter.",
+        "No donor whose qualifying contribution is under $500 receives a letter.",
+        "Major-donor letters for contributions of $1,000 or more appear before Mid-level letters for contributions of $500 through $999.",
+        "Major-donor letters are personalized and include an impact statement.",
+        "Mid-level letters provide the required standard acknowledgment.",
+        "Each qualifying donor's name, amount, and relevant gift circumstance are accurate.",
+        "Memorial, corporate-partnership, and dual volunteer-donor language is customized when that circumstance applies to a donor who qualifies for a letter.",
+        "The PDF does not create an under-threshold letter solely to demonstrate special-circumstance customization."
+      ]
+    }
+  ]
+}

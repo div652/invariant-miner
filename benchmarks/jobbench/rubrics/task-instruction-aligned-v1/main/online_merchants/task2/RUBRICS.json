@@ -1,0 +1,105 @@
+{
+  "rubrics": [
+    {
+      "rubric": "Does Complaint_Triage_Response_Package.docx provide a complete, policy-grounded customer response for every open complaint ticket?",
+      "weight": 10,
+      "criterion": [
+        "Every open Ticket ID in customer_complaint_emails.xlsx has a distinct customer-facing response.",
+        "Each response cites every applicable store_policies.docx section by its exact title.",
+        "Each response states the policy terms that control the proposed resolution.",
+        "Each response addresses the customer's requested remedy or explains the next verification step.",
+        "Each response uses a professional and empathetic tone.",
+        "Each response provides concrete next steps."
+      ]
+    },
+    {
+      "rubric": "Does every internal Triage Note accurately connect the complaint, catalog, sales evidence, and recommended catalog action?",
+      "weight": 8,
+      "criterion": [
+        "Every open ticket has a distinct internal Triage Note.",
+        "Each note checks the complained product against current_product_listings.csv.",
+        "Each note states the catalog-match basis.",
+        "Each note reports product-level margin context from store_sales_data.csv when a reliable match exists.",
+        "Each note explicitly records no reliable match or insufficient margin data when the sales source cannot support a product match.",
+        "Each note recommends correcting the listing, removing the product, or escalating the issue.",
+        "Each recommendation is justified by the complaint, catalog, and available margin evidence."
+      ]
+    },
+    {
+      "rubric": "Does Integrated_Performance_Dashboard.xlsx contain the exact three required sheets with correct profitability and traffic-funnel calculations?",
+      "weight": 8,
+      "criterion": [
+        "The workbook contains exactly Profit Margin Analysis, Traffic-to-Sales Funnel, and Underperformer Crosswalk.",
+        "Profit Margin Analysis has one row per Sub-Category.",
+        "Profit Margin Analysis contains every required column.",
+        "Profit Margin % is calculated as aggregated Profit divided by aggregated Sales for each Sub-Category.",
+        "Average Discount is calculated from store_sales_data.csv.",
+        "Order Count is calculated from store_sales_data.csv.",
+        "Traffic-to-Sales Funnel has one row per Month and VisitorType combination.",
+        "Traffic-to-Sales Funnel contains every required column.",
+        "Revenue Conversion Rate is calculated as the percentage of sessions whose Revenue value is true.",
+        "Sessions reconcile to the complete website_traffic_data.csv.",
+        "All displayed traffic averages reconcile to the complete website_traffic_data.csv."
+      ]
+    },
+    {
+      "rubric": "Does the Underperformer Crosswalk correctly identify the ten lowest-margin products and check each against the current catalog?",
+      "weight": 6,
+      "criterion": [
+        "Sales and Profit are aggregated consistently at Product Name level before profit margin is calculated.",
+        "The sheet contains exactly ten product rows selected by ascending Profit Margin %.",
+        "Each row includes Product Name, Category, Sub-Category, Sales, Profit, Profit Margin %, and Listing Match Status.",
+        "Listing Match Status is based on an explicit comparison with current_product_listings.csv.",
+        "Unmatched or ambiguous names are reported as such rather than forced into an unsupported match."
+      ]
+    },
+    {
+      "rubric": "Does the sentiment audit compute the required department and class statistics and derive complaint themes from the complete reviews dataset?",
+      "weight": 8,
+      "criterion": [
+        "Average Rating is calculated by Department Name over all usable customer_reviews.csv rows.",
+        "Recommendation rate is calculated by Department Name over all usable customer_reviews.csv rows.",
+        "Average Rating is calculated by Class Name over all usable customer_reviews.csv rows.",
+        "Recommendation rate is calculated by Class Name over all usable customer_reviews.csv rows.",
+        "Review count is calculated by Class Name over all usable customer_reviews.csv rows.",
+        "The lowest-rated class ranking excludes classes with fewer than 30 reviews.",
+        "The eligible classes are sorted by average rating ascending, recommendation rate ascending, review count descending, and Class Name ascending.",
+        "The three lowest eligible classes are identified from the displayed calculation.",
+        "Recurring complaint themes for those classes are supported by quotations from actual review text.",
+        "Small-sample classes are treated as caveats rather than mixed into the ranked three."
+      ]
+    },
+    {
+      "rubric": "Does Customer_Sentiment_Catalog_Alignment_Audit.pdf meet the required format and connect review evidence to catalog language and prioritized recommendations?",
+      "weight": 6,
+      "criterion": [
+        "The PDF is approximately two to three pages.",
+        "The four required sections appear in the specified order.",
+        "For product types present in both sources, the audit quotes specific listing language and specific review language.",
+        "Each cross-check states whether the listing addresses or ignores the cited pain point.",
+        "The audit provides three to five prioritized recommendations.",
+        "Each recommendation links a specific catalog-copy change to a documented customer pain point."
+      ]
+    },
+    {
+      "rubric": "Does optimized_product_listings.csv preserve the source catalog while making every required, evidence-grounded listing and feed-field update?",
+      "weight": 8,
+      "criterion": [
+        "The file has the exact required filename.",
+        "Every row from current_product_listings.csv is preserved.",
+        "Every original column from current_product_listings.csv is preserved.",
+        "Listing Change Justification is present for every source row.",
+        "Listing Change Justification is non-empty for every source row.",
+        "Body (HTML) copy describes product benefits that are supported by the source catalog, complaint, review, or sales evidence without unsupported superlatives or claims.",
+        "Body (HTML) copy uses product-specific names, types, materials, uses, or audience terms supported by the source data; keyword repetition or keyword stuffing is not required.",
+        "Body (HTML) copy is consistent with the available complaint and review evidence.",
+        "Claims contradicted by evidence are removed or qualified.",
+        "Sizing or fit guidance is added where the review evidence supports it.",
+        "Every previously empty SEO Title field is completed.",
+        "Every previously empty SEO Description field is completed.",
+        "Every previously empty Google Shopping field is completed with a value appropriate to the product or an explicit applicable placeholder accepted by the feed format.",
+        "Each justification cites a ticket ID, review theme, sales finding, or a documented source-data limitation."
+      ]
+    }
+  ]
+}

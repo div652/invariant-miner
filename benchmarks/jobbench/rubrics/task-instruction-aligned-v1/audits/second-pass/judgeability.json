@@ -1,0 +1,980 @@
+{
+  "summary": {
+    "auditScope": "All 65 task-instruction-aligned-v1 tasks were manually reviewed against their task instructions and declared inputs, covering all 484 rubric rows and 3,235 criteria.",
+    "judgeObservationModel": [
+      "The judge prompt contains rubric text and extracted output-directory contents, but not the task instructions, local reference inputs, external sources, or model trajectory.",
+      "Each criterion is binary, and a rubric row receives zero unless every criterion in that row passes, so one invisible requirement can erase credit for otherwise judgeable work.",
+      "Non-SQLite extraction is capped at 200,000 characters per file; SQLite extraction exposes schema and only the first 500 rows per table.",
+      "XLSX extraction loses formulas, charts, styles, fills, conditional formatting, and template fidelity; DOCX loses pagination and layout; PDF is text-only; PPTX exposes only text-bearing shapes; IPYNB extraction omits common text/plain and HTML MIME-bundle outputs.",
+      "At most eight sorted, deduplicated images are attached, only when a limited visual-keyword regex enables vision; XLSX, PPTX, and PDF visual content is not attached."
+    ],
+    "issueCount": 105,
+    "severityCounts": {
+      "high": 95,
+      "medium": 10
+    },
+    "categoryCounts": {
+      "alternative-solution-fairness": 4,
+      "deliverable-extraction": 29,
+      "execution-dependence": 1,
+      "hidden-process": 5,
+      "missing-reference-context": 65,
+      "omitted-requirement": 1
+    },
+    "systemicFindings": [
+      "Every task contains at least one correctness or completeness criterion that depends on source data or references absent from the judge context.",
+      "Format extraction makes valid spreadsheet charts and styling, PDF graphics/forms, PPTX visuals, DOCX page limits, notebook rich outputs, workbook formulas, and large SQLite/workbook tails unobservable.",
+      "Several accepted implementation or file-format alternatives are not equally judgeable, including embedded Excel charts versus separate images, PDF versus DOCX figures, and tracked revisions versus explicit text markers.",
+      "One explicit task objective is omitted: the HPC Option D rubric checks feasibility but not the required throughput maximization."
+    ],
+    "absenceVsNotApplicableReview": "No standalone high-confidence issue was retained for absence-versus-not-applicable handling. The reviewed rubrics generally used explicit N/A, No Benchmark, unavailable, or conditional-path language when evidence could legitimately be absent."
+  },
+  "reviewedTasks": 65,
+  "issues": [
+    {
+      "task": "biostatisticians/task1",
+      "severity": "high",
+      "category": "missing-reference-context",
+      "location": "Rows 0-6, especially 0.1-0.7, 1.0-1.5, 2.0-2.1, 4.0, and 6.0-6.4",
+      "finding": "The judge cannot reliably verify source-derived eligibility counts, event rates, protocol parameters, subgroup denominators, or missingness results because it receives only output deliverables, not framingham.csv or the proposal CSV.",
+      "evidence": "judge.py builds the prompt from extract_all_file_contents(output_dir) and the rubric text only. The cited criteria require comparison with Clinical_Study_Proposal_CVD_Prevention.csv and framingham.csv, but expected control totals are not included in the rubric.",
+      "recommendedChange": "Provide judge-readable extracts of the named inputs or add authoritative expected counts/rates and tolerances to the affected criteria; otherwise limit scoring to reported methodology and internal consistency."
+    },
+    {
+      "task": "biostatisticians/task1",
+      "severity": "medium",
+      "category": "hidden-process",
+      "location": "Criterion 1.10",
+      "finding": "A workbook can assert that Wan Nor Arifin's calculator was used even when it was not; actual use of an external spreadsheet is process evidence absent from deliverables.",
+      "evidence": "The criterion requires cross-validation with a separately obtained calculator, while the judge sees neither the calculator file nor trajectory. Text extraction can only expose a claim or copied result.",
+      "recommendedChange": "Score a documented independent cross-check with displayed calculator inputs and outputs, or require the completed calculator workbook as a deliverable; do not score unverifiable tool use."
+    },
+    {
+      "task": "biostatisticians/task2",
+      "severity": "high",
+      "category": "missing-reference-context",
+      "location": "Rows 0, 1, 3-5, and 6.4",
+      "finding": "The judge lacks the protocol, trial data, mapping file, and downloaded UCI dataset needed to validate audit discrepancies, LOCF coverage, site effects, sample sizes, conditional power, and RWE rates.",
+      "evidence": "The prompt contains only DX24_301_Integrity_Analysis.xlsx text plus rubric wording. Criteria such as 1.0, 1.5, 3.0-3.6, 4.1-4.6, and 5.1-5.8 require recomputation from files never supplied to the judge.",
+      "recommendedChange": "Attach canonical reference extracts or encode expected source-derived values and tolerances in the rubric. Separate verifiable presentation checks from numerical correctness checks."
+    },
+    {
+      "task": "biostatisticians/task2",
+      "severity": "high",
+      "category": "alternative-solution-fairness",
+      "location": "Criteria 2.4-2.5 and 6.2",
+      "finding": "A valid forest plot embedded as an Excel chart is invisible to the judge, so the rubric favors a separate image even though the task explicitly permits either method.",
+      "evidence": "Excel extraction uses pandas.read_excel and serializes cell tables only. collect_image_attachments does not inspect XLSX media or render charts; it supports standalone images, DOCX media, and notebook images.",
+      "recommendedChange": "Render spreadsheet sheets/charts to images for visual rubrics or require a companion image. Until then, accept the complete subgroup estimate/CI table and interaction p-values as equivalent evidence for an embedded chart."
+    },
+    {
+      "task": "bookkeeping_accounting_and_auditing_clerks/task1",
+      "severity": "high",
+      "category": "missing-reference-context",
+      "location": "Rows 0-6 and criteria 7.4-7.6",
+      "finding": "The judge cannot determine whether bank, GL, AP, aging, journal-entry, and Schedule C amounts are complete and correct against the named inputs.",
+      "evidence": "Only the three produced deliverables are extracted. Criteria including 0.0, 2.0, 2.9, 3.2-3.6, 4.1-4.4, and 5.1-5.10 require source comparison, but neither source files nor expected values appear in the judge prompt.",
+      "recommendedChange": "Supply reference tables/control totals to the judge or include expected reconciliation facts and accepted mappings in the rubric; retain internal cross-file consistency checks separately."
+    },
+    {
+      "task": "bookkeeping_accounting_and_auditing_clerks/task1",
+      "severity": "medium",
+      "category": "hidden-process",
+      "location": "Criterion 7.3",
+      "finding": "The requirement that the workbook use the external AP template and official Schedule C source cannot be established from extracted output text.",
+      "evidence": "The judge has no trajectory, downloaded AP template, or IRS PDF. A deliverable can reproduce plausible fields and merely claim source use.",
+      "recommendedChange": "Replace source-use scoring with observable conformance to specified AP fields and official line identifiers, or require the source/template artifacts and citations as deliverables."
+    },
+    {
+      "task": "bookkeeping_accounting_and_auditing_clerks/task2",
+      "severity": "high",
+      "category": "missing-reference-context",
+      "location": "Rows 1-6",
+      "finding": "The judge cannot validate the true cash balance, complete discrepancy set, AP rollforward, chart-of-accounts names, post-adjustment Schedule C values, or budget overruns against the six task inputs.",
+      "evidence": "judge.py does not include task inputs. The rubric repeatedly requires supported, traceable, or agreeing values without embedding expected results.",
+      "recommendedChange": "Provide canonical extracted inputs or expected balances, discrepancy records, and tolerances to the judge; score memo/workbook consistency independently of source correctness."
+    },
+    {
+      "task": "civil_engineers/task1",
+      "severity": "high",
+      "category": "missing-reference-context",
+      "location": "Rows 0-5",
+      "finding": "The judge cannot verify skew-adjusted quantities, reinforcement coverage, local costs, WSDOT prices, item comparability, or contingency classifications against the four local inputs and Contract 24Z011.",
+      "evidence": "The output workbook is the only extracted evidence. Criteria 0.0-0.6, 1.0-1.7, 2.1-2.5, 3.2-3.8, and 4.1 require source values that are not included in the prompt.",
+      "recommendedChange": "Provide judge-readable source extracts and the WSDOT comparison rows, or embed expected quantities, bar totals, comparable items, and pricing tolerances in the rubric."
+    },
+    {
+      "task": "civil_engineers/task2",
+      "severity": "high",
+      "category": "missing-reference-context",
+      "location": "Rows 0-6",
+      "finding": "Most correctness checks depend on the scope memo, FDOT workbook, labor rates, CDOT and WisDOT data, none of which the judge receives.",
+      "evidence": "Criteria require independent quantity derivations, specific source hierarchy, crew rates, unit-price comparisons, construction staging, and reconciled totals. The judge prompt contains only the produced workbook and memo.",
+      "recommendedChange": "Include canonical source tables and expected quantity controls with the judge request, or convert unsupported correctness checks into observable documentation/internal-consistency checks."
+    },
+    {
+      "task": "civil_engineers/task3",
+      "severity": "high",
+      "category": "missing-reference-context",
+      "location": "Rows 0-5",
+      "finding": "Although several expected quantities are embedded in Row 1, the judge still cannot verify complete CSV coverage, authorized scope, source hierarchy, unit prices, risk grounding, or lifecycle inputs against the project files and external cost books.",
+      "evidence": "Criteria 0.1, 0.3, 1.5, 2.0-2.4, 3.0-3.1, 4.1-4.4, and 5.4 refer to materials absent from the judge prompt.",
+      "recommendedChange": "Retain embedded expected quantity checks, and add authoritative lists/control totals for all remaining source-dependent criteria or provide the actual references to the judge."
+    },
+    {
+      "task": "civil_engineers/task3",
+      "severity": "high",
+      "category": "deliverable-extraction",
+      "location": "Criterion 5.0",
+      "finding": "The judge cannot determine whether the DOCX memo is one page or less because DOCX extraction discards pagination and layout.",
+      "evidence": "mammoth.convert_to_markdown supplies document text but no rendered pages or page count. A multi-page memo and a one-page memo with the same text appear equivalent.",
+      "recommendedChange": "Render DOCX pages to images/PDF and pass page count, or replace the page-limit criterion with a word/character limit that the extractor can measure."
+    },
+    {
+      "task": "computer_and_information_research_scientists/task1",
+      "severity": "high",
+      "category": "missing-reference-context",
+      "location": "Rows 0-5, especially 1-4 and 5.4-5.6",
+      "finding": "The judge cannot validate Option D constraints, 36-month allocations, database-derived trends, SQL table/column validity, lead times, or Epoch benchmark facts because the six inputs and external dataset are absent.",
+      "evidence": "Only output files are extracted. Criteria 2.0-2.4 require every database project; 4.0-4.5 require SQL valid against the real database; 5.6 requires records from Epoch AI. Only a few hardware constants are embedded in Row 0.",
+      "recommendedChange": "Pass reference data and a disposable SQLite copy to deterministic checks, then give those results to the judge. Embed expected constraints and peer records where direct input access is not possible."
+    },
+    {
+      "task": "computer_and_information_research_scientists/task1",
+      "severity": "high",
+      "category": "omitted-requirement",
+      "location": "Option D design objective; Row 1",
+      "finding": "The instructions require Option D to maximize research throughput while satisfying all current requirements, but the rubric only checks feasibility and constraint compliance. A materially dominated feasible configuration can receive full credit.",
+      "evidence": "Row 1 checks availability, budget, annual caps, contingency, facility, sustainability, and access constraints; no criterion compares verified throughput or cost-efficiency with feasible alternatives.",
+      "recommendedChange": "Add a criterion requiring a stated optimization objective and evidence that Option D is non-dominated or throughput-maximizing under the documented discrete purchasing constraints; accept equivalent optimization methods."
+    },
+    {
+      "task": "computer_and_information_research_scientists/task1",
+      "severity": "high",
+      "category": "execution-dependence",
+      "location": "Row 4",
+      "finding": "Validity and source-grounded behavior of workload_impact.sql cannot be judged from SQL text alone; it must be executed against workload_requirements.db.",
+      "evidence": "The extractor presents the .sql file as text, while the database is not supplied in the judge prompt and the judge performs no SQL execution. Plausible but invalid table names or wrong results can pass semantically.",
+      "recommendedChange": "Execute the script deterministically against a copy of the database, capture schema/errors/results, and score those artifacts; reserve the LLM for explanation and query-intent review."
+    },
+    {
+      "task": "computer_and_information_research_scientists/task2",
+      "severity": "high",
+      "category": "missing-reference-context",
+      "location": "Rows 0-6",
+      "finding": "The judge cannot verify the exhaustive data audit, workload/database calculations, vendor repricing, LBNL evidence, HERD peer comparison, or corrected schedule against the four local inputs and external report.",
+      "evidence": "Criteria repeatedly require every roll-up, every workload, all original activities, and specific source-grounded values. The judge sees only the produced Markdown, workbook, and CSV, with no reference files or expected results.",
+      "recommendedChange": "Give the judge canonical extracts and expected audit discrepancies/control totals, and validate the schedule/database-derived populations deterministically before LLM review."
+    },
+    {
+      "task": "computer_and_information_systems_managers/task1",
+      "severity": "high",
+      "category": "missing-reference-context",
+      "location": "Rows 0-6",
+      "finding": "The judge cannot confirm server completeness and tiers, database risks, vendor proposals, budget lines, NIST questions, AWS instance eligibility, or incident correlations because none of the source systems or external CSVs are supplied.",
+      "evidence": "Criteria 0.0-0.3, 1.0-1.3, 2.0-2.3, 4.1-4.3, 5.0-5.3, and 6.0-6.3 depend on exact source rows. The rubric includes rules but not the actual populations or expected outputs.",
+      "recommendedChange": "Provide extracted source tables and external reference rows, or run deterministic reconciliation checks and include their results in the judge evidence."
+    },
+    {
+      "task": "computer_and_information_systems_managers/task2",
+      "severity": "high",
+      "category": "missing-reference-context",
+      "location": "Rows 0-6",
+      "finding": "The judge lacks the incident log, budget workbook, inventory, NIST Core, and AWS calculator data needed to validate the candidate population, costs, project coverage, budget availability, and gap mappings.",
+      "evidence": "The rubric asks for complete top-10, median, every candidate, every pending project, and official NIST mappings, but output deliverables are the only evidence sent to the judge.",
+      "recommendedChange": "Supply reference extracts and expected populations/control totals; use deterministic joins and cost calculations for completeness and reserve LLM scoring for rationale quality."
+    },
+    {
+      "task": "computer_and_information_systems_managers/task2",
+      "severity": "high",
+      "category": "deliverable-extraction",
+      "location": "Criterion 4.3",
+      "finding": "Red conditional formatting in the Gap_Register sheet is not visible in the Excel text extraction, so a correctly formatted workbook and an unformatted one are indistinguishable.",
+      "evidence": "pandas.read_excel emits cell values as CSV and discards fills, conditional-formatting rules, and styles. No XLSX rendering or style inspection is attached.",
+      "recommendedChange": "Inspect XLSX conditional-formatting rules programmatically or render the sheet. Alternatively remove the formatting criterion and score an explicit UNBUDGETED/high-severity flag column."
+    },
+    {
+      "task": "computer_user_support_specialists/task1",
+      "severity": "high",
+      "category": "missing-reference-context",
+      "location": "Rows 1-7",
+      "finding": "The judge can read the produced dashboard database but cannot compare it with the source inventory database, gateway log, ticket export, escalation email, CAB template, or Cisco guidance.",
+      "evidence": "Criteria require every gateway session, every full version, specific cross-source matches, every template field, exact database joins, and full-date totals. Those source populations are absent from the prompt.",
+      "recommendedChange": "Pass normalized source extracts and template fields to the judge or compute deterministic expected counts, mappings, and database validation results before semantic review."
+    },
+    {
+      "task": "computer_user_support_specialists/task2",
+      "severity": "high",
+      "category": "missing-reference-context",
+      "location": "Rows 0-7",
+      "finding": "The judge cannot validate device coverage/classification, disputed-readiness root causes, sprint constraints, database ticket patterns, staff capacity, or cited post-EOL risks against the inventory, database, manager email, budget, briefing, and external guide.",
+      "evidence": "The criteria require every device, every staff member, actual top-five ticket subcategories, exact manager constraints, and source-grounded compliance claims. Only the three deliverables are passed to the judge.",
+      "recommendedChange": "Provide normalized source tables and authoritative hardware requirement data, plus deterministic coverage/count checks, to the judge."
+    },
+    {
+      "task": "computer_user_support_specialists/task2",
+      "severity": "high",
+      "category": "deliverable-extraction",
+      "location": "Criteria 7.2-7.4",
+      "finding": "The PPTX evaluator cannot see embedded charts, images, or visual timeline/budget treatments, so a text-only slide deck can look equivalent to a well-designed visual deck and valid image-only slides can look empty.",
+      "evidence": "PPTX extraction iterates shapes and appends only shape.text. The image collector does not inspect PPTX media or render slides.",
+      "recommendedChange": "Render every slide to an image and attach the slide images for deck rubrics, while retaining text extraction for citations and numbers."
+    },
+    {
+      "task": "court_clerks/task1",
+      "severity": "high",
+      "category": "missing-reference-context",
+      "location": "Rows 0-6",
+      "finding": "The judge cannot verify case facts, discrepancies, legal analysis, fees, mandatory assessments, database changes, or register consistency against the notes, source CMS, fee schedule, defense memo, form, and AOC instructions.",
+      "evidence": "All substantive criteria require exact source materials, but the prompt includes only produced CSVs, PDFs, and updated database. The original CMS is also needed to distinguish correct updates from pre-existing data.",
+      "recommendedChange": "Provide source extracts and deterministic database diff results; embed authoritative legal/fee expectations or include the cited sources in judge evidence."
+    },
+    {
+      "task": "court_clerks/task1",
+      "severity": "high",
+      "category": "deliverable-extraction",
+      "location": "Row 1",
+      "finding": "Filled values in the supplied official PDF form may be AcroForm widget values or annotations that pdfplumber does not extract, and the judge receives no rendered PDF pages. Valid completed forms can therefore appear blank or indistinguishable from the template.",
+      "evidence": "convert_file_to_text uses pdfplumber page.extract_text(layout=True) only. It does not read form fields or attach PDF page images.",
+      "recommendedChange": "Extract AcroForm field names/values and render each order page to images before judging official-form use and completion."
+    },
+    {
+      "task": "customer_service_representatives/task1",
+      "severity": "high",
+      "category": "missing-reference-context",
+      "location": "Rows 1-7",
+      "finding": "The judge cannot verify the six dispute rows, weather calculations, supervisor-note verdicts, deadlines, rate plans, PUC contact information, EIA benchmarks, or policy conclusions against the four local files and external EIA data.",
+      "evidence": "The rubric requires exact customer-level and source-level results but embeds none of the expected values and the judge prompt excludes inputs.",
+      "recommendedChange": "Pass canonical dispute, billing, weather, rights, note, and benchmark extracts to the judge or add expected values/tolerances to each numerical criterion."
+    },
+    {
+      "task": "data_entry_keyers/task1",
+      "severity": "high",
+      "category": "missing-reference-context",
+      "location": "Rows 0-7",
+      "finding": "The judge cannot determine whether every field discrepancy was found or reconciled correctly because the CRM, ERP, customer master, checklist template, and ten authoritative scanned order forms are not included.",
+      "evidence": "Criteria 0.1-0.5, 1.0-1.4, 2.0-2.4, 3.0-3.4, 4.0-4.5, and 6.0-6.5 all depend on exact source rows and image transcription.",
+      "recommendedChange": "Provide OCR/reference transcriptions and source tables or deterministic expected discrepancy records; use the LLM only to assess explanations and recommendations."
+    },
+    {
+      "task": "data_entry_keyers/task2",
+      "severity": "high",
+      "category": "missing-reference-context",
+      "location": "Rows 0-5",
+      "finding": "The judge cannot verify the all-field review, clear-error/review split, exact corrections, provider/facility attribution, or ICD-10 code-description validity because the six local inputs and official code file are absent.",
+      "evidence": "The rubric requires all 75 records and every field to be checked against sources and policy. No expected error set or reference extract is included in the prompt.",
+      "recommendedChange": "Provide canonical row-level inputs plus the relevant ICD-10 reference subset, or run deterministic diff/code validation and pass the results to the judge."
+    },
+    {
+      "task": "financial_managers_branch_or_department/task1",
+      "severity": "high",
+      "category": "missing-reference-context",
+      "location": "Rows 0-8",
+      "finding": "The judge cannot verify complete loan populations, multi-factor re-ratings, CDFI factor weights, stress inputs, FDIC benchmarks, concentration limits, or application decisions against the portfolio database, workbooks, PDF, CSV, and external datasets.",
+      "evidence": "Criteria demand every in-scope loan and exact source thresholds, but expected populations and most numerical results are not embedded in the rubric.",
+      "recommendedChange": "Supply normalized source extracts and template weights/thresholds, and deterministically validate population coverage and calculations before LLM review."
+    },
+    {
+      "task": "financial_managers_branch_or_department/task2",
+      "severity": "high",
+      "category": "missing-reference-context",
+      "location": "Rows 0-7",
+      "finding": "The judge cannot validate portfolio totals, watch-list completeness, CDFI scores, rate-shock calculations, FDIC benchmarks, policy thresholds, or capital allocation against the local portfolio/applications/template and external FDIC/OCC sources.",
+      "evidence": "The output workbook/PDF are the only evidence, while the criteria require exact source populations and source-grounded regulatory/benchmark claims.",
+      "recommendedChange": "Provide source extracts and expected control totals or deterministic calculation results to the judge; keep the rubric's flexible decision-outcome language."
+    },
+    {
+      "task": "human_resources_specialists/task1",
+      "severity": "high",
+      "category": "missing-reference-context",
+      "location": "Rows 0-6",
+      "finding": "The judge cannot establish complete JobRole/applicant coverage, source-derived attrition/overtime rates, salary gaps, requirement matches, or license follow-up against the three input files.",
+      "evidence": "Most criteria require every role or every applicant and exact calculations, but no input rows or expected values are present in the judge prompt.",
+      "recommendedChange": "Attach compact source tables or expected counts/rates and screening outcomes with tolerances; separate numerical correctness from recommendation quality."
+    },
+    {
+      "task": "lawyers/task1",
+      "severity": "high",
+      "category": "missing-reference-context",
+      "location": "Rows 0-7",
+      "finding": "The judge cannot verify database figures, fine-day calculations, settlement terms, ordinance comparisons, case holdings, article usage, or property-specific legal analysis against the SQLite database and legal sources.",
+      "evidence": "The rubric requires actual authorities and all property figures, but only the memo/CSV/TXT are in the prompt; expected facts and holdings are not embedded.",
+      "recommendedChange": "Provide database extracts and authoritative legal excerpts/holdings to the judge, or encode expected factual controls and citation targets in the rubric."
+    },
+    {
+      "task": "licensing_examiners_and_inspectors/task1",
+      "severity": "high",
+      "category": "missing-reference-context",
+      "location": "Rows 0-6",
+      "finding": "The judge cannot validate all 15 determinations, every deficiency, affected bulletin-application pairs, correspondence disposition, violation history, or public license/insurance records against the six local and two external sources.",
+      "evidence": "Criteria demand exact application coverage and evidence synthesis, but no source records or expected determination set are included in the judge prompt.",
+      "recommendedChange": "Pass normalized application/evidence/public-lookup tables and deterministic coverage results to the judge; preserve the rubric's allowance for supported DENY versus HOLD judgments."
+    },
+    {
+      "task": "management_analysts/task1",
+      "severity": "high",
+      "category": "missing-reference-context",
+      "location": "Rows 0-6",
+      "finding": "The judge cannot verify all 12 plant-product series, complaint joins, benchmark percentiles, equipment population, COPQ arithmetic, memo-claim verification, or FRED values against the local and external inputs.",
+      "evidence": "The output files are the only evidence; most criteria require exhaustive source-derived rows and values, while no expected controls are embedded.",
+      "recommendedChange": "Provide compact source extracts and expected aggregations/tolerances, or run deterministic checks for completeness, joins, slopes, percentiles, and COPQ before LLM review."
+    },
+    {
+      "task": "management_analysts/task1",
+      "severity": "high",
+      "category": "deliverable-extraction",
+      "location": "Criterion 3.0",
+      "finding": "The DOCX extractor cannot determine whether the strategic memo is approximately two to three pages.",
+      "evidence": "Mammoth converts DOCX to Markdown without pagination or rendered layout.",
+      "recommendedChange": "Replace the page requirement with a measurable word range or render the DOCX to PDF/images and supply page boundaries."
+    },
+    {
+      "task": "management_analysts/task2",
+      "severity": "high",
+      "category": "missing-reference-context",
+      "location": "Rows 0-7",
+      "finding": "The judge cannot validate 19-plant coverage, order/port/capacity/cost calculations, complaint metrics, memo-claim reconciliation, or external warehouse/freight data because none of the reference datasets are provided.",
+      "evidence": "Criteria require exact populations and source-derived scenarios, but the prompt contains only the workbook and brief.",
+      "recommendedChange": "Pass canonical input extracts and external tables or deterministic score/scenario validation results to the judge."
+    },
+    {
+      "task": "management_analysts/task2",
+      "severity": "high",
+      "category": "deliverable-extraction",
+      "location": "Criteria 4.0 and 7.0",
+      "finding": "Neither the five-page DOCX limit nor the requirement that the Go/No-Go matrix occupy a single page is observable after DOCX-to-Markdown extraction.",
+      "evidence": "Mammoth strips page layout and pagination; the judge sees continuous text.",
+      "recommendedChange": "Use word/row limits, or render the document and attach page images plus page count."
+    },
+    {
+      "task": "management_analysts/task3",
+      "severity": "high",
+      "category": "missing-reference-context",
+      "location": "Rows 0-6",
+      "finding": "The judge cannot validate department/process coverage, overtime patterns, proposal triggers, NYC indicators, Comptroller facts, model outputs, or cross-deliverable figures against the three local files and external benchmarks.",
+      "evidence": "The rubric requires exhaustive source-derived rows and specific public values, but the prompt includes only the submitted memo/workbook/deck.",
+      "recommendedChange": "Provide compact source extracts and benchmark records plus deterministic trigger and consistency checks."
+    },
+    {
+      "task": "management_analysts/task3",
+      "severity": "high",
+      "category": "deliverable-extraction",
+      "location": "Criteria 0.2 and 6.2",
+      "finding": "Red conditional formatting is lost from XLSX extraction, and DOCX pagination is lost, so the formatting rule and 6-10-page memo rule are not judgeable.",
+      "evidence": "pandas.read_excel discards styles and Mammoth emits unpaginated Markdown.",
+      "recommendedChange": "Inspect workbook styles and render/count document pages, or replace both requirements with explicit flag columns and word-count limits."
+    },
+    {
+      "task": "management_analysts/task3",
+      "severity": "high",
+      "category": "deliverable-extraction",
+      "location": "Criterion 6.2 presentation coverage",
+      "finding": "The judge cannot assess charts or other visual trade-off summaries in the PPTX because only text-bearing shapes are extracted.",
+      "evidence": "python-pptx extraction omits chart series, images, and rendered slide layout; PPTX media are not attached.",
+      "recommendedChange": "Render all slides to images for the presentation rubric."
+    },
+    {
+      "task": "mechanical_engineering_technicians/task1",
+      "severity": "high",
+      "category": "missing-reference-context",
+      "location": "Rows 1-8",
+      "finding": "The judge cannot verify test-point completeness, datasheet limits, STL-derived dimensions, seal-kit part numbers, Degelman procedures, or root-cause evidence against the workbook, PDF, STL, and external guide.",
+      "evidence": "Only the report PDF is extracted. The source STL is an unsupported format even if placed in output, and no authoritative expected measurements or part numbers are embedded in the rubric.",
+      "recommendedChange": "Provide source extracts and deterministic workbook/STL measurements, plus authoritative manufacturer/service excerpts, as judge evidence."
+    },
+    {
+      "task": "mechanical_engineering_technicians/task2",
+      "severity": "high",
+      "category": "missing-reference-context",
+      "location": "Rows 0-6",
+      "finding": "The judge cannot verify every test value, sister-pump trend, maintenance record, standard limit, NCR population, or setpoint basis against the three local files and Europump guidance.",
+      "evidence": "Most criteria require exact source rows and cited standard values but no references or expected controls are supplied.",
+      "recommendedChange": "Pass normalized test/baseline tables and authoritative limit excerpts or deterministic comparison results to the judge."
+    },
+    {
+      "task": "mechanical_engineering_technicians/task2",
+      "severity": "high",
+      "category": "alternative-solution-fairness",
+      "location": "Criteria 6.4-6.6",
+      "finding": "The task permits a PDF report, but plots embedded in PDF pages are not shown to the judge; the same plots in DOCX may be attached. This unfairly makes judgeability depend on the allowed report format.",
+      "evidence": "PDF extraction uses text-only pdfplumber and never renders page images. DOCX embedded raster images are collected when the rubric contains plot-related terms.",
+      "recommendedChange": "Render PDF pages or extract PDF images. Until then, accept complete plotted data tables as equivalent evidence regardless of report format."
+    },
+    {
+      "task": "mechanical_engineering_technicians/task3",
+      "severity": "high",
+      "category": "missing-reference-context",
+      "location": "Rows 0-6",
+      "finding": "The judge cannot validate affinity-law inputs, all seven vibration points, API limits, ISO zones, bearing geometry, FFT matches, IOM guidance, or disposition against the source workbooks/PDF and external standards.",
+      "evidence": "The rubric contains formulas but not the actual source values, bearing geometry, or accepted limits; only the workbook and memo are judged.",
+      "recommendedChange": "Provide source extracts, authoritative standard/geometry values, and deterministic calculation checks with tolerances."
+    },
+    {
+      "task": "mechanical_engineers/task1",
+      "severity": "high",
+      "category": "missing-reference-context",
+      "location": "Rows 0-7",
+      "finding": "The judge cannot verify complete Rev-1 reconciliation, allowable stresses, ASME formulas/chart factors, Sample 5 alignment, nozzle geometry, material provisions, or code conclusions against the three local files and external manufacturer/method sources.",
+      "evidence": "Only the CSV/JSON/TXT package is sent to the judge. The rubric embeds formulas but not the controlling source values, changed-row list, chart inputs, or material data.",
+      "recommendedChange": "Provide normalized design inputs, authoritative chart/material extracts, and deterministic calculation validation with tolerances."
+    },
+    {
+      "task": "medical_and_health_services_managers/task1",
+      "severity": "high",
+      "category": "missing-reference-context",
+      "location": "Rows 0-6",
+      "finding": "The judge cannot validate monthly visit/rate calculations, financial variances, audited peer ratios, applicable CMS/AHCA benchmarks, service-line costs, or memo figures against the local and external sources.",
+      "evidence": "The criteria require exact source-derived rows and period-appropriate rates; no source records or expected values are included in the prompt.",
+      "recommendedChange": "Pass compact visit/financial/peer/rate extracts and deterministic reconciliation results to the judge."
+    },
+    {
+      "task": "medical_and_health_services_managers/task1",
+      "severity": "high",
+      "category": "deliverable-extraction",
+      "location": "Criteria 2.4-2.5",
+      "finding": "Required red fills for adverse revenue and expense months are not visible in the extracted workbook.",
+      "evidence": "pandas.read_excel serializes values only and discards fills and conditional-formatting rules.",
+      "recommendedChange": "Inspect XLSX styles/rules or replace the fill requirement with an explicit variance flag column."
+    },
+    {
+      "task": "medical_and_health_services_managers/task2",
+      "severity": "high",
+      "category": "missing-reference-context",
+      "location": "Rows 0-6",
+      "finding": "The judge cannot verify top-10 CPT selection, all payer rows, rate-schedule values, monthly loss drivers, peer cohort/percentiles, HCAI fields, or annual impact calculations against the two local files and external dataset.",
+      "evidence": "The rubric defines formulas but supplies neither source data nor expected outputs to the judge.",
+      "recommendedChange": "Provide normalized source and peer extracts plus deterministic population and arithmetic checks."
+    },
+    {
+      "task": "medical_secretaries/task1",
+      "severity": "high",
+      "category": "missing-reference-context",
+      "location": "Rows 0-7",
+      "finding": "The judge cannot verify complete referral coverage, ICD-10 descriptions/laterality, duplicate relationships, status/tier assignments, contact details, privacy language, or dashboard counts against the referral CSV and external references.",
+      "evidence": "The output workbook and DOCX files are judged without the input referral rows, ICD list, reference form, or original formatting source.",
+      "recommendedChange": "Pass the referral table, relevant ICD reference rows, and privacy reference excerpts to the judge; deterministically validate coverage and counts."
+    },
+    {
+      "task": "medical_secretaries/task1",
+      "severity": "high",
+      "category": "deliverable-extraction",
+      "location": "Row 3",
+      "finding": "The red/yellow conditional-formatting rules, including overlap behavior, are entirely invisible to the judge.",
+      "evidence": "Excel extraction discards style and conditional-formatting information and no sheet image is rendered.",
+      "recommendedChange": "Programmatically inspect conditional-formatting formulas/ranges and style results, or render the Referral Log sheet for vision review."
+    },
+    {
+      "task": "online_merchants/task1",
+      "severity": "high",
+      "category": "missing-reference-context",
+      "location": "Rows 1-6",
+      "finding": "The judge cannot verify inquiry/product matches, catalog means/ranks, all-SKU metrics, external review patterns, Shopify listing language, or conclusion-dependent PDF choice against the local and downloaded datasets.",
+      "evidence": "Only the workbook and PDF are supplied; the rubric embeds two SKU hints but not the full catalog, complaints, listings, or review evidence.",
+      "recommendedChange": "Provide canonical local/external extracts and expected catalog statistics, or deterministically validate joins/ranks and pass those results to the judge."
+    },
+    {
+      "task": "online_merchants/task1",
+      "severity": "high",
+      "category": "deliverable-extraction",
+      "location": "Row 4",
+      "finding": "An Excel chart or conditional color coding is required, but both are invisible in the workbook text extraction.",
+      "evidence": "pandas.read_excel discards charts, conditional formatting, fills, and other graphical encodings; XLSX media are not attached.",
+      "recommendedChange": "Render the Product Risk Dashboard sheet or inspect chart/conditional-formatting objects programmatically."
+    },
+    {
+      "task": "online_merchants/task2",
+      "severity": "high",
+      "category": "missing-reference-context",
+      "location": "Rows 0-6",
+      "finding": "The judge cannot verify all open tickets, exact policy titles/terms, product matches, 2.25M-byte sales aggregations, website funnel rows, review rankings/themes, or full-catalog listing preservation against the four local and two external datasets.",
+      "evidence": "The prompt contains only the deliverables and rubric. No expected ticket/product populations or external datasets are available to recompute the required results.",
+      "recommendedChange": "Provide normalized source subsets and deterministic completeness/aggregation/ranking checks; include the exact policy headings as judge evidence."
+    },
+    {
+      "task": "personal_financial_advisors/task1",
+      "severity": "high",
+      "category": "missing-reference-context",
+      "location": "Rows 0-7",
+      "finding": "The judge cannot validate portfolio reconciliation, holding-level gift sales, target trades, loss positions, Treasury/FRED values, RMD divisors, complete income, Social Security taxation, or modeled taxes against the local and external sources.",
+      "evidence": "The rubric defines formulas but not the client source rows, tax inputs, market series, or expected scenario totals; only outputs are judged.",
+      "recommendedChange": "Pass compact portfolio/market/tax reference data and deterministic calculation checks with tolerances to the judge."
+    },
+    {
+      "task": "petroleum_engineers/task1",
+      "severity": "high",
+      "category": "missing-reference-context",
+      "location": "Rows 0-7",
+      "finding": "The judge cannot verify change-point segmentation, regression data, BOEM fits, top-15 population, OGS matches, formation tops, personnel counts, or data lineage against the local files and large external exports.",
+      "evidence": "No source records or expected results are supplied to the judge, yet the criteria require complete source-derived populations and cross-source matching.",
+      "recommendedChange": "Provide normalized data extracts and deterministic model/join/population checks, including match counts and fitted-parameter validation."
+    },
+    {
+      "task": "petroleum_engineers/task1",
+      "severity": "medium",
+      "category": "deliverable-extraction",
+      "location": "Workbook-wide criteria, especially Rows 0, 2, and 4",
+      "finding": "A valid comprehensive workbook can be truncated before later sheets or rows are shown because the judge caps extracted non-SQLite content at 200,000 characters per file.",
+      "evidence": "extract_all_file_contents truncates the combined text of an XLSX after all sheets are serialized into one string. This task can contain interval diagnostics, per-well decline fits, matched-well formation rows, and lineage tables in one workbook.",
+      "recommendedChange": "Apply per-sheet limits with explicit truncation metadata, sample both ends, or pass structured sheet summaries and row counts separately so sheet order does not decide judge visibility."
+    },
+    {
+      "task": "police_fire_and_ambulance_dispatchers/task1",
+      "severity": "high",
+      "category": "missing-reference-context",
+      "location": "Rows 0-8",
+      "finding": "The judge cannot verify all 15 calls, unit capabilities/availability, distances, pre-existing CAD records, conflicts, active incidents, roster coverage, or historical 911 counts against the local and external sources.",
+      "evidence": "Although the updated SQLite database is extracted, the original database and other inputs are absent, so completeness and synchronization changes cannot be distinguished reliably.",
+      "recommendedChange": "Provide normalized call/unit/station/source-CAD extracts and deterministic database-diff, distance, and coverage checks; include the historical dataset summary inputs."
+    },
+    {
+      "task": "producers/task1",
+      "severity": "high",
+      "category": "missing-reference-context",
+      "location": "Rows 0-7",
+      "finding": "The judge cannot validate venue/personnel feasibility, handbook compliance, every budget category/receipt, cash-flow timing, reimbursement status, roster completeness, or script/backorder facts against the local and external sources.",
+      "evidence": "The prompt contains only outputs, while the criteria require exact source rows and handbook rules.",
+      "recommendedChange": "Provide source extracts, the applicable handbook rules, and deterministic schedule/budget/roster completeness checks."
+    },
+    {
+      "task": "producers/task1",
+      "severity": "high",
+      "category": "deliverable-extraction",
+      "location": "Criterion 5.1",
+      "finding": "The DOCX extractor cannot judge whether the emergency board memo is approximately one to two pages.",
+      "evidence": "Mammoth removes pagination and page layout.",
+      "recommendedChange": "Use a word-count limit or render the DOCX to pages for judging."
+    },
+    {
+      "task": "purchasing_agents_except_wholesale_retail_and_farm_products/task1",
+      "severity": "high",
+      "category": "missing-reference-context",
+      "location": "Rows 0-8",
+      "finding": "The judge cannot validate historical commodity statistics, all 15 bid lines, supplier terms, delivery windows, template conformance, PO values, budget codes, or cross-deliverable totals against the three local files and external government data.",
+      "evidence": "Only outputs are provided; no source records or expected statistics/totals are embedded in the rubric.",
+      "recommendedChange": "Provide benchmark source rows and bid/requisition/template extracts plus deterministic pricing, threshold, and PO checks."
+    },
+    {
+      "task": "purchasing_agents_except_wholesale_retail_and_farm_products/task1",
+      "severity": "medium",
+      "category": "deliverable-extraction",
+      "location": "Criterion 5.2",
+      "finding": "Whether each PO follows the provided template structure is not reliably visible after spreadsheet extraction strips layout, merged cells, print areas, styles, and formulas.",
+      "evidence": "pandas converts worksheets to plain CSV-like values and the judge does not receive the template workbook.",
+      "recommendedChange": "Define observable required fields/sheets instead of visual template conformance, or compare workbook structure/styles programmatically against the template."
+    },
+    {
+      "task": "purchasing_agents_except_wholesale_retail_and_farm_products/task2",
+      "severity": "high",
+      "category": "missing-reference-context",
+      "location": "Rows 0-6",
+      "finding": "The judge cannot validate revised quantities/specs, vendor pricing/history/flags, contract vehicles, manual provisions, warranty/freight calculations, funding splits, or approval threshold against the six local inputs and purchasing manual.",
+      "evidence": "The criteria depend on exact source records and external policy language but the judge sees only the four deliverables.",
+      "recommendedChange": "Provide canonical source/manual extracts and deterministic TCO, scoring, PO, and budget-scenario validations."
+    },
+    {
+      "task": "purchasing_agents_except_wholesale_retail_and_farm_products/task2",
+      "severity": "high",
+      "category": "deliverable-extraction",
+      "location": "Criterion 0.4",
+      "finding": "Required visual shortfall flags in the bid tabulation are not visible to the judge.",
+      "evidence": "Excel extraction discards fills, font colors, icons, and conditional-formatting rules.",
+      "recommendedChange": "Add an explicit Shortfall_Flag field and/or inspect or render workbook formatting."
+    },
+    {
+      "task": "purchasing_agents_except_wholesale_retail_and_farm_products/task2",
+      "severity": "high",
+      "category": "deliverable-extraction",
+      "location": "Criterion 6.0",
+      "finding": "The one-to-two-page memo requirement cannot be measured from DOCX text extraction.",
+      "evidence": "Mammoth produces unpaginated Markdown.",
+      "recommendedChange": "Replace the page limit with a word limit or render and count pages."
+    },
+    {
+      "task": "purchasing_agents_except_wholesale_retail_and_farm_products/task3",
+      "severity": "high",
+      "category": "missing-reference-context",
+      "location": "Rows 0-6",
+      "finding": "The judge cannot validate mandatory requirement coverage, quote arithmetic/specs, amendment-permitted reductions, installation/freight, vendor history, payment consequences, negotiation totals, or escalation path against the nine source files.",
+      "evidence": "All correctness and completeness criteria rely on exact source rows, but the judge sees only the outputs.",
+      "recommendedChange": "Provide normalized requisition/quote/compliance/history/amendment extracts and deterministic audit, scoring, and total checks."
+    },
+    {
+      "task": "purchasing_agents_except_wholesale_retail_and_farm_products/task3",
+      "severity": "medium",
+      "category": "hidden-process",
+      "location": "Criteria 1.0 and 2.0",
+      "finding": "The criteria require workbooks to be built from supplied templates, but output text cannot establish that the templates were actually used rather than recreated.",
+      "evidence": "The judge receives neither source templates nor workbook structure/style comparison; pandas extraction exposes only resulting cell values.",
+      "recommendedChange": "Score observable required fields and calculations, or compare workbook structure, named ranges, styles, and formulas programmatically with the templates."
+    },
+    {
+      "task": "reporters_and_correspondents/task1",
+      "severity": "high",
+      "category": "missing-reference-context",
+      "location": "Rows 0-5",
+      "finding": "The judge cannot validate city values/ranks, full monitoring series, CDC records, CT threshold legislation, EPA enforcement timing, Newark comparison, interview verification, or source-log claims against the local and external sources.",
+      "evidence": "Only the pitch, workbook, and source log are passed; source reports/datasets and expected values are absent.",
+      "recommendedChange": "Provide authoritative source extracts/page text and deterministic worksheet/source-log checks to the judge."
+    },
+    {
+      "task": "reporters_and_correspondents/task1",
+      "severity": "high",
+      "category": "deliverable-extraction",
+      "location": "Criterion 5.0",
+      "finding": "The no-more-than-two-page pitch memo limit is not observable after DOCX extraction.",
+      "evidence": "Mammoth emits unpaginated Markdown.",
+      "recommendedChange": "Use a word limit or render and count document pages."
+    },
+    {
+      "task": "sales_agents_securities_and_commodities/task1",
+      "severity": "high",
+      "category": "missing-reference-context",
+      "location": "Rows 0-7",
+      "finding": "The judge cannot verify complete settled-sell populations, fee rates/rounding, agents, positions, market closes, VWAPs, suitability accounts, adjustments, retention, or clawback matches against the database, market files, and external schedules.",
+      "evidence": "No source records or expected transaction/agent totals are in the prompt.",
+      "recommendedChange": "Provide compact source extracts and deterministic fee/position/volatility/adjustment checks."
+    },
+    {
+      "task": "sales_representatives_wholesale_and_manufacturing_technical_and_scientific_products/task1",
+      "severity": "high",
+      "category": "missing-reference-context",
+      "location": "Rows 0-8",
+      "finding": "The judge cannot validate every RFQ bullet, product certifications, competitor evidence, stakeholder concerns, lead times, internal prices, quote lines, maintenance/warranty assumptions, or TCO against the five local and two external sources.",
+      "evidence": "The rubric requires exhaustive source-grounded matrices and calculations, but only deliverables are supplied to the judge.",
+      "recommendedChange": "Provide normalized RFQ/catalog/site/pricing/quote extracts and authoritative external datasheet sections plus deterministic coverage and pricing checks."
+    },
+    {
+      "task": "sales_representatives_wholesale_and_manufacturing_technical_and_scientific_products/task1",
+      "severity": "high",
+      "category": "deliverable-extraction",
+      "location": "Criterion 7.0",
+      "finding": "The internal strategy memo's one-to-two-page requirement cannot be measured from DOCX text extraction.",
+      "evidence": "Mammoth discards pagination.",
+      "recommendedChange": "Replace the page target with a word range or render/count pages."
+    },
+    {
+      "task": "sales_representatives_wholesale_and_manufacturing_technical_and_scientific_products/task2",
+      "severity": "high",
+      "category": "missing-reference-context",
+      "location": "Rows 0-6",
+      "finding": "The judge cannot validate 38-point coverage, discounts/prices, RFQ-versus-briefing conflicts, controller arithmetic, competitor lives/specs, area ranges, or source citations against the four local and two external documents.",
+      "evidence": "No source records or expected BOM/specification values are included in the prompt.",
+      "recommendedChange": "Provide normalized RFQ/briefing/pricelist/datasheet extracts and deterministic BOM, pricing, replacement, and coverage checks."
+    },
+    {
+      "task": "secretaries_and_administrative_assistants_except_legal_medical_and_executive/task1",
+      "severity": "high",
+      "category": "missing-reference-context",
+      "location": "Rows 0-5",
+      "finding": "The judge cannot verify every gift/registrant, donor deduplication, volunteer matches, professional-background flags, template records, tiers, or special-circumstance letters against the six source files.",
+      "evidence": "Only the reconciled workbooks and PDF are provided; the original templates and source rows are absent.",
+      "recommendedChange": "Provide source/template extracts and deterministic gift/registrant/match/tier completeness checks."
+    },
+    {
+      "task": "secretaries_and_administrative_assistants_except_legal_medical_and_executive/task1",
+      "severity": "medium",
+      "category": "hidden-process",
+      "location": "Criteria 0.0, 3.0, and 5.0",
+      "finding": "The judge cannot establish that the workbooks and letters were actually built on the supplied templates rather than recreated with equivalent text.",
+      "evidence": "Spreadsheet extraction loses template layout/styles, PDF extraction loses the source DOCX template relationship, and source templates are not in the judge prompt.",
+      "recommendedChange": "Define observable required structure/content or compare output workbook/document styles and template identifiers programmatically."
+    },
+    {
+      "task": "secretaries_and_administrative_assistants_except_legal_medical_and_executive/task2",
+      "severity": "high",
+      "category": "missing-reference-context",
+      "location": "Rows 1-5",
+      "finding": "The judge cannot validate initially flagged employees, leave-date deductions, memo precedence, staff names/departments, tardiness patterns, letter population, or policy language against the five local and external sources.",
+      "evidence": "The output report, letter packet, and workbook are judged without attendance rows, leave requests, memos, staff database, or handbook text.",
+      "recommendedChange": "Provide normalized source tables and policy excerpt plus deterministic absence/leave/threshold/page checks."
+    },
+    {
+      "task": "social_science_research_assistants/task1",
+      "severity": "high",
+      "category": "missing-reference-context",
+      "location": "Rows 0-7",
+      "finding": "The judge cannot verify cell-level error completeness, codebook classifications, merges, productivity distribution, chi-square inputs, or benchmark claims against the six source files.",
+      "evidence": "The criteria require every raw value and matching reference row, but source data and expected error sets are absent.",
+      "recommendedChange": "Provide compact source/reference tables and deterministic validation, merge, distribution, and statistical checks."
+    },
+    {
+      "task": "social_science_research_assistants/task1",
+      "severity": "high",
+      "category": "deliverable-extraction",
+      "location": "Criteria 3.4, 4.1-4.3, and 5.3",
+      "finding": "Executed notebook outputs stored in standard Jupyter data bundles are omitted from text extraction, so visible tables/statistics may not reach the judge.",
+      "evidence": "convert_file_to_text for IPYNB reads output[\"text\"] only; it ignores output.data[\"text/plain\"], text/html, execution errors, and other rich outputs. Images are handled separately only for visual rubrics.",
+      "recommendedChange": "Extract text/plain, text/html converted to text, stream output, and error tracebacks from notebook outputs; retain image attachments for plots."
+    },
+    {
+      "task": "social_science_research_assistants/task2",
+      "severity": "high",
+      "category": "missing-reference-context",
+      "location": "Rows 0-7",
+      "finding": "The judge cannot verify every cleaning action, 30-country source extraction, latest-year selection, UNDP footnote parsing/imputation, typology, descriptive tables, or regression statistics against the local and OWID sources.",
+      "evidence": "Only the final workbook/CSV are judged; no source rows, codebook variables, or expected model outputs are provided.",
+      "recommendedChange": "Provide source extracts/codebook mappings and deterministic cleaning, extraction, imputation, typology, and regression validation."
+    },
+    {
+      "task": "social_science_research_assistants/task3",
+      "severity": "high",
+      "category": "missing-reference-context",
+      "location": "Rows 0-5",
+      "finding": "The judge cannot verify cleaning provenance, exact codebook varnames, source-country coverage, Meta/Yale percentages, ESS Table 1 values, descriptive/correlation/regression results, or divergence completeness against the local and external sources.",
+      "evidence": "The rubric requires exact source constructs and country-variable comparisons, but source records and expected results are absent.",
+      "recommendedChange": "Provide codebook/report extracts, normalized source tables, and deterministic database/workbook validation."
+    },
+    {
+      "task": "social_science_research_assistants/task3",
+      "severity": "high",
+      "category": "deliverable-extraction",
+      "location": "Row 0, especially criteria 0.1-0.4",
+      "finding": "The judge reads at most 500 rows from each SQLite table, so it cannot inspect the full cleaned_responses table of approximately 800 respondents or verify tail-row corrections and preservation.",
+      "evidence": "convert_file_to_text applies SELECT * LIMIT 500 per SQLite table, even though it reports total_rows.",
+      "recommendedChange": "For rubric-relevant SQLite outputs, add deterministic full-table summaries/hashes and targeted samples of flagged/excluded rows, or raise/scope the row limit by table."
+    },
+    {
+      "task": "sociology_teachers_postsecondary/task1",
+      "severity": "high",
+      "category": "missing-reference-context",
+      "location": "Rows 0-7",
+      "finding": "The judge cannot validate every student/component, attendance/assignment anomalies, eight indicators, scores/watch ranges, UCI summaries, at-risk roster, or WWC citations against the database, rubric, dataset, and guide.",
+      "evidence": "No source records or expected grade/risk populations are supplied to the judge.",
+      "recommendedChange": "Provide normalized source extracts and deterministic grade, anomaly, threshold, and population checks; include relevant WWC excerpts."
+    },
+    {
+      "task": "sociology_teachers_postsecondary/task2",
+      "severity": "high",
+      "category": "missing-reference-context",
+      "location": "Rows 0-7",
+      "finding": "The judge cannot verify 35 grade calculations, maxima, attendance/office-hours evidence, disputes, distributions, normalized statistics, ten evaluation items, at-risk roster, or rubric categories against the local and external sources.",
+      "evidence": "Only the updated gradebook, decisions CSV, and report are judged; the original gradebook, logs, rubric, and evals dataset are absent.",
+      "recommendedChange": "Provide source extracts and deterministic grade/distribution/statistics/at-risk checks plus the external baseline value."
+    },
+    {
+      "task": "sociology_teachers_postsecondary/task3",
+      "severity": "high",
+      "category": "missing-reference-context",
+      "location": "Rows 0-6",
+      "finding": "The judge cannot validate all 35 grade calculations, attendance-participation mismatches, at-risk population, appeal evidence/policy quotations, syllabus topic mappings, or external rubric/CLEP weights against the three local and two external sources.",
+      "evidence": "Only the four outputs are provided to the judge; the gradebook, attendance, syllabus, Berkeley rubric, and CLEP specifications are absent.",
+      "recommendedChange": "Provide normalized local-source extracts, authoritative external excerpts, and deterministic grade/risk/mapping checks."
+    },
+    {
+      "task": "statisticians/task1",
+      "severity": "high",
+      "category": "missing-reference-context",
+      "location": "Rows 0-10",
+      "finding": "The judge cannot verify source-year selection, jurisdiction exclusions, ERS/CDC/Census extraction, merged values, model estimates, diagnostics, sensitivity states, or memo claims against the seven sources.",
+      "evidence": "No source tables or expected analytic outputs are included in the judge prompt.",
+      "recommendedChange": "Provide compact normalized source data and independently computed expected summaries/model checks."
+    },
+    {
+      "task": "statisticians/task1",
+      "severity": "high",
+      "category": "deliverable-extraction",
+      "location": "Criteria 0.0 and notebook-result criteria throughout",
+      "finding": "Standard Jupyter dataframe/statistical outputs may be invisible even when the notebook is correctly executed.",
+      "evidence": "The IPYNB extractor reads output[\"text\"] but not the usual output.data[\"text/plain\"] or text/html fields used by pandas, statsmodels, and display().",
+      "recommendedChange": "Extract all standard textual MIME outputs and execution errors from notebooks."
+    },
+    {
+      "task": "statisticians/task1",
+      "severity": "high",
+      "category": "alternative-solution-fairness",
+      "location": "Criteria 10.0 and 10.4",
+      "finding": "The two accepted memo formats are not equally judgeable: DOCX pagination is unavailable, while a PDF causal diagram is not rendered or attached.",
+      "evidence": "Mammoth conversion loses DOCX page boundaries; pdfplumber returns PDF text only and collect_image_attachments does not render PDF pages.",
+      "recommendedChange": "Render both DOCX and PDF pages for page-count/layout/diagram criteria, or validate page count and embedded figures with format-aware tooling."
+    },
+    {
+      "task": "statisticians/task2",
+      "severity": "high",
+      "category": "missing-reference-context",
+      "location": "Rows 0-6",
+      "finding": "The judge cannot validate the required source anomalies, 193-country PCA/clusters, reconciliation, mixed/WLS models, 51-jurisdiction ranking, Tennessee handling, or cross-deliverable numbers against local and external data.",
+      "evidence": "Only produced deliverables are judged; the WHO/CDC/UCI/World Bank/Census records and expected calculations are absent.",
+      "recommendedChange": "Provide source extracts and deterministic anomaly, panel, model, ranking, and consistency checks."
+    },
+    {
+      "task": "statisticians/task2",
+      "severity": "high",
+      "category": "deliverable-extraction",
+      "location": "Criteria 6.0 and notebook-result criteria throughout",
+      "finding": "Executed notebook tables and model summaries can be omitted when stored as Jupyter execute_result or display_data text/plain/html outputs.",
+      "evidence": "The extractor handles only output[\"text\"], whereas common pandas/statsmodels outputs use output.data MIME bundles.",
+      "recommendedChange": "Extract standard notebook MIME bundles and errors before judging execution and analysis visibility."
+    },
+    {
+      "task": "statisticians/task3",
+      "severity": "high",
+      "category": "missing-reference-context",
+      "location": "Rows 0-5",
+      "finding": "The judge cannot verify thousands of county joins, all 15 measures, exclusions, terciles, decompositions, models, Moran statistics, mediation, outliers, or memo claims against the five sources.",
+      "evidence": "The local and external county datasets and expected calculated results are absent from the judge context.",
+      "recommendedChange": "Provide normalized source snapshots and deterministic database/model/workbook validation."
+    },
+    {
+      "task": "statisticians/task3",
+      "severity": "high",
+      "category": "deliverable-extraction",
+      "location": "Row 0",
+      "finding": "SQLite extraction samples only the first 500 rows of each county table, preventing complete verification of approximately 3,000 county keys, values, indexes, and exclusions.",
+      "evidence": "convert_file_to_text reports total_rows but executes SELECT * LIMIT 500 for every table.",
+      "recommendedChange": "Add schema/index checks plus full-table aggregates, key hashes, invalid-row queries, and targeted exclusion samples rather than a fixed prefix only."
+    },
+    {
+      "task": "statisticians/task3",
+      "severity": "high",
+      "category": "deliverable-extraction",
+      "location": "Criteria 3.1 and 3.8-4.8",
+      "finding": "Notebook model tables, diagnostics, Moran results, and mediation estimates may not appear in extracted text despite visible execution outputs.",
+      "evidence": "Typical execute_result/display_data text is under output.data[\"text/plain\"] or text/html, which the IPYNB converter ignores.",
+      "recommendedChange": "Extract the standard textual MIME outputs and execution errors."
+    },
+    {
+      "task": "statisticians/task3",
+      "severity": "high",
+      "category": "deliverable-extraction",
+      "location": "Criterion 5.9",
+      "finding": "The judge cannot verify that the PDF memo embeds at least three notebook figures.",
+      "evidence": "PDF extraction is text-only and PDF pages/images are not included in image attachments.",
+      "recommendedChange": "Render PDF pages or inspect PDF image/XObject counts and attach relevant page images for visual criteria."
+    },
+    {
+      "task": "supply_chain_managers/task1",
+      "severity": "high",
+      "category": "missing-reference-context",
+      "location": "Rows 0-7",
+      "finding": "The judge cannot verify ABC/revenue/dead-stock populations, demand/reorder math, supplier metrics/contracts, source SOP wording/issue numbers, or numeric negotiation evidence against the four inputs.",
+      "evidence": "The source transactions, inventory, supplier database, and original SOP are absent from the judge prompt.",
+      "recommendedChange": "Provide normalized source tables/SOP extracts and deterministic ABC, dead-stock, reorder, scorecard, and redline checks."
+    },
+    {
+      "task": "supply_chain_managers/task1",
+      "severity": "high",
+      "category": "deliverable-extraction",
+      "location": "Criteria 7.1-7.3",
+      "finding": "The extractor cannot establish that workbook sheets are visibly interlinked through formulas/references rather than containing independently copied matching values.",
+      "evidence": "XLSX conversion exposes cached cell values but not formulas, named ranges, cell links, or dependency relationships.",
+      "recommendedChange": "Inspect workbook formulas/dependencies programmatically, or rewrite criteria to require cross-sheet keys and reconciled values rather than implementation-specific links."
+    },
+    {
+      "task": "supply_chain_managers/task1",
+      "severity": "medium",
+      "category": "alternative-solution-fairness",
+      "location": "Criterion 6.1",
+      "finding": "A valid tracked-changes redline can be less judgeable than the equally accepted explicit-marker method because DOCX conversion may omit revision state and deleted text.",
+      "evidence": "The criterion accepts tracked revisions, strikethrough/additions, or explicit markers; Mammoth markdown does not reliably preserve Word revision metadata and visual formatting.",
+      "recommendedChange": "Inspect DOCX revision XML and run properties, or require text markers/exported revision tables equally for every allowed method."
+    },
+    {
+      "task": "supply_chain_managers/task2",
+      "severity": "high",
+      "category": "missing-reference-context",
+      "location": "Rows 0-6",
+      "finding": "The judge cannot validate capacity inputs, three-year volume aggregation, region mappings/OTD gaps, reorder parameters, external joins, current SOP gaps, or investment assumptions against the five sources.",
+      "evidence": "Only the final workbook and SOP are judged; source files and expected aggregates are absent.",
+      "recommendedChange": "Provide compact source extracts and deterministic capacity, allocation, reorder, scenario, and SOP-evidence checks."
+    },
+    {
+      "task": "technical_writers/task1",
+      "severity": "high",
+      "category": "missing-reference-context",
+      "location": "Rows 0-6",
+      "finding": "The judge cannot verify endpoint completeness, exact validation/rate-limit/version facts, ticket solutions, changelog synthesis, template headings, or exclusion of internal-only facts against the four local and external sources.",
+      "evidence": "The four Markdown outputs are judged without endpoint CSV, developer notes, template, tickets, or formatting reference.",
+      "recommendedChange": "Provide the source facts in judge context and deterministic endpoint/ticket/changelog coverage checks."
+    },
+    {
+      "task": "technical_writers/task2",
+      "severity": "high",
+      "category": "missing-reference-context",
+      "location": "Rows 0-6",
+      "finding": "The judge cannot validate every breaking change, usage-based order, code details, SDK evidence, OpenAPI endpoint/header coverage, review resolution, ticket mappings, terminology, or CSV metrics against the seven local and two external sources.",
+      "evidence": "Only the three outputs are included in the prompt; all evidence sources and style references are absent.",
+      "recommendedChange": "Provide normalized changelog/OpenAPI/usage/review/ticket/terminology facts and authoritative style excerpts with deterministic coverage checks."
+    },
+    {
+      "task": "technical_writers/task3",
+      "severity": "high",
+      "category": "missing-reference-context",
+      "location": "Rows 0-6",
+      "finding": "The judge cannot verify atomic discrepancy completeness, audit-tracker signals, 1,500-word guide grounding, every OpenAPI operation/field/status, webhook union/provenance, or v1 migration mappings against the six local and external sources.",
+      "evidence": "Only the five outputs are in judge context; the OpenAPI, current/v1 docs, tracker, delivery log, template, and GitLab guidance are absent.",
+      "recommendedChange": "Provide normalized source facts and deterministic discrepancy, endpoint, event, terminology, and migration coverage checks."
+    },
+    {
+      "task": "training_and_development_specialists/task1",
+      "severity": "high",
+      "category": "missing-reference-context",
+      "location": "Rows 0-8",
+      "finding": "The judge cannot validate checklist coverage, historical trends, 180-employee capacity, room/equipment/certification constraints, lowest-performing program, cost values, break-even inputs, or instructor coverage against the six references.",
+      "evidence": "No checklist items, source rows, template, or expected calculations are supplied to the judge.",
+      "recommendedChange": "Provide source extracts and deterministic checklist, scheduling, ROI, and instructor-risk checks."
+    },
+    {
+      "task": "training_and_development_specialists/task1",
+      "severity": "high",
+      "category": "deliverable-extraction",
+      "location": "Row 0",
+      "finding": "A completed OSHA checklist delivered as a filled PDF form or visual annotation can appear blank or incomplete to the judge.",
+      "evidence": "PDF extraction is text-only and does not render pages or reliably expose AcroForm/widget values and annotations.",
+      "recommendedChange": "Extract PDF form fields/annotations and render pages for checklist verification."
+    },
+    {
+      "task": "training_and_development_specialists/task1",
+      "severity": "medium",
+      "category": "hidden-process",
+      "location": "Criterion 8.2",
+      "finding": "The judge cannot reliably determine that attendance tracking or schedule support used the Smartsheet workbook as reference formatting.",
+      "evidence": "XLSX extraction discards formatting and the supplied template is absent; visually similar formatting also does not prove use of the reference.",
+      "recommendedChange": "Replace source-use wording with concrete required columns/layout, or inspect styles against the supplied template programmatically."
+    },
+    {
+      "task": "training_and_development_specialists/task2",
+      "severity": "high",
+      "category": "missing-reference-context",
+      "location": "Rows 0-5",
+      "finding": "The judge cannot validate all Q3 aggregations/flags, identity reconciliation, schedule feasibility, rates/budget, instrument audit, director priorities, consultant evidence, or exactly sourced memo numbers against local and external references.",
+      "evidence": "The four local and two external inputs are not in the judge prompt.",
+      "recommendedChange": "Provide normalized data/memo/availability/instrument extracts and deterministic analysis/schedule/budget checks."
+    },
+    {
+      "task": "training_and_development_specialists/task2",
+      "severity": "medium",
+      "category": "deliverable-extraction",
+      "location": "Criterion 2.8",
+      "finding": "The judge cannot observe the required color coding of external-instructor sessions.",
+      "evidence": "Spreadsheet extraction emits values only and discards cell fills, fonts, and conditional formatting.",
+      "recommendedChange": "Check cell styles programmatically or require a visible Internal/External field without separately scoring color."
+    },
+    {
+      "task": "training_and_development_specialists/task3",
+      "severity": "high",
+      "category": "missing-reference-context",
+      "location": "Rows 0-6",
+      "finding": "The judge cannot validate employee-course states, top-risk ranks, department metrics, resource-feasible sessions, remediation/monthly coverage, course selection, survey evidence, OSHA citations, incident baselines, or ROI against the five sources.",
+      "evidence": "Only the two workbooks and PDF are provided; the records, template, surveys, and external OSHA/Kirkpatrick documents are absent.",
+      "recommendedChange": "Provide normalized source extracts, authoritative standards excerpts, and deterministic matrix/schedule/ROI checks."
+    },
+    {
+      "task": "training_and_development_specialists/task3",
+      "severity": "medium",
+      "category": "deliverable-extraction",
+      "location": "Criterion 1.2",
+      "finding": "The top-ten highlighting requirement is invisible even if correctly implemented.",
+      "evidence": "XLSX extraction drops fills, fonts, conditional formatting, and other highlighting; explanatory note text remains visible but does not prove highlight styling.",
+      "recommendedChange": "Verify workbook styles programmatically or judge top-ten identity from a rank/flag column and stop scoring visual highlighting."
+    },
+    {
+      "task": "web_administrators/task1",
+      "severity": "high",
+      "category": "missing-reference-context",
+      "location": "Rows 0-6",
+      "finding": "The judge cannot verify per-event completeness, indicator correlations, all 14 CR items, topology CIDRs, certificate status, original template preservation, or configuration behavior against the eight local references.",
+      "evidence": "Only the five outputs are included; logs, CR, threat feed, topology, live configs, certificates, and template are absent.",
+      "recommendedChange": "Provide normalized incident/config/source facts and deterministic CSV/config/template validation."
+    }
+  ]
+}

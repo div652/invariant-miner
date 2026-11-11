@@ -1,0 +1,96 @@
+{
+  "rubrics": [
+    {
+      "rubric": "Does the completed error log comprehensively document the field-level discrepancies found across the CRM, scanned forms, and ERP records?",
+      "weight": 18,
+      "criterion": [
+        "The deliverable is a completed copy of the provided Error_Log template with the Error_Log columns unchanged.",
+        "Each discrepant field has its own error-log row.",
+        "All available scanned forms are compared with the corresponding CRM and ERP records.",
+        "Orders without a scanned form are compared using CRM over ERP as the source priority.",
+        "Each row identifies the order or source row, field name, both compared sources and values, and reconciled value.",
+        "No source-supported discrepancy is omitted merely because it is not an example named in an answer key."
+      ]
+    },
+    {
+      "rubric": "Are the error-log reconciliations, classifications, source attributions, and pattern findings supported by the named inputs?",
+      "weight": 14,
+      "criterion": [
+        "Each Reconciled_Value follows scanned form over CRM over ERP unless a documented source issue justifies a different resolution.",
+        "Each Error_Type uses the template vocabulary and is reasonable for the documented error.",
+        "Each Source_System_Causing_Error identifies the source that introduced the discrepant value.",
+        "Each Error_Pattern is supported by whether the same error kind recurs in the same source.",
+        "Root_Cause_Notes explain the resolution and any relevant cross-source or customer-master evidence.",
+        "Reasonable alternative classifications within the allowed vocabulary are accepted when the notes make the basis clear."
+      ]
+    },
+    {
+      "rubric": "Does the reconciliation correctly test and document revenue calculations?",
+      "weight": 10,
+      "criterion": [
+        "Total_Revenue is tested as Units_Sold multiplied by Unit_Price with a tolerance of plus or minus $0.01.",
+        "Every revenue-related discrepancy states the actual units and unit price used in the expected formula.",
+        "Every revenue-related discrepancy states the expected total and variance from the discrepant source value.",
+        "Internal inconsistencies among units, price, and total are used to identify the erroneous field when the evidence supports that inference.",
+        "The reconciled master contains revenue values that agree with its reconciled units and unit price."
+      ]
+    },
+    {
+      "rubric": "Does the submission validate every order against the customer master and handle unregistered entities correctly?",
+      "weight": 10,
+      "criterion": [
+        "Every order's customer identity and country are checked against Customer_Master_List.csv.",
+        "Registered-customer evidence identifies the applicable Customer_ID.",
+        "Customer-name or country discrepancies are reconciled using the source priority and customer-master evidence.",
+        "Every unregistered entity is explicitly flagged for follow-up.",
+        "Customer-registration results are consistent in the error log, master dataset, report, and checklist."
+      ]
+    },
+    {
+      "rubric": "Does the reconciled master dataset provide one complete, traceable record per order?",
+      "weight": 12,
+      "criterion": [
+        "The dataset contains one row for each order represented in the CRM or ERP inputs after resolving any erroneous or duplicate key.",
+        "Each row contains the reconciled value of every order field.",
+        "Each row includes a verification status.",
+        "Each row identifies all source conflicts with the conflicting field and values.",
+        "Each row includes a customer-registration flag.",
+        "The dataset preserves enough source or conflict detail to reproduce the reconciliation."
+      ]
+    },
+    {
+      "rubric": "Does the executive audit findings report present reproducible data-quality findings and actionable recommendations?",
+      "weight": 12,
+      "criterion": [
+        "At least one quantitative data-quality metric states its formula, numerator, denominator, and unit of analysis.",
+        "Every reported metric is mathematically consistent with the submitted reconciliation and its stated unit of analysis.",
+        "The report gives error counts by Error_Type.",
+        "The report gives error counts by source system.",
+        "The report identifies systematic patterns and their frequencies.",
+        "The recommendations address the observed error sources and patterns rather than relying on generic advice."
+      ]
+    },
+    {
+      "rubric": "Is Compliance_Checklist.xlsx fully completed using an explicit, evidence-based assessment basis?",
+      "weight": 10,
+      "criterion": [
+        "Every checklist criterion has Status, Records_Checked, Records_Passed, Pass_Rate, and Evidence_Comments completed.",
+        "Each Status follows the criterion threshold using the original CRM, ERP, scanned-form, and customer-master evidence applicable to that criterion; reconciled-output quality may be reported separately but does not replace the source audit.",
+        "Records_Checked and Records_Passed use a consistent unit of analysis for each criterion.",
+        "Every failed criterion cites the specific Order_IDs and values that caused the failure.",
+        "The Summary sheet correctly aggregates the completed checklist.",
+        "The checklist does not convert a source-data failure into a pass merely because the reconciled output corrects the error."
+      ]
+    },
+    {
+      "rubric": "Are all four deliverables present, usable, and internally consistent?",
+      "weight": 6,
+      "criterion": [
+        "The completed error log, reconciled master dataset, executive audit report, and completed compliance checklist are present in the required formats.",
+        "Discrepancy counts and reconciled values agree across the deliverables or any differing units of analysis are explained.",
+        "The deliverables identify the same systematic patterns and unregistered customers.",
+        "Workbook formulas, values, and report statements are readable and reproducible."
+      ]
+    }
+  ]
+}

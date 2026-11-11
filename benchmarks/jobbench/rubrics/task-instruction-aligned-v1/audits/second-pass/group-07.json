@@ -1,0 +1,108 @@
+{
+  "group": "group-07",
+  "reviewedTasks": [
+    "civil_engineers/task3",
+    "computer_and_information_systems_managers/task1",
+    "court_clerks/task1",
+    "lawyers/task1",
+    "management_analysts/task1",
+    "sociology_teachers_postsecondary/task1"
+  ],
+  "taskReviews": [
+    {
+      "task": "civil_engineers/task3",
+      "verdict": "pass",
+      "summary": "The aligned rubric covers all three deliverables, the complete reconciliation and takeoff workflow, the authorized-scope and markup checks, source hierarchy, lifecycle comparison, and one-page memo. Its numerical checks are derivable from the fixed bridge inputs rather than hidden answers, while unresolved haunch or reinforcing quantities and equivalent documented lifecycle methods remain acceptable.",
+      "alternativeSolutionProbe": "A plausible submission that calculates the reproducible geometry, labels haunch or reinforcing quantities provisional where design dimensions are missing, uses a different source-supported reinforcement basis, and applies a documented equivalent 30-year lifecycle method can satisfy the criteria without reproducing one prescribed narrative or recommendation.",
+      "issues": []
+    },
+    {
+      "task": "computer_and_information_systems_managers/task1",
+      "verdict": "pass_with_changes",
+      "summary": "The rubric is generally well aligned and avoids the original hidden tier counts, vendor conclusion, risk mapping, and budget answers. One explicit report requirement is only indirectly represented by risk-level DR statuses, so a submission can omit a failed recovery plan while still satisfying the scored rows.",
+      "alternativeSolutionProbe": "A submission could correctly populate every Critical/High risk row and mark the generic Disaster Recovery Test Failure risk as Flagged, yet mention only DR-008 and omit failed plan DR-005. That would satisfy the current row-level criterion while failing the instruction to flag any deficient DR plan.",
+      "issues": [
+        {
+          "severity": "medium",
+          "category": "coverage",
+          "location": "rubrics[1].criterion[3]",
+          "finding": "The criterion checks DR Status only for each Critical/High risk and does not require the report to enumerate every disaster-recovery plan with a failed test or RTO above 24 hours.",
+          "evidence": "The refined instructions explicitly say to flag any such plan. The fixed dr_plans input includes at least DR-005 with test_result = Fail and DR-008 with test_result = Fail and rto_hours = 48. A single risk-level Flagged value does not prove that both plans were found or reported.",
+          "recommendedChange": "Add a separate criterion requiring a complete plan-level list of every dr_plans record with a failed test or RTO greater than 24 hours, with the plan ID, reason for the flag, and related risk or an explicit statement that no risk mapping exists. Clarify whether Partial Pass counts as a failed test."
+        }
+      ]
+    },
+    {
+      "task": "court_clerks/task1",
+      "verdict": "pass_with_changes",
+      "summary": "The rubric substantially improves source-grounded auditing, preserves legal uncertainty, and covers all five deliverable types. Its financial-database criteria nevertheless conflict with its own requirement not to resolve conditional fees without verification.",
+      "alternativeSolutionProbe": "A cautious clerk could document the Simmons public-defender fees as pending because the Judge's notes say Public Defender Office, the CMS says James Crawford/Appointed, and the defense memorandum is signed by private appointed counsel. Omitting an unverified conditional fee from fees_payments avoids inventing an obligation but fails the current requirement that every reconciled fee have a database row.",
+      "issues": [
+        {
+          "severity": "high",
+          "category": "contradiction",
+          "location": "rubrics[5].criterion[0]",
+          "finding": "Requiring one fees_payments row for every reconciled fee forces an assessed amount even when a conditional fee remains pending judicial or source verification.",
+          "evidence": "rubrics[2].criterion[7] correctly requires conditional assessments to remain subject to verification, and rubrics[1].criterion[9] forbids inventing a definitive value. In the fixed inputs, Simmons's Judge notes identify Public Defender Office and order two PD fees, the CMS identifies James Crawford as appointed counsel, the defense memorandum is signed by Crawford of a private firm, and the fee schedule makes both PD fees conditional on public-defender representation. No amount or applicability is verified without an additional record or judicial decision.",
+          "recommendedChange": "Limit the database-row requirement to verified financial obligations. Permit an unresolved conditional assessment to remain in fee_reconciliation.csv and pre_entry_audit.csv as pending, with no fees_payments row until verification. Apply the no-omission and amount-equality checks only to verified obligations, or define a non-monetary hold representation if the schema is expected to store pending assessments."
+        }
+      ]
+    },
+    {
+      "task": "lawyers/task1",
+      "verdict": "pass_with_changes",
+      "summary": "The rubric is flexible about the ultimate settlement recommendation and accurately covers the principal legal authorities, Penn Central analysis, fine calculations, comparison table, counter-proposal, deadlines, and uncertainty. It omits the specifically requested analysis supporting Sandra Whitfield's possible sale decision.",
+      "alternativeSolutionProbe": "A memo can earn full credit by comparing transitional STR, historical STR, LTR, fines, and mortgages for all properties while never analyzing a sale or net-equity alternative for Sandra's two properties. That submission would leave an expressly identified client decision unanswered.",
+      "issues": [
+        {
+          "severity": "medium",
+          "category": "coverage",
+          "location": "rubrics[1].criterion[3]",
+          "finding": "The per-property economic criterion does not test the sale or exit analysis requested for Sandra Whitfield.",
+          "evidence": "The refined instructions state that Sandra is considering selling and wants the analysis before deciding. The fixed properties table supplies current_market_value and mortgage_balance for her properties: Property 5 has $680,000 and $198,000, and Property 6 has $525,000 and $330,000. The rubric checks operating alternatives and mortgage balances but never requires sale proceeds, equity, transaction assumptions, or a reason the sale option cannot yet be quantified.",
+          "recommendedChange": "Add a criterion requiring the memo to evaluate a sale/exit alternative for Sandra's properties using available market value and debt data, with transparent transaction-cost or appraisal assumptions, or to explain what additional valuation evidence is needed. Do not prescribe whether sale is recommended."
+        }
+      ]
+    },
+    {
+      "task": "management_analysts/task1",
+      "verdict": "pass_with_changes",
+      "summary": "The rubric correctly removes hidden plant conclusions, accepts evidence-supported consolidation alternatives, handles the impossible Excel sheet-name length, and covers the required calculations. The standalone COPQ deliverable is materially underweighted, and one method-documentation criterion combines four independently judgeable requirements.",
+      "alternativeSolutionProbe": "A submission could omit or seriously underdevelop the entire COPQ CSV and lose only 6 of 88 points, while a workbook that documents OEE, ranking, and downtime methods but not workforce averaging creates an all-or-nothing decision under one bundled criterion.",
+      "issues": [
+        {
+          "severity": "medium",
+          "category": "weight_allocation",
+          "location": "rubrics[6].weight",
+          "finding": "The COPQ CSV, one of only three primary deliverables, receives 6 of 88 total points, substantially less than either the complaint worksheet alone or the trend worksheet.",
+          "evidence": "The COPQ deliverable requires one row per plant plus an aggregate row, thirteen specified columns, five distinct cost formulas, a monetary production-cost denominator, and reconciliation of all totals. Omitting it entirely costs about 6.8% of the available score, whereas Complaint-Production Cross-Reference carries 20 points and Trend Diagnostics carries 18.",
+          "recommendedChange": "Increase the COPQ rubric to roughly 12-16 points and reduce the heaviest workbook-tab weights proportionally so that omission or material failure of a complete primary deliverable cannot retain a near-perfect score."
+        },
+        {
+          "severity": "low",
+          "category": "atomicity",
+          "location": "rubrics[5].criterion[2]",
+          "finding": "One criterion bundles documentation of four unrelated calculation methods: OEE, composite ranking, downtime share, and workforce averaging.",
+          "evidence": "Each method can independently be reproducible or unsupported. A workbook may document three correctly and omit one, but the combined criterion provides no clean way to identify or score the specific deficiency.",
+          "recommendedChange": "Split this criterion into four atomic criteria, one for each method, while retaining the same aggregate rubric weight."
+        }
+      ]
+    },
+    {
+      "task": "sociology_teachers_postsecondary/task1",
+      "verdict": "pass_with_changes",
+      "summary": "The rubric gives unusually complete, atomic coverage of data validation, all eight risk indicators, visible scoring, monitoring, sociological caveats, interventions, and outreach. The projected-grade rule remains ambiguous for the required Attendance & Participation component because its source due-date value is not a date.",
+      "alternativeSolutionProbe": "A reasonable submission can treat Attendance & Participation as an interim completed component using attendance and participation records through October 21, as the representative output does. A literal application of the due-date criterion instead marks the same 15% component Pending because its source value is Ongoing, producing a materially different projected grade.",
+      "issues": [
+        {
+          "severity": "medium",
+          "category": "ambiguity",
+          "location": "rubrics[0].criterion[3]",
+          "finding": "The Completed/Pending criterion does not define how to handle Attendance & Participation, whose Grading_Criteria due-date field is \"Ongoing\" rather than a date.",
+          "evidence": "The refined instructions require all eight components and say a component is completed only if its due date is on or before October 21 and it has been graded. The source workbook lists Attendance & Participation as Ongoing, while the task separately requires its treatment to be calculated from current attendance and participation records. Treating it as completed violates a literal date test; treating it as pending excludes a central 15% current-performance measure.",
+          "recommendedChange": "State an explicit exception for Attendance & Participation: use an interim score based only on valid records through October 21 and treat it as completed for the projection when that score is available. Alternatively, accept either inclusion or exclusion when the choice and its effect are documented, but do not leave the source value \"Ongoing\" subject to a strict date comparison."
+        }
+      ]
+    }
+  ]
+}

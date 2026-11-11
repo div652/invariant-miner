@@ -1,0 +1,85 @@
+{
+  "rubrics": [
+    {
+      "rubric": "Does ABC-Supplier Matrix provide a traceable ABC analysis and characterize every supplier's portfolio?",
+      "weight": 10,
+      "criterion": [
+        "ABC classification and revenue share use whs_sales from warehouse_sales_2019_2020.csv and a documented classification method.",
+        "For every supplier and ABC class, the matrix reports SKU count, revenue, revenue share, and average inventory turns.",
+        "Supplier totals include total SKUs and total revenue share, and the analysis identifies the dominant A-class supplier and the supplier with the most SKUs from the submitted calculations.",
+        "The SKU universe, item-code normalization, and any exclusions or joins between transaction and inventory data are documented so reported counts and shares are reproducible."
+      ]
+    },
+    {
+      "rubric": "Does the workbook correctly identify and explain dead stock by supplier?",
+      "weight": 8,
+      "criterion": [
+        "Dead stock is identified as positive ON_HAND_QTY with zero warehouse sales in the last six available months, rather than by an unrelated annual proxy alone.",
+        "The supplier summary reports dead-stock item count, units on hand, and value at unit cost.",
+        "The item-level list contains item code, description, supplier, UNIT_COST, ON_HAND_QTY, and ANNUAL_COGS_2020.",
+        "The analysis identifies disproportionate supplier concentrations and notable high-value items and connects them to working capital and warehouse-space use."
+      ]
+    },
+    {
+      "rubric": "Does Demand Volatility & Reorder Analysis correctly analyze every A-class item?",
+      "weight": 10,
+      "criterion": [
+        "The sheet contains one row per A-class item from the workbook's ABC classification.",
+        "Mean monthly warehouse sales, standard deviation, CV, and the CV greater-than-1.0 volatility flag are calculated using a documented treatment of available and missing months.",
+        "Current REORDER_POINT, lead-time-appropriate reorder point, percentage deviation, greater-than-30-percent misalignment flag, and proposed reorder point are reported for each row.",
+        "The reorder calculation states its lead-time source and method and uses source-grounded demand and lead-time values.",
+        "The analysis states limitations caused by sparse periods, zero demand, or single-observation items without treating a mechanically zero CV as proof of stable demand."
+      ]
+    },
+    {
+      "rubric": "Does Supplier Scorecard apply the required weights to source-grounded supplier metrics?",
+      "weight": 10,
+      "criterion": [
+        "Every supplier has on-time delivery rate, order accuracy, average lead time compared with contract terms, quality issue rate, and year-over-year spend trend or a clearly disclosed estimate or limitation.",
+        "Component scores use a documented and consistently applied normalization or scoring method.",
+        "The composite uses exactly 30% on-time delivery, 25% order accuracy, 20% lead time, 15% quality, and 10% spend trend.",
+        "The overall ranking follows from the displayed component scores and composite calculation rather than a hard-coded expected order."
+      ]
+    },
+    {
+      "rubric": "Do the scorecard and contract negotiation brief give complete, data-supported positions for both expiring suppliers?",
+      "weight": 8,
+      "criterion": [
+        "Republic National and The Country Vintner or Winebow each receive a clear renewal, conditional-renewal, or non-renewal recommendation.",
+        "Each recommendation cites that supplier's on-time delivery, average lead time, total spend and share, SKU count, dead-stock contribution, and contract end date.",
+        "Negotiation targets are numeric and tied to displayed supplier metrics, contract terms, task-provided performance targets, or cited benchmarks with a quantitative rationale; assumptions used because the data cannot determine a target are justified and sensitivity-tested.",
+        "If non-renewal or partial exit is recommended, the brief estimates the SKU migration scope and addresses transition risk."
+      ]
+    },
+    {
+      "rubric": "Does the revised SOP replace static reorder points with an operational demand-and-lead-time method?",
+      "weight": 6,
+      "criterion": [
+        "The SOP removes or redlines the annual static reorder-point method and supplies a reproducible demand, lead-time, and safety-stock formula.",
+        "The SOP states which source supplies lead time for each supplier and why that source is appropriate.",
+        "Seasonal demand or promotions are incorporated through a documented adjustment process.",
+        "The procedure defines who recalculates the values, how often they are refreshed, and how exceptions are handled."
+      ]
+    },
+    {
+      "rubric": "Does the SOP revision preserve the original procedure as a reviewable redline and implement the required controls?",
+      "weight": 6,
+      "criterion": [
+        "The original six top-level sections and all nine process steps remain visible and in their original order.",
+        "Changes are shown with tracked revisions, strikethrough and additions, or explicit redline markers that distinguish retained, deleted, and added text.",
+        "The revision introduces tiered replenishment frequencies driven by ABC classification and references the documented inefficiencies by stable numbers.",
+        "The revision includes inventory turns of at least 9x, fill rate of at least 97%, and dead stock of at most 1.5%, together with monitoring cadence and escalation triggers."
+      ]
+    },
+    {
+      "rubric": "Is the three-sheet workbook structurally complete and visibly integrated?",
+      "weight": 6,
+      "criterion": [
+        "The workbook contains exactly three worksheets in the requested order; an Excel-safe abbreviation of the overlength second worksheet name is acceptable when the full requested title appears in-sheet.",
+        "The reorder analysis is driven by the ABC-Supplier Matrix A-class list.",
+        "Supplier Scorecard references dead stock from the first sheet and reorder misalignment counts from the second sheet.",
+        "Inventory-turn results from the first sheet are connected to the workbook's overall inventory-performance discussion."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,339 @@
+{
+  "group": "group-02",
+  "reviewedTasks": [
+    "bookkeeping_accounting_and_auditing_clerks/task2",
+    "computer_and_information_research_scientists/task2",
+    "data_entry_keyers/task2",
+    "financial_managers_branch_or_department/task2",
+    "sales_representatives_wholesale_and_manufacturing_technical_and_scientific_products/task2",
+    "statisticians/task1",
+    "technical_writers/task2"
+  ],
+  "summary": {
+    "issuesConsidered": 28,
+    "applied": 19,
+    "deferredInfrastructure": 9,
+    "rejected": 0,
+    "changedTasks": [
+      "computer_and_information_research_scientists/task2",
+      "data_entry_keyers/task2",
+      "financial_managers_branch_or_department/task2",
+      "sales_representatives_wholesale_and_manufacturing_technical_and_scientific_products/task2",
+      "technical_writers/task2"
+    ],
+    "unchangedTasks": [
+      "bookkeeping_accounting_and_auditing_clerks/task2",
+      "statisticians/task1"
+    ]
+  },
+  "issues": [
+    {
+      "issueId": "group-02-001",
+      "task": "computer_and_information_research_scientists/task2",
+      "source": "group-02",
+      "severity": "high",
+      "category": "unsupported source requirement",
+      "location": "rubrics[1].criterion[1]",
+      "finding": "The rubric requires every workload to be compared with each node type's system-memory capacity, but the survey database provides only memory_gb_required, and the task explicitly uses that field as the GPU-memory requirement for cloud tiering. There is no independent system-RAM requirement to compare.",
+      "disposition": "applied",
+      "rationale": "Removed the unsupported independent system-memory comparison and made the survey memory field follow its instructed GPU-memory use."
+    },
+    {
+      "issueId": "group-02-002",
+      "task": "computer_and_information_research_scientists/task2",
+      "source": "group-02",
+      "severity": "medium",
+      "category": "ambiguous threshold",
+      "location": "rubrics[1].criterion[4]",
+      "finding": "The phrase 'nearly exhausts' has no numerical threshold or accepted method, so judges can impose an arbitrary hidden cutoff and disagree about which workloads must be flagged.",
+      "disposition": "applied",
+      "rationale": "Replaced the undefined near-capacity test with a submission-stated, consistently applied headroom threshold."
+    },
+    {
+      "issueId": "group-02-003",
+      "task": "computer_and_information_research_scientists/task2",
+      "source": "group-02",
+      "severity": "medium",
+      "category": "incomplete deliverable coverage",
+      "location": "rubrics[5].criterion[0]",
+      "finding": "The Funding Sources sheet is graded only for existence. An empty sheet or unsupported invented funding plan can satisfy the rubric even though funding sources are an explicit workbook deliverable.",
+      "disposition": "applied",
+      "rationale": "Added substantive Funding Sources reconciliation and uncertainty criteria rather than checking sheet presence alone."
+    },
+    {
+      "issueId": "group-02-004",
+      "task": "computer_and_information_research_scientists/task2",
+      "source": "group-02",
+      "severity": "medium",
+      "category": "method ambiguity",
+      "location": "rubrics[5].criterion[13]",
+      "finding": "Requiring cost per GPU-hour to use the installed GPU count appropriate to each strategy is not applicable to cloud-only and is ambiguous for hybrid, which combines installed capacity with metered cloud hours.",
+      "disposition": "applied",
+      "rationale": "Defined strategy-appropriate GPU-hour denominators for on-premises, cloud-only, and hybrid comparisons."
+    },
+    {
+      "issueId": "group-02-005",
+      "task": "computer_and_information_research_scientists/task2",
+      "source": "group-02",
+      "severity": "medium",
+      "category": "incomplete deliverable coverage",
+      "location": "rubrics[6].criterion[1]",
+      "finding": "The rubric checks only that critical_path and risk_level columns exist, not that rows contain valid, consistent values, so blank or arbitrary columns can pass.",
+      "disposition": "applied",
+      "rationale": "Added content validation for critical_path and risk_level values, including consistency, support, and documented N/A use."
+    },
+    {
+      "issueId": "group-02-006",
+      "task": "data_entry_keyers/task2",
+      "source": "group-02",
+      "severity": "medium",
+      "category": "incomplete input-template coverage",
+      "location": "rubrics[2].criterion[0]",
+      "finding": "Preserving the eight Error Log columns does not require the template's mandatory metadata to be completed: sequential Error_Number, Date_Identified in MM/DD/YYYY, and a nonblank Corrected_By value.",
+      "disposition": "applied",
+      "rationale": "Added the template-required sequential Error_Number, MM/DD/YYYY Date_Identified, and populated Corrected_By checks."
+    },
+    {
+      "issueId": "group-02-007",
+      "task": "data_entry_keyers/task2",
+      "source": "group-02",
+      "severity": "medium",
+      "category": "source-rule inconsistency",
+      "location": "rubrics[0].criterion[3]",
+      "finding": "The criterion can be read to make every policy-memo rule depend on the record's Service_Date and 02/01/2025, but the memo's insurance-provider standardization rule is explicitly effective immediately rather than service-date dependent.",
+      "disposition": "applied",
+      "rationale": "Separated service-date-dependent ICD and fee rules from the memo rule that makes insurer-name standardization effective immediately."
+    },
+    {
+      "issueId": "group-02-008",
+      "task": "financial_managers_branch_or_department/task2",
+      "source": "group-02",
+      "severity": "high",
+      "category": "constraint under-enforcement",
+      "location": "rubrics[6].criterion[4]",
+      "finding": "The rubric requires an increase to an already-grandfathered sector breach only to be explicitly addressed, not prevented or offset. That can award compliance to new exposure that is not grandfathered and leaves the sector above 20%.",
+      "disposition": "applied",
+      "rationale": "Made the 20% ceiling binding for new funding and allowed only quantified contemporaneous reductions that produce a compliant net exposure."
+    },
+    {
+      "issueId": "group-02-009",
+      "task": "financial_managers_branch_or_department/task2",
+      "source": "group-02",
+      "severity": "medium",
+      "category": "rubric-only requirement",
+      "location": "rubrics[1].criterion[9]",
+      "finding": "An explicit benchmark limitation or comparability qualification is made mandatory even though the task asks for the FDIC benchmark, variance, and commentary but does not require a separate limitations statement.",
+      "disposition": "applied",
+      "rationale": "Removed the standalone comparability-disclaimer requirement while retaining the instructed benchmark variance and commentary."
+    },
+    {
+      "issueId": "group-02-010",
+      "task": "financial_managers_branch_or_department/task2",
+      "source": "group-02",
+      "severity": "medium",
+      "category": "ambiguous scope",
+      "location": "rubrics[3].criterion[14]",
+      "finding": "The phrase 'largest problem credits' is not operationally defined, so judges may silently expect one loan, the top few by balance, all Substandard/Doubtful loans, or another cutoff.",
+      "disposition": "applied",
+      "rationale": "Replaced the undefined largest-problem-credit scope with a disclosed materiality rule that must include the largest adversely rated exposure."
+    },
+    {
+      "issueId": "group-02-011",
+      "task": "sales_representatives_wholesale_and_manufacturing_technical_and_scientific_products/task2",
+      "source": "group-02",
+      "severity": "medium",
+      "category": "incomplete deliverable coverage",
+      "location": "rubrics[1].criterion[0]",
+      "finding": "The memo content is graded, but no criterion checks that it is delivered as Internal_Memo_Clearwater_Product_Selection.docx with the exact required filename and Word format.",
+      "disposition": "applied",
+      "rationale": "Added an exact filename and readable-DOCX artifact check for the required memo."
+    },
+    {
+      "issueId": "group-02-012",
+      "task": "sales_representatives_wholesale_and_manufacturing_technical_and_scientific_products/task2",
+      "source": "group-02",
+      "severity": "medium",
+      "category": "unsupported pricing method",
+      "location": "rubrics[3].criterion[7]",
+      "finding": "Any proxy pricing is required to use the SentinelGas-price assumption, but the task limits that proxy rule to unpublished competitor replacement-sensor prices. It provides no required method for unpublished competitor Year 1 detector prices.",
+      "disposition": "applied",
+      "rationale": "Limited the instructed SentinelGas proxy to competitor replacement sensors and accepted cited detector prices or clearly labeled detector-price gaps and estimates."
+    },
+    {
+      "issueId": "group-02-013",
+      "task": "sales_representatives_wholesale_and_manufacturing_technical_and_scientific_products/task2",
+      "source": "group-02",
+      "severity": "medium",
+      "category": "unverifiable source requirement",
+      "location": "rubrics[0].criterion[2]",
+      "finding": "SentinelGas information is required on the cover, but the supplied sources identify only the company name and do not provide a company address, phone, email, or legal entity details, so completeness is not objectively judgeable.",
+      "disposition": "applied",
+      "rationale": "Limited vendor details to source-supported SentinelGas information and prohibited invention of unavailable contact fields."
+    },
+    {
+      "issueId": "group-02-014",
+      "task": "sales_representatives_wholesale_and_manufacturing_technical_and_scientific_products/task2",
+      "source": "group-02",
+      "severity": "low",
+      "category": "status vocabulary ambiguity",
+      "location": "rubrics[4].criterion[1]",
+      "finding": "Rosemount 625IR applies only to IR combustible points, but the allowed status vocabulary has no Not Applicable value. It is unclear how toxic-gas rows in the Rosemount column should be scored without mislabeling non-applicability as Non-Compliant or Not Specified.",
+      "disposition": "applied",
+      "rationale": "Added explicit N/A handling for product/specification combinations outside the product gas application while retaining the required statuses for applicable cells."
+    },
+    {
+      "issueId": "group-02-015",
+      "task": "technical_writers/task2",
+      "source": "group-02",
+      "severity": "medium",
+      "category": "incomplete artifact coverage",
+      "location": "rubrics[0].criterion[0]; rubrics[3].criterion[0]; rubrics[5].criterion[0]",
+      "finding": "No criterion verifies the three exact required filenames, and the Markdown artifact formats are only implied. Content placed in wrongly named files can satisfy the rubric.",
+      "disposition": "applied",
+      "rationale": "Added exact filename and readable-format checks to the migration guide, API reference, and impact CSV rows."
+    },
+    {
+      "issueId": "group-02-016",
+      "task": "technical_writers/task2",
+      "source": "group-02",
+      "severity": "medium",
+      "category": "rubric-only requirement",
+      "location": "rubrics[3].criterion[2]",
+      "finding": "The rubric requires examples for every applicable request body, but the task requires request-body documentation generally and specifically requests examples only where review feedback calls for them, notably POST /store/order.",
+      "disposition": "applied",
+      "rationale": "Limited mandatory request-body examples to contract examples or review/ticket-driven requirements instead of every body-bearing endpoint."
+    },
+    {
+      "issueId": "group-02-017",
+      "task": "technical_writers/task2",
+      "source": "group-02",
+      "severity": "medium",
+      "category": "ambiguous threshold",
+      "location": "rubrics[4].criterion[3]",
+      "finding": "The phrases 'elevated error rate' and 'proportionate troubleshooting' are undefined, allowing judges to impose a hidden cutoff or require different endpoint coverage from equally defensible submissions.",
+      "disposition": "applied",
+      "rationale": "Replaced the undefined elevated-error cutoff with a submission-stated, consistently applied data-based selection method."
+    },
+    {
+      "issueId": "group-02-018",
+      "task": "technical_writers/task2",
+      "source": "group-02",
+      "severity": "low",
+      "category": "incomplete structure check",
+      "location": "rubrics[0].criterion[1]",
+      "finding": "The summary table is required to contain every breaking change, but the rubric does not verify that it appears at the top immediately after the introduction as the instructed document order requires.",
+      "disposition": "applied",
+      "rationale": "Required the summary table to follow the introduction and precede detailed migration sections."
+    },
+    {
+      "issueId": "corpus-lint-001",
+      "task": "computer_and_information_research_scientists/task2",
+      "source": "corpus-lint",
+      "severity": "medium",
+      "category": "all-or-nothing-weight-concentration",
+      "location": "rubrics[5]",
+      "finding": "The adjusted-budget row places 16 independent financial and structural checks into one 16-point all-or-nothing block.",
+      "disposition": "applied",
+      "rationale": "Split the 16-point adjusted-budget row into independently weighted workbook/funding, capital-cost, operating-cost, and dashboard-economics rows while preserving the task total weight."
+    },
+    {
+      "issueId": "judgeability-001",
+      "task": "bookkeeping_accounting_and_auditing_clerks/task2",
+      "source": "judgeability",
+      "severity": "high",
+      "category": "missing-reference-context",
+      "location": "Rows 1-6",
+      "finding": "The judge cannot validate the true cash balance, complete discrepancy set, AP rollforward, chart-of-accounts names, post-adjustment Schedule C values, or budget overruns against the six task inputs.",
+      "disposition": "deferred_infrastructure",
+      "rationale": "Deferred to evaluator infrastructure because the defect is absence of task sources or deterministic reference checks from the judge context. Adding expected values to the rubric would encode hidden answers."
+    },
+    {
+      "issueId": "judgeability-002",
+      "task": "computer_and_information_research_scientists/task2",
+      "source": "judgeability",
+      "severity": "high",
+      "category": "missing-reference-context",
+      "location": "Rows 0-6",
+      "finding": "The judge cannot verify the exhaustive data audit, workload/database calculations, vendor repricing, LBNL evidence, HERD peer comparison, or corrected schedule against the four local inputs and external report.",
+      "disposition": "deferred_infrastructure",
+      "rationale": "Deferred to evaluator infrastructure because the defect is absence of task sources or deterministic reference checks from the judge context. Adding expected values to the rubric would encode hidden answers."
+    },
+    {
+      "issueId": "judgeability-003",
+      "task": "data_entry_keyers/task2",
+      "source": "judgeability",
+      "severity": "high",
+      "category": "missing-reference-context",
+      "location": "Rows 0-5",
+      "finding": "The judge cannot verify the all-field review, clear-error/review split, exact corrections, provider/facility attribution, or ICD-10 code-description validity because the six local inputs and official code file are absent.",
+      "disposition": "deferred_infrastructure",
+      "rationale": "Deferred to evaluator infrastructure because the defect is absence of task sources or deterministic reference checks from the judge context. Adding expected values to the rubric would encode hidden answers."
+    },
+    {
+      "issueId": "judgeability-004",
+      "task": "financial_managers_branch_or_department/task2",
+      "source": "judgeability",
+      "severity": "high",
+      "category": "missing-reference-context",
+      "location": "Rows 0-7",
+      "finding": "The judge cannot validate portfolio totals, watch-list completeness, CDFI scores, rate-shock calculations, FDIC benchmarks, policy thresholds, or capital allocation against the local portfolio/applications/template and external FDIC/OCC sources.",
+      "disposition": "deferred_infrastructure",
+      "rationale": "Deferred to evaluator infrastructure because the defect is absence of task sources or deterministic reference checks from the judge context. Adding expected values to the rubric would encode hidden answers."
+    },
+    {
+      "issueId": "judgeability-005",
+      "task": "sales_representatives_wholesale_and_manufacturing_technical_and_scientific_products/task2",
+      "source": "judgeability",
+      "severity": "high",
+      "category": "missing-reference-context",
+      "location": "Rows 0-6",
+      "finding": "The judge cannot validate 38-point coverage, discounts/prices, RFQ-versus-briefing conflicts, controller arithmetic, competitor lives/specs, area ranges, or source citations against the four local and two external documents.",
+      "disposition": "deferred_infrastructure",
+      "rationale": "Deferred to evaluator infrastructure because the defect is absence of task sources or deterministic reference checks from the judge context. Adding expected values to the rubric would encode hidden answers."
+    },
+    {
+      "issueId": "judgeability-006",
+      "task": "statisticians/task1",
+      "source": "judgeability",
+      "severity": "high",
+      "category": "missing-reference-context",
+      "location": "Rows 0-10",
+      "finding": "The judge cannot verify source-year selection, jurisdiction exclusions, ERS/CDC/Census extraction, merged values, model estimates, diagnostics, sensitivity states, or memo claims against the seven sources.",
+      "disposition": "deferred_infrastructure",
+      "rationale": "Deferred to evaluator infrastructure because the defect is absence of task sources or deterministic reference checks from the judge context. Adding expected values to the rubric would encode hidden answers."
+    },
+    {
+      "issueId": "judgeability-007",
+      "task": "statisticians/task1",
+      "source": "judgeability",
+      "severity": "high",
+      "category": "deliverable-extraction",
+      "location": "Criteria 0.0 and notebook-result criteria throughout",
+      "finding": "Standard Jupyter dataframe/statistical outputs may be invisible even when the notebook is correctly executed.",
+      "disposition": "deferred_infrastructure",
+      "rationale": "Deferred to evaluator infrastructure because standard Jupyter MIME output extraction is a parser defect, not a rubric-content defect."
+    },
+    {
+      "issueId": "judgeability-008",
+      "task": "statisticians/task1",
+      "source": "judgeability",
+      "severity": "high",
+      "category": "alternative-solution-fairness",
+      "location": "Criteria 10.0 and 10.4",
+      "finding": "The two accepted memo formats are not equally judgeable: DOCX pagination is unavailable, while a PDF causal diagram is not rendered or attached.",
+      "disposition": "deferred_infrastructure",
+      "rationale": "Deferred to evaluator infrastructure because DOCX/PDF rendering, page counting, and diagram visibility require format-aware extraction; narrowing the accepted task formats would unfairly change the instructions."
+    },
+    {
+      "issueId": "judgeability-009",
+      "task": "technical_writers/task2",
+      "source": "judgeability",
+      "severity": "high",
+      "category": "missing-reference-context",
+      "location": "Rows 0-6",
+      "finding": "The judge cannot validate every breaking change, usage-based order, code details, SDK evidence, OpenAPI endpoint/header coverage, review resolution, ticket mappings, terminology, or CSV metrics against the seven local and two external sources.",
+      "disposition": "deferred_infrastructure",
+      "rationale": "Deferred to evaluator infrastructure because the defect is absence of task sources or deterministic reference checks from the judge context. Adding expected values to the rubric would encode hidden answers."
+    }
+  ]
+}

@@ -1,0 +1,233 @@
+{
+  "group": "group-06",
+  "reviewedTasks": [
+    "biostatisticians/task1",
+    "computer_user_support_specialists/task1",
+    "petroleum_engineers/task1",
+    "statisticians/task2",
+    "supply_chain_managers/task1",
+    "supply_chain_managers/task2"
+  ],
+  "issues": [
+    {
+      "id": "group-06-1",
+      "source": "group-06.json",
+      "task": "biostatisticians/task1",
+      "severity": "high",
+      "category": "source_consistency",
+      "location": "rubrics[1].criterion[9] and rubrics[3].criterion[7]",
+      "finding": "The interim adjustment did not require the proposal-specified method and information times.",
+      "disposition": "applied",
+      "rationale": "Both criteria now require O'Brien-Fleming spending at 50% and 75% information or a documented mathematically equivalent implementation."
+    },
+    {
+      "id": "group-06-2",
+      "source": "group-06.json",
+      "task": "computer_user_support_specialists/task1",
+      "severity": "medium",
+      "category": "deliverable_coverage",
+      "location": "rubrics[2]",
+      "finding": "The report rubric omitted the escalation email's client-upgrade decision and device-inventory support.",
+      "disposition": "applied",
+      "rationale": "A criterion now requires a mandate, conditional-rollout, or no-mandate recommendation supported by full-version behavior and devices-table evidence or documented join limits."
+    },
+    {
+      "id": "group-06-3",
+      "source": "group-06.json",
+      "task": "statisticians/task2",
+      "severity": "high",
+      "category": "hidden_answer",
+      "location": "rubrics[0].criterion[2] and rubrics[0].criterion[3]",
+      "finding": "The memo row required two exact source anomalies instead of accepting other valid discrepancies.",
+      "disposition": "applied",
+      "rationale": "The exact anomaly requirements were replaced with general source-screening and downstream-handling criteria for variables actually used."
+    },
+    {
+      "id": "group-06-4",
+      "source": "group-06.json",
+      "task": "supply_chain_managers/task1",
+      "severity": "medium",
+      "category": "source_grounding",
+      "location": "rubrics[4].criterion[2]",
+      "finding": "Numeric negotiation targets could pass as unsupported business assumptions.",
+      "disposition": "applied",
+      "rationale": "Targets must now be tied to displayed metrics, contract terms, task targets, or cited benchmarks; data-gap assumptions require quantitative justification and sensitivity testing."
+    },
+    {
+      "id": "group-06-5",
+      "source": "group-06.json",
+      "task": "supply_chain_managers/task2",
+      "severity": "high",
+      "category": "source_consistency_and_judgeability",
+      "location": "rubrics[0].criterion[3] and rubrics[0].criterion[4]",
+      "finding": "The capacity row required a physical utilization ratio despite incompatible product-unit and pallet-day measures.",
+      "disposition": "applied",
+      "rationale": "The row now requires explicit units and a documented pallet-day conversion for physical utilization; otherwise the result must remain a labeled proxy and cannot be compared directly with reported utilization."
+    },
+    {
+      "id": "group-06-6",
+      "source": "group-06.json",
+      "task": "supply_chain_managers/task2",
+      "severity": "medium",
+      "category": "deliverable_coverage",
+      "location": "rubrics[3].criterion[0] and rubrics[3].criterion[3]",
+      "finding": "The investment row did not anchor payback to the stated $1.2M request or disclose treatment of the 12 hires.",
+      "disposition": "applied",
+      "rationale": "The approve scenario and payback criteria now require reconciliation to the $1.2M baseline and explicit treatment of hiring costs."
+    },
+    {
+      "id": "corpus-lint-2",
+      "source": "corpus-lint.json",
+      "task": "petroleum_engineers/task1",
+      "severity": "medium",
+      "category": "all-or-nothing-fragmentation",
+      "location": "rubrics[0] through rubrics[7]",
+      "finding": "Seventy-five checks were concentrated in eight coarse weighted rows.",
+      "disposition": "applied",
+      "rationale": "The rubric was split into 17 separately weighted analytical stages while retaining all prior checks and the exact 50-point total."
+    },
+    {
+      "id": "corpus-lint-7",
+      "source": "corpus-lint.json",
+      "task": "supply_chain_managers/task1",
+      "severity": "high",
+      "category": "duplicate-criterion",
+      "location": "rubrics[3].criterion[4] and rubrics[7].criterion[2]",
+      "finding": "Dead-stock and reorder-misalignment linkage was scored in two rows.",
+      "disposition": "applied",
+      "rationale": "The duplicate was removed from the supplier-scorecard row and remains scored once in the workbook-integration row."
+    },
+    {
+      "id": "corpus-lint-11",
+      "source": "corpus-lint.json",
+      "task": "supply_chain_managers/task2",
+      "severity": "medium",
+      "category": "circular-self-defined-rule",
+      "location": "rubrics[2].criterion[2]",
+      "finding": "Any submission-defined over-stocking rule could satisfy the criterion.",
+      "disposition": "applied",
+      "rationale": "The rule must now derive from demand, lead time, supplied reorder parameters, relevant department targets, and sensitivity analysis for material assumptions."
+    },
+    {
+      "id": "judgeability-0",
+      "source": "judgeability.json",
+      "task": "biostatisticians/task1",
+      "severity": "high",
+      "category": "missing-reference-context",
+      "location": "Rows 0-6",
+      "finding": "The judge lacks proposal and cohort records needed to verify source-derived results.",
+      "disposition": "deferred_infrastructure",
+      "rationale": "Adding expected counts or rates to the rubric would encode hidden answers. The evaluator should receive normalized source extracts or deterministic checks."
+    },
+    {
+      "id": "judgeability-1",
+      "source": "judgeability.json",
+      "task": "biostatisticians/task1",
+      "severity": "medium",
+      "category": "hidden-process",
+      "location": "rubrics[1].criterion[10]",
+      "finding": "Actual use of the external sample-size calculator is not observable from the submitted workbook.",
+      "disposition": "applied",
+      "rationale": "The criterion now scores a deliverable-visible independent cross-check with displayed calculator inputs, output, and differences rather than unverifiable tool-use process."
+    },
+    {
+      "id": "judgeability-18",
+      "source": "judgeability.json",
+      "task": "computer_user_support_specialists/task1",
+      "severity": "high",
+      "category": "missing-reference-context",
+      "location": "Rows 1-7",
+      "finding": "The judge lacks the log, inventory database, tickets, email, CAB template, and guidance needed for source verification.",
+      "disposition": "deferred_infrastructure",
+      "rationale": "Expected mappings and counts were not embedded in rubric prose; source extracts and deterministic validations belong in evaluator infrastructure."
+    },
+    {
+      "id": "judgeability-52",
+      "source": "judgeability.json",
+      "task": "petroleum_engineers/task1",
+      "severity": "high",
+      "category": "missing-reference-context",
+      "location": "Rows 0-7",
+      "finding": "The judge lacks the source records needed to validate models, joins, rankings, formations, personnel, and lineage.",
+      "disposition": "deferred_infrastructure",
+      "rationale": "Embedding expected fitted parameters, match counts, or rankings would create hidden answers; normalized source and deterministic validation support is required."
+    },
+    {
+      "id": "judgeability-53",
+      "source": "judgeability.json",
+      "task": "petroleum_engineers/task1",
+      "severity": "medium",
+      "category": "deliverable-extraction",
+      "location": "Workbook-wide criteria",
+      "finding": "Large workbook extraction can truncate valid later sheets and rows.",
+      "disposition": "deferred_infrastructure",
+      "rationale": "The rubric cannot repair per-file extraction truncation without weakening required deliverables; the extractor needs per-sheet summaries and truncation metadata."
+    },
+    {
+      "id": "judgeability-84",
+      "source": "judgeability.json",
+      "task": "statisticians/task2",
+      "severity": "high",
+      "category": "missing-reference-context",
+      "location": "Rows 0-6",
+      "finding": "The judge lacks the WHO, CDC, UCI, World Bank, and optional proxy records needed to validate source-derived analyses.",
+      "disposition": "deferred_infrastructure",
+      "rationale": "No expected anomaly values, clusters, model coefficients, or rankings were added; source extracts and deterministic checks belong in the evaluator."
+    },
+    {
+      "id": "judgeability-85",
+      "source": "judgeability.json",
+      "task": "statisticians/task2",
+      "severity": "high",
+      "category": "deliverable-extraction",
+      "location": "Notebook-result criteria",
+      "finding": "The notebook extractor omits common execute_result and display_data MIME outputs.",
+      "disposition": "deferred_infrastructure",
+      "rationale": "Required visible outputs should not be weakened because of an extractor gap; standard notebook MIME bundles and errors must be extracted."
+    },
+    {
+      "id": "judgeability-90",
+      "source": "judgeability.json",
+      "task": "supply_chain_managers/task1",
+      "severity": "high",
+      "category": "missing-reference-context",
+      "location": "Rows 0-7",
+      "finding": "The judge lacks the source transactions, inventory, supplier database, and SOP needed to validate the analysis.",
+      "disposition": "deferred_infrastructure",
+      "rationale": "Hidden supplier outcomes and expected item lists were not added. The evaluator needs compact source tables and deterministic checks."
+    },
+    {
+      "id": "judgeability-91",
+      "source": "judgeability.json",
+      "task": "supply_chain_managers/task1",
+      "severity": "high",
+      "category": "deliverable-extraction",
+      "location": "rubrics[7].criterion[1] through rubrics[7].criterion[3]",
+      "finding": "Cached-value extraction cannot prove cross-sheet formula or dependency links.",
+      "disposition": "deferred_infrastructure",
+      "rationale": "The task explicitly requires visible workbook linkage. Formula, named-range, and dependency inspection must be added rather than replacing the requirement with copied-value checks."
+    },
+    {
+      "id": "judgeability-92",
+      "source": "judgeability.json",
+      "task": "supply_chain_managers/task1",
+      "severity": "medium",
+      "category": "alternative-solution-fairness",
+      "location": "rubrics[6].criterion[1]",
+      "finding": "Valid tracked revisions may be less visible than explicit markers under the current DOCX extractor.",
+      "disposition": "deferred_infrastructure",
+      "rationale": "The task expressly accepts tracked changes, formatting, or markers. Restricting the rubric to markers would unfairly remove valid methods; revision XML and run properties must be inspected."
+    },
+    {
+      "id": "judgeability-93",
+      "source": "judgeability.json",
+      "task": "supply_chain_managers/task2",
+      "severity": "high",
+      "category": "missing-reference-context",
+      "location": "Rows 0-6",
+      "finding": "The judge lacks capacity, demand, mapping, reorder, supplementary, and SOP source records.",
+      "disposition": "deferred_infrastructure",
+      "rationale": "Expected capacity totals, routing conclusions, OTD gaps, and reorder answers were not encoded; source extracts and deterministic checks are required."
+    }
+  ]
+}

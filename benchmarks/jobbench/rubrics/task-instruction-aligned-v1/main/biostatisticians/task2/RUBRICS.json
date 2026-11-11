@@ -1,0 +1,97 @@
+{
+  "rubrics": [
+    {
+      "rubric": "Does the Audit sheet accurately reconcile the protocol with the trial data and explain the power implications of material discrepancies?",
+      "weight": 7,
+      "criterion": [
+        "The Audit sheet uses the required columns Parameter, Protocol Value, Observed Value, and Discrepancy Flag.",
+        "The audit compares protocol and observed enrollment and allocation.",
+        "The audit compares the protocol design and primary-analysis specification with the available trial data.",
+        "The audit compares the assumed common standard deviation with an observed pooled standard deviation calculated from the primary endpoint.",
+        "The audit compares assumed and observed dropout or Week 24 missingness.",
+        "Each material discrepancy includes a source-grounded implication for the study's actual precision or power."
+      ]
+    },
+    {
+      "rubric": "Does the Site Effects analysis correctly implement the protocol-specified ITT-LOCF endpoint, identify the outlier site, and perform the leave-one-site-out sensitivity analysis?",
+      "weight": 12,
+      "criterion": [
+        "Every randomized subject is included in the ITT endpoint after applying LOCF as specified in the protocol.",
+        "The number of imputed subjects and the value carried forward for each observed missingness pattern are documented.",
+        "Per-site Drug_X minus Placebo treatment effects report the sample size in each arm.",
+        "Per-site Drug_X minus Placebo treatment effects report an estimate and 95% confidence interval.",
+        "The outlier designation follows a stated sign-consistent rule for the largest treatment benefit under the required per-site analysis.",
+        "The leave-one-site-out table excludes every site once.",
+        "Each leave-one-site-out result reports the protocol-adjusted overall treatment difference, 95% confidence interval, and p-value.",
+        "The interpretation states whether the overall conclusion is sensitive to excluding the outlier or any other site."
+      ]
+    },
+    {
+      "rubric": "Does the Subgroup Forest sheet report the required mixed-effects model, subgroup effects, interaction tests, and clinically meaningful interpretation?",
+      "weight": 10,
+      "criterion": [
+        "The mixed-effects model treats site as a random effect and includes baseline HbA1c.",
+        "The mixed-effects model includes treatment, age group, sex, treatment-by-age-group, and treatment-by-sex fixed effects, or a mathematically equivalent hierarchical parameterization.",
+        "A coefficient table reports estimates and inferential results for the fitted model.",
+        "Treatment effects with 95% confidence intervals are reported for age under 65, age 65 or older, Male, Female, and Overall.",
+        "The forest plot displays the five required effects with 95% confidence intervals and a vertical reference line at zero; the adjacent estimate-and-CI table is accepted as corroborating evidence for the plotted values of an embedded workbook chart.",
+        "The treatment-by-age-group and treatment-by-sex p-values are annotated on or immediately adjacent to the forest plot; an adjacent table is accepted as evidence of those annotations for an embedded workbook chart.",
+        "The interpretation separately addresses statistical significance at p < 0.05 and clinical relevance of the observed subgroup differences.",
+        "The interpretation relates subgroup consistency or heterogeneity to regulatory expectations without claiming equivalence from a non-significant test."
+      ]
+    },
+    {
+      "rubric": "Does the Sample Size sheet correctly re-estimate the 52-week extension sample size for both required scenarios?",
+      "weight": 8,
+      "criterion": [
+        "The two scenarios use the full-dataset effect and the effect after excluding the identified outlier site.",
+        "Each scenario uses 80% of its observed treatment effect as the target difference.",
+        "Each scenario uses an observed pooled standard deviation and documents the population used to estimate it.",
+        "The calculation uses 90% power and two-sided alpha 0.05.",
+        "The calculation follows the cited two-sample parallel-group means formula or a mathematically equivalent method.",
+        "Each scenario reports per-arm and total sample sizes before dropout adjustment.",
+        "Each scenario reports per-arm and total sample sizes after a 15% dropout adjustment.",
+        "Rounding and any uncertainty or modeling assumptions are stated."
+      ]
+    },
+    {
+      "rubric": "Does the Sample Size sheet compute conditional power for Week 24 from the observed Week 12 interim data?",
+      "weight": 7,
+      "criterion": [
+        "Conditional power is framed as the probability of significance at Week 24 given the Week 12 interim result.",
+        "The calculation uses the observed Week 12 treatment effect or its corresponding test statistic.",
+        "The calculation uses the protocol-planned final sample size.",
+        "The interim information fraction is shown and its derivation is stated.",
+        "A valid interim-to-final conditional-power formula is shown.",
+        "The observed interim Z-statistic and two-sided critical value are shown.",
+        "The reported conditional power is numerically consistent with the displayed inputs, allowing ordinary rounding."
+      ]
+    },
+    {
+      "rubric": "Does the RWE Comparison sheet perform the requested source-grounded A1C-testing and medication-utilization comparisons?",
+      "weight": 9,
+      "criterion": [
+        "A1C testing is defined as an A1Cresult value that is neither missing nor \"None\".",
+        "A1C testing is reported by every admission type represented in diabetic_data.csv using labels decoded from IDS_mapping.csv.",
+        "Each admission-type row reports the tested numerator, encounter denominator, and proportion.",
+        "An overall A1C testing numerator, denominator, and proportion are reported.",
+        "Real-world metformin and insulin use are calculated using the instruction's any-value-other-than-\"No\" rule.",
+        "Trial baseline metformin and insulin history are reported separately by treatment arm.",
+        "The medication table contrasts the real-world rate with the trial-arm rates for metformin and insulin.",
+        "The GLP-1 comparison assesses field availability in both the real-world and trial baseline sources, distinguishes unavailable or unsuitable data from an observed zero, and states the resulting limitation.",
+        "Trial medication rates use the corresponding baseline history fields and treatment-arm denominators."
+      ]
+    },
+    {
+      "rubric": "Does the submission provide the complete, internally consistent deliverable requested by the instructions?",
+      "weight": 5,
+      "criterion": [
+        "The output includes DX24_301_Integrity_Analysis.xlsx.",
+        "The workbook contains sheets named exactly Audit, Site Effects, Subgroup Forest, Sample Size, and RWE Comparison.",
+        "A forest plot is embedded in the workbook or supplied as a separate image deliverable; a separate image is not required when an embedded chart has its complete underlying estimate, confidence-interval, and interaction-p-value table on the sheet.",
+        "Treatment-effect signs, outlier identity, imputation counts, and scenario labels are consistent across sheets.",
+        "Displayed totals and headline results are traceable to formulas, tables, or documented calculations using the named inputs."
+      ]
+    }
+  ]
+}

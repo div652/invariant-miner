@@ -1,0 +1,94 @@
+{
+  "rubrics": [
+    {
+      "rubric": "Does the Quantity_Takeoff sheet provide complete, source-grounded quantities and correctly account for the 15-degree skew?",
+      "weight": 10,
+      "criterion": [
+        "Every estimate line item has a quantity, unit, and displayed calculation or source basis.",
+        "Structure excavation uses a parallelogram plan footprint rather than an unadjusted rectangular footprint.",
+        "The excavation calculation derives the skew-adjusted length from the specified length and 15-degree skew or uses a geometrically equivalent method.",
+        "The excavation calculation shows the perpendicular width and excavation depth used.",
+        "Each of the four wing walls is listed individually with its skew-adjusted dimensions.",
+        "The wing-wall explanation distinguishes the effect of the skew at acute and obtuse corners.",
+        "The quantity summary is arithmetically consistent with the detailed calculations."
+      ]
+    },
+    {
+      "rubric": "Does the Reinforcement_Verification sheet verify every cast-in-place bar mark and carry the correct reinforcement quantity into the estimate?",
+      "weight": 8,
+      "criterion": [
+        "Every bar mark in Reinforcement_Schedule_Template.csv appears in the verification.",
+        "Each bar mark reports total length, published unit weight, stated weight, calculated weight, and difference.",
+        "Calculated weight equals total length multiplied by the displayed unit weight from a cited published bar-weight table, rounded once to the displayed precision; a rounding-only difference is no more than half of one unit in the last displayed decimal place.",
+        "Subtotals are shown by structural element and bar size.",
+        "Every non-zero discrepancy beyond the stated display-rounding tolerance is identified, and smaller differences remain visible in the Difference field.",
+        "The cast-in-place subtotal and waste allowance are shown separately.",
+        "The final reinforcement quantity carried into the estimate is consistent with the verification.",
+        "Factory-installed precast reinforcement is excluded from the cast-in-place reinforcement line."
+      ]
+    },
+    {
+      "rubric": "Does the Unit_Cost_Analysis sheet make a complete and valid comparison between local costs and WSDOT Contract 24Z011?",
+      "weight": 9,
+      "criterion": [
+        "The table contains the eight required columns in the instructed order.",
+        "The workbook states a comparability rule based on item scope and compatible units and applies it to every local estimate item.",
+        "Every item meeting the stated comparability rule is included, and plausible candidate matches that are excluded are identified with a reason in the comparison or assumptions documentation.",
+        "Local unit costs are taken from Material_Labor_Unit_Costs_2024.csv.",
+        "WSDOT low-bid and engineer-estimate prices are taken from Contract 24Z011.",
+        "Compared quantities use compatible units or disclose the conversion used.",
+        "Variance is calculated as (WSDOT minus Local) divided by Local times 100.",
+        "Variance values may be displayed as formulas or calculated values that evaluate to the required result.",
+        "Every comparison row states the selected price.",
+        "Every comparison row gives a project-specific rationale for the selected price."
+      ]
+    },
+    {
+      "rubric": "Does the Detailed_Estimate apply the required confidence tiers and contingencies to all line items?",
+      "weight": 9,
+      "criterion": [
+        "Every line item reports quantity, unit, selected unit price, and extended cost.",
+        "Every line item is assigned a confidence level.",
+        "Directly benchmarked items use the 8% high-confidence contingency.",
+        "Indirectly or partially validated items use the 12% moderate-confidence contingency.",
+        "Items without a comparable WSDOT benchmark use the 15% low-confidence contingency.",
+        "Every line item reports its contingency amount.",
+        "The cost-weighted average contingency is calculated from the line-item costs and assigned rates.",
+        "Epoxy-coated reinforcing steel uses the matching local cost line for the specified bar type.",
+        "The estimate does not double-count reinforcement included in the precast culvert price."
+      ]
+    },
+    {
+      "rubric": "Do the Executive_Summary and estimate totals correctly calculate mobilization, contingency, and the final estimate?",
+      "weight": 6,
+      "criterion": [
+        "The construction subtotal before mobilization is shown.",
+        "The mobilization percentage is selected from the local cost table based on the calculated project subtotal.",
+        "Mobilization is calculated from the stated construction subtotal.",
+        "The total contingency amount is shown.",
+        "The final estimate equals the displayed subtotal, mobilization, and contingency components.",
+        "The weighted average contingency is reported in the executive summary."
+      ]
+    },
+    {
+      "rubric": "Does the Assumptions_Risks sheet document the material pricing, geometry, and delivery uncertainties that affect the estimate?",
+      "weight": 4,
+      "criterion": [
+        "Material assumptions used to resolve conflicting or incomplete quantity information are stated.",
+        "Significant local-versus-WSDOT price differences have a stated selection rationale.",
+        "Items without direct market comparables are identified as estimate risks.",
+        "The limits of transferring WSDOT bid prices to this project's scope and location are acknowledged."
+      ]
+    },
+    {
+      "rubric": "Does the submission provide the complete workbook and maintain consistency across its required sheets?",
+      "weight": 4,
+      "criterion": [
+        "The output includes Miller_Creek_Culvert_Estimate.xlsx.",
+        "The workbook contains Executive_Summary, Quantity_Takeoff, Unit_Cost_Analysis, Reinforcement_Verification, Detailed_Estimate, and Assumptions_Risks sheets.",
+        "Quantities and selected prices carried between sheets are consistent.",
+        "Formula-driven cells or displayed values support the reported executive-summary totals."
+      ]
+    }
+  ]
+}

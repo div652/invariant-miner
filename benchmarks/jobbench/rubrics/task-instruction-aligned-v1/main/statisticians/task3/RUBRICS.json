@@ -1,0 +1,133 @@
+{
+  "rubrics": [
+    {
+      "rubric": "Does county_analysis.db contain the required county-level source fields in normalized tables?",
+      "weight": 5,
+      "criterion": [
+        "The county_identifiers table contains FIPS, county name, state, 2023 RUCC, and Economic Typology for every included county.",
+        "The socioeconomic_current table contains all-ages poverty rate, 2023 median household income, 2023 unemployment rate, 2019–23 bachelor's-degree attainment, and the 2023 population estimate.",
+        "The socioeconomic_historical table contains 2010 and 2023 unemployment rates and the earliest and latest available median household income values with their years labeled.",
+        "The health_outcomes table contains all 15 PLACES measures as crude-prevalence columns.",
+        "The demographic_dynamics table contains the 2023 net migration rate, 2023 natural change rate, and 2020–2023 population change."
+      ]
+    },
+    {
+      "rubric": "Are the required socioeconomic and population changes calculated correctly?",
+      "weight": 3,
+      "criterion": [
+        "Unemployment-rate change is calculated as the 2023 rate minus the 2010 rate.",
+        "Income change is calculated as the labeled latest available value minus the labeled earliest available value.",
+        "Population change is calculated as POP_ESTIMATE_2023 minus CENSUS_2020_POP."
+      ]
+    },
+    {
+      "rubric": "Does the exclusions table transparently account for counties that cannot be joined across the five sources?",
+      "weight": 3,
+      "criterion": [
+        "The exclusions table logs every county that cannot be joined across all five sources.",
+        "Each exclusion contains FIPS, county name, and a specific reason_code identifying the missing or incompatible source data."
+      ]
+    },
+    {
+      "rubric": "Does county_analysis.db preserve county-key and SQLite integrity across every required table?",
+      "weight": 3,
+      "criterion": [
+        "Each required county table has one row per included county keyed by FIPS.",
+        "Every required table is indexed on FIPS.",
+        "Measure columns are stored as numeric SQLite types.",
+        "FIPS values retain leading zeros or otherwise join counties without identifier corruption."
+      ]
+    },
+    {
+      "rubric": "Is disparity_profile.xlsx complete and structurally compliant?",
+      "weight": 2,
+      "criterion": [
+        "The workbook is submitted as disparity_profile.xlsx.",
+        "The workbook contains exactly Change-by-Health Matrix, Metro Decomposition, and Outlier Flag Sheet."
+      ]
+    },
+    {
+      "rubric": "Does the Change-by-Health Matrix sheet implement the instructed unemployment-change terciles and valid omnibus tests for all 15 health measures?",
+      "weight": 6,
+      "criterion": [
+        "The sheet is named Change-by-Health Matrix.",
+        "Tercile cuts use the 33rd and 67th percentiles of 2010–2023 unemployment-rate change.",
+        "T1 represents the largest decrease or smallest increase.",
+        "T3 represents the largest increase.",
+        "The sheet has one row for each of the 15 health measures.",
+        "Each row reports mean crude prevalence for T1, T2, and T3.",
+        "Each row reports an ANOVA or justified Welch-test statistic.",
+        "Each row reports a p-value to at least three decimals or scientific notation."
+      ]
+    },
+    {
+      "rubric": "Do the Metro Decomposition and Outlier Flag Sheet provide the required decomposition and regression-outlier analyses?",
+      "weight": 7,
+      "criterion": [
+        "The workbook contains a sheet named Metro Decomposition.",
+        "The decomposition covers obesity, diabetes, and depression.",
+        "Each outcome reports metro mean, non-metro mean, and total gap.",
+        "Each outcome reports explained and unexplained components using pooled coefficients.",
+        "Per-predictor explained contributions are reported.",
+        "The workbook contains a sheet named Outlier Flag Sheet.",
+        "The outlier sheet contains the instructed seven columns.",
+        "Rows are limited to county-outcome residuals whose absolute value exceeds two residual standard deviations.",
+        "Predicted, observed, and residual values are numerically consistent."
+      ]
+    },
+    {
+      "rubric": "Does the executed reconciliation_models.ipynb fit, report, diagnose, and compare the instructed static and dynamic models?",
+      "weight": 10,
+      "criterion": [
+        "The notebook reads its analysis data from county_analysis.db.",
+        "The notebook is saved with executed code cells and outputs.",
+        "Separate static and dynamic models are fit for obesity.",
+        "Separate static and dynamic models are fit for diabetes.",
+        "Separate static and dynamic models are fit for depression.",
+        "The static model uses socioeconomic levels and RUCC controls.",
+        "The dynamic model adds socioeconomic change variables and net migration rate.",
+        "RUCC is categorical or its ordinal treatment is justified.",
+        "Each model reports coefficients, standard errors, p-values, and R-squared.",
+        "Each outcome comparison reports an LR statistic, degrees of freedom, and p-value.",
+        "Each outcome comparison reports AIC and BIC.",
+        "Multicollinearity is assessed for poverty, income, unemployment, and education.",
+        "Any VIF above 10 is noted or remediated."
+      ]
+    },
+    {
+      "rubric": "Does the notebook complete the required residual-spatial, mediation, and figure analyses with reproducible results?",
+      "weight": 8,
+      "criterion": [
+        "The best-fitting model is selected for each outcome using the reported comparison evidence.",
+        "Best-model residuals are averaged to the state level.",
+        "State queen-contiguity weights use shared borders or vertices.",
+        "Non-contiguous states are handled explicitly.",
+        "Moran's I, its expected value, and a p-value are reported for each outcome.",
+        "The mediation analysis estimates the poverty-to-inactivity path.",
+        "The mediation analysis estimates the inactivity-to-obesity path controlling for poverty.",
+        "The mediation analysis reports direct, indirect, and proportion-mediated effects.",
+        "The indirect effect has a bootstrap 95% confidence interval.",
+        "A coefficient forest plot compares specifications.",
+        "A diverging state-level residual map is generated.",
+        "A mediation path diagram is generated."
+      ]
+    },
+    {
+      "rubric": "Does reconciliation_memo.pdf provide the required concise, figure-supported interpretation of the reconciliation analysis?",
+      "weight": 7,
+      "criterion": [
+        "The memo is a two-to-three-page PDF of approximately 1,000 to 2,000 words.",
+        "The sections appear in the instructed order.",
+        "Reconciliation Findings cites LR statistics and p-values.",
+        "Spatial Residual Assessment reports Moran's I and p-values.",
+        "Mediation Insight reports the indirect effect and bootstrap confidence interval.",
+        "Flagged Counties reports the number of flagged counties and notable patterns.",
+        "Limitations and Recommendations addresses ecological inference.",
+        "Limitations and Recommendations addresses temporal mismatch.",
+        "Limitations and Recommendations proposes next steps.",
+        "At least three notebook figures are embedded.",
+        "The memo's numeric claims agree with the notebook and workbook."
+      ]
+    }
+  ]
+}

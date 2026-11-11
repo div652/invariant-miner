@@ -1,0 +1,96 @@
+{
+  "rubrics": [
+    {
+      "rubric": "Does the Commission Tier Audit benchmark every sales agent against the published Fidelity schedule using a transparent comparison basis?",
+      "weight": 6,
+      "criterion": [
+        "Every sales agent in the database appears once with the database tier and internal commission rate.",
+        "The Fidelity online and representative-assisted stock or ETF rates are stated with a published source and schedule date or version.",
+        "The audit explains the structural difference between Meridian's percentage-of-principal rates and Fidelity's flat per-trade rates.",
+        "Industry Classification uses only Above Industry, In Line with Industry, or Below Industry.",
+        "The classification follows the stated comparison basis consistently rather than requiring a predetermined label."
+      ]
+    },
+    {
+      "rubric": "Does Position Valuation correctly calculate settled net positions and use the supplied December 31 market closes?",
+      "weight": 10,
+      "criterion": [
+        "Net position is calculated per client and ticker as settled BUY quantity minus settled SELL quantity.",
+        "Every nonzero settled net position is retained, including negative positions.",
+        "AAPL, MSFT, and GOOGL positions use the December 31, 2024 Close from their respective supplied CSV files.",
+        "Each of those market-data valuations is labeled CSV Dec 31 Close.",
+        "Market value is calculated consistently as net position multiplied by the stated price."
+      ]
+    },
+    {
+      "rubric": "Does Position Valuation use the instructed settled-transaction VWAP proxy for tickers without supplied market data?",
+      "weight": 10,
+      "criterion": [
+        "NVDA, AMZN, V, JPM, and JNJ proxy prices use all settled BUY and SELL transactions for the ticker.",
+        "Each proxy price equals sum(total_amount) divided by sum(quantity) for the applicable settled transactions.",
+        "The computed proxy is applied consistently to every client position in the ticker.",
+        "Each proxy valuation is labeled VWAP from settled transactions.",
+        "The workbook provides enough source totals or formula detail to verify each VWAP."
+      ]
+    },
+    {
+      "rubric": "Does the portfolio workbook correctly assess concentration and account suitability?",
+      "weight": 10,
+      "criterion": [
+        "Concentration percentage is calculated for every client position using a stated formula that defines the position numerator, portfolio denominator, and treatment of negative positions.",
+        "A net-asset-value or gross-exposure method is accepted when it is financially coherent and consistently applied; combining absolute position values with a signed net denominator requires a specific justification and must produce interpretable threshold results.",
+        "Conservative clients use a 30 percent single-position threshold.",
+        "All other clients use a 40 percent single-position threshold.",
+        "Q4 daily return volatility for AAPL, MSFT, and GOOGL is calculated from Oct. 1 through Dec. 31 closes as the standard deviation of Close_t divided by Close_t-1 minus 1.",
+        "Suitability analysis is limited to IRA or Trust accounts with Conservative or Moderate risk profiles.",
+        "Only in-scope positions in market-data tickers with volatility greater than 2.5 percent are flagged."
+      ]
+    },
+    {
+      "rubric": "Does each agent scorecard reconcile commissions and perform complete bidirectional cancelled-trade and clawback testing?",
+      "weight": 10,
+      "criterion": [
+        "Net commission follows a stated accounting basis that reconciles transaction commissions with every Bonus, Clawback, and Override adjustment without double counting cancelled or pending commissions and their reversals.",
+        "The narrative identifies the base commission population, the adjustments included in net commission, and the treatment of cancelled and pending commissions; a ledger/accrual method or an earned-settled method is accepted when fully reconciled.",
+        "Every Cancelled transaction is checked for a corresponding Clawback.",
+        "Every Clawback is checked for a corresponding Cancelled transaction.",
+        "The compliance detail lists transaction ID, client, ticker, trade amount, original commission, and clawback amount for each tested correspondence.",
+        "Missing links and amount mismatches are flagged individually and their commission impact is totaled."
+      ]
+    },
+    {
+      "rubric": "Does agent_scorecard_q4_2024.pdf provide the required performance measures for every sales agent?",
+      "weight": 8,
+      "criterion": [
+        "The PDF contains one identifiable scorecard for every sales agent.",
+        "Each scorecard reports settled trade volume separately for October, November, and December 2024.",
+        "Each scorecard reports repeat-client count, one-time-client count, total assigned clients, and retention ratio using the instructed two-or-more-settled-trades definition.",
+        "Each scorecard reports cancelled and pending trade ratios with stated denominators.",
+        "Each scorecard includes narrative context for net commission and a Compliance Notes section."
+      ]
+    },
+    {
+      "rubric": "Does fee_audit_q4_2024.xlsx completely and correctly validate SEC and TAF fees?",
+      "weight": 10,
+      "criterion": [
+        "The workbook contains exactly SEC Fee Validation, TAF Fee Validation, and Commission Tier Audit.",
+        "SEC Fee Validation contains the instructed columns and one row for every settled SELL transaction.",
+        "TAF Fee Validation contains the instructed columns and one row for every settled SELL transaction.",
+        "The SEC Section 31 rate, source, and effective date used for Q4 2024 are stated and applied to sell amount with documented rounding.",
+        "The FINRA TAF rate, per-trade cap, source, and effective date used for Q4 2024 are stated and applied to shares sold.",
+        "Recorded-versus-calculated variance is correct for every listed transaction."
+      ]
+    },
+    {
+      "rubric": "Does portfolio_risk_analysis_q4_2024.xlsx have the required structure and complete client-level analysis?",
+      "weight": 10,
+      "criterion": [
+        "The workbook contains exactly Position Valuation, Concentration Risk, and Account Suitability Flags.",
+        "Position Valuation contains one row per client and ticker with net position, price, market value, and price source.",
+        "Concentration Risk contains every valued position, portfolio percentage, applicable threshold, and exceedance result.",
+        "Account Suitability Flags contains every in-scope account position in AAPL, MSFT, or GOOGL with volatility and flag result.",
+        "The three sheets use mutually consistent clients, positions, prices, and values."
+      ]
+    }
+  ]
+}

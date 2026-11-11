@@ -1,0 +1,100 @@
+{
+  "rubrics": [
+    {
+      "rubric": "Is the Engineering Investigation Report delivered as a readable PDF with the required organization and calculation detail?",
+      "weight": 6,
+      "criterion": [
+        "The deliverable is a readable PDF.",
+        "The six instructed main sections appear in the instructed order.",
+        "Reported numerical values include units.",
+        "Required deviations, variances, and comparisons show their calculation basis."
+      ]
+    },
+    {
+      "rubric": "Does the Datasheet Compatibility Check compare the factory test specification with the HAWE DZ25 limits?",
+      "weight": 12,
+      "criterion": [
+        "The HAWE rated operating pressure is converted to units comparable with the test workbook.",
+        "Nominal, maximum operating, and proof test pressures are each compared with the HAWE rating.",
+        "The test-specification operating-temperature range is compared with the HAWE hydraulic-fluid temperature range.",
+        "The test-specification operating-temperature range is compared with the HAWE ambient temperature range.",
+        "Any upper- or lower-limit exceedance is explicitly identified."
+      ]
+    },
+    {
+      "rubric": "Does the Test Data Analysis completely and correctly analyze the supplied workbook?",
+      "weight": 16,
+      "criterion": [
+        "The leakage matrix includes every leakage test point with pressure, measured rate, specification limit, PASS or FAIL, and deviation percent.",
+        "Leakage deviation percent is calculated as (measured - limit) divided by limit times 100.",
+        "Every pressure cycle whose Status is not PASS is listed with its status, extension pressure, retraction pressure, flow rate, and deviation from a stated normal or nominal range.",
+        "Each non-PASS cycle receives a source-grounded interpretation relevant to seal performance.",
+        "Every dimensional-inspection feature is shown with nominal, limits, measured value, deviation, tolerance utilization, and PASS or FAIL.",
+        "Every endurance parameter is shown with target, actual, absolute variance, and percent variance."
+      ]
+    },
+    {
+      "rubric": "Does the report present a defensible root cause and correlation determination?",
+      "weight": 8,
+      "criterion": [
+        "The executive summary gives an explicit yes or no answer on correlation between field failures and factory anomalies.",
+        "The primary root cause is supported by measured evidence rather than by a required predetermined conclusion.",
+        "The wear mechanism connects the cited measured values to premature seal damage.",
+        "The analysis explains the significance of leakage behavior at higher test pressures.",
+        "The determination cross-references at least two supplied or required external sources."
+      ]
+    },
+    {
+      "rubric": "Does the Corrective Action Plan address the current batch and recurrence prevention with actions tied to the findings?",
+      "weight": 10,
+      "criterion": [
+        "Immediate actions apply before shipment to the current production batch.",
+        "Inspection, segregation, rework, or rejection thresholds are tied to the measured nonconformities.",
+        "Process modifications address the demonstrated manufacturing or assembly causes.",
+        "Preventive controls specify a measurable verification method or acceptance gate.",
+        "Actions are concrete enough for production and quality management to implement."
+      ]
+    },
+    {
+      "rubric": "Does the Seal Kit Recommendation accurately use the HAWE DZ25 manufacturer documentation for the custom configuration?",
+      "weight": 10,
+      "criterion": [
+        "The report cites the standard and low-friction seal kit part numbers for the 63 mm bore with the 36 mm rod option.",
+        "The report cites the standard and low-friction seal kit part numbers for the 63 mm bore with the 45 mm rod option.",
+        "The report explicitly notes that the cylinder's 40 mm rod is not one of those standard options.",
+        "The report gives an actionable, source-bounded recommendation for the custom 40 mm rod, such as obtaining a manufacturer-confirmed 63/40 custom kit or holding release until compatibility and a part number are confirmed, without presenting an unsupported standard kit as a direct fit.",
+        "The recommendation identifies the manufacturer documentation used."
+      ]
+    },
+    {
+      "rubric": "Does the Rod Reconditioning Procedure accurately apply the Degelman repair guidance?",
+      "weight": 6,
+      "criterion": [
+        "The report cites inspection of the rod and other polished parts for burrs and scratches.",
+        "The report cites smoothing applicable damaged areas with emery cloth.",
+        "The procedure includes appropriate cleaning, inspection, and acceptance controls before reassembly.",
+        "The report does not imply that smoothing can correct an out-of-tolerance rod without verification."
+      ]
+    },
+    {
+      "rubric": "Does the Reassembly subsection use the Degelman piston locknut torque guidance without inventing an unsupported torque?",
+      "weight": 6,
+      "criterion": [
+        "The report cites the Degelman piston locknut torque chart.",
+        "The report provides the applicable torque value when the locknut size is established.",
+        "If the supplied files do not establish locknut size, the report requires identification of the actual locknut thread before selecting the chart value.",
+        "The reassembly guidance includes lubrication or other directly applicable Degelman steps."
+      ]
+    },
+    {
+      "rubric": "Does the 3D Model Verification Summary compare STL-derived geometry with the cylinder specification?",
+      "weight": 4,
+      "criterion": [
+        "The report states how dimensions were derived from the STL.",
+        "STL-derived overall and relevant cylinder dimensions are compared with the stated specification.",
+        "Any discrepancy or limitation caused by simplified geometry is documented.",
+        "The conclusion follows from the reported measurements."
+      ]
+    }
+  ]
+}

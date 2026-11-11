@@ -1,0 +1,124 @@
+{
+  "group": "group-05",
+  "reviewedTasks": [
+    "biostatisticians/task2",
+    "customer_service_representatives/task1",
+    "data_entry_keyers/task1",
+    "management_analysts/task3",
+    "sales_agents_securities_and_commodities/task1",
+    "training_and_development_specialists/task2",
+    "training_and_development_specialists/task3"
+  ],
+  "taskReviews": [
+    {
+      "task": "biostatisticians/task2",
+      "verdict": "pass_with_changes",
+      "summary": "The rubric covers the workbook structure, ITT-LOCF analysis, site sensitivity, subgroup forest, sample-size scenarios, conditional power, and RWE comparisons with generally sensible weights and method flexibility. Two medium gaps could allow an incomplete interaction model and an unsupported trial-side GLP-1 value to pass.",
+      "alternativeSolutionProbe": "A hierarchical mixed model with treatment, age group, sex, both treatment interactions, baseline HbA1c, and a site random effect is a valid implementation, but the present criteria would also accept an interaction-only fixed-effects specification. A cautious submission that reports GLP-1 baseline history as unavailable in both datasets is valid, while the rubric currently checks absence-versus-zero only for the real-world source.",
+      "issues": [
+        {
+          "severity": "medium",
+          "category": "coverage_statistical_model",
+          "location": "rubrics[2].criterion[0] and rubrics[2].criterion[1]",
+          "finding": "The criteria require baseline HbA1c, a site random effect, and the two interaction terms, but never require the treatment, age-group, and sex fixed main effects needed for a hierarchical interaction model.",
+          "evidence": "The refined instruction asks for a mixed-effects model with treatment-by-age-group and treatment-by-sex interactions alongside baseline HbA1c. Omitting the constituent main effects changes the interpretation and can produce invalid subgroup contrasts, yet an interaction-only model can satisfy the listed criteria.",
+          "recommendedChange": "Require treatment, age group, sex, baseline HbA1c, treatment-by-age-group, and treatment-by-sex as fixed effects, with site as a random effect; accept mathematically equivalent hierarchical parameterizations."
+        },
+        {
+          "severity": "medium",
+          "category": "source_consistency",
+          "location": "rubrics[5].criterion[7]",
+          "finding": "The GLP-1 availability safeguard applies only to the real-world dataset and does not require the same absence-versus-zero check for the trial baseline data.",
+          "evidence": "DX24_phase3_trial_data.csv contains prior_metformin, prior_sulfonylurea, and prior_insulin but no baseline GLP-1-history field. The deliverable asks for a real-world-versus-trial GLP-1 comparison, so absence in either source must not be converted to an observed zero.",
+          "recommendedChange": "Require the submission to assess GLP-1 field availability in both the real-world and trial sources, report unavailable data rather than zero, and state the resulting limitation."
+        }
+      ]
+    },
+    {
+      "task": "customer_service_representatives/task1",
+      "verdict": "pass",
+      "summary": "The rubric fully covers the three deliverables, all six disputes, source reconciliation, weather and EIA calculations, PUC-versus-tariff authority, individualized letters, escalation disclosures, and the briefing. It removes the original hidden required ranking and numerical answers while retaining reproducibility and strong cross-deliverable consistency checks.",
+      "alternativeSolutionProbe": "A submission may use a total-period Oct–Dec kWh/HDD baseline or a clearly documented aggregation of monthly ratios, and may rank urgency with any transparent multi-factor method. The rubric accepts these defensible alternatives while still rejecting unsupported supervisor assertions or tariff claims.",
+      "issues": []
+    },
+    {
+      "task": "data_entry_keyers/task1",
+      "verdict": "pass_with_changes",
+      "summary": "The rubric is substantially improved: it evaluates complete discrepancy discovery rather than a hidden answer list, permits defensible error classifications, and covers all four deliverables. The compliance-checklist criterion, however, permits an assessment basis that can erase the source errors the audit is supposed to measure.",
+      "alternativeSolutionProbe": "A valid audit that evaluates the raw CRM, ERP, scans, and customer master would mark a calculation criterion as failed when source records contain material formula errors. Under the current wording, another submission can repair the master first, disclose that choice, mark the same criterion as passed, and receive equal credit.",
+      "issues": [
+        {
+          "severity": "high",
+          "category": "contradiction_assessment_basis",
+          "location": "rubrics[6].criterion[1] and rubrics[6].criterion[5]",
+          "finding": "The rubric allows the checklist to use either source data or reconciled data, even though the supplied checklist is an audit of source quality and several criteria inherently test raw cross-system and calculation errors.",
+          "evidence": "The checklist includes Cross-System Consistency, scanned-form reconciliation, and Total Revenue calculation accuracy with a 95% threshold. The representative output marked CRT-005 Pass because corrected totals were accurate while acknowledging multiple source calculation exceptions; the original evidence rubric correctly treated the source errors as a failure. Disclosure does not cure the wrong assessment population.",
+          "recommendedChange": "Require checklist statuses and pass rates to be calculated from the original source records for source-quality criteria. Reconciled-data quality may be reported separately, but it must not replace the source audit or convert identified source failures into passes."
+        }
+      ]
+    },
+    {
+      "task": "management_analysts/task3",
+      "verdict": "pass_with_changes",
+      "summary": "The rubric covers agency mapping, department overtime, Proposal B triggers, external benchmarks, underperforming processes, workforce feasibility, all deliverables, and recommendation flexibility. One workbook requirement is weakened from a numeric projection to merely documenting assumptions.",
+      "alternativeSolutionProbe": "Weighted historical cycle times, volume-weighted cycle times, or explicit scenario adjustments are all defensible Proposal A methods and should pass when assumptions are shown. A workbook with no projected cycle-time values can also pass the present criterion, despite omitting an explicit required output.",
+      "issues": [
+        {
+          "severity": "medium",
+          "category": "deliverable_coverage",
+          "location": "rubrics[6].criterion[0]",
+          "finding": "The Proposal A criterion requires cycle-time assumptions but does not require the projected cycle-time values themselves.",
+          "evidence": "The refined instructions require Proposal A Model to project merged-department headcount, combined overtime costs, and cycle times, and the deliverable specification again calls for projected cycle times. The rubric checks numeric headcount and cost outputs but only documentation of cycle-time assumptions.",
+          "recommendedChange": "Require projected cycle-time values for the Proposal A entities, with the calculation or scenario method and assumptions documented; accept any source-grounded method rather than a predetermined projection."
+        }
+      ]
+    },
+    {
+      "task": "sales_agents_securities_and_commodities/task1",
+      "verdict": "fail",
+      "summary": "The fee, valuation, volatility, suitability-scope, file-structure, retention, and bidirectional correspondence criteria are strong. Two high-severity accounting and short-position defects can materially misstate agent compensation and concentration flags, so the rubric is not yet reliable for this task.",
+      "alternativeSolutionProbe": "A ledger-based commission reconciliation that begins with all recorded commissions and applies reversals, or an earned-commission reconciliation that excludes cancelled commissions and treats clawbacks separately, can both be valid if they reconcile without double counting. A gross-exposure or net-asset concentration method can also be valid if short positions are handled explicitly. The current rubric mandates one questionable commission method and does not distinguish sound from distorted short-exposure calculations.",
+      "issues": [
+        {
+          "severity": "high",
+          "category": "unsupported_accounting_method",
+          "location": "rubrics[4].criterion[0]",
+          "finding": "The criterion mandates starting with settled-trade commissions and then applying every clawback, which can reverse cancelled-trade commissions a second time because those commissions were already excluded from the starting population.",
+          "evidence": "The database contains Q4 cancelled trades and clawbacks whose reasons explicitly reference those trades. The representative scorecard excludes cancelled commissions from base settled commission and then subtracts the related clawbacks, including mismatched amounts. The task asks for net commission after adjustments but does not prescribe this double-impact method.",
+          "recommendedChange": "Require a clearly stated commission accounting basis that reconciles transaction commissions and the adjustment ledger without double counting. Accept either a ledger/accrual approach or an earned-settled approach when cancelled and pending commissions, clawbacks, opening balances, and residual impacts are separately and consistently reconciled."
+        },
+        {
+          "severity": "high",
+          "category": "ambiguity_short_position_concentration",
+          "location": "rubrics[3].criterion[0]",
+          "finding": "The criterion accepts any stated portfolio-value denominator but does not define or constrain the numerator, denominator, or threshold treatment for negative positions, even though the valuation rubric explicitly requires retaining them.",
+          "evidence": "The transaction data produces short positions. In the representative output, absolute position values were divided by a signed net portfolio total, creating concentration percentages above 100% and broad threshold flags. This method would satisfy a merely stated and consistent denominator while materially distorting risk.",
+          "recommendedChange": "Require explicit treatment of shorts and a financially coherent exposure formula. Accept documented net-asset or gross-exposure methods when the numerator, denominator, sign treatment, and threshold interpretation are stated and produce internally consistent flags; reject mixed absolute-numerator/signed-denominator calculations without justification."
+        }
+      ]
+    },
+    {
+      "task": "training_and_development_specialists/task2",
+      "verdict": "pass",
+      "summary": "The rubric comprehensively covers Q3 breakdowns, instructor reconciliation, all scheduling constraints, mandatory-module access, Facilities timing, budget calculations, Kirkpatrick Levels 1–3, all five director priorities, consultant recommendations, uncertainty, and exactly three quick wins. The weights appropriately emphasize schedule feasibility and the two narrative deliverables.",
+      "alternativeSolutionProbe": "Different source-grounded mandatory-module sets, feasible session calendars, and instructor ranking methods can pass when justified. External consultants without Q3 performance records can be renegotiated, retained, or replaced based on fit, availability, cost, and explicit uncertainty rather than invented performance evidence.",
+      "issues": []
+    },
+    {
+      "task": "training_and_development_specialists/task3",
+      "verdict": "pass_with_changes",
+      "summary": "The rubric is broadly complete and fairly accepts source-grounded risk scoring, course selection, scheduling, evaluation instruments, KPI targets, and ROI assumptions. The ROI baseline criterion checks the correct counts but omits the explicitly required incident-period dates.",
+      "alternativeSolutionProbe": "A plan costing less than the cap and a clearly labeled full-cap sensitivity scenario are both accepted, as are different documented composite course-risk methods. A report can nevertheless state 52 incidents, 23 recordables, and 129 lost work days without stating the observation period and still pass.",
+      "issues": [
+        {
+          "severity": "medium",
+          "category": "baseline_period_coverage",
+          "location": "rubrics[6].criterion[0]",
+          "finding": "The criterion verifies incident totals but not the start and end of the baseline period required by the instructions.",
+          "evidence": "The required analysis explicitly calls for total incidents and the period covered. The Safety Incident Log spans 2024-01-02 through 2025-03-05, but the rubric only asks for the 52 incidents, 23 OSHA recordables, and 129 lost work days.",
+          "recommendedChange": "Require the ROI baseline to state the incident-log observation period, preferably its start and end dates, alongside the total incidents, recordables, and lost work days."
+        }
+      ]
+    }
+  ]
+}

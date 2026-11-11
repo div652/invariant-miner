@@ -1,0 +1,139 @@
+{
+  "group": "group-03",
+  "reviewedTasks": [
+    "civil_engineers/task2",
+    "human_resources_specialists/task1",
+    "licensing_examiners_and_inspectors/task1",
+    "medical_and_health_services_managers/task2",
+    "medical_secretaries/task1",
+    "purchasing_agents_except_wholesale_retail_and_farm_products/task3",
+    "sales_representatives_wholesale_and_manufacturing_technical_and_scientific_products/task1"
+  ],
+  "taskReviews": [
+    {
+      "task": "civil_engineers/task2",
+      "verdict": "pass",
+      "summary": "The revised rubric covers both estimate options, quantity reconciliation, source-traceable pricing, all six workbook tabs, the recommendation memo, and the explicit arithmetic and lifecycle requirements without retaining the original hidden numeric answers.",
+      "alternativeSolutionProbe": "A submission that uses different defensible CDOT or WisDOT item matches, transparent rebar lap and waste assumptions, a different common life-cycle comparison method, or a justified painting-rate selection can satisfy the criteria because the rubric evaluates traceability, comparability, reconciliation, and disclosed rationale rather than fixed values.",
+      "issues": []
+    },
+    {
+      "task": "human_resources_specialists/task1",
+      "verdict": "pass_with_changes",
+      "summary": "The rubric is broadly complete and source-aligned, but one recommendation-format requirement adds a temporal categorization that the task does not prescribe.",
+      "alternativeSolutionProbe": "A valid Section D could organize evidence-based compensation, overtime, retention, and hiring-priority recommendations by topic or owner rather than labeling them as immediate recruiting versus longer-term retention. The current rubric could deduct credit from that equivalent solution.",
+      "issues": [
+        {
+          "severity": "medium",
+          "category": "unsupported_rubric_only_requirement",
+          "location": "rubrics[6].criterion[5]",
+          "finding": "The criterion requires recommendations to distinguish immediate recruiting actions from longer-term retention investigation, an organization and timing split not requested by the refined instructions.",
+          "evidence": "Section D is required to separate compensation and non-compensation recommendations, tie them to evidence, and include top hiring priorities. Neither TASK_INSTRUCTIONS.txt nor the named inputs require an immediate-versus-longer-term taxonomy.",
+          "recommendedChange": "Remove the temporal-label requirement, or replace it with a check that the recommendations cover supported recruiting and retention actions regardless of headings, ordering, or time-horizon labels."
+        }
+      ]
+    },
+    {
+      "task": "licensing_examiners_and_inspectors/task1",
+      "verdict": "pass",
+      "summary": "The rubric covers all workbook and report deliverables, applies the four bulletins and dated evidence, requires traceable multi-source reasoning, and appropriately accepts supported DENY versus HOLD choices for curable deficiencies.",
+      "alternativeSolutionProbe": "A submission may place a curable failed-exam, insurance, bond, or background-check case on HOLD rather than DENY when it explains the governing rule and corrective path. It may also use a defensible management-escalation interpretation for ambiguous records. The revised criteria expressly accept those supported alternatives.",
+      "issues": []
+    },
+    {
+      "task": "medical_and_health_services_managers/task2",
+      "verdict": "pass",
+      "summary": "The revised rubric removes the original fixed peer results, fixed gap basis, predetermined actions, and unavailable local cash metrics while retaining complete profitability, peer, payer-mix, financial-reconciliation, monthly-loss, and deliverable checks.",
+      "alternativeSolutionProbe": "A valid submission can choose a defensible comparable-hospital cohort and a consistently stated reimbursement basis for charge gaps, and can report Valley General total margin or days cash on hand as not calculable when local inputs are insufficient. The rubric accepts those alternatives when formulas, fields, assumptions, and comparability limits are documented.",
+      "issues": []
+    },
+    {
+      "task": "medical_secretaries/task1",
+      "verdict": "pass_with_changes",
+      "summary": "Most deliverables and data-quality checks are well covered, but the action-plan criterion embeds a contradictory hidden handling of a mixed rescheduling and authorization case, and the source-use criterion restores an unrequested chapter-label requirement.",
+      "alternativeSolutionProbe": "For REF-2026-0211, a reasonable submission could place the unresolved authorization in Tier 2 and the rescheduling task in Tier 3, or place one combined item in Tier 2 as the higher priority. The current criteria simultaneously require one highest-tier item, authorization gaps in Tier 2, and routine rescheduling in Tier 3, so at least one defensible treatment can fail.",
+      "issues": [
+        {
+          "severity": "high",
+          "category": "contradiction_and_hidden_answer",
+          "location": "rubrics[6].criterion[1], rubrics[6].criterion[3], rubrics[6].criterion[4]",
+          "finding": "The action-plan rules conflict for referrals containing both an authorization gap and an administrative rescheduling request, and they prescribe an input-specific authorization-timing treatment not stated in the task.",
+          "evidence": "The rubric requires every referral once at the highest applicable tier, routine authorization gaps in Tier 2, and routine rescheduling in Tier 3 with authorization timing adjusted to the rescheduled appointment. REF-2026-0211 has Auth_Status = Not Submitted and a note requesting March rescheduling. TASK_INSTRUCTIONS.txt defines the tiers but does not establish this precedence, prohibit separate actions, or require the timing adjustment.",
+          "recommendedChange": "Allow separate action rows when one referral has distinct Tier 2 and Tier 3 work, or explicitly define a single-item precedence rule in the instructions. Remove the rescheduled-authorization timing requirement unless it is added to the task specification."
+        },
+        {
+          "severity": "medium",
+          "category": "unsupported_rubric_only_requirement",
+          "location": "rubrics[7].criterion[1]",
+          "finding": "The criterion requires an out-of-range code to be described by its actual ICD-10 chapter, although the refined instructions require only M00-M99 membership and a separate narrative or laterality assessment.",
+          "evidence": "The instructions say to report chapter validity separately from narrative or laterality match. They do not require naming Chapter 19 or another chapter. REFINEMENT_NOTES.md specifically identifies the original actual-chapter pointer as deliberately withheld.",
+          "recommendedChange": "Judge whether the submission correctly marks the code as outside M00-M99 and separately assesses clinical narrative and laterality. Treat the actual chapter name as optional supporting detail."
+        }
+      ]
+    },
+    {
+      "task": "purchasing_agents_except_wholesale_retail_and_farm_products/task3",
+      "verdict": "fail",
+      "summary": "The central audit criterion inherits an internally incompatible row schema, ambiguously handles the preferred CR-007 requirement, and the scorecard criteria omit an explicit vendor-history detail while leaving the compliance-rate denominator undefined.",
+      "alternativeSolutionProbe": "A careful audit could include a Pass row for every applicable requirement and use a neutral issue type such as Compliance Check, treat CR-007 as preferred rather than mandatory, and calculate pass rate over applicable requirement checks with Verification Required separated. That source-faithful submission can fail the current closed vocabulary and ambiguous pass-rate checks.",
+      "issues": [
+        {
+          "severity": "high",
+          "category": "schema_contradiction",
+          "location": "rubrics[0].criterion[1], rubrics[0].criterion[3], rubrics[0].criterion[14]",
+          "finding": "The rubric requires Pass rows for vendor-requirement checks while allowing only issue types that describe a discrepancy or unresolved verification; no allowed Issue_Type accurately labels a confirmed pass.",
+          "evidence": "Required Result values include Pass, but the only Issue_Type values are Quantity Mismatch, Arithmetic Error, Specification Gap, and Verification Required. A confirmed compliant requirement is none of those. Because the CSV has a required Issue_Type column, a submission must either mislabel Pass rows or violate the vocabulary.",
+          "recommendedChange": "Add an allowed neutral Issue_Type such as Compliance Check, or permit blank or N/A Issue_Type for requirement rows with Result = Pass. State the valid Issue_Type and Result combinations."
+        },
+        {
+          "severity": "medium",
+          "category": "coverage_and_source_scope_ambiguity",
+          "location": "rubrics[0].criterion[1], rubrics[0].criterion[6]",
+          "finding": "The phrase every mandatory requirement CR-001 through CR-010 does not clearly require coverage of CR-007 and can imply that CR-007 is mandatory, contrary to the source table.",
+          "evidence": "compliance_requirements.csv marks CR-007 Mandatory = PREFERRED, while CR-001 through CR-006 and CR-008 through CR-010 are YES. The memo explicitly requires a CR-001 through CR-010 summary, so CR-007 still needs coverage but must not receive mandatory-failure severity.",
+          "recommendedChange": "Require one row per vendor for every CR-001 through CR-010 requirement, then separately require Critical severity only when Mandatory = YES. State how preferred-requirement failures or verification gaps are graded."
+        },
+        {
+          "severity": "medium",
+          "category": "explicit_deliverable_coverage_gap",
+          "location": "rubrics[2].criterion[12]",
+          "finding": "The scorecard checks warranty claims by resolution status but omits the explicitly required resolution times.",
+          "evidence": "TASK_INSTRUCTIONS.txt requires past performance to show warranty claims by resolved, pending, and denied status with resolution times. vendor_history.db provides resolution_days. No other revised criterion requires those times.",
+          "recommendedChange": "Extend the warranty-history criterion to require resolution time for resolved or denied claims and an explicit unresolved or not-yet-resolved value for pending claims."
+        },
+        {
+          "severity": "medium",
+          "category": "ambiguous_calculation_method",
+          "location": "rubrics[2].criterion[14]",
+          "finding": "Compliance Pass Rate is required to come from the audit CSV, but the denominator and treatment of Verification Required and non-compliance discrepancy rows are undefined.",
+          "evidence": "The audit contains requirement Pass, Fail, and Verification Required rows plus quantity, arithmetic, and specification findings. Different reasonable calculations can use all applicable requirement checks, confirmed checks only, or treat verification gaps as non-passes, producing different scores and ranks.",
+          "recommendedChange": "Define the pass-rate denominator and treatment of Verification Required, or accept any clearly disclosed, consistently applied method based only on applicable CR-001 through CR-010 checks."
+        }
+      ]
+    },
+    {
+      "task": "sales_representatives_wholesale_and_manufacturing_technical_and_scientific_products/task1",
+      "verdict": "pass_with_changes",
+      "summary": "The revised rubric successfully removes fixed protocol, commissioning-duration, product-mix, and savings answers, but its assessment vocabulary conflicts with product applicability and its pricing criterion is too permissive where internal prices exist.",
+      "alternativeSolutionProbe": "A technically correct matrix would use N/A or a blank with explanation for the Rosemount 625IR on H2S and controller rows, because the task limits that product to IR requirements. The current PASS, FAIL, or PARTIAL-only criterion can reject that correct treatment.",
+      "issues": [
+        {
+          "severity": "high",
+          "category": "applicability_contradiction",
+          "location": "rubrics[0].criterion[4]",
+          "finding": "Requiring every Rosemount and Dräger assessment to use only PASS, FAIL, or PARTIAL leaves no valid value for a product that is not applicable to a requirement row.",
+          "evidence": "TASK_INSTRUCTIONS.txt says to assess the Rosemount 625IR and Polytron 8700 IR against IR requirements and the Polytron 8100 EC and REGARD 7000 against H2S and controller requirements as applicable. The fixed CSV still has Rosemount assessment columns on every row, so H2S and controller rows need N/A, blank, or an equivalent non-applicable marker.",
+          "recommendedChange": "Allow N/A or a documented blank for non-applicable product-requirement combinations. Enforce PASS, FAIL, or PARTIAL only when the named product is actually being assessed."
+        },
+        {
+          "severity": "medium",
+          "category": "source_consistency_underconstraint",
+          "location": "rubrics[5].criterion[2]",
+          "finding": "The criterion permits clearly labeled estimates for SafeGuard products and services even when the internal pricing workbook supplies an applicable price.",
+          "evidence": "The task requires SafeGuard equivalents to be priced from Internal_Product_Pricing_Q1_2025.xlsx, including its Services rate card. The current or estimates wording does not limit estimates to genuinely missing items and could accept replacement of available catalog or service rates with unsupported assumptions.",
+          "recommendedChange": "Require internal workbook prices whenever an applicable SKU or service rate exists. Permit a labeled estimate only for an item absent from the workbook, with its basis and uncertainty documented."
+        }
+      ]
+    }
+  ]
+}

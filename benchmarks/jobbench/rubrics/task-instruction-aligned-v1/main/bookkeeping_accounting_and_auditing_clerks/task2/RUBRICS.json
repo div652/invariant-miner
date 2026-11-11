@@ -1,0 +1,83 @@
+{
+  "rubrics": [
+    {
+      "rubric": "Are the required month-end close deliverables present with the specified workbook structure?",
+      "weight": 4,
+      "criterion": [
+        "December_2024_Month_End_Close.xlsx contains exactly the five required sheets in the required order.",
+        "The five sheet names exactly match Reconciliation, Discrepancies, AP Reconciliation, Journal Entries, and Schedule C Summary.",
+        "December_2024_Variance_Memo.txt is present as a readable plain-text memo."
+      ]
+    },
+    {
+      "rubric": "Does the Reconciliation sheet provide a source-grounded two-sided bank reconciliation to one true cash balance?",
+      "weight": 12,
+      "criterion": [
+        "The bank side starts from the December bank statement closing balance.",
+        "The bank side lists each supported outstanding check individually and applies it with the correct sign.",
+        "The bank side separately identifies any deposits in transit or bank errors supported by the named inputs.",
+        "The book side starts from the cash book ending balance and accounts for source-supported fees, interest, bank-only transactions, and book errors.",
+        "The adjusted bank balance and adjusted book balance equal the same stated true cash balance.",
+        "The sheet reports separate counts of bank-side and book-side reconciling items."
+      ]
+    },
+    {
+      "rubric": "Does the Discrepancies sheet completely and accurately document disagreements among the bank statement, cash book, vendor invoices, and AP aging?",
+      "weight": 8,
+      "criterion": [
+        "The sheet uses the required discrepancy columns or clearly equivalent columns containing the same information.",
+        "Each material cross-source disagreement appears in its own row.",
+        "For a shared check number or reference, every differing field is identified rather than only the amount difference.",
+        "Each difference and proposed resolution is arithmetically correct and traceable to the named inputs.",
+        "Documented uncertainty is preserved when the supplied evidence does not establish a unique resolution."
+      ]
+    },
+    {
+      "rubric": "Does the AP Reconciliation sheet produce a complete vendor-level November-to-December rollforward?",
+      "weight": 7,
+      "criterion": [
+        "Each vendor appearing in the opening AP aging, December invoices, or supported December payments is represented.",
+        "Each row computes opening balance plus December invoices minus December payments equals December 31 ending balance.",
+        "Invoice numbers and payment references are included where supplied.",
+        "Partial payments, unpaid December invoices, disputed balances, and uncertain payment applications remain visible in the ending balance or are explicitly resolved from source evidence.",
+        "The total ending AP agrees with the sum of the vendor rows."
+      ]
+    },
+    {
+      "rubric": "Does the Journal Entries sheet present all source-supported book corrections in valid double-entry form?",
+      "weight": 8,
+      "criterion": [
+        "Each entry provides an entry identifier, date, debit account, credit account, amount, and memo.",
+        "Debits equal credits within every entry.",
+        "Account names are taken verbatim from chart_of_accounts_template.xlsx rather than replaced by Schedule C labels or unsupported aliases.",
+        "Source-supported cash book errors, omitted bank activity, fees, interest, and any adopted year-end AP treatment are addressed exactly once.",
+        "Items requiring owner or accountant judgment are identified without posting an unsupported final classification."
+      ]
+    },
+    {
+      "rubric": "Does the Schedule C Summary correctly map post-close figures to the official 2024 Schedule C and calculate budget variances?",
+      "weight": 7,
+      "criterion": [
+        "The sheet uses the official 2024 Schedule C line numbers and category names.",
+        "Line 1 and every expense line with an actual or budgeted amount are included.",
+        "Corrected Actual values are traceable to the reconciled books and adopted adjusting entries rather than copied from raw cash book totals.",
+        "Budgeted Amount values agree with monthly_budget_dec2024.csv.",
+        "Variance dollars equal Corrected Actual minus Budgeted Amount.",
+        "Variance percentages use the same sign convention when the budget is nonzero and are documented as not applicable when the budget is zero."
+      ]
+    },
+    {
+      "rubric": "Does the variance memo give management a complete and internally consistent close summary?",
+      "weight": 6,
+      "criterion": [
+        "The memo is addressed to Owner, Greenfield Landscaping Services LLC.",
+        "The stated true cash balance matches the Reconciliation sheet.",
+        "The memo states separate bank-side and book-side reconciling-item counts that match the workbook.",
+        "The memo summarizes the significant discrepancies and their source-grounded resolutions.",
+        "The memo identifies the largest corrected budget overruns.",
+        "The memo gives a documented recommendation for the disputed Acme Lawn Equipment invoice.",
+        "The memo lists the records or decisions the accountant still needs for year-end Schedule C reporting."
+      ]
+    }
+  ]
+}

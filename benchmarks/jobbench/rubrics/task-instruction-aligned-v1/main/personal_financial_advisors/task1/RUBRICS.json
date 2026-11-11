@@ -1,0 +1,100 @@
+{
+  "rubrics": [
+    {
+      "rubric": "Do the deliverables audit the supplied data, resolve data-quality issues transparently, and use a consistent cleaned data basis?",
+      "weight": 8,
+      "criterion": [
+        "data_quality_notes.csv uses exactly the required File, Field, Date, Issue_Description, and Resolution_Applied columns.",
+        "The audit records each material missing value, date gap, anomaly, and cross-sheet balance inconsistency found in the supplied files.",
+        "The audit reconciles the account-summary, holding-level, and allocation totals without silently mixing incompatible totals.",
+        "Each material issue states the resolution or limitation and the figure or treatment used downstream.",
+        "The workbook and memo consistently use the documented cleaned-data choices."
+      ]
+    },
+    {
+      "rubric": "Does the Market_Environment analysis correctly calculate and interpret the required Treasury, policy-rate, inflation, and S&P 500 measures from the named inputs?",
+      "weight": 10,
+      "criterion": [
+        "The Market_Environment sheet contains one row per month of 2024 with 2-year, 10-year, and 30-year Treasury yields, the 10-year minus 2-year slope in basis points, FEDFUNDS, trailing 12-month CPI inflation, the real policy rate, the S&P 500 monthly value, and a rolling 12-month return field; months whose t-12 observation falls outside the retrieved source window may be marked N/A when the limitation is stated.",
+        "The Treasury aggregation convention is stated and applied consistently.",
+        "The S&P 500 monthly value is calculated as the average of available daily closes in each month.",
+        "The analysis identifies when the inversion ended using a clearly stated daily or monthly definition supported by the Treasury data.",
+        "The latest 12-month S&P 500 return and the period high are calculated from the supplied series with reasonable rounding.",
+        "A summary row reports the latest available market values and clearly identifies any measure whose latest date differs because the instructed source windows end on different dates.",
+        "The memo's bond recommendation is tied to the calculated market measures and the portfolio's current weights versus targets without requiring a predetermined duration conclusion."
+      ]
+    },
+    {
+      "rubric": "Does the Liquidity_Event_Plan fund the $150,000 gift from account XXX-3789 with a source-grounded, tax-aware liquidation and applicable gift-tax planning?",
+      "weight": 10,
+      "criterion": [
+        "The sheet shows every holding in XXX-3789 with ticker, shares, current value, cost basis, unrealized gain or loss, estimated tax, recommended shares to sell, and recommended proceeds.",
+        "The recommended sales total $150,000, subject only to clearly documented execution-price or fractional-share rounding.",
+        "The sale selection is justified by the supplied holding values and minimizes estimated realized capital gain under the stated tax assumptions.",
+        "The assumed capital-gains rate and any omitted state, NIIT, lot-level, or holding-period effects are stated.",
+        "The gift-tax treatment addresses both spouses, applicable exclusions or lifetime exemption use, and any required return or election with its deadline.",
+        "The memo explains the holding-level liquidation rationale and does not present unsupported tax certainty."
+      ]
+    },
+    {
+      "rubric": "Does the post-gift analysis recalculate the portfolio and provide specific, tax-aware trades that address target allocation and concentration risk?",
+      "weight": 12,
+      "criterion": [
+        "The Post_Gift_Rebalancing sheet states the post-gift portfolio total and compares each asset class with Target_Allocation_Pct using the documented reconciled data basis.",
+        "Each proposed trade states account, ticker, action, shares, amount, and tax consequence.",
+        "The trade plan prioritizes tax-advantaged accounts where doing so avoids unnecessary taxable gains.",
+        "The memo quantifies direct U.S. large-cap and mega-cap concentration from the supplied holdings and states any inclusion or look-through assumptions.",
+        "The recommendation gives specific account-level and ticker-level diversification trades with amounts.",
+        "The proposed trades materially move the portfolio toward the supplied targets and address Linda's concentration concern."
+      ]
+    },
+    {
+      "rubric": "Does the loss-harvesting analysis identify all supplied loss positions and evaluate them correctly by account type?",
+      "weight": 6,
+      "criterion": [
+        "The workbook lists every supplied position with an unrealized loss, including its account, ticker, and loss amount.",
+        "The analysis distinguishes deductible taxable-account losses from losses inside Traditional or Roth IRAs.",
+        "The analysis states whether a current taxable loss-harvesting opportunity exists after the proposed gift sales.",
+        "The analysis does not claim a tax benefit for realizing a loss in a tax-advantaged account."
+      ]
+    },
+    {
+      "rubric": "Does the RMD_vs_Roth_Conversion sheet model both requested scenarios from 2025 through 2040 with traceable balances, conversions, RMDs, and Roth growth?",
+      "weight": 12,
+      "criterion": [
+        "The sheet presents Scenario A and Scenario B side by side for every year from 2025 through 2040.",
+        "Both scenarios begin with Robert's stated Traditional IRA balance and apply 6% annual growth consistently.",
+        "Scenario B models $100,000 annual Roth conversions in 2025 through 2028 and reduces the Traditional IRA by the conversion amount.",
+        "RMDs begin in the appropriate year and use prior year-end Traditional IRA balances divided by the applicable Uniform Lifetime Table divisor.",
+        "The sheet shows Traditional IRA balance, conversion, RMD, Roth balance, taxable-income components, and federal tax for each scenario.",
+        "The balance and distribution calculations are reproducible from displayed inputs, formulas, or notes."
+      ]
+    },
+    {
+      "rubric": "Does the tax comparison use the Chens' complete income picture, calculate Social Security taxation and federal tax consistently, and support the stated Roth recommendation?",
+      "weight": 14,
+      "criterion": [
+        "Each scenario includes the supplied pension and portfolio-income components rather than taxing only the conversion or RMD.",
+        "Taxable Social Security is calculated from provisional income using the married-filing-jointly thresholds and the supplied benefits.",
+        "Conversion income and RMD income are included in provisional income and taxable income in the applicable years.",
+        "The stated 2025 married-filing-jointly federal brackets are applied consistently in every modeled year as required by the instructions.",
+        "Any deduction, preferential-rate income, timing, or other tax assumption that affects the comparison is stated.",
+        "The sheet reports cumulative federal tax for both scenarios and net tax savings as Scenario A total tax minus Scenario B total tax.",
+        "The memo gives a definitive recommendation supported by the modeled totals while acknowledging material uncertainty and alternative estate or lifetime-tax considerations."
+      ]
+    },
+    {
+      "rubric": "Does the client memo satisfy the requested scope and present a coherent Q2-Q4 2025 action sequence?",
+      "weight": 6,
+      "criterion": [
+        "client_memo.pdf is addressed to Robert and Linda and is no more than four pages.",
+        "The memo contains the required Market Conditions, Gift Execution Plan, Roth Conversion Recommendation, Concentration Risk Remediation, and Action Timeline sections.",
+        "The Market Conditions section cites the 2-year, 10-year, and 30-year yields, yield-curve slope, stated un-inversion timing, fed-funds path, real policy rate, latest 12-month S&P 500 return, and period high.",
+        "The memo cites concrete source-grounded gift, tax-comparison, and trade figures.",
+        "The Q2-Q4 timeline sequences gift execution, applicable gift-tax administration, Roth-conversion decision or execution, and rebalancing.",
+        "The timeline explains how gift gains and the post-gift asset mix affect conversion planning and rebalancing.",
+        "The output includes data_quality_notes.csv, rebalancing_analysis.xlsx, and client_memo.pdf with the exact instructed filenames and formats."
+      ]
+    }
+  ]
+}

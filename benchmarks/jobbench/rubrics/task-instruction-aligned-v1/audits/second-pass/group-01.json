@@ -1,0 +1,141 @@
+{
+  "group": "group-01",
+  "reviewedTasks": [
+    "mechanical_engineering_technicians/task2",
+    "medical_and_health_services_managers/task1",
+    "purchasing_agents_except_wholesale_retail_and_farm_products/task2",
+    "secretaries_and_administrative_assistants_except_legal_medical_and_executive/task1",
+    "secretaries_and_administrative_assistants_except_legal_medical_and_executive/task2",
+    "sociology_teachers_postsecondary/task2",
+    "technical_writers/task1"
+  ],
+  "taskReviews": [
+    {
+      "task": "mechanical_engineering_technicians/task2",
+      "verdict": "pass",
+      "summary": "The rubric covers the exact NCR and report deliverables, ordered report structure, one final recommendation, limits reconciliation, complete shared-point calculations, operating-region logic, transient and FFT evidence, sister-pump history and projection, setpoints, pre-installation requirements, and both plots. It removes the original hidden ISO classification, mechanism, setpoint, and missing-flow conclusions while preserving source-checkable engineering requirements.",
+      "alternativeSolutionProbe": "A submission can justify ISO 10816-7 Category I or another defensible classification, choose contractual or stricter standard limits through explicit precedence reasoning, recommend different evidence-based alarm and trip values, and reach Accept, Conditional-Accept, or Reject. The criteria accept those alternatives when the selected basis is sourced, internally consistent, and applied to all shared measurements.",
+      "issues": []
+    },
+    {
+      "task": "medical_and_health_services_managers/task1",
+      "verdict": "pass_with_changes",
+      "summary": "The rubric substantially improves period-aware rate benchmarking, source-qualified peer ratios, complete variance analysis, profitability, memo exceptions, and recommendations, but it omits one exact workbook-level deliverable check and adds a memo reconciliation requirement not stated in the task.",
+      "alternativeSolutionProbe": "A correct submission could provide the four required sheets under an incorrect workbook filename or with an extra sheet and still pass the current content criteria. A Board memo could also correctly use the visit file for reimbursement analysis, the financial workbook for organization results, and stated assumptions for the FY2025 projection without explicitly reconciling the datasets' different scopes; the current final memo criterion could penalize that otherwise compliant method.",
+      "issues": [
+        {
+          "severity": "medium",
+          "category": "explicit_deliverable_coverage_gap",
+          "location": "rubrics[2] before criterion[0] (missing workbook-level criterion)",
+          "finding": "No criterion requires the integrated workbook to be named FY2024_Board_Financial_Report.xlsx or to contain exactly the four instructed sheets and no others.",
+          "evidence": "TASK_INSTRUCTIONS.txt specifies the exact workbook filename and the exact sheet set Revenue Variance, Expense Variance, Peer Benchmark, and Service Line Profitability. Rubrics[2] through [4] evaluate the sheet contents individually but never enforce the filename or exact workbook inventory.",
+          "recommendedChange": "Add a workbook-level criterion requiring the exact filename FY2024_Board_Financial_Report.xlsx and exactly the four instructed sheet names."
+        },
+        {
+          "severity": "medium",
+          "category": "unsupported_rubric_only_requirement",
+          "location": "rubrics[5].criterion[4]",
+          "finding": "The memo must reconcile or explain material scope differences among the visit file, financial workbook, and projection even though the refined instructions do not require a cross-dataset scope reconciliation.",
+          "evidence": "The task assigns distinct uses to the visit file, budget-versus-actual workbook, and FY2025 projection and requires projection assumptions, but it never requires the memo to compare or reconcile their aggregate scopes. A submission can accurately perform every requested analysis without making that additional reconciliation explicit.",
+          "recommendedChange": "Remove this criterion, or narrow it to require disclosure only when the submission directly compares totals drawn from datasets with different scopes or periods."
+        }
+      ]
+    },
+    {
+      "task": "purchasing_agents_except_wholesale_retail_and_farm_products/task2",
+      "verdict": "pass_with_changes",
+      "summary": "The rubric comprehensively covers all four exact deliverables, technical compliance, revised quantities, scoring, delivery and compliance risk, PO reconciliation, funding scenarios, and the policy-grounded memo. Its central TCO criteria, however, do not accommodate several required costs that the supplied quotations do not price.",
+      "alternativeSolutionProbe": "Two careful submissions could use different transparent estimates for peripheral warranty extensions and five VGA adapters, or could flag installation and other unquoted scope for vendor confirmation rather than inventing a price. Those alternatives can produce different TCOs, price scores, and award recommendations, yet the current rubric asks whether the costs were included correctly without defining an accepted estimation or uncertainty treatment.",
+      "issues": [
+        {
+          "severity": "high",
+          "category": "underdetermined_cost_method",
+          "location": "rubrics[1].criterion[0], rubrics[1].criterion[2], rubrics[1].criterion[3]",
+          "finding": "The TCO criteria require every required product line, warranty-extension costs, and the five VGA solutions, but the sources do not provide prices for several of those items and the rubric does not accept a range of documented estimation methods or a quote-required treatment.",
+          "evidence": "department_requisition.xlsx includes installation/setup services and a three-year warranty requirement. vendor_quotations.csv contains only laptops, monitors, docking stations, keyboards, and mice; it supplies warranty durations but no extension prices, no 24-inch monitor quote, no VGA-adapter price, and no installation/service price. TASK_INSTRUCTIONS.txt explicitly authorizes a pricing-pattern estimate only for an unquoted monitor size.",
+          "recommendedChange": "Clarify which unquoted requisition lines belong in evaluated TCO. For every required but unpriced adjustment, accept a disclosed reasonable estimate, range, or vendor-quote-needed amount with its basis and uncertainty; require consistent use in TCO, scoring, the PO, and sensitivity analysis rather than one hidden cost assumption."
+        }
+      ]
+    },
+    {
+      "task": "secretaries_and_administrative_assistants_except_legal_medical_and_executive/task1",
+      "verdict": "pass_with_changes",
+      "summary": "The rubric adds strong coverage for the previously unscored letter packet and otherwise covers gift import, donor deduplication, special circumstances, reconciliation, attendance, and all donor and professional flags. Two donor-workbook criteria can nevertheless reject a valid normalized template implementation or require unrequested process prose.",
+      "alternativeSolutionProbe": "A compliant workbook can keep donor type and contact data once on the Donors sheet while the Gifts sheet contains the instructed transaction fields, preserving every source value without repeating contact fields on every gift row. It can also deduplicate accurately and state only the volunteer-donor matching keys, as instructed, without documenting a separate donor-deduplication algorithm. The current wording can fail both choices.",
+      "issues": [
+        {
+          "severity": "medium",
+          "category": "arbitrary_storage_requirement",
+          "location": "rubrics[0].criterion[2]",
+          "finding": "The wording can be read to require every gift record itself to carry donor type, email, phone, and full address, rather than allowing those attributes to be preserved once in the related donor record.",
+          "evidence": "The deliverable specification requires Gifts rows with Donor, Amount, Date, Campaign, Payment Method, and Notes, then separately requires every donation's contact and address information to be recorded in the workbook. Donor_Database_Template.xlsx is normalized into Donors and Gifts sheets, so storing contact details on Donors is a natural compliant design.",
+          "recommendedChange": "Reword the criterion to require that the workbook as a whole preserves all listed source fields for each donation and that every gift can be linked unambiguously to its donor record. Do not require redundant fields on the Gifts row."
+        },
+        {
+          "severity": "low",
+          "category": "unsupported_method_documentation",
+          "location": "rubrics[0].criterion[5]",
+          "finding": "The criterion requires the submission to state donor-deduplication matching keys and a conflict-handling method, beyond the instructed requirement to state the keys used for volunteer-donor matching.",
+          "evidence": "TASK_INSTRUCTIONS.txt requires no duplicate donor entries, a conflict summary, and stated matching keys for volunteer-donors. It does not require a written donor-deduplication algorithm or conflict-handling methodology when the resulting records and listed conflicts are correct.",
+          "recommendedChange": "Require stated keys for volunteer-donor matching as written in the task. Treat donor-deduplication method prose as optional unless a merge or conflict cannot be judged from the workbook and reconciliation summary."
+        }
+      ]
+    },
+    {
+      "task": "secretaries_and_administrative_assistants_except_legal_medical_and_executive/task2",
+      "verdict": "pass_with_changes",
+      "summary": "The rubric correctly removes the hidden intermittent-FMLA outcome and thoroughly covers raw and partial absences, leave deductions, uncertainty, report breakouts, memo precedence, letter eligibility, policy content, and cross-file consistency. One privacy-style criterion is unsupported and too vague relative to the detailed leave evidence the task requires.",
+      "alternativeSolutionProbe": "A defensible reconciliation may list approved leave type, request IDs, dates, and the attendance reasons needed to explain an intermittent-FMLA judgment, then summarize those facts in the report. The current criterion could label that necessary audit trail excessive without defining what protected-leave information is allowed.",
+      "issues": [
+        {
+          "severity": "medium",
+          "category": "vague_unsupported_privacy_constraint",
+          "location": "rubrics[5].criterion[3]",
+          "finding": "The requirement that protected-leave information be presented only to the extent needed is not defined by the task and has no objective boundary for judging required versus excessive detail.",
+          "evidence": "The task expressly requires most common absence reason, FMLA effects by department, request IDs and dates for every deduction, and explanations for every judgment call. It provides no separate privacy-minimization rule, while those required fields can legitimately include protected-leave type and timing.",
+          "recommendedChange": "Remove the criterion, or replace it with an objective prohibition on unsupported diagnoses or unnecessary medical detail while explicitly allowing the source leave type, request ID, dates, counts, and reasoning needed for reconciliation."
+        }
+      ]
+    },
+    {
+      "task": "sociology_teachers_postsecondary/task2",
+      "verdict": "pass_with_changes",
+      "summary": "The rubric comprehensively covers grade calculation, both open-ended appeals, distributions, all normalized statistics, evaluation benchmarking, at-risk students, essay review, report structure, and reflection without retaining fixed student outcomes. It omits the exact updated-gradebook filename and leaves the standard-deviation convention unresolved.",
+      "alternativeSolutionProbe": "A submission using population standard deviation and another using sample standard deviation can both be statistically defensible for the two complete course sections, but they will report different values. A correctly updated workbook saved under a different name can also satisfy every current gradebook criterion. Both alternatives expose gaps in the current rubric wording.",
+      "issues": [
+        {
+          "severity": "medium",
+          "category": "explicit_deliverable_coverage_gap",
+          "location": "rubrics[0] before criterion[0] (missing filename criterion)",
+          "finding": "No criterion requires the updated workbook to retain the exact filename SOC101_Fall2024_Gradebook.xlsx.",
+          "evidence": "TASK_INSTRUCTIONS.txt specifies SOC101_Fall2024_Gradebook.xlsx as the exact deliverable filename. Rubric[0] checks the Assignments-sheet content and all 35 grades but does not name or otherwise enforce the file path.",
+          "recommendedChange": "Add a criterion requiring the updated gradebook to be delivered as SOC101_Fall2024_Gradebook.xlsx."
+        },
+        {
+          "severity": "medium",
+          "category": "ambiguous_statistical_method",
+          "location": "rubrics[3].criterion[0] through rubrics[3].criterion[6]",
+          "finding": "The required section-level standard deviations have no specified population-versus-sample convention and the rubric does not explicitly accept either consistently documented method.",
+          "evidence": "TASK_INSTRUCTIONS.txt requests mean, median, and standard deviation by section but gives no ddof convention. Both STDEV.P and STDEV.S are common for course-section summaries and yield different source-correct values, potentially changing reported gap magnitudes and spread commentary.",
+          "recommendedChange": "Either specify the intended convention in the task or accept population or sample standard deviation when the choice is stated and applied consistently to every component and section."
+        }
+      ]
+    },
+    {
+      "task": "technical_writers/task1",
+      "verdict": "pass_with_changes",
+      "summary": "The rubric covers all four exact files, every endpoint, authentication migration, ticket resolutions, async sync, webhooks, rate limits, troubleshooting, release notes, and public-document hygiene. One conflicting request-body definition lacks source precedence, so equivalent source-faithful API references can be judged differently.",
+      "alternativeSolutionProbe": "One API reference could document POST /datasets/{id}/records as accepting only a records array based on api_endpoints_data.csv, while another could document a single object or an array based on developer_notes_raw.txt. Both use supplied sources, but the current request-body criterion gives no rule for choosing between them.",
+      "issues": [
+        {
+          "severity": "medium",
+          "category": "source_precedence_ambiguity",
+          "location": "rubrics[1].criterion[5]",
+          "finding": "The criterion requires source-defined request bodies but does not resolve a direct conflict for the bulk-record endpoint.",
+          "evidence": "api_endpoints_data.csv defines POST /datasets/{id}/records with records:array:required. developer_notes_raw.txt says the body can be a single object or an array for bulk insert. TASK_INSTRUCTIONS.txt names both as local sources and provides no precedence rule.",
+          "recommendedChange": "Declare the structured endpoint CSV authoritative for public request schemas, or explicitly define the accepted single-object/array behavior. The rubric should then judge that declared rule rather than allowing hidden evaluator source preference."
+        }
+      ]
+    }
+  ]
+}

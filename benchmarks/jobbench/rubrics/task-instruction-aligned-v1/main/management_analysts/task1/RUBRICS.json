@@ -1,0 +1,77 @@
+{
+  "rubrics": [
+    {
+      "rubric": "Does the Industry Benchmark analysis correctly compare Meridian's plant performance with the required national and defect-dataset benchmarks?",
+      "weight": 14,
+      "criterion": [
+        "The analysis reports the six January–June 2024 MCUMFN observations from a public FRED source and computes their simple arithmetic mean.",
+        "Each plant's capacity utilization is calculated as Actual_Output_Hours divided by Planned_Output_Hours and is compared with the MCUMFN mean in percentage points.",
+        "The 25th, 50th, and 75th percentiles of DefectRate and DowntimePercentage are calculated from the provided manufacturing defect dataset.",
+        "Each plant's defect rate is converted to percent of units produced and each plant is explicitly positioned against both benchmark percentile distributions using the requested quartile labels or unambiguous equivalents."
+      ]
+    },
+    {
+      "rubric": "Does the Trend Diagnostics analysis implement the requested plant–product and plant-level trend calculations without imposing an unsupported expected trend?",
+      "weight": 16,
+      "criterion": [
+        "The analysis contains January–June monthly defect rate, OTD percentage, target attainment, and month-over-month changes for all 12 plant and Product_Line combinations.",
+        "A monthly Watch Item is marked Yes when at least two of defect rate, OTD percentage, and target attainment deteriorate from the prior month, with January handled as not applicable.",
+        "The analysis contains each plant's January–June aggregate defect rate and OTD percentage together with a documented six-month trend-slope calculation.",
+        "Each plant-level trend is characterized from the calculated series and slope; an aggregate trend is not required to be labeled a Watch Item unless it independently meets a documented rule."
+      ]
+    },
+    {
+      "rubric": "Does the Complaint-Production Cross-Reference provide a complete, source-grounded complaint analysis?",
+      "weight": 18,
+      "criterion": [
+        "Complaint records are joined to production by plant and month, and the per-plant summary reports complaints, production units, complaint rate per 1,000 units, and counts by Severity.",
+        "Complaint_Category counts are reported company-wide and by plant, with Systemic reserved for categories present at all four plants and other patterns classified without inventing a required conclusion.",
+        "The analysis assesses the relationship between downtime and complaint severity using a stated method, unit of analysis, and sample, and distinguishes association from causation.",
+        "The reported rates, severity counts, category counts, and classifications reconcile to the supplied complaint and production records."
+      ]
+    },
+    {
+      "rubric": "Does the strategic investment memo provide an evidence-based recommendation and prioritized action plan?",
+      "weight": 10,
+      "criterion": [
+        "The memo is addressed to David Chen, is approximately 2–3 pages, and prioritizes interventions with quantified or transparently estimated impact.",
+        "The memo directly answers the board's consolidation question using evidence from cost structure, capacity, equipment condition, and workforce data.",
+        "Either a consolidation or retention recommendation is acceptable when it follows from the submitted calculations and discusses material trade-offs.",
+        "Figures used in the memo reconcile to the workbook and COPQ model, and material assumptions or uncertainty are disclosed."
+      ]
+    },
+    {
+      "rubric": "Does the memo verify the VP memo's factual claims against the available data?",
+      "weight": 8,
+      "criterion": [
+        "The memo contains a section titled \"VP Memo Figure Verification\" that covers each material quantitative figure or claim in the VP memo.",
+        "Each reviewed claim is labeled Verified, Contradicted, or Cannot Be Verified and includes the corresponding data-derived value or a specific reason verification is impossible.",
+        "Claims requiring unavailable periods or measures are not presented as verified through an unsupported proxy.",
+        "The verification results are consistent with the calculations in the diagnostic workbook."
+      ]
+    },
+    {
+      "rubric": "Does the diagnostic workbook provide the requested plant scorecard and equipment-risk analysis?",
+      "weight": 10,
+      "criterion": [
+        "The workbook contains exactly five worksheets corresponding unambiguously to the five requested analyses; an Excel-safe abbreviation of the overlength complaint worksheet name is acceptable when the full requested title is displayed in the sheet.",
+        "Plant Scorecard has one row per plant with OEE, defect rate per 1,000 units, average OTD percentage, unplanned downtime share, cost per unit, capacity utilization, all requested workforce metrics, and composite rank.",
+        "The workbook documents the OEE method sufficiently to reproduce it from the named inputs.",
+        "The workbook documents the composite-ranking method sufficiently to reproduce it from the named inputs.",
+        "The workbook documents the unplanned-downtime-share method sufficiently to reproduce it from the named inputs.",
+        "The workbook states whether workforce metrics are simple department averages and documents any different aggregation method.",
+        "Equipment Risk Matrix lists every equipment item, applies the stated age and condition replacement rule, includes the requested item and plant metrics, and totals estimated capital need by plant."
+      ]
+    },
+    {
+      "rubric": "Does Meridian_COPQ_Analysis.csv correctly implement and reconcile the requested cost-of-poor-quality model?",
+      "weight": 12,
+      "criterion": [
+        "The CSV contains one row per plant plus a summary row labeled \"All Plants\" and includes every column named in the deliverable specification.",
+        "Scrap, rework, return, complaint, and downtime costs use the formulas and severity weights stated in the instructions.",
+        "Total Production Cost and COPQ percentage use a documented monetary cost denominator derived from the supplied plant data without treating non-currency measures as dollars.",
+        "The All Plants row arithmetically reconciles units, defects, rework, every cost component, total COPQ, total production cost, and the aggregate COPQ percentage."
+      ]
+    }
+  ]
+}

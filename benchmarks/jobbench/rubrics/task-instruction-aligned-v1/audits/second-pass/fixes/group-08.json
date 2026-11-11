@@ -1,0 +1,221 @@
+{
+  "group": "group-08",
+  "reviewedTasks": [
+    "bookkeeping_accounting_and_auditing_clerks/task1",
+    "computer_user_support_specialists/task2",
+    "management_analysts/task2",
+    "mechanical_engineering_technicians/task1",
+    "producers/task1",
+    "technical_writers/task3"
+  ],
+  "changedTasks": [
+    "bookkeeping_accounting_and_auditing_clerks/task1",
+    "computer_user_support_specialists/task2",
+    "management_analysts/task2",
+    "mechanical_engineering_technicians/task1",
+    "technical_writers/task3"
+  ],
+  "sourceIssueCounts": {
+    "group-08.json": 7,
+    "corpus-lint.json": 2,
+    "judgeability.json": 10
+  },
+  "issues": [
+    {
+      "source": "group-08.json",
+      "sourceLocation": "taskReviews[0].issues[0]",
+      "task": "bookkeeping_accounting_and_auditing_clerks/task1",
+      "severity": "high",
+      "category": "source_scope_ambiguity",
+      "disposition": "applied",
+      "rationale": "The multi-currency GL and absence of an instructed FX basis make a single hidden population unfair. The rubric now accepts two source-grounded treatments and requires the choice and exclusions to be observable.",
+      "change": "Added a currency-scope criterion accepting either a cited, consistently applied USD conversion for all Q1 currencies or disclosed USD-only scope because the supplied files provide no exchange-rate basis; completeness is judged within the stated scope."
+    },
+    {
+      "source": "group-08.json",
+      "sourceLocation": "taskReviews[0].issues[1]",
+      "task": "bookkeeping_accounting_and_auditing_clerks/task1",
+      "severity": "medium",
+      "category": "unsupported_rubric_only_requirement",
+      "disposition": "applied",
+      "rationale": "The instructions require complete quantification and materiality but do not prescribe category aggregation when transaction-level analysis is complete.",
+      "change": "Reworded the criterion to accept transaction-level, category-level, or combined bank-versus-GL quantification when the chosen presentation supports completeness and materiality."
+    },
+    {
+      "source": "group-08.json",
+      "sourceLocation": "taskReviews[1].issues[0]",
+      "task": "computer_user_support_specialists/task2",
+      "severity": "medium",
+      "category": "deliverable_structure",
+      "disposition": "applied",
+      "rationale": "The two DOCX and one PPTX formats are explicit artifact requirements and can be checked from the output inventory without exposing hidden answers.",
+      "change": "Added a four-point deliverable row requiring exactly two DOCX files for the plan and incident analysis, one PPTX for the deck, unambiguous roles, and cross-deliverable consistency; reallocated integer weights to preserve 82 points."
+    },
+    {
+      "source": "group-08.json",
+      "sourceLocation": "taskReviews[1].issues[1]",
+      "task": "computer_user_support_specialists/task2",
+      "severity": "medium",
+      "category": "unsupported_rubric_only_requirement",
+      "disposition": "applied",
+      "rationale": "The task presents burden factors as examples, so an alternative reproducible feature set should not fail for omitting an unsupported example.",
+      "change": "Required a justified subset of available hardware and remediation factors tied to pilot evidence instead of requiring every example factor or a separate explanation."
+    },
+    {
+      "source": "group-08.json",
+      "sourceLocation": "taskReviews[1].issues[2]",
+      "task": "computer_user_support_specialists/task2",
+      "severity": "low",
+      "category": "unsupported_rubric_only_requirement",
+      "disposition": "applied",
+      "rationale": "The decision-tree specification requires the derived top five subcategories, not two additional branches whose topics are already handled elsewhere in the plan.",
+      "change": "Removed the extra hardware-eligibility and remote-network branch criterion while retaining top-five coverage, actions, diagnostics, and named escalation."
+    },
+    {
+      "source": "group-08.json",
+      "sourceLocation": "taskReviews[2].issues[0]",
+      "task": "management_analysts/task2",
+      "severity": "medium",
+      "category": "deliverable_structure",
+      "disposition": "applied",
+      "rationale": "The single XLSX and exact four-tab set are explicit, directly observable deliverable requirements.",
+      "change": "Added a four-point structure row requiring one XLSX with exactly the four named tabs and one ordered DOCX brief, while preserving the 80-point total."
+    },
+    {
+      "source": "group-08.json",
+      "sourceLocation": "taskReviews[3].issues[0]",
+      "task": "mechanical_engineering_technicians/task1",
+      "severity": "medium",
+      "category": "coverage",
+      "disposition": "applied",
+      "rationale": "The task requires an actionable recommendation for the custom 40 mm rod, not only a statement that the standard kits do not directly fit.",
+      "change": "Required a manufacturer-confirmed custom-kit path or a release hold pending compatibility and part-number confirmation, while continuing to reject unsupported direct-fit claims for the listed standard kits."
+    },
+    {
+      "source": "corpus-lint.json",
+      "sourceLocation": "issues[3]",
+      "task": "management_analysts/task2",
+      "severity": "medium",
+      "category": "all-or-nothing-weight-concentration",
+      "disposition": "applied",
+      "rationale": "The two 14-point rows combined many independently fail-able construction, reporting, feasibility, and cost requirements, making localized omissions control 35% of the score.",
+      "change": "Split composite construction from score reporting and scenario topology/capacity feasibility from cost-impact arithmetic, allocating the same 28 points across four narrower rows."
+    },
+    {
+      "source": "corpus-lint.json",
+      "sourceLocation": "issues[5]",
+      "task": "technical_writers/task3",
+      "severity": "medium",
+      "category": "all-or-nothing-weight-concentration",
+      "disposition": "applied",
+      "rationale": "One 18-point row combined operation coverage, examples, success responses, errors, tracker gaps, conventions, and non-invention, so a localized defect could erase otherwise complete documentation work.",
+      "change": "Split the row into operation/input coverage (7), request and successful-response documentation (4), error and audit-gap coverage (4), and cross-cutting standards (3), preserving 84 total points."
+    },
+    {
+      "source": "judgeability.json",
+      "sourceLocation": "issues[4]",
+      "task": "bookkeeping_accounting_and_auditing_clerks/task1",
+      "severity": "high",
+      "category": "missing-reference-context",
+      "disposition": "deferred_infrastructure",
+      "rationale": "Bank, GL, AP, aging, journal-entry, and Schedule C completeness require canonical source extracts or deterministic checks. Embedding expected transactions, balances, matches, or tax mappings in the rubric would reintroduce hidden-answer scoring.",
+      "change": null
+    },
+    {
+      "source": "judgeability.json",
+      "sourceLocation": "issues[5]",
+      "task": "bookkeeping_accounting_and_auditing_clerks/task1",
+      "severity": "medium",
+      "category": "hidden-process",
+      "disposition": "applied",
+      "rationale": "A judge can observe traceable AP identifiers and official Schedule C labels but cannot establish that the agent privately used named external files.",
+      "change": "Replaced the source-use claim with observable APID/source-field traceability and official 2024 Schedule C line-identifier and category conformance."
+    },
+    {
+      "source": "judgeability.json",
+      "sourceLocation": "issues[19]",
+      "task": "computer_user_support_specialists/task2",
+      "severity": "high",
+      "category": "missing-reference-context",
+      "disposition": "deferred_infrastructure",
+      "rationale": "Device, ticket, staff, budget, manager-constraint, hardware-support, and external-risk validation require normalized source context. Adding fixed classifications, counts, or compliance claims to the rubric would create hidden expected answers.",
+      "change": null
+    },
+    {
+      "source": "judgeability.json",
+      "sourceLocation": "issues[20]",
+      "task": "computer_user_support_specialists/task2",
+      "severity": "high",
+      "category": "deliverable-extraction",
+      "disposition": "deferred_infrastructure",
+      "rationale": "Rendering PPTX slides and exposing charts and images is evaluator infrastructure. The task explicitly requires visual budget and timeline treatment, so the rubric should not weaken that requirement to match a text-only extractor.",
+      "change": null
+    },
+    {
+      "source": "judgeability.json",
+      "sourceLocation": "issues[33]",
+      "task": "management_analysts/task2",
+      "severity": "high",
+      "category": "missing-reference-context",
+      "disposition": "deferred_infrastructure",
+      "rationale": "Plant coverage, source-derived metrics, scenario feasibility, complaint results, and memo reconciliation require local and external tables or deterministic recomputation. The rubric should not disclose canonical candidates or numeric answers.",
+      "change": null
+    },
+    {
+      "source": "judgeability.json",
+      "sourceLocation": "issues[34]",
+      "task": "management_analysts/task2",
+      "severity": "high",
+      "category": "deliverable-extraction",
+      "disposition": "deferred_infrastructure",
+      "rationale": "The five-page brief and single-page matrix are explicit layout requirements. DOCX page rendering and page-count inspection should be added to the evaluator rather than replaced by an invented word or row limit.",
+      "change": null
+    },
+    {
+      "source": "judgeability.json",
+      "sourceLocation": "issues[38]",
+      "task": "mechanical_engineering_technicians/task1",
+      "severity": "high",
+      "category": "missing-reference-context",
+      "disposition": "deferred_infrastructure",
+      "rationale": "Workbook completeness, manufacturer limits and part numbers, service procedures, and STL measurements require source extracts and deterministic geometry evidence. Encoding those expected values in the rubric would leak the investigation answers.",
+      "change": null
+    },
+    {
+      "source": "judgeability.json",
+      "sourceLocation": "issues[55]",
+      "task": "producers/task1",
+      "severity": "high",
+      "category": "missing-reference-context",
+      "disposition": "deferred_infrastructure",
+      "rationale": "Venue, personnel, handbook, budget, reimbursement, roster, and script checks require canonical input extracts and deterministic completeness checks. The current rubric content is aligned and should not embed the hidden schedule or financial answers.",
+      "change": null
+    },
+    {
+      "source": "judgeability.json",
+      "sourceLocation": "issues[56]",
+      "task": "producers/task1",
+      "severity": "high",
+      "category": "deliverable-extraction",
+      "disposition": "deferred_infrastructure",
+      "rationale": "Verifying a one-to-two-page DOCX memo requires rendered pages or page-count metadata. Replacing the explicit page requirement with an unrequested word limit would change the task.",
+      "change": null
+    },
+    {
+      "source": "judgeability.json",
+      "sourceLocation": "issues[96]",
+      "task": "technical_writers/task3",
+      "severity": "high",
+      "category": "missing-reference-context",
+      "disposition": "deferred_infrastructure",
+      "rationale": "Exhaustive discrepancy, endpoint, tracker, event, terminology, and migration validation requires the six local references and external guidance or deterministic coverage checks. The rubric should not reveal the specific mismatches or mappings.",
+      "change": null
+    }
+  ],
+  "summary": {
+    "considered": 19,
+    "applied": 10,
+    "deferred_infrastructure": 9,
+    "rejected": 0
+  }
+}

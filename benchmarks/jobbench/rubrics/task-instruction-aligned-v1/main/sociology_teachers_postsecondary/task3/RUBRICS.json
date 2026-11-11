@@ -1,0 +1,110 @@
+{
+  "rubrics": [
+    {
+      "rubric": "Does the Current Grades sheet correctly calculate and present every student's Week 11 standing?",
+      "weight": 12,
+      "criterion": [
+        "All 35 enrolled students appear once.",
+        "The sheet contains the eleven required columns in the instructed order.",
+        "Participation_Avg uses Weeks 1-11 and excludes blank cells from its denominator.",
+        "A recorded participation score of zero remains in the denominator.",
+        "An L or E attendance code changes the participation denominator only when the corresponding participation score is absent.",
+        "Quiz 1, Quiz 2, and Writing Assignment 1 percentages use their source-score maxima.",
+        "Weighted_Total uses the completed-work weights for Participation, Quiz 1, Quiz 2, and Writing Assignment 1.",
+        "Projected_Grade_Pct equals Weighted_Total divided by 0.65.",
+        "Letter grades use the scale supplied in the instructions.",
+        "Each Discrepancy_Flag identifies the week and nature of every attendance-versus-participation mismatch for that student.",
+        "Blank discrepancy cells or the word None are used only when no mismatch exists."
+      ]
+    },
+    {
+      "rubric": "Does the At-Risk Analysis identify all students meeting the stated rules and provide source-grounded, individualized interventions?",
+      "weight": 12,
+      "criterion": [
+        "A student is included when Projected_Grade_Pct is below 70%.",
+        "A student is included when Attendance_Pct is below 60%.",
+        "A student is included when at least two completed-work score cells are missing under a stated interpretation of missing assignment scores.",
+        "Criteria_Triggered lists every rule met by the student.",
+        "Office-hours dates and reasons are reported from the Office Hours Log.",
+        "Active, Partial, and No Contact are applied using the definitions in the instructions.",
+        "The analysis states an as-of date consistent with a Week 11 mid-November review.",
+        "Office-hours entries after the stated review date are excluded or clearly labeled as post-review information.",
+        "Each intervention addresses the student's specific grade, attendance, or missing-work risks.",
+        "Each intervention reflects the student's prior engagement level and office-hours history.",
+        "Disability-accommodation history is handled as a support and implementation issue rather than as a negative compliance inference."
+      ]
+    },
+    {
+      "rubric": "Does Appeal_Decisions.docx adjudicate all four pending appeals with the required components and evidence?",
+      "weight": 14,
+      "criterion": [
+        "All four appeals in the Grade Appeals sheet receive a separate decision section.",
+        "Each section identifies the student by name and ID.",
+        "Each section states the contested assignment and original score.",
+        "Each section reproduces or faithfully summarizes the stated appeal reason.",
+        "Each section includes short, accurately attributed excerpts from the applicable syllabus policy or Berkeley rubric criteria.",
+        "Each section uses Approved, Denied, or Partially Approved.",
+        "Each section gives a detailed rationale tied to the named inputs.",
+        "Each section reports an adjusted score or No change.",
+        "Quiz and participation appeals cross-reference relevant attendance, participation, and office-hours evidence.",
+        "The writing appeal evaluates the available work evidence against the cited rubric dimensions without inventing unseen essay content.",
+        "No particular appeal outcome is required when the ruling is supported by the cited evidence and documented uncertainty."
+      ]
+    },
+    {
+      "rubric": "Do the appeal decisions apply the relevant policies and external rubric accurately?",
+      "weight": 10,
+      "criterion": [
+        "Quiz appeals use the syllabus rules for quiz timing, approved extensions, prior communication, and case-by-case make-ups as applicable.",
+        "The disability-accommodation appeal considers the syllabus exception for an approved extension and the documented accommodation history.",
+        "The participation appeal distinguishes an explicit zero from a missing participation score.",
+        "The participation appeal considers the asynchronous PlayPosit course format when assessing a claimed Zoom attendance event.",
+        "The writing appeal cites the Berkeley Originality performance levels or faithful equivalents.",
+        "The writing appeal also considers the other Berkeley dimensions relevant to an analytical essay score.",
+        "The required quoted source excerpts are attributed to the correct syllabus or Berkeley document; paraphrase may supplement but does not replace those excerpts.",
+        "Later-dated office-hours entries are not treated as evidence of conduct before the stated review date unless labeled as retrospective context."
+      ]
+    },
+    {
+      "rubric": "Does Quiz3_Assessment_Blueprint.csv map Weeks 9-14 to the official CLEP content framework?",
+      "weight": 10,
+      "criterion": [
+        "The CSV contains Week, Topic, CLEP_Category, CLEP_Subtopic, and CLEP_Weight_Pct columns.",
+        "Every syllabus topic from Weeks 9-14 appears in at least one mapping row.",
+        "Each topic is mapped to a defensible CLEP category and subtopic.",
+        "Cross-cutting topics may use more than one mapping row when the rationale is clear.",
+        "Institutions rows use the official 20% category weight.",
+        "Social Patterns rows use the official 15% category weight.",
+        "Social Processes rows use the official 20% category weight.",
+        "Social Stratification rows use the official 30% category weight.",
+        "The Sociological Perspective rows use the official 15% category weight.",
+        "The file does not replace the official category weights with a locally reweighted quiz allocation."
+      ]
+    },
+    {
+      "rubric": "Does Quiz3_Study_Guide.docx provide a CLEP-organized guide and five weighted sample questions?",
+      "weight": 8,
+      "criterion": [
+        "The guide is organized by CLEP category rather than by course week.",
+        "The guide covers the Weeks 9-14 topics represented in the blueprint.",
+        "Each topic includes relevant key concepts.",
+        "The guide contains exactly five multiple-choice sample questions.",
+        "Each sample question includes an answer.",
+        "Each sample question is labeled with its CLEP category.",
+        "The five-question allocation reasonably reflects the official weights across categories covered by the course topics; a nearest-integer allocation does not require a separate rounding explanation."
+      ]
+    },
+    {
+      "rubric": "Does the submission provide the complete academic review package with consistent student data and source use?",
+      "weight": 6,
+      "criterion": [
+        "The output includes SOC101_Midterm_Report.xlsx, Appeal_Decisions.docx, Quiz3_Assessment_Blueprint.csv, and Quiz3_Study_Guide.docx.",
+        "The workbook contains Current Grades and At-Risk Analysis sheets.",
+        "Student names, IDs, scores, attendance values, and office-hours records are consistent across the workbook and appeal decisions.",
+        "CLEP category labels and weights are consistent between the blueprint and study guide.",
+        "The package distinguishes source facts from analyst assumptions or unresolved evidence.",
+        "The syllabus, Berkeley rubric, and CLEP fact sheet are identified when their policies, criteria, or weights are used."
+      ]
+    }
+  ]
+}

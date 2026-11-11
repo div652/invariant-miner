@@ -1,0 +1,210 @@
+{
+  "group": "group-05",
+  "assignedTasks": [
+    "biostatisticians/task2",
+    "customer_service_representatives/task1",
+    "data_entry_keyers/task1",
+    "management_analysts/task3",
+    "sales_agents_securities_and_commodities/task1",
+    "training_and_development_specialists/task2",
+    "training_and_development_specialists/task3"
+  ],
+  "issues": [
+    {
+      "id": "group-05-biostat-model-hierarchy",
+      "source": "group-05.json",
+      "task": "biostatisticians/task2",
+      "location": "rubrics[2].criterion[0] and rubrics[2].criterion[1]",
+      "category": "coverage_statistical_model",
+      "disposition": "applied",
+      "rationale": "The subgroup-model criterion now requires treatment, age group, sex, both interactions, baseline HbA1c, and a site random effect while accepting mathematically equivalent hierarchical parameterizations."
+    },
+    {
+      "id": "group-05-biostat-glp-availability",
+      "source": "group-05.json",
+      "task": "biostatisticians/task2",
+      "location": "rubrics[5].criterion[7]",
+      "category": "source_consistency",
+      "disposition": "applied",
+      "rationale": "The GLP-1 criterion now checks availability in both the trial and real-world sources and prohibits treating an absent or unsuitable field as an observed zero."
+    },
+    {
+      "id": "group-05-data-entry-checklist-basis",
+      "source": "group-05.json",
+      "task": "data_entry_keyers/task1",
+      "location": "rubrics[6].criterion[1] and rubrics[6].criterion[5]",
+      "category": "contradiction_assessment_basis",
+      "disposition": "applied",
+      "rationale": "Checklist status and pass-rate calculations now use the original source evidence; corrected reconciled values may be reported separately but cannot erase a source-data failure."
+    },
+    {
+      "id": "group-05-management-cycle-time-output",
+      "source": "group-05.json",
+      "task": "management_analysts/task3",
+      "location": "rubrics[6].criterion[0]",
+      "category": "deliverable_coverage",
+      "disposition": "applied",
+      "rationale": "Proposal A now requires numeric projected cycle-time results with a documented source-grounded calculation or scenario method rather than assumptions alone."
+    },
+    {
+      "id": "group-05-sales-commission-accounting",
+      "source": "group-05.json",
+      "task": "sales_agents_securities_and_commodities/task1",
+      "location": "rubrics[4].criterion[0]",
+      "category": "unsupported_accounting_method",
+      "disposition": "applied",
+      "rationale": "The rubric now accepts fully reconciled ledger/accrual or earned-settled methods and explicitly rejects double counting cancelled or pending commissions and their reversals."
+    },
+    {
+      "id": "group-05-sales-short-concentration",
+      "source": "group-05.json",
+      "task": "sales_agents_securities_and_commodities/task1",
+      "location": "rubrics[3].criterion[0]",
+      "category": "ambiguity_short_position_concentration",
+      "disposition": "applied",
+      "rationale": "Concentration analysis must now define its numerator, denominator, and negative-position treatment; coherent net-asset-value and gross-exposure methods remain acceptable."
+    },
+    {
+      "id": "group-05-training3-baseline-period",
+      "source": "group-05.json",
+      "task": "training_and_development_specialists/task3",
+      "location": "rubrics[6].criterion[0]",
+      "category": "baseline_period_coverage",
+      "disposition": "applied",
+      "rationale": "The ROI baseline now requires the incident-log start and end dates or an equivalent unambiguous observation range in addition to the requested totals."
+    },
+    {
+      "id": "corpus-management-compound-row",
+      "source": "corpus-lint.json",
+      "task": "management_analysts/task3",
+      "location": "rubrics[6].criterion[0] and rubrics[6].criterion[2]",
+      "category": "oversized-compound-criterion",
+      "disposition": "applied",
+      "rationale": "The former 12-weight compound row was split into atomic Proposal A outputs, assumptions, comparison, memo, workbook, presentation, and cross-deliverable consistency rows while preserving the task total weight."
+    },
+    {
+      "id": "corpus-customer-divergence-materiality",
+      "source": "corpus-lint.json",
+      "task": "customer_service_representatives/task1",
+      "location": "rubrics[7].criterion[3]",
+      "category": "undefined-materiality",
+      "disposition": "applied",
+      "rationale": "The briefing must now include every factual divergence from the supervisor notes, while remaining free to prioritize the most consequential items in its narrative."
+    },
+    {
+      "id": "judgeability-2-biostat-reference-context",
+      "source": "judgeability.json",
+      "task": "biostatisticians/task2",
+      "location": "Rows 0, 1, 3-5, and 6.4",
+      "category": "missing-reference-context",
+      "disposition": "deferred_infrastructure",
+      "rationale": "The defect is missing protocol, trial, mapping, and UCI source context in the evaluator. Adding hidden expected values to the rubric would violate the task-aligned design; the evaluator must receive canonical inputs or deterministic checks."
+    },
+    {
+      "id": "judgeability-3-biostat-embedded-forest",
+      "source": "judgeability.json",
+      "task": "biostatisticians/task2",
+      "location": "Criteria 2.4-2.5 and 6.2",
+      "category": "alternative-solution-fairness",
+      "disposition": "applied",
+      "rationale": "The rubric now confirms that an embedded Excel forest chart is valid without a separate image and accepts the adjacent estimates, confidence intervals, and interaction p-values as corroborating evidence of its visual contents."
+    },
+    {
+      "id": "judgeability-23-customer-reference-context",
+      "source": "judgeability.json",
+      "task": "customer_service_representatives/task1",
+      "location": "Rows 1-7",
+      "category": "missing-reference-context",
+      "disposition": "deferred_infrastructure",
+      "rationale": "The evaluator needs the dispute, billing, weather, rights, supervisor-note, and EIA sources. Hidden customer-level expected values were not added to compensate for absent references."
+    },
+    {
+      "id": "judgeability-24-data-entry-reference-context",
+      "source": "judgeability.json",
+      "task": "data_entry_keyers/task1",
+      "location": "Rows 0-7",
+      "category": "missing-reference-context",
+      "disposition": "deferred_infrastructure",
+      "rationale": "Complete discrepancy checking requires the CRM, ERP, customer master, checklist, and scan transcriptions. This belongs in evaluator inputs or deterministic comparison tooling, not hidden rubric answers."
+    },
+    {
+      "id": "judgeability-35-management-reference-context",
+      "source": "judgeability.json",
+      "task": "management_analysts/task3",
+      "location": "Rows 0-6",
+      "category": "missing-reference-context",
+      "disposition": "deferred_infrastructure",
+      "rationale": "The evaluator must receive the local data and benchmark extracts needed to validate triggers and calculations. No source-derived expected values were embedded in the rubric."
+    },
+    {
+      "id": "judgeability-36-management-styles-pagination",
+      "source": "judgeability.json",
+      "task": "management_analysts/task3",
+      "location": "Criteria 0.2 and 6.2",
+      "category": "deliverable-extraction",
+      "disposition": "deferred_infrastructure",
+      "rationale": "Conditional formatting and document pagination are explicit task requirements. Style inspection and page-aware rendering must be added to the evaluator rather than weakening the rubric."
+    },
+    {
+      "id": "judgeability-37-management-presentation-visuals",
+      "source": "judgeability.json",
+      "task": "management_analysts/task3",
+      "location": "Criterion 6.2 presentation coverage",
+      "category": "deliverable-extraction",
+      "disposition": "deferred_infrastructure",
+      "rationale": "Charts and rendered slide layouts require presentation rendering or chart extraction. The task's visual trade-off requirement remains valid and was not replaced with a hidden textual proxy."
+    },
+    {
+      "id": "judgeability-66-sales-reference-context",
+      "source": "judgeability.json",
+      "task": "sales_agents_securities_and_commodities/task1",
+      "location": "Rows 0-7",
+      "category": "missing-reference-context",
+      "disposition": "deferred_infrastructure",
+      "rationale": "Fee, position, volatility, retention, and clawback correctness require database, market, and external schedule inputs. These should be attached or checked deterministically rather than encoded as hidden answers."
+    },
+    {
+      "id": "judgeability-100-training2-reference-context",
+      "source": "judgeability.json",
+      "task": "training_and_development_specialists/task2",
+      "location": "Rows 0-5",
+      "category": "missing-reference-context",
+      "disposition": "deferred_infrastructure",
+      "rationale": "The rubric content is aligned; validating Q3 metrics, schedule feasibility, instrument coverage, and memo evidence requires normalized local and external source extracts."
+    },
+    {
+      "id": "judgeability-101-training2-color",
+      "source": "judgeability.json",
+      "task": "training_and_development_specialists/task2",
+      "location": "Criterion 2.8",
+      "category": "deliverable-extraction",
+      "disposition": "deferred_infrastructure",
+      "rationale": "External-session color coding is an explicit deliverable requirement and the schedule already includes an Internal/External field. Workbook style inspection should verify the color instead of removing the requirement."
+    },
+    {
+      "id": "judgeability-102-training3-reference-context",
+      "source": "judgeability.json",
+      "task": "training_and_development_specialists/task3",
+      "location": "Rows 0-6",
+      "category": "missing-reference-context",
+      "disposition": "deferred_infrastructure",
+      "rationale": "Employee-course states, schedules, survey evidence, OSHA citations, and ROI need the local and external sources. Hidden employee, course, or metric answers were not added."
+    },
+    {
+      "id": "judgeability-103-training3-highlighting",
+      "source": "judgeability.json",
+      "task": "training_and_development_specialists/task3",
+      "location": "Criterion 1.2",
+      "category": "deliverable-extraction",
+      "disposition": "deferred_infrastructure",
+      "rationale": "Top-ten highlighting is an explicit workbook requirement, while rank and explanatory notes remain textually judgeable. Style-aware workbook inspection is required to verify the visual highlight."
+    }
+  ],
+  "counts": {
+    "considered": 21,
+    "applied": 10,
+    "deferred_infrastructure": 11,
+    "rejected": 0,
+    "changedTasks": 6
+  }
+}

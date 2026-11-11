@@ -1,0 +1,82 @@
+{
+  "rubrics": [
+    {
+      "rubric": "Does the Q3 Analysis sheet provide the required accurate performance breakdowns, flags, and qualitative context?",
+      "weight": 8,
+      "criterion": [
+        "Completion rate with completed and enrolled counts, mean satisfaction, and mean pre/post gain are shown by department.",
+        "The same metrics are shown by training module.",
+        "The same metrics are shown by training format.",
+        "The same metrics are shown by module and department.",
+        "Overall per-module totals are included.",
+        "Every module-department combination below 80 percent completion or 3.5 satisfaction is flagged.",
+        "Flagged modules include a source-grounded summary of relevant Comments themes."
+      ]
+    },
+    {
+      "rubric": "Does the Instructor Scorecard provide accurate instructor performance, availability reconciliation, and Priority 5 recommendations?",
+      "weight": 6,
+      "criterion": [
+        "Each actual instructor has satisfaction, knowledge gain, completion counts and rate, unique sessions taught, and enrollments.",
+        "Self-Paced is excluded from instructor rankings and reported separately.",
+        "Each instructor is cross-referenced to the Q4 availability file.",
+        "Naming, credential, specialization, or missing-record inconsistencies are documented without silently merging uncertain identities.",
+        "The highest- and lowest-performing instructors are identified from the displayed metrics.",
+        "Coaching, reassignment, or increased-session recommendations are tied to the director's Priority 5 and Q4 availability."
+      ]
+    },
+    {
+      "rubric": "Does the Q4 Schedule provide feasible October–December coverage under the supplied operational constraints?",
+      "weight": 10,
+      "criterion": [
+        "Each session row contains date, module, format, department or departments, room, instructor, and internal or external status.",
+        "The schedule includes every Q3 module.",
+        "The submission states which modules are mandatory and gives a source-grounded rationale.",
+        "Every department can access each mandatory module at least once.",
+        "Facilities mandatory training is scheduled before December 15.",
+        "Self-paced delivery that underperformed in Q3 is rescheduled as classroom or blended delivery.",
+        "Room availability, capacity, equipment, blocked dates, and operating hours are respected.",
+        "Instructor availability, unavailable dates, monthly session caps, specialization, and booking requirements are respected.",
+        "External instructor sessions are visibly color-coded."
+      ]
+    },
+    {
+      "rubric": "Does the Budget Projection sheet correctly calculate Q4 external-instructor costs?",
+      "weight": 4,
+      "criterion": [
+        "External hourly rates come from q4_classroom_instructor_availability.csv.",
+        "Classroom and blended sessions are costed at three hours and virtual sessions at two hours.",
+        "Internal instructors are costed at zero.",
+        "Per-session values reconcile to per-month and per-instructor subtotals.",
+        "The quarterly total reconciles with the Q4 Schedule."
+      ]
+    },
+    {
+      "rubric": "Does the evaluation redesign audit the existing evidence and provide a practical Kirkpatrick Level 1–3 instrument?",
+      "weight": 8,
+      "criterion": [
+        "The document opens with an Evaluator Instructions preamble covering administration and the Level 1–3 mapping.",
+        "The audit addresses the Kirkpatrick Participant Survey, Delayed Post-Training Survey, and Performance-Based Rubric.",
+        "The audit addresses the EIF template, Smartsheet onboarding form, and Q3 CSV columns.",
+        "Kirkpatrick-level mappings are supported by the actual items or fields and may preserve mixed or partial coverage.",
+        "The redesigned instrument contains distinct Level 1, Level 2, and Level 3 sections.",
+        "The redesigned instrument includes Likert-scale, multiple-choice, short-answer, and self-assessment skills-checklist items.",
+        "Diagnostic items cite specific Q3 module, department, format, metric, or comment patterns.",
+        "The design does not add a Level 4 requirement that the director explicitly deferred."
+      ]
+    },
+    {
+      "rubric": "Does the director briefing memo answer the five priorities with evidence, risk, consultant, and immediate-action guidance?",
+      "weight": 8,
+      "criterion": [
+        "The PDF contains one clearly identifiable response for each director Priority 1 through Priority 5.",
+        "The memo cites at least five distinct quantitative Q3 data points spanning department, format, module, and instructor findings.",
+        "The memo includes at least one specific qualitative Comments theme.",
+        "The likelihood-by-impact risk matrix covers the top Q4 training-success risks.",
+        "Every external consultant receives a retain, replace, or renegotiate recommendation grounded in available performance, fit, availability, and projected cost.",
+        "Missing Q3 performance data for an external consultant is treated as uncertainty rather than invented evidence.",
+        "The memo closes with exactly three quick wins that can be approved immediately."
+      ]
+    }
+  ]
+}

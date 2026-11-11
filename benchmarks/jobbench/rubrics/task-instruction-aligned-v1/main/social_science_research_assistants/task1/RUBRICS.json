@@ -1,0 +1,96 @@
+{
+  "rubrics": [
+    {
+      "rubric": "Does Data_Validation_Report.xlsx provide a complete cell-level validation record in the required structure?",
+      "weight": 12,
+      "criterion": [
+        "The workbook has exactly the sheets Error_Classification, Coding_Discrepancies, and Summary_Matrix.",
+        "Error_Classification contains the required columns Row, Responder_ID, Column, Error_Type, Current_Value, Reference_Data_Comparison, and Recommended_Action.",
+        "Every flagged cell has its own row rather than being represented only by a pattern example.",
+        "Every missing value is flagged with a handling recommendation.",
+        "Duplicate identifiers and logical inconsistencies required by the codebook are documented.",
+        "Row references are defined clearly enough to locate the corresponding raw record."
+      ]
+    },
+    {
+      "rubric": "Are validation findings and error classifications grounded in the codebook and reference datasets?",
+      "weight": 10,
+      "criterion": [
+        "Every raw value is checked against the applicable codebook values, ranges, or rules.",
+        "Reference_Data_Comparison uses the matching respondent, organizational, or time-management record when available.",
+        "Typo, Impossible Value, Missing Value, and Coding Inconsistency are used consistently with the documented evidence.",
+        "Legitimate Outlier is used only when the value is plausible and confirmed by a reference dataset.",
+        "A source-consistent value that violates a codebook rule is distinguished from a raw-entry transcription error.",
+        "Recommended actions preserve uncertainty when the codebook and reference source disagree."
+      ]
+    },
+    {
+      "rubric": "Do Coding_Discrepancies and Summary_Matrix accurately summarize the validation work?",
+      "weight": 6,
+      "criterion": [
+        "Coding_Discrepancies contains one row per variable whose raw coding differs from the expected coding.",
+        "Each coding-discrepancy row shows the raw scheme, expected scheme, affected rows or count, and recommended recode.",
+        "Summary_Matrix cross-tabulates Error_Type by Demographic, Organizational, and Time-related category.",
+        "Summary_Matrix row, column, and grand totals reconcile with Error_Classification."
+      ]
+    },
+    {
+      "rubric": "Does the executed notebook create and validate the required merged analysis dataset?",
+      "weight": 8,
+      "criterion": [
+        "The notebook merges time_management.csv, organizational_data.csv, and respondents.csv on responder_id.",
+        "Record counts are shown before and after each merge.",
+        "Unmatched or duplicated merge keys are reported.",
+        "The notebook applies and documents the cleaning or exclusion decisions used for analysis.",
+        "All analysis cells are executed and their outputs are visible."
+      ]
+    },
+    {
+      "rubric": "Does the notebook correctly reconcile the survey productivity distribution with the published benchmark?",
+      "weight": 8,
+      "criterion": [
+        "Productivity responses are collapsed into more productive, equally productive, and less productive using the instructed mapping.",
+        "The survey percentages are calculated from the cleaned time-management data with the denominator shown.",
+        "The comparison uses the published 64 percent, 22 percent, and 14 percent values.",
+        "Variance is reported as survey percentage minus PDF percentage in percentage points.",
+        "At least two substantive methodological explanations for the benchmark difference are provided.",
+        "Explanations are framed as plausible interpretations rather than hidden expected conclusions."
+      ]
+    },
+    {
+      "rubric": "Does the notebook perform and report all three required chi-square analyses correctly?",
+      "weight": 8,
+      "criterion": [
+        "A chi-square test is performed for productivity by organization_size.",
+        "A chi-square test is performed for productivity by metro_or_regional.",
+        "A chi-square test is performed for productivity by manage_others.",
+        "Each test reports chi-square statistic, degrees of freedom, and p-value.",
+        "Contingency-table construction and any category consolidation or sparse-cell limitation are documented.",
+        "Interpretations distinguish association from causation."
+      ]
+    },
+    {
+      "rubric": "Does Policy_Briefing_Package.docx follow the required four-section structure and accurately communicate the analysis?",
+      "weight": 8,
+      "criterion": [
+        "The document has the four required section headings in the required order.",
+        "Section 1 is no more than 200 words and names at least three concrete validation patterns.",
+        "Section 2 includes the required benchmark-comparison columns and separate More productive, Equally productive, and Less productive rows, each with the PDF value, cleaned-survey value, percentage-point variance, and a plausible explanation.",
+        "Section 2 values and explanations agree with the notebook.",
+        "Section 3 translates all three chi-square findings into plain language.",
+        "Section 4 contains three to five methodological caveats derived from the validation and analysis."
+      ]
+    },
+    {
+      "rubric": "Are the comparison visualization and all three deliverables complete and integrated?",
+      "weight": 6,
+      "criterion": [
+        "The executed notebook contains a grouped comparison chart for the PDF and survey productivity distributions.",
+        "The chart labels both data sources and makes the percentage-point discrepancies visible.",
+        "At least one chart generated by the notebook is embedded in the Word document.",
+        "All three exact filenames and required formats are present.",
+        "Workbook counts, notebook cleaning decisions, and briefing statements are mutually consistent."
+      ]
+    }
+  ]
+}

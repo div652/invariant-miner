@@ -1,0 +1,106 @@
+{
+  "rubrics": [
+    {
+      "rubric": "Does the migration plan classify every inventoried device accurately and investigate the manager's two disputed readiness results using hardware and ticket evidence?",
+      "weight": 13,
+      "criterion": [
+        "The per-device table covers every inventory row with all required source fields, recorded compatibility, classification, specific reason, and cost.",
+        "Each Ready, Remediable, Replace, or Decommission decision applies the Windows 11 CPU, TPM 2.0, UEFI and Secure Boot capability, RAM, and storage requirements to the device's evidence.",
+        "The plan distinguishes a configurable or firmware-remediable condition from a hardware condition that requires replacement or decommissioning.",
+        "The plan independently reconciles MFS-PC-046 and MFS-PC-049 against authoritative hardware requirements rather than treating the inventory label or an earlier report as conclusive.",
+        "The root-cause analysis for each flagged device cites any related ticket and distinguishes upgrade eligibility from a post-upgrade software or network incident.",
+        "The per-department breakdown correctly derives recorded Yes, Partial, and No counts, classification counts, and remediation or replacement costs from the per-device table."
+      ]
+    },
+    {
+      "rubric": "Does the plan provide an executable January-June 2026 sprint schedule that resolves every manager constraint and procurement conflict?",
+      "weight": 11,
+      "criterion": [
+        "The timeline is organized into two-week sprints covering January through June 2026.",
+        "Each sprint identifies department milestones and separates procurement, preparation, deployment, and validation where applicable.",
+        "Finance and Legal devices are migrated or decommissioned by March 31, 2026.",
+        "Manufacturer procurement lead times are reflected in order and deployment dates.",
+        "The Sales schedule provides a workable middle ground for the February-March freeze while addressing the post-EOL risk.",
+        "The plan verifies Executive-device status rather than assuming those devices are complete.",
+        "The plan staggers remote and on-site work or otherwise mitigates the 500 Mbps VPN constraint.",
+        "Each numbered manager-email constraint has an explicit resolution."
+      ]
+    },
+    {
+      "rubric": "Does the budget analysis calculate the available funds, itemize all plan costs, and make evidence-based deferral decisions where needed?",
+      "weight": 9,
+      "criterion": [
+        "The analysis states the $42,000 Q1 cap, the $2,500 contingency reserve, and the resulting $39,500 available amount.",
+        "Hardware replacements, upgrades, and licenses are itemized as quantity multiplied by the applicable unit cost.",
+        "Every nonzero per-device cost reconciles to the budget summary.",
+        "Missing workstation pricing or other unresolved cost assumptions are identified and treated as uncertainty rather than silently assigned a known price.",
+        "If the proposed scope exceeds available funds, the plan names the specific deferred devices or departments and gives a business justification.",
+        "If the proposed scope fits within available funds, the plan shows the remaining headroom and explains any zero-cost decommission or reassignment dependency."
+      ]
+    },
+    {
+      "rubric": "Does the incident analysis accurately summarize pilot ticket patterns and staff workload from the helpdesk database?",
+      "weight": 10,
+      "criterion": [
+        "Pilot ticket counts are reported for every subcategory, ranked by volume, with the total ticket count.",
+        "Average resolution time is calculated from an explicitly stated treatment of unresolved or missing-time tickets.",
+        "Each support staff member is listed with role, specialization, active status, ticket count, and average resolution time.",
+        "The analysis identifies hardware or deployment patterns correlated with ticket volume or resolution time without presenting correlation as proof of causation.",
+        "The analysis connects the highest-volume or longest-resolution patterns to rollout controls."
+      ]
+    },
+    {
+      "rubric": "Does the staffing-capacity analysis project full-rollout demand transparently and address bottlenecks under the current headcount?",
+      "weight": 10,
+      "criterion": [
+        "The analysis lists the remaining active staff and identifies the departed staff member and historical workload.",
+        "The projected per-staff weekly ticket volume uses the pilot volume and shows the scaling period, rollout assumption, and arithmetic.",
+        "The analysis distinguishes ticket-count capacity from specialist resolution-time or concurrency constraints.",
+        "Tier 1, Tier 2, system-administration, and escalation bottlenecks are identified from the staff and ticket data.",
+        "Redistribution strategies assign concrete work to named active staff and address the departed staff member's peripheral-support and training duties."
+      ]
+    },
+    {
+      "rubric": "Does the incident analysis assign a reproducible support-burden score to every not-yet-migrated device?",
+      "weight": 8,
+      "criterion": [
+        "Every not-yet-migrated inventory device receives a Low, Medium, or High score.",
+        "The scoring method defines its thresholds and uses pilot ticket counts and resolution times.",
+        "The scoring method uses a justified subset of available hardware and remediation factors, such as CPU generation, TPM version, device type, manufacturer, or remediation-step count, and relates the selected factors to the pilot evidence.",
+        "Device scores can be reproduced from the stated method and source fields.",
+        "Sparse ticket linkage and other limitations are disclosed."
+      ]
+    },
+    {
+      "rubric": "Does the Tier 1 troubleshooting decision tree cover the actual top five pilot subcategories with actionable diagnosis and escalation?",
+      "weight": 8,
+      "criterion": [
+        "The decision tree covers at least the five highest-volume pilot subcategories derived from the database.",
+        "Each branch gives first-level resolution steps appropriate to the issue.",
+        "Each branch specifies the diagnostic information Tier 1 must collect before escalation.",
+        "Each branch names the Tier 2 or system-administration escalation owner whose specialization matches the issue."
+      ]
+    },
+    {
+      "rubric": "Does the 12-15-slide executive deck give the CTO a complete, decision-ready view of risk, cost, schedule, support risk, security, and approvals needed?",
+      "weight": 9,
+      "criterion": [
+        "The deck contains 12 to 15 slides and opens with post-EOL exposure contextualized for financial services.",
+        "The opening cites the relevant compliance frameworks, cyber-insurance implications, and loss of security patches from the manager email and external EOL guide.",
+        "The deck visualizes budget versus need and the phased timeline with department milestones.",
+        "The deck highlights the top pilot risks with concrete mitigation playbooks.",
+        "The deck covers relevant Windows 11 enterprise security features.",
+        "The final slide requests specific decisions that match unresolved budget, scheduling, staffing, or risk choices in the plan."
+      ]
+    },
+    {
+      "rubric": "Are the three deliverables provided in the required formats and mutually consistent?",
+      "weight": 4,
+      "criterion": [
+        "Exactly two DOCX files provide the migration plan and incident correlation analysis, and exactly one PPTX file provides the executive briefing deck.",
+        "The roles of the two DOCX files are unambiguous from their content.",
+        "Device classifications, costs, milestones, staffing assumptions, and risk statements agree across the three deliverables or any difference is explicitly explained."
+      ]
+    }
+  ]
+}

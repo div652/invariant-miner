@@ -1,0 +1,117 @@
+{
+  "rubrics": [
+    {
+      "rubric": "Does the revised rehearsal schedule cover Sep 15-27, resolve the Director's requested changes, and respect venue and personnel constraints?",
+      "weight": 12,
+      "criterion": [
+        "The Daily Schedule has one row for each rehearsal day in the Sep 15-27 period.",
+        "Each rehearsal row reports date, day, venue or room, start time, end time, meal break when applicable, rehearsal hours, activity, and cast called.",
+        "Weekly rehearsal-hour subtotals are shown for Sep 15-21 and Sep 22-28.",
+        "Days off are listed.",
+        "The added Sep 17 rehearsal uses rooms and times that are actually available.",
+        "The Sep 20 full-company stumble-through resolves the Main Hall conflict using a feasible venue plan.",
+        "The Conflict Matrix cross-references cast availability against rehearsal dates.",
+        "Maria Santos is treated as available after Sep 11.",
+        "Priya Mehta's Tuesday arrival constraint is reflected in her calls and activity sequencing.",
+        "Production-team constraints that affect the scheduled activity, including piano and choreography availability, are respected."
+      ]
+    },
+    {
+      "rubric": "Does the schedule demonstrate compliance with the applicable Theatre UCF rehearsal rules?",
+      "weight": 10,
+      "criterion": [
+        "Each Monday-Sunday week remains within the 23-hour pre-technical-rehearsal maximum.",
+        "Weeknight rehearsals last no more than four hours.",
+        "Weeknight rehearsals begin no earlier than 6:00 PM and end no later than 10:30 PM.",
+        "Ordinary weekend calls schedule no more than seven work hours in an eight-hour span.",
+        "Ordinary weekend calls include a one-hour meal break after no more than five work hours.",
+        "Any use of the handbook's straight-six option documents that all stated prerequisites are satisfied.",
+        "Each weekend preserves one complete 24-hour day without rehearsal.",
+        "The workbook includes a rule-by-rule compliance check using the cited handbook."
+      ]
+    },
+    {
+      "rubric": "Does the Reconciliation sheet tie every budget category to the underlying expense records?",
+      "weight": 10,
+      "criterion": [
+        "Every Budget Summary category appears, including categories with zero actual spending.",
+        "Each row reports Budgeted, Actual Spent from the Budget Summary, Sum of Expense Details, Receipt numbers, Match, Uncommitted Balance, and Variance Flag.",
+        "Expense-detail sums include every receipt mapped to the category.",
+        "The Match field reflects whether the summary actual equals the expense-detail sum.",
+        "Uncommitted balance equals budgeted amount minus the reconciled actual amount.",
+        "Any category-name normalization between the two source sheets is disclosed.",
+        "Reconciliation totals tie to the source budget total and source actual-spent total."
+      ]
+    },
+    {
+      "rubric": "Does the Cash Flow Forecast provide a coherent weekly projection from Sep 15 through Oct 19?",
+      "weight": 8,
+      "criterion": [
+        "The forecast has one row per Monday-Sunday week from Sep 15 through Oct 19.",
+        "The opening position uses actual spending and actual revenue received to date from the budget tracker.",
+        "Each week reports projected spending and projected revenue inflows.",
+        "Each week reports cumulative spending and cumulative revenue.",
+        "Each week reports the net cumulative position.",
+        "Every week with cumulative spending greater than cumulative revenue is flagged.",
+        "Revenue timing is consistent with the source notes, including the ticket-sales start date.",
+        "Material timing assumptions for uncommitted expenses are stated."
+      ]
+    },
+    {
+      "rubric": "Does the Reimbursement Action Items sheet include every expense requiring action and apply the priority rule correctly?",
+      "weight": 8,
+      "criterion": [
+        "Every expense whose status is not paid, reimbursed, or direct payment appears in the action list.",
+        "Each action row reports receipt number, date, payee, amount, status, days outstanding, priority, and action.",
+        "Days Outstanding is calculated from September 15, 2025.",
+        "High priority is assigned when amount is greater than $200.",
+        "High priority is assigned when days outstanding is greater than 10.",
+        "An item exactly 10 days old and not over $200 is not classified High.",
+        "The total outstanding amount equals the sum of the listed nonzero action items.",
+        "Recommended actions identify a responsible next step."
+      ]
+    },
+    {
+      "rubric": "Does the Emergency Board Memo contain the required financial, scheduling, compliance, and decision content?",
+      "weight": 12,
+      "criterion": [
+        "The memo is dated September 15, 2025 and identifies the Producer and Board.",
+        "The memo is approximately one to two pages.",
+        "The memo reports total budget, total spent, utilization percentage, and remaining balance from the reconciliation.",
+        "The memo reports actual and projected revenue and the resulting cash-flow gap.",
+        "The memo reports the total outstanding reimbursements.",
+        "The memo identifies upcoming major uncommitted expenses.",
+        "The memo explains the Sep 20 venue conflict and the selected resolution.",
+        "The memo reports material personnel-record compliance issues.",
+        "The memo reconciles script distribution records with the budget tracker's backorder note.",
+        "The memo makes a clear recommendation on the second-half budget tranche and supports it with displayed financial evidence.",
+        "The memo closes with an action table containing Priority, Item, Owner, Deadline, and Status.",
+        "The action table covers the material unresolved finance, venue, script, and personnel-compliance actions identified in the memo."
+      ]
+    },
+    {
+      "rubric": "Does the contact and compliance workbook provide a complete unified directory and actionable follow-up tracking?",
+      "weight": 8,
+      "criterion": [
+        "Every cast member and production-team member appears once in a unified directory.",
+        "The directory contains all required contact, emergency-contact, script, compliance, action, owner, and deadline columns.",
+        "Cast emergency-contact data is carried over accurately.",
+        "Missing production-team emergency-contact data is identified as a follow-up item rather than invented.",
+        "Script status reflects the roster and the known backorder.",
+        "Personnel availability notes that affect scheduling are retained.",
+        "Compliance flags identify unresolved issues supported by the roster.",
+        "Each unresolved issue has a follow-up action, responsible party, and deadline."
+      ]
+    },
+    {
+      "rubric": "Are the four deliverables complete and mutually consistent?",
+      "weight": 4,
+      "criterion": [
+        "The output contains one DOCX memo and three XLSX workbooks covering the four requested deliverables.",
+        "The schedule workbook contains Daily Schedule and Conflict Matrix sheets.",
+        "The budget workbook contains Reconciliation, Cash Flow Forecast, and Reimbursement Action Items sheets.",
+        "Names, dates, financial totals, conflicts, and action owners are consistent across the deliverables."
+      ]
+    }
+  ]
+}

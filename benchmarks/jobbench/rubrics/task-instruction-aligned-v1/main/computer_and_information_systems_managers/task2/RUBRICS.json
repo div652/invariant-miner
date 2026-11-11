@@ -1,0 +1,86 @@
+{
+  "rubrics": [
+    {
+      "rubric": "Does the analysis reconcile incident and inventory data and derive the migration candidate population using the instructed rules?",
+      "weight": 10,
+      "criterion": [
+        "The Reconciliation analysis explains or annotates the naming and category discrepancies between ITSM configuration items and inventory assets.",
+        "The analysis identifies the top 10 assets or reconciled asset groupings by incident volume and cites operational or infrastructure factors associated with the pattern.",
+        "The analysis identifies incident categories with the worst reassignment performance using a stated, consistently applied measure.",
+        "The candidate pool includes on-premise assets with Avg_CPU_Utilization_Pct below 25 percent or Warranty_Expiry before 2024-10-01.",
+        "The fleet median Incident_Count_Q4 is calculated from the inventory population and stated.",
+        "Critical assets are excluded unless their Incident_Count_Q4 exceeds the stated fleet median, and included exceptions are identified."
+      ]
+    },
+    {
+      "rubric": "Does the Migration_Plan provide a transparent AWS cost comparison for every final candidate?",
+      "weight": 10,
+      "criterion": [
+        "CPU_Cores and RAM_GB are mapped to documented EC2 instance types using a consistent sizing method.",
+        "Monthly compute cost is calculated for on-demand, 1-year reserved, and 3-year reserved pricing.",
+        "Reserved-instance calculations include applicable upfront fees.",
+        "A 3-year TCO is shown for each required pricing option.",
+        "Pricing source, date or version, region, operating system, utilization-hours assumption, and material exclusions are stated.",
+        "Every candidate whose selected AWS comparison cost exceeds current Monthly_Cost_USD is explicitly flagged."
+      ]
+    },
+    {
+      "rubric": "Does the plan identify and correctly sequence security-sensitive migration candidates around PRJ-2024-042?",
+      "weight": 8,
+      "criterion": [
+        "Security-sensitive candidates are identified from Associated_Service and Asset_Type rather than from an unsupported fixed asset list.",
+        "Only assets in the final candidate set are assigned a Zero Trust sequencing flag.",
+        "Relevant identity, directory, firewall, VPN, DNS/DHCP, and security-operations candidates are deferred until the segmentation dependency is resolved.",
+        "The rationale cites PRJ-2024-042's local budget, status, and timeline.",
+        "The rationale explains how the Zero Trust network-segmentation work affects migration ordering."
+      ]
+    },
+    {
+      "rubric": "Does the Executive_Summary contain 5 to 7 prioritized, board-ready recommendations?",
+      "weight": 6,
+      "criterion": [
+        "The sheet contains between 5 and 7 recommendations in a defensible priority order.",
+        "Each recommendation cites a specific quantified finding from the workbook.",
+        "Each recommendation states a dollar-denominated financial impact or funding requirement.",
+        "Each recommendation states an implementation quarter.",
+        "The set addresses the material operational, security, migration, dependency, and funding findings."
+      ]
+    },
+    {
+      "rubric": "Are both required deliverables complete and structurally compliant?",
+      "weight": 8,
+      "criterion": [
+        "Q4_Infrastructure_Rationalization.xlsx contains exactly Reconciliation, Migration_Plan, Gap_Register, and Executive_Summary.",
+        "Reconciliation contains substantive incident-versus-inventory analysis with discrepancy status and probable cause.",
+        "Migration_Plan contains ranked candidates, current and cloud costs, 3-year TCO, net savings or cost, risk flags, rationale, and Recommended Action.",
+        "Gap_Register contains substantive NIST gap data and red conditional formatting for UNBUDGETED high-severity rows.",
+        "Executive_Summary contains substantive recommendations rather than placeholders.",
+        "gap_register.csv contains exactly the seven instructed fields and is consistent with the workbook register."
+      ]
+    },
+    {
+      "rubric": "Does the Migration_Plan apply a consistent Migrate, Defer, or Decommission decision framework?",
+      "weight": 10,
+      "criterion": [
+        "Every final candidate is assigned exactly one instructed Recommended Action value.",
+        "Migrate is used when the selected AWS cost is below current on-premise cost and no blocking dependency remains.",
+        "Defer is used when cloud cost exceeds current spend or a documented dependency blocks migration.",
+        "Decommission is limited to assets whose low utilization, age, low criticality, and incident evidence support retirement.",
+        "Critical assets admitted by the incident exception carry a criticality override flag.",
+        "Each action has an asset-specific rationale that applies the stated framework consistently."
+      ]
+    },
+    {
+      "rubric": "Does the gap and budget analysis map process failures to NIST CSF 2.0 and provide defensible funding conclusions?",
+      "weight": 10,
+      "criterion": [
+        "The worst reassignment process gaps are mapped to applicable subcategories from the official NIST CSF 2.0 Core.",
+        "Each gap is checked against every pending project for coverage before it is marked UNBUDGETED.",
+        "Every UNBUDGETED gap has a specific dollar estimate with an individual source or analogous-project justification.",
+        "The analysis calculates the remaining PRJ-2024-041 migration budget using a stated treatment of existing cloud operations and avoids treating unrelated business-as-usual cloud spend as project spend without support.",
+        "The analysis compares the pending portfolio's approved budgets with the overall IT budget using matching time periods or clearly documented normalization.",
+        "Any claimed unallocated amount is reconciled to the cited budget fields and kept distinct from project-specific remaining funds."
+      ]
+    }
+  ]
+}

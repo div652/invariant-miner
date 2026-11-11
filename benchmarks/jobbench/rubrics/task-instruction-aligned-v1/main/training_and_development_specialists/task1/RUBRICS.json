@@ -1,0 +1,113 @@
+{
+  "rubrics": [
+    {
+      "rubric": "Does OSHA_Gap_Analysis_Completed.pdf complete the provided OSHA checklist as a source-grounded gap analysis?",
+      "weight": 6,
+      "criterion": [
+        "Every applicable section and item from OSHA_SHP_Implementation_Checklist.pdf has a recorded compliance status.",
+        "Each compliance status is supported by evidence from the checklist, Historical_Training_Effectiveness_Data.csv, or an explicitly identified evidence gap.",
+        "Each identified gap has a concrete corrective action that is consistent with the cited evidence.",
+        "Historical training metrics used in the assessment are identified by program and period so the assessment is traceable."
+      ]
+    },
+    {
+      "rubric": "Does Q2_2025_Training_Schedule.xlsx provide a feasible integrated Q2 schedule that satisfies the required coverage, reinforcement, room, and documentation constraints?",
+      "weight": 6,
+      "criterion": [
+        "The schedule has one row per session.",
+        "The schedule includes Program, Date or Week, Time slot, Room_ID, Instructor_ID, instructor name, Participants, and Constraint Resolution Notes.",
+        "Scheduled Safety Orientation capacity covers all 180 production floor employees without exceeding room capacity.",
+        "The workbook states and consistently applies a program-level decline rule using the available 2024 Level3_Behavior_Change_Pct values, such as a negative fitted trend or an end-to-end decline, and schedules reinforcement for every program identified by that rule; a single adjacent-quarter decrease is not sufficient unless the chosen rule and its relevance are explained.",
+        "Each room assignment is compatible with the program's equipment needs in Training_Room_Schedule_Q1_2025.csv.",
+        "The schedule avoids documented instructor and room conflicts or explains a valid resolution in Constraint Resolution Notes."
+      ]
+    },
+    {
+      "rubric": "Does the Q2 schedule manage certification-continuity risk using the instructor data rather than an assumed backup assignment?",
+      "weight": 6,
+      "criterion": [
+        "Every instructor whose certification expires within 180 days of April 1, 2025 is identified from Instructor_Availability_Q2_2025.csv.",
+        "Any required recertification is scheduled before the affected certification expires.",
+        "Each continuity gap has a named backup whose qualification is demonstrated or whose required cross-training is scheduled.",
+        "Constraint Resolution Notes explain the timing and coverage decision for each certification-continuity risk."
+      ]
+    },
+    {
+      "rubric": "Does Q2_Evaluation_Strategy.docx provide manufacturing-appropriate participant and delayed Level 3 surveys?",
+      "weight": 6,
+      "criterion": [
+        "Participant-facing survey items use simple non-technical language.",
+        "The participant survey provides a visual or pictorial response scale.",
+        "The participant survey provides a verbal or oral administration option.",
+        "The administration plan provides survey opportunities for multiple shifts.",
+        "The administration plan keeps participant completion time under 10 minutes.",
+        "The delayed survey is scheduled 60 to 90 days after training completion.",
+        "The delayed-survey timing is justified by the need for on-the-job application.",
+        "The delayed survey has a shift-aware distribution plan."
+      ]
+    },
+    {
+      "rubric": "Does the evaluation strategy include an usable supervisor observation rubric and diagnostics for the program that is actually lowest-performing under the stated Level 3 definition?",
+      "weight": 6,
+      "criterion": [
+        "The lowest-performing program is derived by a documented program-level aggregation of the available 2024 Level3_Behavior_Change_Pct values; an annual mean or another defensible full-year method is accepted, but an unexplained single minimum row is not.",
+        "The supervisor observation rubric defines observable Safety Orientation behaviors.",
+        "The supervisor observation rubric provides a usable rating or recording method.",
+        "The diagnostic questions address at least five distinct transfer-barrier areas relevant to the derived lowest-performing program.",
+        "The diagnostic questions are distinguishable from the general delayed-survey items."
+      ]
+    },
+    {
+      "rubric": "Does Training_ROI_Analysis.xlsx calculate and rank program cost-effectiveness from the named source fields without imposing a predetermined winner?",
+      "weight": 6,
+      "criterion": [
+        "Cost-effectiveness is calculated for every program with Level4_Productivity_Impact_Pct data using productivity-impact percentage relative to Cost_Per_Participant, such as impact points per $100.",
+        "Any aggregation across quarters is shown or documented consistently.",
+        "The ranking follows the displayed calculations rather than an assumed program ordering.",
+        "Programs without Level 4 data are reported as unavailable rather than converted to zero.",
+        "Recommended budget allocation percentages are connected to the calculated results and operational constraints."
+      ]
+    },
+    {
+      "rubric": "Does the ROI workbook provide a complete Q2 budget projection and incident-based break-even analysis?",
+      "weight": 6,
+      "criterion": [
+        "The budget projection uses the exact Cost_Per_Participant values from Historical_Training_Effectiveness_Data.csv.",
+        "Each scenario shows participant counts by program for 200 employees.",
+        "Each scenario shows total cost by program.",
+        "Every scenario preserves Safety Orientation for the 180 production employees as a fixed constraint.",
+        "Scenario totals reconcile with the displayed participant counts and costs.",
+        "Allocation percentages reconcile with the displayed participant counts and costs.",
+        "Break-even calculations use the available incident-reduction data.",
+        "Each additional valuation assumption used in break-even calculations is stated.",
+        "The workbook exposes formulas or calculation steps sufficient to reproduce the results."
+      ]
+    },
+    {
+      "rubric": "Does Instructor_Risk_Matrix.xlsx assess every instructor's certification, coverage, and capacity risk from the provided data and schedule?",
+      "weight": 6,
+      "criterion": [
+        "The matrix contains one row for each instructor in Instructor_Availability_Q2_2025.csv.",
+        "The matrix includes every field required by the instructions.",
+        "Days to expiry are calculated from April 1, 2025.",
+        "The expiry flag applies the stated 180-day rule.",
+        "Single-point-of-failure flags are based on the number of qualified instructors for each critical program.",
+        "Estimated Q2 demand hours are traceable to scheduled Safety Orientation, reinforcement, and regular-program activity.",
+        "Capacity findings compare peak weekly scheduled demand, or an explicitly time-normalized equivalent, with Max_Weekly_Hours and flag only constraints supported by that like-for-like comparison.",
+        "The analysis explicitly identifies the instructor with the lowest Max_Weekly_Hours.",
+        "Cross-training recommendations address the documented coverage or capacity gap."
+      ]
+    },
+    {
+      "rubric": "Do the five deliverables meet the specified file, format, attendance-reference, and cross-deliverable traceability requirements?",
+      "weight": 6,
+      "criterion": [
+        "All five deliverables exist with the exact filenames specified in TASK_INSTRUCTIONS.txt.",
+        "Each deliverable uses the format specified in TASK_INSTRUCTIONS.txt.",
+        "Attendance tracking or schedule support includes the template's functional elements: training program, date, time, location, trainer, attendee name, and signature or initials; cosmetic style matching is not required.",
+        "Metrics and recommendations identify the source file or source field needed to trace them.",
+        "Recommendations remain consistent across the gap analysis, schedule, evaluation plan, ROI workbook, and instructor risk matrix."
+      ]
+    }
+  ]
+}

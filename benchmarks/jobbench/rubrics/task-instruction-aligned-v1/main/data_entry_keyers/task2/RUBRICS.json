@@ -1,0 +1,77 @@
+{
+  "rubrics": [
+    {
+      "rubric": "Does the review comprehensively validate the entered records against the source forms, policy memo, fee schedule, provider directory, and official FY2025 ICD-10-CM descriptions?",
+      "weight": 10,
+      "criterion": [
+        "Every entered record and field is compared with the corresponding source billing form rather than checking only selected columns.",
+        "ICD10_Code and ICD10_Description are validated as a pair in both the entered data and source forms against the supplied official FY2025 code descriptions.",
+        "Internal source-form inconsistencies are identified instead of being copied or silently resolved as transcription errors.",
+        "Date-dependent ICD-10-CM and fee-schedule rules are applied according to the record's Service_Date and the 02/01/2025 effective date.",
+        "Insurance-provider name standardization is applied according to the memo's immediate effective date rather than being limited by Service_Date.",
+        "Provider-to-facility attribution uses provider_facility_reference.csv."
+      ]
+    },
+    {
+      "rubric": "Are findings correctly separated into CLEAR ERROR and REQUIRES REVIEW based on the evidence available for each field?",
+      "weight": 10,
+      "criterion": [
+        "A direct entered-versus-source discrepancy is classified as CLEAR ERROR when the source value is internally valid and no policy or fee-schedule exception applies.",
+        "Wrong carriers, patient-name misspellings, transposed identifiers or policy numbers, wrong dates, wrong codes, and unsupported amounts found in the named inputs are classified by their actual field error rather than by superficial formatting.",
+        "An entered amount that differs from the source but correctly matches the effective facility-and-CPT fee-schedule rate is classified as REQUIRES REVIEW and is not corrected automatically.",
+        "A code-description mismatch already present in the source form is classified semantically as a source inconsistency requiring clarification, regardless of the exact review-category wording used.",
+        "A source-consistent code that triggers the post-02/01/2025 memo rule is classified as a policy-compliance review item rather than a transcription error.",
+        "No record is flagged solely because a value differs from a preferred format when the entered value is already the correct source-grounded value."
+      ]
+    },
+    {
+      "rubric": "Does completed_error_log.xlsx accurately and completely record every clear error using the supplied template?",
+      "weight": 10,
+      "criterion": [
+        "The Error Log sheet preserves the required template columns Error_Number, Form_ID, Field_Name, Entered_Value, Correct_Value, Error_Type, Date_Identified, and Corrected_By.",
+        "Error_Number values are unique and sequential starting at 1.",
+        "Date_Identified is populated for every row in MM/DD/YYYY format.",
+        "Corrected_By is populated for every row with a reviewer name or employee ID.",
+        "Each erroneous field has its own row, including multiple rows when a form contains multiple independent clear errors.",
+        "Entered_Value and Correct_Value reproduce the entered and validated source values without changing formatting in a way that alters meaning.",
+        "Error_Type uses the template vocabulary and matches the affected field.",
+        "Items that require clarification under the memo, fee schedule, or an internally inconsistent source form are excluded from the clear-error log."
+      ]
+    },
+    {
+      "rubric": "Does flagged_for_review.csv contain every unresolved review item with enough evidence for a supervisor to act?",
+      "weight": 10,
+      "criterion": [
+        "The file identifies Form_ID, Field_Name, Entered_Value, Source_Value, Review_Category, and a specific Reason for every review item.",
+        "Each reason states the Service_Date when applicability depends on the 02/01/2025 effective date.",
+        "Fee-schedule items cite the applicable facility, CPT code, and effective rate.",
+        "Policy-compliance items cite the applicable memo rule and explain why the source-consistent value still needs clarification.",
+        "Source inconsistencies identify the code-description conflict and the clarification needed without silently selecting one side.",
+        "Clear transcription errors are not duplicated in the review file."
+      ]
+    },
+    {
+      "rubric": "Does corrected_billing_data.csv preserve the source dataset while changing only fields that are clear errors?",
+      "weight": 10,
+      "criterion": [
+        "The file contains all 75 entered records and all original columns.",
+        "Every clear-error field is corrected to the validated source value.",
+        "Every REQUIRES REVIEW field remains exactly as entered pending clarification.",
+        "Fields with no finding remain unchanged.",
+        "The corrected file, error log, and review file are mutually consistent for every Form_ID and Field_Name."
+      ]
+    },
+    {
+      "rubric": "Does the reconciliation workbook accurately summarize the completed review at overall, provider, facility, and flagged-item levels?",
+      "weight": 10,
+      "criterion": [
+        "The workbook contains an overall summary, a provider-level view, a facility-level view, and a detailed flagged-review sheet.",
+        "The overall summary reports the 75-record scope, separate CLEAR ERROR and REQUIRES REVIEW counts, and a breakdown by Error_Type.",
+        "Provider totals reconcile to the row-level findings.",
+        "Facility totals use the internal provider-to-facility directory and reconcile to the provider totals.",
+        "The flagged-item sheet reproduces each unresolved item and its applicable policy rule or fee-schedule entry.",
+        "All counts reconcile with completed_error_log.xlsx and flagged_for_review.csv."
+      ]
+    }
+  ]
+}
