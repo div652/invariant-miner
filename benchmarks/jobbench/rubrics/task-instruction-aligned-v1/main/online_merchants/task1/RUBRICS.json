@@ -1,0 +1,78 @@
+{
+  "rubrics": [
+    {
+      "rubric": "Are the required workbook and conclusion-dependent PDF deliverables present with the instructed workbook structure?",
+      "weight": 6,
+      "criterion": [
+        "Incident_Analysis_Report.xlsx is present.",
+        "The workbook contains exactly the required sheets in this order: Executive Summary, Customer Response Protocols, Product Risk Dashboard.",
+        "The submitted PDF uses Supplier_Quality_Notice.pdf when the analysis identifies systemic quality concerns or Quality_Assessment_Memo.pdf when it does not."
+      ]
+    },
+    {
+      "rubric": "Does the Executive Summary provide a source-grounded decision matrix for all three escalated inquiries?",
+      "weight": 14,
+      "criterion": [
+        "The decision matrix contains one row for each of INQ-001, INQ-003, and INQ-006.",
+        "Each row identifies the matching product ID and product name from the local files.",
+        "Each row states the inquiry's actual issue and uses one of the instructed verdict labels.",
+        "Each row reports the product's Return_Rate and Avg_Rating against correctly calculated catalog means, allowing reasonable rounding.",
+        "Each row reports the product's catalog rank for Return_Rate and Avg_Rating.",
+        "Each verdict is supported by relevant inquiry details, product-performance evidence, listing evidence, and industry-review evidence without implying that irrelevant sources independently prove the verdict.",
+        "Each row gives a recommended action and action priority consistent with its evidence-supported verdict."
+      ]
+    },
+    {
+      "rubric": "Do the Customer Response Protocols provide usable, finding-consistent responses for every escalated inquiry?",
+      "weight": 8,
+      "criterion": [
+        "A distinct draft response is provided for each of INQ-001, INQ-003, and INQ-006.",
+        "Each response addresses the inquiry's actual problem rather than a generic complaint category.",
+        "Each response offers concrete resolution options appropriate to that problem.",
+        "Each response is consistent with the decision-matrix verdict and does not assert unsupported quality, shipping, or fulfillment findings."
+      ]
+    },
+    {
+      "rubric": "Does the Product Risk Dashboard cover the full catalog and identify additional products through a reproducible, source-grounded risk analysis?",
+      "weight": 12,
+      "criterion": [
+        "Every SKU in product_performance_Q4.csv appears with Return_Rate, Avg_Rating, Units_Sold_Q4, and a risk level.",
+        "All displayed catalog metrics match product_performance_Q4.csv, allowing normal display rounding.",
+        "The product-similarity dimensions and thresholds are stated and derived from the escalated products' observed indicators, the catalog distribution, or both, rather than being selected to produce a preferred match set.",
+        "The resulting rule is applied across every non-escalated SKU and the dashboard shows every match with the metrics or inquiry evidence that trigger the rule; if no SKU matches, the dashboard shows the full-catalog comparison supporting that result.",
+        "Related customer inquiries are cited where they materially inform the additional-product assessment.",
+        "The dashboard distinguishes listing-accuracy evidence from manufacturing-quality evidence when the supplied inquiry and listing data support that distinction."
+      ]
+    },
+    {
+      "rubric": "Does the Product Risk Dashboard contain a genuine visualization of product risk rather than only a plain table?",
+      "weight": 6,
+      "criterion": [
+        "The Product Risk Dashboard contains an Excel chart, conditional formatting, or another genuine graphical encoding of risk indicators.",
+        "The visualization is tied to the dashboard's product-risk data.",
+        "A text heading or a second unformatted table labeled as a visualization does not by itself satisfy this requirement."
+      ]
+    },
+    {
+      "rubric": "Does the analysis use the required external datasets accurately and only to the extent supported by those sources?",
+      "weight": 6,
+      "criterion": [
+        "The review-dataset analysis identifies relevant recurring complaint patterns such as fabric, sizing, or construction issues using the supplied Kaggle data.",
+        "The Shopify apparel descriptions for the escalated products are compared with the corresponding complaint wording.",
+        "Any expectation-mismatch finding distinguishes intentional design language from evidence of an actual defect.",
+        "External-dataset findings are framed as contextual evidence rather than as direct proof about an individual boutique SKU."
+      ]
+    },
+    {
+      "rubric": "Does the PDF communication accurately reflect the analysis and include the evidence and action appropriate to its conclusion?",
+      "weight": 6,
+      "criterion": [
+        "The PDF identifies the affected product or products and the specific complaint or defect patterns supporting the conclusion.",
+        "The PDF reports relevant return rate, rating, catalog comparison, and units-sold evidence from product_performance_Q4.csv.",
+        "Relevant listing language is quoted or faithfully paraphrased when it affects the conclusion.",
+        "A Supplier Quality Notice requests concrete corrective actions with a timeline.",
+        "A Quality Assessment Memo, if used instead, explains why the available evidence does not establish a systemic issue and states appropriate follow-up."
+      ]
+    }
+  ]
+}

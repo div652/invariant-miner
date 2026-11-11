@@ -1,0 +1,283 @@
+{
+  "group": "group-10",
+  "reviewedTasks": [
+    "civil_engineers/task1",
+    "personal_financial_advisors/task1",
+    "police_fire_and_ambulance_dispatchers/task1",
+    "purchasing_agents_except_wholesale_retail_and_farm_products/task1",
+    "social_science_research_assistants/task1",
+    "training_and_development_specialists/task1"
+  ],
+  "issues": [
+    {
+      "id": "group-10-01",
+      "source": "group-10.json",
+      "task": "personal_financial_advisors/task1",
+      "severity": "medium",
+      "category": "ambiguity_and_judgeability",
+      "location": "rubrics[1].criterion[0]",
+      "finding": "Rolling-return treatment and the latest-values summary row were underdefined.",
+      "disposition": "applied",
+      "rationale": "The market criterion now permits explained N/A values when the t-12 observation is outside the retrieved source window and separately requires a latest-values summary row with date differences disclosed."
+    },
+    {
+      "id": "group-10-02",
+      "source": "group-10.json",
+      "task": "personal_financial_advisors/task1",
+      "severity": "medium",
+      "category": "coverage",
+      "location": "rubrics[7].criterion[2]",
+      "finding": "The memo could omit specifically required market measures.",
+      "disposition": "applied",
+      "rationale": "The memo rubric now enumerates all instructed yield, slope, timing, policy-rate, real-rate, return, and period-high evidence without prescribing conclusions."
+    },
+    {
+      "id": "group-10-03",
+      "source": "group-10.json",
+      "task": "personal_financial_advisors/task1",
+      "severity": "low",
+      "category": "deliverable_coverage",
+      "location": "rubrics[7].criterion[0]",
+      "finding": "Exact workbook and memo filenames were not enforced.",
+      "disposition": "applied",
+      "rationale": "The final memo row now requires all three exact filenames and formats, and the page-limit criterion names client_memo.pdf directly."
+    },
+    {
+      "id": "group-10-04",
+      "source": "group-10.json",
+      "task": "police_fire_and_ambulance_dispatchers/task1",
+      "severity": "medium",
+      "category": "coverage_and_judgeability",
+      "location": "rubrics[2].criterion[0]",
+      "finding": "The Unit Matching Matrix candidate population was not auditable.",
+      "disposition": "applied",
+      "rationale": "The criterion now requires either the full unit roster or a reproducible candidate-selection rule covering assigned, closest eligible, unavailable, and specialty-relevant units."
+    },
+    {
+      "id": "group-10-05",
+      "source": "group-10.json",
+      "task": "purchasing_agents_except_wholesale_retail_and_farm_products/task1",
+      "severity": "medium",
+      "category": "coverage_and_atomicity",
+      "location": "rubrics[1].criterion[4]",
+      "finding": "Benchmark flags were not explicitly required per supplier-item quote.",
+      "disposition": "applied",
+      "rationale": "The line-item criterion now requires a separate four-label classification for every supplier-item quote."
+    },
+    {
+      "id": "group-10-06",
+      "source": "group-10.json",
+      "task": "purchasing_agents_except_wholesale_retail_and_farm_products/task1",
+      "severity": "low",
+      "category": "deliverable_coverage",
+      "location": "rubrics[3].criterion[0]",
+      "finding": "The exact three-sheet workbook structure was not enforced.",
+      "disposition": "applied",
+      "rationale": "The split-analysis row now begins with an exact sheet-set requirement for the bid evaluation workbook."
+    },
+    {
+      "id": "group-10-07",
+      "source": "group-10.json",
+      "task": "social_science_research_assistants/task1",
+      "severity": "medium",
+      "category": "coverage",
+      "location": "rubrics[6].criterion[2]",
+      "finding": "The briefing table could omit equally productive and less productive discrepancies.",
+      "disposition": "applied",
+      "rationale": "The criterion now requires separate rows for all three published productivity categories with values, variances, and plausible explanations."
+    },
+    {
+      "id": "group-10-08",
+      "source": "group-10.json",
+      "task": "training_and_development_specialists/task1",
+      "severity": "high",
+      "category": "ambiguity_and_source_consistency",
+      "location": "rubrics[4].criterion[0]",
+      "finding": "The lowest-performing program lacked a program-level quarterly aggregation rule.",
+      "disposition": "applied",
+      "rationale": "The criterion now requires a documented full-year program-level aggregation, accepts defensible alternatives, and rejects an unexplained single minimum row."
+    },
+    {
+      "id": "group-10-09",
+      "source": "group-10.json",
+      "task": "training_and_development_specialists/task1",
+      "severity": "high",
+      "category": "ambiguity_and_alternative_solution_fairness",
+      "location": "rubrics[1].criterion[3]",
+      "finding": "Declining Level 3 outcomes lacked a consistent trend definition.",
+      "disposition": "applied",
+      "rationale": "The schedule criterion now requires a stated program-level full-year decline rule, accepts equivalent documented methods, and prevents an unexplained single adjacent-quarter dip from controlling."
+    },
+    {
+      "id": "group-10-10",
+      "source": "group-10.json",
+      "task": "training_and_development_specialists/task1",
+      "severity": "medium",
+      "category": "measurement_and_judgeability",
+      "location": "rubrics[7].criterion[6]",
+      "finding": "Quarterly demand could be compared directly with weekly capacity.",
+      "disposition": "applied",
+      "rationale": "The risk criterion now requires peak weekly demand or an explicitly time-normalized equivalent and separately requires identification of the lowest-capacity instructor."
+    },
+    {
+      "id": "group-10-11",
+      "source": "group-10.json",
+      "task": "training_and_development_specialists/task1",
+      "severity": "low",
+      "category": "subjective_format_requirement",
+      "location": "rubrics[8].criterion[2]",
+      "finding": "Visible use of the attendance template was subjective.",
+      "disposition": "applied",
+      "rationale": "The criterion now checks concrete training-information and attendee-signature fields and explicitly does not require cosmetic imitation."
+    },
+    {
+      "id": "corpus-lint-01",
+      "source": "corpus-lint.json",
+      "task": "civil_engineers/task1",
+      "severity": "medium",
+      "category": "undefined-materiality",
+      "location": "rubrics[1].criterion[4]",
+      "finding": "The rubric weakened every discrepancy to every material discrepancy.",
+      "disposition": "applied",
+      "rationale": "The reinforcement row now requires every difference to remain visible and every non-zero difference beyond the stated rounding tolerance to be identified."
+    },
+    {
+      "id": "corpus-lint-02",
+      "source": "corpus-lint.json",
+      "task": "civil_engineers/task1",
+      "severity": "medium",
+      "category": "unjudgeable-completeness",
+      "location": "rubrics[2].criterion[1]",
+      "finding": "Every defensibly comparable item had no auditable comparison population.",
+      "disposition": "applied",
+      "rationale": "The workbook must now state and apply a scope-and-unit comparability rule to every local estimate item and document plausible excluded matches with reasons."
+    },
+    {
+      "id": "corpus-lint-03",
+      "source": "corpus-lint.json",
+      "task": "civil_engineers/task1",
+      "severity": "medium",
+      "category": "rounding-tolerance-ambiguity",
+      "location": "rubrics[1].criterion[2]",
+      "finding": "Ordinary rounding supplied no reproducible reinforcement tolerance.",
+      "disposition": "applied",
+      "rationale": "The criterion now uses a cited table, displayed unit weight, one rounding step, and a half-unit-in-the-last-displayed-decimal tolerance."
+    },
+    {
+      "id": "judgeability-01",
+      "source": "judgeability.json",
+      "task": "civil_engineers/task1",
+      "severity": "high",
+      "category": "missing-reference-context",
+      "location": "Rows 0-5",
+      "finding": "The judge lacks the local and WSDOT source records needed for source-value verification.",
+      "disposition": "deferred_infrastructure",
+      "rationale": "This requires judge-readable source extracts or deterministic checks. Embedding expected quantities, prices, or mappings in the rubric would recreate hidden answers."
+    },
+    {
+      "id": "judgeability-02",
+      "source": "judgeability.json",
+      "task": "personal_financial_advisors/task1",
+      "severity": "high",
+      "category": "missing-reference-context",
+      "location": "Rows 0-7",
+      "finding": "The judge lacks portfolio, market, tax, and RMD source records.",
+      "disposition": "deferred_infrastructure",
+      "rationale": "The evaluator must receive compact source data and deterministic calculation checks; the rubric must not encode expected trades or scenario totals."
+    },
+    {
+      "id": "judgeability-03",
+      "source": "judgeability.json",
+      "task": "police_fire_and_ambulance_dispatchers/task1",
+      "severity": "high",
+      "category": "missing-reference-context",
+      "location": "Rows 0-8",
+      "finding": "The judge lacks the original calls, roster, stations, CAD state, and historical source data.",
+      "disposition": "deferred_infrastructure",
+      "rationale": "Source extracts and database-diff checks belong in evaluator infrastructure; embedding expected units, conflicts, or counts would be an answer key."
+    },
+    {
+      "id": "judgeability-04",
+      "source": "judgeability.json",
+      "task": "purchasing_agents_except_wholesale_retail_and_farm_products/task1",
+      "severity": "high",
+      "category": "missing-reference-context",
+      "location": "Rows 0-8",
+      "finding": "The judge lacks requisition, bid, benchmark, template, and supplier-term source records.",
+      "disposition": "deferred_infrastructure",
+      "rationale": "The evaluator needs source extracts and deterministic arithmetic checks; hidden supplier totals, award choices, or benchmark matches were not added."
+    },
+    {
+      "id": "judgeability-05",
+      "source": "judgeability.json",
+      "task": "purchasing_agents_except_wholesale_retail_and_farm_products/task1",
+      "severity": "medium",
+      "category": "deliverable-extraction",
+      "location": "Criterion 5.2",
+      "finding": "Visual conformance to the provided PO template is not visible in extracted spreadsheet text.",
+      "disposition": "applied",
+      "rationale": "The rubric now defines observable header, party, logistics, and line-item sections and permits cosmetic variation."
+    },
+    {
+      "id": "judgeability-06",
+      "source": "judgeability.json",
+      "task": "social_science_research_assistants/task1",
+      "severity": "high",
+      "category": "missing-reference-context",
+      "location": "Rows 0-7",
+      "finding": "The judge lacks raw and reference data needed to verify exhaustive validation and statistics.",
+      "disposition": "deferred_infrastructure",
+      "rationale": "Compact source tables and deterministic validation and statistical checks must be supplied by the evaluator; expected errors and test results were not embedded."
+    },
+    {
+      "id": "judgeability-07",
+      "source": "judgeability.json",
+      "task": "social_science_research_assistants/task1",
+      "severity": "high",
+      "category": "deliverable-extraction",
+      "location": "Criteria 3.4, 4.1-4.3, and 5.3",
+      "finding": "Standard Jupyter rich outputs are omitted by notebook text extraction.",
+      "disposition": "deferred_infrastructure",
+      "rationale": "The notebook extractor must support text/plain, HTML, streams, errors, and images. Requiring duplicated output prose in the rubric would add an unsupported format burden."
+    },
+    {
+      "id": "judgeability-08",
+      "source": "judgeability.json",
+      "task": "training_and_development_specialists/task1",
+      "severity": "high",
+      "category": "missing-reference-context",
+      "location": "Rows 0-8",
+      "finding": "The judge lacks checklist, historical, schedule, room, instructor, and template source records.",
+      "disposition": "deferred_infrastructure",
+      "rationale": "Source extracts and deterministic schedule, ROI, and risk checks are evaluator responsibilities; no expected program, instructor, room, or cost answers were added."
+    },
+    {
+      "id": "judgeability-09",
+      "source": "judgeability.json",
+      "task": "training_and_development_specialists/task1",
+      "severity": "high",
+      "category": "deliverable-extraction",
+      "location": "Row 0",
+      "finding": "PDF form values and visual checklist annotations may be invisible to text extraction.",
+      "disposition": "deferred_infrastructure",
+      "rationale": "The evaluator must extract form fields and annotations or render pages. The rubric cannot require a text-only reimplementation of an allowed completed PDF."
+    },
+    {
+      "id": "judgeability-10",
+      "source": "judgeability.json",
+      "task": "training_and_development_specialists/task1",
+      "severity": "medium",
+      "category": "hidden-process",
+      "location": "Criterion 8.2",
+      "finding": "Use of the Smartsheet workbook as a formatting reference cannot be inferred from extracted values.",
+      "disposition": "applied",
+      "rationale": "The criterion now evaluates concrete functional fields taken from the attendance template and disclaims cosmetic style matching."
+    }
+  ],
+  "summary": {
+    "considered": 24,
+    "applied": 16,
+    "deferred_infrastructure": 8,
+    "rejected": 0
+  }
+}

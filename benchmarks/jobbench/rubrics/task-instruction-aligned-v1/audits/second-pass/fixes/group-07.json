@@ -1,0 +1,181 @@
+{
+  "group": "group-07",
+  "reviewedTasks": [
+    "civil_engineers/task3",
+    "computer_and_information_systems_managers/task1",
+    "court_clerks/task1",
+    "lawyers/task1",
+    "management_analysts/task1",
+    "sociology_teachers_postsecondary/task1"
+  ],
+  "changedTasks": [
+    "computer_and_information_systems_managers/task1",
+    "court_clerks/task1",
+    "lawyers/task1",
+    "management_analysts/task1",
+    "sociology_teachers_postsecondary/task1"
+  ],
+  "sourceIssueCounts": {
+    "group-07.json": 6,
+    "corpus-lint.json": 0,
+    "judgeability.json": 9
+  },
+  "issues": [
+    {
+      "source": "group-07",
+      "sourceLocation": "taskReviews[1].issues[0]",
+      "task": "computer_and_information_systems_managers/task1",
+      "severity": "medium",
+      "category": "coverage",
+      "disposition": "applied",
+      "rationale": "The report must flag every deficient DR plan, while the prior rubric could pass a generic risk-level status without proving plan-level coverage.",
+      "change": "Split the 6-point risk/DR row into a 4-point risk-incident row and a 2-point DR-plan row requiring every Fail result or RTO above 24 hours, documented treatment of other non-Pass results, and explicit risk relationships."
+    },
+    {
+      "source": "group-07",
+      "sourceLocation": "taskReviews[2].issues[0]",
+      "task": "court_clerks/task1",
+      "severity": "high",
+      "category": "contradiction",
+      "disposition": "applied",
+      "rationale": "A conditional assessment cannot be inserted as a definitive obligation when its applicability or amount remains unresolved, and the rubric elsewhere requires that uncertainty to be preserved.",
+      "change": "Limited fees_payments completeness and amount checks to verified obligations and expressly permits a documented pending conditional assessment to remain uninserted until verification."
+    },
+    {
+      "source": "group-07",
+      "sourceLocation": "taskReviews[3].issues[0]",
+      "task": "lawyers/task1",
+      "severity": "medium",
+      "category": "coverage",
+      "disposition": "applied",
+      "rationale": "Sandra Whitfield's possible sale is an explicit client decision supported by market-value and mortgage fields in the supplied database but was not scored.",
+      "change": "Split the 6-point economics row into 4 points for operating economics and 2 points for a qualified sale-or-hold analysis that accepts disclosed assumptions and missing-input caveats without prescribing a sale recommendation."
+    },
+    {
+      "source": "group-07",
+      "sourceLocation": "taskReviews[4].issues[0]",
+      "task": "management_analysts/task1",
+      "severity": "medium",
+      "category": "weight_allocation",
+      "disposition": "applied",
+      "rationale": "The standalone COPQ deliverable contained five cost formulas and full reconciliation but carried only 6 of 88 points.",
+      "change": "Raised COPQ to 12 points and reduced Industry Benchmark, Trend Diagnostics, and Complaint-Production Cross-Reference by 2 points each, preserving 88 total points."
+    },
+    {
+      "source": "group-07",
+      "sourceLocation": "taskReviews[4].issues[1]",
+      "task": "management_analysts/task1",
+      "severity": "low",
+      "category": "atomicity",
+      "disposition": "applied",
+      "rationale": "OEE, composite ranking, downtime share, and workforce averaging are independently reproducible methods and should not be one compound binary criterion.",
+      "change": "Split the combined method-documentation sentence into four separate criteria."
+    },
+    {
+      "source": "group-07",
+      "sourceLocation": "taskReviews[5].issues[0]",
+      "task": "sociology_teachers_postsecondary/task1",
+      "severity": "medium",
+      "category": "ambiguity",
+      "disposition": "applied",
+      "rationale": "Attendance & Participation has an Ongoing source period rather than a dated deadline, so the general dated-component rule produced two incompatible projected-grade treatments.",
+      "change": "Added an interim Completed rule for Attendance & Participation based only on valid records through October 21 and retained the due-date-plus-grade rule for the other seven components."
+    },
+    {
+      "source": "judgeability",
+      "sourceLocation": "issues[9]",
+      "task": "civil_engineers/task3",
+      "severity": "high",
+      "category": "missing-reference-context",
+      "disposition": "deferred_infrastructure",
+      "rationale": "Complete reconciliation, scope, price-source, lifecycle, and risk checks require the bridge files and fixed external cost references to be supplied to the judge or checked deterministically. Embedding their expected rows, prices, or conclusions in the rubric would create hidden-answer scoring.",
+      "change": null
+    },
+    {
+      "source": "judgeability",
+      "sourceLocation": "issues[10]",
+      "task": "civil_engineers/task3",
+      "severity": "high",
+      "category": "deliverable-extraction",
+      "disposition": "deferred_infrastructure",
+      "rationale": "DOCX page count is a rendering limitation. The one-page requirement is explicit and should be evaluated with rendered pages rather than replaced by an invented word limit.",
+      "change": null
+    },
+    {
+      "source": "judgeability",
+      "sourceLocation": "issues[15]",
+      "task": "computer_and_information_systems_managers/task1",
+      "severity": "high",
+      "category": "missing-reference-context",
+      "disposition": "deferred_infrastructure",
+      "rationale": "Server, risk, budget, proposal, AWS, NIST, and incident validation requires the source systems or deterministic controls. The rubric fix adds omitted DR coverage but does not embed source populations or expected answers.",
+      "change": null
+    },
+    {
+      "source": "judgeability",
+      "sourceLocation": "issues[21]",
+      "task": "court_clerks/task1",
+      "severity": "high",
+      "category": "missing-reference-context",
+      "disposition": "deferred_infrastructure",
+      "rationale": "Case facts, legal analysis, fee authority, and database diffs require the original case materials and CMS state. Encoding the expected discrepancies, holdings, or amounts in the rubric would recreate the answer-key defects removed by the aligned variant.",
+      "change": null
+    },
+    {
+      "source": "judgeability",
+      "sourceLocation": "issues[22]",
+      "task": "court_clerks/task1",
+      "severity": "high",
+      "category": "deliverable-extraction",
+      "disposition": "deferred_infrastructure",
+      "rationale": "AcroForm field and rendered-page extraction is evaluator infrastructure. The task explicitly requires the official form, so the rubric should not accept substitute text forms merely because the current extractor can miss widget values.",
+      "change": null
+    },
+    {
+      "source": "judgeability",
+      "sourceLocation": "issues[29]",
+      "task": "lawyers/task1",
+      "severity": "high",
+      "category": "missing-reference-context",
+      "disposition": "deferred_infrastructure",
+      "rationale": "Database figures, settlement terms, ordinances, and legal authorities must be supplied to the judge or validated deterministically. The sale-analysis fix remains source-grounded without embedding expected equity or legal conclusions.",
+      "change": null
+    },
+    {
+      "source": "judgeability",
+      "sourceLocation": "issues[31]",
+      "task": "management_analysts/task1",
+      "severity": "high",
+      "category": "missing-reference-context",
+      "disposition": "deferred_infrastructure",
+      "rationale": "Exhaustive trend, complaint, benchmark, equipment, memo, and COPQ checks require the local inputs and FRED extract. Adding expected plant rankings or totals to the rubric would undermine alternative-method fairness.",
+      "change": null
+    },
+    {
+      "source": "judgeability",
+      "sourceLocation": "issues[32]",
+      "task": "management_analysts/task1",
+      "severity": "high",
+      "category": "deliverable-extraction",
+      "disposition": "deferred_infrastructure",
+      "rationale": "DOCX pagination must be rendered or measured by the evaluator. The explicit 2–3-page requirement remains unchanged rather than being replaced with a rubric-only word range.",
+      "change": null
+    },
+    {
+      "source": "judgeability",
+      "sourceLocation": "issues[78]",
+      "task": "sociology_teachers_postsecondary/task1",
+      "severity": "high",
+      "category": "missing-reference-context",
+      "disposition": "deferred_infrastructure",
+      "rationale": "Student-level grades, anomalies, risk populations, UCI summaries, and WWC citations require the course database and named reference files. The attendance exception resolves rubric ambiguity without embedding student outcomes or expected citations.",
+      "change": null
+    }
+  ],
+  "summary": {
+    "considered": 15,
+    "applied": 6,
+    "deferred_infrastructure": 9,
+    "rejected": 0
+  }
+}

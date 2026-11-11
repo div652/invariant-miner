@@ -1,0 +1,156 @@
+{
+  "rubrics": [
+    {
+      "rubric": "Does discrepancy_compliance_audit.csv provide complete CR-001 through CR-010 coverage with source-supported result states and valid schema values?",
+      "weight": 10,
+      "criterion": [
+        "The file contains all eleven instructed columns.",
+        "The audit contains one requirement-check row for every vendor and every requirement CR-001 through CR-010, including the preferred CR-007 requirement.",
+        "Each requirement-check row compares the applicable requirement with the quotation evidence.",
+        "A requirement is marked Pass only when the quotation provides sufficient confirming evidence.",
+        "A requirement is marked Fail only when the quotation contradicts the requirement.",
+        "A requirement is marked Verification Required when the quotation neither confirms nor contradicts the requirement.",
+        "Requirements whose source row has Mandatory = YES are distinguished from CR-007, whose source row is PREFERRED.",
+        "Every failed requirement with Mandatory = YES has Critical severity; treatment of a preferred-requirement failure or gap is source-supported and is not forced to Critical.",
+        "Rows with Result = Pass may leave Issue_Type blank or use N/A; rows reporting a discrepancy or unresolved evidence use only the instructed Issue_Type vocabulary.",
+        "Result values use only Pass, Fail, or Verification Required, and populated Severity values use only Critical, High, Medium, or Low."
+      ]
+    },
+    {
+      "rubric": "Does discrepancy_compliance_audit.csv identify quotation discrepancies and unresolved evidence completely and actionably?",
+      "weight": 12,
+      "criterion": [
+        "Every quotation quantity is compared with the matching PR quantity.",
+        "Every quotation line extension and total is arithmetically checked.",
+        "Every quoted product is compared with the PR description and specifications.",
+        "Each quantity mismatch is recorded in its own finding row.",
+        "Each arithmetic error is recorded in its own finding row.",
+        "Each specification gap is recorded in its own finding row.",
+        "Each unresolved source ambiguity is recorded with Result and Issue_Type equal to Verification Required.",
+        "Required_Value and Quoted_Value accurately state the source values relevant to the finding.",
+        "Each finding contains a source-grounded recommended action."
+      ]
+    },
+    {
+      "rubric": "Does adjusted_bid_tabulation.xlsx present the required three-vendor scenarios and item comparisons in a usable bid-tabulation structure?",
+      "weight": 8,
+      "criterion": [
+        "The workbook presents a recognizable bid-tabulation layout with every PR line and all three vendors side by side.",
+        "The Original Totals scenario preserves source quotation quantities and unit prices and distinguishes quoted totals from any corrected arithmetic.",
+        "The Adjusted Totals scenario applies only quantity reductions permitted by the budget amendment.",
+        "The final adjusted scenario includes installation and freight.",
+        "Each vendor's installation rate is derived from its quotation notes and the source note is shown.",
+        "Lowest price per comparable item is identified across vendors.",
+        "Savings spread across vendors is calculated per comparable item.",
+        "Quotation discrepancies are distinguished from approved adjustment assumptions."
+      ]
+    },
+    {
+      "rubric": "Are the bid-tabulation quantities, extensions, totals, and budget comparisons arithmetically correct and consistent with the sources?",
+      "weight": 8,
+      "criterion": [
+        "Scenario line extensions and totals are arithmetically correct.",
+        "Adjusted quantities remain consistent with the amendment memo.",
+        "Installation rates are applied to the applicable adjusted quantities without double counting.",
+        "Freight treatment is stated and applied for each vendor.",
+        "The budget comparison uses the $310,000 pre-tax, installation-inclusive cap.",
+        "The displayed vendor comparisons are consistent with discrepancy_compliance_audit.csv.",
+        "Formulas or displayed calculations make the scenario totals reproducible."
+      ]
+    },
+    {
+      "rubric": "Does vendor_evaluation_scorecard.xlsx provide the seven instructed weighted scores with comparable, source-grounded justifications?",
+      "weight": 8,
+      "criterion": [
+        "The workbook presents a comparable scorecard view for all three vendors.",
+        "The scorecard includes Unit Pricing, Total Cost with Installation, Delivery Lead Time and Phased Capability, Warranty Coverage, Past Performance, Compliance Pass Rate, and Payment Terms and Financial Risk.",
+        "The seven criteria use the instructed weights of 20%, 15%, 15%, 10%, 20%, 10%, and 10%.",
+        "Every criterion uses a 1-to-5 score for each vendor.",
+        "Each score has a source-grounded justification.",
+        "Total Cost with Installation is benchmarked against the $310,000 cap.",
+        "Delivery, warranty, and payment-term scores reflect the quotations and amendment memo.",
+        "Compliance Pass Rate uses a disclosed, consistently applied method based only on applicable CR-001 through CR-010 requirement checks, with the treatment of Verification Required stated."
+      ]
+    },
+    {
+      "rubric": "Are the scorecard's vendor-history inputs, weighted totals, and rankings accurate and traceable?",
+      "weight": 10,
+      "criterion": [
+        "Past Performance reports on-time order counts and rates from vendor_history.db.",
+        "Past Performance reports average quality scores from vendor_history.db.",
+        "Warranty claims are reported by resolution status with resolution_days for completed dispositions and an explicit unresolved value for pending claims.",
+        "The nature of each unresolved claim is identified.",
+        "The Past Performance score follows from the displayed history metrics and justification.",
+        "The Compliance Pass Rate score agrees with the disclosed audit-based method.",
+        "Payment-term scoring reflects the amendment memo's review and approval consequences.",
+        "Weighted totals are calculated correctly from the displayed scores and weights.",
+        "Vendor ranks follow the weighted totals."
+      ]
+    },
+    {
+      "rubric": "Does purchase_recommendation_memo.docx provide the required budget analysis and complete CR-001 through CR-010 compliance summary?",
+      "weight": 12,
+      "criterion": [
+        "The memo is addressed to the Procurement Manager.",
+        "Budget Analysis is the first required section.",
+        "Budget Analysis reports each vendor's adjusted total including installation and freight.",
+        "Budget Analysis reports each vendor's dollar variance from the cap.",
+        "Budget Analysis reports each vendor's percent variance from the cap.",
+        "Compliance Summary Table is the second required section.",
+        "The compliance table contains one row for every requirement CR-001 through CR-010.",
+        "The compliance table contains one column for each vendor.",
+        "Each compliance cell is Pass, Fail, or Verification Required.",
+        "Each failed cell shows the quoted value and required value.",
+        "Compliance results match discrepancy_compliance_audit.csv.",
+        "Budget values match adjusted_bid_tabulation.xlsx."
+      ]
+    },
+    {
+      "rubric": "Does the memo's Risk Assessment accurately synthesize vendor-specific quotation, compliance, history, warranty, delivery, and payment risks?",
+      "weight": 10,
+      "criterion": [
+        "Risk Assessment is the third required section.",
+        "Each vendor has a distinct risk assessment.",
+        "Quotation-specific risks are identified.",
+        "Compliance failures and verification gaps are identified.",
+        "Delivery and phased-capability risks are identified.",
+        "Historical on-time performance is interpreted.",
+        "Historical quality performance is interpreted.",
+        "Unresolved warranty claims are described by claim type.",
+        "Safety implications of unresolved claims are addressed when supported by vendor_history.db.",
+        "Payment terms are evaluated against Finance's Net 30 or Net 45 preference.",
+        "Any required CFO review and associated delay are identified from the amendment memo."
+      ]
+    },
+    {
+      "rubric": "Does the Negotiation Counter-Offer provide an actionable and mathematically traceable proposal for the recommended vendor?",
+      "weight": 10,
+      "criterion": [
+        "Negotiation Counter-Offer is the fourth required section.",
+        "The counter-offer addresses the recommended vendor.",
+        "Two or three specific line items or commercial terms are selected.",
+        "Each selected item states its current price or term.",
+        "Each selected item states a target price or term.",
+        "Each selected item states a fallback position.",
+        "Existing vendor discounts are incorporated without double counting.",
+        "The post-negotiation total is calculated.",
+        "The memo states whether the counter-offer reaches the cap.",
+        "The recommendation remains consistent with compliance and risk findings."
+      ]
+    },
+    {
+      "rubric": "Does the memo state the correct escalation path and maintain traceable consistency across all four deliverables?",
+      "weight": 8,
+      "criterion": [
+        "Escalation Path is the fifth required section.",
+        "The escalation path matches the budget amendment memo.",
+        "Escalation is triggered when the recommended post-negotiation total cannot meet the cap.",
+        "The recommended vendor matches the scorecard and stated decision rationale.",
+        "Quoted, adjusted, installation, freight, and negotiated totals agree across deliverables.",
+        "Compliance outcomes agree across the audit, scorecard, and memo.",
+        "Vendor-history metrics agree across the scorecard and memo.",
+        "Material assumptions are labeled and traceable to a source."
+      ]
+    }
+  ]
+}

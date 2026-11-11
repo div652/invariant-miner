@@ -1,0 +1,73 @@
+{
+  "rubrics": [
+    {
+      "rubric": "Does the workbook independently reconcile every preliminary CSV quantity and make each adopted value reproducible?",
+      "weight": 14,
+      "criterion": [
+        "The Excel workbook contains exactly the Data Verification, Quantity Takeoff, Engineer's Estimate, and Cost Summary tabs.",
+        "The Data Verification sheet contains one row for every computed quantity in Bridge_CR42_Dimensions_and_Quantities.csv.",
+        "Each reconciliation row provides the CSV value with units, the independently calculated value with units, percent difference, a greater-than-2-percent flag, and a resolution note.",
+        "Each reconciliation row shows the dimensions, geometry, counts, and assumptions needed to reproduce the independent calculation.",
+        "Percent difference is calculated as the absolute CSV-to-calculated difference divided by the calculated value, and values within 2 percent are marked verified while larger differences are flagged.",
+        "A quantity that cannot be independently resolved from the named inputs is identified as provisional with the missing design input stated instead of being presented as verified."
+      ]
+    },
+    {
+      "rubric": "Are the adopted bridge quantities calculated accurately from the named inputs and carried into the quantity takeoff with the required rounding conventions?",
+      "weight": 20,
+      "criterion": [
+        "Existing deck removal uses the stated 9,567.5-square-foot deck area and 7.5-inch existing thickness, yielding approximately 221.5 cubic yards rather than the CSV value of 597.3 cubic yards.",
+        "New deck concrete uses the full out-to-out deck area and 8-inch thickness, yielding approximately 236.2 cubic yards and resolving the CSV's inconsistent area description.",
+        "Expansion-joint length accounts for the 15-degree skew, yielding approximately 92.1 linear feet for the two abutments.",
+        "Epoxy-coated reinforcing quantity is independently checked using the CSV's stated 6-percent-of-slab-weight basis, yielding approximately 57,400 pounds unless a different source-supported design basis is documented.",
+        "Haunch concrete is checked only with source-supported dimensions, and any missing girder-flange width or equivalent design input is explicitly identified before the quantity is adopted.",
+        "The remaining CSV quantities are independently checked, and the Quantity Takeoff sheet applies the Alaska DOT guide's applicable rounding conventions to the adopted values."
+      ]
+    },
+    {
+      "rubric": "Does the Engineer's Estimate use traceable CDOT bid items, adopted quantities, and the required unit-price hierarchy?",
+      "weight": 14,
+      "criterion": [
+        "Each estimate row includes an actual applicable CDOT 2024 item code, description, quantity, unit, unit price, price source, and extended cost.",
+        "Estimate quantities agree with the adopted values in the reconciliation and quantity-takeoff sheets.",
+        "The CDOT 2024 Cost Data Book is used for every bid item it covers.",
+        "A Michigan LAP or Alaska DOT Table 8-2 price is used only when the item is unavailable in the CDOT source, with any regional adjustment or unit conversion documented.",
+        "Extended costs are mathematically correct and every price can be traced to the cited source entry."
+      ]
+    },
+    {
+      "rubric": "Does the estimate total only the authorized base scope and calculate the required cost summary correctly?",
+      "weight": 10,
+      "criterion": [
+        "The base estimate matches the authorized scope in the project memo.",
+        "A repair or add-alternate outside the authorized scope is excluded from the base total or clearly separated as optional.",
+        "The Cost Summary calculates the construction subtotal and mobilization at 10 percent.",
+        "The Cost Summary calculates contingency at 20 percent and construction engineering at 15 percent, states the displayed bases, and includes mobilization in the construction-engineering base as instructed.",
+        "The grand total reconciles to the estimate rows and the displayed markups."
+      ]
+    },
+    {
+      "rubric": "Does the value-engineering CSV present a source-grounded 30-year comparison of full replacement and HPC overlay?",
+      "weight": 10,
+      "criterion": [
+        "The value-engineering deliverable is a CSV comparing full deck replacement with HPC overlay.",
+        "Both alternatives list their included scope components, quantities or cost bases, unit prices, price sources, initial cost, assumed service life, and 30-year lifecycle cost.",
+        "The HPC overlay uses the Michigan LAP Deep Overlay unit price with an explicitly stated Region 1 adjustment factor.",
+        "Lifecycle calculations are reproducible and apply the documented service-life and renewal assumptions consistently.",
+        "The final row states a 30-year recommendation supported by the calculated costs, service-life assumptions, and relevant project risks.",
+        "An equivalent supported lifecycle method or recommendation is accepted when its assumptions and uncertainty are documented."
+      ]
+    },
+    {
+      "rubric": "Does the one-page summary memo communicate the estimate, data findings, and source-grounded design risks required by the instructions?",
+      "weight": 8,
+      "criterion": [
+        "The memo is no more than one page and states the reconciled project total.",
+        "The memo identifies the principal cost drivers.",
+        "The memo summarizes the material data-quality discrepancies and their adopted resolutions.",
+        "The memo identifies at least three distinct risks requiring further design input.",
+        "The risks include a specific environmental constraint and a specific construction-timing or scheduling risk supported by the named project sources."
+      ]
+    }
+  ]
+}

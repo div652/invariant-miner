@@ -1,0 +1,105 @@
+{
+  "rubrics": [
+    {
+      "rubric": "Does findings_summary.csv provide a complete, chronological, per-event reconstruction of the suspicious activity using the required fields and source evidence?",
+      "weight": 9,
+      "criterion": [
+        "The header contains timestamp, client_ip, method, request_uri, status_code, response_size, matched_signature, attack_type, kill_chain_phase, succeeded, and notes.",
+        "Each malicious or suspicious access-log event has its own row rather than being aggregated into an event range.",
+        "Rows are in chronological order.",
+        "Matched signatures are traceable to threat_indicators.json or are explicitly identified as behavioral correlations.",
+        "Every kill_chain_phase uses one of the labels allowed by the instructions.",
+        "The notes make each attacking IP's progression reconstructable.",
+        "The notes explain any non-obvious phase assignment.",
+        "Succeeded uses Yes, No, or Partial.",
+        "Each Succeeded value is supported by the status code, response size, request sequence, and any stated uncertainty."
+      ]
+    },
+    {
+      "rubric": "Does cr_compliance_audit.csv assess every change-request item against the live evidence and connect each gap to observed impact or an explicit no-exploitation finding?",
+      "weight": 7,
+      "criterion": [
+        "The header contains cr_item, requirement, config_file, observed_configuration, compliance_status, and risk_description.",
+        "The audit contains one row for each item 1a through 1f, 2a through 2e, and 3a through 3c.",
+        "Each observed_configuration is grounded in nginx.conf, iptables.rules, ssl_cert_audit.csv, or network_topology.json.",
+        "Each compliance_status is Compliant, Non-Compliant, or Partial.",
+        "Each non-compliant or partial row cites the enabling log evidence with source IP, request URI, status code, and response size when exploitation was observed.",
+        "A gap with no observed exploitation says so explicitly.",
+        "Firewall findings compare the live rules with the approved source-zone restrictions in network_topology.json."
+      ]
+    },
+    {
+      "rubric": "Does nginx_hardened.conf implement every required Nginx and TLS control as a usable replacement configuration?",
+      "weight": 7,
+      "criterion": [
+        "All port 80 traffic is redirected to HTTPS.",
+        "server_tokens is disabled.",
+        "Access to dotfiles is denied.",
+        "HSTS is configured.",
+        "X-Frame-Options is configured as DENY.",
+        "X-Content-Type-Options is configured as nosniff.",
+        "The admin location is restricted to the management CIDR from network_topology.json.",
+        "The production debug endpoint is removed or explicitly blocked.",
+        "The HTTPS server configuration enforces a minimum of TLS 1.2.",
+        "The replacement preserves the required ShopVault static and reverse-proxy behavior without reintroducing a listed gap."
+      ]
+    },
+    {
+      "rubric": "Does iptables_hardened.rules enforce the approved ShopVault zone segmentation and the exact SSH rate limit?",
+      "weight": 7,
+      "criterion": [
+        "The inbound policy is default-deny after established, loopback, and explicitly approved traffic.",
+        "Public web access is limited to the services exposed by ShopVault's architecture.",
+        "Port 3000 is accepted only from the source zone authorized in network_topology.json.",
+        "Port 3001 is accepted only from the source zone authorized in network_topology.json.",
+        "Port 5432 is accepted only from the source zone authorized in network_topology.json.",
+        "Port 6379 is accepted only from the source zone authorized in network_topology.json.",
+        "SSH is accepted only from the management zone.",
+        "SSH new connections are limited to no more than three per minute.",
+        "No internal service port has an unrestricted ACCEPT rule."
+      ]
+    },
+    {
+      "rubric": "Does incident_report.html populate the supplied sections and tables with a complete, evidence-supported incident account?",
+      "weight": 7,
+      "criterion": [
+        "Sections 1 through 9 are preserved.",
+        "The template's table columns are preserved.",
+        "The incident timeline covers every malicious source IP and its event categories in chronological order.",
+        "The threat-actor analysis correlates each malicious IP with threat_indicators.json.",
+        "The vulnerabilities table uses valid OWASP Top 10 2021 category codes.",
+        "Each exploitation status is supported by the observed response.",
+        "Each exploitation status is expressed as Successful, Partially Successful, or Attempted – Failed.",
+        "Ambiguous HTTP success evidence is described with appropriate uncertainty rather than treated as proof of code execution.",
+        "The impact assessment distinguishes confidentiality, integrity, and availability effects.",
+        "No template placeholder remains."
+      ]
+    },
+    {
+      "rubric": "Does the report's executive and TLS analysis trace the verified evidence without imposing hidden attack-phase or certificate conclusions?",
+      "weight": 6,
+      "criterion": [
+        "The executive summary states that CR-2025-0347 was closed without post-implementation verification.",
+        "Each unimplemented CR item is connected to a specific observed outcome or an explicit statement that no exploitation was observed.",
+        "Causal statements identify the source IP, endpoint, and result used as evidence.",
+        "Every domain in ssl_cert_audit.csv is assessed against CR items 3a through 3c.",
+        "The TLS assessment compares protocol minimum, expiry as of November 10, 2025, key size, issuer or self-signed status, and decommission status.",
+        "The TLS assessment describes the SSL or TLS configuration actually present in nginx.conf.",
+        "Domains that meet the stated requirements are identified from the source fields."
+      ]
+    },
+    {
+      "rubric": "Does the remediation package provide incident-specific P1, P2, and P3 actions and all five exact deliverables?",
+      "weight": 7,
+      "criterion": [
+        "Section 7 includes P1 immediate-containment actions tied to specific incident findings.",
+        "Section 7 includes P2 short-term configuration and certificate fixes tied to specific incident findings.",
+        "Section 7 includes P3 long-term control and change-verification improvements tied to specific incident findings.",
+        "Each remediation row identifies an affected IP, account, resource, certificate, service, or change-control failure when applicable.",
+        "Section 8 contains the complete hardened Nginx and iptables configurations.",
+        "findings_summary.csv, cr_compliance_audit.csv, nginx_hardened.conf, iptables_hardened.rules, and incident_report.html all exist with the exact required filenames.",
+        "The standalone hardened files and the configurations embedded in the report are materially consistent."
+      ]
+    }
+  ]
+}

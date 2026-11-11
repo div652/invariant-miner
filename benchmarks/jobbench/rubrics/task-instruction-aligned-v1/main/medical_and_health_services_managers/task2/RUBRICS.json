@@ -1,0 +1,85 @@
+{
+  "rubrics": [
+    {
+      "rubric": "Does Payer_Service_Profitability.csv provide a complete, source-grounded profitability analysis for the required CPT code and payer combinations?",
+      "weight": 12,
+      "criterion": [
+        "The analysis selects the 10 CPT codes with the highest Annual_Volume_2024 values in Current_Service_Rate_Schedule.csv.",
+        "The CSV contains one row for each selected CPT code paired with each of the six required payers.",
+        "Each row uses the corresponding reimbursement and cost values from the rate schedule.",
+        "Profit_Per_Unit and the reported margin measures are calculated consistently from reimbursement and cost.",
+        "Below_120pct_Cost_Flag is set precisely when reimbursement per unit is less than 1.2 times cost per unit.",
+        "Trend_Indicator is derived consistently from the FY2024 monthly budget-versus-actual net income data."
+      ]
+    },
+    {
+      "rubric": "Does Peer_Benchmark_Analysis.xlsx calculate and present defensible Valley General and California peer financial benchmarks?",
+      "weight": 16,
+      "criterion": [
+        "The workbook states defensible comparable-hospital selection criteria and the resulting peer count.",
+        "Peer operating margin is calculated per hospital as (NET_TOT + OTH_OP_REV - TOT_OP_EXP) divided by (NET_TOT + OTH_OP_REV).",
+        "Peer total margin and days cash on hand use documented standard formulas and identified HCAI source fields.",
+        "The 25th percentile, median, and 75th percentile for each peer metric are computed over a consistently defined peer cohort.",
+        "Valley General operating margin is calculated as FY2024 actual department net income divided by actual total revenue.",
+        "Valley General total margin and days cash on hand are calculated only when the local inputs support them; an explicit not-calculable result with the missing inputs identified is acceptable instead of a fabricated value.",
+        "The presentation states whether Valley General is above or below each available peer percentile for every requested metric."
+      ]
+    },
+    {
+      "rubric": "Does the Payer Mix Comparison sheet correctly compare Valley General and peer government-payer dependency?",
+      "weight": 10,
+      "criterion": [
+        "Valley General government-payer net revenue includes Medicare FFS, Medicare Advantage, and Medicaid from the Payer Mix & Volume sheet.",
+        "Valley General government-payer share is calculated against total local net revenue.",
+        "Peer government-payer share is calculated from the identified HCAI Medicare and Medi-Cal net patient revenue fields divided by NET_TOT.",
+        "The analysis explicitly states whether HCAI managed-care fields are included.",
+        "The sheet compares Valley General with the peer distribution and states whether Valley General is more or less government-payer-dependent.",
+        "The sheet reports Valley General government share of patient visits and explains material department-versus-hospital or period comparability limits."
+      ]
+    },
+    {
+      "rubric": "Does the Recovery Plan Memo identify and analyze the five largest charge-to-reimbursement gaps and propose supportable revenue actions?",
+      "weight": 14,
+      "criterion": [
+        "The memo states the reimbursement basis used for the gap comparison.",
+        "The memo applies the stated reimbursement basis consistently across the rate schedule to identify the five largest gaps.",
+        "For each selected service, the memo shows the CPT code, current charge, reimbursement figure compared, and dollar gap.",
+        "Recommended charge or contracting actions are tied to the observed gaps without assuming that a chargemaster increase automatically changes contracted reimbursement.",
+        "Projected annual revenue impact uses FY2024 service volume and payer distribution.",
+        "The impact calculation documents its formulas, assumptions, and uncertainty."
+      ]
+    },
+    {
+      "rubric": "Does the Recovery Plan Memo reconcile the annual shortfall and provide exactly two source-grounded cost containment actions?",
+      "weight": 14,
+      "criterion": [
+        "The memo calculates actual-versus-budget revenue variance in dollars and percent.",
+        "The memo calculates actual-versus-budget expense variance in dollars and percent.",
+        "The revenue and expense variances reconcile to the net income variance, subject only to explained rounding.",
+        "The memo identifies the expense categories with the most consistent unfavorable monthly variances from the local workbook.",
+        "The memo proposes exactly two cost containment actions tied to the identified unfavorable categories.",
+        "Each action includes a specific operating change and a target savings amount or implementation timeline."
+      ]
+    },
+    {
+      "rubric": "Does the Recovery Plan Memo accurately analyze the FY2024 monthly net income trajectory and loss drivers?",
+      "weight": 10,
+      "criterion": [
+        "The memo identifies every month in the local workbook with negative actual net income.",
+        "For each loss month, the memo reports actual PT, OT, and SLP revenue and actual monthly expenses.",
+        "The memo compares the relevant monthly actuals with budget or other clearly stated baselines.",
+        "The stated drivers and trend conclusions follow from the cited monthly figures without requiring a predetermined seasonal explanation."
+      ]
+    },
+    {
+      "rubric": "Are all required deliverables present in the specified formats and structures?",
+      "weight": 10,
+      "criterion": [
+        "Payer_Service_Profitability.csv is a valid comma-separated file with a header row.",
+        "Peer_Benchmark_Analysis.xlsx contains exactly two sheets named Valley General vs. Peers and Payer Mix Comparison.",
+        "Recovery_Plan_Memo.docx is a readable Word document addressed to the Payer Strategy Committee.",
+        "All three filenames exactly match the task instructions."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,84 @@
+{
+  "rubrics": [
+    {
+      "rubric": "Does the Compliance Matrix accurately represent every employee-course compliance state using the instructed five statuses and an auditable as-of date?",
+      "weight": 10,
+      "criterion": [
+        "The matrix covers all 45 employees and every course identified as OSHA-required from the source records and OSHA reference.",
+        "Each employee-course entry uses exactly Current, Expiring within 60 days, Overdue, Never Completed, or Failed.",
+        "Each entry includes the date of last completion or N/A when the course was never completed.",
+        "Expiring within 60 days is calculated from Refresher_Due_Date relative to a stated early-2025 as-of date.",
+        "The sheet documents how Completed, Incomplete, Failed, Overdue, and no-record source states map to the five displayed statuses.",
+        "When multiple attempts exist, the selected status and last-completion date follow a stated, consistently applied rule."
+      ]
+    },
+    {
+      "rubric": "Are the composite employee-risk ranking and Department Risk Dashboard calculated transparently from the supplied compliance, incident, recency, and survey data?",
+      "weight": 8,
+      "criterion": [
+        "The composite risk formula is documented on the workbook and includes compliance failures, departmental incident exposure, and recency for incident-correlated courses.",
+        "The formula is applied consistently to all employees without manually forcing expected names or departments into the ranking.",
+        "The 10 employees with the highest calculated scores are visibly highlighted and each has a note explaining the score components.",
+        "The dashboard contains all eight departments with compliance percentage, overdue OSHA item count, training-related incident count, average survey satisfaction, risk-priority rank, and explanatory notes.",
+        "Department counts and rankings reconcile to the employee matrix, incident log, and survey data."
+      ]
+    },
+    {
+      "rubric": "Does the 13-week Q2 training plan satisfy the date, resource, participant, cost, and budget constraints in executable session rows?",
+      "weight": 10,
+      "criterion": [
+        "The schedule covers April 7 through July 4, 2025 and provides week, date, course code and name, format, room, instructor, participants, and session cost for every session.",
+        "Each session respects the instructor availability, specialization, room availability, facility suitability, and session limits in Resource Availability.",
+        "In-person sessions cost 650 dollars plus 200 dollars per instructor and virtual sessions cost 250 dollars plus 200 dollars per instructor.",
+        "A running weekly and cumulative cost tally is shown and remains at or below the 38,000 dollar cap.",
+        "Participants or an attached roster make it possible to verify which overdue or failed employee-course requirements each remediation session covers.",
+        "Course prioritization reconciles incident root-cause evidence and survey evidence with a documented explanation when those signals conflict."
+      ]
+    },
+    {
+      "rubric": "Does the schedule provide timely compliance remediation and monthly coverage for every incident-linked OSHA course?",
+      "weight": 6,
+      "criterion": [
+        "Every employee with an overdue or failed OSHA-required course is assigned to a suitable remediation session within the first four weeks.",
+        "Every OSHA-required course with at least one Training_Related = Yes incident has at least one scheduled session in April, May, and June.",
+        "Monthly coverage is verifiable from dated session rows rather than asserted only in narrative text.",
+        "The schedule does not substitute a non-OSHA course for an incident-linked OSHA course merely to satisfy the coverage count."
+      ]
+    },
+    {
+      "rubric": "Do Sections 1 and 2 of the Integrated Evaluation Framework diagnose reaction-outcome disconnects and redesign the Level 1 survey from the actual evidence?",
+      "weight": 6,
+      "criterion": [
+        "The PDF is 6 to 10 pages and begins with three courses whose Level 1 satisfaction most meaningfully diverges from their safety outcomes, using the supplied survey and incident data.",
+        "The retrospective analysis explains what those disconnects reveal about relying on reaction scores as safety evidence.",
+        "The redesigned survey contains items tied to observed weaknesses in the current ratings, delivery formats, and recurring open-feedback themes.",
+        "The survey includes a retrospective before-and-after knowledge matrix on a 5-point scale consistent with the NC State Tool-1A approach.",
+        "The redesigned items are usable as an instrument rather than only described as recommendations."
+      ]
+    },
+    {
+      "rubric": "Does Section 3 provide complete Levels 2-4 measures for the two courses selected by a documented, source-grounded course-risk method?",
+      "weight": 8,
+      "criterion": [
+        "The two target courses are selected using a documented composite course-risk method based on relevant compliance, incident, severity, recency, or outcome evidence; no hidden expected course identities are required.",
+        "Each target course has an 8 to 10 item pre/post knowledge assessment testing specific regulatory or procedural knowledge.",
+        "Each knowledge item cites the applicable 29 CFR standard or subsection and has a verifiable correct answer or scoring key.",
+        "Each target course has a 90-day supervisor checklist of specific observable behaviors tied to applicable OSHA subsections.",
+        "Three KPIs state actual baselines from the supplied data and measurable end-of-Q3 2025 targets.",
+        "The measures distinguish Kirkpatrick learning, behavior, and results evidence."
+      ]
+    },
+    {
+      "rubric": "Does Section 4 present a transparent ROI projection using the actual incident baseline, a cited cost benchmark, and the plan's real investment?",
+      "weight": 6,
+      "criterion": [
+        "The baseline explicitly states the incident-log observation period, including its start and end dates or an equivalent unambiguous range, together with 52 incidents, 23 OSHA recordables, and 129 lost work days.",
+        "The calculation cites an identifiable industry benchmark for OSHA-recordable incident cost and explains any lost-work-day cost treatment without double-counting.",
+        "The expected incident-reduction percentage and its rationale are stated.",
+        "Projected avoided cost, training cost, net benefit, and ROI are arithmetically consistent.",
+        "Training cost uses the actual scheduled plan cost and explicitly relates it to the 38,000 dollar cap; a full-cap scenario is acceptable when clearly labeled as a conservative alternative.",
+        "End-of-Q3 2025 targets are tied back to the stated baseline metrics."
+      ]
+    }
+  ]
+}

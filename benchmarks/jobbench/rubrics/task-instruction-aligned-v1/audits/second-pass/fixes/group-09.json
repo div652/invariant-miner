@@ -1,0 +1,141 @@
+{
+  "group": "group-09",
+  "reviewedTasks": [
+    "financial_managers_branch_or_department/task1",
+    "mechanical_engineering_technicians/task3",
+    "mechanical_engineers/task1",
+    "online_merchants/task1",
+    "social_science_research_assistants/task2",
+    "social_science_research_assistants/task3"
+  ],
+  "sourceIssueCounts": {
+    "group-09.json": 4,
+    "corpus-lint.json": 0,
+    "judgeability.json": 8,
+    "post-fix-re-lint": 1
+  },
+  "counts": {
+    "applied": 5,
+    "deferred_infrastructure": 8,
+    "rejected": 0
+  },
+  "issues": [
+    {
+      "source": "group-09.json",
+      "task": "mechanical_engineering_technicians/task3",
+      "severity": "medium",
+      "category": "deliverable_coverage",
+      "location": "RUBRICS.json: rubrics[0].criterion[0] through rubrics[6].criterion[5]",
+      "disposition": "applied",
+      "rationale": "Added a separate structural row for both exact filenames and all three required workbook sheet names, then reallocated four integer points without changing the 58-point total."
+    },
+    {
+      "source": "group-09.json",
+      "task": "online_merchants/task1",
+      "severity": "high",
+      "category": "hidden_answer_and_method_neutrality",
+      "location": "RUBRICS.json: rubrics[3].criterion[3]",
+      "disposition": "applied",
+      "rationale": "Removed the named SKU answers and now judge completeness against a disclosed, source-grounded risk rule applied consistently to the catalog."
+    },
+    {
+      "source": "group-09.json",
+      "task": "social_science_research_assistants/task2",
+      "severity": "high",
+      "category": "arbitrary_method",
+      "location": "RUBRICS.json: rubrics[1].criterion[1]",
+      "disposition": "applied",
+      "rationale": "The temporal-selection criterion now accepts either latest non-missing values by indicator or the latest complete common year when the policy is stated and consistently applied."
+    },
+    {
+      "source": "group-09.json",
+      "task": "social_science_research_assistants/task3",
+      "severity": "medium",
+      "category": "deliverable_coverage",
+      "location": "RUBRICS.json: rubrics[0].criterion[0] through rubrics[5].criterion[4]",
+      "disposition": "applied",
+      "rationale": "Added a separate structural row for the three exact filenames, instructed formats, and exact five-sheet workbook set while preserving the 50-point total."
+    },
+    {
+      "source": "judgeability.json",
+      "task": "financial_managers_branch_or_department/task1",
+      "severity": "high",
+      "category": "missing-reference-context",
+      "location": "Rows 0-8",
+      "disposition": "deferred_infrastructure",
+      "rationale": "The defect is absent judge access to the portfolio, framework, application, CDFI, FDIC, and concentration sources. Embedding their expected populations, weights, thresholds, or answers in the rubric would recreate hidden-answer scoring."
+    },
+    {
+      "source": "judgeability.json",
+      "task": "mechanical_engineering_technicians/task3",
+      "severity": "high",
+      "category": "missing-reference-context",
+      "location": "Rows 0-6",
+      "disposition": "deferred_infrastructure",
+      "rationale": "Affinity inputs, vibration points, standard limits, bearing geometry, spectra, and IOM guidance must be supplied to deterministic checks or the judge; encoding them in rubric text would leak expected answers."
+    },
+    {
+      "source": "judgeability.json",
+      "task": "mechanical_engineers/task1",
+      "severity": "high",
+      "category": "missing-reference-context",
+      "location": "Rows 0-7",
+      "disposition": "deferred_infrastructure",
+      "rationale": "Verification requires normalized design inputs, controlled ASME chart and material data, and calculation checks. The rubric already permits documented uncertainty and should not embed authoritative chart values or expected conclusions."
+    },
+    {
+      "source": "judgeability.json",
+      "task": "online_merchants/task1",
+      "severity": "high",
+      "category": "missing-reference-context",
+      "location": "Rows 1-6",
+      "disposition": "deferred_infrastructure",
+      "rationale": "The judge needs the complete inquiry, catalog, Shopify, and review datasets or deterministic join and ranking outputs. The hidden SKU hints were removed rather than expanded into a canonical answer list."
+    },
+    {
+      "source": "judgeability.json",
+      "task": "online_merchants/task1",
+      "severity": "high",
+      "category": "deliverable-extraction",
+      "location": "Row 4",
+      "disposition": "deferred_infrastructure",
+      "rationale": "Chart and conditional-format visibility is an XLSX rendering or object-inspection limitation. The visualization requirement is explicit in the task and remains in the rubric."
+    },
+    {
+      "source": "judgeability.json",
+      "task": "social_science_research_assistants/task2",
+      "severity": "high",
+      "category": "missing-reference-context",
+      "location": "Rows 0-7",
+      "disposition": "deferred_infrastructure",
+      "rationale": "Cleaning, source extraction, annex parsing, imputation, typology, and regression verification require source extracts and deterministic recomputation. The rubric was made method-neutral but does not encode expected source rows or model outputs."
+    },
+    {
+      "source": "judgeability.json",
+      "task": "social_science_research_assistants/task3",
+      "severity": "high",
+      "category": "missing-reference-context",
+      "location": "Rows 0-5",
+      "disposition": "deferred_infrastructure",
+      "rationale": "Exact codebook names, benchmark values, source coverage, and statistical results require normalized external and local sources. Adding those expected values to rubric text would undermine task-instruction alignment."
+    },
+    {
+      "source": "judgeability.json",
+      "task": "social_science_research_assistants/task3",
+      "severity": "high",
+      "category": "deliverable-extraction",
+      "location": "Row 0, especially criteria 0.1-0.4",
+      "disposition": "deferred_infrastructure",
+      "rationale": "The 500-row SQLite extraction cap prevents full-table inspection. This requires full-table summaries, targeted flagged-row extraction, or a higher scoped limit, not hidden respondent IDs or corrections in the rubric."
+    },
+    {
+      "source": "post-fix-re-lint",
+      "task": "online_merchants/task1",
+      "severity": "medium",
+      "category": "circular_self_defined_rule",
+      "location": "RUBRICS.json: rubrics[3].criterion[2] and rubrics[3].criterion[3]",
+      "disposition": "applied",
+      "rationale": "The similarity dimensions and thresholds must now derive from escalated-product indicators and/or the catalog distribution. The rule is applied to every non-escalated SKU, all matches are shown, and a no-match result requires a full-catalog comparison."
+    }
+  ]
+}

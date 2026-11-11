@@ -1,0 +1,106 @@
+{
+  "rubrics": [
+    {
+      "rubric": "Are the three deliverables structurally valid and based on a complete reconciliation of the original specification with Rev-1?",
+      "weight": 8,
+      "criterion": [
+        "The output contains the three exact instructed filenames.",
+        "thickness_calculations.csv is parseable and contains exactly the instructed column names.",
+        "design_audit.json is valid JSON with top-level reconciliation, hydrotest, nozzles, external_pressure, and material keys.",
+        "The reconciliation list has one entry for every Rev-1 addition or changed original parameter.",
+        "Each reconciliation entry contains parameter, original_value, rev1_value, resolved_value, and rationale.",
+        "All three deliverables use the same reconciled head types, shell length, nozzle set, design conditions, and material basis."
+      ]
+    },
+    {
+      "rubric": "Do the internal-pressure thickness and MAWP calculations correctly cover the reconciled shell, top head, and bottom head?",
+      "weight": 10,
+      "criterion": [
+        "The CSV contains at least one row each for Shell, Top Head, and Bottom Head.",
+        "Each component uses the formula appropriate to its reconciled geometry under ASME VIII-1.",
+        "The report shows the pressure, dimensions, allowable stress, joint efficiency, corrosion allowance, and intermediate formula values.",
+        "The bottom-head calculation uses the task's ASME F&D conventions if reconciliation selects a torispherical head.",
+        "Pressure-required thickness, corrosion allowance, selected nominal thickness, and UG-16(b) minimum are separated consistently.",
+        "Each component's MAWP is recalculated from the selected available thickness.",
+        "The reported vessel MAWP is governed by the lowest applicable component result."
+      ]
+    },
+    {
+      "rubric": "Does the hydrotest analysis apply a stated UG-99(b) basis to the calculated vessel MAWP and reconcile the client value?",
+      "weight": 6,
+      "criterion": [
+        "The hydrotest object contains calculated_mawp_psi, correct_hydrotest_psi, client_specified_psi, and discrepancy_flag.",
+        "The report states the UG-99(b) equation and the stress-ratio basis used.",
+        "The calculation starts from the calculated vessel MAWP rather than silently substituting design pressure.",
+        "Any assumed test-temperature stress ratio is identified as an assumption or supported by a cited material value.",
+        "The discrepancy flag and conclusion agree with the displayed calculation."
+      ]
+    },
+    {
+      "rubric": "Does the external-pressure analysis perform the instructed shell and bottom-head checks with traceable chart inputs or documented uncertainty?",
+      "weight": 10,
+      "criterion": [
+        "The shell result reports L, Do, net thickness, L/Do, and Do/t from the reconciled geometry.",
+        "The shell result identifies the Figure G Factor A procedure and the applicable material-chart Factor B basis at design temperature.",
+        "The shell allowable external pressure is calculated with the instructed UG-28 equation when chart values are available.",
+        "If controlled chart values are unavailable, the analysis reports the required chart threshold and leaves adequacy conditional rather than inventing a factor.",
+        "The bottom-head result reports Ro, the thickness basis, Ro/t, Factor A, Factor B basis, and allowable external pressure under the instructed UG-33 procedure.",
+        "Both component results compare allowable pressure with the specified external pressure.",
+        "The final recommendation is consistent with the numerical or conditional results."
+      ]
+    },
+    {
+      "rubric": "Does the package compare increased shell thickness with a UG-29 stiffening-ring option for the reconciled vessel?",
+      "weight": 6,
+      "criterion": [
+        "The comparison uses the reconciled shell diameter and unsupported length.",
+        "The thicker-shell option includes a reproducible material-weight or cost basis.",
+        "The ring option states the proposed spacing or effective shell lengths.",
+        "The ring option addresses required section inertia and attachment-weld checks under UG-29 and UG-30.",
+        "Fabrication, inspection, corrosion-detail, and maintenance consequences are considered.",
+        "The recommendation follows the quantified comparison and identifies any design information still needed."
+      ]
+    },
+    {
+      "rubric": "Does design_audit.json provide complete, geometry-aware reinforcement analyses for N1, M1, and N5?",
+      "weight": 12,
+      "criterion": [
+        "The nozzles object contains N1, M1, and N5.",
+        "Each nozzle object reports d, D, d/D, rating, the required thickness tr used, A_required, A_available, repad specifications, and appendix_1_7_required.",
+        "Each reinforcement calculation states the neck, opening, corrosion, undertolerance, weld, and excess-shell or excess-head assumptions used.",
+        "N1 is evaluated on the shell and its specified piping loads are addressed or clearly left for a named local-load analysis.",
+        "M1 is compared with the applicable UG-36 large-opening limits using its actual finished opening geometry.",
+        "The Appendix 1-7 flag follows that comparison rather than a hidden expected outcome.",
+        "When Appendix 1-7 applies, the package reports the required membrane and membrane-plus-bending checks.",
+        "N5 uses a head-geometry method appropriate to its location on the 2:1 top head.",
+        "N5's flange rating and available nozzle-wall contribution are treated consistently.",
+        "A repad is specified only when the calculated available area or other governing analysis requires it."
+      ]
+    },
+    {
+      "rubric": "Does the material assessment reach supported conclusions for wet-H2S service, impact testing, and PWHT?",
+      "weight": 8,
+      "criterion": [
+        "The assessment cross-references the design CSV service and NACE_Compliance fields with the manufacturer datasheet.",
+        "The HIC conclusion distinguishes a manufacturer supplementary option from a project or sour-service purchase requirement.",
+        "Any required supplementary designation and test standard are cited or identified as needing confirmation.",
+        "The impact assessment converts the MDMT and compares it with the datasheet's energy, temperature, and thickness ranges.",
+        "The UCS-66 material curve and exemption-temperature conclusion are supported by the selected material condition and governing thickness.",
+        "The PWHT conclusion is tied to the project requirement and the applicable UCS-56 basis.",
+        "Unprovided chemistry, hardness, heat-treatment, or acceptance criteria are identified rather than assumed."
+      ]
+    },
+    {
+      "rubric": "Does design_summary_report.txt provide the instructed calculation package summary and conclusions without contradicting the machine-readable files?",
+      "weight": 6,
+      "criterion": [
+        "The report contains every instructed section.",
+        "The Design Summary Table includes the instructed vessel, code, pressure, temperature, material, stress, corrosion, efficiency, hydrotest, and UG-22 fields.",
+        "Calculation Results contains formulas and intermediate values for every component.",
+        "The Bill of Materials reflects the selected component thicknesses, reconciled heads, nozzles, pads, and any recommended rings.",
+        "Conclusions include the hydrotest finding and external-pressure recommendation.",
+        "Numeric values and dispositions agree with the CSV and JSON."
+      ]
+    }
+  ]
+}

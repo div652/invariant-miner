@@ -1,0 +1,133 @@
+{
+  "rubrics": [
+    {
+      "rubric": "Is the executed notebook reproducible from the named data sources and does it document data quality?",
+      "weight": 16,
+      "criterion": [
+        "The notebook is valid IPYNB JSON and has visible outputs from executed analysis cells.",
+        "The notebook reads the named local files and retrieved official-source files through runnable code.",
+        "A clean execution does not depend on undefined precomputed objects or unavailable intermediate files.",
+        "State names, abbreviations, and state-level FIPS identifiers are harmonized programmatically.",
+        "The data quality report identifies missing jurisdictions in each source.",
+        "The data quality report reports duplicate-key checks and implausible-value checks.",
+        "Every excluded jurisdiction has a stated reason.",
+        "The final analytic sample size is justified from the documented merges and exclusions."
+      ]
+    },
+    {
+      "rubric": "Are obesity, ERS, vaccination, and Census geography data extracted in accordance with the instructed definitions?",
+      "weight": 10,
+      "criterion": [
+        "Obesity uses one overall adult prevalence observation per retained state or DC from one stated survey year.",
+        "The obesity survey year is justified by temporal alignment rather than selected to match a hidden expected result.",
+        "Stratified and territorial obesity records are excluded from the state-level analysis.",
+        "Poverty is the 2023 all-ages state percentage from the USDA ERS poverty file.",
+        "Median household income and unemployment are 2023 state estimates from the USDA ERS file.",
+        "The December 2021 CDC vaccination snapshot is incorporated or its non-model role is explicitly documented.",
+        "Census region and division assignments are accurate for retained jurisdictions."
+      ]
+    },
+    {
+      "rubric": "Do the descriptive statistics and correlation analysis contain the instructed estimates and uncertainty?",
+      "weight": 10,
+      "criterion": [
+        "Descriptive statistics report means and standard deviations for key variables overall.",
+        "Descriptive statistics report means and standard deviations by Census region.",
+        "The correlation analysis covers life expectancy, obesity, poverty, education, and median household income.",
+        "Each unique Pearson correlation includes a 95 percent confidence interval.",
+        "Correlation intervals use Fisher's z transformation or a documented bootstrap method."
+      ]
+    },
+    {
+      "rubric": "Are Models (a), (b), and (c) specified and reported exactly as instructed?",
+      "weight": 14,
+      "criterion": [
+        "Model (a) regresses life expectancy on obesity.",
+        "Model (b) adds poverty, education, median household income, and unemployment.",
+        "Model (c) adds regional structure through Census region or division effects to Model (b).",
+        "Each model reports coefficients, standard errors, p-values, and 95 percent confidence intervals.",
+        "Standardized coefficients are reported for predictors whose importance is compared.",
+        "Fit statistics are reported consistently across the three models.",
+        "The predictor-importance discussion follows the reported standardized effects without requiring a predetermined winner."
+      ]
+    },
+    {
+      "rubric": "Does the analysis compute and interpret multicollinearity diagnostics for the adjusted predictors?",
+      "weight": 8,
+      "criterion": [
+        "VIF values are computed for obesity, poverty, education, and median household income.",
+        "Reported VIF values are reproducible from the displayed adjusted-model design matrix.",
+        "The interpretation uses the instructed thresholds of below 5 acceptable and above 10 problematic.",
+        "Material collinearity between socioeconomic predictors is discussed when supported by the results."
+      ]
+    },
+    {
+      "rubric": "Does the analysis evaluate regional structure through Model (c) and an ICC?",
+      "weight": 10,
+      "criterion": [
+        "Model (c) uses a documented region or division specification nested within the four Census regions.",
+        "An ICC for life expectancy is calculated from states grouped into Northeast, Midwest, South, and West.",
+        "The ICC method is a one-way random-effects ANOVA or a documented equivalent.",
+        "The ICC interpretation uses the instructed near-zero to near-one scale.",
+        "The analysis distinguishes regional clustering evidence from a causal regional effect."
+      ]
+    },
+    {
+      "rubric": "Are the nested model comparisons conducted with formal likelihood-ratio tests?",
+      "weight": 8,
+      "criterion": [
+        "A likelihood-ratio test compares Model (a) with Model (b).",
+        "A likelihood-ratio test compares Model (b) with Model (c).",
+        "Each test reports chi-square, degrees of freedom, and p-value.",
+        "Each test is interpreted as a comparison of incremental fit rather than proof of causation."
+      ]
+    },
+    {
+      "rubric": "Does Model (b) have the required diagnostic plots with observation-specific interpretation?",
+      "weight": 10,
+      "criterion": [
+        "A residuals-versus-fitted plot is visible in the executed notebook.",
+        "A normal Q-Q plot is visible in the executed notebook.",
+        "A leverage or residuals-versus-leverage plot with Cook's distance information is visible in the executed notebook.",
+        "Each plot has a written interpretation tied to the relevant regression assumption.",
+        "Potentially problematic jurisdictions are named when the diagnostics identify them."
+      ]
+    },
+    {
+      "rubric": "Does the sensitivity analysis evaluate the stability of the adjusted obesity effect after removing high-leverage jurisdictions?",
+      "weight": 10,
+      "criterion": [
+        "The three highest-leverage jurisdictions are identified from Model (b).",
+        "The Model (b) obesity coefficient and 95 percent confidence interval are reported before removal.",
+        "The refitted obesity coefficient and 95 percent confidence interval are reported after removal.",
+        "Magnitude change, sign change, and statistical-significance change are evaluated using the instructed rule.",
+        "The analysis explicitly states whether the obesity conclusion is substantively stable."
+      ]
+    },
+    {
+      "rubric": "Does the results workbook contain exactly the five required sheets with the required content?",
+      "weight": 10,
+      "criterion": [
+        "The workbook contains exactly Clean_Data, Descriptive_Stats, Correlation_Matrix, Model_Comparison, and Sensitivity.",
+        "Clean_Data has one row per retained state or DC and the variables used in the analysis.",
+        "Descriptive_Stats contains overall and regional means and standard deviations.",
+        "Correlation_Matrix contains correlations and 95 percent confidence intervals.",
+        "Model_Comparison contains all three instructed models, standardized coefficients, fit statistics, and likelihood-ratio tests.",
+        "Sensitivity contains the before-and-after Model (b) obesity estimates and confidence intervals."
+      ]
+    },
+    {
+      "rubric": "Does the technical memo directly answer the research question and communicate the evidence responsibly?",
+      "weight": 10,
+      "criterion": [
+        "The memo is a valid DOCX or PDF of two to three pages.",
+        "The executive summary directly answers whether obesity is the primary driver.",
+        "The answer compares bivariate and adjusted obesity effects.",
+        "The answer uses standardized coefficients and sensitivity results.",
+        "A causal diagram is included and interpreted.",
+        "Ecological, temporal, measurement, and residual-confounding limitations are discussed.",
+        "The recommendation is actionable and does not present correlation as causation."
+      ]
+    }
+  ]
+}

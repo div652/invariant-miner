@@ -1,0 +1,156 @@
+{
+  "rubrics": [
+    {
+      "rubric": "Are the workbook and Board Decision Brief supplied in the required file and section structure?",
+      "weight": 4,
+      "criterion": [
+        "A single XLSX workbook contains exactly four tabs named Composite_Score, Consolidation_Scenarios, Risk_Matrix, and Data_Reconciliation, with no additional tabs.",
+        "A single DOCX Board Decision Brief is no longer than five pages.",
+        "The brief sections appear in the instructed order: Methodology Statement, Consolidation Recommendation, Implementation Risk Assessment, Go/No-Go Matrix, and COO/board alignment and conflict."
+      ]
+    },
+    {
+      "rubric": "Does the Composite_Score sheet construct the instructed five-factor model for all 19 plants from the named sources?",
+      "weight": 6,
+      "criterion": [
+        "The sheet contains one row for each of the 19 plants.",
+        "Utilization is calculated from OrderList.csv volume and WhCapacities.csv Daily_Capacity using a stated volume and day basis.",
+        "Cost efficiency uses WhCosts.csv or applicable FreightRates.csv values.",
+        "Service reliability uses the instructed late-shipment definition.",
+        "Customer satisfaction uses the Survey_Results sheet.",
+        "Port connectivity uses PlantPorts.csv.",
+        "Single-port plants are identifiable as higher connectivity risk."
+      ]
+    },
+    {
+      "rubric": "Does the Composite_Score sheet report a transparent, reproducible score and rank for every plant?",
+      "weight": 4,
+      "criterion": [
+        "Each factor shows its raw value.",
+        "Each factor shows its normalized score.",
+        "Each factor shows its weight.",
+        "The sheet reports order count for each plant.",
+        "The sheet reports share of total orders for each plant.",
+        "Composite scores and ranks are calculated consistently.",
+        "The weighting rationale is documented on the sheet."
+      ]
+    },
+    {
+      "rubric": "Does the Consolidation_Scenarios sheet test topology and capacity feasibility for each selected closure candidate?",
+      "weight": 7,
+      "criterion": [
+        "Each scenario identifies the closure candidate.",
+        "Each scenario identifies one or more receiving plants.",
+        "Each receiving plant shares a documented port with the closure candidate or the scenario is clearly marked infeasible.",
+        "Transferred volume is stated using the model's declared volume basis.",
+        "Receiving-plant utilization before transfer is calculated against Daily_Capacity.",
+        "Receiving-plant utilization after transfer is calculated against Daily_Capacity.",
+        "Each scenario contains a capacity-feasibility result.",
+        "Material ambiguity in the capacity unit or time basis is disclosed.",
+        "Infeasible candidates are not presented as executable closures without a mitigation."
+      ]
+    },
+    {
+      "rubric": "Does the Consolidation_Scenarios sheet calculate traceable net annual cost impact for each scenario?",
+      "weight": 7,
+      "criterion": [
+        "Closure savings are derived from the named source data.",
+        "Added warehouse cost at receiving plants is derived from WhCosts.csv.",
+        "Freight cost change is derived from FreightRates.csv or documented as unavailable for a stated source-data reason.",
+        "Net cost impact equals closure savings minus increased warehouse and freight costs.",
+        "The annualization basis is stated."
+      ]
+    },
+    {
+      "rubric": "Does the Risk_Matrix sheet correctly summarize complaint-based customer attrition risk for plants and closure candidates?",
+      "weight": 10,
+      "criterion": [
+        "Complaint metrics are derived from the Complaint_Log sheet.",
+        "Each plant's total complaints are reported.",
+        "Each plant's open complaints use the instructed non-Resolved definition.",
+        "Average severity is reported using a documented mapping.",
+        "Resolution rate is calculated as Resolved divided by total complaints.",
+        "Unresolved rate is calculated consistently.",
+        "The most frequent Complaint_Category is reported.",
+        "The closure candidates are identifiable in the matrix.",
+        "Customer Attrition Risk is true only when the plant has at least one High complaint and resolution rate is below 70%.",
+        "Plants with no complaint observations are distinguished from plants with observed zero risk."
+      ]
+    },
+    {
+      "rubric": "Does the Data_Reconciliation sheet independently verify memo claims and reconcile plant-code coverage across every dataset?",
+      "weight": 10,
+      "criterion": [
+        "Each quantitative claim in the COO memo is compared with an independently computed value when the source data permits.",
+        "Each comparison has a status.",
+        "Each comparison states its interpretation assumptions.",
+        "The company-wide late-shipment rate uses Ship_Late_Day_Count greater than zero.",
+        "The late-shipment calculation shows its numerator.",
+        "The late-shipment calculation shows its denominator.",
+        "Coverage is checked for OrderList.csv.",
+        "Coverage is checked for PlantPorts.csv.",
+        "Coverage is checked for WhCapacities.csv.",
+        "Coverage is checked for WhCosts.csv.",
+        "Coverage is checked for Survey_Results.",
+        "Coverage is checked for Complaint_Log.",
+        "Every orphaned or missing plant code is identified.",
+        "Non-comparable periods or units are labeled rather than treated as verified facts."
+      ]
+    },
+    {
+      "rubric": "Does the Board Decision Brief present a clear methodology and explicit data limitations within the five-page limit?",
+      "weight": 8,
+      "criterion": [
+        "The Methodology Statement appears first.",
+        "The Methodology Statement explains the five factors.",
+        "The Methodology Statement explains the factor weights.",
+        "The Methodology Statement explains the normalization method.",
+        "The Methodology Statement explains the aggregation method.",
+        "A Data Limitations paragraph identifies material coverage gaps.",
+        "A Data Limitations paragraph identifies material unit, period, or route-mapping limitations."
+      ]
+    },
+    {
+      "rubric": "Does the Consolidation Recommendation section give a source-grounded, ranked decision case for three to five candidates?",
+      "weight": 10,
+      "criterion": [
+        "The section contains three to five ranked candidates.",
+        "Each candidate includes utilization using the stated formula.",
+        "Each candidate includes cost per unit.",
+        "Each candidate includes late-shipment rate.",
+        "Each candidate includes customer satisfaction.",
+        "Each candidate includes a receiving-plant plan or an explicit infeasibility finding.",
+        "Each candidate's redistribution plan states its port-sharing basis.",
+        "Each candidate includes net annual cost impact or a documented reason it cannot be calculated.",
+        "Each candidate includes a brief counterargument for retention.",
+        "Recommendations do not treat missing activity data as proof of zero structural value."
+      ]
+    },
+    {
+      "rubric": "Does the brief provide a data-grounded implementation risk assessment and address alignment and conflict between the COO memo and board directive?",
+      "weight": 8,
+      "criterion": [
+        "Implementation risks cite specific operational data.",
+        "Implementation risks cite specific customer data.",
+        "Capacity and topology risks are addressed.",
+        "Customer attrition risks are addressed.",
+        "Network concentration or resilience risks revealed by the data are addressed.",
+        "The brief explains where the COO priorities and board directive align.",
+        "The brief explains where the COO priorities and board directive conflict.",
+        "Recommended mitigations are tied to the identified risks."
+      ]
+    },
+    {
+      "rubric": "Does the Go/No-Go Matrix provide the required concise action for every candidate?",
+      "weight": 6,
+      "criterion": [
+        "The matrix is presented as a single-page table.",
+        "There is one row for each recommended candidate.",
+        "The table contains a Plant column.",
+        "The table contains a Recommended Action column.",
+        "Every action is exactly Close, Consolidate, or Retain-and-Monitor.",
+        "Each row contains a one-line justification consistent with the preceding analysis."
+      ]
+    }
+  ]
+}

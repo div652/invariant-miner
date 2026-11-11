@@ -1,0 +1,206 @@
+{
+  "group": "group-03",
+  "assignedTasks": [
+    "civil_engineers/task2",
+    "human_resources_specialists/task1",
+    "licensing_examiners_and_inspectors/task1",
+    "medical_and_health_services_managers/task2",
+    "medical_secretaries/task1",
+    "purchasing_agents_except_wholesale_retail_and_farm_products/task3",
+    "sales_representatives_wholesale_and_manufacturing_technical_and_scientific_products/task1"
+  ],
+  "changedTasks": [
+    "human_resources_specialists/task1",
+    "medical_secretaries/task1",
+    "purchasing_agents_except_wholesale_retail_and_farm_products/task3",
+    "sales_representatives_wholesale_and_manufacturing_technical_and_scientific_products/task1"
+  ],
+  "summary": {
+    "considered": 20,
+    "applied": 11,
+    "deferred_infrastructure": 9,
+    "rejected": 0
+  },
+  "issues": [
+    {
+      "id": "group-03-human-resources-0",
+      "source": "group-03.json",
+      "task": "human_resources_specialists/task1",
+      "category": "unsupported_rubric_only_requirement",
+      "location": "rubrics[6].criterion[5]",
+      "disposition": "applied",
+      "rationale": "Removed the unrequested immediate-versus-longer-term taxonomy and now accepts any evidence-supported recruiting and retention organization."
+    },
+    {
+      "id": "group-03-medical-secretaries-0",
+      "source": "group-03.json",
+      "task": "medical_secretaries/task1",
+      "category": "contradiction_and_hidden_answer",
+      "location": "rubrics[6].criterion[1], rubrics[6].criterion[3], rubrics[6].criterion[4]",
+      "disposition": "applied",
+      "rationale": "Allows separate items for distinct authorization and administrative work, removes the once-at-highest-tier conflict, and removes the hidden rescheduled-authorization timing rule."
+    },
+    {
+      "id": "group-03-medical-secretaries-1",
+      "source": "group-03.json",
+      "task": "medical_secretaries/task1",
+      "category": "unsupported_rubric_only_requirement",
+      "location": "rubrics[7].criterion[1]",
+      "disposition": "applied",
+      "rationale": "Actual ICD-10 chapter naming is now optional; the rubric scores M00-M99 range classification and separate clinical narrative or laterality assessment."
+    },
+    {
+      "id": "group-03-purchasing-0",
+      "source": "group-03.json",
+      "task": "purchasing_agents_except_wholesale_retail_and_farm_products/task3",
+      "category": "schema_contradiction",
+      "location": "original rubrics[0].criterion[1], original rubrics[0].criterion[3], original rubrics[0].criterion[14]",
+      "disposition": "applied",
+      "rationale": "Pass rows may leave Issue_Type blank or use N/A, while discrepancy and unresolved-evidence rows remain limited to the instructed Issue_Type vocabulary."
+    },
+    {
+      "id": "group-03-purchasing-1",
+      "source": "group-03.json",
+      "task": "purchasing_agents_except_wholesale_retail_and_farm_products/task3",
+      "category": "coverage_and_source_scope_ambiguity",
+      "location": "original rubrics[0].criterion[1], original rubrics[0].criterion[6]",
+      "disposition": "applied",
+      "rationale": "Requires all vendor × CR-001 through CR-010 checks, explicitly distinguishes preferred CR-007, and limits automatic Critical severity to Mandatory = YES failures."
+    },
+    {
+      "id": "group-03-purchasing-2",
+      "source": "group-03.json",
+      "task": "purchasing_agents_except_wholesale_retail_and_farm_products/task3",
+      "category": "explicit_deliverable_coverage_gap",
+      "location": "original rubrics[2].criterion[12]",
+      "disposition": "applied",
+      "rationale": "Added resolution_days for completed warranty dispositions and an explicit unresolved value for pending claims."
+    },
+    {
+      "id": "group-03-purchasing-3",
+      "source": "group-03.json",
+      "task": "purchasing_agents_except_wholesale_retail_and_farm_products/task3",
+      "category": "ambiguous_calculation_method",
+      "location": "original rubrics[2].criterion[14]",
+      "disposition": "applied",
+      "rationale": "The pass-rate method must be disclosed, use only applicable requirement checks, and state the treatment of Verification Required; equivalent consistent methods remain acceptable."
+    },
+    {
+      "id": "group-03-sales-0",
+      "source": "group-03.json",
+      "task": "sales_representatives_wholesale_and_manufacturing_technical_and_scientific_products/task1",
+      "category": "applicability_contradiction",
+      "location": "rubrics[0].criterion[4]",
+      "disposition": "applied",
+      "rationale": "PASS, FAIL, or PARTIAL is enforced only for applicable product assessments; N/A or a documented blank is accepted for non-applicable cells."
+    },
+    {
+      "id": "group-03-sales-1",
+      "source": "group-03.json",
+      "task": "sales_representatives_wholesale_and_manufacturing_technical_and_scientific_products/task1",
+      "category": "source_consistency_underconstraint",
+      "location": "rubrics[5].criterion[2]",
+      "disposition": "applied",
+      "rationale": "Applicable internal SKU and service rates are now mandatory when present; estimates are limited to missing items and require a documented basis and uncertainty."
+    },
+    {
+      "id": "corpus-lint-purchasing-0",
+      "source": "corpus-lint.json",
+      "task": "purchasing_agents_except_wholesale_retail_and_farm_products/task3",
+      "category": "all-or-nothing-weight-concentration",
+      "location": "original rubrics[0] through original rubrics[2]",
+      "disposition": "applied",
+      "rationale": "Split the original three broad rows into six narrower rows with weights 10, 12, 8, 8, 8, and 10 while preserving the task total of 96."
+    },
+    {
+      "id": "judgeability-civil-engineers-8",
+      "source": "judgeability.json",
+      "task": "civil_engineers/task2",
+      "category": "missing-reference-context",
+      "location": "Rows 0-6",
+      "disposition": "deferred_infrastructure",
+      "rationale": "The rubric correctly requires source-grounded engineering calculations. Supplying source extracts or deterministic controls to the judge is an evaluator-context change, not a rubric-content fix; no hidden quantities or prices were added."
+    },
+    {
+      "id": "judgeability-human-resources-28",
+      "source": "judgeability.json",
+      "task": "human_resources_specialists/task1",
+      "category": "missing-reference-context",
+      "location": "Rows 0-6",
+      "disposition": "deferred_infrastructure",
+      "rationale": "Applicant and workforce source tables must be supplied to the evaluator rather than encoded as hidden outcomes in the rubric."
+    },
+    {
+      "id": "judgeability-licensing-30",
+      "source": "judgeability.json",
+      "task": "licensing_examiners_and_inspectors/task1",
+      "category": "missing-reference-context",
+      "location": "Rows 0-6",
+      "disposition": "deferred_infrastructure",
+      "rationale": "Normalized application, bulletin, correspondence, history, and public-lookup records belong in judge context or deterministic checks; the rubric retains supported DENY versus HOLD flexibility."
+    },
+    {
+      "id": "judgeability-health-managers-45",
+      "source": "judgeability.json",
+      "task": "medical_and_health_services_managers/task2",
+      "category": "missing-reference-context",
+      "location": "Rows 0-6",
+      "disposition": "deferred_infrastructure",
+      "rationale": "Rate, budget, payer, and peer extracts are evaluator inputs. Embedding top codes, peer values, or monthly conclusions would recreate hidden expected answers."
+    },
+    {
+      "id": "judgeability-medical-secretaries-46",
+      "source": "judgeability.json",
+      "task": "medical_secretaries/task1",
+      "category": "missing-reference-context",
+      "location": "Rows 0-7",
+      "disposition": "deferred_infrastructure",
+      "rationale": "Referral rows and reference excerpts must be passed to the judge or checked deterministically; they were not encoded into rubric text."
+    },
+    {
+      "id": "judgeability-medical-secretaries-47",
+      "source": "judgeability.json",
+      "task": "medical_secretaries/task1",
+      "category": "deliverable-extraction",
+      "location": "Row 3",
+      "disposition": "deferred_infrastructure",
+      "rationale": "Conditional-format rules and overlap behavior require workbook inspection or rendering. The visible-format requirement remains valid and was not replaced with hidden referral IDs."
+    },
+    {
+      "id": "judgeability-purchasing-62",
+      "source": "judgeability.json",
+      "task": "purchasing_agents_except_wholesale_retail_and_farm_products/task3",
+      "category": "missing-reference-context",
+      "location": "Rows 0-6",
+      "disposition": "deferred_infrastructure",
+      "rationale": "Requisition, quote, compliance, history, and amendment extracts must be made available to the evaluator; vendor-specific answer keys were not added."
+    },
+    {
+      "id": "judgeability-purchasing-63",
+      "source": "judgeability.json",
+      "task": "purchasing_agents_except_wholesale_retail_and_farm_products/task3",
+      "category": "hidden-process",
+      "location": "original criteria 1.0 and 2.0",
+      "disposition": "applied",
+      "rationale": "Replaced unverifiable template-provenance checks with observable bid-tabulation and scorecard structure, fields, calculations, and comparability requirements."
+    },
+    {
+      "id": "judgeability-sales-67",
+      "source": "judgeability.json",
+      "task": "sales_representatives_wholesale_and_manufacturing_technical_and_scientific_products/task1",
+      "category": "missing-reference-context",
+      "location": "Rows 0-8",
+      "disposition": "deferred_infrastructure",
+      "rationale": "RFQ, catalog, site, pricing, quote, and external data-sheet excerpts must be supplied to the evaluator; no product certifications, prices, or conclusions were hard-coded."
+    },
+    {
+      "id": "judgeability-sales-68",
+      "source": "judgeability.json",
+      "task": "sales_representatives_wholesale_and_manufacturing_technical_and_scientific_products/task1",
+      "category": "deliverable-extraction",
+      "location": "Criterion 7.0",
+      "disposition": "deferred_infrastructure",
+      "rationale": "DOCX page count requires pagination-aware rendering or metadata. The explicit 1–2 page task requirement remains, and no arbitrary word-count substitute was introduced."
+    }
+  ]
+}

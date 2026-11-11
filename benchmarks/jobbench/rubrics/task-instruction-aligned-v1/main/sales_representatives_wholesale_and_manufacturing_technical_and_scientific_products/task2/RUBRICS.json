@@ -1,0 +1,102 @@
+{
+  "rubrics": [
+    {
+      "rubric": "Do the quotation and memo use the required artifacts, and does the workbook have complete source-grounded structure and pricing?",
+      "weight": 12,
+      "criterion": [
+        "The workbook uses the exact required filename.",
+        "The memo is a readable DOCX named exactly Internal_Memo_Clearwater_Product_Selection.docx.",
+        "The workbook contains the five instructed tabs in the instructed order.",
+        "The Cover Page includes the quote number, quotation date, RFQ reference, SentinelGas Technologies name and any source-provided company details, full RFQ customer details, 60-day validity, and Net 30 terms; unavailable vendor contact details are not invented.",
+        "The Bill of Materials covers all five plant areas and all 38 detection points.",
+        "Each detector line includes the instructed identification, range, quantity, list-price, discount, and net-price fields.",
+        "Detector and controller discounts follow the applicable Government/Municipal schedules in the price list.",
+        "Area subtotals and the grand total reconcile to the line items.",
+        "The controller and panel configuration is included in the BOM."
+      ]
+    },
+    {
+      "rubric": "Does memo section (a) make a complete and defensible Area 3 H2S selection between H2S-200 and H2S-300X?",
+      "weight": 12,
+      "criterion": [
+        "The memo compares H2S-200 and H2S-300X on detection range.",
+        "The memo compares sensor life, IP rating, certifications, diagnostics or features, detector price, and replacement-sensor price.",
+        "The memo calculates a transparent five-year cost for the Area 3 quantity using a consistent stated pricing basis.",
+        "The memo recognizes the RFQ's Area 3 range and the manager's premium-model guidance.",
+        "The recommendation explains the effect of the confined-space application.",
+        "Any wider-than-requested range is flagged as a deviation and justified rather than described as exact range compliance.",
+        "The final recommendation is consistent with the BOM and compliance matrix."
+      ]
+    },
+    {
+      "rubric": "Does the proposed controller configuration meet the RFQ spare-capacity requirement with correct arithmetic and comparison?",
+      "weight": 8,
+      "criterion": [
+        "Total controller channels, used channels, and spare channels are shown.",
+        "Spare capacity is calculated as spare channels divided by total channels.",
+        "The recommended configuration is correctly compared with the RFQ's minimum 20% spare capacity.",
+        "The CP-32 plus EXP-16 price is calculated from the supplied price list and applicable controller discount.",
+        "The CP-64 alternative is priced and its spare capacity is calculated.",
+        "The memo explains the cost and capacity tradeoff between the two configurations."
+      ]
+    },
+    {
+      "rubric": "Does the five-year TCO tab provide a correct per-area comparison for SentinelGas, MSA, Honeywell, and the Rosemount IR substitute where applicable?",
+      "weight": 14,
+      "criterion": [
+        "The comparison is broken out by plant area.",
+        "Year 1 equipment cost is separated from Years 2 through 5 sensor-replacement costs.",
+        "Replacement counts use ceil(60 divided by sensor life in months) minus 1.",
+        "SentinelGas replacement counts and costs use the selected models' source data.",
+        "MSA and Honeywell sensor lives and replacement assumptions are tied to cited manufacturer information.",
+        "Rosemount 625IR is used for the IR combustible alternative where applicable.",
+        "Unavailable competitor lifespan or replacement-price data are labeled as data gaps rather than invented.",
+        "The instructed SentinelGas proxy is used only for unavailable competitor replacement-sensor prices and is stated explicitly.",
+        "Competitor Year 1 detector pricing uses a cited public price or quote; if no reliable price is available, the analysis labels the data gap and any documented estimate or range rather than silently extending the replacement-sensor proxy.",
+        "Area and solution totals reconcile to their component calculations."
+      ]
+    },
+    {
+      "rubric": "Does the Technical Compliance Matrix evaluate every RFQ requirement accurately across the proposed and competitor products?",
+      "weight": 14,
+      "criterion": [
+        "The matrix includes one row for each material RFQ specification, including per-area detection ranges.",
+        "The matrix separately presents SentinelGas, MSA S5000, Sensepoint XCD, and Rosemount 625IR specifications where applicable.",
+        "Applicable comparison cells use only Compliant, Partially Compliant, Non-Compliant, or Not Specified; product/specification combinations outside the product's intended gas application are explicitly marked N/A rather than misclassified as a documentation gap.",
+        "Each stated product specification names its source.",
+        "Detection-range deviations are flagged and explained.",
+        "Communication-protocol claims distinguish 4-20 mA, Modbus, HART, and other documented capabilities accurately.",
+        "Operating-temperature compliance uses the applicable sensor limits rather than relying only on a broader housing certification range.",
+        "Ingress protection and hazardous-area approvals are compared accurately.",
+        "SIL claims preserve the source wording and distinguish certification, suitability, optional availability, and absence of published information.",
+        "Sensor-life comparisons identify missing information as a data gap."
+      ]
+    },
+    {
+      "rubric": "Does the Spare Parts & Stocking tab calculate five-year replacement demand, on-site stock, and discounted pricing correctly?",
+      "weight": 10,
+      "criterion": [
+        "Each replacement sensor needed by the selected detector mix is listed.",
+        "Installed quantity and sensor life match the selected models.",
+        "Replacements per unit use the instructed 60-month formula.",
+        "Total replacement quantity reconciles to installed quantity and replacements per unit.",
+        "Recommended on-site stock is stated for each applicable replacement part.",
+        "Replacement-sensor pricing applies the Government/Municipal discount.",
+        "Zero scheduled replacement is shown where the documented life spans the full five-year period."
+      ]
+    },
+    {
+      "rubric": "Does the memo reconcile all other RFQ-versus-briefing deviations and remain consistent with the quotation?",
+      "weight": 10,
+      "criterion": [
+        "Memo section (c) compares each selected detector's range with the RFQ range for every plant area.",
+        "Memo section (c) compares the selections with the manager's standard-versus-premium guidance.",
+        "The Area 4 H2S selection explicitly resolves the conflict between the RFQ range and any standard-series recommendation.",
+        "Every material deviation is identified in both the memo and compliance matrix.",
+        "The memo distinguishes requirements from preferred features and sales differentiators.",
+        "The memo, BOM, TCO, compliance matrix, and spare-parts tab use a consistent selected product mix.",
+        "Unsupported competitor facts are not presented as established specifications."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,214 @@
+{
+  "group": "group-01",
+  "assignedTasks": [
+    "mechanical_engineering_technicians/task2",
+    "medical_and_health_services_managers/task1",
+    "purchasing_agents_except_wholesale_retail_and_farm_products/task2",
+    "secretaries_and_administrative_assistants_except_legal_medical_and_executive/task1",
+    "secretaries_and_administrative_assistants_except_legal_medical_and_executive/task2",
+    "sociology_teachers_postsecondary/task2",
+    "technical_writers/task1"
+  ],
+  "changedTasks": [
+    "medical_and_health_services_managers/task1",
+    "purchasing_agents_except_wholesale_retail_and_farm_products/task2",
+    "secretaries_and_administrative_assistants_except_legal_medical_and_executive/task1",
+    "secretaries_and_administrative_assistants_except_legal_medical_and_executive/task2",
+    "sociology_teachers_postsecondary/task2",
+    "technical_writers/task1"
+  ],
+  "issueDispositions": [
+    {
+      "id": "group-01-medical-workbook-structure",
+      "source": "group-01.json",
+      "task": "medical_and_health_services_managers/task1",
+      "location": "rubrics[2] before criterion[0] (missing workbook-level criterion)",
+      "disposition": "applied",
+      "rationale": "Added an exact filename and exact four-sheet inventory criterion to the workbook row."
+    },
+    {
+      "id": "group-01-medical-scope-reconciliation",
+      "source": "group-01.json",
+      "task": "medical_and_health_services_managers/task1",
+      "location": "rubrics[5].criterion[4]",
+      "disposition": "applied",
+      "rationale": "Removed the memo-only cross-dataset scope reconciliation because the instructions do not require it."
+    },
+    {
+      "id": "group-01-purchasing-unpriced-tco",
+      "source": "group-01.json",
+      "task": "purchasing_agents_except_wholesale_retail_and_farm_products/task2",
+      "location": "rubrics[1].criterion[0], rubrics[1].criterion[2], rubrics[1].criterion[3]",
+      "disposition": "applied",
+      "rationale": "Allowed documented estimates, endpoint ranges, or quote-required treatment for unpriced required scope and required consistent propagation through TCO, scoring, award basis, and sensitivity."
+    },
+    {
+      "id": "group-01-secretary1-normalized-storage",
+      "source": "group-01.json",
+      "task": "secretaries_and_administrative_assistants_except_legal_medical_and_executive/task1",
+      "location": "rubrics[0].criterion[2]",
+      "disposition": "applied",
+      "rationale": "Reworded source-field coverage to permit a normalized Donors and Gifts design while requiring an unambiguous gift-to-donor link."
+    },
+    {
+      "id": "group-01-secretary1-dedup-method-prose",
+      "source": "group-01.json",
+      "task": "secretaries_and_administrative_assistants_except_legal_medical_and_executive/task1",
+      "location": "rubrics[0].criterion[5]",
+      "disposition": "applied",
+      "rationale": "Removed the unrequested donor-deduplication algorithm narrative while retaining the explicit volunteer-donor matching-key requirement and outcome checks."
+    },
+    {
+      "id": "group-01-secretary2-privacy-vagueness",
+      "source": "group-01.json",
+      "task": "secretaries_and_administrative_assistants_except_legal_medical_and_executive/task2",
+      "location": "rubrics[5].criterion[3]",
+      "disposition": "applied",
+      "rationale": "Removed the undefined necessary-extent privacy criterion and retained objective source and judgment-call consistency checks."
+    },
+    {
+      "id": "group-01-sociology-gradebook-filename",
+      "source": "group-01.json",
+      "task": "sociology_teachers_postsecondary/task2",
+      "location": "rubrics[0] before criterion[0] (missing filename criterion)",
+      "disposition": "applied",
+      "rationale": "Added the exact SOC101_Fall2024_Gradebook.xlsx filename requirement."
+    },
+    {
+      "id": "group-01-sociology-standard-deviation",
+      "source": "group-01.json",
+      "task": "sociology_teachers_postsecondary/task2",
+      "location": "rubrics[3].criterion[0] through rubrics[3].criterion[6]",
+      "disposition": "applied",
+      "rationale": "Explicitly accepts population or sample standard deviation when one convention is used consistently across components and sections."
+    },
+    {
+      "id": "group-01-technical-request-body-precedence",
+      "source": "group-01.json",
+      "task": "technical_writers/task1",
+      "location": "rubrics[1].criterion[5]",
+      "disposition": "applied",
+      "rationale": "Declared api_endpoints_data.csv authoritative for public parameter and request-body schemas when broader developer notes conflict."
+    },
+    {
+      "id": "corpus-lint-sociology-presentation-subjectivity",
+      "source": "corpus-lint.json",
+      "task": "sociology_teachers_postsecondary/task2",
+      "location": "rubrics[7].criterion[8] and rubrics[7].criterion[9]",
+      "disposition": "applied",
+      "rationale": "Replaced subjective appropriate-tables and professional-format judgments with observable title/header and table-readability checks."
+    },
+    {
+      "id": "judgeability-mechanical-missing-reference-context",
+      "source": "judgeability.json",
+      "task": "mechanical_engineering_technicians/task2",
+      "location": "Rows 0-6",
+      "disposition": "deferred_infrastructure",
+      "rationale": "The rubric content is source-aligned; supplying normalized pump data and standards excerpts is an evaluator-context responsibility and must not be replaced with hidden expected answers."
+    },
+    {
+      "id": "judgeability-mechanical-pdf-plot-extraction",
+      "source": "judgeability.json",
+      "task": "mechanical_engineering_technicians/task2",
+      "location": "Criteria 6.4-6.6",
+      "disposition": "deferred_infrastructure",
+      "rationale": "PDF image rendering is an extraction limitation. Weakening the explicit plot requirement or substituting a hidden table exception would change the task."
+    },
+    {
+      "id": "judgeability-medical-missing-reference-context",
+      "source": "judgeability.json",
+      "task": "medical_and_health_services_managers/task1",
+      "location": "Rows 0-6",
+      "disposition": "deferred_infrastructure",
+      "rationale": "Providing compact visit, financial, peer, and benchmark evidence to the judge is evaluator infrastructure; the rubric should not embed computed answers."
+    },
+    {
+      "id": "judgeability-medical-xlsx-fill-extraction",
+      "source": "judgeability.json",
+      "task": "medical_and_health_services_managers/task1",
+      "location": "Criteria 2.4-2.5",
+      "disposition": "deferred_infrastructure",
+      "rationale": "The red-fill requirement is explicit in the task. XLSX style and conditional-format inspection should be added to extraction rather than replaced with an unrequested flag column."
+    },
+    {
+      "id": "judgeability-purchasing-missing-reference-context",
+      "source": "judgeability.json",
+      "task": "purchasing_agents_except_wholesale_retail_and_farm_products/task2",
+      "location": "Rows 0-6",
+      "disposition": "deferred_infrastructure",
+      "rationale": "Source and purchasing-manual context plus deterministic calculation checks belong in evaluator infrastructure and should not be encoded as hidden vendor answers."
+    },
+    {
+      "id": "judgeability-purchasing-visual-flags",
+      "source": "judgeability.json",
+      "task": "purchasing_agents_except_wholesale_retail_and_farm_products/task2",
+      "location": "Criterion 0.4",
+      "disposition": "deferred_infrastructure",
+      "rationale": "Visual flags are an explicit deliverable requirement. Workbook style rendering or inspection is needed; adding an unrequested field solely for extraction would alter the task."
+    },
+    {
+      "id": "judgeability-purchasing-docx-pagination",
+      "source": "judgeability.json",
+      "task": "purchasing_agents_except_wholesale_retail_and_farm_products/task2",
+      "location": "Criterion 6.0",
+      "disposition": "deferred_infrastructure",
+      "rationale": "The one-to-two-page limit is explicit. DOCX rendering and page counting should be fixed rather than replacing the requirement with an arbitrary word limit."
+    },
+    {
+      "id": "judgeability-secretary1-missing-reference-context",
+      "source": "judgeability.json",
+      "task": "secretaries_and_administrative_assistants_except_legal_medical_and_executive/task1",
+      "location": "Rows 0-5",
+      "disposition": "deferred_infrastructure",
+      "rationale": "Source rows and deterministic matching and tier checks must be supplied to the judge; embedding names, counts, or expected matches would reintroduce hidden answers."
+    },
+    {
+      "id": "judgeability-secretary1-template-provenance",
+      "source": "judgeability.json",
+      "task": "secretaries_and_administrative_assistants_except_legal_medical_and_executive/task1",
+      "location": "Criteria 0.0, 3.0, and 5.0",
+      "disposition": "applied",
+      "rationale": "Replaced claims about being built on a template with observable filename, sheet-role, header, roster, tier, and acknowledgment-content requirements without copying hidden template text."
+    },
+    {
+      "id": "judgeability-secretary2-missing-reference-context",
+      "source": "judgeability.json",
+      "task": "secretaries_and_administrative_assistants_except_legal_medical_and_executive/task2",
+      "location": "Rows 1-5",
+      "disposition": "deferred_infrastructure",
+      "rationale": "Attendance, leave, memo, staff, and handbook context must be passed to the judge; hard-coding employee outcomes would be an invalid rubric workaround."
+    },
+    {
+      "id": "judgeability-sociology-missing-reference-context",
+      "source": "judgeability.json",
+      "task": "sociology_teachers_postsecondary/task2",
+      "location": "Rows 0-7",
+      "disposition": "deferred_infrastructure",
+      "rationale": "Original gradebook, attendance, office-hours, essay-rubric, and external baseline evidence belong in evaluator context; fixed grades and statistics must not be added to the rubric."
+    },
+    {
+      "id": "judgeability-technical-missing-reference-context",
+      "source": "judgeability.json",
+      "task": "technical_writers/task1",
+      "location": "Rows 0-6",
+      "disposition": "deferred_infrastructure",
+      "rationale": "Endpoint, ticket, changelog, and template evidence must be supplied to the judge. Encoding exact source facts in the rubric would recreate hidden-answer grading."
+    },
+    {
+      "id": "post-fix-purchasing-estimate-traceability",
+      "source": "post-fix-re-lint",
+      "task": "purchasing_agents_except_wholesale_retail_and_farm_products/task2",
+      "location": "rubrics[1]",
+      "disposition": "applied",
+      "rationale": "Removed subjective reasonableness and now requires a cited source or shown derivation, numeric range endpoints, or explicit Quote Required treatment with downstream handling."
+    },
+    {
+      "id": "post-fix-sociology-filename-weighting",
+      "source": "post-fix-re-lint",
+      "task": "sociology_teachers_postsecondary/task2",
+      "location": "rubrics[0] and rubrics[1]",
+      "disposition": "applied",
+      "rationale": "Created a 2-point structural-deliverables row for all exact filenames and reduced the grade-calculation row from 10 to 8 points, preserving the 66-point total."
+    }
+  ]
+}

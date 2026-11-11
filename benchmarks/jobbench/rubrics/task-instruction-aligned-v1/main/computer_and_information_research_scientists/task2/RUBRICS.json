@@ -1,0 +1,134 @@
+{
+  "rubrics": [
+    {
+      "rubric": "Does data_audit.md provide a complete, source-grounded audit of quote arithmetic, specifications, lead times, schedule dependencies, and dates?",
+      "weight": 14,
+      "criterion": [
+        "The discrepancy table uses exactly these columns: Source_A, Source_B, Field, Value_A, Value_B, Severity, Recommended_Resolution.",
+        "Every Severity value is Critical or Minor.",
+        "Every discrepancy row contains a specific resolution.",
+        "Every arithmetic roll-up and total in vendor_hardware_quote.xlsx is independently checked.",
+        "Each server model's component values are reconciled with its listed system total.",
+        "Aggregate hardware counts and capacities are reconciled with their detailed line items.",
+        "Vendor lead times are compared with the schedule's dates and dependency chain.",
+        "Material inconsistencies that affect cost, capacity, power, or completion timing are classified as Critical."
+      ]
+    },
+    {
+      "rubric": "Does data_audit.md establish a defensible capacity and electrical baseline for later analysis?",
+      "weight": 10,
+      "criterion": [
+        "Each survey workload is compared with the GPU-memory capacity of each proposed node type.",
+        "The survey's memory_gb_required field is treated consistently with the instructed GPU-memory cloud tier and is not presented as a separate system-memory requirement without an explicit source basis.",
+        "Individual storage requirements are compared with the proposed shared-storage capacity.",
+        "Aggregate storage demand is compared with the proposed shared-storage capacity.",
+        "Every workload that exceeds a relevant capacity is identified; any near-capacity warning uses a stated headroom threshold applied consistently.",
+        "The audit states a corrected pre-PUE electrical load by component.",
+        "The corrected electrical baseline resolves identified source arithmetic inconsistencies.",
+        "Any unresolved electrical ambiguity is documented as a sensitivity rather than silently selected."
+      ]
+    },
+    {
+      "rubric": "Does strategy_analysis.md accurately characterize demand, existing capacity, and the 3-year cloud-only strategy from the survey database?",
+      "weight": 12,
+      "criterion": [
+        "Workload profiles are reported by workload_type with counts and monthly GPU-hours.",
+        "Wait-time ranges and distributions are reported by workload_type.",
+        "Wait times are reported by priority_level.",
+        "Peak-to-average demand is calculated from the available workload data using a stated method.",
+        "Existing systems, GPU counts, GPU types, utilization, and status are summarized from current_infrastructure.",
+        "Existing monthly deliverable capacity is calculated using 730 hours per month and recorded utilization.",
+        "The capacity deficit is reported as a percentage of total monthly demand.",
+        "The cloud-only calculation maps workloads above 48 GB to H100-equivalent pricing.",
+        "The cloud-only calculation maps workloads at or below 48 GB to A100-equivalent pricing.",
+        "The cloud-only cost covers three years at the instructed hourly rates."
+      ]
+    },
+    {
+      "rubric": "Does strategy_analysis.md implement the instructed hybrid split and produce a traceable right-sized blended-cost case?",
+      "weight": 10,
+      "criterion": [
+        "Researchers above 500 GPU-hours per month are classified as sustained workloads.",
+        "Researchers at or below 500 GPU-hours per month are classified as bursty workloads.",
+        "The analysis lists the sustained and bursty groups with counts and GPU-hour totals.",
+        "The proposed on-premises configuration is right-sized to the sustained workload.",
+        "Every removed or reduced vendor line item is identified.",
+        "The reduced electrical load is derived from the right-sized configuration.",
+        "Cloud cost is calculated for the bursty workload.",
+        "The hybrid 3-year cost combines modified on-premises costs and burst-cloud costs without double counting."
+      ]
+    },
+    {
+      "rubric": "Does strategy_analysis.md provide the required weighted comparison, LBNL-grounded sustainability scoring, and NSF HERD investment context?",
+      "weight": 12,
+      "criterion": [
+        "The matrix uses Cost 30%, Performance 20%, Scalability 15%, Data Sovereignty 10%, Sustainability 15%, and Satisfaction Risk 10%.",
+        "All three strategies receive a score for every criterion.",
+        "Weighted totals are calculated correctly from the stated scores and weights.",
+        "The sustainability discussion cites specific PUE values by facility class or space type from the LBNL 2024 report.",
+        "The sustainability discussion uses the cited LBNL evidence to distinguish university on-premises facilities from hyperscale cloud facilities.",
+        "The sustainability discussion cites a PUE trend or WUE value from the LBNL 2024 report.",
+        "The $8.2 million CS R&D expenditure is benchmarked against relevant NSF HERD peers.",
+        "The investment-scale interpretation is supported by the HERD workbook rather than an unsupported peer conclusion."
+      ]
+    },
+    {
+      "rubric": "Does adjusted_budget.xlsx use the required workbook structure and present transparent funding sources?",
+      "weight": 3,
+      "criterion": [
+        "The workbook contains exactly the sheets Capital Costs, Operating Costs, Funding Sources, and Summary Dashboard.",
+        "Funding Sources identifies each confirmed or proposed source and amount and reconciles the total with the strategy funding requirement.",
+        "Funding Sources distinguishes source-backed amounts from assumptions, proposals, and unavailable information without fabricating certainty."
+      ]
+    },
+    {
+      "rubric": "Does the Capital Costs sheet calculate full and hybrid upfront procurement costs correctly?",
+      "weight": 4,
+      "criterion": [
+        "Capital Costs shows the vendor upfront subtotal before adjustments.",
+        "Capital Costs applies the 5% discount before the 10% contingency.",
+        "Capital Costs states the tax and shipping treatment.",
+        "The hybrid capital case uses the modified subtotal from identified removed line items."
+      ]
+    },
+    {
+      "rubric": "Does the Operating Costs sheet calculate annual cash operating costs without double counting?",
+      "weight": 5,
+      "criterion": [
+        "Operating Costs uses the audit-established pre-PUE load as its primary power baseline.",
+        "Annual power cost uses load multiplied by 1.5 PUE, 8,760 hours, and $0.09 per kWh.",
+        "Operating Costs includes two system administrators at $95,000 each.",
+        "Operating Costs includes $45,000 in software licenses.",
+        "The prepaid support contract has zero additional cash outlay in Years 1 through 3.",
+        "The prepaid support contract is counted only once in 3-year TCO.",
+        "Hybrid and cloud operating schedules include their applicable cloud spend."
+      ]
+    },
+    {
+      "rubric": "Does the Summary Dashboard provide a reproducible three-strategy economic comparison and break-even analysis?",
+      "weight": 4,
+      "criterion": [
+        "The Summary Dashboard reports 3-year TCO for on-premises, cloud-only, and hybrid.",
+        "Cost per GPU-hour uses a documented strategy-appropriate denominator: utilized installed capacity for on-premises, purchased or served workload GPU-hours for cloud-only, and a consistent combination of utilized on-premises and cloud GPU-hours for hybrid.",
+        "The break-even utilization solves the instructed TCO equation against a documented blended cloud rate.",
+        "The break-even interpretation states when no feasible utilization at or below 100% exists."
+      ]
+    },
+    {
+      "rubric": "Does revised_schedule.csv resolve the audit's timing and dependency conflicts while preserving the required project structure?",
+      "weight": 8,
+      "criterion": [
+        "The file retains every original project_schedule_wbs.csv column.",
+        "The file adds critical_path, risk_level, and audit_note columns.",
+        "critical_path values are populated for applicable activities and are consistent with the revised dates and dependency chain.",
+        "risk_level values are populated or documented as not applicable and are supported by identified schedule or delivery risks.",
+        "Every original schedule activity is represented.",
+        "Task dates are consistent with task durations.",
+        "Dependencies are temporally valid.",
+        "Vendor lead times are respected or a documented feasible mitigation is used.",
+        "Each corrected conflict has a specific audit_note.",
+        "The final task ends within nine months of project start."
+      ]
+    }
+  ]
+}

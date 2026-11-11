@@ -1,0 +1,860 @@
+{
+  "summary": {
+    "source": "judgeability.json",
+    "totalFindings": 105,
+    "dispositionCounts": {
+      "rubric_content_fix": 10,
+      "evaluator_infrastructure": 95,
+      "accepted_limitation": 0
+    },
+    "classificationPolicy": {
+      "rubric_content_fix": "Omitted explicit requirements, alternative-solution unfairness, and hidden-process wording that can be replaced with observable outcome evidence.",
+      "evaluator_infrastructure": "Missing source context, extraction or rendering gaps, and artifacts whose validity requires deterministic execution.",
+      "accepted_limitation": "Reserved for findings with no proportionate rubric or evaluator remedy; none of the 105 findings met that standard."
+    },
+    "coverage": "Every source finding is represented exactly once with its original task, category, location, and finding text.",
+    "rubricsEdited": false
+  },
+  "issues": [
+    {
+      "task": "biostatisticians/task1",
+      "category": "missing-reference-context",
+      "location": "Rows 0-6, especially 0.1-0.7, 1.0-1.5, 2.0-2.1, 4.0, and 6.0-6.4",
+      "finding": "The judge cannot reliably verify source-derived eligibility counts, event rates, protocol parameters, subgroup denominators, or missingness results because it receives only output deliverables, not framingham.csv or the proposal CSV.",
+      "disposition": "evaluator_infrastructure",
+      "rationale": "Source-dependent correctness requires canonical inputs, reference extracts, or deterministic checks in the evaluator rather than hidden expected answers in rubric prose."
+    },
+    {
+      "task": "biostatisticians/task1",
+      "category": "hidden-process",
+      "location": "Criterion 1.10",
+      "finding": "A workbook can assert that Wan Nor Arifin's calculator was used even when it was not; actual use of an external spreadsheet is process evidence absent from deliverables.",
+      "disposition": "rubric_content_fix",
+      "rationale": "Reframe the process or template-use claim around observable deliverable evidence such as inputs, outputs, structure, or a documented cross-check."
+    },
+    {
+      "task": "biostatisticians/task2",
+      "category": "missing-reference-context",
+      "location": "Rows 0, 1, 3-5, and 6.4",
+      "finding": "The judge lacks the protocol, trial data, mapping file, and downloaded UCI dataset needed to validate audit discrepancies, LOCF coverage, site effects, sample sizes, conditional power, and RWE rates.",
+      "disposition": "evaluator_infrastructure",
+      "rationale": "Source-dependent correctness requires canonical inputs, reference extracts, or deterministic checks in the evaluator rather than hidden expected answers in rubric prose."
+    },
+    {
+      "task": "biostatisticians/task2",
+      "category": "alternative-solution-fairness",
+      "location": "Criteria 2.4-2.5 and 6.2",
+      "finding": "A valid forest plot embedded as an Excel chart is invisible to the judge, so the rubric favors a separate image even though the task explicitly permits either method.",
+      "disposition": "rubric_content_fix",
+      "rationale": "The rubric should treat the task’s allowed equivalent methods or formats equally instead of making credit depend on the more judgeable implementation."
+    },
+    {
+      "task": "bookkeeping_accounting_and_auditing_clerks/task1",
+      "category": "missing-reference-context",
+      "location": "Rows 0-6 and criteria 7.4-7.6",
+      "finding": "The judge cannot determine whether bank, GL, AP, aging, journal-entry, and Schedule C amounts are complete and correct against the named inputs.",
+      "disposition": "evaluator_infrastructure",
+      "rationale": "Source-dependent correctness requires canonical inputs, reference extracts, or deterministic checks in the evaluator rather than hidden expected answers in rubric prose."
+    },
+    {
+      "task": "bookkeeping_accounting_and_auditing_clerks/task1",
+      "category": "hidden-process",
+      "location": "Criterion 7.3",
+      "finding": "The requirement that the workbook use the external AP template and official Schedule C source cannot be established from extracted output text.",
+      "disposition": "rubric_content_fix",
+      "rationale": "Reframe the process or template-use claim around observable deliverable evidence such as inputs, outputs, structure, or a documented cross-check."
+    },
+    {
+      "task": "bookkeeping_accounting_and_auditing_clerks/task2",
+      "category": "missing-reference-context",
+      "location": "Rows 1-6",
+      "finding": "The judge cannot validate the true cash balance, complete discrepancy set, AP rollforward, chart-of-accounts names, post-adjustment Schedule C values, or budget overruns against the six task inputs.",
+      "disposition": "evaluator_infrastructure",
+      "rationale": "Source-dependent correctness requires canonical inputs, reference extracts, or deterministic checks in the evaluator rather than hidden expected answers in rubric prose."
+    },
+    {
+      "task": "civil_engineers/task1",
+      "category": "missing-reference-context",
+      "location": "Rows 0-5",
+      "finding": "The judge cannot verify skew-adjusted quantities, reinforcement coverage, local costs, WSDOT prices, item comparability, or contingency classifications against the four local inputs and Contract 24Z011.",
+      "disposition": "evaluator_infrastructure",
+      "rationale": "Source-dependent correctness requires canonical inputs, reference extracts, or deterministic checks in the evaluator rather than hidden expected answers in rubric prose."
+    },
+    {
+      "task": "civil_engineers/task2",
+      "category": "missing-reference-context",
+      "location": "Rows 0-6",
+      "finding": "Most correctness checks depend on the scope memo, FDOT workbook, labor rates, CDOT and WisDOT data, none of which the judge receives.",
+      "disposition": "evaluator_infrastructure",
+      "rationale": "Source-dependent correctness requires canonical inputs, reference extracts, or deterministic checks in the evaluator rather than hidden expected answers in rubric prose."
+    },
+    {
+      "task": "civil_engineers/task3",
+      "category": "missing-reference-context",
+      "location": "Rows 0-5",
+      "finding": "Although several expected quantities are embedded in Row 1, the judge still cannot verify complete CSV coverage, authorized scope, source hierarchy, unit prices, risk grounding, or lifecycle inputs against the project files and external cost books.",
+      "disposition": "evaluator_infrastructure",
+      "rationale": "Source-dependent correctness requires canonical inputs, reference extracts, or deterministic checks in the evaluator rather than hidden expected answers in rubric prose."
+    },
+    {
+      "task": "civil_engineers/task3",
+      "category": "deliverable-extraction",
+      "location": "Criterion 5.0",
+      "finding": "The judge cannot determine whether the DOCX memo is one page or less because DOCX extraction discards pagination and layout.",
+      "disposition": "evaluator_infrastructure",
+      "rationale": "The requirement is legitimate, but current extraction or rendering hides the evidence; add format-aware rendering, extraction, or structured inspection."
+    },
+    {
+      "task": "computer_and_information_research_scientists/task1",
+      "category": "missing-reference-context",
+      "location": "Rows 0-5, especially 1-4 and 5.4-5.6",
+      "finding": "The judge cannot validate Option D constraints, 36-month allocations, database-derived trends, SQL table/column validity, lead times, or Epoch benchmark facts because the six inputs and external dataset are absent.",
+      "disposition": "evaluator_infrastructure",
+      "rationale": "Source-dependent correctness requires canonical inputs, reference extracts, or deterministic checks in the evaluator rather than hidden expected answers in rubric prose."
+    },
+    {
+      "task": "computer_and_information_research_scientists/task1",
+      "category": "omitted-requirement",
+      "location": "Option D design objective; Row 1",
+      "finding": "The instructions require Option D to maximize research throughput while satisfying all current requirements, but the rubric only checks feasibility and constraint compliance. A materially dominated feasible configuration can receive full credit.",
+      "disposition": "rubric_content_fix",
+      "rationale": "The task explicitly requires an outcome the rubric does not score; add an observable criterion that accepts equivalent valid methods."
+    },
+    {
+      "task": "computer_and_information_research_scientists/task1",
+      "category": "execution-dependence",
+      "location": "Row 4",
+      "finding": "Validity and source-grounded behavior of workload_impact.sql cannot be judged from SQL text alone; it must be executed against workload_requirements.db.",
+      "disposition": "evaluator_infrastructure",
+      "rationale": "Validity requires executing the artifact against the named data and capturing results or errors instead of judging source text alone."
+    },
+    {
+      "task": "computer_and_information_research_scientists/task2",
+      "category": "missing-reference-context",
+      "location": "Rows 0-6",
+      "finding": "The judge cannot verify the exhaustive data audit, workload/database calculations, vendor repricing, LBNL evidence, HERD peer comparison, or corrected schedule against the four local inputs and external report.",
+      "disposition": "evaluator_infrastructure",
+      "rationale": "Source-dependent correctness requires canonical inputs, reference extracts, or deterministic checks in the evaluator rather than hidden expected answers in rubric prose."
+    },
+    {
+      "task": "computer_and_information_systems_managers/task1",
+      "category": "missing-reference-context",
+      "location": "Rows 0-6",
+      "finding": "The judge cannot confirm server completeness and tiers, database risks, vendor proposals, budget lines, NIST questions, AWS instance eligibility, or incident correlations because none of the source systems or external CSVs are supplied.",
+      "disposition": "evaluator_infrastructure",
+      "rationale": "Source-dependent correctness requires canonical inputs, reference extracts, or deterministic checks in the evaluator rather than hidden expected answers in rubric prose."
+    },
+    {
+      "task": "computer_and_information_systems_managers/task2",
+      "category": "missing-reference-context",
+      "location": "Rows 0-6",
+      "finding": "The judge lacks the incident log, budget workbook, inventory, NIST Core, and AWS calculator data needed to validate the candidate population, costs, project coverage, budget availability, and gap mappings.",
+      "disposition": "evaluator_infrastructure",
+      "rationale": "Source-dependent correctness requires canonical inputs, reference extracts, or deterministic checks in the evaluator rather than hidden expected answers in rubric prose."
+    },
+    {
+      "task": "computer_and_information_systems_managers/task2",
+      "category": "deliverable-extraction",
+      "location": "Criterion 4.3",
+      "finding": "Red conditional formatting in the Gap_Register sheet is not visible in the Excel text extraction, so a correctly formatted workbook and an unformatted one are indistinguishable.",
+      "disposition": "evaluator_infrastructure",
+      "rationale": "The requirement is legitimate, but current extraction or rendering hides the evidence; add format-aware rendering, extraction, or structured inspection."
+    },
+    {
+      "task": "computer_user_support_specialists/task1",
+      "category": "missing-reference-context",
+      "location": "Rows 1-7",
+      "finding": "The judge can read the produced dashboard database but cannot compare it with the source inventory database, gateway log, ticket export, escalation email, CAB template, or Cisco guidance.",
+      "disposition": "evaluator_infrastructure",
+      "rationale": "Source-dependent correctness requires canonical inputs, reference extracts, or deterministic checks in the evaluator rather than hidden expected answers in rubric prose."
+    },
+    {
+      "task": "computer_user_support_specialists/task2",
+      "category": "missing-reference-context",
+      "location": "Rows 0-7",
+      "finding": "The judge cannot validate device coverage/classification, disputed-readiness root causes, sprint constraints, database ticket patterns, staff capacity, or cited post-EOL risks against the inventory, database, manager email, budget, briefing, and external guide.",
+      "disposition": "evaluator_infrastructure",
+      "rationale": "Source-dependent correctness requires canonical inputs, reference extracts, or deterministic checks in the evaluator rather than hidden expected answers in rubric prose."
+    },
+    {
+      "task": "computer_user_support_specialists/task2",
+      "category": "deliverable-extraction",
+      "location": "Criteria 7.2-7.4",
+      "finding": "The PPTX evaluator cannot see embedded charts, images, or visual timeline/budget treatments, so a text-only slide deck can look equivalent to a well-designed visual deck and valid image-only slides can look empty.",
+      "disposition": "evaluator_infrastructure",
+      "rationale": "The requirement is legitimate, but current extraction or rendering hides the evidence; add format-aware rendering, extraction, or structured inspection."
+    },
+    {
+      "task": "court_clerks/task1",
+      "category": "missing-reference-context",
+      "location": "Rows 0-6",
+      "finding": "The judge cannot verify case facts, discrepancies, legal analysis, fees, mandatory assessments, database changes, or register consistency against the notes, source CMS, fee schedule, defense memo, form, and AOC instructions.",
+      "disposition": "evaluator_infrastructure",
+      "rationale": "Source-dependent correctness requires canonical inputs, reference extracts, or deterministic checks in the evaluator rather than hidden expected answers in rubric prose."
+    },
+    {
+      "task": "court_clerks/task1",
+      "category": "deliverable-extraction",
+      "location": "Row 1",
+      "finding": "Filled values in the supplied official PDF form may be AcroForm widget values or annotations that pdfplumber does not extract, and the judge receives no rendered PDF pages. Valid completed forms can therefore appear blank or indistinguishable from the template.",
+      "disposition": "evaluator_infrastructure",
+      "rationale": "The requirement is legitimate, but current extraction or rendering hides the evidence; add format-aware rendering, extraction, or structured inspection."
+    },
+    {
+      "task": "customer_service_representatives/task1",
+      "category": "missing-reference-context",
+      "location": "Rows 1-7",
+      "finding": "The judge cannot verify the six dispute rows, weather calculations, supervisor-note verdicts, deadlines, rate plans, PUC contact information, EIA benchmarks, or policy conclusions against the four local files and external EIA data.",
+      "disposition": "evaluator_infrastructure",
+      "rationale": "Source-dependent correctness requires canonical inputs, reference extracts, or deterministic checks in the evaluator rather than hidden expected answers in rubric prose."
+    },
+    {
+      "task": "data_entry_keyers/task1",
+      "category": "missing-reference-context",
+      "location": "Rows 0-7",
+      "finding": "The judge cannot determine whether every field discrepancy was found or reconciled correctly because the CRM, ERP, customer master, checklist template, and ten authoritative scanned order forms are not included.",
+      "disposition": "evaluator_infrastructure",
+      "rationale": "Source-dependent correctness requires canonical inputs, reference extracts, or deterministic checks in the evaluator rather than hidden expected answers in rubric prose."
+    },
+    {
+      "task": "data_entry_keyers/task2",
+      "category": "missing-reference-context",
+      "location": "Rows 0-5",
+      "finding": "The judge cannot verify the all-field review, clear-error/review split, exact corrections, provider/facility attribution, or ICD-10 code-description validity because the six local inputs and official code file are absent.",
+      "disposition": "evaluator_infrastructure",
+      "rationale": "Source-dependent correctness requires canonical inputs, reference extracts, or deterministic checks in the evaluator rather than hidden expected answers in rubric prose."
+    },
+    {
+      "task": "financial_managers_branch_or_department/task1",
+      "category": "missing-reference-context",
+      "location": "Rows 0-8",
+      "finding": "The judge cannot verify complete loan populations, multi-factor re-ratings, CDFI factor weights, stress inputs, FDIC benchmarks, concentration limits, or application decisions against the portfolio database, workbooks, PDF, CSV, and external datasets.",
+      "disposition": "evaluator_infrastructure",
+      "rationale": "Source-dependent correctness requires canonical inputs, reference extracts, or deterministic checks in the evaluator rather than hidden expected answers in rubric prose."
+    },
+    {
+      "task": "financial_managers_branch_or_department/task2",
+      "category": "missing-reference-context",
+      "location": "Rows 0-7",
+      "finding": "The judge cannot validate portfolio totals, watch-list completeness, CDFI scores, rate-shock calculations, FDIC benchmarks, policy thresholds, or capital allocation against the local portfolio/applications/template and external FDIC/OCC sources.",
+      "disposition": "evaluator_infrastructure",
+      "rationale": "Source-dependent correctness requires canonical inputs, reference extracts, or deterministic checks in the evaluator rather than hidden expected answers in rubric prose."
+    },
+    {
+      "task": "human_resources_specialists/task1",
+      "category": "missing-reference-context",
+      "location": "Rows 0-6",
+      "finding": "The judge cannot establish complete JobRole/applicant coverage, source-derived attrition/overtime rates, salary gaps, requirement matches, or license follow-up against the three input files.",
+      "disposition": "evaluator_infrastructure",
+      "rationale": "Source-dependent correctness requires canonical inputs, reference extracts, or deterministic checks in the evaluator rather than hidden expected answers in rubric prose."
+    },
+    {
+      "task": "lawyers/task1",
+      "category": "missing-reference-context",
+      "location": "Rows 0-7",
+      "finding": "The judge cannot verify database figures, fine-day calculations, settlement terms, ordinance comparisons, case holdings, article usage, or property-specific legal analysis against the SQLite database and legal sources.",
+      "disposition": "evaluator_infrastructure",
+      "rationale": "Source-dependent correctness requires canonical inputs, reference extracts, or deterministic checks in the evaluator rather than hidden expected answers in rubric prose."
+    },
+    {
+      "task": "licensing_examiners_and_inspectors/task1",
+      "category": "missing-reference-context",
+      "location": "Rows 0-6",
+      "finding": "The judge cannot validate all 15 determinations, every deficiency, affected bulletin-application pairs, correspondence disposition, violation history, or public license/insurance records against the six local and two external sources.",
+      "disposition": "evaluator_infrastructure",
+      "rationale": "Source-dependent correctness requires canonical inputs, reference extracts, or deterministic checks in the evaluator rather than hidden expected answers in rubric prose."
+    },
+    {
+      "task": "management_analysts/task1",
+      "category": "missing-reference-context",
+      "location": "Rows 0-6",
+      "finding": "The judge cannot verify all 12 plant-product series, complaint joins, benchmark percentiles, equipment population, COPQ arithmetic, memo-claim verification, or FRED values against the local and external inputs.",
+      "disposition": "evaluator_infrastructure",
+      "rationale": "Source-dependent correctness requires canonical inputs, reference extracts, or deterministic checks in the evaluator rather than hidden expected answers in rubric prose."
+    },
+    {
+      "task": "management_analysts/task1",
+      "category": "deliverable-extraction",
+      "location": "Criterion 3.0",
+      "finding": "The DOCX extractor cannot determine whether the strategic memo is approximately two to three pages.",
+      "disposition": "evaluator_infrastructure",
+      "rationale": "The requirement is legitimate, but current extraction or rendering hides the evidence; add format-aware rendering, extraction, or structured inspection."
+    },
+    {
+      "task": "management_analysts/task2",
+      "category": "missing-reference-context",
+      "location": "Rows 0-7",
+      "finding": "The judge cannot validate 19-plant coverage, order/port/capacity/cost calculations, complaint metrics, memo-claim reconciliation, or external warehouse/freight data because none of the reference datasets are provided.",
+      "disposition": "evaluator_infrastructure",
+      "rationale": "Source-dependent correctness requires canonical inputs, reference extracts, or deterministic checks in the evaluator rather than hidden expected answers in rubric prose."
+    },
+    {
+      "task": "management_analysts/task2",
+      "category": "deliverable-extraction",
+      "location": "Criteria 4.0 and 7.0",
+      "finding": "Neither the five-page DOCX limit nor the requirement that the Go/No-Go matrix occupy a single page is observable after DOCX-to-Markdown extraction.",
+      "disposition": "evaluator_infrastructure",
+      "rationale": "The requirement is legitimate, but current extraction or rendering hides the evidence; add format-aware rendering, extraction, or structured inspection."
+    },
+    {
+      "task": "management_analysts/task3",
+      "category": "missing-reference-context",
+      "location": "Rows 0-6",
+      "finding": "The judge cannot validate department/process coverage, overtime patterns, proposal triggers, NYC indicators, Comptroller facts, model outputs, or cross-deliverable figures against the three local files and external benchmarks.",
+      "disposition": "evaluator_infrastructure",
+      "rationale": "Source-dependent correctness requires canonical inputs, reference extracts, or deterministic checks in the evaluator rather than hidden expected answers in rubric prose."
+    },
+    {
+      "task": "management_analysts/task3",
+      "category": "deliverable-extraction",
+      "location": "Criteria 0.2 and 6.2",
+      "finding": "Red conditional formatting is lost from XLSX extraction, and DOCX pagination is lost, so the formatting rule and 6-10-page memo rule are not judgeable.",
+      "disposition": "evaluator_infrastructure",
+      "rationale": "The requirement is legitimate, but current extraction or rendering hides the evidence; add format-aware rendering, extraction, or structured inspection."
+    },
+    {
+      "task": "management_analysts/task3",
+      "category": "deliverable-extraction",
+      "location": "Criterion 6.2 presentation coverage",
+      "finding": "The judge cannot assess charts or other visual trade-off summaries in the PPTX because only text-bearing shapes are extracted.",
+      "disposition": "evaluator_infrastructure",
+      "rationale": "The requirement is legitimate, but current extraction or rendering hides the evidence; add format-aware rendering, extraction, or structured inspection."
+    },
+    {
+      "task": "mechanical_engineering_technicians/task1",
+      "category": "missing-reference-context",
+      "location": "Rows 1-8",
+      "finding": "The judge cannot verify test-point completeness, datasheet limits, STL-derived dimensions, seal-kit part numbers, Degelman procedures, or root-cause evidence against the workbook, PDF, STL, and external guide.",
+      "disposition": "evaluator_infrastructure",
+      "rationale": "Source-dependent correctness requires canonical inputs, reference extracts, or deterministic checks in the evaluator rather than hidden expected answers in rubric prose."
+    },
+    {
+      "task": "mechanical_engineering_technicians/task2",
+      "category": "missing-reference-context",
+      "location": "Rows 0-6",
+      "finding": "The judge cannot verify every test value, sister-pump trend, maintenance record, standard limit, NCR population, or setpoint basis against the three local files and Europump guidance.",
+      "disposition": "evaluator_infrastructure",
+      "rationale": "Source-dependent correctness requires canonical inputs, reference extracts, or deterministic checks in the evaluator rather than hidden expected answers in rubric prose."
+    },
+    {
+      "task": "mechanical_engineering_technicians/task2",
+      "category": "alternative-solution-fairness",
+      "location": "Criteria 6.4-6.6",
+      "finding": "The task permits a PDF report, but plots embedded in PDF pages are not shown to the judge; the same plots in DOCX may be attached. This unfairly makes judgeability depend on the allowed report format.",
+      "disposition": "rubric_content_fix",
+      "rationale": "The rubric should treat the task’s allowed equivalent methods or formats equally instead of making credit depend on the more judgeable implementation."
+    },
+    {
+      "task": "mechanical_engineering_technicians/task3",
+      "category": "missing-reference-context",
+      "location": "Rows 0-6",
+      "finding": "The judge cannot validate affinity-law inputs, all seven vibration points, API limits, ISO zones, bearing geometry, FFT matches, IOM guidance, or disposition against the source workbooks/PDF and external standards.",
+      "disposition": "evaluator_infrastructure",
+      "rationale": "Source-dependent correctness requires canonical inputs, reference extracts, or deterministic checks in the evaluator rather than hidden expected answers in rubric prose."
+    },
+    {
+      "task": "mechanical_engineers/task1",
+      "category": "missing-reference-context",
+      "location": "Rows 0-7",
+      "finding": "The judge cannot verify complete Rev-1 reconciliation, allowable stresses, ASME formulas/chart factors, Sample 5 alignment, nozzle geometry, material provisions, or code conclusions against the three local files and external manufacturer/method sources.",
+      "disposition": "evaluator_infrastructure",
+      "rationale": "Source-dependent correctness requires canonical inputs, reference extracts, or deterministic checks in the evaluator rather than hidden expected answers in rubric prose."
+    },
+    {
+      "task": "medical_and_health_services_managers/task1",
+      "category": "missing-reference-context",
+      "location": "Rows 0-6",
+      "finding": "The judge cannot validate monthly visit/rate calculations, financial variances, audited peer ratios, applicable CMS/AHCA benchmarks, service-line costs, or memo figures against the local and external sources.",
+      "disposition": "evaluator_infrastructure",
+      "rationale": "Source-dependent correctness requires canonical inputs, reference extracts, or deterministic checks in the evaluator rather than hidden expected answers in rubric prose."
+    },
+    {
+      "task": "medical_and_health_services_managers/task1",
+      "category": "deliverable-extraction",
+      "location": "Criteria 2.4-2.5",
+      "finding": "Required red fills for adverse revenue and expense months are not visible in the extracted workbook.",
+      "disposition": "evaluator_infrastructure",
+      "rationale": "The requirement is legitimate, but current extraction or rendering hides the evidence; add format-aware rendering, extraction, or structured inspection."
+    },
+    {
+      "task": "medical_and_health_services_managers/task2",
+      "category": "missing-reference-context",
+      "location": "Rows 0-6",
+      "finding": "The judge cannot verify top-10 CPT selection, all payer rows, rate-schedule values, monthly loss drivers, peer cohort/percentiles, HCAI fields, or annual impact calculations against the two local files and external dataset.",
+      "disposition": "evaluator_infrastructure",
+      "rationale": "Source-dependent correctness requires canonical inputs, reference extracts, or deterministic checks in the evaluator rather than hidden expected answers in rubric prose."
+    },
+    {
+      "task": "medical_secretaries/task1",
+      "category": "missing-reference-context",
+      "location": "Rows 0-7",
+      "finding": "The judge cannot verify complete referral coverage, ICD-10 descriptions/laterality, duplicate relationships, status/tier assignments, contact details, privacy language, or dashboard counts against the referral CSV and external references.",
+      "disposition": "evaluator_infrastructure",
+      "rationale": "Source-dependent correctness requires canonical inputs, reference extracts, or deterministic checks in the evaluator rather than hidden expected answers in rubric prose."
+    },
+    {
+      "task": "medical_secretaries/task1",
+      "category": "deliverable-extraction",
+      "location": "Row 3",
+      "finding": "The red/yellow conditional-formatting rules, including overlap behavior, are entirely invisible to the judge.",
+      "disposition": "evaluator_infrastructure",
+      "rationale": "The requirement is legitimate, but current extraction or rendering hides the evidence; add format-aware rendering, extraction, or structured inspection."
+    },
+    {
+      "task": "online_merchants/task1",
+      "category": "missing-reference-context",
+      "location": "Rows 1-6",
+      "finding": "The judge cannot verify inquiry/product matches, catalog means/ranks, all-SKU metrics, external review patterns, Shopify listing language, or conclusion-dependent PDF choice against the local and downloaded datasets.",
+      "disposition": "evaluator_infrastructure",
+      "rationale": "Source-dependent correctness requires canonical inputs, reference extracts, or deterministic checks in the evaluator rather than hidden expected answers in rubric prose."
+    },
+    {
+      "task": "online_merchants/task1",
+      "category": "deliverable-extraction",
+      "location": "Row 4",
+      "finding": "An Excel chart or conditional color coding is required, but both are invisible in the workbook text extraction.",
+      "disposition": "evaluator_infrastructure",
+      "rationale": "The requirement is legitimate, but current extraction or rendering hides the evidence; add format-aware rendering, extraction, or structured inspection."
+    },
+    {
+      "task": "online_merchants/task2",
+      "category": "missing-reference-context",
+      "location": "Rows 0-6",
+      "finding": "The judge cannot verify all open tickets, exact policy titles/terms, product matches, 2.25M-byte sales aggregations, website funnel rows, review rankings/themes, or full-catalog listing preservation against the four local and two external datasets.",
+      "disposition": "evaluator_infrastructure",
+      "rationale": "Source-dependent correctness requires canonical inputs, reference extracts, or deterministic checks in the evaluator rather than hidden expected answers in rubric prose."
+    },
+    {
+      "task": "personal_financial_advisors/task1",
+      "category": "missing-reference-context",
+      "location": "Rows 0-7",
+      "finding": "The judge cannot validate portfolio reconciliation, holding-level gift sales, target trades, loss positions, Treasury/FRED values, RMD divisors, complete income, Social Security taxation, or modeled taxes against the local and external sources.",
+      "disposition": "evaluator_infrastructure",
+      "rationale": "Source-dependent correctness requires canonical inputs, reference extracts, or deterministic checks in the evaluator rather than hidden expected answers in rubric prose."
+    },
+    {
+      "task": "petroleum_engineers/task1",
+      "category": "missing-reference-context",
+      "location": "Rows 0-7",
+      "finding": "The judge cannot verify change-point segmentation, regression data, BOEM fits, top-15 population, OGS matches, formation tops, personnel counts, or data lineage against the local files and large external exports.",
+      "disposition": "evaluator_infrastructure",
+      "rationale": "Source-dependent correctness requires canonical inputs, reference extracts, or deterministic checks in the evaluator rather than hidden expected answers in rubric prose."
+    },
+    {
+      "task": "petroleum_engineers/task1",
+      "category": "deliverable-extraction",
+      "location": "Workbook-wide criteria, especially Rows 0, 2, and 4",
+      "finding": "A valid comprehensive workbook can be truncated before later sheets or rows are shown because the judge caps extracted non-SQLite content at 200,000 characters per file.",
+      "disposition": "evaluator_infrastructure",
+      "rationale": "The requirement is legitimate, but current extraction or rendering hides the evidence; add format-aware rendering, extraction, or structured inspection."
+    },
+    {
+      "task": "police_fire_and_ambulance_dispatchers/task1",
+      "category": "missing-reference-context",
+      "location": "Rows 0-8",
+      "finding": "The judge cannot verify all 15 calls, unit capabilities/availability, distances, pre-existing CAD records, conflicts, active incidents, roster coverage, or historical 911 counts against the local and external sources.",
+      "disposition": "evaluator_infrastructure",
+      "rationale": "Source-dependent correctness requires canonical inputs, reference extracts, or deterministic checks in the evaluator rather than hidden expected answers in rubric prose."
+    },
+    {
+      "task": "producers/task1",
+      "category": "missing-reference-context",
+      "location": "Rows 0-7",
+      "finding": "The judge cannot validate venue/personnel feasibility, handbook compliance, every budget category/receipt, cash-flow timing, reimbursement status, roster completeness, or script/backorder facts against the local and external sources.",
+      "disposition": "evaluator_infrastructure",
+      "rationale": "Source-dependent correctness requires canonical inputs, reference extracts, or deterministic checks in the evaluator rather than hidden expected answers in rubric prose."
+    },
+    {
+      "task": "producers/task1",
+      "category": "deliverable-extraction",
+      "location": "Criterion 5.1",
+      "finding": "The DOCX extractor cannot judge whether the emergency board memo is approximately one to two pages.",
+      "disposition": "evaluator_infrastructure",
+      "rationale": "The requirement is legitimate, but current extraction or rendering hides the evidence; add format-aware rendering, extraction, or structured inspection."
+    },
+    {
+      "task": "purchasing_agents_except_wholesale_retail_and_farm_products/task1",
+      "category": "missing-reference-context",
+      "location": "Rows 0-8",
+      "finding": "The judge cannot validate historical commodity statistics, all 15 bid lines, supplier terms, delivery windows, template conformance, PO values, budget codes, or cross-deliverable totals against the three local files and external government data.",
+      "disposition": "evaluator_infrastructure",
+      "rationale": "Source-dependent correctness requires canonical inputs, reference extracts, or deterministic checks in the evaluator rather than hidden expected answers in rubric prose."
+    },
+    {
+      "task": "purchasing_agents_except_wholesale_retail_and_farm_products/task1",
+      "category": "deliverable-extraction",
+      "location": "Criterion 5.2",
+      "finding": "Whether each PO follows the provided template structure is not reliably visible after spreadsheet extraction strips layout, merged cells, print areas, styles, and formulas.",
+      "disposition": "evaluator_infrastructure",
+      "rationale": "The requirement is legitimate, but current extraction or rendering hides the evidence; add format-aware rendering, extraction, or structured inspection."
+    },
+    {
+      "task": "purchasing_agents_except_wholesale_retail_and_farm_products/task2",
+      "category": "missing-reference-context",
+      "location": "Rows 0-6",
+      "finding": "The judge cannot validate revised quantities/specs, vendor pricing/history/flags, contract vehicles, manual provisions, warranty/freight calculations, funding splits, or approval threshold against the six local inputs and purchasing manual.",
+      "disposition": "evaluator_infrastructure",
+      "rationale": "Source-dependent correctness requires canonical inputs, reference extracts, or deterministic checks in the evaluator rather than hidden expected answers in rubric prose."
+    },
+    {
+      "task": "purchasing_agents_except_wholesale_retail_and_farm_products/task2",
+      "category": "deliverable-extraction",
+      "location": "Criterion 0.4",
+      "finding": "Required visual shortfall flags in the bid tabulation are not visible to the judge.",
+      "disposition": "evaluator_infrastructure",
+      "rationale": "The requirement is legitimate, but current extraction or rendering hides the evidence; add format-aware rendering, extraction, or structured inspection."
+    },
+    {
+      "task": "purchasing_agents_except_wholesale_retail_and_farm_products/task2",
+      "category": "deliverable-extraction",
+      "location": "Criterion 6.0",
+      "finding": "The one-to-two-page memo requirement cannot be measured from DOCX text extraction.",
+      "disposition": "evaluator_infrastructure",
+      "rationale": "The requirement is legitimate, but current extraction or rendering hides the evidence; add format-aware rendering, extraction, or structured inspection."
+    },
+    {
+      "task": "purchasing_agents_except_wholesale_retail_and_farm_products/task3",
+      "category": "missing-reference-context",
+      "location": "Rows 0-6",
+      "finding": "The judge cannot validate mandatory requirement coverage, quote arithmetic/specs, amendment-permitted reductions, installation/freight, vendor history, payment consequences, negotiation totals, or escalation path against the nine source files.",
+      "disposition": "evaluator_infrastructure",
+      "rationale": "Source-dependent correctness requires canonical inputs, reference extracts, or deterministic checks in the evaluator rather than hidden expected answers in rubric prose."
+    },
+    {
+      "task": "purchasing_agents_except_wholesale_retail_and_farm_products/task3",
+      "category": "hidden-process",
+      "location": "Criteria 1.0 and 2.0",
+      "finding": "The criteria require workbooks to be built from supplied templates, but output text cannot establish that the templates were actually used rather than recreated.",
+      "disposition": "rubric_content_fix",
+      "rationale": "Reframe the process or template-use claim around observable deliverable evidence such as inputs, outputs, structure, or a documented cross-check."
+    },
+    {
+      "task": "reporters_and_correspondents/task1",
+      "category": "missing-reference-context",
+      "location": "Rows 0-5",
+      "finding": "The judge cannot validate city values/ranks, full monitoring series, CDC records, CT threshold legislation, EPA enforcement timing, Newark comparison, interview verification, or source-log claims against the local and external sources.",
+      "disposition": "evaluator_infrastructure",
+      "rationale": "Source-dependent correctness requires canonical inputs, reference extracts, or deterministic checks in the evaluator rather than hidden expected answers in rubric prose."
+    },
+    {
+      "task": "reporters_and_correspondents/task1",
+      "category": "deliverable-extraction",
+      "location": "Criterion 5.0",
+      "finding": "The no-more-than-two-page pitch memo limit is not observable after DOCX extraction.",
+      "disposition": "evaluator_infrastructure",
+      "rationale": "The requirement is legitimate, but current extraction or rendering hides the evidence; add format-aware rendering, extraction, or structured inspection."
+    },
+    {
+      "task": "sales_agents_securities_and_commodities/task1",
+      "category": "missing-reference-context",
+      "location": "Rows 0-7",
+      "finding": "The judge cannot verify complete settled-sell populations, fee rates/rounding, agents, positions, market closes, VWAPs, suitability accounts, adjustments, retention, or clawback matches against the database, market files, and external schedules.",
+      "disposition": "evaluator_infrastructure",
+      "rationale": "Source-dependent correctness requires canonical inputs, reference extracts, or deterministic checks in the evaluator rather than hidden expected answers in rubric prose."
+    },
+    {
+      "task": "sales_representatives_wholesale_and_manufacturing_technical_and_scientific_products/task1",
+      "category": "missing-reference-context",
+      "location": "Rows 0-8",
+      "finding": "The judge cannot validate every RFQ bullet, product certifications, competitor evidence, stakeholder concerns, lead times, internal prices, quote lines, maintenance/warranty assumptions, or TCO against the five local and two external sources.",
+      "disposition": "evaluator_infrastructure",
+      "rationale": "Source-dependent correctness requires canonical inputs, reference extracts, or deterministic checks in the evaluator rather than hidden expected answers in rubric prose."
+    },
+    {
+      "task": "sales_representatives_wholesale_and_manufacturing_technical_and_scientific_products/task1",
+      "category": "deliverable-extraction",
+      "location": "Criterion 7.0",
+      "finding": "The internal strategy memo's one-to-two-page requirement cannot be measured from DOCX text extraction.",
+      "disposition": "evaluator_infrastructure",
+      "rationale": "The requirement is legitimate, but current extraction or rendering hides the evidence; add format-aware rendering, extraction, or structured inspection."
+    },
+    {
+      "task": "sales_representatives_wholesale_and_manufacturing_technical_and_scientific_products/task2",
+      "category": "missing-reference-context",
+      "location": "Rows 0-6",
+      "finding": "The judge cannot validate 38-point coverage, discounts/prices, RFQ-versus-briefing conflicts, controller arithmetic, competitor lives/specs, area ranges, or source citations against the four local and two external documents.",
+      "disposition": "evaluator_infrastructure",
+      "rationale": "Source-dependent correctness requires canonical inputs, reference extracts, or deterministic checks in the evaluator rather than hidden expected answers in rubric prose."
+    },
+    {
+      "task": "secretaries_and_administrative_assistants_except_legal_medical_and_executive/task1",
+      "category": "missing-reference-context",
+      "location": "Rows 0-5",
+      "finding": "The judge cannot verify every gift/registrant, donor deduplication, volunteer matches, professional-background flags, template records, tiers, or special-circumstance letters against the six source files.",
+      "disposition": "evaluator_infrastructure",
+      "rationale": "Source-dependent correctness requires canonical inputs, reference extracts, or deterministic checks in the evaluator rather than hidden expected answers in rubric prose."
+    },
+    {
+      "task": "secretaries_and_administrative_assistants_except_legal_medical_and_executive/task1",
+      "category": "hidden-process",
+      "location": "Criteria 0.0, 3.0, and 5.0",
+      "finding": "The judge cannot establish that the workbooks and letters were actually built on the supplied templates rather than recreated with equivalent text.",
+      "disposition": "rubric_content_fix",
+      "rationale": "Reframe the process or template-use claim around observable deliverable evidence such as inputs, outputs, structure, or a documented cross-check."
+    },
+    {
+      "task": "secretaries_and_administrative_assistants_except_legal_medical_and_executive/task2",
+      "category": "missing-reference-context",
+      "location": "Rows 1-5",
+      "finding": "The judge cannot validate initially flagged employees, leave-date deductions, memo precedence, staff names/departments, tardiness patterns, letter population, or policy language against the five local and external sources.",
+      "disposition": "evaluator_infrastructure",
+      "rationale": "Source-dependent correctness requires canonical inputs, reference extracts, or deterministic checks in the evaluator rather than hidden expected answers in rubric prose."
+    },
+    {
+      "task": "social_science_research_assistants/task1",
+      "category": "missing-reference-context",
+      "location": "Rows 0-7",
+      "finding": "The judge cannot verify cell-level error completeness, codebook classifications, merges, productivity distribution, chi-square inputs, or benchmark claims against the six source files.",
+      "disposition": "evaluator_infrastructure",
+      "rationale": "Source-dependent correctness requires canonical inputs, reference extracts, or deterministic checks in the evaluator rather than hidden expected answers in rubric prose."
+    },
+    {
+      "task": "social_science_research_assistants/task1",
+      "category": "deliverable-extraction",
+      "location": "Criteria 3.4, 4.1-4.3, and 5.3",
+      "finding": "Executed notebook outputs stored in standard Jupyter data bundles are omitted from text extraction, so visible tables/statistics may not reach the judge.",
+      "disposition": "evaluator_infrastructure",
+      "rationale": "The requirement is legitimate, but current extraction or rendering hides the evidence; add format-aware rendering, extraction, or structured inspection."
+    },
+    {
+      "task": "social_science_research_assistants/task2",
+      "category": "missing-reference-context",
+      "location": "Rows 0-7",
+      "finding": "The judge cannot verify every cleaning action, 30-country source extraction, latest-year selection, UNDP footnote parsing/imputation, typology, descriptive tables, or regression statistics against the local and OWID sources.",
+      "disposition": "evaluator_infrastructure",
+      "rationale": "Source-dependent correctness requires canonical inputs, reference extracts, or deterministic checks in the evaluator rather than hidden expected answers in rubric prose."
+    },
+    {
+      "task": "social_science_research_assistants/task3",
+      "category": "missing-reference-context",
+      "location": "Rows 0-5",
+      "finding": "The judge cannot verify cleaning provenance, exact codebook varnames, source-country coverage, Meta/Yale percentages, ESS Table 1 values, descriptive/correlation/regression results, or divergence completeness against the local and external sources.",
+      "disposition": "evaluator_infrastructure",
+      "rationale": "Source-dependent correctness requires canonical inputs, reference extracts, or deterministic checks in the evaluator rather than hidden expected answers in rubric prose."
+    },
+    {
+      "task": "social_science_research_assistants/task3",
+      "category": "deliverable-extraction",
+      "location": "Row 0, especially criteria 0.1-0.4",
+      "finding": "The judge reads at most 500 rows from each SQLite table, so it cannot inspect the full cleaned_responses table of approximately 800 respondents or verify tail-row corrections and preservation.",
+      "disposition": "evaluator_infrastructure",
+      "rationale": "The requirement is legitimate, but current extraction or rendering hides the evidence; add format-aware rendering, extraction, or structured inspection."
+    },
+    {
+      "task": "sociology_teachers_postsecondary/task1",
+      "category": "missing-reference-context",
+      "location": "Rows 0-7",
+      "finding": "The judge cannot validate every student/component, attendance/assignment anomalies, eight indicators, scores/watch ranges, UCI summaries, at-risk roster, or WWC citations against the database, rubric, dataset, and guide.",
+      "disposition": "evaluator_infrastructure",
+      "rationale": "Source-dependent correctness requires canonical inputs, reference extracts, or deterministic checks in the evaluator rather than hidden expected answers in rubric prose."
+    },
+    {
+      "task": "sociology_teachers_postsecondary/task2",
+      "category": "missing-reference-context",
+      "location": "Rows 0-7",
+      "finding": "The judge cannot verify 35 grade calculations, maxima, attendance/office-hours evidence, disputes, distributions, normalized statistics, ten evaluation items, at-risk roster, or rubric categories against the local and external sources.",
+      "disposition": "evaluator_infrastructure",
+      "rationale": "Source-dependent correctness requires canonical inputs, reference extracts, or deterministic checks in the evaluator rather than hidden expected answers in rubric prose."
+    },
+    {
+      "task": "sociology_teachers_postsecondary/task3",
+      "category": "missing-reference-context",
+      "location": "Rows 0-6",
+      "finding": "The judge cannot validate all 35 grade calculations, attendance-participation mismatches, at-risk population, appeal evidence/policy quotations, syllabus topic mappings, or external rubric/CLEP weights against the three local and two external sources.",
+      "disposition": "evaluator_infrastructure",
+      "rationale": "Source-dependent correctness requires canonical inputs, reference extracts, or deterministic checks in the evaluator rather than hidden expected answers in rubric prose."
+    },
+    {
+      "task": "statisticians/task1",
+      "category": "missing-reference-context",
+      "location": "Rows 0-10",
+      "finding": "The judge cannot verify source-year selection, jurisdiction exclusions, ERS/CDC/Census extraction, merged values, model estimates, diagnostics, sensitivity states, or memo claims against the seven sources.",
+      "disposition": "evaluator_infrastructure",
+      "rationale": "Source-dependent correctness requires canonical inputs, reference extracts, or deterministic checks in the evaluator rather than hidden expected answers in rubric prose."
+    },
+    {
+      "task": "statisticians/task1",
+      "category": "deliverable-extraction",
+      "location": "Criteria 0.0 and notebook-result criteria throughout",
+      "finding": "Standard Jupyter dataframe/statistical outputs may be invisible even when the notebook is correctly executed.",
+      "disposition": "evaluator_infrastructure",
+      "rationale": "The requirement is legitimate, but current extraction or rendering hides the evidence; add format-aware rendering, extraction, or structured inspection."
+    },
+    {
+      "task": "statisticians/task1",
+      "category": "alternative-solution-fairness",
+      "location": "Criteria 10.0 and 10.4",
+      "finding": "The two accepted memo formats are not equally judgeable: DOCX pagination is unavailable, while a PDF causal diagram is not rendered or attached.",
+      "disposition": "rubric_content_fix",
+      "rationale": "The rubric should treat the task’s allowed equivalent methods or formats equally instead of making credit depend on the more judgeable implementation."
+    },
+    {
+      "task": "statisticians/task2",
+      "category": "missing-reference-context",
+      "location": "Rows 0-6",
+      "finding": "The judge cannot validate the required source anomalies, 193-country PCA/clusters, reconciliation, mixed/WLS models, 51-jurisdiction ranking, Tennessee handling, or cross-deliverable numbers against local and external data.",
+      "disposition": "evaluator_infrastructure",
+      "rationale": "Source-dependent correctness requires canonical inputs, reference extracts, or deterministic checks in the evaluator rather than hidden expected answers in rubric prose."
+    },
+    {
+      "task": "statisticians/task2",
+      "category": "deliverable-extraction",
+      "location": "Criteria 6.0 and notebook-result criteria throughout",
+      "finding": "Executed notebook tables and model summaries can be omitted when stored as Jupyter execute_result or display_data text/plain/html outputs.",
+      "disposition": "evaluator_infrastructure",
+      "rationale": "The requirement is legitimate, but current extraction or rendering hides the evidence; add format-aware rendering, extraction, or structured inspection."
+    },
+    {
+      "task": "statisticians/task3",
+      "category": "missing-reference-context",
+      "location": "Rows 0-5",
+      "finding": "The judge cannot verify thousands of county joins, all 15 measures, exclusions, terciles, decompositions, models, Moran statistics, mediation, outliers, or memo claims against the five sources.",
+      "disposition": "evaluator_infrastructure",
+      "rationale": "Source-dependent correctness requires canonical inputs, reference extracts, or deterministic checks in the evaluator rather than hidden expected answers in rubric prose."
+    },
+    {
+      "task": "statisticians/task3",
+      "category": "deliverable-extraction",
+      "location": "Row 0",
+      "finding": "SQLite extraction samples only the first 500 rows of each county table, preventing complete verification of approximately 3,000 county keys, values, indexes, and exclusions.",
+      "disposition": "evaluator_infrastructure",
+      "rationale": "The requirement is legitimate, but current extraction or rendering hides the evidence; add format-aware rendering, extraction, or structured inspection."
+    },
+    {
+      "task": "statisticians/task3",
+      "category": "deliverable-extraction",
+      "location": "Criteria 3.1 and 3.8-4.8",
+      "finding": "Notebook model tables, diagnostics, Moran results, and mediation estimates may not appear in extracted text despite visible execution outputs.",
+      "disposition": "evaluator_infrastructure",
+      "rationale": "The requirement is legitimate, but current extraction or rendering hides the evidence; add format-aware rendering, extraction, or structured inspection."
+    },
+    {
+      "task": "statisticians/task3",
+      "category": "deliverable-extraction",
+      "location": "Criterion 5.9",
+      "finding": "The judge cannot verify that the PDF memo embeds at least three notebook figures.",
+      "disposition": "evaluator_infrastructure",
+      "rationale": "The requirement is legitimate, but current extraction or rendering hides the evidence; add format-aware rendering, extraction, or structured inspection."
+    },
+    {
+      "task": "supply_chain_managers/task1",
+      "category": "missing-reference-context",
+      "location": "Rows 0-7",
+      "finding": "The judge cannot verify ABC/revenue/dead-stock populations, demand/reorder math, supplier metrics/contracts, source SOP wording/issue numbers, or numeric negotiation evidence against the four inputs.",
+      "disposition": "evaluator_infrastructure",
+      "rationale": "Source-dependent correctness requires canonical inputs, reference extracts, or deterministic checks in the evaluator rather than hidden expected answers in rubric prose."
+    },
+    {
+      "task": "supply_chain_managers/task1",
+      "category": "deliverable-extraction",
+      "location": "Criteria 7.1-7.3",
+      "finding": "The extractor cannot establish that workbook sheets are visibly interlinked through formulas/references rather than containing independently copied matching values.",
+      "disposition": "evaluator_infrastructure",
+      "rationale": "The requirement is legitimate, but current extraction or rendering hides the evidence; add format-aware rendering, extraction, or structured inspection."
+    },
+    {
+      "task": "supply_chain_managers/task1",
+      "category": "alternative-solution-fairness",
+      "location": "Criterion 6.1",
+      "finding": "A valid tracked-changes redline can be less judgeable than the equally accepted explicit-marker method because DOCX conversion may omit revision state and deleted text.",
+      "disposition": "rubric_content_fix",
+      "rationale": "The rubric should treat the task’s allowed equivalent methods or formats equally instead of making credit depend on the more judgeable implementation."
+    },
+    {
+      "task": "supply_chain_managers/task2",
+      "category": "missing-reference-context",
+      "location": "Rows 0-6",
+      "finding": "The judge cannot validate capacity inputs, three-year volume aggregation, region mappings/OTD gaps, reorder parameters, external joins, current SOP gaps, or investment assumptions against the five sources.",
+      "disposition": "evaluator_infrastructure",
+      "rationale": "Source-dependent correctness requires canonical inputs, reference extracts, or deterministic checks in the evaluator rather than hidden expected answers in rubric prose."
+    },
+    {
+      "task": "technical_writers/task1",
+      "category": "missing-reference-context",
+      "location": "Rows 0-6",
+      "finding": "The judge cannot verify endpoint completeness, exact validation/rate-limit/version facts, ticket solutions, changelog synthesis, template headings, or exclusion of internal-only facts against the four local and external sources.",
+      "disposition": "evaluator_infrastructure",
+      "rationale": "Source-dependent correctness requires canonical inputs, reference extracts, or deterministic checks in the evaluator rather than hidden expected answers in rubric prose."
+    },
+    {
+      "task": "technical_writers/task2",
+      "category": "missing-reference-context",
+      "location": "Rows 0-6",
+      "finding": "The judge cannot validate every breaking change, usage-based order, code details, SDK evidence, OpenAPI endpoint/header coverage, review resolution, ticket mappings, terminology, or CSV metrics against the seven local and two external sources.",
+      "disposition": "evaluator_infrastructure",
+      "rationale": "Source-dependent correctness requires canonical inputs, reference extracts, or deterministic checks in the evaluator rather than hidden expected answers in rubric prose."
+    },
+    {
+      "task": "technical_writers/task3",
+      "category": "missing-reference-context",
+      "location": "Rows 0-6",
+      "finding": "The judge cannot verify atomic discrepancy completeness, audit-tracker signals, 1,500-word guide grounding, every OpenAPI operation/field/status, webhook union/provenance, or v1 migration mappings against the six local and external sources.",
+      "disposition": "evaluator_infrastructure",
+      "rationale": "Source-dependent correctness requires canonical inputs, reference extracts, or deterministic checks in the evaluator rather than hidden expected answers in rubric prose."
+    },
+    {
+      "task": "training_and_development_specialists/task1",
+      "category": "missing-reference-context",
+      "location": "Rows 0-8",
+      "finding": "The judge cannot validate checklist coverage, historical trends, 180-employee capacity, room/equipment/certification constraints, lowest-performing program, cost values, break-even inputs, or instructor coverage against the six references.",
+      "disposition": "evaluator_infrastructure",
+      "rationale": "Source-dependent correctness requires canonical inputs, reference extracts, or deterministic checks in the evaluator rather than hidden expected answers in rubric prose."
+    },
+    {
+      "task": "training_and_development_specialists/task1",
+      "category": "deliverable-extraction",
+      "location": "Row 0",
+      "finding": "A completed OSHA checklist delivered as a filled PDF form or visual annotation can appear blank or incomplete to the judge.",
+      "disposition": "evaluator_infrastructure",
+      "rationale": "The requirement is legitimate, but current extraction or rendering hides the evidence; add format-aware rendering, extraction, or structured inspection."
+    },
+    {
+      "task": "training_and_development_specialists/task1",
+      "category": "hidden-process",
+      "location": "Criterion 8.2",
+      "finding": "The judge cannot reliably determine that attendance tracking or schedule support used the Smartsheet workbook as reference formatting.",
+      "disposition": "rubric_content_fix",
+      "rationale": "Reframe the process or template-use claim around observable deliverable evidence such as inputs, outputs, structure, or a documented cross-check."
+    },
+    {
+      "task": "training_and_development_specialists/task2",
+      "category": "missing-reference-context",
+      "location": "Rows 0-5",
+      "finding": "The judge cannot validate all Q3 aggregations/flags, identity reconciliation, schedule feasibility, rates/budget, instrument audit, director priorities, consultant evidence, or exactly sourced memo numbers against local and external references.",
+      "disposition": "evaluator_infrastructure",
+      "rationale": "Source-dependent correctness requires canonical inputs, reference extracts, or deterministic checks in the evaluator rather than hidden expected answers in rubric prose."
+    },
+    {
+      "task": "training_and_development_specialists/task2",
+      "category": "deliverable-extraction",
+      "location": "Criterion 2.8",
+      "finding": "The judge cannot observe the required color coding of external-instructor sessions.",
+      "disposition": "evaluator_infrastructure",
+      "rationale": "The requirement is legitimate, but current extraction or rendering hides the evidence; add format-aware rendering, extraction, or structured inspection."
+    },
+    {
+      "task": "training_and_development_specialists/task3",
+      "category": "missing-reference-context",
+      "location": "Rows 0-6",
+      "finding": "The judge cannot validate employee-course states, top-risk ranks, department metrics, resource-feasible sessions, remediation/monthly coverage, course selection, survey evidence, OSHA citations, incident baselines, or ROI against the five sources.",
+      "disposition": "evaluator_infrastructure",
+      "rationale": "Source-dependent correctness requires canonical inputs, reference extracts, or deterministic checks in the evaluator rather than hidden expected answers in rubric prose."
+    },
+    {
+      "task": "training_and_development_specialists/task3",
+      "category": "deliverable-extraction",
+      "location": "Criterion 1.2",
+      "finding": "The top-ten highlighting requirement is invisible even if correctly implemented.",
+      "disposition": "evaluator_infrastructure",
+      "rationale": "The requirement is legitimate, but current extraction or rendering hides the evidence; add format-aware rendering, extraction, or structured inspection."
+    },
+    {
+      "task": "web_administrators/task1",
+      "category": "missing-reference-context",
+      "location": "Rows 0-6",
+      "finding": "The judge cannot verify per-event completeness, indicator correlations, all 14 CR items, topology CIDRs, certificate status, original template preservation, or configuration behavior against the eight local references.",
+      "disposition": "evaluator_infrastructure",
+      "rationale": "Source-dependent correctness requires canonical inputs, reference extracts, or deterministic checks in the evaluator rather than hidden expected answers in rubric prose."
+    }
+  ]
+}

@@ -1,0 +1,282 @@
+{
+  "summary": {
+    "status": "pass",
+    "scope": "Final post-fix adversarial validation of all 65 task-instruction-aligned-v1 rubrics after correction of the three prior regression findings. No rubric file was edited during this validation.",
+    "conclusion": "All 15 original corpus-lint issues and all three prior post-fix regression issues are resolved. Re-run duplicate, specificity, compound-length, concentration, subjective-language, and circular-rule screens produced no newly introduced actionable issue.",
+    "originalIssueCounts": {
+      "resolved": 15,
+      "partiallyResolved": 0,
+      "unresolved": 0
+    },
+    "regressionIssueCounts": {
+      "resolved": 3,
+      "partiallyResolved": 0,
+      "unresolved": 0
+    },
+    "newIssueCount": 0,
+    "newIssueSeverityCounts": {
+      "high": 0,
+      "medium": 0,
+      "low": 0
+    },
+    "remainingIssueCounts": {
+      "original": 0,
+      "regression": 0,
+      "new": 0,
+      "total": 0
+    },
+    "passRule": "Status is pass only because originalIssueDispositions and regressionIssueDispositions contain no partial or unresolved item and newIssues is empty."
+  },
+  "originalIssueDispositions": [
+    {
+      "id": "corpus-lint-01",
+      "task": "purchasing_agents_except_wholesale_retail_and_farm_products/task3",
+      "originalSeverity": "high",
+      "originalCategory": "all-or-nothing-weight-concentration",
+      "originalLocation": "rubrics[0] through rubrics[2]",
+      "disposition": "resolved",
+      "evidence": "The former 56-point block of three rows with 18, 16, and 18 criteria is now six rows carrying 10, 12, 8, 8, 8, and 10 points with 10, 9, 8, 7, 8, and 9 criteria. Audit coverage, discrepancy analysis, tabulation structure, arithmetic, score inputs, and score arithmetic are separately weighted."
+    },
+    {
+      "id": "corpus-lint-02",
+      "task": "statisticians/task3",
+      "originalSeverity": "high",
+      "originalCategory": "all-or-nothing-weight-concentration",
+      "originalLocation": "rubrics[0]",
+      "disposition": "resolved",
+      "evidence": "The former 14-point, 23-criterion database row is now four rows weighted 5, 3, 3, and 3 with 5, 3, 2, and 4 criteria for source fields, derived values, exclusions, and database integrity."
+    },
+    {
+      "id": "corpus-lint-03",
+      "task": "petroleum_engineers/task1",
+      "originalSeverity": "medium",
+      "originalCategory": "all-or-nothing-fragmentation",
+      "originalLocation": "rubrics[0] through rubrics[7]",
+      "disposition": "resolved",
+      "evidence": "The 75 criteria are now distributed across 17 weighted rows instead of eight. No row has more than seven criteria or more than 10% of the task weight, so analytical stages receive proportional credit."
+    },
+    {
+      "id": "corpus-lint-04",
+      "task": "management_analysts/task2",
+      "originalSeverity": "medium",
+      "originalCategory": "all-or-nothing-weight-concentration",
+      "originalLocation": "rubrics[0] and rubrics[1]",
+      "disposition": "resolved",
+      "evidence": "Workbook structure, model construction, model reporting, scenario feasibility, and scenario cost arithmetic are now separate rows weighted 4, 6, 4, 7, and 7. The split analytical rows contain at most nine criteria and no row exceeds 12.5% of task weight."
+    },
+    {
+      "id": "corpus-lint-05",
+      "task": "computer_and_information_research_scientists/task2",
+      "originalSeverity": "medium",
+      "originalCategory": "all-or-nothing-weight-concentration",
+      "originalLocation": "rubrics[5]",
+      "disposition": "resolved",
+      "evidence": "The former 16-point budget row is now four rows for workbook structure and funding, capital costs, operating costs, and dashboard economics, weighted 3, 4, 5, and 4 with 3, 4, 7, and 4 criteria."
+    },
+    {
+      "id": "corpus-lint-06",
+      "task": "technical_writers/task3",
+      "originalSeverity": "medium",
+      "originalCategory": "all-or-nothing-weight-concentration",
+      "originalLocation": "rubrics[3]",
+      "disposition": "resolved",
+      "evidence": "The former 18-point, 15-criterion rewritten-documentation row is now four rows for endpoint inputs, examples and success responses, errors and audit gaps, and cross-cutting standards, weighted 7, 4, 4, and 3 with no more than five criteria each."
+    },
+    {
+      "id": "corpus-lint-07",
+      "task": "management_analysts/task3",
+      "originalSeverity": "medium",
+      "originalCategory": "oversized-compound-criterion",
+      "originalLocation": "rubrics[6].criterion[0] and rubrics[6].criterion[2]",
+      "disposition": "resolved",
+      "evidence": "Proposal A outputs, Proposal A assumptions, proposal comparison, memo structure, workbook structure, presentation structure, and cross-artifact consistency are now seven separately weighted rows. No row in the task has more than four criteria."
+    },
+    {
+      "id": "corpus-lint-08",
+      "task": "supply_chain_managers/task1",
+      "originalSeverity": "high",
+      "originalCategory": "duplicate-criterion",
+      "originalLocation": "rubrics[3].criterion[4] and rubrics[7].criterion[2]",
+      "disposition": "resolved",
+      "evidence": "The Supplier Scorecard row now scores metric construction, weights, supplier coverage, and traceability without repeating dead-stock and reorder-misalignment linkage. That linkage appears once in rubrics[7].criterion[2]."
+    },
+    {
+      "id": "corpus-lint-09",
+      "task": "civil_engineers/task1",
+      "originalSeverity": "medium",
+      "originalCategory": "undefined-materiality",
+      "originalLocation": "rubrics[1].criterion[4]",
+      "disposition": "resolved",
+      "evidence": "Rubrics[1].criterion[4] now requires every non-zero discrepancy beyond the stated display-rounding tolerance and requires smaller differences to remain visible in the Difference field; undefined materiality no longer limits the population."
+    },
+    {
+      "id": "corpus-lint-10",
+      "task": "customer_service_representatives/task1",
+      "originalSeverity": "medium",
+      "originalCategory": "undefined-materiality",
+      "originalLocation": "rubrics[7].criterion[3]",
+      "disposition": "resolved",
+      "evidence": "Rubrics[7].criterion[3] now requires every factual divergence from Supervisor_Preliminary_Notes.csv, including the assertion and actual evidence. The briefing may prioritize consequential divergences but may not omit the rest."
+    },
+    {
+      "id": "corpus-lint-11",
+      "task": "civil_engineers/task1",
+      "originalSeverity": "medium",
+      "originalCategory": "unjudgeable-completeness",
+      "originalLocation": "rubrics[2].criterion[1]",
+      "disposition": "resolved",
+      "evidence": "Rubrics[2].criterion[1]-[2] now require a comparability rule based on item scope and compatible units, application to every local estimate item, inclusion of every match, and reasons for excluded plausible candidate matches."
+    },
+    {
+      "id": "corpus-lint-12",
+      "task": "supply_chain_managers/task2",
+      "originalSeverity": "medium",
+      "originalCategory": "circular-self-defined-rule",
+      "originalLocation": "rubrics[2].criterion[2]",
+      "disposition": "resolved",
+      "evidence": "Rubrics[2].criterion[2] now requires the rule to be derived from demand, lead time, supplied reorder parameters, and relevant department targets, with sensitivity analysis for material uncertain assumptions."
+    },
+    {
+      "id": "corpus-lint-13",
+      "task": "sociology_teachers_postsecondary/task2",
+      "originalSeverity": "low",
+      "originalCategory": "verbosity-bias",
+      "originalLocation": "rubrics[7].criterion[8] and rubrics[7].criterion[9]",
+      "disposition": "resolved",
+      "evidence": "The subjective appropriate-table and professional-format checks remain replaced by observable requirements in the current rubrics[8] for a clear SOC 101 Fall 2024 title or header and readable row labels, column labels, and values in required or used tables."
+    },
+    {
+      "id": "corpus-lint-14",
+      "task": "online_merchants/task2",
+      "originalSeverity": "medium",
+      "originalCategory": "verbosity-bias",
+      "originalLocation": "rubrics[6].criterion[5] and rubrics[6].criterion[6]",
+      "disposition": "resolved",
+      "evidence": "Rubrics[6].criterion[5]-[6] now limit benefits and product terms to catalog, complaint, review, or sales evidence, reject unsupported superlatives and claims, and explicitly state that keyword repetition or stuffing is not required."
+    },
+    {
+      "id": "corpus-lint-15",
+      "task": "civil_engineers/task1",
+      "originalSeverity": "medium",
+      "originalCategory": "rounding-tolerance-ambiguity",
+      "originalLocation": "rubrics[1].criterion[2]",
+      "disposition": "resolved",
+      "evidence": "Rubrics[1].criterion[2] now requires one rounding step to the displayed precision and defines a rounding-only difference as no more than half of one unit in the last displayed decimal place."
+    }
+  ],
+  "regressionIssueDispositions": [
+    {
+      "id": "post-fix-regression-01",
+      "task": "purchasing_agents_except_wholesale_retail_and_farm_products/task2",
+      "originalSeverity": "medium",
+      "originalCategory": "subjective-uncertainty-treatment",
+      "originalLocation": "rubrics[1].criterion[2] and rubrics[1].criterion[3]",
+      "finding": "The unpriced-warranty and VGA fixes permitted a reasonable estimate or range without requiring its basis.",
+      "disposition": "resolved",
+      "evidence": "Rubrics[1].criterion[0] now requires every unpriced line to use a numeric estimate with a cited source or shown derivation, a range with a source or derivation and numeric endpoints, or an explicit Quote Required treatment. Criteria[2]-[3] apply that traceable treatment to warranty and VGA costs, and criterion[6] requires consistent propagation through scoring, award, the PO, and Budget Sensitivity."
+    },
+    {
+      "id": "post-fix-regression-02",
+      "task": "sociology_teachers_postsecondary/task2",
+      "originalSeverity": "medium",
+      "originalCategory": "new-all-or-nothing-penalty",
+      "originalLocation": "former rubrics[0].criterion[0]",
+      "finding": "The exact gradebook filename was bundled with a 10-point, 12-criterion grade-calculation row.",
+      "disposition": "resolved",
+      "evidence": "A new two-point rubrics[0] separately scores all three exact deliverable filenames. The grade-calculation row is now rubrics[1], carries eight of 66 points, contains 11 calculation criteria, and contains no filename check."
+    },
+    {
+      "id": "post-fix-regression-03",
+      "task": "online_merchants/task1",
+      "originalSeverity": "medium",
+      "originalCategory": "circular-self-defined-rule",
+      "originalLocation": "rubrics[3].criterion[2] and rubrics[3].criterion[3]",
+      "finding": "The product-risk rule was chosen by the submission without requiring its thresholds to derive from the escalated items.",
+      "disposition": "resolved",
+      "evidence": "Rubrics[3].criterion[2] now requires similarity dimensions and thresholds derived from the escalated products' observed indicators, the catalog distribution, or both and rejects selection for a preferred match set. Criterion[3] requires application to every non-escalated SKU, every resulting match, and a full-catalog comparison when no SKU matches."
+    }
+  ],
+  "newIssues": [],
+  "metrics": {
+    "currentCorpus": {
+      "taskCount": 65,
+      "rubricRowCount": 521,
+      "criterionCount": 3288,
+      "totalWeight": 4500
+    },
+    "changeFromOriginalCorpusLint": {
+      "rubricRowsBefore": 484,
+      "rubricRowsAfter": 521,
+      "rubricRowChange": 37,
+      "rubricRowChangePercent": 7.6,
+      "criteriaBefore": 3235,
+      "criteriaAfter": 3288,
+      "criterionChange": 53,
+      "criterionChangePercent": 1.6,
+      "totalWeightChange": 0
+    },
+    "changeFromPriorPostFixValidation": {
+      "rubricRowsBefore": 520,
+      "rubricRowsAfter": 521,
+      "rubricRowChange": 1,
+      "criteriaBefore": 3287,
+      "criteriaAfter": 3288,
+      "criterionChange": 1,
+      "rowsOver10CriteriaAndAtLeast15PercentBefore": 14,
+      "rowsOver10CriteriaAndAtLeast15PercentAfter": 13
+    },
+    "sourceComparison": {
+      "sourceRubricRows": 569,
+      "variantRubricRows": 521,
+      "rowCountChangePercent": -8.4,
+      "sourceCriteria": 2067,
+      "variantCriteria": 3288,
+      "criterionCountChangePercent": 59.1
+    },
+    "criterionLengthWords": {
+      "minimum": 3,
+      "median": 12,
+      "p90": 20,
+      "p95": 23,
+      "maximum": 78,
+      "over30Words": 42,
+      "over40Words": 6
+    },
+    "criteriaPerRow": {
+      "minimum": 1,
+      "median": 6.0,
+      "p90": 10,
+      "maximum": 15,
+      "rowsOver10Criteria": 27,
+      "tasksWithRowOver10Criteria": 14
+    },
+    "weightConcentration": {
+      "rowsAtLeast20PercentOfTaskWeight": 24,
+      "tasksWithAtLeastOneSuchRow": 18,
+      "rowsOver10CriteriaAndAtLeast15PercentOfTaskWeight": 13,
+      "tasksWithSuchRows": 9,
+      "maximumSingleRowShare": 0.2917
+    },
+    "screenResults": {
+      "nearDuplicateCandidatePairs": 337,
+      "criteriaOver30Words": 42,
+      "unsupportedSpecificCandidates": 18,
+      "subjectiveTermCandidates": 301,
+      "circularRuleCandidates": 11,
+      "concentrationCandidateRows": 34,
+      "manuallyVerifiedNewDuplicateIssues": 0,
+      "manuallyVerifiedNewUnsupportedSpecificIssues": 0,
+      "manuallyVerifiedNewOversizedCompoundIssues": 0,
+      "manuallyVerifiedNewSubjectiveIssues": 0,
+      "manuallyVerifiedNewCircularRuleIssues": 0,
+      "manuallyVerifiedNewConcentrationIssues": 0,
+      "verificationNote": "Heuristics were re-run corpus-wide. Manual review covered every correction-touched candidate, all unsupported-specific and circular-rule candidates, all criteria over 40 words, and the strongest same-task similarity candidates. Parallel field or category checks were distinct obligations; exact specifics traced to instructions, source rubrics, or named input fields; the corrected long purchasing criterion expresses alternative treatments for one uncertainty case rather than unrelated deliverables."
+    },
+    "validation": {
+      "expectedTaskCount": 65,
+      "expectedTotalWeight": 4500,
+      "strictJson": "pass",
+      "corpusValidator": "pass: 65 tasks, 521 rubric rows, 3,288 criteria, every task preserves source weight"
+    }
+  }
+}

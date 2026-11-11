@@ -1,0 +1,97 @@
+{
+  "rubrics": [
+    {
+      "rubric": "Are the survey data cleaned comprehensively and is every material correction or removal documented in Data_Cleaning_Log?",
+      "weight": 10,
+      "criterion": [
+        "Data_Cleaning_Log uses the required respondent_id, country, field, original_value, corrected_value or action, and rationale information, with equivalent extra traceability columns allowed.",
+        "Duplicate respondent IDs are identified and reconciled or removed without double-counting, and the retained record and reason are documented.",
+        "Gender, education_level, and climate_think_frequency are mapped to the instructed valid categories using a documented, reasonable rule; ambiguous values may instead be flagged or removed with explanation.",
+        "climate_worry and other fields are checked for missing or out-of-range values, and each correction, imputation, exclusion, or removal is logged.",
+        "Calendar-invalid survey dates and missing dates are handled and logged; a calendar-valid date is not required to be removed merely because it lies outside an unstated fieldwork window.",
+        "Clean_Data reflects the logged decisions and contains no undocumented corrections."
+      ]
+    },
+    {
+      "rubric": "Are the country indicators extracted from the named OWID and UNDP sources using correct variables, years, numeric parsing, and conditional imputation?",
+      "weight": 10,
+      "criterion": [
+        "The OWID main file and codebook are used to extract co2_per_capita, consumption_co2_per_capita, energy_per_capita, population, and gdp.",
+        "For each country, the OWID values follow one stated, consistently applied temporal-selection policy supported by the source data: either the latest non-missing observation for each indicator or the latest common year with all requested indicators available; any indicator-specific fallback is documented.",
+        "HDI, life expectancy, expected schooling, mean schooling, and GNI per capita are extracted from the supplied HDR23-24 annex with footnote markers and text artifacts removed.",
+        "Country names and ISO3 codes are harmonized using source-grounded mappings.",
+        "Every genuinely source-missing indicator is imputed from an applicable named UNDP regional or development-group average and logged with the source average and imputed value; no imputation entry is required when the source value is available.",
+        "Country_Indicators contains one complete numeric row for each of the 30 survey countries."
+      ]
+    },
+    {
+      "rubric": "Do Merged_Data and Typology_Summary correctly join the indicators and implement the requested 2x2 country typology?",
+      "weight": 10,
+      "criterion": [
+        "Merged_Data joins each cleaned survey record to the correct country indicators and adds country_typology.",
+        "The CO2-per-capita and HDI thresholds are medians computed across the 30 survey countries.",
+        "One consistent, stated rule handles values exactly equal to either median.",
+        "The exact quadrant labels High-Emission/High-Dev, High-Emission/Low-Dev, Low-Emission/High-Dev, and Low-Emission/Low-Dev are used.",
+        "Typology_Summary has one row per survey country with country, co2_per_capita, HDI, country_typology, and both thresholds.",
+        "Every country appears in exactly one quadrant."
+      ]
+    },
+    {
+      "rubric": "Does Descriptive_Stats contain every requested table computed from the cleaned and merged analysis sample?",
+      "weight": 10,
+      "criterion": [
+        "The climate_worry table reports counts and percentages for levels 1 through 5, excludes invalid values, and sums to approximately 100 percent.",
+        "Mean climate_worry is reported for each typology quadrant.",
+        "Mean climate_worry is reported by gender and by ordered education level.",
+        "The percentage supporting stronger action is reported for each quadrant.",
+        "The extreme_weather_experience by quadrant cross-tab reports Yes and No counts plus within-quadrant row percentages.",
+        "Each cross-tab row sums to approximately 100 percent and all displayed analysis counts reconcile to the cleaned sample."
+      ]
+    },
+    {
+      "rubric": "Does Regression_Results present the two instructed OLS models side by side with correct coding and complete inferential and fit statistics?",
+      "weight": 10,
+      "criterion": [
+        "Model 1 includes age, a documented gender dummy and reference category, ordinal education_level, co2_per_capita, consumption_co2_per_capita, HDI, and extreme_weather_experience coded Yes = 1.",
+        "Model 2 contains every Model 1 predictor plus HDI by extreme_weather_experience and co2_per_capita by consumption_co2_per_capita interactions.",
+        "The same documented cleaned-data inclusion rule is used for both models or any N difference is explained.",
+        "Each predictor row reports coefficient, standard error, and p-value for both models.",
+        "N, R-squared, adjusted R-squared, AIC, and BIC are reported for both models.",
+        "The two models are displayed side by side or in an equally direct comparison layout."
+      ]
+    },
+    {
+      "rubric": "Does the written regression interpretation meet the requested length and substantively compare the models?",
+      "weight": 6,
+      "criterion": [
+        "The interpretation is 4 to 6 sentences.",
+        "It states whether each interaction is statistically significant using the reported results.",
+        "It compares model fit using specific reported metrics and states whether Model 2 improves fit overall.",
+        "It gives a substantive climate-attitudes interpretation of at least one main or interaction finding without claiming causality from the cross-sectional models.",
+        "The prose is consistent with the coefficient signs, p-values, and fit statistics shown in the table."
+      ]
+    },
+    {
+      "rubric": "Do the two requested deliverables have the required structure and machine-usable GIS output?",
+      "weight": 6,
+      "criterion": [
+        "Climate_Attitudes_Analysis.xlsx contains Data_Cleaning_Log, Clean_Data, Merged_Data, Country_Indicators, Typology_Summary, Descriptive_Stats, and Regression_Results.",
+        "country_indicators_for_gis.csv contains exactly 30 country rows and exactly the instructed columns in the instructed order.",
+        "country and iso3 are populated for every GIS row.",
+        "All GIS indicator fields are strictly numeric and contain no blanks, footnotes, dashes, or text placeholders.",
+        "GIS values match the corresponding Country_Indicators values."
+      ]
+    },
+    {
+      "rubric": "Are the cleaning, merging, descriptive, typology, and regression outputs internally consistent and traceable across the workbook?",
+      "weight": 6,
+      "criterion": [
+        "All descriptive statistics and regressions use Clean_Data after the documented removals and invalid-value handling.",
+        "Merged_Data contains no unexplained country join failures.",
+        "Country_Indicators, Typology_Summary, Merged_Data, and the GIS CSV use consistent country names, ISO3 codes, indicator values, and typology assignments.",
+        "Reported sample sizes reconcile across Clean_Data, descriptive tables, and regression complete-case rules.",
+        "Any imputed country value is visibly traceable from the cleaning log to every downstream output that uses it."
+      ]
+    }
+  ]
+}

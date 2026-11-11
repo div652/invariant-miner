@@ -1,0 +1,96 @@
+{
+  "rubrics": [
+    {
+      "rubric": "Does the estimate reconcile scope-memo quantities against independent calculations and document adopted quantities?",
+      "weight": 10,
+      "criterion": [
+        "Major scope quantities show the memo value, independent value, difference, adopted value, and adoption rationale.",
+        "Deck area and concrete volume are independently derived from the scope dimensions and stated thicknesses.",
+        "The steel painting area arithmetic is checked and the adopted exposed-perimeter assumption is explicitly justified or qualified.",
+        "Material quantity disagreements are not hidden by copying the scope-memo estimate.",
+        "Assumptions affecting quantity takeoff are stated."
+      ]
+    },
+    {
+      "rubric": "Are Option A and Option B modeled from the instructed scopes with complete, internally consistent quantities and costs?",
+      "weight": 10,
+      "criterion": [
+        "Option A includes the full deck replacement and all associated work in scope-memo Sections 3.1 through 3.6.",
+        "Option A deck concrete uses the specified new-deck thickness and concrete performance class.",
+        "Option A deck pricing includes the installed work required for placement, forming, finishing, and curing.",
+        "Option B derives full-depth repair from 40 percent of deck area at the existing deck thickness.",
+        "Option B derives hydrodemolition and replacement material from 60 percent of deck area at a 2-inch depth.",
+        "Option B applies the thin polymer overlay to the full deck area.",
+        "Non-deck work is held consistent between the two options unless a documented scope reason supports a difference."
+      ]
+    },
+    {
+      "rubric": "Are unit prices traceable, comparable, and selected from the instructed references without unsupported values?",
+      "weight": 10,
+      "criterion": [
+        "Every detailed-estimate unit price identifies a source document and item code, line, or transparent first-principles buildup.",
+        "CDOT 2024 bid data serve as the primary published pricing reference where a reasonably comparable item exists.",
+        "WisDOT and the provided FDOT or local references are used to validate major prices where comparable data exist.",
+        "The Price Comparison sheet covers at least eight key bid items.",
+        "Each compared item includes at least two reasonably comparable sources.",
+        "Unavailable third-source values are identified explicitly rather than invented.",
+        "Each selected price has a project-specific rationale that addresses comparability and uncertainty."
+      ]
+    },
+    {
+      "rubric": "Does the Rebar Takeoff independently verify the Option A deck reinforcement?",
+      "weight": 8,
+      "criterion": [
+        "Top longitudinal, top transverse, bottom longitudinal, and bottom transverse layers are calculated separately.",
+        "Each layer shows bar size, spacing, direction, bar count, individual bar length, unit weight, and subtotal weight.",
+        "Bar-count and length conventions for cover, end bars, laps, development, and waste are transparent.",
+        "The independently calculated total is compared with the scope-memo quantity.",
+        "The adopted rebar quantity is justified from the takeoff rather than selected without explanation."
+      ]
+    },
+    {
+      "rubric": "Does the Paint Crew-Day Buildup derive and benchmark a usable structural-steel painting rate?",
+      "weight": 8,
+      "criterion": [
+        "The buildup identifies crew composition, hours, and labor rates from labor_equipment_rates.csv.",
+        "The buildup identifies equipment and applicable material costs.",
+        "A stated production rate converts the crew-day cost to a unit cost per square foot.",
+        "The calculated rate is benchmarked against relevant published DOT bid data.",
+        "Material divergence between the buildup and bid benchmarks is explained without assuming either value is automatically correct."
+      ]
+    },
+    {
+      "rubric": "Do the estimate summaries and detailed estimate apply the instructed arithmetic and construction conditions?",
+      "weight": 8,
+      "criterion": [
+        "Each option summary reports costs by scope-memo Sections 3.1 through 3.6.",
+        "Each option shows a subtotal, 8 percent mobilization, 15 percent contingency, and grand total.",
+        "Mobilization and contingency are applied on a clearly stated base without double counting.",
+        "The two-phase single-lane construction requirement is reflected through a documented source-grounded pricing treatment.",
+        "Detailed-estimate quantities, unit prices, extensions, summaries, and memo totals reconcile."
+      ]
+    },
+    {
+      "rubric": "Does the recommendation memo provide the required quantitative comparison and a defensible recommendation?",
+      "weight": 8,
+      "criterion": [
+        "The memo states both option totals and compares each with the $2,000,000 budget.",
+        "The memo identifies the three largest cost drivers for each option with dollar values.",
+        "The memo identifies items with pricing uncertainty exceeding 20 percent and explains the uncertainty.",
+        "The life-cycle comparison uses the stated approximate 40-year and 15-year service lives with a transparent common method.",
+        "The memo makes one clear recommendation supported by cost, service life, budget treatment, condition rating, bridge age, and ADT.",
+        "The memo states the assumptions that materially affect the recommendation."
+      ]
+    },
+    {
+      "rubric": "Are the workbook and memo delivered in the required structures and formats?",
+      "weight": 6,
+      "criterion": [
+        "The workbook contains exactly the six required tabs with the specified names.",
+        "The Detailed Estimate contains the required side-by-side columns or clearly equivalent columns with the same information.",
+        "The workbook includes usable Option A Summary, Option B Summary, Rebar Takeoff, Paint Crew-Day Buildup, and Price Comparison content.",
+        "The recommendation memo is a valid DOCX or Markdown file."
+      ]
+    }
+  ]
+}

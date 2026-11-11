@@ -1,0 +1,247 @@
+{
+  "group": "group-04",
+  "reviewedTasks": [
+    "computer_and_information_research_scientists/task1",
+    "computer_and_information_systems_managers/task2",
+    "online_merchants/task2",
+    "reporters_and_correspondents/task1",
+    "sociology_teachers_postsecondary/task3",
+    "statisticians/task3",
+    "web_administrators/task1"
+  ],
+  "changedTasks": [
+    "computer_and_information_research_scientists/task1",
+    "online_merchants/task2",
+    "reporters_and_correspondents/task1",
+    "sociology_teachers_postsecondary/task3",
+    "statisticians/task3"
+  ],
+  "issues": [
+    {
+      "source": "group-04",
+      "sourceLocation": "taskReviews[0].issues[0]",
+      "task": "computer_and_information_research_scientists/task1",
+      "severity": "high",
+      "category": "coverage",
+      "disposition": "applied",
+      "rationale": "The task explicitly requires Option D to maximize research throughput, and the prior rubric checked only feasibility. This is a rubric-content omission rather than an evaluator limitation.",
+      "change": "Added a source-grounded criterion requiring a reproducible throughput objective, comparison of feasible configurations, and a throughput-maximizing selection while accepting equivalent optimization methods and stated tie-breaks."
+    },
+    {
+      "source": "group-04",
+      "sourceLocation": "taskReviews[3].issues[0]",
+      "task": "reporters_and_correspondents/task1",
+      "severity": "medium",
+      "category": "ambiguity",
+      "disposition": "applied",
+      "rationale": "The original use of 'or' could admit annual aggregation even though the task requires every system, year, and monitoring-period record.",
+      "change": "Reworded the criterion to require every water system × Sample_Year × Sample_Period source record and both source fields."
+    },
+    {
+      "source": "group-04",
+      "sourceLocation": "taskReviews[3].issues[1]",
+      "task": "reporters_and_correspondents/task1",
+      "severity": "medium",
+      "category": "coverage",
+      "disposition": "applied",
+      "rationale": "The task requires a value or reason for every requested yearly field, not only for the 3.5-µg/dL fields.",
+      "change": "Required each Connecticut and national tested, at-or-above-5, and at-or-above-3.5 field in every requested year to contain a sourced value or a specific source-grounded missing-data reason."
+    },
+    {
+      "source": "group-04",
+      "sourceLocation": "taskReviews[4].issues[0]",
+      "task": "sociology_teachers_postsecondary/task3",
+      "severity": "medium",
+      "category": "coverage",
+      "disposition": "applied",
+      "rationale": "The deliverable specification explicitly requires quoted policy excerpts, while the rubric allowed paraphrase to replace them.",
+      "change": "Required short, accurately attributed syllabus or Berkeley rubric excerpts and limited paraphrase to supplemental analysis."
+    },
+    {
+      "source": "group-04",
+      "sourceLocation": "taskReviews[4].issues[1]",
+      "task": "sociology_teachers_postsecondary/task3",
+      "severity": "low",
+      "category": "unsupported_requirement",
+      "disposition": "applied",
+      "rationale": "The task requires a reasonably proportional five-question allocation but does not require narration of an obvious integer-rounding choice.",
+      "change": "Removed the separate rounding-explanation requirement and explicitly accepted a reasonable nearest-integer allocation."
+    },
+    {
+      "source": "group-04",
+      "sourceLocation": "taskReviews[5].issues[0]",
+      "task": "statisticians/task3",
+      "severity": "medium",
+      "category": "deliverable_structure",
+      "disposition": "applied",
+      "rationale": "The exact workbook filename and exact three-sheet set are explicit deliverable requirements and are directly judgeable from the artifact.",
+      "change": "Added a dedicated two-point workbook-structure row for disparity_profile.xlsx and the exact three required sheets, with integer weights reallocated to preserve 54 total points."
+    },
+    {
+      "source": "corpus-lint",
+      "sourceLocation": "issues[1]",
+      "task": "statisticians/task3",
+      "severity": "high",
+      "category": "all-or-nothing-weight-concentration",
+      "disposition": "applied",
+      "rationale": "The 14-point database row combined independently fail-able schema, calculation, exclusion, and integrity requirements, making a small defect control more than one quarter of the task score.",
+      "change": "Split the row into four independently weighted rows: source-field coverage (5), derived-value correctness (3), exclusions (3), and SQLite/FIPS integrity (3)."
+    },
+    {
+      "source": "corpus-lint",
+      "sourceLocation": "issues[13]",
+      "task": "online_merchants/task2",
+      "severity": "medium",
+      "category": "verbosity-bias",
+      "disposition": "applied",
+      "rationale": "Unbounded marketing-style judgments could reward longer copy without improving factual accuracy or task compliance.",
+      "change": "Operationalized the criteria around source-supported benefits and product-specific terminology, and stated that keyword repetition or stuffing is not required."
+    },
+    {
+      "source": "judgeability",
+      "sourceLocation": "issues[11]",
+      "task": "computer_and_information_research_scientists/task1",
+      "severity": "high",
+      "category": "missing-reference-context",
+      "disposition": "deferred_infrastructure",
+      "rationale": "The rubric correctly requires source-derived constraint, schedule, SQL, and benchmark validation. Supplying the local inputs and Epoch records is an evaluator-context responsibility; embedding expected answers would create hidden-answer bias.",
+      "change": null
+    },
+    {
+      "source": "judgeability",
+      "sourceLocation": "issues[12]",
+      "task": "computer_and_information_research_scientists/task1",
+      "severity": "high",
+      "category": "omitted-requirement",
+      "disposition": "applied",
+      "rationale": "This duplicates the confirmed group finding and identifies a genuine rubric-content omission.",
+      "change": "Added the Option D throughput-optimization criterion without encoding a hidden hardware configuration or numeric optimum."
+    },
+    {
+      "source": "judgeability",
+      "sourceLocation": "issues[13]",
+      "task": "computer_and_information_research_scientists/task1",
+      "severity": "high",
+      "category": "execution-dependence",
+      "disposition": "deferred_infrastructure",
+      "rationale": "Executing workload_impact.sql against a disposable database and exposing errors/results is deterministic evaluator infrastructure. Replacing execution with embedded expected SQL text or results would reduce alternative-method fairness.",
+      "change": null
+    },
+    {
+      "source": "judgeability",
+      "sourceLocation": "issues[16]",
+      "task": "computer_and_information_systems_managers/task2",
+      "severity": "high",
+      "category": "missing-reference-context",
+      "disposition": "deferred_infrastructure",
+      "rationale": "The rubric content is source-aligned. Candidate completeness, pricing, project coverage, and official NIST mapping require the evaluator to receive source extracts and deterministic checks, not hidden expected populations or costs in the rubric.",
+      "change": null
+    },
+    {
+      "source": "judgeability",
+      "sourceLocation": "issues[17]",
+      "task": "computer_and_information_systems_managers/task2",
+      "severity": "high",
+      "category": "deliverable-extraction",
+      "disposition": "deferred_infrastructure",
+      "rationale": "Conditional-formatting inspection or workbook rendering is an extraction capability. The formatting requirement is explicit and should not be removed merely because the current text extractor drops styles.",
+      "change": null
+    },
+    {
+      "source": "judgeability",
+      "sourceLocation": "issues[50]",
+      "task": "online_merchants/task2",
+      "severity": "high",
+      "category": "missing-reference-context",
+      "disposition": "deferred_infrastructure",
+      "rationale": "Ticket, policy, aggregation, ranking, and catalog-preservation checks require source datasets or deterministic controls. Encoding the expected ticket responses, class rankings, or product matches would reintroduce hidden answers.",
+      "change": null
+    },
+    {
+      "source": "judgeability",
+      "sourceLocation": "issues[64]",
+      "task": "reporters_and_correspondents/task1",
+      "severity": "high",
+      "category": "missing-reference-context",
+      "disposition": "deferred_infrastructure",
+      "rationale": "Authoritative report pages and external datasets must be passed to the evaluator or checked deterministically. The rubric should continue to require source accuracy without embedding the expected city values, legal facts, or monitoring results.",
+      "change": null
+    },
+    {
+      "source": "judgeability",
+      "sourceLocation": "issues[65]",
+      "task": "reporters_and_correspondents/task1",
+      "severity": "high",
+      "category": "deliverable-extraction",
+      "disposition": "deferred_infrastructure",
+      "rationale": "DOCX pagination is a rendering and extraction issue. Replacing the explicit two-page requirement with a newly invented word limit would alter the task and compensate for infrastructure in rubric content.",
+      "change": null
+    },
+    {
+      "source": "judgeability",
+      "sourceLocation": "issues[80]",
+      "task": "sociology_teachers_postsecondary/task3",
+      "severity": "high",
+      "category": "missing-reference-context",
+      "disposition": "deferred_infrastructure",
+      "rationale": "Grade calculations, appeal evidence, quotations, and CLEP mappings need the local and authoritative external sources. Adding expected student classifications, outcomes, excerpts, or mappings to the rubric would create hidden-answer dependence.",
+      "change": null
+    },
+    {
+      "source": "judgeability",
+      "sourceLocation": "issues[86]",
+      "task": "statisticians/task3",
+      "severity": "high",
+      "category": "missing-reference-context",
+      "disposition": "deferred_infrastructure",
+      "rationale": "County joins, models, and derived results require normalized source snapshots and deterministic validation. The rubric should remain method-flexible rather than embed expected county results or statistics.",
+      "change": null
+    },
+    {
+      "source": "judgeability",
+      "sourceLocation": "issues[87]",
+      "task": "statisticians/task3",
+      "severity": "high",
+      "category": "deliverable-extraction",
+      "disposition": "deferred_infrastructure",
+      "rationale": "Full-table SQLite schema, index, aggregate, and invalid-row checks belong in the extractor or deterministic evaluator. Sampling limits are not a rubric-content defect.",
+      "change": null
+    },
+    {
+      "source": "judgeability",
+      "sourceLocation": "issues[88]",
+      "task": "statisticians/task3",
+      "severity": "high",
+      "category": "deliverable-extraction",
+      "disposition": "deferred_infrastructure",
+      "rationale": "Missing text/plain and text/html notebook outputs is an IPYNB converter defect. The executed-output requirements remain appropriate and should not be weakened or replaced with hidden expected statistics.",
+      "change": null
+    },
+    {
+      "source": "judgeability",
+      "sourceLocation": "issues[89]",
+      "task": "statisticians/task3",
+      "severity": "high",
+      "category": "deliverable-extraction",
+      "disposition": "deferred_infrastructure",
+      "rationale": "Verifying embedded figures requires PDF rendering or object inspection. The explicit figure requirement should remain because removing it would reduce task coverage.",
+      "change": null
+    },
+    {
+      "source": "judgeability",
+      "sourceLocation": "issues[104]",
+      "task": "web_administrators/task1",
+      "severity": "high",
+      "category": "missing-reference-context",
+      "disposition": "deferred_infrastructure",
+      "rationale": "Per-event completeness, topology, certificate, CR, and template checks require the eight reference files and deterministic config validation. Embedding attacker sequences, CIDRs, or certificate answers would create hidden expected answers.",
+      "change": null
+    }
+  ],
+  "summary": {
+    "considered": 22,
+    "applied": 9,
+    "deferred_infrastructure": 13,
+    "rejected": 0
+  }
+}

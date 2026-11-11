@@ -1,0 +1,94 @@
+{
+  "rubrics": [
+    {
+      "rubric": "Does the infrastructure triage recommend valid, right-sized AWS replacements for every Tier 1 server?",
+      "weight": 8,
+      "criterion": [
+        "Every server classified as Tier 1 has a recommended instance type that exists in the provided aws-instances.csv.",
+        "Each recommendation meets or exceeds the source server's CPU Cores and RAM (GB).",
+        "The submission documents a reasonable smallest-qualifying tie-break and does not choose an instance that is unnecessarily larger under that stated method.",
+        "The report cross-references Tier 1 hostnames to application or risk data where the source systems provide a relevant relationship."
+      ]
+    },
+    {
+      "rubric": "Does Risk-Incident Correlation provide a reproducible incident and compliance assessment for every Critical or High risk?",
+      "weight": 4,
+      "criterion": [
+        "The sheet contains one row for every risk_register record whose risk_level is Critical or High.",
+        "The risk_category to ITSM CI_Cat mapping is documented and applied consistently rather than relying on an undisclosed expected mapping.",
+        "Each row reports incident count and average Handle_Time_hrs; zero-incident risks may use 0 and a clearly marked not-applicable average.",
+        "Each row identifies affected compliance frameworks."
+      ]
+    },
+    {
+      "rubric": "Does the report completely identify deficient disaster-recovery plans and connect them to Critical or High risk coverage?",
+      "weight": 2,
+      "criterion": [
+        "The report lists every dr_plans record whose test_result is Fail or whose RTO exceeds 24 hours, including the plan ID, system, and reason for the flag.",
+        "Any other non-Pass test result is surfaced with a documented treatment rather than silently treated as a passing test.",
+        "Each Critical or High risk row reports DR Status from the stated Adequate, Flagged, and None rules.",
+        "The report identifies which Critical or High risks lack adequate DR coverage and states when a deficient plan has no defensible risk relationship."
+      ]
+    },
+    {
+      "rubric": "Does Server Migration Matrix completely and correctly classify the server inventory?",
+      "weight": 6,
+      "criterion": [
+        "Every source server appears exactly once with Server ID, Hostname, Tier, Recommended AWS Instance, and Current Annual Cost.",
+        "Tier 1, Tier 2, and Tier 3 assignments follow the urgency rules in the task instructions, with Tier 1 evaluated before Tier 2.",
+        "Tier 1 rows contain a recommendation and Tier 2 or Tier 3 rows contain \"N/A\" for Recommended AWS Instance.",
+        "Current Annual Cost matches Annual Maint Cost ($) from Server_Inventory."
+      ]
+    },
+    {
+      "rubric": "Does reconciliation_flags.csv systematically record material cross-system inconsistencies in the required format?",
+      "weight": 6,
+      "criterion": [
+        "The CSV header is exactly Flag_ID, Source_System_1, Source_System_2, Data_Element, Value_System_1, Value_System_2, Discrepancy_Type, Severity, Action.",
+        "Flags cover budget totals versus asset-level costs, risks without a defensible ITSM category match, and compliance controls without a defensible NIST CSF mapping.",
+        "Reported values and gaps are traceable to the named systems and clearly distinguish differences in scope from true mismatches.",
+        "Every row uses an allowed Discrepancy_Type and Severity and gives a concrete remediation action."
+      ]
+    },
+    {
+      "rubric": "Does the report make and stress-test a cloud vendor recommendation using the supplied proposal data?",
+      "weight": 6,
+      "criterion": [
+        "The Executive Summary recommends one vendor or an explicit multi-cloud strategy.",
+        "The recommendation uses discounted 3-Year TCO, committed-use discount, migration timeline, and proposal risk factors from Vendor_Cloud_Proposals.",
+        "Vendor Sensitivity Analysis calculates the 10% and 20% cloud-cost overrun cases consistently for all compared vendors.",
+        "The report identifies which options remain viable under each sensitivity case using disclosed decision criteria rather than a required vendor conclusion."
+      ]
+    },
+    {
+      "rubric": "Does the submission reconcile compliance status, NIST CSF questions, security incidents, and migration impact?",
+      "weight": 8,
+      "criterion": [
+        "The report gives counts for every compliance_status value and links Non-Compliant or Partial controls to related Critical or High risks using a documented relationship.",
+        "NIST CSF Posture contains one row per question in the provided questionnaire and identifies mapped compliance controls and status.",
+        "Each NIST row reports the related security_incidents count using a documented mapping method.",
+        "Migration Impact is marked Improved only where the risk register supports a severity decrease; other values are Neutral or Requires Attention based on the submitted evidence."
+      ]
+    },
+    {
+      "rubric": "Does the budget analysis calculate variances at both required levels and reconcile asset costs?",
+      "weight": 6,
+      "criterion": [
+        "The report contains separate category-level and subcategory-level tables with Q1–Q3 actual average, Q4 Budget, deviation percentage, and a greater-than-15-percent flag.",
+        "Deviation percentage uses the formula stated in the instructions and all qualifying positive or negative deviations are handled consistently.",
+        "The report compares the sum of server-level maintenance costs with the relevant budget line or lines and quantifies the gap while explaining scope differences.",
+        "Reconciled Budget reports FY2024 category totals, available bottom-up values, deltas, and discrepancy flags above 5%."
+      ]
+    },
+    {
+      "rubric": "Are all three deliverables present with the required structure and substantive content?",
+      "weight": 10,
+      "criterion": [
+        "The DOCX title is exactly \"IT Operations Reconciliation & Cloud Readiness Assessment\" and its five required sections appear in the specified order.",
+        "The XLSX contains exactly four sheets named Reconciled Budget, Server Migration Matrix, Risk-Incident Correlation, and NIST CSF Posture.",
+        "The file reconciliation_flags.csv is present and uses the required filename and columns.",
+        "The three deliverables contain the analyses assigned to them and use mutually consistent figures."
+      ]
+    }
+  ]
+}

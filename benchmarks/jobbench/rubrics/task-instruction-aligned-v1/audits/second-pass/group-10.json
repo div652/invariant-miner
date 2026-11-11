@@ -1,0 +1,148 @@
+{
+  "group": "group-10",
+  "reviewedTasks": [
+    "civil_engineers/task1",
+    "personal_financial_advisors/task1",
+    "police_fire_and_ambulance_dispatchers/task1",
+    "purchasing_agents_except_wholesale_retail_and_farm_products/task1",
+    "social_science_research_assistants/task1",
+    "training_and_development_specialists/task1"
+  ],
+  "taskReviews": [
+    {
+      "task": "civil_engineers/task1",
+      "verdict": "pass",
+      "summary": "The aligned rubric covers the required workbook, skew-adjusted excavation and wing-wall geometry, reinforcement verification, WSDOT comparison, line-item contingencies, mobilization, assumptions, and cross-sheet consistency without preserving the original hidden numeric answers.",
+      "alternativeSolutionProbe": "A submission using an equivalent vector or trigonometric skew calculation, a defensible but different set of WSDOT comparable items with disclosed unit conversions, or a different published rebar table with ordinary rounding can still satisfy the criteria. No plausible correct alternative was found that would be unfairly rejected.",
+      "issues": []
+    },
+    {
+      "task": "personal_financial_advisors/task1",
+      "verdict": "pass_with_changes",
+      "summary": "The rubric is substantially task-aligned and removes the original answer-key figures, but the market-series window and memo requirements need sharper acceptance rules, and exact output naming is not fully enforced.",
+      "alternativeSolutionProbe": "Different tax-aware liquidation mixes, account-level rebalance trades, and bond-duration recommendations are accepted when sourced and explained. A defensible submission that leaves January-December 2024 rolling-return cells unavailable because the required FRED window lacks 2023 observations, while reporting the January 2025 return in the summary, could be judged inconsistently under the current wording.",
+      "issues": [
+        {
+          "severity": "medium",
+          "category": "ambiguity_and_judgeability",
+          "location": "rubrics[1].criterion[0]",
+          "finding": "The criterion does not define acceptable treatment of 2024 rolling 12-month returns when the instructed external series spans only January 2024 through January 2025, and it does not explicitly require the instructed latest-values summary row.",
+          "evidence": "TASK_INSTRUCTIONS.txt requests one row per month of 2024 with a rolling 12-month return and a summary row of latest values, but its external-data window supplies no 2023 S&P observations for January-November 2024 lookbacks. The representative workbook reasonably leaves those cells blank and reports the calculable January 2025 return, yet the criterion could be read as requiring a value in every 2024 row and could also pass a sheet with no summary row.",
+          "recommendedChange": "State that pre-lookback months may be blank or N/A with an explanation unless additional source data are retrieved, require the calculable January 2025 12-month return, and add an explicit latest-values summary-row requirement."
+        },
+        {
+          "severity": "medium",
+          "category": "coverage",
+          "location": "rubrics[7].criterion[2]",
+          "finding": "The broad requirement for concrete market figures does not ensure that the memo includes every specifically required market datum.",
+          "evidence": "The memo specification explicitly requires specific yields, slope, un-inversion timing, the fed-funds path, real policy rate, and S&P figures. Criterion[2] can be satisfied by citing only some source-grounded market figures, while rubrics[1] primarily evaluates the workbook rather than the memo's complete market discussion.",
+          "recommendedChange": "Enumerate the required memo evidence: 2-year, 10-year, and 30-year yields; slope; stated un-inversion timing; fed-funds path; real policy rate; latest 12-month S&P return; and period high."
+        },
+        {
+          "severity": "low",
+          "category": "deliverable_coverage",
+          "location": "rubrics[7].criterion[0]",
+          "finding": "The rubric does not explicitly enforce the exact filenames rebalancing_analysis.xlsx and client_memo.pdf.",
+          "evidence": "TASK_INSTRUCTIONS.txt labels all three filenames as exact. The rubric names data_quality_notes.csv and the workbook sheets, but criterion[0] only describes 'The PDF' and no criterion checks the exact workbook or memo filename.",
+          "recommendedChange": "Add a deliverable-presence criterion requiring all three exact filenames and formats."
+        }
+      ]
+    },
+    {
+      "task": "police_fire_and_ambulance_dispatchers/task1",
+      "verdict": "pass_with_changes",
+      "summary": "The rubric strongly covers source-grounded triage, specialty gating, conflicts, CAD synchronization, map data, depletion analysis, historical patterns, and operational notes while allowing professional dispatch judgment. The candidate-unit matrix scope remains underdefined.",
+      "alternativeSolutionProbe": "Different assignments among capable available units, different ordering within the same priority, and different recall or mutual-aid choices can pass when proximity, commitments, competing demand, and escalation are documented. A matrix listing only the selected unit for each call could nevertheless appear to meet the present criteria even though it would not support the requested CAN-versus-SHOULD comparison.",
+      "issues": [
+        {
+          "severity": "medium",
+          "category": "coverage_and_judgeability",
+          "location": "rubrics[2].criterion[0]",
+          "finding": "The rubric requires every call to appear but does not define a complete or auditable candidate-unit set for each call.",
+          "evidence": "TASK_INSTRUCTIONS.txt asks for the candidate units for each call so capability eligibility can be distinguished from availability and proximity. Criteria[0]-[1] could be satisfied by one row per call, omitting closer, unavailable, or capability-ineligible alternatives and making CAN/SHOULD reasoning impossible to audit. The representative output uses all roster units per call, but the rubric does not require that level of coverage or a disclosed selection rule.",
+          "recommendedChange": "Require either every roster unit for every call or a clearly stated, reproducible candidate-selection rule that includes the assigned unit, the closest eligible available alternatives, and relevant unavailable or specialty-capable units."
+        }
+      ]
+    },
+    {
+      "task": "purchasing_agents_except_wholesale_retail_and_farm_products/task1",
+      "verdict": "pass_with_changes",
+      "summary": "The rubric is source-grounded and strategy-neutral across benchmark derivation, weighted scoring, TCO, OSHA timing, POs, threshold compliance, memo content, and best-value selection. Benchmark-flag granularity and the exact workbook sheet-count requirement need clarification.",
+      "alternativeSolutionProbe": "Either a single-source or category-level split award can pass when the displayed scores, freight, discounts, warranty, timing, and totals support it. Reasonable proxy matching or No Benchmark treatment is also accepted, but a submission could currently show one unexplained flag per line while three suppliers fall into different benchmark bands.",
+      "issues": [
+        {
+          "severity": "medium",
+          "category": "coverage_and_atomicity",
+          "location": "rubrics[1].criterion[4]",
+          "finding": "The criterion does not state that the 20 percent benchmark classification must be calculated separately for each supplier's unit price on every matched line item.",
+          "evidence": "The Line Item Comparison places three supplier prices side by side against one historical median. Those prices can fall into different Above, Below, or Within bands. The current wording can pass a single row-level flag with no defined supplier association, even though that would not evaluate all quoted prices.",
+          "recommendedChange": "Require an Above/Below/Within/No Benchmark result for each supplier-item quote, or explicitly define and justify any single consolidated flag."
+        },
+        {
+          "severity": "low",
+          "category": "deliverable_coverage",
+          "location": "rubrics[3].criterion[0]",
+          "finding": "No criterion enforces that the bid evaluation workbook contains exactly the three instructed sheets and no extras.",
+          "evidence": "TASK_INSTRUCTIONS.txt says the workbook must have exactly Line Item Comparison, Weighted Evaluation, and Split-Award Analysis. Separate rubrics assess those sheets, but none checks the exact sheet set or order/count.",
+          "recommendedChange": "Add a workbook-structure criterion requiring exactly the three named sheets."
+        }
+      ]
+    },
+    {
+      "task": "social_science_research_assistants/task1",
+      "verdict": "pass_with_changes",
+      "summary": "The rubric comprehensively covers cell-level validation, source-aware classification, coding summaries, merges, productivity reconciliation, chi-square tests, briefing structure, visualization, and cross-deliverable consistency. The briefing table can still receive full credit while omitting parts of the instructed benchmark distribution.",
+      "alternativeSolutionProbe": "Different documented treatments of missing values, source-confirmed signed commute values, coding conflicts, or sparse chi-square categories can pass. A memo reporting only the 'more productive' row, however, could pass criterion[2] despite omitting the equally and less productive discrepancies that the notebook and published 64/22/14 distribution establish.",
+      "issues": [
+        {
+          "severity": "medium",
+          "category": "coverage",
+          "location": "rubrics[6].criterion[2]",
+          "finding": "The criterion requires the productivity metric but does not require a benchmark-table row for each component of the instructed three-category distribution or each discrepancy reported from that comparison.",
+          "evidence": "TASK_INSTRUCTIONS.txt defines the benchmark as 64 percent more productive, 22 percent equally productive, and 14 percent less productive and asks the table to report each metric discrepancy. Rubric[4] checks all three in the notebook, while rubric[6].criterion[2] can pass a one-row memo table containing only 'more productive.'",
+          "recommendedChange": "Require the memo table to include separate More productive, Equally productive, and Less productive rows, each with PDF value, cleaned-survey value, percentage-point variance, and a plausible explanation."
+        }
+      ]
+    },
+    {
+      "task": "training_and_development_specialists/task1",
+      "verdict": "fail",
+      "summary": "Most deliverables and source fields are covered, but central program-selection and capacity criteria remain ambiguous enough to reward substantively wrong analyses or reject defensible alternatives. The representative output demonstrates both program-selection ambiguities in practice.",
+      "alternativeSolutionProbe": "Annual mean, latest-quarter, end-to-end trend, and fitted-trend methods can produce different program rankings or reinforcement sets unless the method is specified. The rubric neither mandates a defensible program-level aggregation nor requires a declared trend rule, so a row-minimum or single-quarter-dip approach can pass even when it selects different programs from a full-year analysis.",
+      "issues": [
+        {
+          "severity": "high",
+          "category": "ambiguity_and_source_consistency",
+          "location": "rubrics[4].criterion[0]",
+          "finding": "The lowest-performing program criterion does not define how quarterly Level3_Behavior_Change_Pct observations are aggregated to the program level.",
+          "evidence": "Historical_Training_Effectiveness_Data.csv contains four quarterly values per program. The intended subject is a program, but a global minimum row selects Leadership Development Q1, while a program-level annual average selects Software/ERP Training. The representative output used the row-minimum interpretation and built diagnostics around Leadership Development, showing that the current criterion is not reliably task-instruction aligned.",
+          "recommendedChange": "Require a documented program-level aggregation across the available 2024 quarters, preferably the annual mean, or explicitly accept another defensible full-year method with sensitivity/uncertainty disclosure; do not allow selection from a single minimum row without justification."
+        },
+        {
+          "severity": "high",
+          "category": "ambiguity_and_alternative_solution_fairness",
+          "location": "rubrics[1].criterion[3]",
+          "finding": "The rubric does not define what constitutes a program whose Level 3 outcomes are 'declining across' 2024 quarters.",
+          "evidence": "A sustained negative trend, a Q1-to-Q4 decline, and any adjacent-quarter decrease are materially different tests. The representative output treated a Q3-to-Q4 dip as sufficient and scheduled reinforcement for Quality Control, Equipment Operation, and Software/ERP, whereas a full-year trend rule produces a narrower set. The criterion offers no method for a judge to distinguish these approaches.",
+          "recommendedChange": "Require the submission to state and consistently apply a program-level decline rule, such as a negative fitted trend or end-to-end decline with supporting quarterly values, and explicitly accept equivalent documented trend methods."
+        },
+        {
+          "severity": "medium",
+          "category": "measurement_and_judgeability",
+          "location": "rubrics[7].criterion[6]",
+          "finding": "The capacity criterion compares estimated Q2 demand hours with Max_Weekly_Hours without requiring both measures to use the same time basis.",
+          "evidence": "Estimated Q2 demand is naturally a quarter total, while the source capacity field is weekly. A direct comparison would falsely flag constraints. The representative output separately calculated peak scheduled week hours, but the rubric does not require that normalization and could accept quarter-total divided by weekly capacity.",
+          "recommendedChange": "Require peak weekly scheduled demand, or an explicit conversion of total Q2 demand into a weekly schedule, before comparison with Max_Weekly_Hours; also require explicit identification of the lowest-capacity instructor."
+        },
+        {
+          "severity": "low",
+          "category": "subjective_format_requirement",
+          "location": "rubrics[8].criterion[2]",
+          "finding": "'Visibly uses' the attendance template as reference formatting is too subjective to judge consistently.",
+          "evidence": "TASK_INSTRUCTIONS.txt requests use of the Smartsheet attendance template as a formatting reference but does not prescribe a separate attendance deliverable. The criterion gives no observable minimum elements, so a valid schedule could fail on aesthetics or an unrelated extra sheet could pass.",
+          "recommendedChange": "Define judgeable elements, such as a schedule-support or attendance section containing training information, attendee name, signature/initials, date, trainer, and location fields derived from the template, without requiring cosmetic imitation."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,128 @@
+{
+  "rubrics": [
+    {
+      "rubric": "Does the Enhanced Quarterly Risk Report provide the complete portfolio summary dashboard requested from the branch loan data?",
+      "weight": 8,
+      "criterion": [
+        "Outstanding balance is summarized by Loan_Type.",
+        "Percentage of total outstanding is summarized by Loan_Type.",
+        "Outstanding balance is summarized by Industry_Sector.",
+        "Percentage of total outstanding is summarized by Industry_Sector.",
+        "Weighted average Interest_Rate by loan type uses Outstanding_Balance as the weight.",
+        "Total portfolio yield uses Outstanding_Balance as the weight.",
+        "Dashboard totals reconcile to meridian_branch_loan_portfolio.csv."
+      ]
+    },
+    {
+      "rubric": "Does the asset-quality analysis correctly cross-tabulate the portfolio and benchmark the branch NPA ratio against FDIC Q4 2024 data?",
+      "weight": 10,
+      "criterion": [
+        "Payment_Status is cross-tabulated against Risk_Rating.",
+        "The cross-tabulation reports loan counts.",
+        "The cross-tabulation reports outstanding-dollar balances.",
+        "Row and column totals reconcile to the portfolio.",
+        "The NPA numerator includes 90+ Days Past Due and Nonaccrual balances.",
+        "The NPA ratio uses total outstanding balance as the denominator.",
+        "The FDIC benchmark is the Q4 2024 noncurrent rate for total loans and leases.",
+        "The branch-versus-FDIC variance is reported in basis points.",
+        "Commentary describes the observed relationship between payment status and risk rating."
+      ]
+    },
+    {
+      "rubric": "Does the concentration analysis apply the 20% ceiling, grandfathering rule, and individual-exposure review correctly?",
+      "weight": 8,
+      "criterion": [
+        "Every sector's concentration is calculated from outstanding balance divided by total outstanding balance.",
+        "Every sector is compared with the 20% ceiling.",
+        "Each sector above the ceiling is flagged.",
+        "Grandfathering is limited to existing exposures until their next annual review.",
+        "The analysis does not treat grandfathering as automatic permission for unsupported incremental exposure.",
+        "The top five individual exposures are identified by outstanding balance.",
+        "Each top-five exposure reports its percentage of total outstanding.",
+        "Single-borrower concentration risk is discussed."
+      ]
+    },
+    {
+      "rubric": "Does the scored watch list cover every adversely rated loan with transparent CDFI scoring, stress-relevant facts, and OCC-grounded actions?",
+      "weight": 12,
+      "criterion": [
+        "Every loan rated 3-Special Mention or worse is included.",
+        "Each loan reports outstanding balance.",
+        "Each available Loan-to-Collateral factor is scored with the worksheet bands.",
+        "Each available Debt-to-Asset factor is scored with the worksheet bands.",
+        "Each available Credit Score factor is scored with the worksheet bands.",
+        "Each available Liquidity factor is scored with the worksheet bands.",
+        "A missing objective-factor input is identified explicitly.",
+        "Any score assigned to a missing input is supported by a clearly labeled assumption.",
+        "Subjective adjustments stay within the worksheet's allowed range.",
+        "Every subjective adjustment has a loan-specific explanation.",
+        "The final total is mapped to the CDFI scale.",
+        "A final category based on incomplete inputs is labeled provisional.",
+        "Action items are tied to the loan's condition.",
+        "Action items cite the OCC Rating Credit Risk handbook.",
+        "Collateral-coverage and workout analysis follows a stated materiality rule that includes the largest adversely rated exposure and every other loan meeting that rule."
+      ]
+    },
+    {
+      "rubric": "Does the +200 basis-point rate-shock analysis provide reproducible stressed DSCR results for the watch list?",
+      "weight": 6,
+      "criterion": [
+        "Every watch-list loan is included in the stress analysis.",
+        "The method for recalculating debt service under a +200 basis-point parallel shock is stated.",
+        "Any amortization or payment-frequency assumption is stated.",
+        "Stressed debt service is reported per loan.",
+        "Stressed DSCR is reported per loan.",
+        "The coverage threshold is stated.",
+        "Loans below the threshold are flagged."
+      ]
+    },
+    {
+      "rubric": "Does the PDF contain a complete, source-grounded credit decision memorandum for each of the six pending applications?",
+      "weight": 10,
+      "criterion": [
+        "All six pending applications have a separate memorandum.",
+        "Each memorandum gives an Approve, Conditional Approval, or Decline recommendation.",
+        "Each memorandum shows every CDFI objective-factor score that can be supported from the application.",
+        "Each memorandum identifies missing CDFI inputs.",
+        "Each memorandum explains subjective adjustments.",
+        "Each memorandum reports a final or explicitly provisional CDFI category.",
+        "Credit analysis uses the application's stated metrics and policy thresholds.",
+        "Regulatory alignment cites relevant OCC classification definitions.",
+        "Portfolio impact reports post-decision sector concentration.",
+        "Portfolio impact reports remaining capacity under the $3.0 million cap.",
+        "A conditional approval includes risk-responsive structuring terms.",
+        "The recommendation follows from the displayed evidence without requiring a predetermined outcome."
+      ]
+    },
+    {
+      "rubric": "Do the aggregate credit decisions respect the capital cap and concentration constraints under a transparent allocation rationale?",
+      "weight": 7,
+      "criterion": [
+        "Committed approvals do not exceed $3.0 million.",
+        "Remaining capacity is calculated after each committed approval.",
+        "The final committed and remaining capacity totals are reported.",
+        "No funded approval causes its post-closing sector concentration to exceed 20%; a sector already above 20% receives no incremental funded exposure unless a contemporaneous reduction produces a compliant net post-closing concentration.",
+        "Any participation, paydown, or sell-down used to offset an approval is quantified and treated as a binding closing condition; discussion, a waiver request, or grandfathering alone does not satisfy the ceiling.",
+        "Sector mapping for an application is explained when the input does not provide an explicit Industry_Sector field.",
+        "The allocation rationale compares competing uses of the limited capacity.",
+        "Projected post-lending asset-quality and concentration effects are reported."
+      ]
+    },
+    {
+      "rubric": "Does the one-to-two-page Executive Summary synthesize portfolio health, top risks, remediation, and capital allocation for the CCO and Board?",
+      "weight": 5,
+      "criterion": [
+        "The submission includes one Enhanced Quarterly Risk Report in .xlsx format.",
+        "The submission includes one combined Executive Summary and credit-memoranda document in .pdf format.",
+        "The Executive Summary is addressed to the CCO and Board.",
+        "The Executive Summary is one to two pages.",
+        "Portfolio health is compared with the FDIC benchmark using a specific variance.",
+        "The top three risks are identified from the completed analyses.",
+        "Each top risk has an OCC-referenced remediation step.",
+        "Committed and remaining lending capacity are stated.",
+        "Projected post-lending asset-quality and concentration effects are summarized.",
+        "The Executive Summary is contained within the same PDF as the six memoranda."
+      ]
+    }
+  ]
+}

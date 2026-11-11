@@ -1,0 +1,93 @@
+{
+  "rubrics": [
+    {
+      "rubric": "Does the integrated assessment report follow the required decision structure and make one clear final recommendation?",
+      "weight": 8,
+      "criterion": [
+        "The integrated assessment is delivered as PDF or DOCX.",
+        "The report sections appear in the instructed order.",
+        "The Executive Summary gives exactly one recommendation from Accept, Conditional-Accept, or Reject.",
+        "Any conditions attached to the recommendation are stated concretely.",
+        "The recommendation is consistent with the report's governing limits, retest results, and identified data gaps."
+      ]
+    },
+    {
+      "rubric": "Does the report reconcile the contractual, ISO 13709/API 610, and justified ISO 10816 vibration criteria accurately?",
+      "weight": 14,
+      "criterion": [
+        "The limits table includes every applicable contractual, POR, AOR, and ISO 10816 zone or acceptance value used in the analysis.",
+        "Each limit is reported in mm/s RMS with its source and applicability.",
+        "The report identifies and explains differences among the contractual specification and the relevant standard values.",
+        "The report states which limit governs in the POR and which governs in the AOR.",
+        "The precedence logic is technically defensible and distinguishes a contractual requirement from advisory or generic standard guidance.",
+        "The selected ISO 10816 part and machine category or class are justified from the pump service, design, power, and cited guidance.",
+        "Zone boundaries and alarm or trip references match the selected standard classification.",
+        "If the source material permits more than one reasonable classification or interpretation, the report documents the uncertainty and applies its chosen basis consistently."
+      ]
+    },
+    {
+      "rubric": "Does the report provide a complete, correctly calculated original-versus-retest comparison across the tested operating range?",
+      "weight": 14,
+      "criterion": [
+        "Every measurement point, direction, and flow condition shared by the original test and retest is compared.",
+        "Original and retest overall velocity values match vibration_test_data.csv.",
+        "Delta is calculated as retest minus original.",
+        "Delta percentage is calculated as delta divided by original times 100, with appropriate handling of any zero or missing value.",
+        "Original and retest zone classifications follow the report's stated standard basis.",
+        "Pass or fail status uses the governing limit for the applicable operating region.",
+        "Each tested flow condition is classified as POR, AOR, or outside the stated regions using a clearly stated flow basis.",
+        "The report identifies retest coverage differences, including unpaired flow conditions, and explains how they affect confidence without imposing a predetermined conclusion.",
+        "Remaining concerns are identified from the measured values and available FFT evidence rather than from unsupported diagnosis."
+      ]
+    },
+    {
+      "rubric": "Does the report use the FFT and run-up/coast-down data to evaluate mechanisms and speed separation?",
+      "weight": 8,
+      "criterion": [
+        "The run-up and coast-down data are both evaluated.",
+        "Any repeated resonance peak is identified by speed and amplitude from the source data.",
+        "The separation margin is calculated using the instructed formula and the pump operating speed.",
+        "The significance of the separation margin is explained using a cited standard or engineering practice.",
+        "Mechanism discussions use available 1X, 2X, blade-pass, phase, or other FFT evidence.",
+        "Alignment, resonance, imbalance, or hydraulic explanations are presented as evidence-based findings or qualified hypotheses."
+      ]
+    },
+    {
+      "rubric": "Does the field-performance prediction use the sister pump's baseline, trend, and maintenance history correctly?",
+      "weight": 10,
+      "criterion": [
+        "P-2401A factory signatures are compared with the corresponding P-2401B field baseline.",
+        "The P-2401B vibration history is trended and a projected trajectory is shown with its method or assumptions.",
+        "The report cites relevant work-order numbers, failure modes, root causes, and corrective actions from the maintenance history.",
+        "Maintenance findings are translated into concrete commissioning or monitoring implications for P-2401A.",
+        "The report distinguishes the sister pump's observed condition from a guaranteed prediction of P-2401A performance.",
+        "Projection uncertainty and the effect of maintenance intervention are documented."
+      ]
+    },
+    {
+      "rubric": "Does the report provide defensible commissioning setpoints and pre-installation requirements?",
+      "weight": 8,
+      "criterion": [
+        "A numerical overall-velocity alarm is provided.",
+        "A numerical overall-velocity trip is provided above the alarm.",
+        "The alarm and trip basis is tied to a named standard, the measured baseline, or a clearly explained engineering practice.",
+        "A numerical bearing-temperature alarm is provided and reconciled with the pump specification.",
+        "The monitored-parameter list includes overall velocity, relevant axial or spectral indicators, and bearing temperature.",
+        "Pre-installation requirements address the report's evidence-based alignment, foundation, lubrication, piping, or baseline-verification concerns."
+      ]
+    },
+    {
+      "rubric": "Are the NCR and required plots complete, source-grounded, and consistent with the assessment?",
+      "weight": 8,
+      "criterion": [
+        "The NCR CSV uses exactly the instructed columns.",
+        "The NCR contains one row for each non-conformance identified by the report.",
+        "Each NCR row gives a source-grounded measured value, acceptance limit, disposition, and justification.",
+        "NCR dispositions use only use-as-is, rework, or reject.",
+        "One plot overlays original and retest pump-end bearing vibration across flow conditions.",
+        "One plot shows the sister-pump trend and a distinguishable projected trajectory.",
+        "Plot labels and units make the displayed evidence interpretable."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,115 @@
+{
+  "group": "group-04",
+  "reviewedTasks": [
+    "computer_and_information_research_scientists/task1",
+    "computer_and_information_systems_managers/task2",
+    "online_merchants/task2",
+    "reporters_and_correspondents/task1",
+    "sociology_teachers_postsecondary/task3",
+    "statisticians/task3",
+    "web_administrators/task1"
+  ],
+  "taskReviews": [
+    {
+      "task": "computer_and_information_research_scientists/task1",
+      "verdict": "fail",
+      "summary": "The aligned rubric is substantially source-consistent and removes the original rubric's hidden fixed answers, but it omits a central explicit objective for Option D: maximizing research throughput among configurations that satisfy the updated constraints.",
+      "alternativeSolutionProbe": "A submission could propose any feasible Option D, even when another feasible configuration has demonstrably higher verified throughput, and still satisfy every current criterion by reporting its throughput and recommending it. That is an unfair false positive on the task's primary design objective.",
+      "issues": [
+        {
+          "severity": "high",
+          "category": "coverage",
+          "location": "Rubric 2, missing criterion after criterion 6 (1-based)",
+          "finding": "No criterion requires Option D to maximize research throughput or to justify that it is throughput-optimal among feasible alternatives.",
+          "evidence": "TASK_INSTRUCTIONS.txt explicitly requires Option D to satisfy all current requirements while maximizing research throughput. Rubric 2 checks feasibility constraints and cash flows only; Rubric 6 criterion 2 merely ties the recommendation to throughput analysis, which does not establish optimality.",
+          "recommendedChange": "Add a criterion requiring a reproducible comparison of feasible Option D configurations on verified throughput and selection of the maximum-throughput configuration, or a documented explanation of why the optimum is indeterminate followed by a defensible stated tie-break method."
+        }
+      ]
+    },
+    {
+      "task": "computer_and_information_systems_managers/task2",
+      "verdict": "pass",
+      "summary": "The rubric covers both deliverables, reconciliation, candidate filtering, cloud-pricing assumptions, action decisions, Zero Trust sequencing, NIST mapping, budget reconciliation, formatting, and board recommendations without retaining the original hidden asset lists, counts, or prices.",
+      "alternativeSolutionProbe": "A solution using a different current AWS region or pricing date, a defensible instance-sizing method, and different individually sourced remediation estimates can pass when its assumptions are disclosed and applied consistently. Unmatched ITSM and inventory names can be reconciled transparently rather than forced into hidden asset identities.",
+      "issues": []
+    },
+    {
+      "task": "online_merchants/task2",
+      "verdict": "pass",
+      "summary": "The rubric completely covers complaint responses and triage notes, the three-sheet dashboard, the sentiment audit, and the optimized catalog. It explicitly accepts unmatched or insufficient sales/catalog evidence and requires traceable uncertainty rather than hidden product matches.",
+      "alternativeSolutionProbe": "A submission that finds no reliable product-level sales match can still pass by documenting the mismatch and limiting margin conclusions. Equivalent traffic aggregation, review-theme extraction, and truthful catalog rewrites are accepted when they reconcile to the complete datasets and preserve source rows and columns.",
+      "issues": []
+    },
+    {
+      "task": "reporters_and_correspondents/task1",
+      "verdict": "pass_with_changes",
+      "summary": "The rubric is broadly aligned and appropriately permits alternative trend methods and uncertainty, but two wording gaps can allow incomplete workbook layouts or unexplained missing Connecticut values.",
+      "alternativeSolutionProbe": "A valid trend calculation using first/last monitoring periods or annual averages is accepted if stated and correct. However, an invalid annual-only Water Lead Trends table and silent blanks for Connecticut tested or ≥5 values could also pass under the present wording.",
+      "issues": [
+        {
+          "severity": "medium",
+          "category": "ambiguity",
+          "location": "Rubric 2, criterion 1 (1-based)",
+          "finding": "The phrase 'one row per water system and Sample_Year or Sample_Period' can be read as permitting annual aggregation or period-only rows, instead of the required system × year × monitoring-period rows.",
+          "evidence": "TASK_INSTRUCTIONS.txt requires one row per system per Sample_Year/Sample_Period and the source CSV has two monitoring periods within each year. Annual aggregation would omit required period-level 90th-percentile values and Action_Level_Exceedance entries.",
+          "recommendedChange": "Replace 'or' with an explicit requirement for one row per water system × Sample_Year × Sample_Period, preserving both source columns and every monitoring-period record."
+        },
+        {
+          "severity": "medium",
+          "category": "coverage",
+          "location": "Rubric 3, criteria 2-3 (1-based)",
+          "finding": "The rubric requires a reason for missing ≥3.5 µg/dL values but does not equally require a value-or-reason entry for missing Connecticut children-tested and ≥5 µg/dL fields in every year.",
+          "evidence": "TASK_INSTRUCTIONS.txt says that for each year 2017-2022 the workbook must report every requested value or state why no value is reported. Criterion 2 qualifies tested and ≥5 fields only with 'when available,' while criterion 3 explicitly requires an explanation only for ≥3.5 fields.",
+          "recommendedChange": "Require every Connecticut and national requested field for every year to contain either the sourced value or a specific missing-data label and explanation, including children tested and both ≥5 measures."
+        }
+      ]
+    },
+    {
+      "task": "sociology_teachers_postsecondary/task3",
+      "verdict": "pass_with_changes",
+      "summary": "The rubric thoroughly covers grading, risk analysis, appeals, CLEP mapping, and source uncertainty, but it weakens the explicit quotation requirement and adds an unnecessary explanation-only condition to the five-question allocation.",
+      "alternativeSolutionProbe": "A source-grounded appeal that paraphrases every policy could pass despite the required quoted excerpts. Conversely, a mathematically reasonable five-question CLEP allocation could unfairly lose credit solely because it does not narrate an obvious integer-rounding choice.",
+      "issues": [
+        {
+          "severity": "medium",
+          "category": "coverage",
+          "location": "Rubric 3, criterion 5 and Rubric 4, criterion 7 (1-based)",
+          "finding": "The rubric permits citations or faithful paraphrases where the deliverable specification requires quoted syllabus excerpts and quoted Berkeley rubric criteria.",
+          "evidence": "TASK_INSTRUCTIONS.txt requires each appeal section to contain quoted policy excerpts and requires the writing appeal to cite the Berkeley Originality criterion with its performance-level descriptors. Rubric 4 criterion 7 expressly accepts quoted or paraphrased source language.",
+          "recommendedChange": "Require short, accurately attributed quotations or faithful excerpted text for the applicable syllabus policy and Berkeley criteria in each decision; allow paraphrase only for surrounding analysis."
+        },
+        {
+          "severity": "low",
+          "category": "unsupported_requirement",
+          "location": "Rubric 6, criterion 8 (1-based)",
+          "finding": "The criterion requires an explanation of every integer-rounding choice in the five-question CLEP allocation, although the task requires only that the distribution reflect the official weights.",
+          "evidence": "TASK_INSTRUCTIONS.txt does not require a rounding note. A five-question allocation can be objectively evaluated for reasonable proportionality from the category labels and official weights alone.",
+          "recommendedChange": "Accept a reasonably proportional allocation without an explanation; require a rationale only when the allocation materially departs from the closest defensible integer distribution."
+        }
+      ]
+    },
+    {
+      "task": "statisticians/task3",
+      "verdict": "pass_with_changes",
+      "summary": "The analytic criteria comprehensively cover database construction, all workbook analyses, modeling, spatial and mediation work, figures, and memo interpretation. The only material gap is the workbook's explicit filename and exact-sheet-set requirement.",
+      "alternativeSolutionProbe": "Alternative valid choices such as Welch's ANOVA, categorical or justified ordinal RUCC treatment, isolate exclusion versus explicit isolate handling, and different defensible best-model selections are accepted. A workbook with the right three sheets under the wrong filename or with extra sheets could nevertheless pass.",
+      "issues": [
+        {
+          "severity": "medium",
+          "category": "deliverable_structure",
+          "location": "Rubric 2, before criterion 1 (missing workbook-level criterion; 1-based)",
+          "finding": "No criterion requires the workbook to be named disparity_profile.xlsx or to contain exactly the three instructed sheets and no others.",
+          "evidence": "TASK_INSTRUCTIONS.txt specifies the exact filename disparity_profile.xlsx and exactly three sheets. Rubrics 2 and 3 verify the three named sheets individually but never enforce the filename or exact sheet set.",
+          "recommendedChange": "Add a workbook-level criterion requiring the exact filename disparity_profile.xlsx and exactly Change-by-Health Matrix, Metro Decomposition, and Outlier Flag Sheet."
+        }
+      ]
+    },
+    {
+      "task": "web_administrators/task1",
+      "verdict": "pass",
+      "summary": "The rubric covers every required artifact and CR item, per-event chronology, threat correlation, uncertainty in success claims, source-zone firewall controls, Nginx/TLS hardening, report structure, causal evidence, and incident-specific remediation without preserving the original hidden answer sequence.",
+      "alternativeSolutionProbe": "Equivalent iptables rate-limit constructions and configuration ordering can pass if they enforce the stated behavior. Ambiguous HTTP 200 responses can be marked Partial or Partially Successful with evidence instead of being forced into a hidden code-execution conclusion.",
+      "issues": []
+    }
+  ]
+}

@@ -1,0 +1,96 @@
+{
+  "rubrics": [
+    {
+      "rubric": "Are the two instructed deliverables present under the exact filenames and does the workbook contain the required named sheets?",
+      "weight": 4,
+      "criterion": [
+        "P-2415A_FAT_Acceptance_Matrix.xlsx is present.",
+        "The workbook contains sheets named Speed-Corrected Performance, Vibration Acceptance, and Bearing Frequency Analysis.",
+        "P-2415A_Disposition_Memo.pdf is present."
+      ]
+    },
+    {
+      "rubric": "Does the workbook correctly speed-correct every performance point and evaluate rated-flow head, power, and efficiency against the supplied API 610 criteria?",
+      "weight": 9,
+      "criterion": [
+        "The Speed-Corrected Performance sheet lists raw flow, head, power, efficiency, and test speed for every test point.",
+        "The speed ratio and corrected flow, head, and power use the stated affinity laws at 2970 RPM.",
+        "Efficiency is left unchanged by the speed correction.",
+        "The rated-flow table contains the required Parameter, Raw Measured, Corrected to 2970 RPM, Rated Specification, API 610 Tolerance, Deviation, and PASS/FAIL fields.",
+        "The rated-flow head, power, and efficiency decisions use the tolerance or minimum stated in the pump specification datasheet.",
+        "Any interpolation or treatment of corrected flow near 180 m³/h is stated and produces a traceable comparison."
+      ]
+    },
+    {
+      "rubric": "Does the Vibration Acceptance sheet correctly evaluate all seven points by operating region, API 610 limit, bearing location, and ISO severity zone?",
+      "weight": 8,
+      "criterion": [
+        "All seven test points include flow, percent of BEP, POR, AOR, or outside-AOR classification, applicable API limit, and DE and NDE overall vibration in mm/s RMS.",
+        "The POR and AOR boundaries and overall limits are taken from the pump specification datasheet.",
+        "A point outside the specified AOR is identified as outside the formal operating acceptance range rather than reported as an AOR pass.",
+        "DE and NDE PASS/FAIL decisions are correct for every point where an API acceptance limit applies.",
+        "DE and NDE ISO A, B, C, or D zones are assigned from the selected applicable ISO framework.",
+        "Any discrete-frequency API limit used in the analysis is distinguished from the overall-vibration limit."
+      ]
+    },
+    {
+      "rubric": "Does the standards discussion resolve the ISO 10816 applicability issue and reconcile ISO severity with contractual API 610 acceptance using Europump guidance?",
+      "weight": 9,
+      "criterion": [
+        "The memo explains whether ISO 10816-3:2009 applies to this rotodynamic pump and identifies the applicable pump-specific ISO 10816 part.",
+        "The selected ISO machine category and power class are supported by the pump service and rated-power evidence.",
+        "The A/B, B/C, and C/D zone boundaries used in the workbook are stated and cited.",
+        "Europump guidance is used to explain the relationship between the referenced ISO parts and pump vibration evaluation.",
+        "The memo compares the applicable API overall and discrete limits with the ISO zone boundaries.",
+        "The memo explains that ISO zones describe severity while the project API 610 criteria control contractual FAT acceptance."
+      ]
+    },
+    {
+      "rubric": "Does the bearing-frequency analysis calculate BPFO, BPFI, BSF, and FTF for both specified bearings at actual test speed from cited geometry?",
+      "weight": 8,
+      "criterion": [
+        "The sheet covers the SKF 6313 C3 DE bearing and SKF 6311 C3 NDE bearing.",
+        "For each bearing, Z, Dw, Dm, contact angle, geometry source, actual test speed, and shaft frequency are stated.",
+        "BPFO, BPFI, BSF, and FTF use the formulas specified in the instructions.",
+        "The calculations use actual rated-flow and 120%-flow test speeds where they differ.",
+        "Any geometry inferred from dimensions or taken from a corroborating manufacturer source is labeled rather than presented as direct SKF internal-geometry data.",
+        "The calculated frequencies are reproducible from the displayed geometry and formulas."
+      ]
+    },
+    {
+      "rubric": "Does the workbook cross-reference each calculated bearing frequency against both FFT spectra and reach evidence-based signature verdicts?",
+      "weight": 7,
+      "criterion": [
+        "For both bearings and both flow conditions, each BPFO, BPFI, BSF, and FTF result is matched to the nearest relevant spectral peak with frequency and amplitude.",
+        "The analysis states the frequency-resolution or matching tolerance used.",
+        "Each match receives a signature-present or signature-not-present verdict.",
+        "Verdicts consider harmonics, sidebands, amplitude prominence, and overlap with running-speed orders where the data permit.",
+        "A nearby peak is not treated as proof of a bearing defect without diagnostic support."
+      ]
+    },
+    {
+      "rubric": "Does the spectral analysis quantify running-speed, harmonic, and vane-pass behavior and give a balanced IOM-grounded diagnosis?",
+      "weight": 7,
+      "criterion": [
+        "The spectral-peak table reports 1×, 2×, and vane-pass peak frequency and amplitude at rated and 120% flow.",
+        "The percentage change for each component is calculated from the supplied FFT data.",
+        "The vane-pass frequency is derived from shaft speed and the documented vane count.",
+        "The diagnosis explains how the change with flow bears on hydraulic excitation.",
+        "The diagnosis also considers plausible mechanical contributors supported by the 1× and 2× behavior.",
+        "Troubleshooting recommendations are connected to relevant pump IOM guidance without attributing statements to the IOM that it does not make."
+      ]
+    },
+    {
+      "rubric": "Does the disposition memo give a complete, numerically supported recommendation, corrective-action plan, and high-flow operating restrictions?",
+      "weight": 6,
+      "criterion": [
+        "The memo clearly recommends Accept or Reject and lists each performance or vibration criterion that determines the disposition with its measured or corrected value and limit.",
+        "Corrective actions address the supported performance, vibration, hydraulic, test-setup, and mechanical hypotheses.",
+        "The retest plan identifies the measurements and operating points needed to verify correction.",
+        "Operational restrictions address the observed high-flow vibration behavior until corrective action and successful retest.",
+        "The memo distinguishes confirmed failures from diagnostic hypotheses.",
+        "The recommendation is consistent with the workbook's calculations."
+      ]
+    }
+  ]
+}

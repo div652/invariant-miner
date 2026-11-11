@@ -1,0 +1,78 @@
+{
+  "rubrics": [
+    {
+      "rubric": "Does the feasibility report verify GPU performance, reprice Options A through C, and assess each original option against the updated facility constraints?",
+      "weight": 12,
+      "criterion": [
+        "The feasibility report is submitted as revised_feasibility_report.docx.",
+        "The performance table compares each proposal claim with the matching precision and sparsity basis in ml_hardware.csv.",
+        "The report identifies 989.4 TFLOPS as the H100 dense Tensor FP16/BF16 value and distinguishes the proposal's 1,979 figure as an INT8 figure.",
+        "The report identifies 312 TFLOPS as the A100 dense Tensor FP16/BF16 value and 624 TFLOPS as the structured-sparsity value, rather than treating 780 TFLOPS as verified.",
+        "The consequence of the corrected performance values for proposal peak-PFLOPS claims is stated.",
+        "Options A, B, and C are recalculated using the updated vendor prices.",
+        "Each original option is assessed against updated power, summer cooling, and floor-space limits, with any required summer capacity reduction quantified."
+      ]
+    },
+    {
+      "rubric": "Does Option D satisfy every current procurement, budget, facility, sustainability, and access constraint with auditable three-year cash flows?",
+      "weight": 12,
+      "criterion": [
+        "Option D states a complete hardware and infrastructure configuration within the updated vendor availability limits, including no more than the available H100 quantity.",
+        "Option D's total cost does not exceed the revised $10.8 million ceiling.",
+        "The cash-flow table shows procurement, infrastructure, operations, personnel, and contingency for each of Years 1 through 3.",
+        "Each annual total respects the $4.2 million, $3.6 million, and $3.0 million caps respectively.",
+        "The contingency reserve is at least 3 percent of the revised total budget.",
+        "Option D demonstrates compliance with the updated power, summer cooling, floor-space, net-zero-by-Year-2, and multi-tenant access requirements.",
+        "Option D states a reproducible throughput objective, compares the feasible configurations considered using verified performance figures, and selects a throughput-maximizing configuration under the documented constraints; equivalent optimization methods and clearly stated tie-breaks are accepted."
+      ]
+    },
+    {
+      "rubric": "Does the Project Schedule provide a feasible 36-month allocation for every research project and the mandated general-access reservation?",
+      "weight": 10,
+      "criterion": [
+        "The Project Schedule contains Months 1 through 36 for every project in the database and a separate general-access reservation row.",
+        "Each monthly value is a number of GPUs and the monthly total never exceeds the Option D cluster capacity.",
+        "The schedule honors documented preferred time slots, preemptibility, dependencies, and other scheduling constraints.",
+        "The schedule implements the provost memo's 20-percent general-access reservation beginning in Month 13.",
+        "The allocations are internally consistent with project demand and the stated deployment timeline."
+      ]
+    },
+    {
+      "rubric": "Do the Migration Plan, Utilization Forecast, and Cost Comparison sheets provide the required source-grounded transition, capacity, and cost analyses?",
+      "weight": 10,
+      "criterion": [
+        "The allocation workbook is submitted as resource_allocation.xlsx.",
+        "The workbook contains exactly the required Project Schedule, Migration Plan, Utilization Forecast, and Cost Comparison sheets.",
+        "The Migration Plan identifies current resources and analyzes historical utilization, peak utilization, and queue-wait trends using the database records.",
+        "The Migration Plan states a reproducible criterion and month for when legacy resources become unsustainable and maps workloads to deployment milestones.",
+        "The Utilization Forecast provides 36 monthly projections and reflects seasonal cooling constraints.",
+        "The Cost Comparison reports TCO for Options A through D and a reproducible cost-per-PFLOPS-hour calculation using a stated verified precision and sparsity basis."
+      ]
+    },
+    {
+      "rubric": "Does workload_impact.sql contain three valid, source-grounded SQLite analyses of delay risk, capacity shortfall, and project urgency?",
+      "weight": 10,
+      "criterion": [
+        "The SQL deliverable is submitted as workload_impact.sql and is valid SQLite against workload_requirements.db.",
+        "The script contains a labeled project-risk query that derives and states its deployment delay from the applicable vendor lead times rather than assuming an unexplained fixed delay.",
+        "The project-risk query compares project deadlines and remaining execution time with the required GPU-hours using actual database tables and columns.",
+        "The script contains a labeled GPU-hours-shortfall query against current_resources grouped by priority tier.",
+        "The script contains a labeled urgency query using priority_weight multiplied by monthly GPU-hours demand and divided by deadline flexibility days.",
+        "The urgency query states the priority-weight mapping, handles zero flexibility without division by zero, includes each formula component, and sorts descending by urgency."
+      ]
+    },
+    {
+      "rubric": "Does the executive memo recommend Option D with a complete sustainability, access, procurement-risk, and peer-benchmark justification?",
+      "weight": 12,
+      "criterion": [
+        "The executive memo is submitted as executive_memo.md.",
+        "The memo recommends Option D and ties the recommendation to the verified throughput, cost, facility, and workload analyses.",
+        "The memo explains how operational emissions reach net zero by the end of Year 2.",
+        "The memo explains how the 20-percent multi-tenant access mandate is implemented.",
+        "The procurement timeline uses the vendor source's 18-week H100, 12-week cooling, 14-week NDR-switch, and 6-week A100 lead times or documents any updated source-grounded values.",
+        "The memo identifies the critical path, parallel ordering opportunities, and material delay risks without forcing an arbitrary month conversion.",
+        "The memo compares Option D with at least three comparable publicly funded academic or public-sector clusters from the Epoch AI dataset on relevant scale, performance, and cost dimensions."
+      ]
+    }
+  ]
+}

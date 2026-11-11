@@ -1,0 +1,88 @@
+{
+  "rubrics": [
+    {
+      "rubric": "Does FY2024_Rate_Compliance_Audit.csv provide the required complete and reproducible reimbursement reconciliation?",
+      "weight": 14,
+      "criterion": [
+        "The CSV uses exactly the required columns in the required order.",
+        "The CSV includes Medicare and Medicaid rows for all five named service lines.",
+        "Total_Visits and Weighted_Avg_Actual_Rate are calculated from the monthly visit file using the instructed weighted-average formula.",
+        "Deviation_Pct is calculated as actual rate minus benchmark rate divided by benchmark rate.",
+        "PASS is used only for deviations within plus or minus 5 percent.",
+        "The submission states a consistent evidence-based rule for distinguishing REVIEW from FAIL."
+      ]
+    },
+    {
+      "rubric": "Are the Medicare and Medicaid benchmarks applicable to the audited period, geographically supported, and transparently sourced?",
+      "weight": 14,
+      "criterion": [
+        "The Medicare audit uses the rate period or periods applicable to October 2023 through September 2024, or clearly documents any reasonable temporal simplification.",
+        "The CY2025 rate is used for the FY2025 projection rather than treated as the sole FY2024 audit benchmark.",
+        "The Medicare calculation applies an appropriate Geographic Adjustment Factor or clearly explains the GAF methodology and limitation.",
+        "The Medicaid benchmark identifies the Florida rate or rates selected from the supplied October 2024 schedule.",
+        "The Medicaid methodology explains the schedule's effective-date relationship to the FY2024 audit period.",
+        "The Medicaid methodology explains the provider or comparability assumption.",
+        "Benchmark citations identify the CMS and Florida AHCA source records used.",
+        "Documented uncertainty is preserved where the supplied sources do not establish an exact Riverside-specific rate."
+      ]
+    },
+    {
+      "rubric": "Do the Revenue Variance and Expense Variance sheets correctly present monthly and annual budget performance?",
+      "weight": 12,
+      "criterion": [
+        "The deliverable is named FY2024_Board_Financial_Report.xlsx and contains exactly the Revenue Variance, Expense Variance, Peer Benchmark, and Service Line Profitability sheets.",
+        "Both required sheets include October 2023 through September 2024 and an annual totals row.",
+        "Each revenue or expense category and total shows Budget, Actual, dollar variance, and percentage variance.",
+        "Dollar variance is Actual minus Budget.",
+        "Percentage variance is dollar variance divided by Budget.",
+        "Revenue months whose total variance is worse than negative 5 percent are filled red.",
+        "Expense months whose total variance exceeds positive 5 percent are filled red.",
+        "Monthly and annual values reconcile to Riverside_CHC_FY2024_Budget_vs_Actuals.xlsx."
+      ]
+    },
+    {
+      "rubric": "Does the Peer Benchmark sheet provide source-grounded, appropriately qualified ratio comparisons?",
+      "weight": 10,
+      "criterion": [
+        "The sheet includes the three required ratio definitions and shows the calculation inputs.",
+        "HealthFirst ratios are calculated from the audited financial statements.",
+        "Riverside ratios are calculated from supplied Riverside data when the required inputs exist.",
+        "A Riverside ratio whose required inputs are absent is labeled unavailable or presented only as a clearly labeled non-comparable proxy.",
+        "The sheet does not silently treat missing Riverside values as zero.",
+        "Comparable differences exceeding 3 percentage points are identified."
+      ]
+    },
+    {
+      "rubric": "Does the Service Line Profitability sheet provide a coherent source-grounded view of each service line?",
+      "weight": 8,
+      "criterion": [
+        "All five service lines are included.",
+        "Each service line shows total visits, total reimbursement, and average reimbursement per visit.",
+        "Applicable benchmark rates are shown with enough labeling to distinguish payer or rate basis.",
+        "Each cost-per-visit estimate states its calculation inputs or allocation assumption.",
+        "Profitability values reconcile with the visit and financial inputs."
+      ]
+    },
+    {
+      "rubric": "Does FY2024_Financial_Compliance_Memo.docx accurately explain financial performance, compliance findings, and the FY2025 Medicare implication?",
+      "weight": 8,
+      "criterion": [
+        "The memo cites specific months with actual, budget, dollar variance, and percentage variance for the key revenue and expense findings.",
+        "The memo discusses every REVIEW or FAIL audit row and distinguishes possible causes from confirmed causes.",
+        "The memo interprets non-comparable service lines or payment mechanisms with appropriate caution.",
+        "The FY2025 Medicare projection uses the upcoming PPS change, states its volume and rate assumptions, and shows the calculation."
+      ]
+    },
+    {
+      "rubric": "Does the memo provide the four requested actionable recommendation areas using the named evidence?",
+      "weight": 8,
+      "criterion": [
+        "The Medicaid recommendation specifies a recurring rate or remittance reconciliation process.",
+        "The cost-per-visit recommendation targets underperforming service lines identified by the analysis.",
+        "The 340B recommendation cites HealthFirst's audited 340B revenue and share of total revenue and evaluates Riverside feasibility using its payer mix and documented constraints.",
+        "The workforce recommendation compares Riverside's personnel cost ratio with HealthFirst's and proposes specific optimization actions.",
+        "Recommendations do not convert peer benchmarks into unsupported Riverside forecasts."
+      ]
+    }
+  ]
+}

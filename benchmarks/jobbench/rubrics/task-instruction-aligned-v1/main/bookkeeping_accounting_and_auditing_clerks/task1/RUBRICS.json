@@ -1,0 +1,130 @@
+{
+  "rubrics": [
+    {
+      "rubric": "Does the Bank Reconciliation sheet reconcile the Q1 bank activity to the books and investigate every unmatched bank transaction?",
+      "weight": 14,
+      "criterion": [
+        "The sheet starts from the bank ending balance supported by Bank_Statement_Q1_2024.csv.",
+        "Reconciling items are quantified.",
+        "The adjusted bank balance is compared with the GL cash balance or the documented absence of cash-account entries.",
+        "The discrepancy-investigation table includes bank Reference.",
+        "The discrepancy-investigation table includes bank date.",
+        "The discrepancy-investigation table includes amount.",
+        "The discrepancy-investigation table identifies the GL match or states no GL entry.",
+        "Every bank transaction without a matching GL entry has a source-grounded explanation or an explicit unresolved investigation status.",
+        "Bank-versus-GL differences are quantified at the transaction level, category level, or both, and the chosen presentation supports completeness and materiality.",
+        "Material discrepancies are ranked without relying on an arbitrary exception count."
+      ]
+    },
+    {
+      "rubric": "Does the Adjusting Journal Entries sheet provide complete, balanced, source-grounded entries that bring the books into agreement?",
+      "weight": 10,
+      "criterion": [
+        "Each journal-entry line contains Entry number.",
+        "Each journal-entry line contains Date.",
+        "Each journal-entry line contains Account Number.",
+        "Each journal-entry line contains Account Name.",
+        "Each journal-entry line contains Debit and Credit.",
+        "Each journal-entry line contains an explanation.",
+        "Each bank-related journal entry identifies the bank Reference.",
+        "Debits equal credits within each entry.",
+        "Account selections are consistent with the chart of accounts or are clearly labeled provisional clearing accounts.",
+        "Proposed entries distinguish confirmed corrections from items requiring additional evidence."
+      ]
+    },
+    {
+      "rubric": "Does the Vendor Payment Audit completely and accurately cross-reference the Q1 vendor-related bank withdrawals against the AP subledger?",
+      "weight": 14,
+      "criterion": [
+        "Every Q1 vendor-related check and EFT in the bank statement appears in the cross-reference.",
+        "The cross-reference contains every required column from Bank Reference through Notes.",
+        "Matches are based on the AP and bank source fields rather than an unsupported invoice assumption.",
+        "Matched withdrawals identify the corresponding APID.",
+        "Status conflicts between the bank and AP subledger are labeled Status discrepancy.",
+        "Date conflicts between the bank and AP subledger are labeled Date discrepancy.",
+        "Withdrawals without an exact supported AP match are labeled Unmatched (no AP invoice for this amount).",
+        "Unmatched withdrawals include an investigation and conclusion in Notes.",
+        "Any proposed relation to a partial invoice is labeled as a hypothesis unless the source data confirms the allocation.",
+        "Vendor, amount, status, and date findings agree with the named input files."
+      ]
+    },
+    {
+      "rubric": "Does the AP aging schedule correctly cover the instructed Q1 USD open and partial invoices as of March 31, 2024?",
+      "weight": 9,
+      "criterion": [
+        "The aging population is limited to Q1 2024 invoices.",
+        "The aging population is limited to Currency USD.",
+        "Every Open invoice in scope is included.",
+        "Every Partial invoice in scope is included.",
+        "Days past due are measured from the due date as of March 31, 2024.",
+        "Each invoice is assigned to Current/0–30, 31–60, 61–90, or 90+ days.",
+        "Bucket assignments are arithmetically correct.",
+        "The aging basis is stated.",
+        "Any unavailable remaining-balance detail for a Partial invoice is disclosed rather than invented."
+      ]
+    },
+    {
+      "rubric": "Does Q1_2024_Schedule_C_Expense_Summary.csv map the Q1 expense population to official 2024 Schedule C lines with complete control totals?",
+      "weight": 12,
+      "criterion": [
+        "The CSV uses exactly the eight required columns.",
+        "The CSV states its Q1 currency scope and treatment: either all currencies are converted to USD with a cited, consistently applied conversion basis, or USD-only scope is used because the supplied files provide no exchange-rate basis and excluded non-USD activity is disclosed.",
+        "Every Q1 GL expense within the stated currency scope is included.",
+        "Each expense amount agrees with General_Ledger_Sample.xlsx.",
+        "Each ScheduleC_Line uses an official 2024 Schedule C line identifier.",
+        "Each ScheduleC_Category agrees with the selected line.",
+        "Any expense added through a supported adjusting entry is clearly distinguished from an original GL row.",
+        "A subtotal row is present for every used Schedule C line.",
+        "A grand total row is present.",
+        "Line subtotals reconcile to the mapped detail.",
+        "The grand total reconciles to the line subtotals."
+      ]
+    },
+    {
+      "rubric": "Does the Schedule C Draft reproduce the required 2024 Schedule C structure with source-grounded Q1 amounts that tie to the expense summary?",
+      "weight": 12,
+      "criterion": [
+        "Part I contains Lines 1 through 7.",
+        "Gross receipts are derived from the Q1 accrual-accounting revenue records.",
+        "Cost of goods sold is reported on the appropriate Schedule C line.",
+        "Gross profit is arithmetically correct.",
+        "Other income is included when supported by the Q1 records.",
+        "Gross income is arithmetically correct.",
+        "Part II contains an amount on every applicable expense line.",
+        "Total expenses are arithmetically correct.",
+        "Net profit or loss is arithmetically correct.",
+        "Schedule C line amounts tie to Q1_2024_Schedule_C_Expense_Summary.csv.",
+        "Bank-reconciliation adjustments included for tax reporting are traceable to a supported journal entry."
+      ]
+    },
+    {
+      "rubric": "Does Q1_2024_Reconciliation_Exceptions.csv provide a complete, non-duplicative log of the discrepancies found and their materiality?",
+      "weight": 10,
+      "criterion": [
+        "The CSV uses exactly the seven required columns.",
+        "Each distinct bank-reconciliation discrepancy has its own exception record.",
+        "Each distinct vendor-audit discrepancy has its own exception record.",
+        "Exception_ID values are unique.",
+        "Source_File identifies where the discrepancy was found.",
+        "Reference identifies the relevant source transaction or record.",
+        "Amount quantifies the discrepancy when an amount is available.",
+        "Resolution states the action taken or recommended.",
+        "Status is either Resolved or Unresolved.",
+        "The log supports the workbook's materiality ranking."
+      ]
+    },
+    {
+      "rubric": "Do the three deliverables have the required structure and remain internally consistent across reconciliation, AP, and tax reporting?",
+      "weight": 7,
+      "criterion": [
+        "Q1_2024_Reconciliation_Workbook.xlsx contains the four required worksheets in the required order.",
+        "The worksheet names match the instructed names.",
+        "The two CSV deliverables use the exact instructed filenames.",
+        "AP conclusions are traceable through APID and the displayed AP source fields, and Schedule C conclusions use observable official 2024 line identifiers and matching category names.",
+        "Shared transaction references have consistent amounts across the workbook and exceptions log.",
+        "Schedule C totals agree between the workbook and expense-summary CSV.",
+        "No resolved item is contradicted by an unresolved treatment elsewhere without explanation."
+      ]
+    }
+  ]
+}

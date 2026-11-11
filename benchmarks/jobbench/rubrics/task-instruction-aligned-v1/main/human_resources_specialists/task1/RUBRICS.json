@@ -1,0 +1,93 @@
+{
+  "rubrics": [
+    {
+      "rubric": "Does Workforce_Planning_Report.docx follow the required structure and present exactly three evidence-supported executive findings?",
+      "weight": 6,
+      "criterion": [
+        "The report uses the four required section headings in the instructed order.",
+        "Section A contains exactly three priority findings.",
+        "Each priority finding includes supporting counts, rates, or compensation amounts from the named inputs.",
+        "The report distinguishes historical employee evidence from current applicant and requisition evidence."
+      ]
+    },
+    {
+      "rubric": "Does the report calculate attrition by JobRole and identify roles that warrant root-cause investigation?",
+      "weight": 9,
+      "criterion": [
+        "Every JobRole in HR_Employee_Attrition_Data.csv has a departed count, total count, and attrition rate.",
+        "Attrition rate is calculated as departed employees divided by all employees in the role.",
+        "The role with the highest source-derived attrition rate is identified.",
+        "Roles selected for root-cause investigation are supported by their counts and rates.",
+        "Any acceptable-threshold or watch-list cutoff not supplied by the instructions is labeled as an analyst assumption."
+      ]
+    },
+    {
+      "rubric": "Does the analysis compute overtime versus turnover within each JobRole and use the results appropriately?",
+      "weight": 9,
+      "criterion": [
+        "Each JobRole reports departed and total counts for OverTime equal to Yes.",
+        "Each JobRole reports departed and total counts for OverTime equal to No.",
+        "Each JobRole reports the attrition rate for both overtime groups.",
+        "The interpretation identifies the largest source-grounded within-role differences without treating association as proof of causation.",
+        "Section D includes non-compensation actions responsive to material overtime differences."
+      ]
+    },
+    {
+      "rubric": "Does Section B provide a consistent and correctly annualized compensation gap analysis for relevant roles?",
+      "weight": 10,
+      "criterion": [
+        "The compensation table contains JobRole, Current Salary Range, Departed Employee Income, and Gap Analysis columns.",
+        "A single statistic, mean or median, is used consistently for departed MonthlyIncome.",
+        "The selected statistic is labeled explicitly.",
+        "Monthly departed income is reported.",
+        "Annual departed income is calculated as monthly income times 12.",
+        "Annual departed income is compared with the matching current annual salary range.",
+        "The gap analysis states whether the departed-employee figure is below, within, or above the current range and quantifies the gap where applicable.",
+        "Any proxy mapping between historical JobRole names and current positions is disclosed."
+      ]
+    },
+    {
+      "rubric": "Does the applicant screening matrix evaluate every applicant against the applicable position requirements?",
+      "weight": 14,
+      "criterion": [
+        "Every applicant in job_applicants.csv appears once in the screening matrix.",
+        "Education level is decoded and compared with the position minimum.",
+        "Education field is compared with the position's semicolon-delimited Required_EducationFields list.",
+        "Minimum experience is evaluated against the applicant's years of experience.",
+        "Required skills are evaluated against the applicant's listed skills.",
+        "A required license is checked for an accepted license type.",
+        "A required active license is checked for active status.",
+        "Salary expectation is compared with the position's salary range.",
+        "Below Range, Within Range, and Above Range are applied consistently with the instruction's greater-than-10% rule for Above Range.",
+        "Expectations above the maximum but not more than 10% above it are explicitly described rather than silently misclassified.",
+        "For each Above Range applicant, the amount and percentage over the maximum are stated.",
+        "Overall Qualified and Recommendation follow from the displayed criterion results or clearly disclosed exception handling."
+      ]
+    },
+    {
+      "rubric": "Does Applicant_Screening_Results.xlsx provide the required qualification, summary, and license-follow-up views?",
+      "weight": 8,
+      "criterion": [
+        "The workbook contains Qualification Matrix, Summary Statistics, and License Verification Follow-up sheets.",
+        "The Qualification Matrix contains all required columns from the instructions.",
+        "Summary Statistics reports applicant counts by position.",
+        "Summary Statistics reports applicant counts by screening outcome.",
+        "Every candidate whose required license is unverified, inactive, missing, or potentially mismatched appears in the follow-up sheet.",
+        "Each follow-up row states the reason verification or follow-up is required.",
+        "Workbook screening outcomes agree with the report's applicant matrix."
+      ]
+    },
+    {
+      "rubric": "Does Section D give evidence-based workforce recommendations and identify top hiring priorities?",
+      "weight": 8,
+      "criterion": [
+        "Compensation recommendations are separated from non-compensation recommendations.",
+        "Each compensation recommendation is tied to a displayed gap assessment.",
+        "Each non-compensation recommendation is tied to attrition, overtime, or another named source measure.",
+        "Hiring priorities combine attrition rate, Positions_Open, and Priority_Level.",
+        "The top hiring priorities are stated explicitly and supported by the three required factors.",
+        "Recommendations cover both recruiting and retention actions supported by the displayed evidence, without requiring a particular heading or time-horizon taxonomy."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,104 @@
+{
+  "rubrics": [
+    {
+      "rubric": "Does Compliance_Matrix_RFQ-2025-0472.csv provide a complete, correctly structured assessment of the RFQ technical requirements?",
+      "weight": 16,
+      "criterion": [
+        "The CSV uses the exact columns and column order specified in TASK_INSTRUCTIONS.txt.",
+        "The CSV contains one row for every technical-requirement bullet in RFQ sections 2.1, 2.2, and 2.3.",
+        "The IR rows assess both the Rosemount 625IR and Dräger Polytron 8700 IR.",
+        "The H2S and controller rows assess the applicable Dräger Polytron 8100 EC and REGARD 7000 products.",
+        "Applicable Rosemount and Dräger assessments use only PASS, FAIL, or PARTIAL; non-applicable product-requirement cells may use N/A or a documented blank."
+      ]
+    },
+    {
+      "rubric": "Are the Rosemount and Dräger compliance findings technically accurate, traceable to the named sources, and appropriately qualified?",
+      "weight": 18,
+      "criterion": [
+        "Rosemount 625IR specifications are consistent with the official Emerson product data sheet.",
+        "Dräger product specifications are consistent with the provided Dräger catalog.",
+        "Evidence_Source identifies a specific source statement, section, page, certificate, or ordering or certification code for each assessment.",
+        "Protocol assessments distinguish a confirmed generic protocol from an unconfirmed requested version such as HART 7.",
+        "Unknown or source-limited sub-requirements are marked PARTIAL or otherwise qualified rather than asserted as confirmed.",
+        "The KLM standard is used only for compliance positioning that the standard actually supports."
+      ]
+    },
+    {
+      "rubric": "Does the compliance matrix provide a source-grounded Honeywell Searchpoint Optima Plus competitor assessment without overstating unavailable evidence?",
+      "weight": 10,
+      "criterion": [
+        "The dedicated Honeywell competitor column addresses every IR detector requirement.",
+        "The assessment uses the competitor quote, internal pricing workbook, or identified public evidence where those sources contain relevant information.",
+        "The assessment uses REQUIRES VERIFICATION when a specific sub-requirement cannot be confirmed.",
+        "The assessment does not convert missing information into an unsupported PASS or FAIL."
+      ]
+    },
+    {
+      "rubric": "Does the 10–15 slide counter-proposal recommend and justify a vendor-diversified solution that responds to NovaPetro's stakeholders?",
+      "weight": 12,
+      "criterion": [
+        "The presentation recommends a vendor-diversified configuration using the Rosemount 625IR for IR combustible detection and suitable products for the H2S and controller duties.",
+        "The presentation explains the technical and strategic rationale for the recommended configuration using source-supported product capabilities and limitations.",
+        "The presentation addresses the concerns of every NovaPetro stakeholder identified in the site visit notes.",
+        "The presentation explains how SafeGuard will provide coordinated responsibility across the mixed-vendor configuration.",
+        "The presentation distinguishes confirmed facts from proposal assumptions or items requiring technical clarification."
+      ]
+    },
+    {
+      "rubric": "Does the presentation provide a feasible implementation plan within NovaPetro's stated schedule using the supplied lead-time and site information?",
+      "weight": 10,
+      "criterion": [
+        "The timeline covers purchase order, submittals or engineering, delivery, installation, commissioning, and acceptance.",
+        "The timeline fits the May–July 2025 installation window and August 2025 commissioning target.",
+        "The timeline uses the product lead times in Internal_Product_Pricing_Q1_2025.xlsx for the products actually proposed.",
+        "The plan addresses the distinct Unit 14 and Building C conditions, including Building C infrastructure readiness.",
+        "The commissioning duration and scope are stated with their evidence or planning assumptions rather than being forced to a predetermined number of days."
+      ]
+    },
+    {
+      "rubric": "Does SafeGuard_Proposal_RFQ-2025-0472_Pricing.xlsx provide a complete, reproducible BOM and competitive comparison?",
+      "weight": 14,
+      "criterion": [
+        "The workbook contains sheets named Bill of Materials, 5-Year TCO Analysis, and Competitive Comparison.",
+        "The Bill of Materials covers the required detectors, controllers, accessories, spares, services, training, and warranty scope.",
+        "SafeGuard product and service prices use applicable entries from Internal_Product_Pricing_Q1_2025.xlsx whenever present; an estimate is used only when no applicable SKU or service rate exists and states its basis and uncertainty.",
+        "The Competitive Comparison includes every line from Competitor_Quote_GasTech_Industrial.csv with quantity, unit price, and extended price.",
+        "Each competitor line is paired with a reasonably comparable SafeGuard line or an explicit scope difference.",
+        "Commentary addresses scope and delivery terms while preserving the competitor quote's stated uncertainty.",
+        "Displayed subtotals, discounts, and totals are mathematically reproducible."
+      ]
+    },
+    {
+      "rubric": "Does the 5-Year TCO Analysis make a source-grounded year-by-year comparison of SafeGuard and GasTech?",
+      "weight": 12,
+      "criterion": [
+        "The analysis shows year-by-year equipment, commissioning, training, spares or sensor replacement, calibration labor and gas, proof testing, and warranty costs.",
+        "Maintenance intervals and activities for the proposed products are tied to cited manufacturer statements or clearly labeled assumptions.",
+        "The treatment of Rosemount field calibration and proof testing is consistent with the official data sheet.",
+        "Manufacturer and extended-warranty terms are compared against the RFQ minimum and the competitor information.",
+        "Warranty and maintenance cost differences are quantified for the proposed configurations rather than forced to a fixed answer.",
+        "The five-year totals reconcile with the displayed annual values."
+      ]
+    },
+    {
+      "rubric": "Does Internal_Deal_Strategy_Memo.docx provide the requested concise, evidence-based deal strategy?",
+      "weight": 10,
+      "criterion": [
+        "The confidential memo is approximately 1–2 pages and contains the sections Competitive Situation, Recommended Pricing Strategy, and Win Strategy.",
+        "The competitive situation reconciles the available competitor pricing information and identifies material information gaps.",
+        "The pricing strategy is supported by the internal price and discount data and states any approval or assumption needed.",
+        "The win strategy connects NovaPetro's stakeholder concerns, technical requirements, schedule, and commercial position.",
+        "Competitor risks are presented as evidence-based possibilities or uncertainties rather than predetermined conclusions."
+      ]
+    },
+    {
+      "rubric": "Are all four deliverables present in the required formats and mutually consistent?",
+      "weight": 4,
+      "criterion": [
+        "The compliance matrix, presentation, pricing workbook, and internal memo are all present in the output directory.",
+        "The exact filenames required by TASK_INSTRUCTIONS.txt are used where an exact filename is specified.",
+        "The proposed configuration, quantities, prices, schedule, and warranty treatment are consistent across the four deliverables."
+      ]
+    }
+  ]
+}

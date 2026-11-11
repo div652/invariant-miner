@@ -1,0 +1,129 @@
+{
+  "rubrics": [
+    {
+      "rubric": "Is the discrepancy report a valid, instruction-conforming CSV whose rows describe actual source disagreements?",
+      "weight": 10,
+      "criterion": [
+        "The CSV is parseable with one header row and no malformed records.",
+        "It contains endpoint, parameter_or_field, yaml_value, docs_value, discrepancy_type, and recommended_resolution columns.",
+        "Each row identifies one endpoint-plus-parameter, field, or response disagreement.",
+        "discrepancy_type uses default_mismatch, value_mismatch, enum_mismatch, or missing_in_docs unless none of those labels fits.",
+        "Enum rows list the complete value set from each source.",
+        "Numeric mismatch rows state both values.",
+        "Each recommended_resolution explicitly names the source whose value should be adopted.",
+        "The report does not classify a matching value as a discrepancy."
+      ]
+    },
+    {
+      "rubric": "Does the discrepancy report comprehensively reconcile the OpenAPI spec, current Markdown, and audit-tracker signals?",
+      "weight": 14,
+      "criterion": [
+        "Every operation present in either the OpenAPI spec or current v2 Markdown is compared.",
+        "Every path and query parameter present in either source is compared.",
+        "Every request-body field present in either source is compared.",
+        "Defaults, limits, required flags, formats, and enum sets are compared where present.",
+        "Every response status and documented response field present in either source is compared.",
+        "Pagination support and response-envelope claims are compared.",
+        "Audit-tracker gaps that simple source comparison would miss are represented with source-appropriate values.",
+        "Each actual disagreement appears once at the most atomic useful level.",
+        "Recommendations distinguish executable API behavior from documentation-only style improvements.",
+        "Unresolvable source conflicts are identified for engineering confirmation rather than silently invented."
+      ]
+    },
+    {
+      "rubric": "Does the TaskFlow API style guide provide at least 1500 words of source-grounded, TaskFlow-specific documentation standards?",
+      "weight": 14,
+      "criterion": [
+        "The style guide contains at least 1500 words.",
+        "It adapts the local template and the supplied GitLab REST API documentation guidance to TaskFlow.",
+        "It defines a reusable endpoint structure covering method/path, purpose, authentication, parameters, request examples, responses, and errors.",
+        "It includes an approved-versus-rejected terminology glossary resolving every non-empty terminology_issues entry in the audit tracker.",
+        "It selects one date/time format for TaskFlow timestamp fields.",
+        "It explains why that date/time format is preferred and how legacy exceptions are documented.",
+        "It defines a response-envelope standard for single resources, collections, pagination metadata, and errors.",
+        "It defines naming, voice, examples, HTTP-status, deprecation, and source-of-truth conventions.",
+        "The guide does not present an observed inconsistency as intentional API behavior without evidence."
+      ]
+    },
+    {
+      "rubric": "Does the rewritten TaskFlow API v2 documentation cover every OpenAPI operation and define its inputs accurately?",
+      "weight": 7,
+      "criterion": [
+        "Every operation in the OpenAPI YAML has a distinct documentation section.",
+        "Each operation states its HTTP method and v2 path.",
+        "Authentication requirements are documented consistently.",
+        "All path, query, and body fields from the OpenAPI operation are documented with types and required or optional status.",
+        "Defaults, limits, formats, and enum values agree with the reconciled source decision."
+      ]
+    },
+    {
+      "rubric": "Does each rewritten operation provide usable request and successful-response documentation?",
+      "weight": 4,
+      "criterion": [
+        "Each operation includes an appropriate request example or explicitly states when no request body exists.",
+        "Each operation includes the successful status and a response example or a justified no-content response.",
+        "Examples use the documented v2 path, field names, formats, and enum values."
+      ]
+    },
+    {
+      "rubric": "Does the rewritten documentation provide complete error and audit-gap coverage without inventing behavior?",
+      "weight": 4,
+      "criterion": [
+        "Each operation includes an error table covering at least the statuses defined for that operation in the OpenAPI YAML.",
+        "Every endpoint flagged has_error_codes = N in the audit tracker receives error documentation.",
+        "The rewrite resolves the audit tracker's missing authentication, examples, parameters, retry behavior, reassignment behavior, and cascade behavior where the provided sources support an answer.",
+        "The rewrite does not invent unsupported status codes, fields, or endpoint behavior."
+      ]
+    },
+    {
+      "rubric": "Does the rewritten documentation apply the selected cross-cutting standards consistently?",
+      "weight": 3,
+      "criterion": [
+        "The selected response-envelope standard is applied throughout.",
+        "Any response-envelope exception is explicitly identified and justified.",
+        "Timestamp fields follow the selected date/time standard or carry an explicit compatibility note.",
+        "Terminology follows the style-guide glossary."
+      ]
+    },
+    {
+      "rubric": "Does the webhook event catalog cover the union of defined and observed events with accurate provenance and usable event documentation?",
+      "weight": 12,
+      "criterion": [
+        "The HTML opens as a coherent page.",
+        "Every unique event in the OpenAPI event enum appears once.",
+        "Every unique event in the delivery log appears once.",
+        "Each event has one of the exact provenance labels YAML spec only, Delivery log only, or Both.",
+        "Each event includes a description and trigger condition supported by its source evidence.",
+        "Each event includes an example payload using available source fields.",
+        "The catalog states which source defines the supported event set and explains that decision.",
+        "For each event, the catalog states its documentation status and recommended handling.",
+        "Observed events absent from the defined set are clearly distinguished from supported enum values.",
+        "The catalog does not fabricate payload fields for events lacking an observed example."
+      ]
+    },
+    {
+      "rubric": "Does the v1-to-v2 migration guide give developers a complete, source-grounded upgrade path?",
+      "weight": 12,
+      "criterion": [
+        "The guide contains a v1-field-to-v2-field renaming table covering every rename identifiable from the v1 docs and reconciled v2 materials.",
+        "Pagination changes are documented as fields and behavior rather than only as prose.",
+        "Every v1 endpoint that was removed, deprecated, renamed, narrowed, or changed in method or path has its own explanation.",
+        "Endpoints with no direct v2 equivalent are identified as such.",
+        "Changed authentication, timestamp, envelope, error, and webhook behavior is described where supported by the sources.",
+        "Examples show how a developer changes representative requests or client code.",
+        "The guide identifies migration risks and verification steps.",
+        "The guide does not claim a replacement endpoint when the v2 sources provide none."
+      ]
+    },
+    {
+      "rubric": "Are the five deliverables publication-ready and mutually consistent?",
+      "weight": 4,
+      "criterion": [
+        "Exactly one CSV, one HTML file, and three Markdown files provide the five instructed deliverables.",
+        "Endpoint names, parameter names, enum values, timestamp policy, envelopes, and migration mappings agree across the deliverables.",
+        "Markdown links, tables, code fences, CSV quoting, and HTML structure are syntactically usable.",
+        "The deliverables distinguish source facts, selected standards, and unresolved engineering questions."
+      ]
+    }
+  ]
+}

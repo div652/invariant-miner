@@ -1,0 +1,97 @@
+{
+  "rubrics": [
+    {
+      "rubric": "Are all three required deliverables present in usable formats and organized as instructed?",
+      "weight": 6,
+      "criterion": [
+        "One DOCX reconciliation report is present.",
+        "One CSV contains exactly two CAB change-request records rather than one record per template field.",
+        "vpn_executive_dashboard.db is a readable SQLite database.",
+        "The dashboard database contains root-cause summary, daily failure breakdown, and client-version correlation tables."
+      ]
+    },
+    {
+      "rubric": "Does the reconciliation report provide a complete and internally consistent taxonomy of the gateway-log sessions?",
+      "weight": 8,
+      "criterion": [
+        "Every gateway-log session is assigned to exactly one primary outcome or failure category.",
+        "The taxonomy preserves the distinction between connection failures and successful connections with DTLS fallback or degraded performance.",
+        "Each category lists its session IDs, error codes or diagnostic messages, and count.",
+        "Category counts reconcile to the grand total of sessions in the log.",
+        "The categories and counts are derived from the actual log rather than copied from database incident labels."
+      ]
+    },
+    {
+      "rubric": "Does the report analyze client sub-versions, technical impact, and the management escalation questions using source-grounded evidence?",
+      "weight": 8,
+      "criterion": [
+        "The report analyzes each full client version string observed in the gateway log.",
+        "The report states the observed failure or degradation signatures for each sub-version without treating all 4.10 or all 5.1 clients as identical.",
+        "The report quantifies each root cause's impact using log-derived counts and relevant measured values.",
+        "The report answers whether the certificate-expiry evidence and SSL handshake timeouts establish one root cause, separate causes, or unresolved correlation, and explains the evidentiary basis.",
+        "The report explains the split-tunnel configuration discrepancy using the database, log, version, and routing evidence while documenting uncertainty where causation cannot be proved.",
+        "The report applies the escalation email's timestamp guidance when distinguishing client-side from gateway-side evidence.",
+        "Cisco troubleshooting guidance is cited for SSL or TLS error interpretation.",
+        "The report gives a clear mandate, conditional-rollout, or no-mandate client-upgrade recommendation supported by full-version behavior and devices-table evidence or documented join limitations, and distinguishes failures that an upgrade cannot remediate."
+      ]
+    },
+    {
+      "rubric": "Does the report perform a defensible cross-source reconciliation and identify both unreported and unmatched records?",
+      "weight": 8,
+      "criterion": [
+        "Gateway sessions are mapped to vpn_incidents records and helpdesk tickets using stated matching keys.",
+        "Log sessions without a matching ticket are identified as unreported issues.",
+        "Tickets or incidents without matching log evidence are identified as possible client-side issues, duplicates, or otherwise unresolved records.",
+        "The report distinguishes exact matches from probable or ambiguous matches.",
+        "Material matching limitations are documented, including identifier, hostname, email-domain, and timestamp differences that affect reconciliation.",
+        "Claims about duplicates or client-side issues are presented with appropriate uncertainty when the sources do not prove them."
+      ]
+    },
+    {
+      "rubric": "Does the CAB CSV contain complete, evidence-based RADIUS/authentication and DNS change requests using the provided template?",
+      "weight": 8,
+      "criterion": [
+        "One change request addresses the RADIUS or authentication infrastructure issue.",
+        "One change request addresses the DNS resolution infrastructure issue.",
+        "Each record supplies every Field from cab_change_request_template.csv.",
+        "Each record cites relevant gateway session IDs and database incident IDs.",
+        "Each record contains actionable implementation, testing, rollback, communication, and approval information.",
+        "The DNS rollback plan accounts for the identified tunnel-routing or split-tunnel discrepancy."
+      ]
+    },
+    {
+      "rubric": "Does the dashboard database contain a correct root-cause summary derived from vpn_incidents and devices?",
+      "weight": 7,
+      "criterion": [
+        "The root-cause summary has one row per distinct vpn_incidents category or clearly documented equivalent grouping.",
+        "Affected-user or affected-device counts use a consistent uniqueness definition.",
+        "Affected departments are derived by joining vpn_incidents.device_id to devices.",
+        "Mean time to resolution uses resolved incidents' reported_date and resolved_date and states its unit.",
+        "Current status is ongoing when any incident in the category is open or in progress and resolved otherwise.",
+        "The resulting values are traceable to acmecorp_it_inventory.db."
+      ]
+    },
+    {
+      "rubric": "Does the dashboard database contain a complete daily failure breakdown parsed from the gateway log?",
+      "weight": 6,
+      "criterion": [
+        "Every calendar date represented by gateway session timestamps is included.",
+        "Counts are broken down by the report's log-derived error or outcome categories.",
+        "Daily category counts and daily totals reconcile to the complete gateway-session population.",
+        "The table identifies that its source is the gateway log rather than vpn_incidents.",
+        "The table exposes totals directly or makes them unambiguous to compute."
+      ]
+    },
+    {
+      "rubric": "Does the dashboard database provide a correct full-version correlation with explicit success and failure definitions?",
+      "weight": 5,
+      "criterion": [
+        "Each full client version observed in the log is represented.",
+        "Observed failure or degradation types and session counts are recorded per version.",
+        "Success and failure are explicitly defined, including how connected-but-degraded sessions are treated.",
+        "Success and failure rates reconcile to the underlying session counts.",
+        "The table does not collapse materially different sub-versions into one family-only result."
+      ]
+    }
+  ]
+}

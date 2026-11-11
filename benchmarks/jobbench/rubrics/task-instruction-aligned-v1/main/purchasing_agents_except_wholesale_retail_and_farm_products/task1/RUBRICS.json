@@ -1,0 +1,113 @@
+{
+  "rubrics": [
+    {
+      "rubric": "Does price_benchmark_analysis.csv correctly derive per-commodity benchmarks from the instructed government dataset?",
+      "weight": 8,
+      "criterion": [
+        "The CSV has exactly the six required columns.",
+        "Records are limited to reasonably matching electrical, plumbing, and safety commodity titles from the instructed dataset and codes.",
+        "Unit cost is Encumbered Amount divided by Encumbered Quantity only when quantity is greater than zero.",
+        "Record count, average, median, and maximum are computed separately for each commodity title within each category.",
+        "The reported statistics are reproducible from the retrieved source records."
+      ]
+    },
+    {
+      "rubric": "Does the Line Item Comparison accurately consolidate the bids and apply defensible benchmark flags?",
+      "weight": 10,
+      "criterion": [
+        "All 15 requisition line items appear once with the requested quantities.",
+        "Quoted unit and extended prices for all three suppliers agree with supplier_bid_proposals.xlsx.",
+        "Supplier totals reconcile to the line-item extensions.",
+        "Each reasonable historical match uses the matched commodity's median unit cost.",
+        "Each supplier-item quote receives its own Above Benchmark, Below Benchmark, Within Range, or No Benchmark classification using the instructed 20 percent thresholds.",
+        "No Benchmark is used when no reasonably comparable commodity exists.",
+        "Any proxy commodity match is identified clearly enough to evaluate its comparability."
+      ]
+    },
+    {
+      "rubric": "Does the Weighted Evaluation score all suppliers consistently on the five instructed criteria?",
+      "weight": 10,
+      "criterion": [
+        "Price Competitiveness is weighted 30 percent.",
+        "Delivery Lead Time is weighted 25 percent.",
+        "Payment Terms, Warranty Coverage, and Additional Value are each weighted 15 percent.",
+        "Every supplier receives a 1-to-5 score and a source-grounded justification for every criterion.",
+        "Weighted totals are calculated correctly from the displayed scores and weights.",
+        "The ranking is consistent with the displayed weighted totals."
+      ]
+    },
+    {
+      "rubric": "Does the Split-Award Analysis compare single-source and category-level split scenarios on a complete total-cost basis?",
+      "weight": 14,
+      "criterion": [
+        "The bid evaluation workbook contains exactly the three sheets Line Item Comparison, Weighted Evaluation, and Split-Award Analysis.",
+        "Scenario A uses the top-ranked supplier's quoted prices for all 15 items.",
+        "Scenario B assigns each category to a documented best-value supplier and shows separate category or PO subtotals.",
+        "Freight is applied to each modeled supplier order using that supplier's threshold and FOB terms.",
+        "Early-payment savings use the quoted discount terms.",
+        "Early-payment annualized returns use discount percent multiplied by 365 divided by net days minus discount days.",
+        "Volume discounts are treated separately and applied only to qualifying supplier order amounts.",
+        "Warranty differences are included as a quantified value or a documented qualitative TCO factor.",
+        "The displayed scenario totals reconcile to their merchandise, freight, discount, and warranty components."
+      ]
+    },
+    {
+      "rubric": "Does the analysis evaluate safety-item delivery against the OSHA remediation window and provide a workable mitigation plan?",
+      "weight": 10,
+      "criterion": [
+        "The PR-2025-0043 submission date, required date, and three-week OSHA window are identified.",
+        "Each supplier's safety lead-time range is converted from business days to calendar weeks using the instructed conversion.",
+        "Each supplier receives a source-grounded compliance-risk classification.",
+        "Safety items are assigned only to a supplier reasonably capable of meeting the three-week window.",
+        "The memo provides actionable mitigation proportionate to any remaining delivery uncertainty."
+      ]
+    },
+    {
+      "rubric": "Do the purchase orders form a complete and accurate authorization set for the recommended strategy?",
+      "weight": 12,
+      "criterion": [
+        "One clearly authoritative PO set corresponds to the recommended award strategy.",
+        "A single-source award uses PO-2025-0112, while a split award uses separate supplier files numbered PO-2025-0112A, PO-2025-0112B, and so on.",
+        "Each PO follows the provided template's observable structure by including a purchase-order header, PO number and date, supplier or bill-to and ship-to blocks, shipping, payment, and delivery fields, and a line-item table; cosmetic style matching is not required.",
+        "Each PO references the applicable requisition numbers.",
+        "Each PO uses the selected supplier's quoted line-item prices.",
+        "Each PO states the supplier's payment, delivery, FOB, discount, and freight terms.",
+        "Each PO shows category subtotals, freight, and grand total.",
+        "Each PO uses the required ClearFlow Water Services ship-to address."
+      ]
+    },
+    {
+      "rubric": "Does the procurement package demonstrate compliance with the $35,000 quarterly threshold?",
+      "weight": 6,
+      "criterion": [
+        "The sum of the recommended PO grand totals including freight is shown on a pre-discount basis.",
+        "The recommended pre-discount commitment does not exceed $35,000.",
+        "Each supplier's full-order merchandise plus applicable freight is separately checked against $35,000.",
+        "Contingent discounts are not used to create apparent threshold compliance."
+      ]
+    },
+    {
+      "rubric": "Does the procurement decision memo contain the required addressee, ordered sections, and supporting analysis?",
+      "weight": 10,
+      "criterion": [
+        "The memo is a valid DOCX addressed to Sarah Chen, Operations Director.",
+        "The five required memo sections appear in the instructed order.",
+        "The benchmark section identifies material pricing anomalies and limits of the historical comparisons.",
+        "The scenario section gives dollar figures for single-source and split-award options.",
+        "The recommendation section explains the selected strategy.",
+        "The OSHA section states the delivery risk and mitigation.",
+        "The budget-code section maps each requisition or category to its supplied budget code."
+      ]
+    },
+    {
+      "rubric": "Is the recommended award strategy a source-grounded best-value decision consistent across the workbook, memo, and POs?",
+      "weight": 8,
+      "criterion": [
+        "The recommendation considers price, delivery, payment terms, warranty, and additional value.",
+        "The treatment of pump warranty coverage reflects the actual supplier terms and the value at risk.",
+        "The selected suppliers and dollar totals are consistent across the analysis, memo, and authoritative POs.",
+        "The recommendation explains why the chosen strategy is preferable to the modeled alternative without assuming a predetermined supplier."
+      ]
+    }
+  ]
+}

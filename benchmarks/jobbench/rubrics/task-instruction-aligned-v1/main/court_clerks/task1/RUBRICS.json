@@ -1,0 +1,105 @@
+{
+  "rubrics": [
+    {
+      "rubric": "Does pre_entry_audit.csv comprehensively and accurately reconcile defendant-identifying and case information across the Judge's notes, CMS database, defense memorandum, and other case materials?",
+      "weight": 18,
+      "criterion": [
+        "The file uses exactly these columns: case_number, field_name, judges_notes_value, database_value, recommended_resolution.",
+        "Each source-supported discrepancy is recorded in its own row.",
+        "The values recorded for each discrepancy accurately reflect the named source materials.",
+        "The audit covers every defendant-identifying and case field available for comparison across the provided sources.",
+        "Each recommended_resolution identifies a verification source appropriate to the disputed field.",
+        "Each recommended_resolution states the value used on the sentencing order or states that the value remains pending verification.",
+        "Each recommended_resolution states any downstream effect relevant to the order, fee treatment, criminal-history analysis, or CMS update.",
+        "The audit evaluates the Simmons memorandum's statutory challenge on its merits rather than merely noting that a challenge was filed.",
+        "The audit explains the source-grounded effect of the Simmons challenge on the criminal-history score and presumptive range.",
+        "The audit gives a documented recommendation for resolving or escalating the Simmons challenge."
+      ]
+    },
+    {
+      "rubric": "Are six completed Arkansas Sentencing Order PDFs prepared on the supplied official form using source-grounded case data and the AOC Sentencing Order Instructions?",
+      "weight": 12,
+      "criterion": [
+        "There is one completed sentencing-order PDF for each of the six defendants.",
+        "Each order uses the supplied Arkansas Sentencing Order form rather than a substitute text document or recreated form.",
+        "Each order follows the applicable AOC Sentencing Order Instructions.",
+        "Each order accurately reflects the source-supported disposition.",
+        "Each order accurately reflects the source-supported charge outcomes.",
+        "Each order accurately reflects the source-supported sentence and departure treatment.",
+        "Each order accurately reflects the source-supported financial obligations.",
+        "Each order accurately reflects the source-supported assignment.",
+        "Each order consistently applies the resolutions documented in pre_entry_audit.csv.",
+        "Any unresolved factual or legal uncertainty is clearly identified without inventing a definitive value."
+      ]
+    },
+    {
+      "rubric": "Does fee_reconciliation.csv accurately reconcile every ordered and mandatory financial assessment against the current county fee schedule?",
+      "weight": 10,
+      "criterion": [
+        "The file uses exactly these columns: case_number, defendant_name, fee_type, judges_amount, schedule_amount, status, notes.",
+        "The reconciliation contains one row for each fee, fine, or assessment applicable to each case.",
+        "The reconciliation includes mandatory assessments omitted from the Judge's notes.",
+        "The judges_amount and schedule_amount values accurately reflect the Judge's notes and fee schedule.",
+        "Every status is one of MATCH, MISMATCH, or OMITTED.",
+        "Each notes value cites the applicable statutory authority from the fee schedule.",
+        "Each notes value states a corrective action supported by whether the assessment is mandatory, conditional, or discretionary.",
+        "Conditional assessments are documented as requiring appropriate verification rather than being treated as automatically mandatory."
+      ]
+    },
+    {
+      "rubric": "Does jefferson_county_cms.db correctly update the cases and charges tables for all six June 9, 2025 dispositions?",
+      "weight": 10,
+      "criterion": [
+        "All six cases have case_status set to Disposed.",
+        "All six cases have disposition_date set to 2025-06-09.",
+        "Each case has a disposition_type that accurately describes the source-supported plea or trial disposition and any First Offender Act treatment.",
+        "Every charge has a source-supported plea_type.",
+        "Every charge has a source-supported verdict.",
+        "Every charge has a source-supported disposition."
+      ]
+    },
+    {
+      "rubric": "Does jefferson_county_cms.db contain a complete, case-specific sentencing-hearing docket entry for each case?",
+      "weight": 6,
+      "criterion": [
+        "Exactly one new sentencing-hearing docket entry is present for each of the six cases.",
+        "Each new entry has entry_date set to 2025-06-09.",
+        "Each new entry has entered_by set to Clerk R. Patterson.",
+        "Each new entry has an entry_type indicating a sentencing hearing.",
+        "Each new entry describes that case's actual sentencing outcome."
+      ]
+    },
+    {
+      "rubric": "Does jefferson_county_cms.db record all verified financial obligations consistently with fee_reconciliation.csv?",
+      "weight": 8,
+      "criterion": [
+        "The fees_payments table contains one row for each verified fee, fine, and assessment in fee_reconciliation.csv.",
+        "The fees_payments table contains one row for each ordered restitution obligation.",
+        "Each financial row is linked to the correct case.",
+        "Each inserted fee, fine, or assessment amount_assessed equals the verified amount in fee_reconciliation.csv.",
+        "Each restitution amount_assessed equals the source-supported ordered amount.",
+        "Each payment_status is Pending.",
+        "Each balance_due equals amount_assessed.",
+        "A conditional assessment whose applicability or amount remains pending verification is documented as pending in fee_reconciliation.csv or pre_entry_audit.csv and is not inserted as a definitive assessed obligation.",
+        "No verified fee, fine, or assessment is duplicated or omitted relative to fee_reconciliation.csv.",
+        "No restitution obligation is duplicated or omitted relative to the case materials."
+      ]
+    },
+    {
+      "rubric": "Does the Sentencing Register PDF provide the required six-case summary, totals, and source-grounded annotations?",
+      "weight": 12,
+      "criterion": [
+        "The PDF is titled Sentencing Register — Jefferson County Circuit Court — June 9, 2025.",
+        "The summary table contains the required columns for case number, defendant, charges, disposition, sentence, departure, fees and fines, restitution, and assignment.",
+        "The summary table contains all six cases.",
+        "Each summary value is consistent with the completed orders, fee reconciliation, and updated database.",
+        "The table includes a correctly calculated totals row for fees and fines.",
+        "The table includes a correctly calculated totals row for restitution.",
+        "The annotations cover every discrepancy recorded in pre_entry_audit.csv and its resolution.",
+        "The annotations cover every fee variance recorded in fee_reconciliation.csv and its corrective action.",
+        "The annotations summarize the Simmons challenge, its source-grounded effect, and the recommended court action.",
+        "Documented uncertainty or pending judicial verification is preserved rather than replaced with an unsupported conclusion."
+      ]
+    }
+  ]
+}

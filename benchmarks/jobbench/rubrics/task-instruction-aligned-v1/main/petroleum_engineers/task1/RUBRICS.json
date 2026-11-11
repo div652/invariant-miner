@@ -1,0 +1,181 @@
+{
+  "rubrics": [
+    {
+      "rubric": "Does the workbook provide reproducible interval-specific ROP model specifications from the Utah FORGE data?",
+      "weight": 5,
+      "criterion": [
+        "The full drilling dataset is segmented by documented parameter discontinuities or change points.",
+        "Every interval reports its depth range.",
+        "Every interval reports the number of modeled observations.",
+        "Every interval regresses ROP(1 ft) on weight on bit, rotary speed, and pump pressure.",
+        "Every interval reports the fitted coefficients."
+      ]
+    },
+    {
+      "rubric": "Does the workbook validate the interval ROP models and interpret anomalies without unsupported certainty?",
+      "weight": 5,
+      "criterion": [
+        "Every interval reports R-squared.",
+        "Every interval reports cross-validated error metrics.",
+        "The cross-validation method is stated.",
+        "Two-sigma anomaly rules are stated.",
+        "Anomalous observations are flagged.",
+        "Equipment-issue and formation-change interpretations are distinguished from unsupported certainty."
+      ]
+    },
+    {
+      "rubric": "Does the ROP operating-envelope analysis correctly derive the full-dataset 75th-percentile threshold and numeric high-ROP parameter ranges?",
+      "weight": 5,
+      "criterion": [
+        "The 75th-percentile ROP threshold is calculated over the full drilling dataset.",
+        "The threshold is reported in ft/hr.",
+        "Above-threshold observations are identified.",
+        "The operating envelope reports a numeric minimum and maximum for WOB.",
+        "The operating envelope reports a numeric minimum and maximum for RPM.",
+        "The operating envelope reports a numeric minimum and maximum for pump pressure.",
+        "Any additional filtering used for an operationally active envelope is disclosed."
+      ]
+    },
+    {
+      "rubric": "Does the production-decline analysis define an eligible BOEM well population and apply the instructed Arps model?",
+      "weight": 2,
+      "criterion": [
+        "The BOEM 2024 production records are parsed into per-well monthly histories.",
+        "A minimum production-history rule is stated.",
+        "Wells are considered by available history rather than excluded solely by first-production year.",
+        "The fitted equation is the instructed Arps hyperbolic form."
+      ]
+    },
+    {
+      "rubric": "Does the production-decline analysis report complete, physically constrained per-well fit results?",
+      "weight": 3,
+      "criterion": [
+        "Each fitted well reports qi.",
+        "Each fitted well reports Di with its time unit.",
+        "Each fitted well reports b constrained to 0<b<1.",
+        "Each fitted well reports a goodness-of-fit measure."
+      ]
+    },
+    {
+      "rubric": "Does the decline analysis document the supported limits of cross-referencing production with drilling problems?",
+      "weight": 3,
+      "criterion": [
+        "Historical drilling complications are cross-referenced where a supported identifier match exists.",
+        "Identifier mismatches or absent crosswalks are reported as data gaps rather than forced matches."
+      ]
+    },
+    {
+      "rubric": "Does the intervention score construct all four instructed normalized priority factors?",
+      "weight": 2,
+      "criterion": [
+        "Decline severity is included.",
+        "Days since first production is included.",
+        "Water-cut trend is included.",
+        "Historical drilling complications are included.",
+        "Each component is normalized before weighting."
+      ]
+    },
+    {
+      "rubric": "Does the intervention score use a transparent weighting method led by decline severity?",
+      "weight": 2,
+      "criterion": [
+        "Decline severity has the highest weight.",
+        "All weights are reported.",
+        "The weighting rationale is documented."
+      ]
+    },
+    {
+      "rubric": "Does the intervention ranking produce a traceable top 15 from the documented score?",
+      "weight": 3,
+      "criterion": [
+        "The top 15 candidates are ranked by the resulting score.",
+        "Each candidate includes the supporting component values.",
+        "A missing drilling-complication match is handled consistently and disclosed."
+      ]
+    },
+    {
+      "rubric": "Does the Oklahoma analysis document API matching and interval-depth data quality?",
+      "weight": 4,
+      "criterion": [
+        "The API normalization methodology is documented for each source format.",
+        "Matched and unmatched counts are reported for the attempted joins.",
+        "Mud-log Log Interval endpoints are compared with core Top and Bottom depths for each matched well.",
+        "A top-depth difference greater than 50 feet is flagged.",
+        "A bottom-depth difference greater than 50 feet is flagged.",
+        "Every flagged depth discrepancy is identified as requiring reconciliation."
+      ]
+    },
+    {
+      "rubric": "Does the Oklahoma analysis compare gas indications with core information and provide the instructed formation-tops table?",
+      "weight": 4,
+      "criterion": [
+        "Gas-detection indicators are compared with available core lithology or hydrocarbon descriptors.",
+        "If hydrocarbon-bearing core descriptors are unavailable, that limitation is stated.",
+        "The formation-tops table has one row per matched well.",
+        "The formation-tops table contains Woodford, Hunton, Oswego, Bromide, Springer, and Deese columns.",
+        "Unavailable formation tops are left blank or explicitly marked unavailable."
+      ]
+    },
+    {
+      "rubric": "Does the drilling-risk matrix relate ROP intervals to Oklahoma formation analogs with appropriate geographic caution?",
+      "weight": 2,
+      "criterion": [
+        "The risk matrix relates ROP depth intervals to available Oklahoma formation analogs with stated limitations.",
+        "Drilling difficulty by formation is estimated without presenting geographically distinct analogs as exact equivalence."
+      ]
+    },
+    {
+      "rubric": "Does the integrated assessment quantify overall program risk from the required risk domains?",
+      "weight": 2,
+      "criterion": [
+        "Production-decline risk is represented.",
+        "Subsurface data-quality risk is represented.",
+        "Operational or equipment risk is represented.",
+        "Overall program risk is quantified with a stated method.",
+        "The rationale cites findings from each required data source."
+      ]
+    },
+    {
+      "rubric": "Are the workbook's major figures traceable to source records?",
+      "weight": 1,
+      "criterion": [
+        "Each major figure identifies its source file or database table and source fields."
+      ]
+    },
+    {
+      "rubric": "Does the crew competency analysis compare required program capabilities with the personnel data and disclose certification-data gaps?",
+      "weight": 3,
+      "criterion": [
+        "Required drilling-program roles or certifications are listed.",
+        "Currently staffed or available counts are derived from the personnel tables.",
+        "Understaffed capabilities are identified.",
+        "Generic certification levels are not presented as specific credentials without support.",
+        "Missing certification-name or expiry data is documented.",
+        "A mitigation or staffing action is recommended."
+      ]
+    },
+    {
+      "rubric": "Are the required workbook and technical-memo sections present with a quantified executive summary?",
+      "weight": 2,
+      "criterion": [
+        "The submission includes an Excel workbook.",
+        "The submission includes a technical memo in .docx or .pdf format.",
+        "The memo contains Executive Summary.",
+        "The memo contains Data Quality Issues and Mitigation.",
+        "The memo contains Recommendations.",
+        "The memo contains Appendix.",
+        "The Executive Summary states quantified thresholds, fit metrics, counts, scores, and overall program risk."
+      ]
+    },
+    {
+      "rubric": "Does the technical memo provide evidence-based confidence, mitigation, and source documentation?",
+      "weight": 2,
+      "criterion": [
+        "Every recommendation has a High, Medium, or Low confidence level.",
+        "Confidence criteria use model fit and cross-source corroboration.",
+        "The data-quality section covers identifier mismatches, depth discrepancies, missing data, and drilling-to-decline cross-reference limits.",
+        "The appendix identifies the data source for each major conclusion."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,124 @@
+{
+  "rubrics": [
+    {
+      "rubric": "Does the baseline analysis consistently connect the 311 agency codes, staffing data, service outcomes, and budget benchmark?",
+      "weight": 8,
+      "criterion": [
+        "The submission explicitly maps DPR, DSNY, DOT, DHS, and FDNY to the corresponding Greenfield departments using the supplied service data and applies the mapping consistently.",
+        "Baseline Metrics has one row per department with every staffing, overtime, 311, process, and Greenfield-versus-NYC budget field required by the instructions.",
+        "Red conditional formatting is applied where vacancy exceeds 12%, overtime exceeds 10%, or worst on-time performance is below 65%.",
+        "The per-employee budget comparison states the Greenfield and NYC sources, calculation method, and material comparability limits."
+      ]
+    },
+    {
+      "rubric": "Does the decision package provide a complete and decision-relevant overtime analysis?",
+      "weight": 14,
+      "criterion": [
+        "For every department, the submission reports OT_as_Pct_of_Regular, annual Overtime_Cost_USD, and share of citywide overtime cost.",
+        "The submission states whether the 10% intervention trigger is applied to monthly, annual, or another documented aggregation and applies that choice consistently.",
+        "Material seasonal or persistent overtime patterns visible in Monthly_Overtime are identified without imposing a predetermined department conclusion.",
+        "The evaluation explains how Proposal A and Proposal B would affect the observed overtime cost structure, including departments left standalone and departments that trigger a shared budget."
+      ]
+    },
+    {
+      "rubric": "Does Proposal B Model identify the triggered interventions and assess whether the workforce can implement them?",
+      "weight": 12,
+      "criterion": [
+        "Every division above the 12% vacancy threshold is listed with its triggering value and a source-grounded centralized hiring target.",
+        "Every department meeting the submitted 10% overtime trigger is identified with a source-grounded overtime cap.",
+        "Cross-training pool sizes are shown with a documented calculation or assumption.",
+        "The memo cites relevant division-level turnover ranges and evaluates cross-training, centralized hiring, and specialized-role constraints for the affected departments."
+      ]
+    },
+    {
+      "rubric": "Does Comparative Benchmark Analysis use specific, relevant NYC MMR indicators for at least three agency analogs?",
+      "weight": 10,
+      "criterion": [
+        "At least three of DPR, DSNY, DOT, DOHMH, and FDNY are represented by a specific MMR indicator with its reported value and target when available.",
+        "Each cited NYC indicator is compared with a reasonably corresponding Greenfield service metric.",
+        "The cited values are traceable to the supplied MMR extract or another clearly identified public MMR source.",
+        "Differences in scale, definitions, periods, or measurement units are disclosed where they limit direct comparison."
+      ]
+    },
+    {
+      "rubric": "Does the benchmark discussion use the NYS Comptroller staffing report to contextualize Greenfield?",
+      "weight": 6,
+      "criterion": [
+        "The submission cites at least two specific data points from Report 2-2025.",
+        "The cited data points address relevant vacancy, attrition, or overtime trends.",
+        "Each data point is used to interpret Greenfield's workforce or overtime conditions rather than presented without comparison."
+      ]
+    },
+    {
+      "rubric": "Does the proposal evaluation account for every underperforming process and its service-delivery risk?",
+      "weight": 10,
+      "criterion": [
+        "Every Process_Metrics record below 70% On_Time_Pct is listed with its department, process name, and value.",
+        "Every process below 65% is explicitly treated as a high-risk SLA.",
+        "Proposal A is evaluated for both potential improvement and implementation-transition risk for the affected processes.",
+        "Proposal B is evaluated for both potential improvement and implementation-transition risk for the affected processes."
+      ]
+    },
+    {
+      "rubric": "Does Proposal A Model report the required component, combined, standalone, and cycle-time projections?",
+      "weight": 2,
+      "criterion": [
+        "Community Wellness and Public Works each show their component departments and combined authorized positions, filled positions, and overtime cost.",
+        "Fire Department remains a standalone entity with authorized positions, filled positions, and overtime cost.",
+        "Community Wellness, Public Works, and Fire Department have numeric projected cycle-time results for the processes or service measures modeled.",
+        "The projected cycle-time results follow a documented source-grounded calculation or scenario method rather than an unstated required value."
+      ]
+    },
+    {
+      "rubric": "Does Proposal A Model document the operational assumptions behind its projections?",
+      "weight": 1,
+      "criterion": [
+        "Cycle-time assumptions and their application are stated.",
+        "Any overlapping-division consolidation assumption is stated.",
+        "Any shared-fleet savings or capacity assumption is stated."
+      ]
+    },
+    {
+      "rubric": "Does Comparison Summary provide the instructed proposal comparison and a supported recommendation?",
+      "weight": 2,
+      "criterion": [
+        "Both proposals are compared on annual cost savings, FTE reallocation count, projected SLA improvement, implementation complexity, and risk rating.",
+        "A documented net recommendation score is shown and is reproducible from the displayed method.",
+        "The selected recommendation may be Proposal A, Proposal B, or a defined hybrid when supported by the calculations and explicit assumptions."
+      ]
+    },
+    {
+      "rubric": "Does the Decision Briefing Memo meet the instructed scope and organization?",
+      "weight": 2,
+      "criterion": [
+        "The memo is 6–10 pages.",
+        "The memo presents Situation Overview, Comparative Benchmark Analysis, Proposal A evaluation, Proposal B evaluation, and Recommendation in the instructed order.",
+        "The recommendation uses quantitative arguments and states its material assumptions."
+      ]
+    },
+    {
+      "rubric": "Does the Cost-Benefit Analysis Workbook have the complete instructed structure?",
+      "weight": 2,
+      "criterion": [
+        "The workbook contains exactly Baseline Metrics, Proposal A Model, Proposal B Model, and Comparison Summary.",
+        "Each tab contains the fields and model outputs assigned to it by the instructions."
+      ]
+    },
+    {
+      "rubric": "Does the Council Presentation meet the instructed length and decision content?",
+      "weight": 2,
+      "criterion": [
+        "The presentation contains 8–12 slides.",
+        "The presentation covers current operational health, proposal trade-offs in a table or chart, NYC benchmark context, the recommendation, and next steps."
+      ]
+    },
+    {
+      "rubric": "Are quantitative claims consistent across the memo, workbook, and presentation?",
+      "weight": 1,
+      "criterion": [
+        "Shared source metrics and proposal outputs agree across all three deliverables.",
+        "Any differing figures are clearly identified as scenario-specific and use documented assumptions."
+      ]
+    }
+  ]
+}

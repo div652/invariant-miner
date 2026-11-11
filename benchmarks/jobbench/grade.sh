@@ -6,12 +6,13 @@
 #
 # --rubrics picks the rubric set the judge grades against (default: original):
 #   original  the dataset's own RUBRICS.json;                                   results in RUN_DIR/grading/
-#   v1        agentic-evolution's task-instruction-aligned v1 rubrics, from JOBBENCH_V1_RUBRICS_DIR in local.env
-#             (default ~/agentic-evolution/attribution/jobbench_rubric_variants/task-instruction-aligned-v1/main);
+#   v1        agentic-evolution's task-instruction-aligned v1 rubrics, kept in this repository
+#             (benchmarks/jobbench/rubrics/task-instruction-aligned-v1/main; provenance: rubrics/README.md);
 #                                                                               results in RUN_DIR/grading-v1/
 #   DIR       any other rubric tree DIR/<profession>/<taskN>/RUBRICS.json; needs GRADING_DIR (results go there)
 # Each set has its own grading directory, so one run can be graded on both and the results never mix. The set used is
-# recorded in <grading dir>/rubrics.json (name, source directory, and its git commit when it is in a git checkout).
+# recorded in <grading dir>/rubrics.json (name, source directory, its git commit when it is in a git checkout, and a
+# sha256 over the run's RUBRICS.json files as graded).
 #
 # Builds <grading dir>/dataset/main/<task>/ from the dataset's task dir (task_folder, RUBRICS.json, ...; RUBRICS.json
 # replaced by the chosen set's) plus the run's workspace/output as model_output/$LABEL/. Symlinks in the output are NOT
@@ -24,6 +25,7 @@ set -euo pipefail
 [[ -f "$HOME/.config/dsh-bench/local.env" ]] && set -a && source "$HOME/.config/dsh-bench/local.env" && set +a
 : "${JOBBENCH_JUDGE_PARALLEL:?set JOBBENCH_JUDGE_PARALLEL in ~/.config/dsh-bench/local.env (template: local.env.example)}"
 die() { echo "[grade] $*" >&2; exit 1; }
+HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 RUBRICS=original
 if [[ "${1:-}" == --rubrics ]]; then [[ $# -ge 2 ]] || die "--rubrics needs original, v1 or a directory"; RUBRICS="$2"; shift 2
@@ -34,13 +36,13 @@ fi
 RUN="$(cd "$1" && pwd)"; DATASET="$(cd "${2:-$HOME/job-bench-eval/dataset/main}" && pwd)"
 case "$RUBRICS" in
   original) NAME=original; SRC=""; DEFAULT_G="$RUN/grading" ;;
-  v1) NAME=v1; SRC="${JOBBENCH_V1_RUBRICS_DIR:-$HOME/agentic-evolution/attribution/jobbench_rubric_variants/task-instruction-aligned-v1/main}"
+  v1) NAME=v1; SRC="$HERE/rubrics/task-instruction-aligned-v1/main"
       DEFAULT_G="$RUN/grading-v1" ;;
   *) NAME=custom; SRC="$RUBRICS"; DEFAULT_G=""
      [[ -n "${GRADING_DIR:-}" ]] || die "--rubrics DIR needs GRADING_DIR (where this set's results go)" ;;
 esac
 if [[ -n "$SRC" ]]; then
-  [[ -d "$SRC" ]] || die "rubric set $NAME: no directory $SRC (set JOBBENCH_V1_RUBRICS_DIR in local.env)"
+  [[ -d "$SRC" ]] || die "rubric set $NAME: no directory $SRC"
   SRC="$(cd "$SRC" && pwd)"
 fi
 [[ "$(realpath -m "${GRADING_DIR:-$DEFAULT_G}")" != "$RUN/tasks/"* ]] || die "GRADING_DIR must not be inside a task dir"
@@ -64,14 +66,6 @@ if [[ -n "$SRC" ]]; then  # the whole set must cover the run before anything is 
 fi
 mkdir -p "$G/dataset/main"
 : > "$G/skipped-symlinks.txt"
-python3 - "$G/rubrics.json" "$NAME" "$SRC" "$DATASET" <<'PY'
-import json, subprocess, sys
-out, name, src, dataset = sys.argv[1:]
-where = src or dataset
-commit = subprocess.run(["git", "-C", where, "rev-parse", "HEAD"], capture_output=True, text=True).stdout.strip()
-json.dump({"rubrics": name, "source": src or f"{dataset}/<task>/RUBRICS.json", "git_commit": commit or None},
-          open(out, "w"), indent=2)
-PY
 while read -r task; do
   id="$(task_id "$task")"
   dest="$G/dataset/main/$id"
@@ -86,6 +80,18 @@ while read -r task; do
   (cd "$task/workspace/output" && find . -type d -exec mkdir -p "$dest/model_output/$LABEL/{}" \; \
      && find . -type f -exec cp --no-dereference "{}" "$dest/model_output/$LABEL/{}" \;)
 done < <(selected)
+python3 - "$G" "$NAME" "$SRC" "$DATASET" <<'PY'
+import glob, hashlib, json, subprocess, sys
+g, name, src, dataset = sys.argv[1:]
+where = src or dataset
+commit = subprocess.run(["git", "-C", where, "rev-parse", "HEAD"], capture_output=True, text=True).stdout.strip()
+files = sorted(glob.glob(f"{g}/dataset/main/*/task*/RUBRICS.json"))
+digest = hashlib.sha256()
+for f in files:  # relative path + content of every RUBRICS.json the judge grades against
+    digest.update(f[len(g) + 1:].encode() + b"\0" + open(f, "rb").read() + b"\0")
+json.dump({"rubrics": name, "source": src or f"{dataset}/<task>/RUBRICS.json", "git_commit": commit or None,
+           "tasks": len(files), "rubrics_sha256": digest.hexdigest()}, open(f"{g}/rubrics.json", "w"), indent=2)
+PY
 echo "[grade] $(ls -d "$G"/dataset/main/*/task* | wc -l) tasks staged, label $LABEL, rubrics $NAME${SRC:+ ($SRC)}"
 "$JOBBENCH_JUDGE_PARALLEL" "$G" "$LABEL" "$NGROUPS" "$PER_GROUP" | tee "$G/scores.txt"
 python3 - "$G/dataset/main" "$LABEL" "${JUDGE_RESULTS_DIR:-eval_result_grok-4-6-high-cao}" "$NAME" <<'PY' | tee -a "$G/scores.txt"

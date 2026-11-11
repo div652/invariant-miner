@@ -1,0 +1,81 @@
+{
+  "rubrics": [
+    {
+      "rubric": "Are the three required attendance-review deliverables present, readable, and named exactly as instructed?",
+      "weight": 4,
+      "criterion": [
+        "The output contains Q1_2025_Attendance_Summary_Report.pdf, Attendance_Notification_Letters.pdf, and Q1_2025_Leave_Reconciliation.xlsx.",
+        "Both PDFs open successfully.",
+        "The reconciliation workbook opens successfully."
+      ]
+    },
+    {
+      "rubric": "Does Q1_2025_Leave_Reconciliation.xlsx correctly and transparently reconcile every initially flagged employee's full-day absences with approved and protected leave?",
+      "weight": 14,
+      "criterion": [
+        "The workbook contains one summary row for every employee with seven or more raw Status = Absent records in the review period.",
+        "Each summary row includes every instructed column.",
+        "Raw Full-Day Absences count only Status = Absent records.",
+        "Partial Absence records are tracked separately and never increase or reduce the raw full-day count.",
+        "Approved leave is deducted only when its date covers a raw full-day absence.",
+        "Approved – Retroactive leave within the supplied 48-hour policy is treated like pre-approved leave.",
+        "FMLA deductions are tied to an approved FMLA request and the dates or scope that the supplied request supports.",
+        "When an intermittent-FMLA request does not identify covered occurrences, the submission states its classification method and the resulting uncertainty or HR-confirmation need.",
+        "Overlapping leave requests do not create duplicate deductions.",
+        "Adjusted Unexcused Absences equals raw full-day absences minus the documented approved and FMLA deductions.",
+        "Notes list the request IDs and dates applied for every deduction.",
+        "Every judgment call is explained from the memos, attendance log, and leave workbook rather than from an unstated assumption."
+      ]
+    },
+    {
+      "rubric": "Does the attendance summary report provide a complete and accurate flagged-employee table and notification determination?",
+      "weight": 10,
+      "criterion": [
+        "The table contains one row for every initially flagged employee.",
+        "The table contains all eleven instructed columns.",
+        "Names and departments agree with greenfield_staff.db.",
+        "Raw absences, partial absences, approved deductions, protected deductions, adjusted counts, and tardy counts agree with the reconciliation workbook.",
+        "Most Common Absence Reason is derived from the employee's full-day absence records.",
+        "Notification Letter is Yes only when the adjusted count exceeds six.",
+        "Tardiness patterns of three or more entries are identified for every applicable initially flagged employee.",
+        "The table does not treat a tardiness pattern as an additional full-day absence."
+      ]
+    },
+    {
+      "rubric": "Does the summary report include the required grant-funded breakouts and organization-wide attendance narrative?",
+      "weight": 8,
+      "criterion": [
+        "The report has a separate department-level breakout for Community Outreach.",
+        "The report has a separate department-level breakout for Youth Programs.",
+        "The narrative covers Administration, Youth Programs, Community Outreach, Finance & Grants, and Facilities & Operations.",
+        "The narrative reports the organization-wide most common full-day absence reason and its count out of total full-day absences.",
+        "The narrative explains the effect of FMLA-protected leave by department.",
+        "The report explicitly states how the two memos were reconciled.",
+        "The report identifies the Executive Director's later requirements as controlling where they modify the Office Manager's instructions."
+      ]
+    },
+    {
+      "rubric": "Does Attendance_Notification_Letters.pdf contain exactly the letters supported by the adjusted threshold and the required policy content?",
+      "weight": 8,
+      "criterion": [
+        "There is one letter page for each employee whose adjusted unexcused absence count exceeds six.",
+        "No employee at or below six adjusted unexcused absences receives a letter.",
+        "Each letter is dated April 7, 2025.",
+        "Each letter states the employee's adjusted unexcused absence count.",
+        "Each letter cites Section VI.D, Attendance and Punctuality.",
+        "Each letter requests a meeting.",
+        "Each letter is signed Karen Mitchell, Office Manager.",
+        "The cited policy language is consistent with the supplied PublicCounsel handbook template and does not invent organization-specific sanctions."
+      ]
+    },
+    {
+      "rubric": "Are attendance classifications and conclusions consistent across the report, letter packet, reconciliation workbook, memos, and source data?",
+      "weight": 4,
+      "criterion": [
+        "Employee counts and classifications agree across all three deliverables.",
+        "The report and letters use the same adjusted-count threshold.",
+        "The submission distinguishes source facts from documented judgment calls."
+      ]
+    }
+  ]
+}

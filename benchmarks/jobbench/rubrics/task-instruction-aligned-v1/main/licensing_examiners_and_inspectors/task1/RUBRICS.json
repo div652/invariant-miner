@@ -1,0 +1,84 @@
+{
+  "rubrics": [
+    {
+      "rubric": "Does the Eligibility Summary give a complete, evidence-traceable determination for all 15 applications?",
+      "weight": 18,
+      "criterion": [
+        "The workbook contains exactly the Eligibility Summary, Deficiency Detail, and Regulatory Impact Analysis sheets.",
+        "The sheet contains exactly one row for each of the 15 applications and uses only APPROVE, DENY, or HOLD as determinations.",
+        "Each row identifies the ApplicationID, applicant, principal, requested specialty, determination, reasoning, and evidence sources.",
+        "The reasoning lists every material deficiency or approval condition found for the application rather than stopping at the first issue.",
+        "Evidence citations identify the applicable bulletin and all relevant violation, complaint, inspection, correspondence, bond, and public-dataset records.",
+        "Determinations consistently reflect later or more specific evidence, including correspondence and field records that update an application field.",
+        "The category counts and application lists used in the case report reconcile to the 15 workbook rows."
+      ]
+    },
+    {
+      "rubric": "Are the eligibility determinations supported by the current rules and all material evidence in the named sources?",
+      "weight": 16,
+      "criterion": [
+        "Bond compliance is evaluated against the specialty-specific bulletin threshold, with the required amount, amount on file, and shortfall stated.",
+        "Insurance is evaluated as in force or not in force on the application's own ApplicationDate.",
+        "Exam results, exam scores, years of experience, and third-party experience verification are evaluated when applicable to the requested specialty.",
+        "The mandatory RB-2025-003 hold is applied to an application supported by the unlicensed-activity evidence for the bulletin's required period.",
+        "Violations, payment status, complaints, background-check status, field inspections, and duplicate-principal evidence are synthesized where relevant.",
+        "An application with an unresolved failed exam, expired insurance, insufficient bond, pending background check, or other curable deficiency is not approved; DENY versus HOLD is accepted when the chosen disposition is supported and consistently explained.",
+        "Public general-license and insurance lookup results are documented, and an absent public match is not treated as dispositive without corroborating evidence."
+      ]
+    },
+    {
+      "rubric": "Does the Deficiency Detail sheet document every deficiency for every non-approved application with an actionable resolution?",
+      "weight": 10,
+      "criterion": [
+        "Every non-approved application has one row for each distinct material deficiency.",
+        "Each row includes ApplicationID, deficiency, evidence or source, citation, and recommended corrective action.",
+        "Each citation uses an applicable RCW, WAC, or Bulletin ID supported by the task sources.",
+        "Corrective actions are specific enough to resolve or disposition the cited deficiency.",
+        "Deficiencies and actions reconcile with the Eligibility Summary determination."
+      ]
+    },
+    {
+      "rubric": "Does the Regulatory Impact Analysis map all four bulletins to every application each bulletin actually affects?",
+      "weight": 8,
+      "criterion": [
+        "The sheet includes each affected bulletin-application pair for RB-2025-001 through RB-2025-004.",
+        "Unaffected Cartesian-product pairs are not presented as affected cases.",
+        "Each row states the outcome under prior rules, the outcome under new rules, and a concrete explanation of the change.",
+        "Each row states whether an ambiguity requires management escalation.",
+        "The affected applications and rule effects agree with the source application data, correspondence, and bulletin effective dates."
+      ]
+    },
+    {
+      "rubric": "Does the 3-to-4-page case report provide the required executive summary and complete high-risk applicant narratives?",
+      "weight": 8,
+      "criterion": [
+        "The PDF is 3 to 4 pages and uses the exact required title.",
+        "The report sections appear in the required order.",
+        "The Executive Summary gives APPROVE, DENY, and HOLD counts that sum to 15 and lists the ApplicationIDs in each category.",
+        "Each held application has a one-sentence rationale.",
+        "Each high-risk profile synthesizes every relevant named source into one narrative and cites material record IDs, penalty amounts, and payment status."
+      ]
+    },
+    {
+      "rubric": "Does the Correspondence Disposition section address all four queue items with traceable actions and follow-up?",
+      "weight": 6,
+      "criterion": [
+        "There is one clearly identified entry for each correspondence item from Item 1 through Item 4.",
+        "Each entry states the sender and affected application or applications.",
+        "Each entry identifies the application, database, inspection, bond, or bulletin records used to cross-check the claim.",
+        "Each entry states the effect on the determination or other action taken.",
+        "Each entry identifies any follow-up needed to verify missing attachments, changed status, or another unresolved claim."
+      ]
+    },
+    {
+      "rubric": "Does the report conclude with actionable process improvements grounded in this batch?",
+      "weight": 6,
+      "criterion": [
+        "The report proposes at least two distinct procedural improvements.",
+        "Each improvement names a specific operational change rather than a generic best practice.",
+        "Each improvement identifies at least one application or case pattern from this batch that motivates it.",
+        "Each improvement is feasible for an application-review workflow and identifies the intended control or outcome."
+      ]
+    }
+  ]
+}

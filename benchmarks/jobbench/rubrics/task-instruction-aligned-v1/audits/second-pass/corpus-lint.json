@@ -1,0 +1,218 @@
+{
+  "summary": {
+    "auditScope": "Corpus-wide adversarial lint of all 65 task-instruction-aligned-v1 rubrics, covering 484 rubric rows and 3,235 criteria. Candidate patterns were quantified with local Python scripts, then every retained issue was manually checked against the refined task instructions, the source rubric, the refinement notes, and task-input schemas where relevant.",
+    "relationshipToPriorReviews": "This report targets cross-task and systematic scoring risks not recorded in group-01.json through group-10.json. It does not repeat the prior per-task findings.",
+    "issueCount": 15,
+    "severityCounts": {
+      "high": 3,
+      "medium": 11,
+      "low": 1
+    },
+    "categoryCounts": {
+      "all-or-nothing-weight-concentration": 5,
+      "all-or-nothing-fragmentation": 1,
+      "oversized-compound-criterion": 1,
+      "duplicate-criterion": 1,
+      "undefined-materiality": 2,
+      "unjudgeable-completeness": 1,
+      "circular-self-defined-rule": 1,
+      "verbosity-bias": 2,
+      "rounding-tolerance-ambiguity": 1
+    },
+    "systemicFindings": [
+      "The variant has 14.9% fewer weighted rubric rows than the source rubrics but 56.5% more binary criteria. Because a row receives its full weight only when every criterion passes, the added detail is often packed into larger all-or-nothing score blocks instead of receiving proportional weight.",
+      "Seventeen tasks contain a row with more than ten criteria, and 14 tasks contain a row that combines more than ten criteria with at least 15% of the task's total weight.",
+      "Undefined qualifiers such as material, appropriate, professional, actionable, and substantive are common. Only the instances that change a required population, create a self-fulfilling rule, or can erase substantial content credit are reported below.",
+      "No new unsupported exact filename, worksheet name, or column-name requirement survived manual verification. Exact-name candidates were supported by the refined instructions or task-input schemas."
+    ]
+  },
+  "metrics": {
+    "taskCount": 65,
+    "rubricRowCount": 484,
+    "criterionCount": 3235,
+    "totalWeight": 4500,
+    "sourceComparison": {
+      "sourceRubricRows": 569,
+      "variantRubricRows": 484,
+      "rowCountChangePercent": -14.9,
+      "sourceCriteria": 2067,
+      "variantCriteria": 3235,
+      "criterionCountChangePercent": 56.5
+    },
+    "criterionLengthWords": {
+      "minimum": 3,
+      "median": 12,
+      "p90": 19,
+      "p95": 22,
+      "maximum": 45,
+      "over30Words": 14,
+      "over40Words": 1
+    },
+    "criteriaPerRow": {
+      "minimum": 3,
+      "median": 6,
+      "p90": 10,
+      "maximum": 23,
+      "rowsOver10Criteria": 38,
+      "tasksWithRowOver10Criteria": 17
+    },
+    "weightConcentration": {
+      "rowsAtLeast20PercentOfTaskWeight": 31,
+      "tasksWithAtLeastOneSuchRow": 23,
+      "rowsOver10CriteriaAndAtLeast15PercentOfTaskWeight": 24,
+      "tasksWithSuchRows": 14,
+      "maximumSingleRowShare": 0.2917
+    },
+    "textPatternCounts": {
+      "criteriaContainingNumbers": 553,
+      "criteriaContainingFilenames": 161,
+      "criteriaContainingEveryEachOrAll": 983,
+      "criteriaContainingUncertaintyOrLimitationTerms": 148,
+      "criteriaContainingMaterialOrMaterially": 73,
+      "criteriaContainingSelectedSubjectiveStyleTerms": 17
+    },
+    "verificationResults": {
+      "exactDuplicateCriteriaCaughtByStructuralValidator": 0,
+      "manuallyVerifiedNearDuplicateIssues": 1,
+      "retainedUnsupportedExactFilenameSheetOrColumnIssues": 0,
+      "retainedUnsupportedHardCodedConclusionIssues": 0
+    }
+  },
+  "issues": [
+    {
+      "task": "purchasing_agents_except_wholesale_retail_and_farm_products/task3",
+      "severity": "high",
+      "category": "all-or-nothing-weight-concentration",
+      "location": "rubrics[0] through rubrics[2]",
+      "finding": "The first three rows concentrate 56 of 96 points into 52 independent criteria, making minor defects in one audit field, one bid-tabulation detail, or one scorecard component erase 22, 16, or 18 points respectively.",
+      "evidence": "Rubrics[0], [1], and [2] contain 18, 16, and 18 criteria and carry 22, 16, and 18 points. The criteria separately cover schema, requirement coverage, evidence states, arithmetic, quantities, specifications, vocabulary, recommendations, template use, installation, freight, scenario totals, seven score dimensions, historical metrics, weighted totals, and ranking. The judge prompt states that a row passes only if all its criteria pass.",
+      "recommendedChange": "Split each of the three rows into narrower weighted rows, such as audit coverage, audit correctness, arithmetic and quantity checks, bid-tabulation scenarios, cost reconciliation, score inputs, and score arithmetic. Preserve the 96-point total while preventing one small omission from zeroing a broad deliverable."
+    },
+    {
+      "task": "statisticians/task3",
+      "severity": "high",
+      "category": "all-or-nothing-weight-concentration",
+      "location": "rubrics[0]",
+      "finding": "A single 14-point row, worth 25.9% of the task, combines 23 independently fail-able database requirements.",
+      "evidence": "The row separately checks five tables' fields, two formulas, all 15 health measures, exclusions, exclusion metadata, FIPS indexes, numeric SQLite types, and leading-zero integrity. Missing one index, one field, or one exclusion reason makes the entire 14-point row fail even if the remaining database is correct.",
+      "recommendedChange": "Divide the row into separately weighted schema and coverage, derived-value correctness, exclusions, and database-integrity rows. Keep field-level criteria, but do not make one field or index control more than a quarter of the task score."
+    },
+    {
+      "task": "petroleum_engineers/task1",
+      "severity": "medium",
+      "category": "all-or-nothing-fragmentation",
+      "location": "rubrics[0] through rubrics[7], especially rubrics[0], rubrics[3], rubrics[4], and rubrics[7]",
+      "finding": "The variant fragments the task into 75 microcriteria while retaining only eight weighted outcomes, so the extra detail is not scored proportionally and instead increases the chance that an otherwise strong row receives zero.",
+      "evidence": "The source rubric had 18 criteria across six rows; the variant has 75 criteria across eight rows with the same 50 total points, a 4.17-fold criterion increase. Four rows contain 11 criteria, and rubrics[0] alone is worth 10 of 50 points while combining segmentation, ranges, observations, model specification, coefficients, fit, cross-validation, anomaly rules, flags, and interpretation.",
+      "recommendedChange": "Convert major analytical stages into separately weighted rows or use additive criterion scoring. Retain atomic checks, but align point granularity with the 75 checks so one omitted reporting field does not erase credit for an otherwise correct analysis."
+    },
+    {
+      "task": "management_analysts/task2",
+      "severity": "medium",
+      "category": "all-or-nothing-weight-concentration",
+      "location": "rubrics[0] and rubrics[1]",
+      "finding": "Two 14-point rows contain 14 criteria each and jointly control 35% of the task score.",
+      "evidence": "Rubrics[0] mixes complete plant coverage, five source-derived factors, risk identification, raw values, normalized values, weights, order count, order share, composite arithmetic, ranking, and rationale. Rubrics[1] separately mixes candidate selection, receiving plants, port feasibility, transferred volume, before-and-after capacity, savings, warehouse cost, freight, net impact, annualization, ambiguity, and mitigation. A single omitted order-count field or annualization statement zeros 17.5% of the task.",
+      "recommendedChange": "Split model construction from model reporting and split scenario feasibility from scenario cost arithmetic. Allocate the existing 28 points across those narrower rows."
+    },
+    {
+      "task": "computer_and_information_research_scientists/task2",
+      "severity": "medium",
+      "category": "all-or-nothing-weight-concentration",
+      "location": "rubrics[5]",
+      "finding": "The adjusted-budget row places 16 independent financial and structural checks into one 16-point all-or-nothing block.",
+      "evidence": "The row covers exact sheet structure, capital subtotal, discount and contingency order, tax and shipping, hybrid removals, electrical baseline, power arithmetic, staffing, licenses, prepaid support treatment, cloud spend, three TCOs, cost per GPU-hour, break-even calculation, and break-even interpretation. It carries 19.5% of the task's 82 points.",
+      "recommendedChange": "Separate workbook structure, capital-cost arithmetic, operating-cost arithmetic, and dashboard economics into individually weighted rows. This also isolates the already ambiguous cost-per-GPU-hour and break-even checks from unrelated correct budget content."
+    },
+    {
+      "task": "technical_writers/task3",
+      "severity": "medium",
+      "category": "all-or-nothing-weight-concentration",
+      "location": "rubrics[3]",
+      "finding": "The core rewritten-documentation row makes 15 distinct publication checks jointly control 18 of 84 points.",
+      "evidence": "The row independently checks operation coverage, paths, authentication, all field definitions, defaults and enums, request examples, success responses, error tables, tracker gaps, envelope policy and exceptions, timestamps, terminology, behavior gaps, and non-invention. One missing error status for one operation can zero the same row that contains otherwise complete API documentation.",
+      "recommendedChange": "Split endpoint coverage and field accuracy, examples and responses, error documentation, and cross-cutting conventions into separate weighted rows."
+    },
+    {
+      "task": "management_analysts/task3",
+      "severity": "medium",
+      "category": "oversized-compound-criterion",
+      "location": "rubrics[6].criterion[0] and rubrics[6].criterion[2]",
+      "finding": "Two criteria bundle multiple independently judgeable deliverables and calculations into single binary decisions.",
+      "evidence": "Criterion[0] simultaneously requires component and combined authorized positions, filled positions, overtime cost for two merged entities, Fire remaining standalone, and documentation of cycle-time, overlap, and shared-fleet assumptions. Criterion[2] combines memo length and section coverage, exact workbook tabs, and presentation length and content. The refined instructions specify these as separate deliverable obligations.",
+      "recommendedChange": "Create separate weighted rows for Proposal A numerical outputs, Proposal A assumptions, memo structure, workbook structure, and presentation structure. Do not combine three artifact formats or several independent calculations in one criterion."
+    },
+    {
+      "task": "supply_chain_managers/task1",
+      "severity": "high",
+      "category": "duplicate-criterion",
+      "location": "rubrics[3].criterion[4] and rubrics[7].criterion[2]",
+      "finding": "The same workbook-linkage requirement is scored twice in two all-or-nothing rows.",
+      "evidence": "Rubrics[3].criterion[4] requires the Supplier Scorecard to reference each supplier's dead stock and A-class reorder-misalignment results. Rubrics[7].criterion[2] again requires the Supplier Scorecard to reference dead stock from the first sheet and reorder misalignment counts from the second. The task requires this linkage once. Omitting it can fail both the 10-point scorecard row and the 6-point workbook-integration row, exposing 25% of the 64-point task to one defect.",
+      "recommendedChange": "Score the linkage once, preferably in the workbook-integration row. Keep the supplier-scorecard row focused on metric correctness, weighting, ranking, and recommendations."
+    },
+    {
+      "task": "civil_engineers/task1",
+      "severity": "medium",
+      "category": "undefined-materiality",
+      "location": "rubrics[1].criterion[4]",
+      "finding": "The criterion replaces the instructed requirement to list every reinforcement discrepancy with the undefined subset every material discrepancy.",
+      "evidence": "The refined instruction requires the Reinforcement_Verification sheet to list every discrepancy found. The rubric says, \"Every material discrepancy between stated and calculated weight is identified,\" but supplies no dollar, weight, or percentage threshold for materiality. A submission can omit smaller discrepancies, and judges can disagree about whether an omitted discrepancy is material.",
+      "recommendedChange": "Require every non-zero discrepancy after a defined rounding tolerance, or state an explicit discrepancy threshold and require all below-threshold differences to remain visible even if they are labeled immaterial."
+    },
+    {
+      "task": "customer_service_representatives/task1",
+      "severity": "medium",
+      "category": "undefined-materiality",
+      "location": "rubrics[7].criterion[3]",
+      "finding": "The rubric weakens an exhaustive divergence requirement by adding an undefined materiality filter.",
+      "evidence": "The refined instruction requires the briefing to cover each point where the investigation differs from Supervisor_Preliminary_Notes.csv. The rubric requires only every material divergence and gives no threshold based on disputed amount, resolution effect, or factual significance.",
+      "recommendedChange": "Require every factual divergence, or define a disclosed materiality rule and require a complete appendix of all divergences with the briefing allowed to summarize only the material subset."
+    },
+    {
+      "task": "civil_engineers/task1",
+      "severity": "medium",
+      "category": "unjudgeable-completeness",
+      "location": "rubrics[2].criterion[1]",
+      "finding": "The phrase every defensibly comparable local item defines neither the comparison population nor the evidence needed to show completeness.",
+      "evidence": "The task requires one row for every item comparable between the local cost file and WSDOT Contract 24Z011, but neither the task nor the rubric supplies a matching rule. The criterion does not require a list of rejected near-matches, so a workbook with only a few convenient comparisons can assert that no other items were defensibly comparable.",
+      "recommendedChange": "Require an explicit comparability rule based on item scope and compatible units, apply it to every local item, and list excluded candidate matches with a reason. Score completeness against that auditable rule rather than an unstated evaluator judgment."
+    },
+    {
+      "task": "supply_chain_managers/task2",
+      "severity": "medium",
+      "category": "circular-self-defined-rule",
+      "location": "rubrics[2].criterion[2]",
+      "finding": "The submission is allowed to define the rule that determines whether its own over-stocking and miscalibration conclusions are correct.",
+      "evidence": "The criterion passes when the analysis uses any stated, consistently applied rule. The task asks whether safety stock and reorder points are calibrated correctly, and the supplied Reorder_Parameters and Department_Targets provide relevant anchors, but the rubric does not require the rule to derive from lead time, demand, EOQ, target waste, target turns, or a sensitivity analysis. An arbitrary threshold can therefore produce any desired conclusion and still satisfy the criterion.",
+      "recommendedChange": "Require the classification rule to be derived from the supplied reorder parameters and department targets, with formulas and sensitivity around uncertain assumptions. Accept alternative methods only when they are operationally grounded and would classify the same inputs reproducibly."
+    },
+    {
+      "task": "sociology_teachers_postsecondary/task2",
+      "severity": "low",
+      "category": "verbosity-bias",
+      "location": "rubrics[7].criterion[8] and rubrics[7].criterion[9]",
+      "finding": "The final report row can fail on subjective presentation judgments that are not tied to a defined accreditation requirement.",
+      "evidence": "The criteria require tables \"where appropriate\" and \"professional\" tone and formatting. The refined instruction already specifies the required report sections, a grade-distribution table, detailed statistics, audience, signature, and reflection length, but it provides no objective standard for additional tables or professional formatting. These style judgments can zero the 6-point row despite correct content.",
+      "recommendedChange": "Replace the two criteria with observable checks such as required tables being present, headings matching the instructed order, and tables being readable without truncated labels. Remove the general professional-tone criterion unless a concrete style guide is supplied."
+    },
+    {
+      "task": "online_merchants/task2",
+      "severity": "medium",
+      "category": "verbosity-bias",
+      "location": "rubrics[6].criterion[5] and rubrics[6].criterion[6]",
+      "finding": "Benefit-oriented and relevant searchable product language are unbounded marketing judgments that can reward longer copy rather than more accurate copy.",
+      "evidence": "The row already checks preservation, evidence consistency, qualification of contradicted claims, fit guidance, feed completion, and traceable justification. The two additional criteria provide no required product attributes, keyword source, length, or falsifiable threshold. Because rubrics[6] has 14 criteria and is worth 8 of 54 points, either subjective style judgment can zero the entire listing-optimization row.",
+      "recommendedChange": "Operationalize the criteria around source-supported product benefits and product-specific search terms taken from the catalog taxonomy, while explicitly rejecting keyword stuffing and unsupported claims. Alternatively, treat marketing polish as non-scoring guidance."
+    },
+    {
+      "task": "civil_engineers/task1",
+      "severity": "medium",
+      "category": "rounding-tolerance-ambiguity",
+      "location": "rubrics[1].criterion[2]",
+      "finding": "Allowing ordinary rounding does not define the tolerance for reinforcement-weight verification across published tables and displayed precision.",
+      "evidence": "The task permits a published standard bar-weight table rather than naming one canonical table. The criterion requires calculated weight to equal length times unit weight while allowing ordinary rounding, but it gives no accepted precision or absolute or relative tolerance. Small differences from table precision or intermediate rounding can therefore be judged inconsistently, and failure zeros the 8-point reinforcement row.",
+      "recommendedChange": "Require citation of the selected published table and evaluate the multiplication from the displayed unit weight at a stated precision, with an explicit tolerance based on the displayed decimals or a small percentage threshold."
+    }
+  ]
+}

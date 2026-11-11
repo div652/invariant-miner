@@ -1,0 +1,88 @@
+{
+  "rubrics": [
+    {
+      "rubric": "Does Bid_Analysis_Workbook.xlsx provide the required revised bid tabulation with complete, visibly flagged specification analysis?",
+      "weight": 14,
+      "criterion": [
+        "The deliverable is named Bid_Analysis_Workbook.xlsx and contains exactly the Bid Tabulation, Weighted Scoring Matrix, and Cost Summary sheets.",
+        "The Bid Tabulation recalculates each vendor's pricing using the addendum's revised 24-inch and 27-inch monitor quantities.",
+        "An unquoted required monitor size is assigned a documented estimated substitution cost derived from that vendor's available pricing pattern.",
+        "Each vendor's laptop, monitor stand, docking output, connectivity, power-delivery, and five-unit VGA requirements are checked against the original requisition and addendum.",
+        "Every shortfall is visually flagged and every material specification exceedance is identified.",
+        "Quantities, prices, specification findings, and assumptions are traceable to the named requisition, addendum, and quotation sources."
+      ]
+    },
+    {
+      "rubric": "Does the Cost Summary calculate an auditable total cost of ownership for every vendor under the required normalization rules?",
+      "weight": 14,
+      "criterion": [
+        "Each vendor's TCO uses the revised quantities for every required quoted product line. For each required but unpriced line, the Cost Summary either provides a numeric estimate with a cited source or shown derivation, provides a range with a cited source or shown derivation and numeric low/high endpoints, or labels the item Quote Required and states how it is treated in TCO, scoring, the award basis, and Budget Sensitivity; a missing cost is never silently treated as zero.",
+        "FOB Origin goods receive the instructed 3.5-percent freight estimate and FOB Destination goods do not receive added freight.",
+        "Every line item below the requisition's uniform warranty period is normalized to that period; an unavailable extension price follows the traceable estimate, endpoint range, or explicit Quote Required treatment.",
+        "The five conference-room VGA adapters or equivalent compliant solution are included using a quoted price or the traceable estimate, endpoint range, or explicit Quote Required treatment.",
+        "Quoted volume discounts and all documented substitution costs are applied correctly.",
+        "Each vendor's TCO is formula-driven or otherwise reproducible, and vendors over the $223,200 revised ceiling are flagged.",
+        "Every estimate or range has a traceable derivation or source, every Quote Required item or exclusion explains why a value is unavailable, and each treatment is applied consistently across price scoring, the selected award basis, the PO, and Budget Sensitivity."
+      ]
+    },
+    {
+      "rubric": "Does the Weighted Scoring Matrix apply the six required weights with transparent source-grounded scoring and a supported best-value result?",
+      "weight": 12,
+      "criterion": [
+        "The matrix uses Price 25 percent, Technical Compliance 20 percent, Delivery or Lead Time 20 percent, Past Performance 15 percent, Vendor Risk Profile 10 percent, and HUB Preference 10 percent.",
+        "The scoring rule and calculation for each criterion are visible and applied consistently to all vendors.",
+        "Past-performance rates are derived from completed vendor_history.db orders with numerator and denominator shown, and any in-progress order is explicitly excluded or otherwise handled without being silently counted as on time.",
+        "Vendor Risk Profile scores reflect each vendor's open and closed compliance flags, including vendors with no flags.",
+        "HUB-certified vendors receive full HUB credit and a non-certified vendor receives reduced credit without being treated as automatically ineligible.",
+        "The recommended vendor follows from the displayed scoring and any documented best-value judgment rather than from an unstated preferred result."
+      ]
+    },
+    {
+      "rubric": "Does Risk_and_Compliance_Assessment.xlsx correctly analyze delivery, compliance, contract vehicles, and eligibility under the purchasing manual?",
+      "weight": 12,
+      "criterion": [
+        "The deliverable is named Risk_and_Compliance_Assessment.xlsx and contains exactly the Delivery Risk, Compliance Review, and Budget Sensitivity sheets.",
+        "Delivery Risk uses the 28-calendar-day March 10 to April 7 window and classifies vendors from their quoted maximum lead times using the instructed Green, Yellow, and Red definitions.",
+        "Delivery Risk cross-references source-derived completed-order on-time rates and explains any treatment of an in-progress order.",
+        "Compliance Review reports HUB status and every open or closed compliance flag with relevant notification and corrective-action dates.",
+        "Compliance Review reconciles contract vehicle type and number across the quotations and vendor database and assesses applicability under the manual's cooperative or interlocal provisions.",
+        "Eligibility analysis cites the manual's non-performing-vendor process and distinguishes consideration of disqualification from an automatic exclusion unsupported by the manual."
+      ]
+    },
+    {
+      "rubric": "Does PO-2025-0412.xlsx accurately order the recommended scope and preserve a separable carryover-funded portion?",
+      "weight": 12,
+      "criterion": [
+        "The deliverable is named PO-2025-0412.xlsx, uses PO number PO-2025-0412, and identifies the recommended vendor.",
+        "The aggregate PO quantities match the addendum's full revised configuration and required specification adjustments.",
+        "Line extensions and the PO total are arithmetically correct and reconcile to the selected vendor's evaluated award basis.",
+        "The base account 110-5400-53100 and carryover account 110-5400-53100-R are both shown with specific line amounts.",
+        "The carryover-funded section is separable without silently deleting or double-counting required quantities in the full-award scope.",
+        "The PO states the April 7 delivery deadline, manual-consistent payment terms, and contingency on Commissioners Court approval."
+      ]
+    },
+    {
+      "rubric": "Does Budget Sensitivity compare the two required funding scenarios with reconciled and quantified fallback choices?",
+      "weight": 6,
+      "criterion": [
+        "Scenario A evaluates the full award against the $223,200 ceiling with the $8,200 carryover secured.",
+        "Scenario B evaluates the award against the $215,000 base appropriation without carryover.",
+        "Specific optional descope candidates are identified with quantities and dollar impacts.",
+        "The analysis states whether each descope is actually necessary for the recommended award and reconciles the scenario totals to the PO and TCO.",
+        "The fallback does not remove required quantities without clearly identifying the resulting scope change and operational consequence."
+      ]
+    },
+    {
+      "rubric": "Does Award_Recommendation_Memo.docx provide the required one-to-two-page, policy-grounded best-value recommendation?",
+      "weight": 8,
+      "criterion": [
+        "The deliverable is named Award_Recommendation_Memo.docx, is one to two pages, and is addressed to the Purchasing Manager.",
+        "The memo summarizes the solicitation scope and all material addendum impacts.",
+        "The recommendation is grounded in the weighted scores, TCO, delivery feasibility, performance history, and specification findings.",
+        "The memo discusses each material open compliance issue, its dates, and its effect under the manual's non-performing-vendor process.",
+        "The memo assesses March 10 approval, March 31 carryover expiration, April 7 delivery, execution priority, and the no-carryover contingency.",
+        "The memo states award conditions and cites the over-$50,000 governing-body approval dependency."
+      ]
+    }
+  ]
+}

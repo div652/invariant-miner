@@ -1,0 +1,102 @@
+{
+  "rubrics": [
+    {
+      "rubric": "Are the three required deliverables present with the exact instructed filenames and workbook sheet structure?",
+      "weight": 4,
+      "criterion": [
+        "The output contains Dispute_Investigation_Workbook.xlsx, Customer_Response_Letters.docx, and January2025_Dispute_Briefing.pdf.",
+        "The workbook opens successfully and contains exactly the four instructed sheet names.",
+        "Each deliverable is in the required file format and is readable."
+      ]
+    },
+    {
+      "rubric": "Does Cross-Source Validation reconcile every dispute against the customer, account, billing, and supervisor-note evidence?",
+      "weight": 10,
+      "criterion": [
+        "The sheet contains one row for each of the six Dispute_ID values.",
+        "Each row includes the customer's stated reason and the instructed account-profile fields.",
+        "Each row summarizes the relevant billing trajectory from Billing History.",
+        "Each row includes the corresponding Supervisor_Note.",
+        "Every factual assertion in each supervisor note receives a confirmed, inaccurate, or unsupported verdict.",
+        "Each verdict includes the actual source figure or states that the supplied data cannot establish the assertion.",
+        "Cross-source disagreements are described without converting an unsupported hypothesis into a fact."
+      ]
+    },
+    {
+      "rubric": "Does Weather-Usage Correlation perform reproducible customer-level weather and Pennsylvania benchmark calculations?",
+      "weight": 12,
+      "criterion": [
+        "Each customer has January 2025 kWh and summed January Heating_Degree_Days from the named local files.",
+        "Each customer has a correctly calculated January kWh-per-HDD ratio.",
+        "The Oct–Dec 2024 baseline kWh-per-HDD method is stated and applied consistently.",
+        "The percentage change from the baseline ratio is arithmetically correct.",
+        "Each January Total_Bill is compared with the 2024 Pennsylvania residential average monthly bill from EIA Table 5A.",
+        "Each January energy rate is compared with the 2024 Pennsylvania residential average price in cents per kWh.",
+        "Dollar or cent differences and percentage differences are reported for both benchmarks.",
+        "The energy rate is distinguished from Total_Bill divided by kWh.",
+        "The usage-versus-price conclusion for each customer follows the reported figures."
+      ]
+    },
+    {
+      "rubric": "Does Regulatory Compliance Check identify supported provisions, plan-specific authority, and deadline timing for every dispute?",
+      "weight": 10,
+      "criterion": [
+        "The sheet contains one row for each dispute.",
+        "Business days remaining are calculated from a stated as-of date to the source Resolution_Deadline.",
+        "Each applied consumer-rights provision is tied to the supplied PA PUC guide or another identified governing source.",
+        "Utility-specific rate-plan terms are not attributed to the PA PUC guide when that guide does not contain them.",
+        "Budget Billing, payment-plan, dispute, complaint, service-protection, and meter-investigation provisions are applied only where relevant.",
+        "Any missing tariff or account-program evidence is identified as requiring internal verification rather than filled with an unsupported rule."
+      ]
+    },
+    {
+      "rubric": "Does the Resolution Matrix give a supported and internally consistent disposition for all six disputes?",
+      "weight": 8,
+      "criterion": [
+        "Every dispute receives exactly one of the four instructed resolution labels.",
+        "Each justification is two to three sentences.",
+        "Each justification references findings from the preceding workbook sheets.",
+        "The resolution distinguishes a verified billing error from an explainable high bill, affordability relief, and unresolved meter or program questions.",
+        "The stated next action is consistent with the evidence and applicable consumer rights."
+      ]
+    },
+    {
+      "rubric": "Are all six customer letters individualized, quantitatively grounded, and responsive to the customer's rate plan and resolution?",
+      "weight": 12,
+      "criterion": [
+        "The document contains one identifiable letter for each of the six customers.",
+        "Each letter includes the correct Account_ID and Dispute_ID.",
+        "Each letter states the customer's resolution and concrete next steps.",
+        "Each letter explains the bill increase with the instructed January below-zero-day count, Extreme Cold Warning dates, and average departure from normal calculated from the weather CSV.",
+        "Each letter addresses concerns specific to the customer's Rate_Plan.",
+        "Each letter accurately distinguishes verified rights from utility-specific terms that require tariff or internal-program confirmation.",
+        "Customer-specific bill, usage, rate, or investigation figures agree with the workbook."
+      ]
+    },
+    {
+      "rubric": "Does every customer letter provide the required Pennsylvania PUC escalation path and contact information?",
+      "weight": 8,
+      "criterion": [
+        "Each letter explains that the customer first disputes the matter with the utility.",
+        "Each letter explains the right to file an informal complaint with the PUC Bureau of Consumer Services.",
+        "Each letter explains the further formal-complaint process and the possibility of a hearing before a PUC judge.",
+        "Each letter includes the PUC phone number from the supplied consumer-rights guide.",
+        "Each letter includes the PUC mailing address from the supplied consumer-rights guide."
+      ]
+    },
+    {
+      "rubric": "Does the supervisor briefing prioritize all disputes and synthesize divergences, systemic findings, and policy recommendations from the completed investigation?",
+      "weight": 12,
+      "criterion": [
+        "The briefing contains an action matrix covering all six disputes.",
+        "The matrix separately evaluates regulatory deadline proximity, customer vulnerability, and financial exposure.",
+        "The overall ranking follows a stated method and the source values rather than a hidden required order.",
+        "Every factual divergence from Supervisor_Preliminary_Notes.csv states the supervisor's assertion and the actual evidence; the briefing may prioritize the most consequential divergences but may not omit the rest.",
+        "The systemic-issues section identifies patterns actually supported across multiple disputes or rate plans.",
+        "The briefing does not label a correctly applied program a systemic failure solely because a bill was high.",
+        "The briefing includes two or three concrete extreme-weather policy recommendations grounded in the six-case findings.",
+        "Briefing conclusions agree with the workbook and customer letters."
+      ]
+    }
+  ]
+}

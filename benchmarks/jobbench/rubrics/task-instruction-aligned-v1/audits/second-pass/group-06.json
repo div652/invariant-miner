@@ -1,0 +1,108 @@
+{
+  "group": "group-06",
+  "reviewedTasks": [
+    "biostatisticians/task1",
+    "computer_user_support_specialists/task1",
+    "petroleum_engineers/task1",
+    "statisticians/task2",
+    "supply_chain_managers/task1",
+    "supply_chain_managers/task2"
+  ],
+  "taskReviews": [
+    {
+      "task": "biostatisticians/task1",
+      "verdict": "pass_with_changes",
+      "summary": "The rubric covers the three workbooks, operational eligibility limitations, empirical and sensitivity sample-size analyses, subgroup characterization, missingness, regulatory interpretation, and source-derived calculations with mostly atomic criteria. The interim-design criteria, however, do not enforce the proposal-specified alpha-spending method and information times, so a materially different sample-size design could receive credit.",
+      "alternativeSolutionProbe": "A submission could use Pocock boundaries, a Bonferroni split, or a generic sample-size inflation while mentioning two interim looks. It would satisfy the current generic adjustment wording even though the proposal specifies O'Brien-Fleming spending at 50% and 75% information.",
+      "issues": [
+        {
+          "severity": "high",
+          "category": "source_consistency",
+          "location": "rubrics[1].criterion[9] and rubrics[3].criterion[7]",
+          "finding": "The rubric accepts any stated group-sequential or alpha-spending adjustment instead of requiring the interim design specified by the proposal input.",
+          "evidence": "Clinical_Study_Proposal_CVD_Prevention.csv specifies Interim_Analysis_Method as O'Brien-Fleming and the two analyses at 50% and 75% information. TASK_INSTRUCTIONS.txt requires the primary calculation to use protocol-specified parameters and the sensitivity matrix to include the planned two-look adjusted design. The current criteria only require a stated adjustment or identified method, so non-protocol boundaries and information times can pass and change the required sample size.",
+          "recommendedChange": "Require the primary and adjusted sensitivity calculations to implement the proposal-specified O'Brien-Fleming spending at the stated 50% and 75% information times, or a documented mathematically equivalent implementation. Preserve acceptance of different software and computational methods."
+        }
+      ]
+    },
+    {
+      "task": "computer_user_support_specialists/task1",
+      "verdict": "pass_with_changes",
+      "summary": "The rubric is source-grounded and largely complete across deliverable structure, session taxonomy, cross-source reconciliation, CAB records, dashboard tables, full-version behavior, uncertainty, and external troubleshooting guidance. It omits one explicit management decision: whether to mandate a client upgrade using device-inventory evidence.",
+      "alternativeSolutionProbe": "A report could correctly describe every full-version failure signature and the split-tunnel discrepancy but never state whether an upgrade should be mandated or assess the installed-version population in the devices table. The current criteria could still award full report-analysis credit.",
+      "issues": [
+        {
+          "severity": "medium",
+          "category": "deliverable_coverage",
+          "location": "rubrics[2].criterion[0] through rubrics[2].criterion[6] (missing criterion after criterion[6])",
+          "finding": "No criterion requires the report to answer the escalation email's upgrade-mandate question or factor device inventory into that recommendation.",
+          "evidence": "mgmt_escalation_email.txt asks whether client version is contributing, whether an upgrade should be mandated, and directs the analyst to factor device inventory into the analysis. TASK_INSTRUCTIONS.txt requires answers to each email question. The rubric checks observed sub-version signatures but not a supported upgrade decision or inventory-based deployment scope. The representative report contains a separate judgeable section answering this question, confirming that the requirement can be evaluated from the deliverable.",
+          "recommendedChange": "Add a criterion requiring a clear mandate, conditional rollout, or no-mandate recommendation supported by full-version log behavior, relevant devices-table counts or limitations, and an explanation of which infrastructure failures an upgrade can and cannot remediate."
+        }
+      ]
+    },
+    {
+      "task": "petroleum_engineers/task1",
+      "verdict": "pass",
+      "summary": "The rubric comprehensively covers interval segmentation, multivariate ROP models, cross-validation, anomaly interpretation, the high-ROP envelope, Arps decline fitting, four-factor intervention ranking, Oklahoma matching and depth checks, gas/core limitations, formation tops, integrated risk, crew capability gaps, lineage, and memo requirements. It avoids forced cross-source matches and accepts documented uncertainty where the inputs lack identifiers or certification detail.",
+      "alternativeSolutionProbe": "Documented change-point detection or engineering-defined discontinuities, different defensible cross-validation schemes, and different normalized scoring formulas would all pass if reproducible. A submission that reports unavailable core hydrocarbon descriptors or unmatched BOEM/drilling identifiers as limitations is also accepted rather than forced into unsupported conclusions.",
+      "issues": []
+    },
+    {
+      "task": "statisticians/task2",
+      "verdict": "pass_with_changes",
+      "summary": "The rubric strongly covers PCA, clustering, reconciliation, panel integrity, mixed-model comparison, obesity adjustment limitations, rankings, WLS, plots, and exact deliverable structure. Its analytical-memo criterion nevertheless reinstates two exact source discoveries as mandatory hidden answers even though the refined task permits other defensible discrepancy choices.",
+      "alternativeSolutionProbe": "A valid memo could identify two different national-versus-clinical discrepancies with hypotheses, exclude suspect WHO variables through a documented screening rule, and complete all requested analyses without narrating the exact U.S. BMI and Adult Mortality breaks. It would unfairly lose credit under the current criterion despite satisfying the stated at-least-two requirement.",
+      "issues": [
+        {
+          "severity": "high",
+          "category": "hidden_answer",
+          "location": "rubrics[0].criterion[2] and rubrics[0].criterion[3]",
+          "finding": "The rubric mandates the exact U.S. BMI and Adult Mortality anomalies rather than evaluating any two defensible macro-versus-clinical discrepancies and appropriate handling of material anomalies actually used.",
+          "evidence": "TASK_INSTRUCTIONS.txt requires at least two discrepancies with a hypothesis for each and documentation of data issues found; it does not name these two anomalies. REFINEMENT_NOTES.md explicitly lists the BMI-scale anomaly and Adult Mortality discontinuity as deliberately withheld. Representative judge evidence also shows that a submission discussing other cross-level discrepancies was failed specifically for not reporting these exact findings.",
+          "recommendedChange": "Keep a general criterion requiring at least two specific, defensible discrepancies with hypotheses. Make anomaly handling conditional: any implausible or discontinuous variable used in comparison, PCA, or regression must be validated, excluded, corrected, or qualified, but do not require these exact two anomalies when an equivalent valid analysis avoids them."
+        }
+      ]
+    },
+    {
+      "task": "supply_chain_managers/task1",
+      "verdict": "pass_with_changes",
+      "summary": "The rubric has strong coverage of ABC analysis, dead stock, volatility, reorder recalibration, scorecard construction, both expiring contracts, SOP redlining, performance controls, and workbook integration. One negotiation criterion weakens the explicit requirement that numeric targets be grounded in the submitted analysis.",
+      "alternativeSolutionProbe": "A brief could state an arbitrary numeric service or lead-time target as a business assumption and pass the current wording even if the target is not derived from the supplier metrics, contract terms, displayed benchmarks, or scorecard calculations.",
+      "issues": [
+        {
+          "severity": "medium",
+          "category": "source_grounding",
+          "location": "rubrics[4].criterion[2]",
+          "finding": "The criterion permits numeric negotiation targets based only on clearly stated business assumptions, while the task requires targets drawn from and backed by the analysis.",
+          "evidence": "TASK_INSTRUCTIONS.txt directs the brief to use specific numeric targets drawn from the analysis. The rubric's alternative phrase, 'or clearly stated business assumptions,' can award credit to an unsupported target without a calculation, source benchmark, contract term, or demonstrated link to the supplier evidence.",
+          "recommendedChange": "Require every numeric target to be tied to a displayed supplier metric, contract term, task-provided performance target, or cited benchmark with a quantitative rationale. Allow assumptions only when the data cannot determine a target and the assumption is sensitivity-tested or otherwise justified."
+        }
+      ]
+    },
+    {
+      "task": "supply_chain_managers/task2",
+      "verdict": "fail",
+      "summary": "The rubric adds substantial missing coverage for reorder scenarios, investment comparison, capacity recovery, KPI governance, and dependent rollout phases. The core utilization criterion remains dimensionally unjudgeable from the supplied data, and the investment criterion does not explicitly anchor payback to the escalated $1.2M request.",
+      "alternativeSolutionProbe": "A careful submission may refuse to label product units divided by pallet-days as physical utilization and instead disclose the missing units-per-pallet and dwell-time conversion; the current rubric can fail that responsible treatment while allowing an unlabeled, dimensionally invalid ratio. Separately, a scenario can mention 3,000 positions and 12 staff but omit or replace the stated $1.2M capital request.",
+      "issues": [
+        {
+          "severity": "high",
+          "category": "source_consistency_and_judgeability",
+          "location": "rubrics[0].criterion[3] and rubrics[0].criterion[4]",
+          "finding": "The rubric requires a utilization ratio without requiring compatible units or accepting documented inability to convert the supplied order data into pallet-days.",
+          "evidence": "orders_and_shipments.csv provides Order Quantity in product units and no units-per-pallet, pallet occupancy, or dwell-time field. The instructed theoretical denominator is pallet-days per month. Dividing product units by pallet-days is not a physical utilization ratio. Representative judge evidence confirms that a submission explicitly disclosed this mismatch and left the ratio blank, then failed the original capacity criterion, demonstrating the unfair-failure risk.",
+          "recommendedChange": "Require the actual-volume unit and conversion path to be shown. Accept a physical utilization ratio only when a defensible product-unit-to-pallet-day conversion is documented; otherwise require a clearly labeled throughput proxy, quantify the missing conversion data, and prohibit direct comparison with Current_Utilization_Pct or capital conclusions as if the units matched."
+        },
+        {
+          "severity": "medium",
+          "category": "deliverable_coverage",
+          "location": "rubrics[3].criterion[0] and rubrics[3].criterion[3]",
+          "finding": "The expansion scenario and payback criteria do not explicitly require the stated $1.2M request to be the capital baseline or require disclosure of how the 12 hires are treated in that request.",
+          "evidence": "TASK_INSTRUCTIONS.txt frames the board decision as a $1.2M request for 3,000 pallet positions and 12 additional staff. The rubric names the positions and headcount but only asks for stated costs, allowing a different capex baseline or omission of the escalated amount while still satisfying the text.",
+          "recommendedChange": "Require the approve-as-is scenario to display the $1.2M requested capital baseline and state whether hiring costs are included or modeled separately. Any alternative cost estimate should be reconciled explicitly to the request before calculating payback."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,662 @@
+{
+  "schemaVersion": 1,
+  "source": "runs/gpt56-luna-high-exa-main-refined-256k-32k-landlock-20260930T055414Z/dataset/main",
+  "variant": "rubric_variants/task-instruction-aligned-v1/main",
+  "taskCount": 65,
+  "rubricRowCount": 521,
+  "criterionCount": 3288,
+  "totalWeight": 4500,
+  "sourceWeightPreservedForEveryTask": true,
+  "tasks": [
+    {
+      "task": "biostatisticians/task1",
+      "sourceRubricSha256": "fcf069f216f8ba61661ac81276f93a799387bc71e3f2c7e1890c35b97524a1da",
+      "variantRubricSha256": "b96ed64ee7b34d37bb96f0131899520fd76a226c80dc52789476cf7e1e25cbf4",
+      "sourceRubricRows": 8,
+      "variantRubricRows": 8,
+      "sourceCriteria": 30,
+      "variantCriteria": 66,
+      "totalWeight": 72
+    },
+    {
+      "task": "biostatisticians/task2",
+      "sourceRubricSha256": "d085c8463adfffc2f07ab37ecdc27f4accfddde7363fd326956a4b01b732ff21",
+      "variantRubricSha256": "9054e88d3d28becc7cb311a43f927162685af763413ed05213ef89478c1ba0b6",
+      "sourceRubricRows": 7,
+      "variantRubricRows": 7,
+      "sourceCriteria": 23,
+      "variantCriteria": 51,
+      "totalWeight": 58
+    },
+    {
+      "task": "bookkeeping_accounting_and_auditing_clerks/task1",
+      "sourceRubricSha256": "79f01eae511d0db9598a2436476a1cc30a06d3ffb8a2372bfd25d945bdf5b338",
+      "variantRubricSha256": "505932830f550fb1dadbf3b7b13ece86f4899605da91153ef18f55fb910c5e2f",
+      "sourceRubricRows": 10,
+      "variantRubricRows": 8,
+      "sourceCriteria": 35,
+      "variantCriteria": 78,
+      "totalWeight": 88
+    },
+    {
+      "task": "bookkeeping_accounting_and_auditing_clerks/task2",
+      "sourceRubricSha256": "282ca1e5de459517cbd9e1b4e2746ddd9b11932354ed71f00937263e7da20291",
+      "variantRubricSha256": "746a504bbb9a2ad4d823510844dcfa0731cf340b69508dc3e9d939356e440a6e",
+      "sourceRubricRows": 8,
+      "variantRubricRows": 7,
+      "sourceCriteria": 32,
+      "variantCriteria": 37,
+      "totalWeight": 52
+    },
+    {
+      "task": "civil_engineers/task1",
+      "sourceRubricSha256": "344b0e0a72d1eb692b78509467a9dd912beb46ff3580aa4088c32038fe49521c",
+      "variantRubricSha256": "fbcf11a627ea159fac4c0ca2acb45d1bc7ce80c0d0375bb8ff45788e9bd4306a",
+      "sourceRubricRows": 7,
+      "variantRubricRows": 7,
+      "sourceCriteria": 25,
+      "variantCriteria": 48,
+      "totalWeight": 50
+    },
+    {
+      "task": "civil_engineers/task2",
+      "sourceRubricSha256": "e63b38a8f27cb550a39f31c2ca3a3081be6ed4253aa84eb900c404adb333b106",
+      "variantRubricSha256": "d6e3710667553ee6c7d4dc84fec5b435cb0a201864fade841a7d287fc411dbcb",
+      "sourceRubricRows": 9,
+      "variantRubricRows": 8,
+      "sourceCriteria": 31,
+      "variantCriteria": 44,
+      "totalWeight": 68
+    },
+    {
+      "task": "civil_engineers/task3",
+      "sourceRubricSha256": "b6e8daa5581223453c049b662ced2c698b99c3cb0c5edd459982cdbce981b0b1",
+      "variantRubricSha256": "8ae9215a65b08e0422370eb18dfa86f210ce231a81d03f0db53b2ef72602f7d4",
+      "sourceRubricRows": 9,
+      "variantRubricRows": 6,
+      "sourceCriteria": 26,
+      "variantCriteria": 33,
+      "totalWeight": 76
+    },
+    {
+      "task": "computer_and_information_research_scientists/task1",
+      "sourceRubricSha256": "55910211d4e7dc21496a36baa1418e8e191068a42e4e436965a15ce7634c0023",
+      "variantRubricSha256": "56520d4d63265bb41547ff19297bafaa42fef5f57e3e2f75c4aabe9f75fefe61",
+      "sourceRubricRows": 9,
+      "variantRubricRows": 6,
+      "sourceCriteria": 31,
+      "variantCriteria": 38,
+      "totalWeight": 66
+    },
+    {
+      "task": "computer_and_information_research_scientists/task2",
+      "sourceRubricSha256": "5e0d13533c80cc93fd42e545cfb42314024d79b7033b5aafbc63f1dadea3310f",
+      "variantRubricSha256": "55829eb34ff916079f4e453934a1c09cb1a127ad9cdb4ff199d2cc5e2f3db91b",
+      "sourceRubricRows": 10,
+      "variantRubricRows": 10,
+      "sourceCriteria": 37,
+      "variantCriteria": 70,
+      "totalWeight": 82
+    },
+    {
+      "task": "computer_and_information_systems_managers/task1",
+      "sourceRubricSha256": "3f17ca699055354b45134b0f61c2cccab81baa339af7f76db5e7984e95f87938",
+      "variantRubricSha256": "6ba6aade0feddda651653db2f6a7d3944375468e95f42c72e1a1fbbfeb96b0b5",
+      "sourceRubricRows": 8,
+      "variantRubricRows": 9,
+      "sourceCriteria": 32,
+      "variantCriteria": 36,
+      "totalWeight": 56
+    },
+    {
+      "task": "computer_and_information_systems_managers/task2",
+      "sourceRubricSha256": "80b7f578c6cf6c33be6db106826d97c4eda020444f2f2b1063607eb90a90aed5",
+      "variantRubricSha256": "e3cdfdf3c1baaabe315266da612686026ce776f176a67fd73b37b3f9a03a8f78",
+      "sourceRubricRows": 7,
+      "variantRubricRows": 7,
+      "sourceCriteria": 31,
+      "variantCriteria": 40,
+      "totalWeight": 62
+    },
+    {
+      "task": "computer_user_support_specialists/task1",
+      "sourceRubricSha256": "af34b756553dcb7fc32b8efede66c63ffe8e8c6a49c7a6f630c5f67e23f1d65d",
+      "variantRubricSha256": "9de03b470e4497a41791cc45d53e92acba72bcf3ab472324599e7106c7e3cc47",
+      "sourceRubricRows": 8,
+      "variantRubricRows": 8,
+      "sourceCriteria": 32,
+      "variantCriteria": 45,
+      "totalWeight": 56
+    },
+    {
+      "task": "computer_user_support_specialists/task2",
+      "sourceRubricSha256": "ddee560b79ba66448a3b5b62dca622fc5b1cb5df78968d4ca0a0ddc3abe1a1f0",
+      "variantRubricSha256": "c4ff5a40db1ff93d8621f9dfad39cef88cd9ce8fa732557bfc6089f6268a644c",
+      "sourceRubricRows": 10,
+      "variantRubricRows": 9,
+      "sourceCriteria": 39,
+      "variantCriteria": 48,
+      "totalWeight": 82
+    },
+    {
+      "task": "court_clerks/task1",
+      "sourceRubricSha256": "e741382ca492d7078315ce70aab7c10d00b7d6a9979d968040a36174e47519ae",
+      "variantRubricSha256": "1ef04fe8fa4efd0705f8acb3951869bf92b41ae86aa59f1f5338f3cf29e4226e",
+      "sourceRubricRows": 10,
+      "variantRubricRows": 7,
+      "sourceCriteria": 33,
+      "variantCriteria": 59,
+      "totalWeight": 76
+    },
+    {
+      "task": "customer_service_representatives/task1",
+      "sourceRubricSha256": "9b40940e9a900b58e33bb109f53ab9301231941a9f0e5f96c5416ee03e11c19d",
+      "variantRubricSha256": "66004f0f08549587f81ecc93b7ba9abd77c12be42595ce3279dff9accff25d58",
+      "sourceRubricRows": 10,
+      "variantRubricRows": 8,
+      "sourceCriteria": 36,
+      "variantCriteria": 50,
+      "totalWeight": 76
+    },
+    {
+      "task": "data_entry_keyers/task1",
+      "sourceRubricSha256": "b2115fad8e41fb5459f9bcc0f49dc415700ea5f7dfc4c75fa7239fb3d4c30311",
+      "variantRubricSha256": "b3d55e191d79753cd0b210640ff389a41ed9243492019b4fc44c7b2921089c9a",
+      "sourceRubricRows": 12,
+      "variantRubricRows": 8,
+      "sourceCriteria": 41,
+      "variantCriteria": 44,
+      "totalWeight": 92
+    },
+    {
+      "task": "data_entry_keyers/task2",
+      "sourceRubricSha256": "bfa28d88456bdcfcf88f321498bbce61968664dc309e3140ec31653a2c0bf3cd",
+      "variantRubricSha256": "d4537bf06c6422617fe1d59883ea6b122d002af1486dd293ccfd20fa8c28eaa3",
+      "sourceRubricRows": 8,
+      "variantRubricRows": 6,
+      "sourceCriteria": 27,
+      "variantCriteria": 37,
+      "totalWeight": 60
+    },
+    {
+      "task": "financial_managers_branch_or_department/task1",
+      "sourceRubricSha256": "b0bdaf6c5194276ecb077cee66e929209184878beef2d42c28878424144c9389",
+      "variantRubricSha256": "f9dae576e84eb82d448a25c676ae912b76e9e2c362519a9a9324a08d19eca8d5",
+      "sourceRubricRows": 11,
+      "variantRubricRows": 9,
+      "sourceCriteria": 42,
+      "variantCriteria": 63,
+      "totalWeight": 90
+    },
+    {
+      "task": "financial_managers_branch_or_department/task2",
+      "sourceRubricSha256": "d0333d6d71fe16270ff67bbafb79a721c5b903751fd2ff45641766d7d3d5f823",
+      "variantRubricSha256": "caadfd855912f901e342d5059276f23816f70724fa19917c7ebf71ec79225e89",
+      "sourceRubricRows": 9,
+      "variantRubricRows": 8,
+      "sourceCriteria": 40,
+      "variantCriteria": 76,
+      "totalWeight": 66
+    },
+    {
+      "task": "human_resources_specialists/task1",
+      "sourceRubricSha256": "51be481be6d68892a7519f78ac22b58e5171796de2aeb773d23d2b622a5ab0fa",
+      "variantRubricSha256": "0489f62b195ed71aa758eb2197b45d4e144a13e0490e98a0a10f6a47838fa550",
+      "sourceRubricRows": 8,
+      "variantRubricRows": 7,
+      "sourceCriteria": 27,
+      "variantCriteria": 47,
+      "totalWeight": 64
+    },
+    {
+      "task": "lawyers/task1",
+      "sourceRubricSha256": "a9c54f219a3dacd10c4d986ab450cb6851cbd2ed608fc1549e808a4cd3a2d8a5",
+      "variantRubricSha256": "19d7adf6c1d37fb8532249da6398c2b506db2b755cdc72234aefa8837a2d08f3",
+      "sourceRubricRows": 8,
+      "variantRubricRows": 9,
+      "sourceCriteria": 33,
+      "variantCriteria": 43,
+      "totalWeight": 48
+    },
+    {
+      "task": "licensing_examiners_and_inspectors/task1",
+      "sourceRubricSha256": "8795831cdca0e78d67d6ece77840632068831efc459beab63f0e7e485ad77b1f",
+      "variantRubricSha256": "26f483b548cf6f5b10f8ebfe32da767da932d61b60f2bce67b4f0c882c120fa6",
+      "sourceRubricRows": 10,
+      "variantRubricRows": 7,
+      "sourceCriteria": 33,
+      "variantCriteria": 38,
+      "totalWeight": 72
+    },
+    {
+      "task": "management_analysts/task1",
+      "sourceRubricSha256": "e48a50f3153c600da10b84285153afdd766e41d89ef518118143cca9f7454af7",
+      "variantRubricSha256": "0a09a9cf7f80418bc660937766a248103f352dc181d085e8fe3d1fa3ba0025bf",
+      "sourceRubricRows": 10,
+      "variantRubricRows": 7,
+      "sourceCriteria": 39,
+      "variantCriteria": 31,
+      "totalWeight": 88
+    },
+    {
+      "task": "management_analysts/task2",
+      "sourceRubricSha256": "c8bd7ec010d367e689e72b3f8471ebc014b7fdee5b0c7752a8923b1ebeefc36d",
+      "variantRubricSha256": "b832ce4759e0d8749ea167d983009d09350396222fa931de1ffd81ec047048d9",
+      "sourceRubricRows": 9,
+      "variantRubricRows": 11,
+      "sourceCriteria": 31,
+      "variantCriteria": 86,
+      "totalWeight": 80
+    },
+    {
+      "task": "management_analysts/task3",
+      "sourceRubricSha256": "4acf3cbef565c8294a495c2663c606754db8334fd78f0c81a2954cb8f6554939",
+      "variantRubricSha256": "b3f35874eb5b39b00a7aa02c7ca19a9b57dff2ef30a79df413b4a607315b47a0",
+      "sourceRubricRows": 9,
+      "variantRubricRows": 13,
+      "sourceCriteria": 31,
+      "variantCriteria": 42,
+      "totalWeight": 72
+    },
+    {
+      "task": "mechanical_engineering_technicians/task1",
+      "sourceRubricSha256": "2149ad3dae293f103e7e32f17b4d5dffe833efcc9abe456190398a412de54be3",
+      "variantRubricSha256": "ce46dac8352ff52cb2160a404bebd0ca48ab580741b41671a17896a07572ad83",
+      "sourceRubricRows": 10,
+      "variantRubricRows": 9,
+      "sourceCriteria": 29,
+      "variantCriteria": 42,
+      "totalWeight": 78
+    },
+    {
+      "task": "mechanical_engineering_technicians/task2",
+      "sourceRubricSha256": "1f341d010cc1e0b85085aace9c3a01f9d8603d30959e75c6322f0c0ce63205bc",
+      "variantRubricSha256": "dcdf9a2c10381b421abaaf612f0913d476485a9b41d819610f1749cef9cfb299",
+      "sourceRubricRows": 8,
+      "variantRubricRows": 7,
+      "sourceCriteria": 29,
+      "variantCriteria": 47,
+      "totalWeight": 70
+    },
+    {
+      "task": "mechanical_engineering_technicians/task3",
+      "sourceRubricSha256": "39a7ed96441d2e51cab0923e334630a37dc5f9f23133045f90a1ed03cf9fb16d",
+      "variantRubricSha256": "15791a3f02cc610e2b46dda779aa05d6aa652a3e3bf335f25c594fd02c2b4590",
+      "sourceRubricRows": 9,
+      "variantRubricRows": 8,
+      "sourceCriteria": 35,
+      "variantCriteria": 44,
+      "totalWeight": 58
+    },
+    {
+      "task": "mechanical_engineers/task1",
+      "sourceRubricSha256": "29c635fc702a8cb4444b4e511738c16e4e83f320d6d65ecae695de5799e48f0f",
+      "variantRubricSha256": "81f23ae7cf9ce5ea54e658b9daafb8d1ff94f4d237e6a7a2d86a5be48d9bba2b",
+      "sourceRubricRows": 9,
+      "variantRubricRows": 8,
+      "sourceCriteria": 37,
+      "variantCriteria": 54,
+      "totalWeight": 66
+    },
+    {
+      "task": "medical_and_health_services_managers/task1",
+      "sourceRubricSha256": "394bf23afea49dc87f933de7a91746a4d08658f903de45c347e689d81a04069c",
+      "variantRubricSha256": "9015464081429c34a62d7d7b299caea54f4857eb2648c2bed1b3f3508f51cfdf",
+      "sourceRubricRows": 8,
+      "variantRubricRows": 7,
+      "sourceCriteria": 29,
+      "variantCriteria": 42,
+      "totalWeight": 74
+    },
+    {
+      "task": "medical_and_health_services_managers/task2",
+      "sourceRubricSha256": "8d86495318d778a638b8d2ed419631053f45216c06821b408cc8fa5866d1757e",
+      "variantRubricSha256": "fa51eca7b783a0504d2eb387742d799eef6e86f608c1b41d8bd1f74c8f5e2362",
+      "sourceRubricRows": 9,
+      "variantRubricRows": 7,
+      "sourceCriteria": 32,
+      "variantCriteria": 39,
+      "totalWeight": 86
+    },
+    {
+      "task": "medical_secretaries/task1",
+      "sourceRubricSha256": "d4b95e63f97f46057255f8e64bba34ee27ce378c304098d39a359858814ec5d9",
+      "variantRubricSha256": "8fef0d7d28d697ff60675b42eae31a63ed82df6133a93c634053060cefb63fa7",
+      "sourceRubricRows": 10,
+      "variantRubricRows": 8,
+      "sourceCriteria": 38,
+      "variantCriteria": 47,
+      "totalWeight": 78
+    },
+    {
+      "task": "online_merchants/task1",
+      "sourceRubricSha256": "e132d3a214ca4f2623c5427533a9f4c9fa740a226187eb49b7c180de06a8b835",
+      "variantRubricSha256": "e4c33858f007634e3ba78acd96057cf52d1230d6ec606ec477206267d17938fc",
+      "sourceRubricRows": 8,
+      "variantRubricRows": 7,
+      "sourceCriteria": 25,
+      "variantCriteria": 32,
+      "totalWeight": 58
+    },
+    {
+      "task": "online_merchants/task2",
+      "sourceRubricSha256": "acb074ce25f2b5150d2f7ca308bb3abc8270f196800bc0e7d5bb9957ad9f3256",
+      "variantRubricSha256": "0b0222391ec74d72a1c9f1aeb1cf0363a1c8559d904044ee10fd3c0df8511050",
+      "sourceRubricRows": 7,
+      "variantRubricRows": 7,
+      "sourceCriteria": 30,
+      "variantCriteria": 59,
+      "totalWeight": 54
+    },
+    {
+      "task": "personal_financial_advisors/task1",
+      "sourceRubricSha256": "e99a5ac89ded08eda65a2095810206ef43c0eeda81ccc5464dba8a7b08f25fa5",
+      "variantRubricSha256": "92fbc74b615418fab2fae0cecf72b156171849a5b0e852759ac8bdeb1934d856",
+      "sourceRubricRows": 9,
+      "variantRubricRows": 8,
+      "sourceCriteria": 35,
+      "variantCriteria": 48,
+      "totalWeight": 78
+    },
+    {
+      "task": "petroleum_engineers/task1",
+      "sourceRubricSha256": "4484c77329bd5a81bd308e4a4b329e4cb68a03765ec203384b33dab0292cb2ef",
+      "variantRubricSha256": "355591a869b69117352a9303860ec1a2a20150c900c846dbbdac2444c5fd624c",
+      "sourceRubricRows": 6,
+      "variantRubricRows": 17,
+      "sourceCriteria": 18,
+      "variantCriteria": 75,
+      "totalWeight": 50
+    },
+    {
+      "task": "police_fire_and_ambulance_dispatchers/task1",
+      "sourceRubricSha256": "fe58055d0e0151936a8062230b46ecbb786c2739069efb405e382cd89ae44e72",
+      "variantRubricSha256": "c2ab24f5ac9dc7028943d3507068f1953367721e69baeeda732010bebfea1034",
+      "sourceRubricRows": 10,
+      "variantRubricRows": 9,
+      "sourceCriteria": 32,
+      "variantCriteria": 52,
+      "totalWeight": 94
+    },
+    {
+      "task": "producers/task1",
+      "sourceRubricSha256": "f0e2633c44fdfa29e022031b1ea06e2f24d36e01191d98ccbb0f27bb00bfb2b8",
+      "variantRubricSha256": "c429e5ac9646c2ede46da6f159935ff1486aca1a1e642a05b0751efaf7761de6",
+      "sourceRubricRows": 9,
+      "variantRubricRows": 8,
+      "sourceCriteria": 27,
+      "variantCriteria": 65,
+      "totalWeight": 72
+    },
+    {
+      "task": "purchasing_agents_except_wholesale_retail_and_farm_products/task1",
+      "sourceRubricSha256": "6092a24e36350a708410711fc9e25ba724be28a40716fd666f2740f1e6802432",
+      "variantRubricSha256": "b1618d4105b0dd2cd67948ee3fecf449c151d152a3f86d9eea85f522ef2a7fdd",
+      "sourceRubricRows": 10,
+      "variantRubricRows": 9,
+      "sourceCriteria": 41,
+      "variantCriteria": 55,
+      "totalWeight": 88
+    },
+    {
+      "task": "purchasing_agents_except_wholesale_retail_and_farm_products/task2",
+      "sourceRubricSha256": "5be11d410ab4ea2d9a18d948a1d460c7902c7c24cc0cf591c388f08b0014a754",
+      "variantRubricSha256": "a7f771a11b03d77a05e13236a58208ab53e1edda3c01ad19422eb40baf04ca9c",
+      "sourceRubricRows": 10,
+      "variantRubricRows": 7,
+      "sourceCriteria": 33,
+      "variantCriteria": 42,
+      "totalWeight": 78
+    },
+    {
+      "task": "purchasing_agents_except_wholesale_retail_and_farm_products/task3",
+      "sourceRubricSha256": "7c67ee0299a193f357365485de38524155242e59a4ff69b8caca65bc488cd2d8",
+      "variantRubricSha256": "352de69a4838814c06fbd8ed9eaa3504f4477eecac58cde6708834348d24897d",
+      "sourceRubricRows": 11,
+      "variantRubricRows": 10,
+      "sourceCriteria": 44,
+      "variantCriteria": 92,
+      "totalWeight": 96
+    },
+    {
+      "task": "reporters_and_correspondents/task1",
+      "sourceRubricSha256": "7979a12fe6a6bc0a07746bc92491f605a9c236d9515124cc10f4d6543fef5d55",
+      "variantRubricSha256": "4dba698b3d2268668f69e3978d2d0a9fd8008e6d255694c4ae5017000e9781c3",
+      "sourceRubricRows": 8,
+      "variantRubricRows": 6,
+      "sourceCriteria": 26,
+      "variantCriteria": 27,
+      "totalWeight": 60
+    },
+    {
+      "task": "sales_agents_securities_and_commodities/task1",
+      "sourceRubricSha256": "56f0cb234f196876f1edad8968488b6b94aeea9ce5bd1868a0ca63b3f7ca344c",
+      "variantRubricSha256": "a668083e8ab3ebb239eedb88830a7d6091cab8aebdd61a2f38fbf4e42c413b72",
+      "sourceRubricRows": 8,
+      "variantRubricRows": 8,
+      "sourceCriteria": 29,
+      "variantCriteria": 44,
+      "totalWeight": 74
+    },
+    {
+      "task": "sales_representatives_wholesale_and_manufacturing_technical_and_scientific_products/task1",
+      "sourceRubricSha256": "16d45d790887b44488ad2f13c54867327779a34ef8484839a481205c72ca0843",
+      "variantRubricSha256": "05848a3740f14f9c715f485952919a1c338305d3b0aa7a9174a625797640cb69",
+      "sourceRubricRows": 11,
+      "variantRubricRows": 9,
+      "sourceCriteria": 39,
+      "variantCriteria": 46,
+      "totalWeight": 106
+    },
+    {
+      "task": "sales_representatives_wholesale_and_manufacturing_technical_and_scientific_products/task2",
+      "sourceRubricSha256": "511f85948fad644b561dd5bb7209d6d242b3b7292bbcb51457c8815ad015cc0b",
+      "variantRubricSha256": "3ade919b6706940d5d3e363f419fc853d452d6fa3ca03aabc87ec9292a53942c",
+      "sourceRubricRows": 10,
+      "variantRubricRows": 7,
+      "sourceCriteria": 32,
+      "variantCriteria": 56,
+      "totalWeight": 80
+    },
+    {
+      "task": "secretaries_and_administrative_assistants_except_legal_medical_and_executive/task1",
+      "sourceRubricSha256": "73a7815b3618f06889ff3513c563e73c4d399e230ce3c34dbdcc03cdb37d11b5",
+      "variantRubricSha256": "6afe5719095a181eedf40f1adca7cebb23b1cac5e5ee2bb22a0f67b251c1b851",
+      "sourceRubricRows": 7,
+      "variantRubricRows": 6,
+      "sourceCriteria": 27,
+      "variantCriteria": 37,
+      "totalWeight": 60
+    },
+    {
+      "task": "secretaries_and_administrative_assistants_except_legal_medical_and_executive/task2",
+      "sourceRubricSha256": "7f522933fdfb7697b0a5ab0ad796fc2cfe289a64f3efa2bd0f00f57037f11b16",
+      "variantRubricSha256": "312e2ad89e265df6d8b64e32cb5425c0a7f1041aa7ee52e2d72e36413a7ea929",
+      "sourceRubricRows": 6,
+      "variantRubricRows": 6,
+      "sourceCriteria": 23,
+      "variantCriteria": 41,
+      "totalWeight": 48
+    },
+    {
+      "task": "social_science_research_assistants/task1",
+      "sourceRubricSha256": "6b35eadab14a6bbedec8adecc47bb743d019d60dc2503cf798249c3d586ee591",
+      "variantRubricSha256": "34249aad6c2d018d2258b66892fab9b7c83a273c181b2d0b6b7958d66d1dac67",
+      "sourceRubricRows": 10,
+      "variantRubricRows": 8,
+      "sourceCriteria": 30,
+      "variantCriteria": 44,
+      "totalWeight": 66
+    },
+    {
+      "task": "social_science_research_assistants/task2",
+      "sourceRubricSha256": "7512c27f136ebefa3b4fc4c18b4c3f50bc93a9c2e56c15bb5698987f419184a8",
+      "variantRubricSha256": "2b1d387a2e39c2fab3f2a50b483e7ce7b89f6c0907791363879fbda8e3533a7e",
+      "sourceRubricRows": 9,
+      "variantRubricRows": 8,
+      "sourceCriteria": 28,
+      "variantCriteria": 45,
+      "totalWeight": 68
+    },
+    {
+      "task": "social_science_research_assistants/task3",
+      "sourceRubricSha256": "5e164bcc378fae6ff36003af7eebb04e6a00c6c1614484e6897a23bef3c2983b",
+      "variantRubricSha256": "b109f9e8a383687c4b546859576a283b30f4d18ea0a55ec678bfee37225df231",
+      "sourceRubricRows": 6,
+      "variantRubricRows": 7,
+      "sourceCriteria": 21,
+      "variantCriteria": 34,
+      "totalWeight": 50
+    },
+    {
+      "task": "sociology_teachers_postsecondary/task1",
+      "sourceRubricSha256": "45d4b1c21feb84a358da6c791d0bcaffddece0a11a6311dde939c6d633f06b9d",
+      "variantRubricSha256": "c0b134b391c4b449eb1bc0ed6f819d680bb42d07f211fd8140ca79b9428f2df5",
+      "sourceRubricRows": 8,
+      "variantRubricRows": 8,
+      "sourceCriteria": 32,
+      "variantCriteria": 69,
+      "totalWeight": 68
+    },
+    {
+      "task": "sociology_teachers_postsecondary/task2",
+      "sourceRubricSha256": "e1bba7a1e16712f5b6570fab292ef6251f20178c4e0767bfc7a3a265152aab0e",
+      "variantRubricSha256": "9e81811b7ae6df116438b3a7cfe6786f51638a20ef542a8bfd78ceeedcd0bb2c",
+      "sourceRubricRows": 8,
+      "variantRubricRows": 9,
+      "sourceCriteria": 25,
+      "variantCriteria": 84,
+      "totalWeight": 66
+    },
+    {
+      "task": "sociology_teachers_postsecondary/task3",
+      "sourceRubricSha256": "71014fc76d4901f63c582eb36353a119765ad0926eac099ea9f9bc37ea873aa6",
+      "variantRubricSha256": "704079eded126a50479fc5a52b05f5a1f9174724a0041187cd429bde9d7967b5",
+      "sourceRubricRows": 9,
+      "variantRubricRows": 7,
+      "sourceCriteria": 37,
+      "variantCriteria": 64,
+      "totalWeight": 72
+    },
+    {
+      "task": "statisticians/task1",
+      "sourceRubricSha256": "adcdb91b955283f57b33bf79a88dfa4decb5c5a93c19248ea210e73182d6d223",
+      "variantRubricSha256": "a76d6f102541206b437ae905baacfe69da45b28ccf7b53eadf00fa6733e1138f",
+      "sourceRubricRows": 12,
+      "variantRubricRows": 11,
+      "sourceCriteria": 46,
+      "variantCriteria": 63,
+      "totalWeight": 116
+    },
+    {
+      "task": "statisticians/task2",
+      "sourceRubricSha256": "37fd427804f4f7e984d361adf724ec7bbc364988a424b72268c8cfd92b611aa0",
+      "variantRubricSha256": "78d83a9ea1e93e2b9adcd36b013e0858931d158e6a0dca7bdd090e053eefc98f",
+      "sourceRubricRows": 8,
+      "variantRubricRows": 7,
+      "sourceCriteria": 30,
+      "variantCriteria": 43,
+      "totalWeight": 66
+    },
+    {
+      "task": "statisticians/task3",
+      "sourceRubricSha256": "31fe462250c6a681611a085a6620236c254bdc7037b04394d6d23ef24c564d00",
+      "variantRubricSha256": "c1514b88553acbf4ef5e263ccc70372160d1c9e0ad7511a7a2006e2c8d5c870f",
+      "sourceRubricRows": 8,
+      "variantRubricRows": 10,
+      "sourceCriteria": 33,
+      "variantCriteria": 69,
+      "totalWeight": 54
+    },
+    {
+      "task": "supply_chain_managers/task1",
+      "sourceRubricSha256": "bb3ba39673ae3e582be72357ea560499167a40f5e0581765f4a206ffba6cfa9a",
+      "variantRubricSha256": "35d7d14e93745ec844e4237138a380d3f6ee79b8e1ebf1031f38df1800452b6f",
+      "sourceRubricRows": 8,
+      "variantRubricRows": 8,
+      "sourceCriteria": 31,
+      "variantCriteria": 33,
+      "totalWeight": 64
+    },
+    {
+      "task": "supply_chain_managers/task2",
+      "sourceRubricSha256": "b46fc0df53beb3deb7d77084b6ed5d95e50b7489394e52b8460d190074852412",
+      "variantRubricSha256": "21678000ea6a0ba5a3cb47532984010edb53bc72dd2a051558f08723cde9a358",
+      "sourceRubricRows": 6,
+      "variantRubricRows": 7,
+      "sourceCriteria": 19,
+      "variantCriteria": 38,
+      "totalWeight": 40
+    },
+    {
+      "task": "technical_writers/task1",
+      "sourceRubricSha256": "4e97df76c8afbaf84d41411a57174aa9cc4254949cf1d09534ede6c2f6a002c4",
+      "variantRubricSha256": "27466d4fac003a1e9cafaab8dd923cf3ea4b8644481dc55a721c7882c13a524a",
+      "sourceRubricRows": 10,
+      "variantRubricRows": 7,
+      "sourceCriteria": 40,
+      "variantCriteria": 57,
+      "totalWeight": 66
+    },
+    {
+      "task": "technical_writers/task2",
+      "sourceRubricSha256": "4833760461378a07fc84893c58b058779655117791b00f8f7ff7f22c190dde40",
+      "variantRubricSha256": "3ac481f2d667cc505d2d9aabbb7f4deaf77d708b8305a321b4336bab7a2806d8",
+      "sourceRubricRows": 8,
+      "variantRubricRows": 7,
+      "sourceCriteria": 32,
+      "variantCriteria": 50,
+      "totalWeight": 60
+    },
+    {
+      "task": "technical_writers/task3",
+      "sourceRubricSha256": "455866a847f622cac585e191377a706fd330ffc746652a4482bee1f7fca8468f",
+      "variantRubricSha256": "2935bf4a9f912e4792229add75e183864e4485a841d869c0a8915c861fc21486",
+      "sourceRubricRows": 12,
+      "variantRubricRows": 10,
+      "sourceCriteria": 41,
+      "variantCriteria": 65,
+      "totalWeight": 84
+    },
+    {
+      "task": "training_and_development_specialists/task1",
+      "sourceRubricSha256": "d918291e907de00cee0738dd915b20f8096e731e6c30587a77d65ce42eba7572",
+      "variantRubricSha256": "b042c27761f8c20892b130d6477a5c2c24d1af7a105978d9b2abb77bb15ad65b",
+      "sourceRubricRows": 9,
+      "variantRubricRows": 9,
+      "sourceCriteria": 35,
+      "variantCriteria": 55,
+      "totalWeight": 54
+    },
+    {
+      "task": "training_and_development_specialists/task2",
+      "sourceRubricSha256": "c4f717be0bc8f29e967e25ac7da229102217d7f448a2005e724c0453f8e472ef",
+      "variantRubricSha256": "d29c03506d67abf8de2ec879dff05b65c984560f3c595f9380ce152313c5e6a5",
+      "sourceRubricRows": 6,
+      "variantRubricRows": 6,
+      "sourceCriteria": 23,
+      "variantCriteria": 42,
+      "totalWeight": 44
+    },
+    {
+      "task": "training_and_development_specialists/task3",
+      "sourceRubricSha256": "74c047c778eb246e3ebdbcc9e050223b7681c3220b9bee23427ec61882b5e274",
+      "variantRubricSha256": "f5e6252f2dc2a5276c37fd56cd97829ebf9e541bbe3ec9cd88ba2bb19104ead9",
+      "sourceRubricRows": 7,
+      "variantRubricRows": 7,
+      "sourceCriteria": 23,
+      "variantCriteria": 38,
+      "totalWeight": 54
+    },
+    {
+      "task": "web_administrators/task1",
+      "sourceRubricSha256": "0aa960c72261ac46d632b7c290147438ced45358750eba99b741532d11a7f55b",
+      "variantRubricSha256": "96de4132ac512151fd50c1a1224318f13800a1a3f51f23e21f8b39670f767fa2",
+      "sourceRubricRows": 8,
+      "variantRubricRows": 7,
+      "sourceCriteria": 34,
+      "variantCriteria": 59,
+      "totalWeight": 50
+    }
+  ]
+}
