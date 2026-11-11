@@ -1,6 +1,9 @@
 """One readable markdown digest per JobBench task of a run, for failure analysis.
 
-    python3 benchmarks/jobbench/trace_digest.py RUN_DIR --out DIR [--grading grading] [--tasks ID ...]
+    python3 benchmarks/jobbench/trace_digest.py RUN_DIR --out DIR [--rubrics original|v1] [--grading DIR] [--tasks ID ...]
+
+--rubrics picks whose judge verdicts are shown: original (RUN_DIR/grading, the default) or v1 (RUN_DIR/grading-v1), the
+grading directories grade.sh --rubrics writes; --grading names another one (relative to RUN_DIR).
 
 Per task (DIR/<profession>__<taskN>.md):
 - score, time, steps, subagent sessions;
@@ -22,6 +25,7 @@ from pathlib import Path
 EXTRACTOR = os.environ.get("DSH_BENCH_EXTRACTOR", str(Path.home() / "dsh-bench-harness-inv/plugins/invariants/.venv/bin/python")
                            + " " + str(Path.home() / "dsh-bench-harness-inv/plugins/invariants/extract_text.py")).split()
 TEXT_EXT = {".md", ".txt", ".csv", ".json", ".py", ".html", ".xml", ".yaml", ".yml", ".tsv", ".sql", ".log", ".eml"}
+GRADING_DIRS = {"original": "grading", "v1": "grading-v1"}  # grade.sh --rubrics: where each set's results go
 DOC_EXT = {".docx", ".xlsx", ".xls", ".pptx", ".pdf", ".doc", ".xlsm"}
 
 
@@ -105,7 +109,7 @@ def extract(path: Path, n: int) -> str:
     return "(binary; not extracted)"
 
 
-def render(run: Path, task_dir: Path, grading: Path) -> str:
+def render(run: Path, task_dir: Path, grading: Path, rubric_set: str) -> str:
     spec = json.loads((task_dir / "spec.json").read_text())
     tid = spec["task_id"]
     gdir = grading / "dataset/main" / tid
@@ -118,7 +122,7 @@ def render(run: Path, task_dir: Path, grading: Path) -> str:
     root = [x for x in rendered if x[2]["depth"] == 0]
     subs = [x for x in rendered if x[2]["depth"] != 0]
     score = f"{j['total_score']}/{j['max_score']} = {j['total_score'] / j['max_score']:.3f}" if j else "not graded"
-    parts.append(f"# {tid}\n\nScore (original rubrics): **{score}**; rubric items passed {j['passed_count']}/{j['total_count']}" if j else f"# {tid}\n\nScore: not graded")
+    parts.append(f"# {tid}\n\nScore ({rubric_set} rubrics): **{score}**; rubric items passed {j['passed_count']}/{j['total_count']}" if j else f"# {tid}\n\nScore: not graded")
     parts.append(f"Agent time {rj.get('agent_s', '?')} s; finish {rj.get('finish_reason', '?')}; root steps {root[0][2]['steps'] if root else '?'}; "
                  f"subagent sessions {len(subs)}")
     parts.append("\n## Prompt given to the agent\n\n" + cut((task_dir / "prompt.txt").read_text(), 9000))
@@ -162,9 +166,16 @@ def main() -> None:
     p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     p.add_argument("run", type=Path)
     p.add_argument("--out", type=Path, required=True)
-    p.add_argument("--grading", default="grading")
+    p.add_argument("--rubrics", choices=sorted(GRADING_DIRS), default="original",
+                   help="rubric set whose verdicts are shown (grade.sh --rubrics)")
+    p.add_argument("--grading", help="grading directory under RUN_DIR (default: the rubric set's)")
     p.add_argument("--tasks", nargs="*")
     args = p.parse_args()
+    grading = args.run / (args.grading or GRADING_DIRS[args.rubrics])
+    if not grading.is_dir():
+        raise SystemExit(f"no {grading}: grade the run first (benchmarks/jobbench/grade.sh --rubrics {args.rubrics})")
+    recorded = grading / "rubrics.json"  # written by grade.sh; older gradings have none
+    rubric_set = json.loads(recorded.read_text())["rubrics"] if recorded.exists() else args.rubrics
     args.out.mkdir(parents=True, exist_ok=True)
     for task_dir in sorted((args.run / "tasks").iterdir()):
         if not (task_dir / "spec.json").exists():
@@ -172,7 +183,7 @@ def main() -> None:
         tid = json.loads((task_dir / "spec.json").read_text())["task_id"]
         if args.tasks and tid not in args.tasks:
             continue
-        text = render(args.run, task_dir, args.run / args.grading)
+        text = render(args.run, task_dir, grading, rubric_set)
         (args.out / f"{task_dir.name}.md").write_text(text)
         print(f"{task_dir.name}: {len(text)} chars")
 
