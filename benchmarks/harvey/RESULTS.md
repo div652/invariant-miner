@@ -23,6 +23,18 @@ other, each graded before the next started: `runs/hv-fk250-lunahigh-rep2-2026111
 | AHE train + val (`ahe:trainval`, 100) | 25.0% (22.0 / 26.0 / 27.0) | 0.675 (0.660 / 0.693 / 0.673) |
 | our test (`split:test`, 50) | 26.7% (28.0 / 26.0 / 26.0) | 0.620 (0.620 / 0.615 / 0.624) |
 
+**Pass@3 (all 250 tasks): 32.8%** (82/250): a task counts if it is all-pass in at least one of the three runs.
+
+| Tasks | Pass@1 (three-run mean) | Pass@2 | **Pass@3** | All-pass in all three runs | Tasks passing in 0 / 1 / 2 / 3 runs |
+|---|---|---|---|---|---|
+| all 250 | 22.7% | 29.1% | **32.8%** (82) | 13.6% (34) | 168 / 28 / 20 / 34 |
+| AHE test (70) | 21.9% | 27.1% | 30.0% (21) | 14.3% (10) | 49 / 6 / 5 / 10 |
+| AHE train + val (100) | 25.0% | 31.3% | 35.0% (35) | 16.0% (16) | 65 / 11 / 8 / 16 |
+| our test (50) | 26.7% | 35.3% | 40.0% (20) | 14.0% (7) | 30 / 7 / 6 / 7 |
+
+Pass@2 is the unbiased estimate from the three runs (mean over tasks of 1 - C(3-c, 2) / C(3, 2), c = passing runs). Of
+the 82 tasks Luna high solves at least once, 48 are solved in only one or two of the three runs.
+
 All 750 runs ended `completed`; no CAO stall needed a re-run. Run-to-run spread on all 250: 0.5 points all-pass (SD of the
 three run means), 0.013 criterion; on the 70- and 100-task subsets the all-pass spread is 2-3 points.
 

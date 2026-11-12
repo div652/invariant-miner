@@ -28,6 +28,18 @@
   "mean": {
    "all_pass_rate": 0.2267,
    "criterion_pass_rate": 0.6613
+  },
+  "pass_at_k": {
+   "pass@1": 0.2267,
+   "pass@2": 0.2907,
+   "pass@3": 0.328,
+   "all_three": 0.136,
+   "tasks_passing_in_0_1_2_3_runs": [
+    168,
+    28,
+    20,
+    34
+   ]
   }
  },
  "tasks": {
