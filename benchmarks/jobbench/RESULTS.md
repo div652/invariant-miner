@@ -5,6 +5,105 @@ table says so, on agentic-evolution's **task-instruction-aligned v1** rubrics (`
 `RUN/grading-v1/`; the v1 files are in this repository, `rubrics/`). What differs between them: CHECKLIST.md, row 9
 "Rubric sets".
 
+## Baseline: all 65 tasks, GPT-5.6 Luna high, two runs, 2026-11-12
+
+**The reference baseline for JobBench comparisons**: the core harness (subagents off, no optional plugins), two full
+runs of all 65 tasks, graded on both rubric sets. Per-task scores (both runs, both rubric sets) are in
+[`baselines/luna-high-2runs-20261112.json`](baselines/luna-high-2runs-20261112.json); compare a new run with the
+two-run mean per task, not with one run.
+
+Setup: `models/luna-cao.json` (gpt-5.6-luna via CAO, effort high, reasoning summaries on), 2 h per task, network pasta,
+web_search via the Exa relay; graded by grok-4.6 high via the CAO shim (`grade.sh`, judge_parallel 2x9). Runs
+`runs/jb-all65-base-r1-20261111T191736Z` and `-r2-` (in the inv-new-tools worktree, not in git) were the baseline arm of the agent-tools experiment
+on branch `inv-new-tools` (`62328bf`, docs/agent-tools/RESULTS.md there): that branch's additions are inactive without
+the `agent_tools` spec key, so these runs are main's configuration. Run 2026-11-12 00:48-06:13 IST, 40 tasks at a time
+(interleaved with the experiment's other arms). The Exa credits ran out at 00:57 IST: the 15 (r1) and 16 (r2) tasks
+whose web_search hit the credit error were discarded and re-run with a new key; no kept run has the error. All 130 runs
+ended `completed`; 65/65 graded in each run on both rubric sets.
+
+| | Run 1 | Run 2 | **Two-run mean** |
+|---|---|---|---|
+| original rubrics, macro (pooled) | 0.291 (0.278) | 0.363 (0.352) | **0.327** (0.315) |
+| v1 rubrics, macro (pooled) | 0.407 (0.407) | 0.423 (0.422) | **0.415** (0.414) |
+| agent time median, root steps median | 467 s, 33 | 515 s, 32 | |
+
+- **Run-to-run noise**: run 2 - run 1 = +0.073, 95% CI [+0.039, +0.106] (W/T/L 33/21/11) on the original rubrics,
+  +0.016 [-0.020, +0.052] on v1. One run of the same setup can sit 0.07 from another: compare against the two-run mean.
+- **Against the 11-10 Luna-high subagents-off run** (0.313 / 0.404, section below): two-run mean - that run = +0.014
+  [-0.011, +0.040] original, +0.011 [-0.029, +0.049] v1 (paired over the 65 tasks): the same level.
+
+<details><summary>Per task (points/max per run, two-run mean of score/max)</summary>
+
+| Task | orig r1 | orig r2 | orig mean | v1 r1 | v1 r2 | v1 mean |
+|---|---|---|---|---|---|---|
+| biostatisticians/task1 | 38/72 | 44/72 | 0.569 | 45/72 | 37/72 | 0.569 |
+| biostatisticians/task2 | 0/58 | 14/58 | 0.121 | 5/58 | 5/58 | 0.086 |
+| bookkeeping_accounting_and_auditing_clerks/task1 | 0/88 | 20/88 | 0.114 | 19/88 | 29/88 | 0.273 |
+| bookkeeping_accounting_and_auditing_clerks/task2 | 24/52 | 6/52 | 0.288 | 12/52 | 25/52 | 0.356 |
+| civil_engineers/task1 | 34/50 | 34/50 | 0.680 | 8/50 | 16/50 | 0.240 |
+| civil_engineers/task2 | 26/68 | 48/68 | 0.544 | 40/68 | 42/68 | 0.603 |
+| civil_engineers/task3 | 14/76 | 24/76 | 0.250 | 28/76 | 48/76 | 0.500 |
+| computer_and_information_research_scientists/task1 | 18/66 | 32/66 | 0.379 | 12/66 | 32/66 | 0.333 |
+| computer_and_information_research_scientists/task2 | 6/82 | 24/82 | 0.183 | 36/82 | 28/82 | 0.390 |
+| computer_and_information_systems_managers/task1 | 12/56 | 30/56 | 0.375 | 28/56 | 36/56 | 0.571 |
+| computer_and_information_systems_managers/task2 | 10/62 | 8/62 | 0.145 | 0/62 | 0/62 | 0.000 |
+| computer_user_support_specialists/task1 | 28/56 | 28/56 | 0.500 | 41/56 | 41/56 | 0.732 |
+| computer_user_support_specialists/task2 | 14/82 | 8/82 | 0.134 | 24/82 | 32/82 | 0.342 |
+| court_clerks/task1 | 24/76 | 22/76 | 0.303 | 18/76 | 16/76 | 0.224 |
+| customer_service_representatives/task1 | 6/76 | 6/76 | 0.079 | 34/76 | 34/76 | 0.447 |
+| data_entry_keyers/task1 | 32/92 | 60/92 | 0.500 | 52/92 | 58/92 | 0.598 |
+| data_entry_keyers/task2 | 44/60 | 44/60 | 0.733 | 40/60 | 20/60 | 0.500 |
+| financial_managers_branch_or_department/task1 | 30/90 | 30/90 | 0.333 | 40/90 | 54/90 | 0.522 |
+| financial_managers_branch_or_department/task2 | 16/66 | 0/66 | 0.121 | 31/66 | 31/66 | 0.470 |
+| human_resources_specialists/task1 | 26/64 | 26/64 | 0.406 | 23/64 | 23/64 | 0.359 |
+| lawyers/task1 | 6/48 | 12/48 | 0.188 | 30/48 | 26/48 | 0.583 |
+| licensing_examiners_and_inspectors/task1 | 18/72 | 28/72 | 0.319 | 64/72 | 66/72 | 0.903 |
+| management_analysts/task1 | 22/88 | 22/88 | 0.250 | 52/88 | 38/88 | 0.511 |
+| management_analysts/task2 | 18/80 | 18/80 | 0.225 | 14/80 | 28/80 | 0.263 |
+| management_analysts/task3 | 6/72 | 12/72 | 0.125 | 49/72 | 42/72 | 0.632 |
+| mechanical_engineering_technicians/task1 | 24/78 | 24/78 | 0.308 | 50/78 | 50/78 | 0.641 |
+| mechanical_engineering_technicians/task2 | 0/70 | 0/70 | 0.000 | 30/70 | 24/70 | 0.386 |
+| mechanical_engineering_technicians/task3 | 26/58 | 32/58 | 0.500 | 32/58 | 30/58 | 0.534 |
+| mechanical_engineers/task1 | 6/66 | 6/66 | 0.091 | 24/66 | 18/66 | 0.318 |
+| medical_and_health_services_managers/task1 | 16/74 | 26/74 | 0.284 | 44/74 | 8/74 | 0.351 |
+| medical_and_health_services_managers/task2 | 6/86 | 16/86 | 0.128 | 26/86 | 26/86 | 0.302 |
+| medical_secretaries/task1 | 12/78 | 6/78 | 0.115 | 28/78 | 34/78 | 0.397 |
+| online_merchants/task1 | 28/58 | 38/58 | 0.569 | 38/58 | 26/58 | 0.552 |
+| online_merchants/task2 | 22/54 | 30/54 | 0.481 | 22/54 | 22/54 | 0.407 |
+| personal_financial_advisors/task1 | 6/78 | 22/78 | 0.179 | 20/78 | 8/78 | 0.179 |
+| petroleum_engineers/task1 | 16/50 | 16/50 | 0.320 | 27/50 | 31/50 | 0.580 |
+| police_fire_and_ambulance_dispatchers/task1 | 34/94 | 54/94 | 0.468 | 62/94 | 60/94 | 0.649 |
+| producers/task1 | 56/72 | 48/72 | 0.722 | 40/72 | 44/72 | 0.583 |
+| purchasing_agents_except_wholesale_retail_and_farm_products/task1 | 12/88 | 18/88 | 0.171 | 18/88 | 24/88 | 0.239 |
+| purchasing_agents_except_wholesale_retail_and_farm_products/task2 | 8/78 | 24/78 | 0.205 | 44/78 | 58/78 | 0.654 |
+| purchasing_agents_except_wholesale_retail_and_farm_products/task3 | 16/96 | 16/96 | 0.167 | 18/96 | 24/96 | 0.219 |
+| reporters_and_correspondents/task1 | 20/60 | 36/60 | 0.467 | 24/60 | 14/60 | 0.317 |
+| sales_agents_securities_and_commodities/task1 | 30/74 | 30/74 | 0.405 | 30/74 | 10/74 | 0.270 |
+| sales_representatives_wholesale_and_manufacturing_technical_and_scientific_products/task1 | 10/106 | 10/106 | 0.094 | 52/106 | 42/106 | 0.443 |
+| sales_representatives_wholesale_and_manufacturing_technical_and_scientific_products/task2 | 18/80 | 30/80 | 0.300 | 12/80 | 22/80 | 0.212 |
+| secretaries_and_administrative_assistants_except_legal_medical_and_executive/task1 | 22/60 | 40/60 | 0.517 | 8/60 | 34/60 | 0.350 |
+| secretaries_and_administrative_assistants_except_legal_medical_and_executive/task2 | 18/48 | 6/48 | 0.250 | 26/48 | 16/48 | 0.438 |
+| social_science_research_assistants/task1 | 48/66 | 48/66 | 0.727 | 42/66 | 52/66 | 0.712 |
+| social_science_research_assistants/task2 | 38/68 | 36/68 | 0.544 | 26/68 | 22/68 | 0.353 |
+| social_science_research_assistants/task3 | 32/50 | 32/50 | 0.640 | 33/50 | 33/50 | 0.660 |
+| sociology_teachers_postsecondary/task1 | 18/68 | 38/68 | 0.412 | 16/68 | 16/68 | 0.235 |
+| sociology_teachers_postsecondary/task2 | 30/66 | 38/66 | 0.515 | 40/66 | 44/66 | 0.636 |
+| sociology_teachers_postsecondary/task3 | 14/72 | 30/72 | 0.306 | 40/72 | 40/72 | 0.556 |
+| statisticians/task1 | 16/116 | 10/116 | 0.112 | 34/116 | 24/116 | 0.250 |
+| statisticians/task2 | 16/66 | 30/66 | 0.348 | 28/66 | 32/66 | 0.455 |
+| statisticians/task3 | 22/54 | 22/54 | 0.407 | 23/54 | 22/54 | 0.417 |
+| supply_chain_managers/task1 | 6/64 | 12/64 | 0.141 | 16/64 | 22/64 | 0.297 |
+| supply_chain_managers/task2 | 0/40 | 6/40 | 0.075 | 6/40 | 12/40 | 0.225 |
+| technical_writers/task1 | 34/66 | 48/66 | 0.621 | 14/66 | 26/66 | 0.303 |
+| technical_writers/task2 | 16/60 | 22/60 | 0.317 | 0/60 | 0/60 | 0.000 |
+| technical_writers/task3 | 24/84 | 24/84 | 0.286 | 29/84 | 48/84 | 0.458 |
+| training_and_development_specialists/task1 | 6/54 | 6/54 | 0.111 | 12/54 | 12/54 | 0.222 |
+| training_and_development_specialists/task2 | 18/44 | 18/44 | 0.409 | 12/44 | 20/44 | 0.364 |
+| training_and_development_specialists/task3 | 22/54 | 32/54 | 0.500 | 28/54 | 20/54 | 0.444 |
+| web_administrators/task1 | 12/50 | 6/50 | 0.180 | 14/50 | 20/50 | 0.340 |
+
+</details>
+
 ## All 65 tasks, Qwen3.8-27B (local vLLM), subagents on, 2 h limit, 2026-11-09/11
 
 Run `runs/jb-all65-qwen38-xhigh-subon-2h-p5-20261109T181320Z` (not in git): `models/qwen38-vllm.json` (Qwen3.8-27B

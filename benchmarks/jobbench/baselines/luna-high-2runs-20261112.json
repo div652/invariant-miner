@@ -1,0 +1,1606 @@
+{
+ "name": "JobBench all 65 tasks, GPT-5.6 Luna high (models/luna-cao.json), core harness, two runs",
+ "date": "2026-11-12",
+ "setup": {
+  "model": "models/luna-cao.json (gpt-5.6-luna via CAO, effort high, reasoning summaries on)",
+  "harness": "core (subagents off), no optional plugins; run from branch inv-new-tools 62328bf, whose additions are inactive without the agent_tools spec key (same configuration as main 4f287a7)",
+  "time_limit_s": 7200,
+  "network": "pasta",
+  "web": "web_search via the Exa relay, web_fetch http",
+  "judge": "grok-4.6 high via the CAO shim (grade.sh, judge_parallel 2x9)",
+  "runs": [
+   "runs/jb-all65-base-r1-20261111T191736Z",
+   "runs/jb-all65-base-r2-20261111T191736Z"
+  ],
+  "where": "~/dsh-bench-harness-invnew (worktree of inv-new-tools), not in git"
+ },
+ "scores": "per task [points, max] for each run and rubric set; mean = mean of the two runs' score/max",
+ "summary": {
+  "original": {
+   "macro": {
+    "r1": 0.2907,
+    "r2": 0.3634,
+    "mean": 0.327
+   },
+   "pooled": {
+    "r1": 0.2778,
+    "r2": 0.3524,
+    "mean": 0.3151
+   }
+  },
+  "v1": {
+   "macro": {
+    "r1": 0.4066,
+    "r2": 0.4228,
+    "mean": 0.4147
+   },
+   "pooled": {
+    "r1": 0.4073,
+    "r2": 0.4216,
+    "mean": 0.4144
+   }
+  }
+ },
+ "tasks": {
+  "biostatisticians/task1": {
+   "original": {
+    "r1": [
+     38,
+     72
+    ],
+    "r2": [
+     44,
+     72
+    ],
+    "mean": 0.5694
+   },
+   "v1": {
+    "r1": [
+     45,
+     72
+    ],
+    "r2": [
+     37,
+     72
+    ],
+    "mean": 0.5694
+   }
+  },
+  "biostatisticians/task2": {
+   "original": {
+    "r1": [
+     0,
+     58
+    ],
+    "r2": [
+     14,
+     58
+    ],
+    "mean": 0.1207
+   },
+   "v1": {
+    "r1": [
+     5,
+     58
+    ],
+    "r2": [
+     5,
+     58
+    ],
+    "mean": 0.0862
+   }
+  },
+  "bookkeeping_accounting_and_auditing_clerks/task1": {
+   "original": {
+    "r1": [
+     0,
+     88
+    ],
+    "r2": [
+     20,
+     88
+    ],
+    "mean": 0.1136
+   },
+   "v1": {
+    "r1": [
+     19,
+     88
+    ],
+    "r2": [
+     29,
+     88
+    ],
+    "mean": 0.2727
+   }
+  },
+  "bookkeeping_accounting_and_auditing_clerks/task2": {
+   "original": {
+    "r1": [
+     24,
+     52
+    ],
+    "r2": [
+     6,
+     52
+    ],
+    "mean": 0.2885
+   },
+   "v1": {
+    "r1": [
+     12,
+     52
+    ],
+    "r2": [
+     25,
+     52
+    ],
+    "mean": 0.3558
+   }
+  },
+  "civil_engineers/task1": {
+   "original": {
+    "r1": [
+     34,
+     50
+    ],
+    "r2": [
+     34,
+     50
+    ],
+    "mean": 0.68
+   },
+   "v1": {
+    "r1": [
+     8,
+     50
+    ],
+    "r2": [
+     16,
+     50
+    ],
+    "mean": 0.24
+   }
+  },
+  "civil_engineers/task2": {
+   "original": {
+    "r1": [
+     26,
+     68
+    ],
+    "r2": [
+     48,
+     68
+    ],
+    "mean": 0.5441
+   },
+   "v1": {
+    "r1": [
+     40,
+     68
+    ],
+    "r2": [
+     42,
+     68
+    ],
+    "mean": 0.6029
+   }
+  },
+  "civil_engineers/task3": {
+   "original": {
+    "r1": [
+     14,
+     76
+    ],
+    "r2": [
+     24,
+     76
+    ],
+    "mean": 0.25
+   },
+   "v1": {
+    "r1": [
+     28,
+     76
+    ],
+    "r2": [
+     48,
+     76
+    ],
+    "mean": 0.5
+   }
+  },
+  "computer_and_information_research_scientists/task1": {
+   "original": {
+    "r1": [
+     18,
+     66
+    ],
+    "r2": [
+     32,
+     66
+    ],
+    "mean": 0.3788
+   },
+   "v1": {
+    "r1": [
+     12,
+     66
+    ],
+    "r2": [
+     32,
+     66
+    ],
+    "mean": 0.3333
+   }
+  },
+  "computer_and_information_research_scientists/task2": {
+   "original": {
+    "r1": [
+     6,
+     82
+    ],
+    "r2": [
+     24,
+     82
+    ],
+    "mean": 0.1829
+   },
+   "v1": {
+    "r1": [
+     36,
+     82
+    ],
+    "r2": [
+     28,
+     82
+    ],
+    "mean": 0.3902
+   }
+  },
+  "computer_and_information_systems_managers/task1": {
+   "original": {
+    "r1": [
+     12,
+     56
+    ],
+    "r2": [
+     30,
+     56
+    ],
+    "mean": 0.375
+   },
+   "v1": {
+    "r1": [
+     28,
+     56
+    ],
+    "r2": [
+     36,
+     56
+    ],
+    "mean": 0.5714
+   }
+  },
+  "computer_and_information_systems_managers/task2": {
+   "original": {
+    "r1": [
+     10,
+     62
+    ],
+    "r2": [
+     8,
+     62
+    ],
+    "mean": 0.1452
+   },
+   "v1": {
+    "r1": [
+     0,
+     62
+    ],
+    "r2": [
+     0,
+     62
+    ],
+    "mean": 0.0
+   }
+  },
+  "computer_user_support_specialists/task1": {
+   "original": {
+    "r1": [
+     28,
+     56
+    ],
+    "r2": [
+     28,
+     56
+    ],
+    "mean": 0.5
+   },
+   "v1": {
+    "r1": [
+     41,
+     56
+    ],
+    "r2": [
+     41,
+     56
+    ],
+    "mean": 0.7321
+   }
+  },
+  "computer_user_support_specialists/task2": {
+   "original": {
+    "r1": [
+     14,
+     82
+    ],
+    "r2": [
+     8,
+     82
+    ],
+    "mean": 0.1341
+   },
+   "v1": {
+    "r1": [
+     24,
+     82
+    ],
+    "r2": [
+     32,
+     82
+    ],
+    "mean": 0.3415
+   }
+  },
+  "court_clerks/task1": {
+   "original": {
+    "r1": [
+     24,
+     76
+    ],
+    "r2": [
+     22,
+     76
+    ],
+    "mean": 0.3026
+   },
+   "v1": {
+    "r1": [
+     18,
+     76
+    ],
+    "r2": [
+     16,
+     76
+    ],
+    "mean": 0.2237
+   }
+  },
+  "customer_service_representatives/task1": {
+   "original": {
+    "r1": [
+     6,
+     76
+    ],
+    "r2": [
+     6,
+     76
+    ],
+    "mean": 0.0789
+   },
+   "v1": {
+    "r1": [
+     34,
+     76
+    ],
+    "r2": [
+     34,
+     76
+    ],
+    "mean": 0.4474
+   }
+  },
+  "data_entry_keyers/task1": {
+   "original": {
+    "r1": [
+     32,
+     92
+    ],
+    "r2": [
+     60,
+     92
+    ],
+    "mean": 0.5
+   },
+   "v1": {
+    "r1": [
+     52,
+     92
+    ],
+    "r2": [
+     58,
+     92
+    ],
+    "mean": 0.5978
+   }
+  },
+  "data_entry_keyers/task2": {
+   "original": {
+    "r1": [
+     44,
+     60
+    ],
+    "r2": [
+     44,
+     60
+    ],
+    "mean": 0.7333
+   },
+   "v1": {
+    "r1": [
+     40,
+     60
+    ],
+    "r2": [
+     20,
+     60
+    ],
+    "mean": 0.5
+   }
+  },
+  "financial_managers_branch_or_department/task1": {
+   "original": {
+    "r1": [
+     30,
+     90
+    ],
+    "r2": [
+     30,
+     90
+    ],
+    "mean": 0.3333
+   },
+   "v1": {
+    "r1": [
+     40,
+     90
+    ],
+    "r2": [
+     54,
+     90
+    ],
+    "mean": 0.5222
+   }
+  },
+  "financial_managers_branch_or_department/task2": {
+   "original": {
+    "r1": [
+     16,
+     66
+    ],
+    "r2": [
+     0,
+     66
+    ],
+    "mean": 0.1212
+   },
+   "v1": {
+    "r1": [
+     31,
+     66
+    ],
+    "r2": [
+     31,
+     66
+    ],
+    "mean": 0.4697
+   }
+  },
+  "human_resources_specialists/task1": {
+   "original": {
+    "r1": [
+     26,
+     64
+    ],
+    "r2": [
+     26,
+     64
+    ],
+    "mean": 0.4062
+   },
+   "v1": {
+    "r1": [
+     23,
+     64
+    ],
+    "r2": [
+     23,
+     64
+    ],
+    "mean": 0.3594
+   }
+  },
+  "lawyers/task1": {
+   "original": {
+    "r1": [
+     6,
+     48
+    ],
+    "r2": [
+     12,
+     48
+    ],
+    "mean": 0.1875
+   },
+   "v1": {
+    "r1": [
+     30,
+     48
+    ],
+    "r2": [
+     26,
+     48
+    ],
+    "mean": 0.5833
+   }
+  },
+  "licensing_examiners_and_inspectors/task1": {
+   "original": {
+    "r1": [
+     18,
+     72
+    ],
+    "r2": [
+     28,
+     72
+    ],
+    "mean": 0.3194
+   },
+   "v1": {
+    "r1": [
+     64,
+     72
+    ],
+    "r2": [
+     66,
+     72
+    ],
+    "mean": 0.9028
+   }
+  },
+  "management_analysts/task1": {
+   "original": {
+    "r1": [
+     22,
+     88
+    ],
+    "r2": [
+     22,
+     88
+    ],
+    "mean": 0.25
+   },
+   "v1": {
+    "r1": [
+     52,
+     88
+    ],
+    "r2": [
+     38,
+     88
+    ],
+    "mean": 0.5114
+   }
+  },
+  "management_analysts/task2": {
+   "original": {
+    "r1": [
+     18,
+     80
+    ],
+    "r2": [
+     18,
+     80
+    ],
+    "mean": 0.225
+   },
+   "v1": {
+    "r1": [
+     14,
+     80
+    ],
+    "r2": [
+     28,
+     80
+    ],
+    "mean": 0.2625
+   }
+  },
+  "management_analysts/task3": {
+   "original": {
+    "r1": [
+     6,
+     72
+    ],
+    "r2": [
+     12,
+     72
+    ],
+    "mean": 0.125
+   },
+   "v1": {
+    "r1": [
+     49,
+     72
+    ],
+    "r2": [
+     42,
+     72
+    ],
+    "mean": 0.6319
+   }
+  },
+  "mechanical_engineering_technicians/task1": {
+   "original": {
+    "r1": [
+     24,
+     78
+    ],
+    "r2": [
+     24,
+     78
+    ],
+    "mean": 0.3077
+   },
+   "v1": {
+    "r1": [
+     50,
+     78
+    ],
+    "r2": [
+     50,
+     78
+    ],
+    "mean": 0.641
+   }
+  },
+  "mechanical_engineering_technicians/task2": {
+   "original": {
+    "r1": [
+     0,
+     70
+    ],
+    "r2": [
+     0,
+     70
+    ],
+    "mean": 0.0
+   },
+   "v1": {
+    "r1": [
+     30,
+     70
+    ],
+    "r2": [
+     24,
+     70
+    ],
+    "mean": 0.3857
+   }
+  },
+  "mechanical_engineering_technicians/task3": {
+   "original": {
+    "r1": [
+     26,
+     58
+    ],
+    "r2": [
+     32,
+     58
+    ],
+    "mean": 0.5
+   },
+   "v1": {
+    "r1": [
+     32,
+     58
+    ],
+    "r2": [
+     30,
+     58
+    ],
+    "mean": 0.5345
+   }
+  },
+  "mechanical_engineers/task1": {
+   "original": {
+    "r1": [
+     6,
+     66
+    ],
+    "r2": [
+     6,
+     66
+    ],
+    "mean": 0.0909
+   },
+   "v1": {
+    "r1": [
+     24,
+     66
+    ],
+    "r2": [
+     18,
+     66
+    ],
+    "mean": 0.3182
+   }
+  },
+  "medical_and_health_services_managers/task1": {
+   "original": {
+    "r1": [
+     16,
+     74
+    ],
+    "r2": [
+     26,
+     74
+    ],
+    "mean": 0.2838
+   },
+   "v1": {
+    "r1": [
+     44,
+     74
+    ],
+    "r2": [
+     8,
+     74
+    ],
+    "mean": 0.3514
+   }
+  },
+  "medical_and_health_services_managers/task2": {
+   "original": {
+    "r1": [
+     6,
+     86
+    ],
+    "r2": [
+     16,
+     86
+    ],
+    "mean": 0.1279
+   },
+   "v1": {
+    "r1": [
+     26,
+     86
+    ],
+    "r2": [
+     26,
+     86
+    ],
+    "mean": 0.3023
+   }
+  },
+  "medical_secretaries/task1": {
+   "original": {
+    "r1": [
+     12,
+     78
+    ],
+    "r2": [
+     6,
+     78
+    ],
+    "mean": 0.1154
+   },
+   "v1": {
+    "r1": [
+     28,
+     78
+    ],
+    "r2": [
+     34,
+     78
+    ],
+    "mean": 0.3974
+   }
+  },
+  "online_merchants/task1": {
+   "original": {
+    "r1": [
+     28,
+     58
+    ],
+    "r2": [
+     38,
+     58
+    ],
+    "mean": 0.569
+   },
+   "v1": {
+    "r1": [
+     38,
+     58
+    ],
+    "r2": [
+     26,
+     58
+    ],
+    "mean": 0.5517
+   }
+  },
+  "online_merchants/task2": {
+   "original": {
+    "r1": [
+     22,
+     54
+    ],
+    "r2": [
+     30,
+     54
+    ],
+    "mean": 0.4815
+   },
+   "v1": {
+    "r1": [
+     22,
+     54
+    ],
+    "r2": [
+     22,
+     54
+    ],
+    "mean": 0.4074
+   }
+  },
+  "personal_financial_advisors/task1": {
+   "original": {
+    "r1": [
+     6,
+     78
+    ],
+    "r2": [
+     22,
+     78
+    ],
+    "mean": 0.1795
+   },
+   "v1": {
+    "r1": [
+     20,
+     78
+    ],
+    "r2": [
+     8,
+     78
+    ],
+    "mean": 0.1795
+   }
+  },
+  "petroleum_engineers/task1": {
+   "original": {
+    "r1": [
+     16,
+     50
+    ],
+    "r2": [
+     16,
+     50
+    ],
+    "mean": 0.32
+   },
+   "v1": {
+    "r1": [
+     27,
+     50
+    ],
+    "r2": [
+     31,
+     50
+    ],
+    "mean": 0.58
+   }
+  },
+  "police_fire_and_ambulance_dispatchers/task1": {
+   "original": {
+    "r1": [
+     34,
+     94
+    ],
+    "r2": [
+     54,
+     94
+    ],
+    "mean": 0.4681
+   },
+   "v1": {
+    "r1": [
+     62,
+     94
+    ],
+    "r2": [
+     60,
+     94
+    ],
+    "mean": 0.6489
+   }
+  },
+  "producers/task1": {
+   "original": {
+    "r1": [
+     56,
+     72
+    ],
+    "r2": [
+     48,
+     72
+    ],
+    "mean": 0.7222
+   },
+   "v1": {
+    "r1": [
+     40,
+     72
+    ],
+    "r2": [
+     44,
+     72
+    ],
+    "mean": 0.5833
+   }
+  },
+  "purchasing_agents_except_wholesale_retail_and_farm_products/task1": {
+   "original": {
+    "r1": [
+     12,
+     88
+    ],
+    "r2": [
+     18,
+     88
+    ],
+    "mean": 0.1705
+   },
+   "v1": {
+    "r1": [
+     18,
+     88
+    ],
+    "r2": [
+     24,
+     88
+    ],
+    "mean": 0.2386
+   }
+  },
+  "purchasing_agents_except_wholesale_retail_and_farm_products/task2": {
+   "original": {
+    "r1": [
+     8,
+     78
+    ],
+    "r2": [
+     24,
+     78
+    ],
+    "mean": 0.2051
+   },
+   "v1": {
+    "r1": [
+     44,
+     78
+    ],
+    "r2": [
+     58,
+     78
+    ],
+    "mean": 0.6538
+   }
+  },
+  "purchasing_agents_except_wholesale_retail_and_farm_products/task3": {
+   "original": {
+    "r1": [
+     16,
+     96
+    ],
+    "r2": [
+     16,
+     96
+    ],
+    "mean": 0.1667
+   },
+   "v1": {
+    "r1": [
+     18,
+     96
+    ],
+    "r2": [
+     24,
+     96
+    ],
+    "mean": 0.2188
+   }
+  },
+  "reporters_and_correspondents/task1": {
+   "original": {
+    "r1": [
+     20,
+     60
+    ],
+    "r2": [
+     36,
+     60
+    ],
+    "mean": 0.4667
+   },
+   "v1": {
+    "r1": [
+     24,
+     60
+    ],
+    "r2": [
+     14,
+     60
+    ],
+    "mean": 0.3167
+   }
+  },
+  "sales_agents_securities_and_commodities/task1": {
+   "original": {
+    "r1": [
+     30,
+     74
+    ],
+    "r2": [
+     30,
+     74
+    ],
+    "mean": 0.4054
+   },
+   "v1": {
+    "r1": [
+     30,
+     74
+    ],
+    "r2": [
+     10,
+     74
+    ],
+    "mean": 0.2703
+   }
+  },
+  "sales_representatives_wholesale_and_manufacturing_technical_and_scientific_products/task1": {
+   "original": {
+    "r1": [
+     10,
+     106
+    ],
+    "r2": [
+     10,
+     106
+    ],
+    "mean": 0.0943
+   },
+   "v1": {
+    "r1": [
+     52,
+     106
+    ],
+    "r2": [
+     42,
+     106
+    ],
+    "mean": 0.4434
+   }
+  },
+  "sales_representatives_wholesale_and_manufacturing_technical_and_scientific_products/task2": {
+   "original": {
+    "r1": [
+     18,
+     80
+    ],
+    "r2": [
+     30,
+     80
+    ],
+    "mean": 0.3
+   },
+   "v1": {
+    "r1": [
+     12,
+     80
+    ],
+    "r2": [
+     22,
+     80
+    ],
+    "mean": 0.2125
+   }
+  },
+  "secretaries_and_administrative_assistants_except_legal_medical_and_executive/task1": {
+   "original": {
+    "r1": [
+     22,
+     60
+    ],
+    "r2": [
+     40,
+     60
+    ],
+    "mean": 0.5167
+   },
+   "v1": {
+    "r1": [
+     8,
+     60
+    ],
+    "r2": [
+     34,
+     60
+    ],
+    "mean": 0.35
+   }
+  },
+  "secretaries_and_administrative_assistants_except_legal_medical_and_executive/task2": {
+   "original": {
+    "r1": [
+     18,
+     48
+    ],
+    "r2": [
+     6,
+     48
+    ],
+    "mean": 0.25
+   },
+   "v1": {
+    "r1": [
+     26,
+     48
+    ],
+    "r2": [
+     16,
+     48
+    ],
+    "mean": 0.4375
+   }
+  },
+  "social_science_research_assistants/task1": {
+   "original": {
+    "r1": [
+     48,
+     66
+    ],
+    "r2": [
+     48,
+     66
+    ],
+    "mean": 0.7273
+   },
+   "v1": {
+    "r1": [
+     42,
+     66
+    ],
+    "r2": [
+     52,
+     66
+    ],
+    "mean": 0.7121
+   }
+  },
+  "social_science_research_assistants/task2": {
+   "original": {
+    "r1": [
+     38,
+     68
+    ],
+    "r2": [
+     36,
+     68
+    ],
+    "mean": 0.5441
+   },
+   "v1": {
+    "r1": [
+     26,
+     68
+    ],
+    "r2": [
+     22,
+     68
+    ],
+    "mean": 0.3529
+   }
+  },
+  "social_science_research_assistants/task3": {
+   "original": {
+    "r1": [
+     32,
+     50
+    ],
+    "r2": [
+     32,
+     50
+    ],
+    "mean": 0.64
+   },
+   "v1": {
+    "r1": [
+     33,
+     50
+    ],
+    "r2": [
+     33,
+     50
+    ],
+    "mean": 0.66
+   }
+  },
+  "sociology_teachers_postsecondary/task1": {
+   "original": {
+    "r1": [
+     18,
+     68
+    ],
+    "r2": [
+     38,
+     68
+    ],
+    "mean": 0.4118
+   },
+   "v1": {
+    "r1": [
+     16,
+     68
+    ],
+    "r2": [
+     16,
+     68
+    ],
+    "mean": 0.2353
+   }
+  },
+  "sociology_teachers_postsecondary/task2": {
+   "original": {
+    "r1": [
+     30,
+     66
+    ],
+    "r2": [
+     38,
+     66
+    ],
+    "mean": 0.5152
+   },
+   "v1": {
+    "r1": [
+     40,
+     66
+    ],
+    "r2": [
+     44,
+     66
+    ],
+    "mean": 0.6364
+   }
+  },
+  "sociology_teachers_postsecondary/task3": {
+   "original": {
+    "r1": [
+     14,
+     72
+    ],
+    "r2": [
+     30,
+     72
+    ],
+    "mean": 0.3056
+   },
+   "v1": {
+    "r1": [
+     40,
+     72
+    ],
+    "r2": [
+     40,
+     72
+    ],
+    "mean": 0.5556
+   }
+  },
+  "statisticians/task1": {
+   "original": {
+    "r1": [
+     16,
+     116
+    ],
+    "r2": [
+     10,
+     116
+    ],
+    "mean": 0.1121
+   },
+   "v1": {
+    "r1": [
+     34,
+     116
+    ],
+    "r2": [
+     24,
+     116
+    ],
+    "mean": 0.25
+   }
+  },
+  "statisticians/task2": {
+   "original": {
+    "r1": [
+     16,
+     66
+    ],
+    "r2": [
+     30,
+     66
+    ],
+    "mean": 0.3485
+   },
+   "v1": {
+    "r1": [
+     28,
+     66
+    ],
+    "r2": [
+     32,
+     66
+    ],
+    "mean": 0.4545
+   }
+  },
+  "statisticians/task3": {
+   "original": {
+    "r1": [
+     22,
+     54
+    ],
+    "r2": [
+     22,
+     54
+    ],
+    "mean": 0.4074
+   },
+   "v1": {
+    "r1": [
+     23,
+     54
+    ],
+    "r2": [
+     22,
+     54
+    ],
+    "mean": 0.4167
+   }
+  },
+  "supply_chain_managers/task1": {
+   "original": {
+    "r1": [
+     6,
+     64
+    ],
+    "r2": [
+     12,
+     64
+    ],
+    "mean": 0.1406
+   },
+   "v1": {
+    "r1": [
+     16,
+     64
+    ],
+    "r2": [
+     22,
+     64
+    ],
+    "mean": 0.2969
+   }
+  },
+  "supply_chain_managers/task2": {
+   "original": {
+    "r1": [
+     0,
+     40
+    ],
+    "r2": [
+     6,
+     40
+    ],
+    "mean": 0.075
+   },
+   "v1": {
+    "r1": [
+     6,
+     40
+    ],
+    "r2": [
+     12,
+     40
+    ],
+    "mean": 0.225
+   }
+  },
+  "technical_writers/task1": {
+   "original": {
+    "r1": [
+     34,
+     66
+    ],
+    "r2": [
+     48,
+     66
+    ],
+    "mean": 0.6212
+   },
+   "v1": {
+    "r1": [
+     14,
+     66
+    ],
+    "r2": [
+     26,
+     66
+    ],
+    "mean": 0.303
+   }
+  },
+  "technical_writers/task2": {
+   "original": {
+    "r1": [
+     16,
+     60
+    ],
+    "r2": [
+     22,
+     60
+    ],
+    "mean": 0.3167
+   },
+   "v1": {
+    "r1": [
+     0,
+     60
+    ],
+    "r2": [
+     0,
+     60
+    ],
+    "mean": 0.0
+   }
+  },
+  "technical_writers/task3": {
+   "original": {
+    "r1": [
+     24,
+     84
+    ],
+    "r2": [
+     24,
+     84
+    ],
+    "mean": 0.2857
+   },
+   "v1": {
+    "r1": [
+     29,
+     84
+    ],
+    "r2": [
+     48,
+     84
+    ],
+    "mean": 0.4583
+   }
+  },
+  "training_and_development_specialists/task1": {
+   "original": {
+    "r1": [
+     6,
+     54
+    ],
+    "r2": [
+     6,
+     54
+    ],
+    "mean": 0.1111
+   },
+   "v1": {
+    "r1": [
+     12,
+     54
+    ],
+    "r2": [
+     12,
+     54
+    ],
+    "mean": 0.2222
+   }
+  },
+  "training_and_development_specialists/task2": {
+   "original": {
+    "r1": [
+     18,
+     44
+    ],
+    "r2": [
+     18,
+     44
+    ],
+    "mean": 0.4091
+   },
+   "v1": {
+    "r1": [
+     12,
+     44
+    ],
+    "r2": [
+     20,
+     44
+    ],
+    "mean": 0.3636
+   }
+  },
+  "training_and_development_specialists/task3": {
+   "original": {
+    "r1": [
+     22,
+     54
+    ],
+    "r2": [
+     32,
+     54
+    ],
+    "mean": 0.5
+   },
+   "v1": {
+    "r1": [
+     28,
+     54
+    ],
+    "r2": [
+     20,
+     54
+    ],
+    "mean": 0.4444
+   }
+  },
+  "web_administrators/task1": {
+   "original": {
+    "r1": [
+     12,
+     50
+    ],
+    "r2": [
+     6,
+     50
+    ],
+    "mean": 0.18
+   },
+   "v1": {
+    "r1": [
+     14,
+     50
+    ],
+    "r2": [
+     20,
+     50
+    ],
+    "mean": 0.34
+   }
+  }
+ }
+}
