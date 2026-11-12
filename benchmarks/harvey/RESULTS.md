@@ -35,6 +35,14 @@ other, each graded before the next started: `runs/hv-fk250-lunahigh-rep2-2026111
 Pass@2 is the unbiased estimate from the three runs (mean over tasks of 1 - C(3-c, 2) / C(3, 2), c = passing runs). Of
 the 82 tasks Luna high solves at least once, 48 are solved in only one or two of the three runs.
 
+**Flipping tasks, analysed:** of the 80 AHE-train tasks, 14 pass in one or two of the three runs (52 never, 14 always).
+Their 42 trajectories are in [`analysis/hv-lunahigh-train80-flip14/`](analysis/hv-lunahigh-train80-flip14/README.md)
+(readable traces, criterion x run verdicts), with a per-task failure analysis and the patterns across all 14 in
+[`ANALYSIS.md`](analysis/hv-lunahigh-train80-flip14/ANALYSIS.md). In short: precision tasks fail by judgement after
+surfacing, and their passing runs mostly pass by never opening the wrong item; recall, superlative and counting tasks
+fail on incomplete candidate sets caused by tool limits (grep blind to .docx, capped outputs whose full result the
+agent cannot open, timeouts).
+
 All 750 runs ended `completed`; no CAO stall needed a re-run. Run-to-run spread on all 250: 0.5 points all-pass (SD of the
 three run means), 0.013 criterion; on the 70- and 100-task subsets the all-pass spread is 2-3 points.
 
