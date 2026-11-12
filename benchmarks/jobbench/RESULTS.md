@@ -32,6 +32,25 @@ ended `completed`; 65/65 graded in each run on both rubric sets.
 - **Against the 11-10 Luna-high subagents-off run** (0.313 / 0.404, section below): two-run mean - that run = +0.014
   [-0.011, +0.040] original, +0.011 [-0.029, +0.049] v1 (paired over the 65 tasks): the same level.
 
+**Pass@3 (three runs, rubric level): 0.430 original, 0.551 v1** (all 65 tasks). The three base-harness Luna-high runs of
+all 65 tasks: these two and the 11-10 subagents-off run (section below; same model, settings and judge). A task's
+pass@3 counts the weight of every rubric item that passed in at least one of the three runs (items are all-or-nothing;
+the rubric texts match across the runs); pass@2 is the expected score over the three pairs of runs; pass@1 the mean of
+the three runs. Macro over tasks (pooled over all 65: pass@1 0.310 / pass@3 0.416 original, 0.410 / 0.546 v1).
+Per task: `pass_at_k` in the JSON.
+
+| Rubrics, tasks | Pass@1 | Pass@2 | **Pass@3** | Items passed in all three runs |
+|---|---|---|---|---|
+| original, all 65 | 0.322 | 0.391 | **0.430** | 0.224 |
+| original, train-20 | 0.320 | 0.370 | **0.393** | 0.242 |
+| original, test-45 | 0.323 | 0.400 | **0.447** | 0.216 |
+| v1, all 65 | 0.411 | 0.505 | **0.551** | 0.270 |
+| v1, train-20 | 0.347 | 0.446 | **0.494** | 0.200 |
+| v1, test-45 | 0.440 | 0.532 | **0.577** | 0.300 |
+
+About a third more rubric weight passes in at least one of three runs than in one run (0.430 vs 0.322 original), and
+only 0.224 passes in all three.
+
 <details><summary>Per task (points/max per run, two-run mean of score/max)</summary>
 
 | Task | orig r1 | orig r2 | orig mean | v1 r1 | v1 r2 | v1 mean |

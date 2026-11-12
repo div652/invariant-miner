@@ -39,6 +39,62 @@
     "r2": 0.4216,
     "mean": 0.4144
    }
+  },
+  "pass_at_k": {
+   "runs": [
+    "runs/jb-all65-lunahigh-suboff-20261109T215439Z (2026-11-10, main b49f3b6, same setup)",
+    "runs/jb-all65-base-r1-20261111T191736Z",
+    "runs/jb-all65-base-r2-20261111T191736Z"
+   ],
+   "definition": "rubric level: a task's pass@3 is the weight of its rubric items passed in at least one of the three runs over its max; pass@2 the expected value over the three pairs of runs; pass@1 the mean of the runs; all3 = items passed in all three. Macro over tasks unless named pooled.",
+   "original": {
+    "all65": {
+     "pass@1": 0.3223,
+     "pass@2": 0.391,
+     "pass@3": 0.4302,
+     "all3": 0.2241
+    },
+    "train20": {
+     "pass@1": 0.32,
+     "pass@2": 0.3702,
+     "pass@3": 0.3931,
+     "all3": 0.2424
+    },
+    "test45": {
+     "pass@1": 0.3233,
+     "pass@2": 0.4002,
+     "pass@3": 0.4466,
+     "all3": 0.216
+    },
+    "all65_pooled": {
+     "pass@1": 0.3102,
+     "pass@3": 0.4164
+    }
+   },
+   "v1": {
+    "all65": {
+     "pass@1": 0.4112,
+     "pass@2": 0.5052,
+     "pass@3": 0.5515,
+     "all3": 0.2696
+    },
+    "train20": {
+     "pass@1": 0.3475,
+     "pass@2": 0.4456,
+     "pass@3": 0.4944,
+     "all3": 0.2001
+    },
+    "test45": {
+     "pass@1": 0.4395,
+     "pass@2": 0.5317,
+     "pass@3": 0.5769,
+     "all3": 0.3004
+    },
+    "all65_pooled": {
+     "pass@1": 0.4099,
+     "pass@3": 0.546
+    }
+   }
   }
  },
  "tasks": {
@@ -64,6 +120,20 @@
      72
     ],
     "mean": 0.5694
+   },
+   "pass_at_k": {
+    "original": {
+     "pass@1": 0.5556,
+     "pass@2": 0.5833,
+     "pass@3": 0.6111,
+     "all3": 0.5278
+    },
+    "v1": {
+     "pass@1": 0.5,
+     "pass@2": 0.588,
+     "pass@3": 0.625,
+     "all3": 0.3611
+    }
    }
   },
   "biostatisticians/task2": {
@@ -88,6 +158,20 @@
      58
     ],
     "mean": 0.0862
+   },
+   "pass_at_k": {
+    "original": {
+     "pass@1": 0.1724,
+     "pass@2": 0.3103,
+     "pass@3": 0.4138,
+     "all3": 0.0
+    },
+    "v1": {
+     "pass@1": 0.1552,
+     "pass@2": 0.2241,
+     "pass@3": 0.2931,
+     "all3": 0.0862
+    }
    }
   },
   "bookkeeping_accounting_and_auditing_clerks/task1": {
@@ -112,6 +196,20 @@
      88
     ],
     "mean": 0.2727
+   },
+   "pass_at_k": {
+    "original": {
+     "pass@1": 0.1136,
+     "pass@2": 0.1894,
+     "pass@3": 0.2273,
+     "all3": 0.0
+    },
+    "v1": {
+     "pass@1": 0.2083,
+     "pass@2": 0.2917,
+     "pass@3": 0.3295,
+     "all3": 0.0795
+    }
    }
   },
   "bookkeeping_accounting_and_auditing_clerks/task2": {
@@ -136,6 +234,20 @@
      52
     ],
     "mean": 0.3558
+   },
+   "pass_at_k": {
+    "original": {
+     "pass@1": 0.2692,
+     "pass@2": 0.3846,
+     "pass@3": 0.4615,
+     "all3": 0.1154
+    },
+    "v1": {
+     "pass@1": 0.359,
+     "pass@2": 0.4423,
+     "pass@3": 0.4808,
+     "all3": 0.2308
+    }
    }
   },
   "civil_engineers/task1": {
@@ -160,6 +272,20 @@
      50
     ],
     "mean": 0.24
+   },
+   "pass_at_k": {
+    "original": {
+     "pass@1": 0.64,
+     "pass@2": 0.68,
+     "pass@3": 0.68,
+     "all3": 0.56
+    },
+    "v1": {
+     "pass@1": 0.24,
+     "pass@2": 0.32,
+     "pass@3": 0.32,
+     "all3": 0.08
+    }
    }
   },
   "civil_engineers/task2": {
@@ -184,6 +310,20 @@
      68
     ],
     "mean": 0.6029
+   },
+   "pass_at_k": {
+    "original": {
+     "pass@1": 0.5784,
+     "pass@2": 0.8039,
+     "pass@3": 0.8824,
+     "all3": 0.2059
+    },
+    "v1": {
+     "pass@1": 0.6471,
+     "pass@2": 0.8333,
+     "pass@3": 0.8824,
+     "all3": 0.3235
+    }
    }
   },
   "civil_engineers/task3": {
@@ -208,6 +348,20 @@
      76
     ],
     "mean": 0.5
+   },
+   "pass_at_k": {
+    "original": {
+     "pass@1": 0.3158,
+     "pass@2": 0.4035,
+     "pass@3": 0.4474,
+     "all3": 0.1842
+    },
+    "v1": {
+     "pass@1": 0.6053,
+     "pass@2": 0.7544,
+     "pass@3": 0.8158,
+     "all3": 0.3684
+    }
    }
   },
   "computer_and_information_research_scientists/task1": {
@@ -232,6 +386,20 @@
      66
     ],
     "mean": 0.3333
+   },
+   "pass_at_k": {
+    "original": {
+     "pass@1": 0.3838,
+     "pass@2": 0.4848,
+     "pass@3": 0.4848,
+     "all3": 0.1818
+    },
+    "v1": {
+     "pass@1": 0.3333,
+     "pass@2": 0.4848,
+     "pass@3": 0.6364,
+     "all3": 0.1818
+    }
    }
   },
   "computer_and_information_research_scientists/task2": {
@@ -256,6 +424,20 @@
      82
     ],
     "mean": 0.3902
+   },
+   "pass_at_k": {
+    "original": {
+     "pass@1": 0.1463,
+     "pass@2": 0.2195,
+     "pass@3": 0.2927,
+     "all3": 0.0732
+    },
+    "v1": {
+     "pass@1": 0.3415,
+     "pass@2": 0.4065,
+     "pass@3": 0.439,
+     "all3": 0.2439
+    }
    }
   },
   "computer_and_information_systems_managers/task1": {
@@ -280,6 +462,20 @@
      56
     ],
     "mean": 0.5714
+   },
+   "pass_at_k": {
+    "original": {
+     "pass@1": 0.381,
+     "pass@2": 0.5833,
+     "pass@3": 0.7143,
+     "all3": 0.1071
+    },
+    "v1": {
+     "pass@1": 0.5238,
+     "pass@2": 0.6667,
+     "pass@3": 0.75,
+     "all3": 0.3214
+    }
    }
   },
   "computer_and_information_systems_managers/task2": {
@@ -304,6 +500,20 @@
      62
     ],
     "mean": 0.0
+   },
+   "pass_at_k": {
+    "original": {
+     "pass@1": 0.1828,
+     "pass@2": 0.3226,
+     "pass@3": 0.4194,
+     "all3": 0.0
+    },
+    "v1": {
+     "pass@1": 0.1183,
+     "pass@2": 0.2366,
+     "pass@3": 0.3548,
+     "all3": 0.0
+    }
    }
   },
   "computer_user_support_specialists/task1": {
@@ -328,6 +538,20 @@
      56
     ],
     "mean": 0.7321
+   },
+   "pass_at_k": {
+    "original": {
+     "pass@1": 0.5,
+     "pass@2": 0.5,
+     "pass@3": 0.5,
+     "all3": 0.5
+    },
+    "v1": {
+     "pass@1": 0.7321,
+     "pass@2": 0.7321,
+     "pass@3": 0.7321,
+     "all3": 0.7321
+    }
    }
   },
   "computer_user_support_specialists/task2": {
@@ -352,6 +576,20 @@
      82
     ],
     "mean": 0.3415
+   },
+   "pass_at_k": {
+    "original": {
+     "pass@1": 0.1463,
+     "pass@2": 0.1707,
+     "pass@3": 0.1707,
+     "all3": 0.0976
+    },
+    "v1": {
+     "pass@1": 0.2886,
+     "pass@2": 0.3577,
+     "pass@3": 0.3902,
+     "all3": 0.1829
+    }
    }
   },
   "court_clerks/task1": {
@@ -376,6 +614,20 @@
      76
     ],
     "mean": 0.2237
+   },
+   "pass_at_k": {
+    "original": {
+     "pass@1": 0.307,
+     "pass@2": 0.3684,
+     "pass@3": 0.3947,
+     "all3": 0.2105
+    },
+    "v1": {
+     "pass@1": 0.2719,
+     "pass@2": 0.3684,
+     "pass@3": 0.3684,
+     "all3": 0.0789
+    }
    }
   },
   "customer_service_representatives/task1": {
@@ -400,6 +652,20 @@
      76
     ],
     "mean": 0.4474
+   },
+   "pass_at_k": {
+    "original": {
+     "pass@1": 0.1053,
+     "pass@2": 0.1316,
+     "pass@3": 0.1579,
+     "all3": 0.0789
+    },
+    "v1": {
+     "pass@1": 0.4474,
+     "pass@2": 0.4474,
+     "pass@3": 0.4474,
+     "all3": 0.4474
+    }
    }
   },
   "data_entry_keyers/task1": {
@@ -424,6 +690,20 @@
      92
     ],
     "mean": 0.5978
+   },
+   "pass_at_k": {
+    "original": {
+     "pass@1": 0.4855,
+     "pass@2": 0.587,
+     "pass@3": 0.6522,
+     "all3": 0.3478
+    },
+    "v1": {
+     "pass@1": 0.6087,
+     "pass@2": 0.7174,
+     "pass@3": 0.7609,
+     "all3": 0.4348
+    }
    }
   },
   "data_entry_keyers/task2": {
@@ -448,6 +728,20 @@
      60
     ],
     "mean": 0.5
+   },
+   "pass_at_k": {
+    "original": {
+     "pass@1": 0.7333,
+     "pass@2": 0.7333,
+     "pass@3": 0.7333,
+     "all3": 0.7333
+    },
+    "v1": {
+     "pass@1": 0.3889,
+     "pass@2": 0.5556,
+     "pass@3": 0.6667,
+     "all3": 0.1667
+    }
    }
   },
   "financial_managers_branch_or_department/task1": {
@@ -472,6 +766,20 @@
      90
     ],
     "mean": 0.5222
+   },
+   "pass_at_k": {
+    "original": {
+     "pass@1": 0.3333,
+     "pass@2": 0.3333,
+     "pass@3": 0.3333,
+     "all3": 0.3333
+    },
+    "v1": {
+     "pass@1": 0.4815,
+     "pass@2": 0.6,
+     "pass@3": 0.6,
+     "all3": 0.2444
+    }
    }
   },
   "financial_managers_branch_or_department/task2": {
@@ -496,6 +804,20 @@
      66
     ],
     "mean": 0.4697
+   },
+   "pass_at_k": {
+    "original": {
+     "pass@1": 0.1515,
+     "pass@2": 0.2626,
+     "pass@3": 0.3333,
+     "all3": 0.0
+    },
+    "v1": {
+     "pass@1": 0.4697,
+     "pass@2": 0.4697,
+     "pass@3": 0.4697,
+     "all3": 0.4697
+    }
    }
   },
   "human_resources_specialists/task1": {
@@ -520,6 +842,20 @@
      64
     ],
     "mean": 0.3594
+   },
+   "pass_at_k": {
+    "original": {
+     "pass@1": 0.4062,
+     "pass@2": 0.4062,
+     "pass@3": 0.4062,
+     "all3": 0.4062
+    },
+    "v1": {
+     "pass@1": 0.3281,
+     "pass@2": 0.3594,
+     "pass@3": 0.3594,
+     "all3": 0.2656
+    }
    }
   },
   "lawyers/task1": {
@@ -544,6 +880,20 @@
      48
     ],
     "mean": 0.5833
+   },
+   "pass_at_k": {
+    "original": {
+     "pass@1": 0.1667,
+     "pass@2": 0.2083,
+     "pass@3": 0.25,
+     "all3": 0.125
+    },
+    "v1": {
+     "pass@1": 0.5556,
+     "pass@2": 0.6111,
+     "pass@3": 0.6667,
+     "all3": 0.5
+    }
    }
   },
   "licensing_examiners_and_inspectors/task1": {
@@ -568,6 +918,20 @@
      72
     ],
     "mean": 0.9028
+   },
+   "pass_at_k": {
+    "original": {
+     "pass@1": 0.2963,
+     "pass@2": 0.3426,
+     "pass@3": 0.3889,
+     "all3": 0.25
+    },
+    "v1": {
+     "pass@1": 0.8519,
+     "pass@2": 1.0,
+     "pass@3": 1.0,
+     "all3": 0.5556
+    }
    }
   },
   "management_analysts/task1": {
@@ -592,6 +956,20 @@
      88
     ],
     "mean": 0.5114
+   },
+   "pass_at_k": {
+    "original": {
+     "pass@1": 0.25,
+     "pass@2": 0.25,
+     "pass@3": 0.25,
+     "all3": 0.25
+    },
+    "v1": {
+     "pass@1": 0.5379,
+     "pass@2": 0.5909,
+     "pass@3": 0.5909,
+     "all3": 0.4318
+    }
    }
   },
   "management_analysts/task2": {
@@ -616,6 +994,20 @@
      80
     ],
     "mean": 0.2625
+   },
+   "pass_at_k": {
+    "original": {
+     "pass@1": 0.225,
+     "pass@2": 0.225,
+     "pass@3": 0.225,
+     "all3": 0.225
+    },
+    "v1": {
+     "pass@1": 0.25,
+     "pass@2": 0.3333,
+     "pass@3": 0.35,
+     "all3": 0.1
+    }
    }
   },
   "management_analysts/task3": {
@@ -640,6 +1032,20 @@
      72
     ],
     "mean": 0.6319
+   },
+   "pass_at_k": {
+    "original": {
+     "pass@1": 0.1389,
+     "pass@2": 0.1667,
+     "pass@3": 0.1667,
+     "all3": 0.0833
+    },
+    "v1": {
+     "pass@1": 0.4954,
+     "pass@2": 0.7222,
+     "pass@3": 0.8889,
+     "all3": 0.2083
+    }
    }
   },
   "mechanical_engineering_technicians/task1": {
@@ -664,6 +1070,20 @@
      78
     ],
     "mean": 0.641
+   },
+   "pass_at_k": {
+    "original": {
+     "pass@1": 0.3077,
+     "pass@2": 0.3077,
+     "pass@3": 0.3077,
+     "all3": 0.3077
+    },
+    "v1": {
+     "pass@1": 0.641,
+     "pass@2": 0.641,
+     "pass@3": 0.641,
+     "all3": 0.641
+    }
    }
   },
   "mechanical_engineering_technicians/task2": {
@@ -688,6 +1108,20 @@
      70
     ],
     "mean": 0.3857
+   },
+   "pass_at_k": {
+    "original": {
+     "pass@1": 0.0,
+     "pass@2": 0.0,
+     "pass@3": 0.0,
+     "all3": 0.0
+    },
+    "v1": {
+     "pass@1": 0.3333,
+     "pass@2": 0.4762,
+     "pass@3": 0.5429,
+     "all3": 0.1143
+    }
    }
   },
   "mechanical_engineering_technicians/task3": {
@@ -712,6 +1146,20 @@
      58
     ],
     "mean": 0.5345
+   },
+   "pass_at_k": {
+    "original": {
+     "pass@1": 0.5172,
+     "pass@2": 0.5517,
+     "pass@3": 0.5517,
+     "all3": 0.4483
+    },
+    "v1": {
+     "pass@1": 0.5,
+     "pass@2": 0.6667,
+     "pass@3": 0.7414,
+     "all3": 0.2414
+    }
    }
   },
   "mechanical_engineers/task1": {
@@ -736,6 +1184,20 @@
      66
     ],
     "mean": 0.3182
+   },
+   "pass_at_k": {
+    "original": {
+     "pass@1": 0.0909,
+     "pass@2": 0.1515,
+     "pass@3": 0.1818,
+     "all3": 0.0
+    },
+    "v1": {
+     "pass@1": 0.3333,
+     "pass@2": 0.3636,
+     "pass@3": 0.3636,
+     "all3": 0.2727
+    }
    }
   },
   "medical_and_health_services_managers/task1": {
@@ -760,6 +1222,20 @@
      74
     ],
     "mean": 0.3514
+   },
+   "pass_at_k": {
+    "original": {
+     "pass@1": 0.2613,
+     "pass@2": 0.3063,
+     "pass@3": 0.3514,
+     "all3": 0.2162
+    },
+    "v1": {
+     "pass@1": 0.3874,
+     "pass@2": 0.5495,
+     "pass@3": 0.5946,
+     "all3": 0.1081
+    }
    }
   },
   "medical_and_health_services_managers/task2": {
@@ -784,6 +1260,20 @@
      86
     ],
     "mean": 0.3023
+   },
+   "pass_at_k": {
+    "original": {
+     "pass@1": 0.1085,
+     "pass@2": 0.1473,
+     "pass@3": 0.186,
+     "all3": 0.0698
+    },
+    "v1": {
+     "pass@1": 0.3023,
+     "pass@2": 0.3023,
+     "pass@3": 0.3023,
+     "all3": 0.3023
+    }
    }
   },
   "medical_secretaries/task1": {
@@ -808,6 +1298,20 @@
      78
     ],
     "mean": 0.3974
+   },
+   "pass_at_k": {
+    "original": {
+     "pass@1": 0.1368,
+     "pass@2": 0.2479,
+     "pass@3": 0.3333,
+     "all3": 0.0
+    },
+    "v1": {
+     "pass@1": 0.4701,
+     "pass@2": 0.5556,
+     "pass@3": 0.6154,
+     "all3": 0.359
+    }
    }
   },
   "online_merchants/task1": {
@@ -832,6 +1336,20 @@
      58
     ],
     "mean": 0.5517
+   },
+   "pass_at_k": {
+    "original": {
+     "pass@1": 0.4828,
+     "pass@2": 0.6552,
+     "pass@3": 0.8276,
+     "all3": 0.3103
+    },
+    "v1": {
+     "pass@1": 0.5862,
+     "pass@2": 0.6552,
+     "pass@3": 0.6552,
+     "all3": 0.4483
+    }
    }
   },
   "online_merchants/task2": {
@@ -856,6 +1374,20 @@
      54
     ],
     "mean": 0.4074
+   },
+   "pass_at_k": {
+    "original": {
+     "pass@1": 0.4691,
+     "pass@2": 0.5926,
+     "pass@3": 0.6667,
+     "all3": 0.2963
+    },
+    "v1": {
+     "pass@1": 0.4568,
+     "pass@2": 0.5062,
+     "pass@3": 0.5556,
+     "all3": 0.4074
+    }
    }
   },
   "personal_financial_advisors/task1": {
@@ -880,6 +1412,20 @@
      78
     ],
     "mean": 0.1795
+   },
+   "pass_at_k": {
+    "original": {
+     "pass@1": 0.1795,
+     "pass@2": 0.2479,
+     "pass@3": 0.2821,
+     "all3": 0.0769
+    },
+    "v1": {
+     "pass@1": 0.2991,
+     "pass@2": 0.4444,
+     "pass@3": 0.5385,
+     "all3": 0.1026
+    }
    }
   },
   "petroleum_engineers/task1": {
@@ -904,6 +1450,20 @@
      50
     ],
     "mean": 0.58
+   },
+   "pass_at_k": {
+    "original": {
+     "pass@1": 0.32,
+     "pass@2": 0.32,
+     "pass@3": 0.32,
+     "all3": 0.32
+    },
+    "v1": {
+     "pass@1": 0.5533,
+     "pass@2": 0.6467,
+     "pass@3": 0.7,
+     "all3": 0.42
+    }
    }
   },
   "police_fire_and_ambulance_dispatchers/task1": {
@@ -928,6 +1488,20 @@
      94
     ],
     "mean": 0.6489
+   },
+   "pass_at_k": {
+    "original": {
+     "pass@1": 0.3759,
+     "pass@2": 0.5745,
+     "pass@3": 0.6809,
+     "all3": 0.0851
+    },
+    "v1": {
+     "pass@1": 0.6454,
+     "pass@2": 0.7234,
+     "pass@3": 0.766,
+     "all3": 0.5319
+    }
    }
   },
   "producers/task1": {
@@ -952,6 +1526,20 @@
      72
     ],
     "mean": 0.5833
+   },
+   "pass_at_k": {
+    "original": {
+     "pass@1": 0.6944,
+     "pass@2": 0.7778,
+     "pass@3": 0.7778,
+     "all3": 0.5278
+    },
+    "v1": {
+     "pass@1": 0.5463,
+     "pass@2": 0.6111,
+     "pass@3": 0.6111,
+     "all3": 0.4167
+    }
    }
   },
   "purchasing_agents_except_wholesale_retail_and_farm_products/task1": {
@@ -976,6 +1564,20 @@
      88
     ],
     "mean": 0.2386
+   },
+   "pass_at_k": {
+    "original": {
+     "pass@1": 0.1591,
+     "pass@2": 0.2045,
+     "pass@3": 0.2045,
+     "all3": 0.0682
+    },
+    "v1": {
+     "pass@1": 0.2576,
+     "pass@2": 0.4242,
+     "pass@3": 0.5,
+     "all3": 0.0
+    }
    }
   },
   "purchasing_agents_except_wholesale_retail_and_farm_products/task2": {
@@ -1000,6 +1602,20 @@
      78
     ],
     "mean": 0.6538
+   },
+   "pass_at_k": {
+    "original": {
+     "pass@1": 0.2051,
+     "pass@2": 0.3761,
+     "pass@3": 0.5128,
+     "all3": 0.0
+    },
+    "v1": {
+     "pass@1": 0.6239,
+     "pass@2": 0.7436,
+     "pass@3": 0.7436,
+     "all3": 0.3846
+    }
    }
   },
   "purchasing_agents_except_wholesale_retail_and_farm_products/task3": {
@@ -1024,6 +1640,20 @@
      96
     ],
     "mean": 0.2188
+   },
+   "pass_at_k": {
+    "original": {
+     "pass@1": 0.1458,
+     "pass@2": 0.1667,
+     "pass@3": 0.1667,
+     "all3": 0.1042
+    },
+    "v1": {
+     "pass@1": 0.2292,
+     "pass@2": 0.3194,
+     "pass@3": 0.3542,
+     "all3": 0.0833
+    }
    }
   },
   "reporters_and_correspondents/task1": {
@@ -1048,6 +1678,20 @@
      60
     ],
     "mean": 0.3167
+   },
+   "pass_at_k": {
+    "original": {
+     "pass@1": 0.3889,
+     "pass@2": 0.5111,
+     "pass@3": 0.6,
+     "all3": 0.2333
+    },
+    "v1": {
+     "pass@1": 0.3444,
+     "pass@2": 0.4,
+     "pass@3": 0.4,
+     "all3": 0.2333
+    }
    }
   },
   "sales_agents_securities_and_commodities/task1": {
@@ -1072,6 +1716,20 @@
      74
     ],
     "mean": 0.2703
+   },
+   "pass_at_k": {
+    "original": {
+     "pass@1": 0.3153,
+     "pass@2": 0.4054,
+     "pass@3": 0.4054,
+     "all3": 0.1351
+    },
+    "v1": {
+     "pass@1": 0.2252,
+     "pass@2": 0.3604,
+     "pass@3": 0.4054,
+     "all3": 0.0
+    }
    }
   },
   "sales_representatives_wholesale_and_manufacturing_technical_and_scientific_products/task1": {
@@ -1096,6 +1754,20 @@
      106
     ],
     "mean": 0.4434
+   },
+   "pass_at_k": {
+    "original": {
+     "pass@1": 0.0818,
+     "pass@2": 0.1321,
+     "pass@3": 0.1509,
+     "all3": 0.0
+    },
+    "v1": {
+     "pass@1": 0.3774,
+     "pass@2": 0.4591,
+     "pass@3": 0.4906,
+     "all3": 0.2453
+    }
    }
   },
   "sales_representatives_wholesale_and_manufacturing_technical_and_scientific_products/task2": {
@@ -1120,6 +1792,20 @@
      80
     ],
     "mean": 0.2125
+   },
+   "pass_at_k": {
+    "original": {
+     "pass@1": 0.275,
+     "pass@2": 0.375,
+     "pass@3": 0.45,
+     "all3": 0.15
+    },
+    "v1": {
+     "pass@1": 0.1917,
+     "pass@2": 0.2333,
+     "pass@3": 0.275,
+     "all3": 0.15
+    }
    }
   },
   "secretaries_and_administrative_assistants_except_legal_medical_and_executive/task1": {
@@ -1144,6 +1830,20 @@
      60
     ],
     "mean": 0.35
+   },
+   "pass_at_k": {
+    "original": {
+     "pass@1": 0.5222,
+     "pass@2": 0.6222,
+     "pass@3": 0.6667,
+     "all3": 0.3667
+    },
+    "v1": {
+     "pass@1": 0.2333,
+     "pass@2": 0.4222,
+     "pass@3": 0.5667,
+     "all3": 0.0
+    }
    }
   },
   "secretaries_and_administrative_assistants_except_legal_medical_and_executive/task2": {
@@ -1168,6 +1868,20 @@
      48
     ],
     "mean": 0.4375
+   },
+   "pass_at_k": {
+    "original": {
+     "pass@1": 0.25,
+     "pass@2": 0.3333,
+     "pass@3": 0.375,
+     "all3": 0.125
+    },
+    "v1": {
+     "pass@1": 0.4028,
+     "pass@2": 0.4722,
+     "pass@3": 0.5417,
+     "all3": 0.3333
+    }
    }
   },
   "social_science_research_assistants/task1": {
@@ -1192,6 +1906,20 @@
      66
     ],
     "mean": 0.7121
+   },
+   "pass_at_k": {
+    "original": {
+     "pass@1": 0.7576,
+     "pass@2": 0.7879,
+     "pass@3": 0.8182,
+     "all3": 0.7273
+    },
+    "v1": {
+     "pass@1": 0.7374,
+     "pass@2": 0.7879,
+     "pass@3": 0.7879,
+     "all3": 0.6364
+    }
    }
   },
   "social_science_research_assistants/task2": {
@@ -1216,6 +1944,20 @@
      68
     ],
     "mean": 0.3529
+   },
+   "pass_at_k": {
+    "original": {
+     "pass@1": 0.4706,
+     "pass@2": 0.5784,
+     "pass@3": 0.6471,
+     "all3": 0.3235
+    },
+    "v1": {
+     "pass@1": 0.3137,
+     "pass@2": 0.4216,
+     "pass@3": 0.4706,
+     "all3": 0.1471
+    }
    }
   },
   "social_science_research_assistants/task3": {
@@ -1240,6 +1982,20 @@
      50
     ],
     "mean": 0.66
+   },
+   "pass_at_k": {
+    "original": {
+     "pass@1": 0.64,
+     "pass@2": 0.64,
+     "pass@3": 0.64,
+     "all3": 0.64
+    },
+    "v1": {
+     "pass@1": 0.62,
+     "pass@2": 0.66,
+     "pass@3": 0.66,
+     "all3": 0.54
+    }
    }
   },
   "sociology_teachers_postsecondary/task1": {
@@ -1264,6 +2020,20 @@
      68
     ],
     "mean": 0.2353
+   },
+   "pass_at_k": {
+    "original": {
+     "pass@1": 0.4314,
+     "pass@2": 0.5294,
+     "pass@3": 0.5588,
+     "all3": 0.2647
+    },
+    "v1": {
+     "pass@1": 0.2745,
+     "pass@2": 0.3137,
+     "pass@3": 0.3529,
+     "all3": 0.2353
+    }
    }
   },
   "sociology_teachers_postsecondary/task2": {
@@ -1288,6 +2058,20 @@
      66
     ],
     "mean": 0.6364
+   },
+   "pass_at_k": {
+    "original": {
+     "pass@1": 0.5354,
+     "pass@2": 0.5758,
+     "pass@3": 0.5758,
+     "all3": 0.4545
+    },
+    "v1": {
+     "pass@1": 0.5556,
+     "pass@2": 0.6768,
+     "pass@3": 0.7576,
+     "all3": 0.3939
+    }
    }
   },
   "sociology_teachers_postsecondary/task3": {
@@ -1312,6 +2096,20 @@
      72
     ],
     "mean": 0.5556
+   },
+   "pass_at_k": {
+    "original": {
+     "pass@1": 0.3426,
+     "pass@2": 0.4167,
+     "pass@3": 0.4167,
+     "all3": 0.1944
+    },
+    "v1": {
+     "pass@1": 0.5556,
+     "pass@2": 0.5556,
+     "pass@3": 0.5556,
+     "all3": 0.5556
+    }
    }
   },
   "statisticians/task1": {
@@ -1336,6 +2134,20 @@
      116
     ],
     "mean": 0.25
+   },
+   "pass_at_k": {
+    "original": {
+     "pass@1": 0.1034,
+     "pass@2": 0.1207,
+     "pass@3": 0.1379,
+     "all3": 0.0862
+    },
+    "v1": {
+     "pass@1": 0.1954,
+     "pass@2": 0.2644,
+     "pass@3": 0.2931,
+     "all3": 0.0862
+    }
    }
   },
   "statisticians/task2": {
@@ -1360,6 +2172,20 @@
      66
     ],
     "mean": 0.4545
+   },
+   "pass_at_k": {
+    "original": {
+     "pass@1": 0.3131,
+     "pass@2": 0.3838,
+     "pass@3": 0.4545,
+     "all3": 0.2424
+    },
+    "v1": {
+     "pass@1": 0.4444,
+     "pass@2": 0.5859,
+     "pass@3": 0.7273,
+     "all3": 0.303
+    }
    }
   },
   "statisticians/task3": {
@@ -1384,6 +2210,20 @@
      54
     ],
     "mean": 0.4167
+   },
+   "pass_at_k": {
+    "original": {
+     "pass@1": 0.3086,
+     "pass@2": 0.4444,
+     "pass@3": 0.5185,
+     "all3": 0.1111
+    },
+    "v1": {
+     "pass@1": 0.3889,
+     "pass@2": 0.5185,
+     "pass@3": 0.6111,
+     "all3": 0.2222
+    }
    }
   },
   "supply_chain_managers/task1": {
@@ -1408,6 +2248,20 @@
      64
     ],
     "mean": 0.2969
+   },
+   "pass_at_k": {
+    "original": {
+     "pass@1": 0.1562,
+     "pass@2": 0.1875,
+     "pass@3": 0.1875,
+     "all3": 0.0938
+    },
+    "v1": {
+     "pass@1": 0.3958,
+     "pass@2": 0.5104,
+     "pass@3": 0.5938,
+     "all3": 0.25
+    }
    }
   },
   "supply_chain_managers/task2": {
@@ -1432,6 +2286,20 @@
      40
     ],
     "mean": 0.225
+   },
+   "pass_at_k": {
+    "original": {
+     "pass@1": 0.05,
+     "pass@2": 0.1,
+     "pass@3": 0.15,
+     "all3": 0.0
+    },
+    "v1": {
+     "pass@1": 0.2,
+     "pass@2": 0.35,
+     "pass@3": 0.45,
+     "all3": 0.0
+    }
    }
   },
   "technical_writers/task1": {
@@ -1456,6 +2324,20 @@
      66
     ],
     "mean": 0.303
+   },
+   "pass_at_k": {
+    "original": {
+     "pass@1": 0.6162,
+     "pass@2": 0.7576,
+     "pass@3": 0.8182,
+     "all3": 0.3939
+    },
+    "v1": {
+     "pass@1": 0.3333,
+     "pass@2": 0.3939,
+     "pass@3": 0.3939,
+     "all3": 0.2121
+    }
    }
   },
   "technical_writers/task2": {
@@ -1480,6 +2362,20 @@
      60
     ],
     "mean": 0.0
+   },
+   "pass_at_k": {
+    "original": {
+     "pass@1": 0.3333,
+     "pass@2": 0.3667,
+     "pass@3": 0.3667,
+     "all3": 0.2667
+    },
+    "v1": {
+     "pass@1": 0.0444,
+     "pass@2": 0.0889,
+     "pass@3": 0.1333,
+     "all3": 0.0
+    }
    }
   },
   "technical_writers/task3": {
@@ -1504,6 +2400,20 @@
      84
     ],
     "mean": 0.4583
+   },
+   "pass_at_k": {
+    "original": {
+     "pass@1": 0.3571,
+     "pass@2": 0.4286,
+     "pass@3": 0.5,
+     "all3": 0.2857
+    },
+    "v1": {
+     "pass@1": 0.4841,
+     "pass@2": 0.5595,
+     "pass@3": 0.5714,
+     "all3": 0.3452
+    }
    }
   },
   "training_and_development_specialists/task1": {
@@ -1528,6 +2438,20 @@
      54
     ],
     "mean": 0.2222
+   },
+   "pass_at_k": {
+    "original": {
+     "pass@1": 0.1481,
+     "pass@2": 0.1852,
+     "pass@3": 0.2222,
+     "all3": 0.1111
+    },
+    "v1": {
+     "pass@1": 0.2963,
+     "pass@2": 0.4074,
+     "pass@3": 0.4444,
+     "all3": 0.1111
+    }
    }
   },
   "training_and_development_specialists/task2": {
@@ -1552,6 +2476,20 @@
      44
     ],
     "mean": 0.3636
+   },
+   "pass_at_k": {
+    "original": {
+     "pass@1": 0.4091,
+     "pass@2": 0.4091,
+     "pass@3": 0.4091,
+     "all3": 0.4091
+    },
+    "v1": {
+     "pass@1": 0.4091,
+     "pass@2": 0.6515,
+     "pass@3": 0.8182,
+     "all3": 0.0909
+    }
    }
   },
   "training_and_development_specialists/task3": {
@@ -1576,6 +2514,20 @@
      54
     ],
     "mean": 0.4444
+   },
+   "pass_at_k": {
+    "original": {
+     "pass@1": 0.5062,
+     "pass@2": 0.6049,
+     "pass@3": 0.7037,
+     "all3": 0.4074
+    },
+    "v1": {
+     "pass@1": 0.4815,
+     "pass@2": 0.642,
+     "pass@3": 0.7037,
+     "all3": 0.2222
+    }
    }
   },
   "web_administrators/task1": {
@@ -1600,6 +2552,20 @@
      50
     ],
     "mean": 0.34
+   },
+   "pass_at_k": {
+    "original": {
+     "pass@1": 0.2,
+     "pass@2": 0.24,
+     "pass@3": 0.24,
+     "all3": 0.12
+    },
+    "v1": {
+     "pass@1": 0.32,
+     "pass@2": 0.36,
+     "pass@3": 0.4,
+     "all3": 0.28
+    }
    }
   }
  }
