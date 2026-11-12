@@ -1,5 +1,39 @@
 # Harvey LAB results
 
+## Baseline: firm-knowledge, all 250 tasks, GPT-5.6 Luna high, three runs, 2026-11-10/12
+
+**The reference baseline for Harvey comparisons**: the core harness (subagents off, no optional plugins),
+`models/luna-cao.json`, `make_specs.py` defaults (200 steps, 2 h), 20 tasks at a time, graded with `grade.py`'s defaults
+(judge gpt-5.6-sol high, helper claude-sonnet-5, via CAO). Run 1 is the run of the next section (main `5f908f7`); runs
+2 and 3 repeat it on main `ed7f677` (no harness change for Harvey in between; the specs are identical), one after the
+other, each graded before the next started: `runs/hv-fk250-lunahigh-rep2-20261112T122308Z` (17:53-19:43 IST) and
+`runs/hv-fk250-lunahigh-rep3-20261112T141312Z` (19:43-21:48 IST), not in git. Per-task scores of all three runs:
+[`baselines/luna-high-3runs-20261112.json`](baselines/luna-high-3runs-20261112.json); compare with the three-run mean.
+
+| | Run 1 | Run 2 | Run 3 | **Three-run mean** |
+|---|---|---|---|---|
+| all-pass | 22.4% | 23.2% | 22.4% | **22.7%** |
+| criterion pass rate | 0.651 | 0.675 | 0.657 | **0.661** |
+| agent time median, root steps median | 434 s, 32.5 | 408 s, 32 | 419 s, 32 | |
+
+| Tasks | All-pass, three-run mean (runs) | Criterion pass rate, three-run mean (runs) |
+|---|---|---|
+| all 250 | 22.7% (22.4 / 23.2 / 22.4) | 0.661 (0.651 / 0.675 / 0.657) |
+| AHE test (`ahe:test`, 70) | 21.9% (24.3 / 20.0 / 21.4) | 0.638 (0.641 / 0.639 / 0.636) |
+| AHE train + val (`ahe:trainval`, 100) | 25.0% (22.0 / 26.0 / 27.0) | 0.675 (0.660 / 0.693 / 0.673) |
+| our test (`split:test`, 50) | 26.7% (28.0 / 26.0 / 26.0) | 0.620 (0.620 / 0.615 / 0.624) |
+
+All 750 runs ended `completed`; no CAO stall needed a re-run. Run-to-run spread on all 250: 0.5 points all-pass (SD of the
+three run means), 0.013 criterion; on the 70- and 100-task subsets the all-pass spread is 2-3 points.
+
+One collection crash, graded by hand: in run 3, task 175's agent finished normally (`output/response.md` written), then
+the launcher crashed on `git diff --binary` (exit 128) because the agent had left a 1.2 GB `scratch_index.txt` in the
+workspace, so no run.json was written and `grade.py` skipped the task (its first summary covered 249 tasks). The run.json
+was written afterwards from the launcher's own collection steps without the binary diff (`workspace_diff_error`
+recorded), the task graded alone (`grading-task175/`, 4/6 criteria) and merged into `grading/scores.json`
+(`scores-before-task175.*` keep the 249-task version). The launcher fix for this crash exists on branch
+invariant-system-prompt (2026-11-11, `workspace_diff_error`) but is not on main.
+
 ## Firm-knowledge, all 250 tasks, GPT-5.6 Luna high via CAO, subagents off, 2026-11-11
 
 Run `runs/hv-fk250-lunahigh-20261110T175632Z` (not in git), harness main `5f908f7` (core-v6: subagents off for every

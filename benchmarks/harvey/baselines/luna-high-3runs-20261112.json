@@ -1,0 +1,5285 @@
+{
+ "name": "Harvey LAB firm-knowledge, all 250 tasks, GPT-5.6 Luna high (models/luna-cao.json), core harness, three runs",
+ "dates": "run 1 2026-11-10/11, runs 2 and 3 2026-11-12",
+ "setup": {
+  "model": "models/luna-cao.json (gpt-5.6-luna via CAO, effort high, reasoning summaries on)",
+  "harness": "core (subagents off), make_specs.py defaults (200 steps, 2 h), 20 tasks at a time; run 1 on main 5f908f7, runs 2-3 on main ed7f677 (no harness change for Harvey in between)",
+  "grader": "benchmarks/harvey/grade.py defaults: judge gpt-5.6-sol high, helper claude-sonnet-5, via CAO",
+  "runs": [
+   "runs/hv-fk250-lunahigh-20261110T175632Z",
+   "runs/hv-fk250-lunahigh-rep2-20261112T122308Z",
+   "runs/hv-fk250-lunahigh-rep3-20261112T141312Z"
+  ],
+  "where": "~/dsh-bench-harness (main checkout), not in git"
+ },
+ "summary": {
+  "run1": {
+   "all_pass_rate": 0.224,
+   "criterion_pass_rate": 0.6513
+  },
+  "run2": {
+   "all_pass_rate": 0.232,
+   "criterion_pass_rate": 0.6754
+  },
+  "run3": {
+   "all_pass_rate": 0.224,
+   "criterion_pass_rate": 0.6571
+  },
+  "mean": {
+   "all_pass_rate": 0.2267,
+   "criterion_pass_rate": 0.6613
+  }
+ },
+ "tasks": {
+  "firm-knowledge/tasks/001": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 5,
+    "n_criteria": 7
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 5,
+    "n_criteria": 7
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 5,
+    "n_criteria": 7
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.7143
+   }
+  },
+  "firm-knowledge/tasks/002": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 3,
+    "n_criteria": 4
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 3,
+    "n_criteria": 4
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 3,
+    "n_criteria": 4
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.75
+   }
+  },
+  "firm-knowledge/tasks/003": {
+   "run1": {
+    "all_pass": true,
+    "n_passed": 3,
+    "n_criteria": 3
+   },
+   "run2": {
+    "all_pass": true,
+    "n_passed": 3,
+    "n_criteria": 3
+   },
+   "run3": {
+    "all_pass": true,
+    "n_passed": 3,
+    "n_criteria": 3
+   },
+   "mean": {
+    "all_pass": 1.0,
+    "criterion_pass_rate": 1.0
+   }
+  },
+  "firm-knowledge/tasks/004": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 0,
+    "n_criteria": 2
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 0,
+    "n_criteria": 2
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 0,
+    "n_criteria": 2
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.0
+   }
+  },
+  "firm-knowledge/tasks/005": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 3,
+    "n_criteria": 6
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 3,
+    "n_criteria": 6
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 3,
+    "n_criteria": 6
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.5
+   }
+  },
+  "firm-knowledge/tasks/006": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 2,
+    "n_criteria": 3
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 2,
+    "n_criteria": 3
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 2,
+    "n_criteria": 3
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.6667
+   }
+  },
+  "firm-knowledge/tasks/007": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 2,
+    "n_criteria": 3
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 2,
+    "n_criteria": 3
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 2,
+    "n_criteria": 3
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.6667
+   }
+  },
+  "firm-knowledge/tasks/008": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 0,
+    "n_criteria": 4
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 0,
+    "n_criteria": 4
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 0,
+    "n_criteria": 4
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.0
+   }
+  },
+  "firm-knowledge/tasks/009": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 2,
+    "n_criteria": 19
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 16,
+    "n_criteria": 19
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 10,
+    "n_criteria": 19
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.4912
+   }
+  },
+  "firm-knowledge/tasks/010": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 1,
+    "n_criteria": 2
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 1,
+    "n_criteria": 2
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 1,
+    "n_criteria": 2
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.5
+   }
+  },
+  "firm-knowledge/tasks/011": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 10,
+    "n_criteria": 19
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 15,
+    "n_criteria": 19
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 2,
+    "n_criteria": 19
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.4737
+   }
+  },
+  "firm-knowledge/tasks/012": {
+   "run1": {
+    "all_pass": true,
+    "n_passed": 1,
+    "n_criteria": 1
+   },
+   "run2": {
+    "all_pass": true,
+    "n_passed": 1,
+    "n_criteria": 1
+   },
+   "run3": {
+    "all_pass": true,
+    "n_passed": 1,
+    "n_criteria": 1
+   },
+   "mean": {
+    "all_pass": 1.0,
+    "criterion_pass_rate": 1.0
+   }
+  },
+  "firm-knowledge/tasks/013": {
+   "run1": {
+    "all_pass": true,
+    "n_passed": 4,
+    "n_criteria": 4
+   },
+   "run2": {
+    "all_pass": true,
+    "n_passed": 4,
+    "n_criteria": 4
+   },
+   "run3": {
+    "all_pass": true,
+    "n_passed": 4,
+    "n_criteria": 4
+   },
+   "mean": {
+    "all_pass": 1.0,
+    "criterion_pass_rate": 1.0
+   }
+  },
+  "firm-knowledge/tasks/014": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 1,
+    "n_criteria": 3
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 2,
+    "n_criteria": 3
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 2,
+    "n_criteria": 3
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.5556
+   }
+  },
+  "firm-knowledge/tasks/015": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 0,
+    "n_criteria": 3
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 2,
+    "n_criteria": 3
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 0,
+    "n_criteria": 3
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.2222
+   }
+  },
+  "firm-knowledge/tasks/016": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 9,
+    "n_criteria": 14
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 10,
+    "n_criteria": 14
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 9,
+    "n_criteria": 14
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.6667
+   }
+  },
+  "firm-knowledge/tasks/017": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 10,
+    "n_criteria": 12
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 9,
+    "n_criteria": 12
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 10,
+    "n_criteria": 12
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.8056
+   }
+  },
+  "firm-knowledge/tasks/018": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 0,
+    "n_criteria": 1
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 0,
+    "n_criteria": 1
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 0,
+    "n_criteria": 1
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.0
+   }
+  },
+  "firm-knowledge/tasks/019": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 8,
+    "n_criteria": 12
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 3,
+    "n_criteria": 12
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 3,
+    "n_criteria": 12
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.3889
+   }
+  },
+  "firm-knowledge/tasks/020": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 0,
+    "n_criteria": 3
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 0,
+    "n_criteria": 3
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 0,
+    "n_criteria": 3
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.0
+   }
+  },
+  "firm-knowledge/tasks/021": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 22,
+    "n_criteria": 24
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 22,
+    "n_criteria": 24
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 22,
+    "n_criteria": 24
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.9167
+   }
+  },
+  "firm-knowledge/tasks/022": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 12,
+    "n_criteria": 13
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 9,
+    "n_criteria": 13
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 9,
+    "n_criteria": 13
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.7692
+   }
+  },
+  "firm-knowledge/tasks/023": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 0,
+    "n_criteria": 4
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 0,
+    "n_criteria": 4
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 0,
+    "n_criteria": 4
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.0
+   }
+  },
+  "firm-knowledge/tasks/024": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 8,
+    "n_criteria": 9
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 8,
+    "n_criteria": 9
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 7,
+    "n_criteria": 9
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.8519
+   }
+  },
+  "firm-knowledge/tasks/025": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 4,
+    "n_criteria": 5
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 4,
+    "n_criteria": 5
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 4,
+    "n_criteria": 5
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.8
+   }
+  },
+  "firm-knowledge/tasks/026": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 0,
+    "n_criteria": 3
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 0,
+    "n_criteria": 3
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 0,
+    "n_criteria": 3
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.0
+   }
+  },
+  "firm-knowledge/tasks/027": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 0,
+    "n_criteria": 7
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 5,
+    "n_criteria": 7
+   },
+   "run3": {
+    "all_pass": true,
+    "n_passed": 7,
+    "n_criteria": 7
+   },
+   "mean": {
+    "all_pass": 0.3333,
+    "criterion_pass_rate": 0.5714
+   }
+  },
+  "firm-knowledge/tasks/028": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 5,
+    "n_criteria": 6
+   },
+   "run2": {
+    "all_pass": true,
+    "n_passed": 6,
+    "n_criteria": 6
+   },
+   "run3": {
+    "all_pass": true,
+    "n_passed": 6,
+    "n_criteria": 6
+   },
+   "mean": {
+    "all_pass": 0.6667,
+    "criterion_pass_rate": 0.9444
+   }
+  },
+  "firm-knowledge/tasks/029": {
+   "run1": {
+    "all_pass": true,
+    "n_passed": 4,
+    "n_criteria": 4
+   },
+   "run2": {
+    "all_pass": true,
+    "n_passed": 4,
+    "n_criteria": 4
+   },
+   "run3": {
+    "all_pass": true,
+    "n_passed": 4,
+    "n_criteria": 4
+   },
+   "mean": {
+    "all_pass": 1.0,
+    "criterion_pass_rate": 1.0
+   }
+  },
+  "firm-knowledge/tasks/030": {
+   "run1": {
+    "all_pass": true,
+    "n_passed": 6,
+    "n_criteria": 6
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 5,
+    "n_criteria": 6
+   },
+   "run3": {
+    "all_pass": true,
+    "n_passed": 6,
+    "n_criteria": 6
+   },
+   "mean": {
+    "all_pass": 0.6667,
+    "criterion_pass_rate": 0.9444
+   }
+  },
+  "firm-knowledge/tasks/031": {
+   "run1": {
+    "all_pass": true,
+    "n_passed": 6,
+    "n_criteria": 6
+   },
+   "run2": {
+    "all_pass": true,
+    "n_passed": 6,
+    "n_criteria": 6
+   },
+   "run3": {
+    "all_pass": true,
+    "n_passed": 6,
+    "n_criteria": 6
+   },
+   "mean": {
+    "all_pass": 1.0,
+    "criterion_pass_rate": 1.0
+   }
+  },
+  "firm-knowledge/tasks/032": {
+   "run1": {
+    "all_pass": true,
+    "n_passed": 2,
+    "n_criteria": 2
+   },
+   "run2": {
+    "all_pass": true,
+    "n_passed": 2,
+    "n_criteria": 2
+   },
+   "run3": {
+    "all_pass": true,
+    "n_passed": 2,
+    "n_criteria": 2
+   },
+   "mean": {
+    "all_pass": 1.0,
+    "criterion_pass_rate": 1.0
+   }
+  },
+  "firm-knowledge/tasks/033": {
+   "run1": {
+    "all_pass": true,
+    "n_passed": 2,
+    "n_criteria": 2
+   },
+   "run2": {
+    "all_pass": true,
+    "n_passed": 2,
+    "n_criteria": 2
+   },
+   "run3": {
+    "all_pass": true,
+    "n_passed": 2,
+    "n_criteria": 2
+   },
+   "mean": {
+    "all_pass": 1.0,
+    "criterion_pass_rate": 1.0
+   }
+  },
+  "firm-knowledge/tasks/034": {
+   "run1": {
+    "all_pass": true,
+    "n_passed": 2,
+    "n_criteria": 2
+   },
+   "run2": {
+    "all_pass": true,
+    "n_passed": 2,
+    "n_criteria": 2
+   },
+   "run3": {
+    "all_pass": true,
+    "n_passed": 2,
+    "n_criteria": 2
+   },
+   "mean": {
+    "all_pass": 1.0,
+    "criterion_pass_rate": 1.0
+   }
+  },
+  "firm-knowledge/tasks/035": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 4,
+    "n_criteria": 5
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 4,
+    "n_criteria": 5
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 4,
+    "n_criteria": 5
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.8
+   }
+  },
+  "firm-knowledge/tasks/036": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 2,
+    "n_criteria": 3
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 2,
+    "n_criteria": 3
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 2,
+    "n_criteria": 3
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.6667
+   }
+  },
+  "firm-knowledge/tasks/037": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 1,
+    "n_criteria": 2
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 1,
+    "n_criteria": 2
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 1,
+    "n_criteria": 2
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.5
+   }
+  },
+  "firm-knowledge/tasks/038": {
+   "run1": {
+    "all_pass": true,
+    "n_passed": 15,
+    "n_criteria": 15
+   },
+   "run2": {
+    "all_pass": true,
+    "n_passed": 15,
+    "n_criteria": 15
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 11,
+    "n_criteria": 15
+   },
+   "mean": {
+    "all_pass": 0.6667,
+    "criterion_pass_rate": 0.9111
+   }
+  },
+  "firm-knowledge/tasks/039": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 21,
+    "n_criteria": 25
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 8,
+    "n_criteria": 25
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 23,
+    "n_criteria": 25
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.6933
+   }
+  },
+  "firm-knowledge/tasks/040": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 0,
+    "n_criteria": 2
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 0,
+    "n_criteria": 2
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 0,
+    "n_criteria": 2
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.0
+   }
+  },
+  "firm-knowledge/tasks/041": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 19,
+    "n_criteria": 23
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 18,
+    "n_criteria": 23
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 16,
+    "n_criteria": 23
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.7681
+   }
+  },
+  "firm-knowledge/tasks/042": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 7,
+    "n_criteria": 8
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 5,
+    "n_criteria": 8
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 6,
+    "n_criteria": 8
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.75
+   }
+  },
+  "firm-knowledge/tasks/043": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 9,
+    "n_criteria": 11
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 9,
+    "n_criteria": 11
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 8,
+    "n_criteria": 11
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.7879
+   }
+  },
+  "firm-knowledge/tasks/044": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 0,
+    "n_criteria": 4
+   },
+   "run2": {
+    "all_pass": true,
+    "n_passed": 4,
+    "n_criteria": 4
+   },
+   "run3": {
+    "all_pass": true,
+    "n_passed": 4,
+    "n_criteria": 4
+   },
+   "mean": {
+    "all_pass": 0.6667,
+    "criterion_pass_rate": 0.6667
+   }
+  },
+  "firm-knowledge/tasks/045": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 12,
+    "n_criteria": 13
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 10,
+    "n_criteria": 13
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 12,
+    "n_criteria": 13
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.8718
+   }
+  },
+  "firm-knowledge/tasks/046": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 6,
+    "n_criteria": 13
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 5,
+    "n_criteria": 13
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 7,
+    "n_criteria": 13
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.4615
+   }
+  },
+  "firm-knowledge/tasks/047": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 13,
+    "n_criteria": 25
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 21,
+    "n_criteria": 25
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 5,
+    "n_criteria": 25
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.52
+   }
+  },
+  "firm-knowledge/tasks/048": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 3,
+    "n_criteria": 4
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 3,
+    "n_criteria": 4
+   },
+   "run3": {
+    "all_pass": true,
+    "n_passed": 4,
+    "n_criteria": 4
+   },
+   "mean": {
+    "all_pass": 0.3333,
+    "criterion_pass_rate": 0.8333
+   }
+  },
+  "firm-knowledge/tasks/049": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 7,
+    "n_criteria": 15
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 8,
+    "n_criteria": 15
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 8,
+    "n_criteria": 15
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.5111
+   }
+  },
+  "firm-knowledge/tasks/050": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 12,
+    "n_criteria": 29
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 28,
+    "n_criteria": 29
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 13,
+    "n_criteria": 29
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.6092
+   }
+  },
+  "firm-knowledge/tasks/051": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 1,
+    "n_criteria": 3
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 1,
+    "n_criteria": 3
+   },
+   "run3": {
+    "all_pass": true,
+    "n_passed": 3,
+    "n_criteria": 3
+   },
+   "mean": {
+    "all_pass": 0.3333,
+    "criterion_pass_rate": 0.5556
+   }
+  },
+  "firm-knowledge/tasks/052": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 21,
+    "n_criteria": 23
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 12,
+    "n_criteria": 23
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 20,
+    "n_criteria": 23
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.7681
+   }
+  },
+  "firm-knowledge/tasks/053": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 19,
+    "n_criteria": 21
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 20,
+    "n_criteria": 21
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 19,
+    "n_criteria": 21
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.9206
+   }
+  },
+  "firm-knowledge/tasks/054": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 6,
+    "n_criteria": 8
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 6,
+    "n_criteria": 8
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 6,
+    "n_criteria": 8
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.75
+   }
+  },
+  "firm-knowledge/tasks/055": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 1,
+    "n_criteria": 3
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 1,
+    "n_criteria": 3
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 1,
+    "n_criteria": 3
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.3333
+   }
+  },
+  "firm-knowledge/tasks/056": {
+   "run1": {
+    "all_pass": true,
+    "n_passed": 2,
+    "n_criteria": 2
+   },
+   "run2": {
+    "all_pass": true,
+    "n_passed": 2,
+    "n_criteria": 2
+   },
+   "run3": {
+    "all_pass": true,
+    "n_passed": 2,
+    "n_criteria": 2
+   },
+   "mean": {
+    "all_pass": 1.0,
+    "criterion_pass_rate": 1.0
+   }
+  },
+  "firm-knowledge/tasks/057": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 1,
+    "n_criteria": 5
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 3,
+    "n_criteria": 5
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 1,
+    "n_criteria": 5
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.3333
+   }
+  },
+  "firm-knowledge/tasks/058": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 10,
+    "n_criteria": 11
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 10,
+    "n_criteria": 11
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 9,
+    "n_criteria": 11
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.8788
+   }
+  },
+  "firm-knowledge/tasks/059": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 6,
+    "n_criteria": 9
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 8,
+    "n_criteria": 9
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 7,
+    "n_criteria": 9
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.7778
+   }
+  },
+  "firm-knowledge/tasks/060": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 1,
+    "n_criteria": 7
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 0,
+    "n_criteria": 7
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 1,
+    "n_criteria": 7
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.0952
+   }
+  },
+  "firm-knowledge/tasks/061": {
+   "run1": {
+    "all_pass": true,
+    "n_passed": 1,
+    "n_criteria": 1
+   },
+   "run2": {
+    "all_pass": true,
+    "n_passed": 1,
+    "n_criteria": 1
+   },
+   "run3": {
+    "all_pass": true,
+    "n_passed": 1,
+    "n_criteria": 1
+   },
+   "mean": {
+    "all_pass": 1.0,
+    "criterion_pass_rate": 1.0
+   }
+  },
+  "firm-knowledge/tasks/062": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 6,
+    "n_criteria": 10
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 5,
+    "n_criteria": 10
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 6,
+    "n_criteria": 10
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.5667
+   }
+  },
+  "firm-knowledge/tasks/063": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 6,
+    "n_criteria": 11
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 5,
+    "n_criteria": 11
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 7,
+    "n_criteria": 11
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.5455
+   }
+  },
+  "firm-knowledge/tasks/064": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 3,
+    "n_criteria": 9
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 5,
+    "n_criteria": 9
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 3,
+    "n_criteria": 9
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.4074
+   }
+  },
+  "firm-knowledge/tasks/065": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 2,
+    "n_criteria": 6
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 3,
+    "n_criteria": 6
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 5,
+    "n_criteria": 6
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.5556
+   }
+  },
+  "firm-knowledge/tasks/066": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 8,
+    "n_criteria": 9
+   },
+   "run2": {
+    "all_pass": true,
+    "n_passed": 9,
+    "n_criteria": 9
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 8,
+    "n_criteria": 9
+   },
+   "mean": {
+    "all_pass": 0.3333,
+    "criterion_pass_rate": 0.9259
+   }
+  },
+  "firm-knowledge/tasks/067": {
+   "run1": {
+    "all_pass": true,
+    "n_passed": 7,
+    "n_criteria": 7
+   },
+   "run2": {
+    "all_pass": true,
+    "n_passed": 7,
+    "n_criteria": 7
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 6,
+    "n_criteria": 7
+   },
+   "mean": {
+    "all_pass": 0.6667,
+    "criterion_pass_rate": 0.9524
+   }
+  },
+  "firm-knowledge/tasks/068": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 2,
+    "n_criteria": 3
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 2,
+    "n_criteria": 3
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 2,
+    "n_criteria": 3
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.6667
+   }
+  },
+  "firm-knowledge/tasks/069": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 1,
+    "n_criteria": 3
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 0,
+    "n_criteria": 3
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 0,
+    "n_criteria": 3
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.1111
+   }
+  },
+  "firm-knowledge/tasks/070": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 3,
+    "n_criteria": 4
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 3,
+    "n_criteria": 4
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 3,
+    "n_criteria": 4
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.75
+   }
+  },
+  "firm-knowledge/tasks/071": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 6,
+    "n_criteria": 7
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 6,
+    "n_criteria": 7
+   },
+   "run3": {
+    "all_pass": true,
+    "n_passed": 7,
+    "n_criteria": 7
+   },
+   "mean": {
+    "all_pass": 0.3333,
+    "criterion_pass_rate": 0.9048
+   }
+  },
+  "firm-knowledge/tasks/072": {
+   "run1": {
+    "all_pass": true,
+    "n_passed": 4,
+    "n_criteria": 4
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 3,
+    "n_criteria": 4
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 3,
+    "n_criteria": 4
+   },
+   "mean": {
+    "all_pass": 0.3333,
+    "criterion_pass_rate": 0.8333
+   }
+  },
+  "firm-knowledge/tasks/073": {
+   "run1": {
+    "all_pass": true,
+    "n_passed": 3,
+    "n_criteria": 3
+   },
+   "run2": {
+    "all_pass": true,
+    "n_passed": 3,
+    "n_criteria": 3
+   },
+   "run3": {
+    "all_pass": true,
+    "n_passed": 3,
+    "n_criteria": 3
+   },
+   "mean": {
+    "all_pass": 1.0,
+    "criterion_pass_rate": 1.0
+   }
+  },
+  "firm-knowledge/tasks/074": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 8,
+    "n_criteria": 9
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 7,
+    "n_criteria": 9
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 7,
+    "n_criteria": 9
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.8148
+   }
+  },
+  "firm-knowledge/tasks/075": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 12,
+    "n_criteria": 13
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 12,
+    "n_criteria": 13
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 12,
+    "n_criteria": 13
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.9231
+   }
+  },
+  "firm-knowledge/tasks/076": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 3,
+    "n_criteria": 5
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 3,
+    "n_criteria": 5
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 4,
+    "n_criteria": 5
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.6667
+   }
+  },
+  "firm-knowledge/tasks/077": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 8,
+    "n_criteria": 9
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 7,
+    "n_criteria": 9
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 8,
+    "n_criteria": 9
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.8519
+   }
+  },
+  "firm-knowledge/tasks/078": {
+   "run1": {
+    "all_pass": true,
+    "n_passed": 8,
+    "n_criteria": 8
+   },
+   "run2": {
+    "all_pass": true,
+    "n_passed": 8,
+    "n_criteria": 8
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 7,
+    "n_criteria": 8
+   },
+   "mean": {
+    "all_pass": 0.6667,
+    "criterion_pass_rate": 0.9583
+   }
+  },
+  "firm-knowledge/tasks/079": {
+   "run1": {
+    "all_pass": true,
+    "n_passed": 2,
+    "n_criteria": 2
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 0,
+    "n_criteria": 2
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 0,
+    "n_criteria": 2
+   },
+   "mean": {
+    "all_pass": 0.3333,
+    "criterion_pass_rate": 0.3333
+   }
+  },
+  "firm-knowledge/tasks/080": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 7,
+    "n_criteria": 9
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 7,
+    "n_criteria": 9
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 7,
+    "n_criteria": 9
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.7778
+   }
+  },
+  "firm-knowledge/tasks/081": {
+   "run1": {
+    "all_pass": true,
+    "n_passed": 3,
+    "n_criteria": 3
+   },
+   "run2": {
+    "all_pass": true,
+    "n_passed": 3,
+    "n_criteria": 3
+   },
+   "run3": {
+    "all_pass": true,
+    "n_passed": 3,
+    "n_criteria": 3
+   },
+   "mean": {
+    "all_pass": 1.0,
+    "criterion_pass_rate": 1.0
+   }
+  },
+  "firm-knowledge/tasks/082": {
+   "run1": {
+    "all_pass": true,
+    "n_passed": 1,
+    "n_criteria": 1
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 0,
+    "n_criteria": 1
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 0,
+    "n_criteria": 1
+   },
+   "mean": {
+    "all_pass": 0.3333,
+    "criterion_pass_rate": 0.3333
+   }
+  },
+  "firm-knowledge/tasks/083": {
+   "run1": {
+    "all_pass": true,
+    "n_passed": 6,
+    "n_criteria": 6
+   },
+   "run2": {
+    "all_pass": true,
+    "n_passed": 6,
+    "n_criteria": 6
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 4,
+    "n_criteria": 6
+   },
+   "mean": {
+    "all_pass": 0.6667,
+    "criterion_pass_rate": 0.8889
+   }
+  },
+  "firm-knowledge/tasks/084": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 11,
+    "n_criteria": 18
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 13,
+    "n_criteria": 18
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 13,
+    "n_criteria": 18
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.6852
+   }
+  },
+  "firm-knowledge/tasks/085": {
+   "run1": {
+    "all_pass": true,
+    "n_passed": 6,
+    "n_criteria": 6
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 5,
+    "n_criteria": 6
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 5,
+    "n_criteria": 6
+   },
+   "mean": {
+    "all_pass": 0.3333,
+    "criterion_pass_rate": 0.8889
+   }
+  },
+  "firm-knowledge/tasks/086": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 3,
+    "n_criteria": 7
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 4,
+    "n_criteria": 7
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 5,
+    "n_criteria": 7
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.5714
+   }
+  },
+  "firm-knowledge/tasks/087": {
+   "run1": {
+    "all_pass": true,
+    "n_passed": 10,
+    "n_criteria": 10
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 7,
+    "n_criteria": 10
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 9,
+    "n_criteria": 10
+   },
+   "mean": {
+    "all_pass": 0.3333,
+    "criterion_pass_rate": 0.8667
+   }
+  },
+  "firm-knowledge/tasks/088": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 3,
+    "n_criteria": 4
+   },
+   "run2": {
+    "all_pass": true,
+    "n_passed": 4,
+    "n_criteria": 4
+   },
+   "run3": {
+    "all_pass": true,
+    "n_passed": 4,
+    "n_criteria": 4
+   },
+   "mean": {
+    "all_pass": 0.6667,
+    "criterion_pass_rate": 0.9167
+   }
+  },
+  "firm-knowledge/tasks/089": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 2,
+    "n_criteria": 3
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 2,
+    "n_criteria": 3
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 2,
+    "n_criteria": 3
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.6667
+   }
+  },
+  "firm-knowledge/tasks/090": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 15,
+    "n_criteria": 19
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 13,
+    "n_criteria": 19
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 17,
+    "n_criteria": 19
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.7895
+   }
+  },
+  "firm-knowledge/tasks/091": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 2,
+    "n_criteria": 3
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 1,
+    "n_criteria": 3
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 2,
+    "n_criteria": 3
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.5556
+   }
+  },
+  "firm-knowledge/tasks/092": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 7,
+    "n_criteria": 9
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 4,
+    "n_criteria": 9
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 5,
+    "n_criteria": 9
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.5926
+   }
+  },
+  "firm-knowledge/tasks/093": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 0,
+    "n_criteria": 4
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 0,
+    "n_criteria": 4
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 0,
+    "n_criteria": 4
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.0
+   }
+  },
+  "firm-knowledge/tasks/094": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 7,
+    "n_criteria": 9
+   },
+   "run2": {
+    "all_pass": true,
+    "n_passed": 9,
+    "n_criteria": 9
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 7,
+    "n_criteria": 9
+   },
+   "mean": {
+    "all_pass": 0.3333,
+    "criterion_pass_rate": 0.8519
+   }
+  },
+  "firm-knowledge/tasks/095": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 3,
+    "n_criteria": 4
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 2,
+    "n_criteria": 4
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 2,
+    "n_criteria": 4
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.5833
+   }
+  },
+  "firm-knowledge/tasks/096": {
+   "run1": {
+    "all_pass": true,
+    "n_passed": 2,
+    "n_criteria": 2
+   },
+   "run2": {
+    "all_pass": true,
+    "n_passed": 2,
+    "n_criteria": 2
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 1,
+    "n_criteria": 2
+   },
+   "mean": {
+    "all_pass": 0.6667,
+    "criterion_pass_rate": 0.8333
+   }
+  },
+  "firm-knowledge/tasks/097": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 5,
+    "n_criteria": 10
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 4,
+    "n_criteria": 10
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 7,
+    "n_criteria": 10
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.5333
+   }
+  },
+  "firm-knowledge/tasks/098": {
+   "run1": {
+    "all_pass": true,
+    "n_passed": 1,
+    "n_criteria": 1
+   },
+   "run2": {
+    "all_pass": true,
+    "n_passed": 1,
+    "n_criteria": 1
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 0,
+    "n_criteria": 1
+   },
+   "mean": {
+    "all_pass": 0.6667,
+    "criterion_pass_rate": 0.6667
+   }
+  },
+  "firm-knowledge/tasks/099": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 1,
+    "n_criteria": 6
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 2,
+    "n_criteria": 6
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 3,
+    "n_criteria": 6
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.3333
+   }
+  },
+  "firm-knowledge/tasks/100": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 4,
+    "n_criteria": 19
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 13,
+    "n_criteria": 19
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 7,
+    "n_criteria": 19
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.4211
+   }
+  },
+  "firm-knowledge/tasks/101": {
+   "run1": {
+    "all_pass": true,
+    "n_passed": 3,
+    "n_criteria": 3
+   },
+   "run2": {
+    "all_pass": true,
+    "n_passed": 3,
+    "n_criteria": 3
+   },
+   "run3": {
+    "all_pass": true,
+    "n_passed": 3,
+    "n_criteria": 3
+   },
+   "mean": {
+    "all_pass": 1.0,
+    "criterion_pass_rate": 1.0
+   }
+  },
+  "firm-knowledge/tasks/102": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 0,
+    "n_criteria": 5
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 0,
+    "n_criteria": 5
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 4,
+    "n_criteria": 5
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.2667
+   }
+  },
+  "firm-knowledge/tasks/103": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 2,
+    "n_criteria": 3
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 2,
+    "n_criteria": 3
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 2,
+    "n_criteria": 3
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.6667
+   }
+  },
+  "firm-knowledge/tasks/104": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 0,
+    "n_criteria": 3
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 0,
+    "n_criteria": 3
+   },
+   "run3": {
+    "all_pass": true,
+    "n_passed": 3,
+    "n_criteria": 3
+   },
+   "mean": {
+    "all_pass": 0.3333,
+    "criterion_pass_rate": 0.3333
+   }
+  },
+  "firm-knowledge/tasks/105": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 3,
+    "n_criteria": 4
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 3,
+    "n_criteria": 4
+   },
+   "run3": {
+    "all_pass": true,
+    "n_passed": 4,
+    "n_criteria": 4
+   },
+   "mean": {
+    "all_pass": 0.3333,
+    "criterion_pass_rate": 0.8333
+   }
+  },
+  "firm-knowledge/tasks/106": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 4,
+    "n_criteria": 5
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 4,
+    "n_criteria": 5
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 4,
+    "n_criteria": 5
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.8
+   }
+  },
+  "firm-knowledge/tasks/107": {
+   "run1": {
+    "all_pass": true,
+    "n_passed": 3,
+    "n_criteria": 3
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 2,
+    "n_criteria": 3
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 2,
+    "n_criteria": 3
+   },
+   "mean": {
+    "all_pass": 0.3333,
+    "criterion_pass_rate": 0.7778
+   }
+  },
+  "firm-knowledge/tasks/108": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 11,
+    "n_criteria": 12
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 10,
+    "n_criteria": 12
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 9,
+    "n_criteria": 12
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.8333
+   }
+  },
+  "firm-knowledge/tasks/109": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 3,
+    "n_criteria": 12
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 9,
+    "n_criteria": 12
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 8,
+    "n_criteria": 12
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.5556
+   }
+  },
+  "firm-knowledge/tasks/110": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 10,
+    "n_criteria": 11
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 10,
+    "n_criteria": 11
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 10,
+    "n_criteria": 11
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.9091
+   }
+  },
+  "firm-knowledge/tasks/111": {
+   "run1": {
+    "all_pass": true,
+    "n_passed": 3,
+    "n_criteria": 3
+   },
+   "run2": {
+    "all_pass": true,
+    "n_passed": 3,
+    "n_criteria": 3
+   },
+   "run3": {
+    "all_pass": true,
+    "n_passed": 3,
+    "n_criteria": 3
+   },
+   "mean": {
+    "all_pass": 1.0,
+    "criterion_pass_rate": 1.0
+   }
+  },
+  "firm-knowledge/tasks/112": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 2,
+    "n_criteria": 4
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 2,
+    "n_criteria": 4
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 2,
+    "n_criteria": 4
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.5
+   }
+  },
+  "firm-knowledge/tasks/113": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 6,
+    "n_criteria": 7
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 6,
+    "n_criteria": 7
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 6,
+    "n_criteria": 7
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.8571
+   }
+  },
+  "firm-knowledge/tasks/114": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 13,
+    "n_criteria": 17
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 11,
+    "n_criteria": 17
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 14,
+    "n_criteria": 17
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.7451
+   }
+  },
+  "firm-knowledge/tasks/115": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 2,
+    "n_criteria": 6
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 5,
+    "n_criteria": 6
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 1,
+    "n_criteria": 6
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.4444
+   }
+  },
+  "firm-knowledge/tasks/116": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 13,
+    "n_criteria": 23
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 11,
+    "n_criteria": 23
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 13,
+    "n_criteria": 23
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.5362
+   }
+  },
+  "firm-knowledge/tasks/117": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 9,
+    "n_criteria": 29
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 12,
+    "n_criteria": 29
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 9,
+    "n_criteria": 29
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.3448
+   }
+  },
+  "firm-knowledge/tasks/118": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 5,
+    "n_criteria": 7
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 5,
+    "n_criteria": 7
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 3,
+    "n_criteria": 7
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.619
+   }
+  },
+  "firm-knowledge/tasks/119": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 21,
+    "n_criteria": 24
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 18,
+    "n_criteria": 24
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 20,
+    "n_criteria": 24
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.8194
+   }
+  },
+  "firm-knowledge/tasks/120": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 4,
+    "n_criteria": 5
+   },
+   "run2": {
+    "all_pass": true,
+    "n_passed": 5,
+    "n_criteria": 5
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 4,
+    "n_criteria": 5
+   },
+   "mean": {
+    "all_pass": 0.3333,
+    "criterion_pass_rate": 0.8667
+   }
+  },
+  "firm-knowledge/tasks/121": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 7,
+    "n_criteria": 18
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 12,
+    "n_criteria": 18
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 8,
+    "n_criteria": 18
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.5
+   }
+  },
+  "firm-knowledge/tasks/122": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 2,
+    "n_criteria": 3
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 2,
+    "n_criteria": 3
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 2,
+    "n_criteria": 3
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.6667
+   }
+  },
+  "firm-knowledge/tasks/123": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 16,
+    "n_criteria": 20
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 16,
+    "n_criteria": 20
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 17,
+    "n_criteria": 20
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.8167
+   }
+  },
+  "firm-knowledge/tasks/124": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 25,
+    "n_criteria": 31
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 16,
+    "n_criteria": 31
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 21,
+    "n_criteria": 31
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.6667
+   }
+  },
+  "firm-knowledge/tasks/125": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 19,
+    "n_criteria": 29
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 21,
+    "n_criteria": 29
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 21,
+    "n_criteria": 29
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.7011
+   }
+  },
+  "firm-knowledge/tasks/126": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 26,
+    "n_criteria": 29
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 22,
+    "n_criteria": 29
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 26,
+    "n_criteria": 29
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.8506
+   }
+  },
+  "firm-knowledge/tasks/127": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 4,
+    "n_criteria": 8
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 5,
+    "n_criteria": 8
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 6,
+    "n_criteria": 8
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.625
+   }
+  },
+  "firm-knowledge/tasks/128": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 1,
+    "n_criteria": 4
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 1,
+    "n_criteria": 4
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 2,
+    "n_criteria": 4
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.3333
+   }
+  },
+  "firm-knowledge/tasks/129": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 7,
+    "n_criteria": 8
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 6,
+    "n_criteria": 8
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 4,
+    "n_criteria": 8
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.7083
+   }
+  },
+  "firm-knowledge/tasks/130": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 16,
+    "n_criteria": 29
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 16,
+    "n_criteria": 29
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 20,
+    "n_criteria": 29
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.5977
+   }
+  },
+  "firm-knowledge/tasks/131": {
+   "run1": {
+    "all_pass": true,
+    "n_passed": 2,
+    "n_criteria": 2
+   },
+   "run2": {
+    "all_pass": true,
+    "n_passed": 2,
+    "n_criteria": 2
+   },
+   "run3": {
+    "all_pass": true,
+    "n_passed": 2,
+    "n_criteria": 2
+   },
+   "mean": {
+    "all_pass": 1.0,
+    "criterion_pass_rate": 1.0
+   }
+  },
+  "firm-knowledge/tasks/132": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 5,
+    "n_criteria": 28
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 20,
+    "n_criteria": 28
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 10,
+    "n_criteria": 28
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.4167
+   }
+  },
+  "firm-knowledge/tasks/133": {
+   "run1": {
+    "all_pass": true,
+    "n_passed": 13,
+    "n_criteria": 13
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 11,
+    "n_criteria": 13
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 11,
+    "n_criteria": 13
+   },
+   "mean": {
+    "all_pass": 0.3333,
+    "criterion_pass_rate": 0.8974
+   }
+  },
+  "firm-knowledge/tasks/134": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 5,
+    "n_criteria": 6
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 5,
+    "n_criteria": 6
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 4,
+    "n_criteria": 6
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.7778
+   }
+  },
+  "firm-knowledge/tasks/135": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 11,
+    "n_criteria": 12
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 11,
+    "n_criteria": 12
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 6,
+    "n_criteria": 12
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.7778
+   }
+  },
+  "firm-knowledge/tasks/136": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 25,
+    "n_criteria": 45
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 23,
+    "n_criteria": 45
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 19,
+    "n_criteria": 45
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.4963
+   }
+  },
+  "firm-knowledge/tasks/137": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 3,
+    "n_criteria": 4
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 2,
+    "n_criteria": 4
+   },
+   "run3": {
+    "all_pass": true,
+    "n_passed": 4,
+    "n_criteria": 4
+   },
+   "mean": {
+    "all_pass": 0.3333,
+    "criterion_pass_rate": 0.75
+   }
+  },
+  "firm-knowledge/tasks/138": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 0,
+    "n_criteria": 1
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 0,
+    "n_criteria": 1
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 0,
+    "n_criteria": 1
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.0
+   }
+  },
+  "firm-knowledge/tasks/139": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 8,
+    "n_criteria": 9
+   },
+   "run2": {
+    "all_pass": true,
+    "n_passed": 9,
+    "n_criteria": 9
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 7,
+    "n_criteria": 9
+   },
+   "mean": {
+    "all_pass": 0.3333,
+    "criterion_pass_rate": 0.8889
+   }
+  },
+  "firm-knowledge/tasks/140": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 7,
+    "n_criteria": 11
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 9,
+    "n_criteria": 11
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 9,
+    "n_criteria": 11
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.7576
+   }
+  },
+  "firm-knowledge/tasks/141": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 20,
+    "n_criteria": 29
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 23,
+    "n_criteria": 29
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 23,
+    "n_criteria": 29
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.7586
+   }
+  },
+  "firm-knowledge/tasks/142": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 21,
+    "n_criteria": 26
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 23,
+    "n_criteria": 26
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 22,
+    "n_criteria": 26
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.8462
+   }
+  },
+  "firm-knowledge/tasks/143": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 18,
+    "n_criteria": 23
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 17,
+    "n_criteria": 23
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 20,
+    "n_criteria": 23
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.7971
+   }
+  },
+  "firm-knowledge/tasks/144": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 21,
+    "n_criteria": 29
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 20,
+    "n_criteria": 29
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 18,
+    "n_criteria": 29
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.6782
+   }
+  },
+  "firm-knowledge/tasks/145": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 22,
+    "n_criteria": 41
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 37,
+    "n_criteria": 41
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 36,
+    "n_criteria": 41
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.7724
+   }
+  },
+  "firm-knowledge/tasks/146": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 32,
+    "n_criteria": 53
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 36,
+    "n_criteria": 53
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 32,
+    "n_criteria": 53
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.6289
+   }
+  },
+  "firm-knowledge/tasks/147": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 33,
+    "n_criteria": 53
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 33,
+    "n_criteria": 53
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 32,
+    "n_criteria": 53
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.6164
+   }
+  },
+  "firm-knowledge/tasks/148": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 0,
+    "n_criteria": 3
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 0,
+    "n_criteria": 3
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 2,
+    "n_criteria": 3
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.2222
+   }
+  },
+  "firm-knowledge/tasks/149": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 24,
+    "n_criteria": 31
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 28,
+    "n_criteria": 31
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 26,
+    "n_criteria": 31
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.8387
+   }
+  },
+  "firm-knowledge/tasks/150": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 14,
+    "n_criteria": 17
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 14,
+    "n_criteria": 17
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 14,
+    "n_criteria": 17
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.8235
+   }
+  },
+  "firm-knowledge/tasks/151": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 2,
+    "n_criteria": 3
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 2,
+    "n_criteria": 3
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 2,
+    "n_criteria": 3
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.6667
+   }
+  },
+  "firm-knowledge/tasks/152": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 15,
+    "n_criteria": 19
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 17,
+    "n_criteria": 19
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 15,
+    "n_criteria": 19
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.8246
+   }
+  },
+  "firm-knowledge/tasks/153": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 9,
+    "n_criteria": 10
+   },
+   "run2": {
+    "all_pass": true,
+    "n_passed": 10,
+    "n_criteria": 10
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 9,
+    "n_criteria": 10
+   },
+   "mean": {
+    "all_pass": 0.3333,
+    "criterion_pass_rate": 0.9333
+   }
+  },
+  "firm-knowledge/tasks/154": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 2,
+    "n_criteria": 3
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 2,
+    "n_criteria": 3
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 0,
+    "n_criteria": 3
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.4444
+   }
+  },
+  "firm-knowledge/tasks/155": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 32,
+    "n_criteria": 43
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 36,
+    "n_criteria": 43
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 34,
+    "n_criteria": 43
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.7907
+   }
+  },
+  "firm-knowledge/tasks/156": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 18,
+    "n_criteria": 24
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 21,
+    "n_criteria": 24
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 20,
+    "n_criteria": 24
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.8194
+   }
+  },
+  "firm-knowledge/tasks/157": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 0,
+    "n_criteria": 3
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 0,
+    "n_criteria": 3
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 0,
+    "n_criteria": 3
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.0
+   }
+  },
+  "firm-knowledge/tasks/158": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 4,
+    "n_criteria": 7
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 4,
+    "n_criteria": 7
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 4,
+    "n_criteria": 7
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.5714
+   }
+  },
+  "firm-knowledge/tasks/159": {
+   "run1": {
+    "all_pass": true,
+    "n_passed": 3,
+    "n_criteria": 3
+   },
+   "run2": {
+    "all_pass": true,
+    "n_passed": 3,
+    "n_criteria": 3
+   },
+   "run3": {
+    "all_pass": true,
+    "n_passed": 3,
+    "n_criteria": 3
+   },
+   "mean": {
+    "all_pass": 1.0,
+    "criterion_pass_rate": 1.0
+   }
+  },
+  "firm-knowledge/tasks/160": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 5,
+    "n_criteria": 8
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 5,
+    "n_criteria": 8
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 7,
+    "n_criteria": 8
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.7083
+   }
+  },
+  "firm-knowledge/tasks/161": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 1,
+    "n_criteria": 2
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 1,
+    "n_criteria": 2
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 1,
+    "n_criteria": 2
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.5
+   }
+  },
+  "firm-knowledge/tasks/162": {
+   "run1": {
+    "all_pass": true,
+    "n_passed": 4,
+    "n_criteria": 4
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 0,
+    "n_criteria": 4
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 0,
+    "n_criteria": 4
+   },
+   "mean": {
+    "all_pass": 0.3333,
+    "criterion_pass_rate": 0.3333
+   }
+  },
+  "firm-knowledge/tasks/163": {
+   "run1": {
+    "all_pass": true,
+    "n_passed": 4,
+    "n_criteria": 4
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 0,
+    "n_criteria": 4
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 0,
+    "n_criteria": 4
+   },
+   "mean": {
+    "all_pass": 0.3333,
+    "criterion_pass_rate": 0.3333
+   }
+  },
+  "firm-knowledge/tasks/164": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 0,
+    "n_criteria": 4
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 0,
+    "n_criteria": 4
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 3,
+    "n_criteria": 4
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.25
+   }
+  },
+  "firm-knowledge/tasks/165": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 1,
+    "n_criteria": 2
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 1,
+    "n_criteria": 2
+   },
+   "run3": {
+    "all_pass": true,
+    "n_passed": 2,
+    "n_criteria": 2
+   },
+   "mean": {
+    "all_pass": 0.3333,
+    "criterion_pass_rate": 0.6667
+   }
+  },
+  "firm-knowledge/tasks/166": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 0,
+    "n_criteria": 5
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 4,
+    "n_criteria": 5
+   },
+   "run3": {
+    "all_pass": true,
+    "n_passed": 5,
+    "n_criteria": 5
+   },
+   "mean": {
+    "all_pass": 0.3333,
+    "criterion_pass_rate": 0.6
+   }
+  },
+  "firm-knowledge/tasks/167": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 4,
+    "n_criteria": 5
+   },
+   "run2": {
+    "all_pass": true,
+    "n_passed": 5,
+    "n_criteria": 5
+   },
+   "run3": {
+    "all_pass": true,
+    "n_passed": 5,
+    "n_criteria": 5
+   },
+   "mean": {
+    "all_pass": 0.6667,
+    "criterion_pass_rate": 0.9333
+   }
+  },
+  "firm-knowledge/tasks/168": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 3,
+    "n_criteria": 6
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 4,
+    "n_criteria": 6
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 1,
+    "n_criteria": 6
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.4444
+   }
+  },
+  "firm-knowledge/tasks/169": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 16,
+    "n_criteria": 19
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 10,
+    "n_criteria": 19
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 13,
+    "n_criteria": 19
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.6842
+   }
+  },
+  "firm-knowledge/tasks/170": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 6,
+    "n_criteria": 9
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 4,
+    "n_criteria": 9
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 6,
+    "n_criteria": 9
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.5926
+   }
+  },
+  "firm-knowledge/tasks/171": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 4,
+    "n_criteria": 7
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 6,
+    "n_criteria": 7
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 2,
+    "n_criteria": 7
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.5714
+   }
+  },
+  "firm-knowledge/tasks/172": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 2,
+    "n_criteria": 3
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 2,
+    "n_criteria": 3
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 2,
+    "n_criteria": 3
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.6667
+   }
+  },
+  "firm-knowledge/tasks/173": {
+   "run1": {
+    "all_pass": true,
+    "n_passed": 2,
+    "n_criteria": 2
+   },
+   "run2": {
+    "all_pass": true,
+    "n_passed": 2,
+    "n_criteria": 2
+   },
+   "run3": {
+    "all_pass": true,
+    "n_passed": 2,
+    "n_criteria": 2
+   },
+   "mean": {
+    "all_pass": 1.0,
+    "criterion_pass_rate": 1.0
+   }
+  },
+  "firm-knowledge/tasks/174": {
+   "run1": {
+    "all_pass": true,
+    "n_passed": 4,
+    "n_criteria": 4
+   },
+   "run2": {
+    "all_pass": true,
+    "n_passed": 4,
+    "n_criteria": 4
+   },
+   "run3": {
+    "all_pass": true,
+    "n_passed": 4,
+    "n_criteria": 4
+   },
+   "mean": {
+    "all_pass": 1.0,
+    "criterion_pass_rate": 1.0
+   }
+  },
+  "firm-knowledge/tasks/175": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 4,
+    "n_criteria": 6
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 5,
+    "n_criteria": 6
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 4,
+    "n_criteria": 6
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.7222
+   }
+  },
+  "firm-knowledge/tasks/176": {
+   "run1": {
+    "all_pass": true,
+    "n_passed": 11,
+    "n_criteria": 11
+   },
+   "run2": {
+    "all_pass": true,
+    "n_passed": 11,
+    "n_criteria": 11
+   },
+   "run3": {
+    "all_pass": true,
+    "n_passed": 11,
+    "n_criteria": 11
+   },
+   "mean": {
+    "all_pass": 1.0,
+    "criterion_pass_rate": 1.0
+   }
+  },
+  "firm-knowledge/tasks/177": {
+   "run1": {
+    "all_pass": true,
+    "n_passed": 3,
+    "n_criteria": 3
+   },
+   "run2": {
+    "all_pass": true,
+    "n_passed": 3,
+    "n_criteria": 3
+   },
+   "run3": {
+    "all_pass": true,
+    "n_passed": 3,
+    "n_criteria": 3
+   },
+   "mean": {
+    "all_pass": 1.0,
+    "criterion_pass_rate": 1.0
+   }
+  },
+  "firm-knowledge/tasks/178": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 0,
+    "n_criteria": 23
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 0,
+    "n_criteria": 23
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 0,
+    "n_criteria": 23
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.0
+   }
+  },
+  "firm-knowledge/tasks/179": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 6,
+    "n_criteria": 27
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 22,
+    "n_criteria": 27
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 23,
+    "n_criteria": 27
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.6296
+   }
+  },
+  "firm-knowledge/tasks/180": {
+   "run1": {
+    "all_pass": true,
+    "n_passed": 4,
+    "n_criteria": 4
+   },
+   "run2": {
+    "all_pass": true,
+    "n_passed": 4,
+    "n_criteria": 4
+   },
+   "run3": {
+    "all_pass": true,
+    "n_passed": 4,
+    "n_criteria": 4
+   },
+   "mean": {
+    "all_pass": 1.0,
+    "criterion_pass_rate": 1.0
+   }
+  },
+  "firm-knowledge/tasks/181": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 5,
+    "n_criteria": 6
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 5,
+    "n_criteria": 6
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 5,
+    "n_criteria": 6
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.8333
+   }
+  },
+  "firm-knowledge/tasks/182": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 5,
+    "n_criteria": 9
+   },
+   "run2": {
+    "all_pass": true,
+    "n_passed": 9,
+    "n_criteria": 9
+   },
+   "run3": {
+    "all_pass": true,
+    "n_passed": 9,
+    "n_criteria": 9
+   },
+   "mean": {
+    "all_pass": 0.6667,
+    "criterion_pass_rate": 0.8519
+   }
+  },
+  "firm-knowledge/tasks/183": {
+   "run1": {
+    "all_pass": true,
+    "n_passed": 3,
+    "n_criteria": 3
+   },
+   "run2": {
+    "all_pass": true,
+    "n_passed": 3,
+    "n_criteria": 3
+   },
+   "run3": {
+    "all_pass": true,
+    "n_passed": 3,
+    "n_criteria": 3
+   },
+   "mean": {
+    "all_pass": 1.0,
+    "criterion_pass_rate": 1.0
+   }
+  },
+  "firm-knowledge/tasks/184": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 0,
+    "n_criteria": 10
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 1,
+    "n_criteria": 10
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 1,
+    "n_criteria": 10
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.0667
+   }
+  },
+  "firm-knowledge/tasks/185": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 0,
+    "n_criteria": 4
+   },
+   "run2": {
+    "all_pass": true,
+    "n_passed": 4,
+    "n_criteria": 4
+   },
+   "run3": {
+    "all_pass": true,
+    "n_passed": 4,
+    "n_criteria": 4
+   },
+   "mean": {
+    "all_pass": 0.6667,
+    "criterion_pass_rate": 0.6667
+   }
+  },
+  "firm-knowledge/tasks/186": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 39,
+    "n_criteria": 51
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 24,
+    "n_criteria": 51
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 25,
+    "n_criteria": 51
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.5752
+   }
+  },
+  "firm-knowledge/tasks/187": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 4,
+    "n_criteria": 6
+   },
+   "run2": {
+    "all_pass": true,
+    "n_passed": 6,
+    "n_criteria": 6
+   },
+   "run3": {
+    "all_pass": true,
+    "n_passed": 6,
+    "n_criteria": 6
+   },
+   "mean": {
+    "all_pass": 0.6667,
+    "criterion_pass_rate": 0.8889
+   }
+  },
+  "firm-knowledge/tasks/188": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 0,
+    "n_criteria": 29
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 0,
+    "n_criteria": 29
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 2,
+    "n_criteria": 29
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.023
+   }
+  },
+  "firm-knowledge/tasks/189": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 27,
+    "n_criteria": 37
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 33,
+    "n_criteria": 37
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 31,
+    "n_criteria": 37
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.8198
+   }
+  },
+  "firm-knowledge/tasks/190": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 13,
+    "n_criteria": 16
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 14,
+    "n_criteria": 16
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 10,
+    "n_criteria": 16
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.7708
+   }
+  },
+  "firm-knowledge/tasks/191": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 2,
+    "n_criteria": 3
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 2,
+    "n_criteria": 3
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 2,
+    "n_criteria": 3
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.6667
+   }
+  },
+  "firm-knowledge/tasks/192": {
+   "run1": {
+    "all_pass": true,
+    "n_passed": 10,
+    "n_criteria": 10
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 9,
+    "n_criteria": 10
+   },
+   "run3": {
+    "all_pass": true,
+    "n_passed": 10,
+    "n_criteria": 10
+   },
+   "mean": {
+    "all_pass": 0.6667,
+    "criterion_pass_rate": 0.9667
+   }
+  },
+  "firm-knowledge/tasks/193": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 84,
+    "n_criteria": 85
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 84,
+    "n_criteria": 85
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 84,
+    "n_criteria": 85
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.9882
+   }
+  },
+  "firm-knowledge/tasks/194": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 17,
+    "n_criteria": 18
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 17,
+    "n_criteria": 18
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 15,
+    "n_criteria": 18
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.9074
+   }
+  },
+  "firm-knowledge/tasks/195": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 12,
+    "n_criteria": 16
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 15,
+    "n_criteria": 16
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 12,
+    "n_criteria": 16
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.8125
+   }
+  },
+  "firm-knowledge/tasks/196": {
+   "run1": {
+    "all_pass": true,
+    "n_passed": 2,
+    "n_criteria": 2
+   },
+   "run2": {
+    "all_pass": true,
+    "n_passed": 2,
+    "n_criteria": 2
+   },
+   "run3": {
+    "all_pass": true,
+    "n_passed": 2,
+    "n_criteria": 2
+   },
+   "mean": {
+    "all_pass": 1.0,
+    "criterion_pass_rate": 1.0
+   }
+  },
+  "firm-knowledge/tasks/197": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 67,
+    "n_criteria": 68
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 67,
+    "n_criteria": 68
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 67,
+    "n_criteria": 68
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.9853
+   }
+  },
+  "firm-knowledge/tasks/198": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 3,
+    "n_criteria": 4
+   },
+   "run2": {
+    "all_pass": true,
+    "n_passed": 4,
+    "n_criteria": 4
+   },
+   "run3": {
+    "all_pass": true,
+    "n_passed": 4,
+    "n_criteria": 4
+   },
+   "mean": {
+    "all_pass": 0.6667,
+    "criterion_pass_rate": 0.9167
+   }
+  },
+  "firm-knowledge/tasks/199": {
+   "run1": {
+    "all_pass": true,
+    "n_passed": 12,
+    "n_criteria": 12
+   },
+   "run2": {
+    "all_pass": true,
+    "n_passed": 12,
+    "n_criteria": 12
+   },
+   "run3": {
+    "all_pass": true,
+    "n_passed": 12,
+    "n_criteria": 12
+   },
+   "mean": {
+    "all_pass": 1.0,
+    "criterion_pass_rate": 1.0
+   }
+  },
+  "firm-knowledge/tasks/200": {
+   "run1": {
+    "all_pass": true,
+    "n_passed": 4,
+    "n_criteria": 4
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 3,
+    "n_criteria": 4
+   },
+   "run3": {
+    "all_pass": true,
+    "n_passed": 4,
+    "n_criteria": 4
+   },
+   "mean": {
+    "all_pass": 0.6667,
+    "criterion_pass_rate": 0.9167
+   }
+  },
+  "firm-knowledge/tasks/201": {
+   "run1": {
+    "all_pass": true,
+    "n_passed": 5,
+    "n_criteria": 5
+   },
+   "run2": {
+    "all_pass": true,
+    "n_passed": 5,
+    "n_criteria": 5
+   },
+   "run3": {
+    "all_pass": true,
+    "n_passed": 5,
+    "n_criteria": 5
+   },
+   "mean": {
+    "all_pass": 1.0,
+    "criterion_pass_rate": 1.0
+   }
+  },
+  "firm-knowledge/tasks/202": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 11,
+    "n_criteria": 22
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 12,
+    "n_criteria": 22
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 13,
+    "n_criteria": 22
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.5455
+   }
+  },
+  "firm-knowledge/tasks/203": {
+   "run1": {
+    "all_pass": true,
+    "n_passed": 2,
+    "n_criteria": 2
+   },
+   "run2": {
+    "all_pass": true,
+    "n_passed": 2,
+    "n_criteria": 2
+   },
+   "run3": {
+    "all_pass": true,
+    "n_passed": 2,
+    "n_criteria": 2
+   },
+   "mean": {
+    "all_pass": 1.0,
+    "criterion_pass_rate": 1.0
+   }
+  },
+  "firm-knowledge/tasks/204": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 40,
+    "n_criteria": 66
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 28,
+    "n_criteria": 66
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 31,
+    "n_criteria": 66
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.5
+   }
+  },
+  "firm-knowledge/tasks/205": {
+   "run1": {
+    "all_pass": true,
+    "n_passed": 2,
+    "n_criteria": 2
+   },
+   "run2": {
+    "all_pass": true,
+    "n_passed": 2,
+    "n_criteria": 2
+   },
+   "run3": {
+    "all_pass": true,
+    "n_passed": 2,
+    "n_criteria": 2
+   },
+   "mean": {
+    "all_pass": 1.0,
+    "criterion_pass_rate": 1.0
+   }
+  },
+  "firm-knowledge/tasks/206": {
+   "run1": {
+    "all_pass": true,
+    "n_passed": 3,
+    "n_criteria": 3
+   },
+   "run2": {
+    "all_pass": true,
+    "n_passed": 3,
+    "n_criteria": 3
+   },
+   "run3": {
+    "all_pass": true,
+    "n_passed": 3,
+    "n_criteria": 3
+   },
+   "mean": {
+    "all_pass": 1.0,
+    "criterion_pass_rate": 1.0
+   }
+  },
+  "firm-knowledge/tasks/207": {
+   "run1": {
+    "all_pass": true,
+    "n_passed": 2,
+    "n_criteria": 2
+   },
+   "run2": {
+    "all_pass": true,
+    "n_passed": 2,
+    "n_criteria": 2
+   },
+   "run3": {
+    "all_pass": true,
+    "n_passed": 2,
+    "n_criteria": 2
+   },
+   "mean": {
+    "all_pass": 1.0,
+    "criterion_pass_rate": 1.0
+   }
+  },
+  "firm-knowledge/tasks/208": {
+   "run1": {
+    "all_pass": true,
+    "n_passed": 18,
+    "n_criteria": 18
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 10,
+    "n_criteria": 18
+   },
+   "run3": {
+    "all_pass": true,
+    "n_passed": 18,
+    "n_criteria": 18
+   },
+   "mean": {
+    "all_pass": 0.6667,
+    "criterion_pass_rate": 0.8519
+   }
+  },
+  "firm-knowledge/tasks/209": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 0,
+    "n_criteria": 3
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 0,
+    "n_criteria": 3
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 0,
+    "n_criteria": 3
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.0
+   }
+  },
+  "firm-knowledge/tasks/210": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 4,
+    "n_criteria": 15
+   },
+   "run2": {
+    "all_pass": true,
+    "n_passed": 15,
+    "n_criteria": 15
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 3,
+    "n_criteria": 15
+   },
+   "mean": {
+    "all_pass": 0.3333,
+    "criterion_pass_rate": 0.4889
+   }
+  },
+  "firm-knowledge/tasks/211": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 1,
+    "n_criteria": 2
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 1,
+    "n_criteria": 2
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 1,
+    "n_criteria": 2
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.5
+   }
+  },
+  "firm-knowledge/tasks/212": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 3,
+    "n_criteria": 7
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 6,
+    "n_criteria": 7
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 4,
+    "n_criteria": 7
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.619
+   }
+  },
+  "firm-knowledge/tasks/213": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 10,
+    "n_criteria": 11
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 7,
+    "n_criteria": 11
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 6,
+    "n_criteria": 11
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.697
+   }
+  },
+  "firm-knowledge/tasks/214": {
+   "run1": {
+    "all_pass": true,
+    "n_passed": 5,
+    "n_criteria": 5
+   },
+   "run2": {
+    "all_pass": true,
+    "n_passed": 5,
+    "n_criteria": 5
+   },
+   "run3": {
+    "all_pass": true,
+    "n_passed": 5,
+    "n_criteria": 5
+   },
+   "mean": {
+    "all_pass": 1.0,
+    "criterion_pass_rate": 1.0
+   }
+  },
+  "firm-knowledge/tasks/215": {
+   "run1": {
+    "all_pass": true,
+    "n_passed": 1,
+    "n_criteria": 1
+   },
+   "run2": {
+    "all_pass": true,
+    "n_passed": 1,
+    "n_criteria": 1
+   },
+   "run3": {
+    "all_pass": true,
+    "n_passed": 1,
+    "n_criteria": 1
+   },
+   "mean": {
+    "all_pass": 1.0,
+    "criterion_pass_rate": 1.0
+   }
+  },
+  "firm-knowledge/tasks/216": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 1,
+    "n_criteria": 3
+   },
+   "run2": {
+    "all_pass": true,
+    "n_passed": 3,
+    "n_criteria": 3
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 1,
+    "n_criteria": 3
+   },
+   "mean": {
+    "all_pass": 0.3333,
+    "criterion_pass_rate": 0.5556
+   }
+  },
+  "firm-knowledge/tasks/217": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 2,
+    "n_criteria": 11
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 3,
+    "n_criteria": 11
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 2,
+    "n_criteria": 11
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.2121
+   }
+  },
+  "firm-knowledge/tasks/218": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 2,
+    "n_criteria": 9
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 6,
+    "n_criteria": 9
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 4,
+    "n_criteria": 9
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.4444
+   }
+  },
+  "firm-knowledge/tasks/219": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 0,
+    "n_criteria": 1
+   },
+   "run2": {
+    "all_pass": true,
+    "n_passed": 1,
+    "n_criteria": 1
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 0,
+    "n_criteria": 1
+   },
+   "mean": {
+    "all_pass": 0.3333,
+    "criterion_pass_rate": 0.3333
+   }
+  },
+  "firm-knowledge/tasks/220": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 2,
+    "n_criteria": 6
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 2,
+    "n_criteria": 6
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 2,
+    "n_criteria": 6
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.3333
+   }
+  },
+  "firm-knowledge/tasks/221": {
+   "run1": {
+    "all_pass": true,
+    "n_passed": 3,
+    "n_criteria": 3
+   },
+   "run2": {
+    "all_pass": true,
+    "n_passed": 3,
+    "n_criteria": 3
+   },
+   "run3": {
+    "all_pass": true,
+    "n_passed": 3,
+    "n_criteria": 3
+   },
+   "mean": {
+    "all_pass": 1.0,
+    "criterion_pass_rate": 1.0
+   }
+  },
+  "firm-knowledge/tasks/222": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 1,
+    "n_criteria": 3
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 2,
+    "n_criteria": 3
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 2,
+    "n_criteria": 3
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.5556
+   }
+  },
+  "firm-knowledge/tasks/223": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 4,
+    "n_criteria": 7
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 3,
+    "n_criteria": 7
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 3,
+    "n_criteria": 7
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.4762
+   }
+  },
+  "firm-knowledge/tasks/224": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 5,
+    "n_criteria": 7
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 5,
+    "n_criteria": 7
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 5,
+    "n_criteria": 7
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.7143
+   }
+  },
+  "firm-knowledge/tasks/225": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 2,
+    "n_criteria": 7
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 3,
+    "n_criteria": 7
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 2,
+    "n_criteria": 7
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.3333
+   }
+  },
+  "firm-knowledge/tasks/226": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 0,
+    "n_criteria": 4
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 0,
+    "n_criteria": 4
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 0,
+    "n_criteria": 4
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.0
+   }
+  },
+  "firm-knowledge/tasks/227": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 6,
+    "n_criteria": 9
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 7,
+    "n_criteria": 9
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 7,
+    "n_criteria": 9
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.7407
+   }
+  },
+  "firm-knowledge/tasks/228": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 3,
+    "n_criteria": 5
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 3,
+    "n_criteria": 5
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 4,
+    "n_criteria": 5
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.6667
+   }
+  },
+  "firm-knowledge/tasks/229": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 0,
+    "n_criteria": 3
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 0,
+    "n_criteria": 3
+   },
+   "run3": {
+    "all_pass": true,
+    "n_passed": 3,
+    "n_criteria": 3
+   },
+   "mean": {
+    "all_pass": 0.3333,
+    "criterion_pass_rate": 0.3333
+   }
+  },
+  "firm-knowledge/tasks/230": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 10,
+    "n_criteria": 15
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 8,
+    "n_criteria": 15
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 8,
+    "n_criteria": 15
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.5778
+   }
+  },
+  "firm-knowledge/tasks/231": {
+   "run1": {
+    "all_pass": true,
+    "n_passed": 3,
+    "n_criteria": 3
+   },
+   "run2": {
+    "all_pass": true,
+    "n_passed": 3,
+    "n_criteria": 3
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 2,
+    "n_criteria": 3
+   },
+   "mean": {
+    "all_pass": 0.6667,
+    "criterion_pass_rate": 0.8889
+   }
+  },
+  "firm-knowledge/tasks/232": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 5,
+    "n_criteria": 6
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 5,
+    "n_criteria": 6
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 5,
+    "n_criteria": 6
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.8333
+   }
+  },
+  "firm-knowledge/tasks/233": {
+   "run1": {
+    "all_pass": true,
+    "n_passed": 3,
+    "n_criteria": 3
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 2,
+    "n_criteria": 3
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 2,
+    "n_criteria": 3
+   },
+   "mean": {
+    "all_pass": 0.3333,
+    "criterion_pass_rate": 0.7778
+   }
+  },
+  "firm-knowledge/tasks/234": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 2,
+    "n_criteria": 4
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 2,
+    "n_criteria": 4
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 0,
+    "n_criteria": 4
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.3333
+   }
+  },
+  "firm-knowledge/tasks/235": {
+   "run1": {
+    "all_pass": true,
+    "n_passed": 5,
+    "n_criteria": 5
+   },
+   "run2": {
+    "all_pass": true,
+    "n_passed": 5,
+    "n_criteria": 5
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 3,
+    "n_criteria": 5
+   },
+   "mean": {
+    "all_pass": 0.6667,
+    "criterion_pass_rate": 0.8667
+   }
+  },
+  "firm-knowledge/tasks/236": {
+   "run1": {
+    "all_pass": true,
+    "n_passed": 4,
+    "n_criteria": 4
+   },
+   "run2": {
+    "all_pass": true,
+    "n_passed": 4,
+    "n_criteria": 4
+   },
+   "run3": {
+    "all_pass": true,
+    "n_passed": 4,
+    "n_criteria": 4
+   },
+   "mean": {
+    "all_pass": 1.0,
+    "criterion_pass_rate": 1.0
+   }
+  },
+  "firm-knowledge/tasks/237": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 2,
+    "n_criteria": 5
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 2,
+    "n_criteria": 5
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 2,
+    "n_criteria": 5
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.4
+   }
+  },
+  "firm-knowledge/tasks/238": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 2,
+    "n_criteria": 5
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 2,
+    "n_criteria": 5
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 0,
+    "n_criteria": 5
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.2667
+   }
+  },
+  "firm-knowledge/tasks/239": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 1,
+    "n_criteria": 3
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 1,
+    "n_criteria": 3
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 1,
+    "n_criteria": 3
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.3333
+   }
+  },
+  "firm-knowledge/tasks/240": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 1,
+    "n_criteria": 3
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 0,
+    "n_criteria": 3
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 0,
+    "n_criteria": 3
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.1111
+   }
+  },
+  "firm-knowledge/tasks/241": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 3,
+    "n_criteria": 4
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 2,
+    "n_criteria": 4
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 1,
+    "n_criteria": 4
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.5
+   }
+  },
+  "firm-knowledge/tasks/242": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 7,
+    "n_criteria": 8
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 7,
+    "n_criteria": 8
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 7,
+    "n_criteria": 8
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.875
+   }
+  },
+  "firm-knowledge/tasks/243": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 7,
+    "n_criteria": 8
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 7,
+    "n_criteria": 8
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 7,
+    "n_criteria": 8
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.875
+   }
+  },
+  "firm-knowledge/tasks/244": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 0,
+    "n_criteria": 2
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 0,
+    "n_criteria": 2
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 0,
+    "n_criteria": 2
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.0
+   }
+  },
+  "firm-knowledge/tasks/245": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 6,
+    "n_criteria": 7
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 5,
+    "n_criteria": 7
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 6,
+    "n_criteria": 7
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.8095
+   }
+  },
+  "firm-knowledge/tasks/246": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 5,
+    "n_criteria": 7
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 6,
+    "n_criteria": 7
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 4,
+    "n_criteria": 7
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.7143
+   }
+  },
+  "firm-knowledge/tasks/247": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 0,
+    "n_criteria": 3
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 0,
+    "n_criteria": 3
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 0,
+    "n_criteria": 3
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.0
+   }
+  },
+  "firm-knowledge/tasks/248": {
+   "run1": {
+    "all_pass": true,
+    "n_passed": 3,
+    "n_criteria": 3
+   },
+   "run2": {
+    "all_pass": true,
+    "n_passed": 3,
+    "n_criteria": 3
+   },
+   "run3": {
+    "all_pass": true,
+    "n_passed": 3,
+    "n_criteria": 3
+   },
+   "mean": {
+    "all_pass": 1.0,
+    "criterion_pass_rate": 1.0
+   }
+  },
+  "firm-knowledge/tasks/249": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 15,
+    "n_criteria": 20
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 15,
+    "n_criteria": 20
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 14,
+    "n_criteria": 20
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.7333
+   }
+  },
+  "firm-knowledge/tasks/250": {
+   "run1": {
+    "all_pass": false,
+    "n_passed": 9,
+    "n_criteria": 13
+   },
+   "run2": {
+    "all_pass": false,
+    "n_passed": 12,
+    "n_criteria": 13
+   },
+   "run3": {
+    "all_pass": false,
+    "n_passed": 9,
+    "n_criteria": 13
+   },
+   "mean": {
+    "all_pass": 0.0,
+    "criterion_pass_rate": 0.7692
+   }
+  }
+ }
+}
