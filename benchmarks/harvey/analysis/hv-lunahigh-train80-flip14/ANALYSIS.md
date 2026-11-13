@@ -109,11 +109,18 @@ Added train tasks passing exactly once: 051, 071, 085, 107, 120, 133, 139, 153, 
   extraction timed out at 60 s; it restarted it in the background, then answered from partial results and killed the
   job before it finished. Run 2 counted all 266 matter folders by client series and confirmed each series' client in
   its engagement letters.
+- **038** -> Failed 2 recall criteria and their 2 executed-document criteria (4 of 15) in 1 run (run 3); 2 runs passed.
+  Lost because 1014-00001 (Optiwave, $250M 144A convertible notes with a 15% over-allotment option, exercised in full)
+  and 1037-00001 (Solstice Biomedical ADS IPO, executed underwriting agreement with a 1,000,000-ADS overallotment
+  option) were left out: run 3's full-text index was killed at the 60 s default timeout, it then scanned a hand-picked
+  list of 15 matters that omitted both (no reason recorded), and the cross-check it ran after writing the answer found
+  both but was read only to line 198 of 1,113. In run 3 both surfaced (file-name listings, step 3) but were never
+  opened; runs 1 and 2 enumerated every offering agreement or scanned every document, read both and included them.
 
 
 ## Patterns across tasks (updated as tasks are added)
 
-Tasks so far: 028, 048, 072, 082, 137, 167, 192, 198, 200, 066, 104, 162, 185, 210.
+Tasks so far: 028, 048, 072, 082, 137, 167, 192, 198, 200, 066, 104, 162, 185, 210; added train: 038.
 
 - **How the passing runs avoided the wrong item.**
   - Never surfaced it or never read it (pass by omission): 028 (runs 2, 3), 048 (run 3), 072 (run 1), 137 (run 3), 192 (runs 1, 3).
@@ -134,7 +141,8 @@ Tasks so far: 028, 048, 072, 082, 137, 167, 192, 198, 200, 066, 104, 162, 185, 2
   - 200 run 2: all three at once (blind grep, capped output it could not open, case-sensitive `*Vantor*` file-name search), and "No matches found" in .docx read as absence.
   - 185 run 1: blind grep, a capped listing, and a glob that lists files only, all silent, in one step;
   - 210: a range assumed from a capped listing (run 1, series 1001-1030 only); a timed-out scan whose background rerun was killed before it finished (run 3).
-  - The recall and counting failures (167, 200, 185, 210) all come from tool limits, not judgement.
+  - 038 run 3: a full-text scan killed at bash's 60 s default timeout, replaced by a hand-narrowed candidate list; then a capped `read` of its own result file ("Showing lines 1-198. Use offset=199 to continue."), never continued.
+  - The recall and counting failures (167, 200, 185, 210, 038) all come from tool limits, not judgement.
 - **The grader is inconsistent:**
   - on caveated listings: 198's "supplemental" listing passed, 192's "related" listing failed;
   - on wording: in 066, the same sentence about the subscription agreement was graded fail in run 1 and pass in run 2. That flip is pure grading noise.
@@ -546,7 +554,44 @@ The ground truth comes from the folder names: there are 266 matter folders, and 
 
 In short: run 2 counted the unit the question names, completely, from the folder structure, and had a total to check against. Runs 1 and 3 counted a stand-in (engagement letters and the client names in them) over an incomplete range: run 1 stopped at series 1030; run 3 ran a script over every file under the matters folder, which timed out, and then abandoned the rerun.
 
+## 038: Capital Markets offerings with a greenshoe, and their executed offering documents
+
+Question asked (2026-11-13): add an analysis for 038, the same way as the others.
+
+Answer:
+
+A **recall** failure in run 3: 11/15. The qualifying set is 7 offerings; run 3 found 5 (1002-00001, 1010-00002, 1018-00001, 1027-00001, 1033-00002) and left out two, losing each one's "qualifying matter" and "executed documents" criteria. Precision passed in all three runs.
+- **1014-00001, Optiwave:** $250M 2.75% convertible senior notes (Rule 144A) with a 15% over-allotment option ($37.5M) granted to the initial purchasers, exercised in full on 1 June 2023 ("full exercise of the 15% greenshoe option", matter-close email).
+- **1037-00001, Solstice Biomedical:** ADS IPO; the executed underwriting agreement (2 March 2023) grants an "Overallotment Option" for up to 1,000,000 additional ADSs.
+
+Run 3's answer mentions neither matter, not even among the matters it screened out.
+
+**How run 3 lost them**
+1. **Step 3: both surfaced.** The `*Underwrit*` listing (complete, 29 files) showed `1037-00001/…/underwriting-agreement-execution.docx`; the `*Offering*` listing showed `1014-00001/documents/final-offering-memorandum.docx`.
+2. **Step 9: the full scan died.** A script to extract the text of every .docx and .eml was killed at bash's 60 s default ("timed out after 60000ms"); it had set no longer timeout.
+3. **Steps 11-12: a hand-picked list replaced it.** It scanned 15 matters for greenshoe terms. The list holds 10 of the 12 matters with underwriting-agreement files in the step-3 listing, plus five others (a block trade, a shelf/ATM programme and three debt offerings), but not 1037-00001 or 1014-00001. Its reasoning summaries for steps 8-12 are empty, so no reason is recorded.
+4. **Step 35: answer written** from those 15 matters.
+5. **Steps 38-39: the cross-check found both, unread.** It then cross-checked the 37 matters with offering-type file names and saved the hits to a 1,113-line file. 1014-00001's hits are at lines 286-380 (33 files) and 1037-00001's at lines 1065-1090 (10 files). Its `read` returned "Output capped. Showing lines 1-198. Use offset=199 to continue." It did not continue, and finished at step 41 without changing the answer.
+
+**What runs 1 and 2 did**
+- **Run 1 enumerated the place a greenshoe is granted.** At step 19 it globbed every `underwriting-agreement*`, `purchase-agreement*` and `final-offering-memorandum*` file; at step 20 it extracted all 12 agreements, 1037's underwriting agreement and 1014's purchase agreement among them; at step 21 it searched each for over-allotment terms. Both included.
+- **Run 2 scanned every document**, giving the script a 120 s timeout. The scan took 68.8 s (step 6), and 71.5 s regrouped by matter (step 7), so it would have died at the default. It read 1037's executed underwriting agreement and closing checklist (step 13) and 1014's purchase agreement, closing checklist, deal summary and final offering memorandum (steps 16-18). At step 16 it reasoned that "the greenshoe provision might include all types of offerings, not just equity", so a notes offering counts. Both included.
+
+**Recall check**
+- **1014-00001:** surfaced in run 3 at steps 3, 5, 6, 8 and 17 (file names; step 8's `*Execution*` listing was capped at 100 of 262 but still showed its executed purchase agreement). Never opened. Its only scan, step 38, put its hits in the unread part of the file.
+- **1037-00001:** surfaced at steps 3, 5 and 6 (its executed underwriting agreement by name at step 3). Never opened; its hits in the step-38 file are also in the unread part.
+- **How it was lost:** surfaced, not read, and dropped without a decision. The full scan was killed by the default timeout, the hand-picked list that replaced it left both out, and the late cross-check that caught them was read partially, despite an explicit "use offset=199 to continue". In the catalog's terms: a scan that timed out, narrowing that drops recall, partial view taken as the whole.
+
+**Observations**
+- This is the second scan killed at the 60 s default, after 210 run 3. Run 2 ran the same kind of scan and passed only because it set a 120 s timeout.
+- A new instrument: the cap is on `read` of a file the agent wrote itself, and the tool said exactly how to continue. The run had already written its answer and treated the cross-check as a formality.
+- A cross-check after writing is the right instinct (compare 198 and 066, where the answer drifted from the record). Here the check itself was not read in full, so it could not correct the answer.
+- Run 3's rule for debt offerings (stabilization-only "over-allotment" language is not a greenshoe) was right for the three debt deals it screened out, and the precision criterion passed. It never applied the rule to 1014, whose option is explicit, so the miss is retrieval, not interpretation.
+- Run 1 passed without any full-text scan: it enumerated by document type, the agreements in which a greenshoe is granted. That is a complete candidate set with nothing to time out.
+
 ## Overall patterns across all 14 tasks
+
+(The original 14 AHE-train tasks. Tasks added with train 160, from 038 on, are folded into "Patterns across tasks" above as they are analysed.)
 
 14 flipping AHE-train tasks, three base-harness runs each: 42 runs, **22 failing and 20 passing**. Each run is counted once, under its main cause.
 
