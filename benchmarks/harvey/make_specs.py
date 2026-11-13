@@ -7,7 +7,8 @@
 (train, val, test; trainval = train + val; default train), whose task_json_sha256 values are checked against the
 pinned tasks. Shortcuts: `split:<name>` = our 60/20/20 split, benchmarks/harvey/splits.json (make_splits.py);
 `ahe:<name>` = the AHE campaigns' 80/20/70 split, benchmarks/harvey/splits-ahe-80-20-70.json (import_ahe_splits.py;
-ahe:trainval = the 100 tasks AHE evolved on, ahe:test = the 70 it reported on). Needs benchmarks/harvey/setup.sh
+ahe:trainval = the 100 tasks AHE evolved on, ahe:test = the 70 it reported on). `ahe160:<name>` = the same split with
+AHE's 80 unused tasks added to train (160/20/70, splits-ahe-160-20-70.json, make_train160_split.py). Needs benchmarks/harvey/setup.sh
 (pinned checkout, image, prepared prompt).
 
 Per task: documents (the task's own, or the shared corpus its `docs_dir` names) are hard-linked read-only into
@@ -31,7 +32,8 @@ LAB = REPO / "work/harvey-labs"
 PREPARED = REPO / "work/harvey-prepared"
 
 
-SPLIT_FILES = {"split": HERE / "splits.json", "ahe": HERE / "splits-ahe-80-20-70.json"}
+SPLIT_FILES = {"split": HERE / "splits.json", "ahe": HERE / "splits-ahe-80-20-70.json",
+               "ahe160": HERE / "splits-ahe-160-20-70.json"}
 
 
 def task_ids(spec: str) -> tuple[list[str], dict[str, str]]:

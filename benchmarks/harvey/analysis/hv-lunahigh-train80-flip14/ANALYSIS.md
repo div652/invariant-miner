@@ -1,4 +1,6 @@
-# Analysis: the 14 flipping AHE-train tasks (Luna high, base harness, three runs)
+# Analysis: the flipping train tasks (Luna high, base harness, three runs)
+
+Train was expanded to 160 tasks on 2026-11-13 (benchmarks/harvey/splits-ahe-160-20-70.json: the 80 AHE train tasks + the 80 the AHE split left unused; val and test unchanged). The 14 original flipping tasks are analysed below; the 18 added ones (051 071 085 107 120 133 139 153 216 229 233; 038 044 083 088 208 231 235) have their traces in README.md and get a section here as each is read.
 
 Traces: [README.md](README.md). One section per task, added as each task is read: first a one-line summary of the
 failure (pattern: which criteria failed in how many runs, how many runs passed; why the criterion was lost; what each
@@ -10,16 +12,19 @@ thorough search; and did the passing run(s) not surface them, surface but not re
 
 All-pass counts over the three base-harness Luna-high runs (main's three-run baseline, benchmarks/harvey/RESULTS.md):
 
-| Passed in | AHE train (80 tasks) | All 250 FK tasks |
-|---|---|---|
-| 0 of 3 runs | 52 | 168 |
-| exactly 1 of 3 | 8 | 28 |
-| exactly 2 of 3 | 6 | 20 |
-| all 3 | 14 | 34 |
-| **varying (1 or 2)** | **14** (the tasks in this file) | 48 |
+| Passed in | AHE train (80 tasks) | Added train (80 tasks) | Train 160 | All 250 FK tasks |
+|---|---|---|---|---|
+| 0 of 3 runs | 52 | 54 | 106 | 168 |
+| exactly 1 of 3 | 8 | 11 | 19 | 28 |
+| exactly 2 of 3 | 6 | 7 | 13 | 20 |
+| all 3 | 14 | 8 | 22 | 34 |
+| **varying (1 or 2)** | **14** | **18** | **32** (the tasks in this folder) | 48 |
 
 AHE train tasks passing exactly once: 048, 066, 072, 082, 104, 137, 162, 210. Passing exactly twice: 028, 167, 185, 192,
 198, 200.
+
+Added train tasks passing exactly once: 051, 071, 085, 107, 120, 133, 139, 153, 216, 229, 233. Passing exactly twice: 038,
+044, 083, 088, 208, 231, 235.
 
 ## One-line summaries
 
