@@ -1,0 +1,138 @@
+# Retrieval methods across the 32 flipping train tasks (96 runs)
+
+Question asked (2026-11-13): for the same task, some search strategies retrieve all the right documents and others do
+not. Are there methods that always work and methods that fail? Ground it in evidence and numbers.
+
+**Method.** Every tool call of the 96 trajectories (32 tasks x 3 base runs; 5,718 calls) was classified by search
+method. The gold matters of each task come from its rubric, from every criterion except precision: 104 gold matters
+in 30 tasks; 082 (answer: none) and 210 (a client count) are left out of the matter counts. That gives 312
+(task, run, gold matter) items. For each item: the first call before the answer was written whose output, as the
+model saw it, names the matter, and that call's method; whether the run then opened one of the matter's files; and
+whether the matter's criterion passed. A scan that wrote its hits to a file is credited when the agent reads that
+file. Capped listings and case-sensitive patterns were re-run against the real document store (9,288 files) to see
+what they hid. Scripts: [retrieval-scripts/](retrieval-scripts/).
+
+## 1. Where gold matters were lost
+
+| Stage | Items | Share |
+|---|---|---|
+| Included (criterion passed) | 278 | 89% |
+| Opened, but not included (judgement, or only partly read) | 8 | 3% |
+| **Surfaced in a search output, never opened** | **16** | 5% |
+| **Never surfaced before the answer** | **10** | 3% |
+
+Finding is rarely the problem: 302 of 312 items (97%) appeared in some search output, and in 13 of the 16
+surfaced-but-unopened misses the gold matter appeared in the run's **first** searches (steps 3-5). Retrieval breaks
+in two places: a matter the run saw but never opened, and a matter its instruments could not show it.
+
+## 2. Method scorecard
+
+In the runs that used each method (before the answer): the share of the task's gold matters that appeared in that
+method's own output.
+
+| Method | Calls | Runs | Gold in its output | Failure signature |
+|---|---|---|---|---|
+| File-name search (glob with words) | 1,043 | 93 | **276/299 (92%)** | 148 capped at 100 paths; 61 returned nothing only because of letter case |
+| Full-text scan of the whole corpus (bash, extracted .docx text) | 92 | 36 | 107/141 (76%) | 12 timed out at 60 s; 19 capped; hits only as good as the search words |
+| Text scan of name-selected files (bash) | 30 | 15 | 58/73 (79%) | 4 timed out |
+| Text scan of a hand-listed set of matters | 171 | 69 | 128/257 (50%) | covers only the matters listed |
+| grep tool over the raw corpus | 158 | 35 | 48/94 (51%) | reads raw bytes: blind inside .docx/.xlsx/.pptx |
+| Folder listing of a matter or client prefix | 927 | 86 | 174/272 (64%) | lists only what was already chosen |
+| Generic listing (`*`, `**/*`) | 105 | 96 | 11/312 (4%) | 98 of 105 capped at 100 of 9,288 |
+
+- **grep is structurally blind.** On gold matters that have an .eml or .txt file it found 44/71 (62%); on gold
+  matters that are only Office files, 4/23 (17%, those 4 through mentions in other matters' emails). 35 of the 104
+  gold matters have no plain-text file at all, so grep can never see them.
+- **File names carry most of the signal** in this corpus (files are named for their content). Only 3 of 104 gold
+  matters were never hit by any file-name search in any run: 153's 1042-00004 (earn-out only inside a merger
+  agreement), 185's 1038-00003 and 216's 1009-00003. These are found only by full-text scans or folder enumeration,
+  and they have the lowest recall: 1, 2 and 1 runs of 3.
+
+## 3. Strategy and recall per run
+
+| Run class (before the answer) | Runs | Gold included | Runs with every gold matter |
+|---|---|---|---|
+| A. Completed a whole-corpus full-text scan | 30 | 122/126 (97%) | 26/30 (87%) |
+| B. Attempted one, every attempt timed out | 4 | 13/15 (87%) | 3/4 |
+| C. Text scan of name-selected files only | 4 | 20/21 (95%) | 3/4 |
+| D. No corpus-wide content scan (names, grep, chosen files) | 52 | 123/150 (82%) | 33/52 (63%) |
+
+Within the same task (33 pairs where one run included more gold matters than another), the higher-recall run had a
+completed full-text scan and the lower-recall run did not in **11** pairs; the reverse in **2**. Opening more
+matters is not the difference (higher-recall run opened more in 18 pairs, fewer in 14; median 11 vs 10 matters).
+
+A gold matter that appeared in a **content** hit (scan or grep) was included 205/214 times (96%); one that appeared
+only in **file-name** listings, 73/87 (84%); never surfaced, 0/10.
+
+**Selective opening is universal.** For gold items that first surfaced in a file-name list, the run opened a median
+of 50% of the matters in that list, whether the gold matter was then included (n=255) or never opened (n=13). Which
+half gets opened decides the item: a name hit is a coin the run may or may not pick up.
+
+The trade-off: full scans do not cost precision overall. Precision failed in 11/31 class-A runs (35%) against 16/53
+class-D runs (30%); all-pass was 17/32 (53%) against 25/55 (45%).
+
+## 4. Instrument failures, measured on the corpus
+
+- **Capped listings** ("Showing 100 of N"): re-running the 142 capped name-search globs on the store, a gold matter
+  sat in the unshown part 206 times (130 distinct items). The run saw it elsewhere in 127 of the 130; the cap alone
+  caused 3 misses: 153 run 1, 185 run 1, 208 run 2 (1033-00004).
+- **Letter case:** the store's file names are lower case; 234 name-search globs had capital letters, 61 of them
+  returned nothing only because of case. Direct misses: 229 runs 1 and 2 (`*SNDA*`; the files are `snda-…`), 200
+  run 2 (`*Vantor*`).
+- **Timeouts:** whole-corpus scans (126 calls in 41 runs) timed out 16 times at bash's 60 s default; 10 of the 15
+  runs that hit one completed a later scan. 038 run 3 did not (it scanned a hand-picked list instead) and lost 2 of 7.
+- **Capped scan output not paged:** 25 scan outputs were capped. 133 run 3's capped scan output contained the gold
+  matter, never acted on; 051 run 2's capped "best efforts / commercially reasonable efforts" scan hid it.
+- **Vocabulary:** a content scan finds the words, not the concept. 051's gold matter (an at-the-market offering)
+  never says "best efforts" (0 of 12 files); it says "commercially reasonable efforts" (4 files) and "sales agent"
+  (6). Run 2's completed best-efforts scans could not find it; run 3 found it by the file name `*equity*` and read it.
+
+## 5. The 34 misses by cause
+
+| Cause | Items | Where |
+|---|---|---|
+| Never surfaced: letter-case file-name pattern | 3 | 229 r1, 229 r2, 200 r2 |
+| Never surfaced: capped listing, nothing else showed it | 3 | 153 r1, 185 r1, 208 r2 (1033-00004) |
+| Never surfaced: grep blind to .docx + file-name words that do not occur in its names | 2 | 083 r3, 085 r3 (1007-00003) |
+| Never surfaced: content-only matter, scan output too large or capped | 2 | 104 r1, 051 r2 |
+| Surfaced, never opened: long or capped name list, run opened another part | 10 | 044 r1, 085 r2, 104 r2, 133 r2, 133 r3, 153 r3, 208 r2 (x3), 216 r1 (1009-00003) |
+| Surfaced, never opened: stopped early on a superlative ("first") | 2 | 162 r2, 162 r3 |
+| Surfaced, never opened: full scan timed out, hand-picked list replaced it | 2 | 038 r3 (x2) |
+| Surfaced, never opened: run stopped after a partial look | 2 | 216 r3 (x2) |
+| Opened, not included: judgement or partial reading | 8 | 051 r1, 139 r1, 139 r3 (x2), 167 r1, 208 r2 (x2), 216 r1 (1010-00002) |
+
+## 6. Answer: what works, what fails
+
+**No single method always works.** Even the best one, a completed whole-corpus full-text scan, missed 4 of 126
+items, each time for an identifiable reason (output capped, words that the documents do not use, or the scan aimed
+at another criterion). What separates the runs that got everything is not one tool but whether the candidate set was
+**complete and fully read**:
+
+What reliably works (no failures in the data when done completely):
+1. **A full-text scan of the extracted text of every document, that completes and whose hits are read in full**
+   (paged past any cap, or summarised by matter). 97% gold recall; the within-task winner in 11 of 13 decided pairs.
+2. **Enumerating the unit, then checking each item:** every file of the document type in which the fact is recorded
+   (038 run 1: every underwriting / purchase agreement / offering memorandum, each checked; 7/7), or every folder
+   of the client or the corpus (185 runs 2-3: all ten Cascade matters dated; 210 run 2: all 266 matter folders
+   counted).
+3. **Case-insensitive file-name search with several words for the concept**, followed by opening **every** matter it
+   returns, not a selection. File names alone reach 92% of gold; the losses come from not opening what they show.
+
+What fails, and how often:
+1. **Opening a selection of a name-search list** (16 misses; the single largest cause): median 50% of a list opened,
+   with no rule for which half.
+2. **grep over the raw corpus**: 51% of gold, 17% on Office-only matters; 35 of 104 gold matters are invisible to it.
+   "No matches" from it says nothing about .docx.
+3. **Case-sensitive patterns**: 61 empty results caused only by case; 3 direct misses.
+4. **Capped outputs taken as the whole** (listings at 100, scans and reads cut): 3 direct misses plus 133 r3 and
+   051 r2; in 038 r3 the tool even said "use offset=199 to continue".
+5. **Scans at the 60 s default**: 16 timeouts; a run that replaces the scan with a hand-picked list loses recall
+   (038 r3).
+6. **Exact-phrase content search for a concept** (051): the documents describe it in other words.
+
+In short: retrieval is reliable when the candidate set is generated **completely** (every document's text, or every
+item of the right unit) and every candidate is **checked**; it fails when the run samples a list, trusts an instrument
+that cannot see (raw grep, case, caps, timeouts), or searches for a phrase instead of the thing.
+
+Caveats: method classes come from heuristics over the commands; gold is matter-level (proof-document criteria are
+not scored separately); 96 runs, so within-task comparisons rest on 33 pairs.

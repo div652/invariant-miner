@@ -120,6 +120,8 @@ Added train tasks passing exactly once: 051, 071, 085, 107, 120, 133, 139, 153, 
 
 ## Patterns across tasks (updated as tasks are added)
 
+Retrieval methods across all 32 tasks, measured (which search methods find the gold matters, which fail, and why): [RETRIEVAL.md](RETRIEVAL.md).
+
 Tasks so far: 028, 048, 072, 082, 137, 167, 192, 198, 200, 066, 104, 162, 185, 210; added train: 038.
 
 - **How the passing runs avoided the wrong item.**
