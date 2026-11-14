@@ -162,7 +162,9 @@ discovery methods first appear before the answer:
 | other orders | 38 |
 
 Reading named matters one by one appears in 69 runs, a full-text scan of the whole corpus in 36, raw grep in 35, a
-scan of name-selected files in 15.
+scan of name-selected files in 15. These counts overlap (a run counts under every method it used, in any order); the table puts
+each run in one row by its exact sequence (rows sum to 96). So the 69 are the table's 23 + 10 + 10 plus 26 in "other
+orders", and the 36 full-text-scan runs are 10 + 6 plus 20 in "other orders".
 
 **Why names first: the size of the corpus, and the harness's own tool guidance.** The reasoning at the first name
 search cites the 9,288 files in 56 of 93 runs and grep's blindness to .docx in 26:
