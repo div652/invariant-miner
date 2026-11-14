@@ -40,6 +40,11 @@ method's own output.
 | Folder listing of a matter or client prefix | 927 | 86 | 174/272 (64%) | lists only what was already chosen |
 | Generic listing (`*`, `**/*`) | 105 | 96 | 11/312 (4%) | 98 of 105 capped at 100 of 9,288 |
 
+- **How to read "gold in its output"** (it is per gold matter, not per call): of the gold matters of the runs that
+  used the method, the share that appeared in the output of at least one call of it in that run. For file-name
+  search: 276 of 299 gold matters (92%) appeared in some name search of their run. Per call it is much lower: 455 of
+  1,021 name searches (45%) named any gold matter. Per run: in 70 of 87 runs (80%) the name searches together named
+  every gold matter of the task.
 - **grep is structurally blind.** On gold matters that have an .eml or .txt file it found 44/71 (62%); on gold
   matters that are only Office files, 4/23 (17%, those 4 through mentions in other matters' emails). 35 of the 104
   gold matters have no plain-text file at all, so grep can never see them.
@@ -136,3 +141,88 @@ that cannot see (raw grep, case, caps, timeouts), or searches for a phrase inste
 
 Caveats: method classes come from heuristics over the commands; gold is matter-level (proof-document criteria are
 not scored separately); 96 runs, so within-task comparisons rest on 33 pairs.
+
+## 7. How the agent chooses a search strategy
+
+Question asked (2026-11-14): how does the model decide between file-name search, a full-text scan, a scan of
+name-selected files, and the other strategies? Grounded in the reasoning summaries (present on 1,271 of 2,916 steps,
+44%) and the order of tool calls in the 96 runs.
+
+**The default path is the same in every run.** Step 2 is always a generic listing (`glob *`: "Showing 100 of 9288",
+96/96 runs). The first real search is a file-name glob in 93 of 96 runs. What follows, by the order in which
+discovery methods first appear before the answer:
+
+| Order | Runs |
+|---|---|
+| names, then reading named matters one by one (parse-doc) | 23 |
+| names, full-text scan, then reading named matters | 10 |
+| names, grep, then reading named matters | 10 |
+| names only | 9 |
+| names, then full-text scan | 6 |
+| other orders | 38 |
+
+Reading named matters one by one appears in 69 runs, a full-text scan of the whole corpus in 36, raw grep in 35, a
+scan of name-selected files in 15.
+
+**Why names first: the size of the corpus, and the harness's own tool guidance.** The reasoning at the first name
+search cites the 9,288 files in 56 of 93 runs and grep's blindness to .docx in 26:
+- 133 run 3, step 3: "I'm looking at 9288 files … I wonder if searching content with grep is the best way,
+  considering it likely handles mainly plain text. I might have issues with binary files like docx … I should check
+  filenames for terms like 'purchase'."
+- 185 run 1, step 4: "Using grep might be a good approach for text extraction, but it won't work on binary files like
+  docx due to compression. I could explore using filenames … a glob pattern like '*Cascade*'."
+
+The system prompt points the same way: "Use the glob tool — not shell find — to discover files", "Use the grep tool —
+not shell grep or rg — to search file contents", and for .docx "convert them to text with bash: parse-doc". So the
+prompt's path is glob for discovery, grep for content, parse-doc per file, and that is the path most runs take: name
+search, then parse-doc on the matters the names point to. 47 runs question in their reasoning whether a Python or
+shell search is even allowed (210 run 3, step 11: "Python's os.walk, but that feels prohibited"; 028 run 3, step 18:
+"The developer suggests using the grep tool instead of shell commands for this content search. I can use Python to
+extract text from the docx files"). It does not change how often they scan in the end (36% of those runs vs 39%).
+
+**Why a full-text scan: instrument trouble, not missing results.** In the 3 steps up to the first whole-corpus scan
+(36 runs) the reasoning gives: grep or plain-text tools cannot read .docx (28 runs), a capped output or an unreadable
+saved list (22), a wish for completeness (17), an earlier search that came back empty (1). The name searches had not
+failed: by then they had already named 119 of the 141 gold matters (84%), and only 19% of them had come back empty,
+against 25% in the runs that never scanned. Examples:
+- 185 run 3, step 4: "using grep on docx files isn't feasible since it can't search binary files. I might need to
+  parse the documents into text" (it then dated all ten Cascade matters and passed).
+- 231 run 3, step 14: "I need to not only check the tax opinion files but scan through all related documents for
+  'should-level' conclusions … I'll perform a full extraction" (completeness).
+
+**The choice is not set by the task.** Of the 32 tasks, 3 got a full-text scan in all three runs, 9 in none, and 20
+in one or two. The same question, with the same documents, gets different strategies from run to run.
+
+**What makes escalation more likely, and less.** Share of runs that went on to a whole-corpus scan:
+
+| Before the scan (or the answer) | With | Without |
+|---|---|---|
+| The reasoning notes that grep / plain-text tools cannot read .docx | 27/63 (43%) | 9/33 (27%) |
+| A name search came back capped ("Showing 100 of N") | 28/68 (41%) | 8/28 (29%) |
+| A saved full result (spill file) could not be read | 17/48 (35%) | 19/48 (40%) |
+| Raw grep returned "No matches" | **6/24 (25%)** | 30/72 (42%) |
+
+The signals are weak, and the last one runs the wrong way: a grep "No matches", which says nothing about .docx, makes
+a scan *less* likely. The agent reads it as an answer (absence), not as a blind instrument (as in 200 run 2). And 63
+runs state that grep cannot read .docx, yet 36 of them never run a content scan: they rely on names and parse-doc.
+
+**Why a scan of name-selected files: cost.** It is chosen to make a scan cheaper, by reading only files whose names
+match: 038 run 3, step 38: "I want to ensure a thorough search … but I need to balance thoroughness with time limits";
+210 run 3's script: "Read only filenames containing engagement; avoid scanning large XML for irrelevant docs". It
+inherits the blind spot of names.
+
+**After a scan times out** (bash's default is 60 s; 15 runs hit it), 7 runs re-ran a whole-corpus scan that completed
+(104 r1, 137 r1, 167 r3, 192 r2, 192 r3, 216 r2, 233 r1). 8 did not before answering:
+- five went on from partial output, name searches or picked matters (028 r1, 048 r2, 133 r1, 137 r3, 231 r3);
+- two ran a name-filtered scan in the background (051 r1, 210 r3);
+- one switched to a hand-picked subset (038 r3).
+
+028 run 1, just after its timeout: "I'm uncertain whether I should retry the same expensive operation. However, I
+could use the existing temporary file". 104 run 1: "I'm running into a timeout issue, and it seems I need a more
+efficient method".
+
+**In short:** the agent picks its strategy by cost and by the friction of its tools, not by what the question needs.
+Names first because the corpus is large and the prompt says glob; a scan when grep proves blind, a list comes back
+capped, or it wants to be thorough; narrower scans when time feels short. It never checks whether its candidate set
+is complete, and it escalates no more often after its name searches miss than after they succeed. So for the same
+task the strategy, and with it the recall, is partly a coin toss: section 3's 11-to-2 within-task pairs.
