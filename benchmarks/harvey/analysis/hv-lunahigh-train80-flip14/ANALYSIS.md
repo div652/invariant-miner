@@ -8,6 +8,9 @@ run did with the item at the heart of it), then the in-depth analysis. Every tas
 it wrong to surface the wrongly included matters, or were they misread after surfacing; was surfacing them the more
 thorough search; and did the passing run(s) not surface them, surface but not read them, or read and reject them.
 
+These 32 tasks are the named split `ahe:flip` (= `ahe160:flip`): `make_specs.py --tasks ahe:flip`, or
+`python3 -m dsh_bench.splits benchmarks/harvey/splits-ahe-80-20-70.json flip` for the ids.
+
 ## How often tasks pass across the three runs
 
 All-pass counts over the three base-harness Luna-high runs (main's three-run baseline, benchmarks/harvey/RESULTS.md):

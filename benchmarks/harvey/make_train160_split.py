@@ -64,6 +64,7 @@ def main() -> None:
                         | {"train ahe-train": means([e for e in train if e["train_origin"] == "ahe-train"]),
                            "train ahe-unused": means([e for e in train if e["train_origin"] == "ahe-unused"])},
         "splits": splits,
+        **({"subsets": ahe["subsets"]} if "subsets" in ahe else {}),  # named subsets (make_flip_subset.py)
     }
     (HERE / "splits-ahe-160-20-70.json").write_text(json.dumps(data, indent=1) + "\n")
     print(data["counts"]["train"], data["counts"]["val"], data["counts"]["test"], data["counts"]["train_origin"])

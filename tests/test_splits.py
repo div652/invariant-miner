@@ -3,7 +3,8 @@
 1. stratified_split on made-up groups: deterministic for a seed, every group cut 60/20/20 (val and test rounded),
    pinned tasks kept where they were pinned, a different seed gives a different split.
 2. Each committed split file (benchmarks/*/splits*.json): no task in two splits or twice, counts match, each group
-   within one task of the file's ratios, trainval = train + val, and `python3 -m dsh_bench.splits FILE --check` passes.
+   within one task of the file's ratios, trainval = train + val, and `python3 -m dsh_bench.splits FILE --check` passes;
+   each named subset resolves by name and holds no val/test task, and --check refuses one that does.
 
     python3 tests/test_splits.py
 """
@@ -66,6 +67,19 @@ def main() -> int:
              == [e["task_id"] for e in data["splits"]["train"] + data["splits"]["val"]]),
             (f"{name}: --check passes", cli.returncode == 0),
         ]
+        for sub, body in data.get("subsets", {}).items():
+            held = {e["task_id"] for n in ("val", "test") for e in data["splits"][n]}
+            checks += [(f"{name}: subset {sub} resolves by name, no val/test task",
+                        [e["task_id"] for e in entries(path, sub)] == [e["task_id"] for e in body["entries"]]
+                        and not held & {e["task_id"] for e in body["entries"]})]
+    # --check refuses a subset that holds a held-out task
+    import tempfile
+    sample = json.loads((REPO / "benchmarks/harvey/splits-ahe-80-20-70.json").read_text())
+    sample["subsets"] = {"bad": {"entries": [sample["splits"]["test"][0]]}}
+    with tempfile.NamedTemporaryFile("w", suffix=".json", delete=False) as f:
+        json.dump(sample, f)
+    bad = subprocess.run([sys.executable, "-m", "dsh_bench.splits", f.name, "--check"], cwd=REPO, capture_output=True, text=True)
+    checks.append(("--check refuses a subset holding a test task", bad.returncode == 1 and "is a test task" in bad.stdout))
     width = max(len(n) for n, _ in checks)
     for n, ok in checks:
         print(f"{'PASS' if ok else 'FAIL'}  {n:<{width}}")

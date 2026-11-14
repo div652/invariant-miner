@@ -10,6 +10,10 @@ recorded only to say how the file was made). Format:
 Split names: train, val, test, and trainval = train + val (for work with only a train and a test set: train on
 trainval, report on test).
 
+Named subsets: a file may also carry `"subsets": {"<name>": {"description": ..., "entries": [{"task_id": ...}, ...]}}`,
+working sets addressed by name like a split (e.g. Harvey's `ahe:flip`). They are not part of the partition: a subset
+may span train and tasks the partition leaves unused, but never a val or test task (--check refuses it).
+
     python3 -m dsh_bench.splits benchmarks/<name>/splits.json test        # task ids, one per line
     python3 -m dsh_bench.splits benchmarks/<name>/splits.json --check     # disjoint, counts by group
 
@@ -30,13 +34,17 @@ DEFAULT_RATIOS = {"train": 0.6, "val": 0.2, "test": 0.2}
 
 
 def entries(path: Path, name: str) -> list[dict]:
-    """The split's entries (dicts with at least task_id); `trainval` is train followed by val."""
+    """The split's entries (dicts with at least task_id); `trainval` is train followed by val; other names are the
+    file's named subsets."""
     data = json.loads(Path(path).read_text())
     if name == "trainval":
         return data["splits"]["train"] + data["splits"]["val"]
-    if name not in NAMES:
-        raise SystemExit(f"split {name!r}: choose one of {', '.join(NAMES)}, trainval")
-    return data["splits"][name]
+    if name in NAMES:
+        return data["splits"][name]
+    subsets = data.get("subsets", {})
+    if name in subsets:
+        return subsets[name]["entries"]
+    raise SystemExit(f"split {name!r}: choose one of {', '.join([*NAMES, 'trainval', *subsets])}")
 
 
 def task_ids(path: Path, name: str) -> list[str]:
@@ -91,6 +99,14 @@ def check(path: Path) -> list[str]:
     counts = {name: len(data["splits"][name]) for name in NAMES}
     if data.get("counts", {}).get("total") not in (None, sum(counts.values())):
         problems.append(f"counts.total {data['counts']['total']} != {sum(counts.values())}")
+    held_out = {e["task_id"]: n for n in ("val", "test") for e in data["splits"][n]}
+    sha = {e["task_id"]: e.get("task_json_sha256") for n in NAMES for e in data["splits"][n]}
+    for sub, body in data.get("subsets", {}).items():
+        ids = [e["task_id"] for e in body["entries"]]
+        problems += [f"subset {sub}: {t} twice" for t, c in Counter(ids).items() if c > 1]
+        problems += [f"subset {sub}: {t} is a {held_out[t]} task" for t in ids if t in held_out]
+        problems += [f"subset {sub}: {e['task_id']} task_json_sha256 differs from its split entry" for e in body["entries"]
+                     if sha.get(e["task_id"]) and e.get("task_json_sha256") not in (None, sha[e["task_id"]])]
     return problems
 
 
@@ -107,13 +123,15 @@ def summary(path: Path) -> str:
         for group in sorted(table, key=str):
             c = table[group]
             lines.append(f"  {group}: " + " / ".join(str(c[n]) for n in NAMES))
+    for sub, body in data.get("subsets", {}).items():
+        lines.append(f"subset {sub}: {len(body['entries'])} tasks")
     return "\n".join(lines)
 
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("path", type=Path)
-    parser.add_argument("name", nargs="?", help="train, val, test or trainval: print its task ids")
+    parser.add_argument("name", nargs="?", help="train, val, test, trainval or a named subset: print its task ids")
     parser.add_argument("--check", action="store_true", help="check the file and print the counts by group")
     args = parser.parse_args()
     if args.check or not args.name:

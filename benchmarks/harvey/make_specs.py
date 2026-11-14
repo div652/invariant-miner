@@ -8,7 +8,8 @@
 pinned tasks. Shortcuts: `split:<name>` = our 60/20/20 split, benchmarks/harvey/splits.json (make_splits.py);
 `ahe:<name>` = the AHE campaigns' 80/20/70 split, benchmarks/harvey/splits-ahe-80-20-70.json (import_ahe_splits.py;
 ahe:trainval = the 100 tasks AHE evolved on, ahe:test = the 70 it reported on). `ahe160:<name>` = the same split with
-AHE's 80 unused tasks added to train (160/20/70, splits-ahe-160-20-70.json, make_train160_split.py). Needs benchmarks/harvey/setup.sh
+AHE's 80 unused tasks added to train (160/20/70, splits-ahe-160-20-70.json, make_train160_split.py). `ahe:flip` (=
+`ahe160:flip`) = the 32 train tasks whose all-pass flips across the three Luna-high base runs (make_flip_subset.py). Needs benchmarks/harvey/setup.sh
 (pinned checkout, image, prepared prompt).
 
 Per task: documents (the task's own, or the shared corpus its `docs_dir` names) are hard-linked read-only into

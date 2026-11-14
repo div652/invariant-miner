@@ -109,6 +109,9 @@ def main() -> None:
         "unused": unused,
         "splits": splits,
     }
+    old = HERE / "splits-ahe-80-20-70.json"
+    if old.exists() and "subsets" in json.loads(old.read_text()):  # named subsets (make_flip_subset.py) are ours: keep them
+        data["subsets"] = json.loads(old.read_text())["subsets"]
     (HERE / "splits-ahe-80-20-70.json").write_text(json.dumps(data, indent=1) + "\n")
 
     ours = {e["task_id"]: n for n in NAMES for e in json.loads((HERE / "splits.json").read_text())["splits"][n]}
