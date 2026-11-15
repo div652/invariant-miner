@@ -5,3 +5,17 @@
       name: __BENCH_REPO__/benchmarks/harvey/plugins/harvey-write.mjs
       config:
         outputDir: output
+
+# DSH's glob/grep limits, raised for Harvey (user, 2026-11-15; benchmarks/harvey/README.md "Checking traces"):
+# - rawOutputMaxBytes 20 MB -> 500 MB: grep failed outright ("more raw output than the subprocess seam retained") on 148
+#   calls in seven FK-250 runs, the agent grepping its own whole-corpus text dumps whose lines are entire documents
+#   (ripgrep's --json repeats each matching line; re-run sizes up to 1 GB, median 81 MB). 500 MB stays under Node's
+#   maximum string length (536,870,888); the inline result is still the first 250 matches, lines cut at 2,000 bytes.
+# - timeoutMs 30 s -> 600 s (bash's cap): 18 glob/grep calls were stopped at 30 s, trivial ones included, all in one run
+#   (the budget includes starting the command in the container). Harvey's own glob/grep have no limit or timeout.
+# A `config:` row replaces the row's whole config, so DSH's base setting is restated.
+- id: tool-fs-search
+  config:
+    sampleOverCapGlobResults: false
+    rawOutputMaxBytes: 500000000
+    timeoutMs: 600000

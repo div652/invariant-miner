@@ -94,10 +94,16 @@ smokes (task runs affected per run, range over the seven 250-task runs):
 | `response.md` looked up in the workspace root instead of output/ (`write` routes it to output/) | 8-42 | 164 failed calls in 156 task runs, every one followed by a successful access of `output/response.md` |
 | saved full result of a capped glob/grep/bash unreadable (`/tmp/dsh-spill-*`) | 79-122 | known limit of the base harness |
 | file the agent wrote to `/tmp` in the container, then tried to `read` (read runs on the host, sees only the workspace) | 22-51 | 959 refused reads in all |
-| grep's raw ripgrep output over DSH's 20 MB buffer: the call fails | 4-15 | 148 failed calls |
-| glob/grep stopped by the 30 s search timeout | 0-16 | 16 task runs, all in ask-open r1 |
-| bash calls hitting their timeout | 47-62 | agent-chosen or 60 s default |
+| grep's raw ripgrep output over DSH's 20 MB buffer: the call fails | 4-15 | 148 failed calls. **Fixed 2026-11-15**: patch.yml raises the buffer to 500 MB (re-run sizes: median 81 MB, max 1 GB; Node's string limit caps it); test_search_limits.py |
+| glob/grep stopped by the 30 s search timeout | 0-16 | 16 task runs, all in ask-open r1. **Fixed 2026-11-15**: patch.yml sets 600 s (bash's cap) |
+| bash calls hitting their timeout | 47-62 | mostly agent-chosen (189 at 120 s, 34 at 1 s); 23 at the 60 s default. Harvey's own bash is stricter: 60 s fixed (`--shell-timeout`), no per-call timeout, no background jobs |
 | `read` of an office file refused ("binary file") / edit of a file not read first | 12-22 / 0-4 | DSH rules, agent recovers |
 | `markitdown` on a .docx | 1 call | the image's markitdown lacks its docx extra (pptx/xlsx work; parse-doc works for all); the prompt names markitdown as an alternative |
 
 The two harvey-mixed smokes (with and without skills) show none of the A-C failures, only the two DSH rules.
+
+Compared with Harvey's own tools (lab_core/harness/tools.py at the pin): Harvey has the /tmp gap too (its read / write /
+edit refuse paths outside /workspace); it has no saved results but cuts glob at 100 and grep at 250 silently; its
+glob/grep have no output buffer or timeout (so the two fixed rows were ours); its read and edit look for a relative
+path in output/ as well, so the response.md slips are ours (harvey-write routes only `write`); and its prompt never
+names markitdown (our prepare.py does).
