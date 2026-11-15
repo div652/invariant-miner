@@ -1,6 +1,6 @@
-"""Prepare Harvey's system prompt for DSH: exact, recorded text replacements on the pinned file.
+"""Prepare Harvey's system prompt and skills for DSH: exact, recorded text replacements on the pinned files.
 
-    python3 benchmarks/harvey/prepare.py      # writes work/harvey-prepared/ (system_prompt.md, CHANGES.md)
+    python3 benchmarks/harvey/prepare.py      # writes work/harvey-prepared/ (system_prompt.md, skills/, CHANGES.md)
 
 Source: work/harvey-labs (pinned by setup.sh). The system prompt is Harvey's `--no-enable-finish` variant (the file
 as-is: the finish guidance is only spliced in when the finish tool is on). Each replacement must match exactly once;
@@ -8,7 +8,14 @@ a source change at a new pin fails here instead of silently leaving a false stat
 
 Why each change: under DSH, `read` opens UTF-8 text only (Harvey's `read` converts .docx/.xlsx/.pptx); only `write`
 gets Harvey's output/ rule (plugins/harvey-write.mjs), `edit` resolves relative paths against the workspace; Harvey's
-skills are not used (user's decision, 2026-11-05), so every mention of them is removed. Everything else is unchanged.
+skills are off by default (user's decision, 2026-11-05), so every mention of them is removed from the prompt.
+
+Skills (optional, `make_specs.py --skills`, user 2026-11-15): Harvey's docx / xlsx / pptx skills are exposed the way
+DSH exposes skills - registered with DSH's skill registry (spec key skills_dir, plugins/skills), listed by the `skill`
+tool by name and description, a manual loaded only when the agent asks - never pasted into the system prompt as
+Harvey's harness does. skills/<name>/ here is Harvey's skill folder (SKILL.md + scripts/) with three exact changes per
+manual: reading an office file is `parse-doc` in bash, not `read`. The scripts are staged into the workspace at
+skills/<name>/scripts/, where the manuals say they are. Everything else is unchanged.
 """
 
 import shutil
@@ -52,6 +59,32 @@ PROMPT_CHANGES = [
 ]
 
 
+def skill_changes(fmt: str, note_old: str, note_new: str) -> list[tuple[str, str, str]]:
+    why = "DSH's read opens text only; office files are converted with bash"
+    return [
+        (why, f"{fmt} files, use the harness `read` tool — do not invoke this skill.",
+         f"{fmt} files, convert them with `parse-doc {fmt} <file>` in bash — do not invoke this skill."),
+        (why, note_old, note_new),
+        (why, "- Reading: use the `read` tool.", f"- Reading: `parse-doc {fmt} <file>` in bash."),
+    ]
+
+
+SKILL_CHANGES = {
+    "docx": skill_changes(
+        "docx",
+        "To read an existing .docx, use the harness `read` tool. It already returns structured text via pandoc.",
+        "To read an existing .docx, run `parse-doc docx <file>` in bash. It returns structured text via pandoc."),
+    "xlsx": skill_changes(
+        "xlsx",
+        "To read an existing .xlsx, use the harness `read` tool (pandas extracts every sheet as a markdown table).",
+        "To read an existing .xlsx, run `parse-doc xlsx <file>` in bash (pandas extracts every sheet as a table)."),
+    "pptx": skill_changes(
+        "pptx",
+        "To read an existing .pptx, use the harness `read` tool (markitdown extracts slide text).",
+        "To read an existing .pptx, run `parse-doc pptx <file>` in bash (markitdown extracts slide text)."),
+}
+
+
 def apply(text: str, changes: list[tuple[str, str, str]], where: str, log: list[str]) -> str:
     for why, old, new in changes:
         count = text.count(old)
@@ -77,8 +110,18 @@ def main() -> None:
     if "skill" in text.lower():
         raise SystemExit("the prepared system prompt still mentions skills")
     (OUT / "system_prompt.md").write_text(text)
+    skills_src = LAB / "lab_core/harness/skills"
+    names = sorted(p.parent.name for p in skills_src.glob("*/SKILL.md"))
+    if names != sorted(SKILL_CHANGES):
+        raise SystemExit(f"skills at the pin are {names}, prepare.py knows {sorted(SKILL_CHANGES)}")
+    log.append("\n# Changes to Harvey's skill manuals (used only with make_specs.py --skills)\n")
+    for name in names:
+        shutil.copytree(skills_src / name, OUT / "skills" / name)
+        manual = OUT / "skills" / name / "SKILL.md"
+        manual.write_text(apply(manual.read_text(), SKILL_CHANGES[name], f"skills/{name}/SKILL.md", log))
     (OUT / "CHANGES.md").write_text("\n".join(log))
-    print(f"[prepare] {OUT}: system_prompt.md ({len(PROMPT_CHANGES)} changes); see CHANGES.md")
+    print(f"[prepare] {OUT}: system_prompt.md ({len(PROMPT_CHANGES)} changes), skills {names} "
+          f"({sum(len(v) for v in SKILL_CHANGES.values())} changes); see CHANGES.md")
 
 
 if __name__ == "__main__":

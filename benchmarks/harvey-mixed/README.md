@@ -55,13 +55,29 @@ The agent built both .docx files with python-docx in bash, into `output/`. The "
 (0 `w:ins` / `w:del`): without Harvey's docx skill it wrote a clean document that describes its changes, and the judge
 still passed 28 of 29 criteria.
 
-## Open decisions
+## Split
 
-- **Skills.** Harvey's own harness loads its docx / xlsx / pptx skills by default (scripts for tracked-changes redlines,
-  comments, template filling, validation). Our Harvey setup runs without them (user's decision for firm-knowledge,
-  benchmarks/harvey/CHECKLIST.md row 6). On this set, 151 of 200 deliverables are .docx and many tasks are redlines, so
-  skills could matter much more here than on firm-knowledge.
-- **Splits.** The 200 are one list; no train / val / test yet.
-- **Upstream.** harvey-labs main is 5 commits past our pin (2026-11-11), with the same 2,010 tasks. One changes grading:
-  a criterion whose deliverable is missing now fails without a judge call (#218). We keep the pin, so the grader is the
-  same as for the firm-knowledge runs.
+`splits-150-50.json` (`make_split.py`, seed 20261115): **150 train, 50 test**, no val, stratified by practice area
+(largest remainder), so both halves cover the areas in proportion; test holds 2,741 of the 11,160 criteria and 25 of
+the 27 areas (diligence, 1 task, and white-collar, 2 tasks, fall in train). `make_specs.py --tasks mixed:train` /
+`--tasks mixed:test`; `mixed200` is still the whole list.
+
+## Skills (optional)
+
+`make_specs.py ... --skills` (off by default, user 2026-11-15) gives the agent Harvey's docx / xlsx / pptx skills the
+way DSH exposes skills: registered with DSH's skill registry, listed by the `skill` tool by name and description, a
+manual loaded on demand, nothing added to the system prompt (Harvey's harness pastes all three manuals into it). The
+scripts the manuals use (tracked-changes redlines, comments, template filling, validation, recalculation) are staged
+at `workspace/skills/<name>/scripts/`. Details: benchmarks/harvey/CHECKLIST.md row 6, benchmarks/harvey/prepare.py.
+
+Smoke with skills (2026-11-15, Luna high, `runs/hv-mixed-skills-smoke-20261115T130137Z`), the contracts redline task of
+the smoke above: the catalog reached the agent as DSH's `<available_skills>` reminder (no manual in the system
+prompt); it loaded `docx` at step 1 and used the skill's `accept_changes.py`, `redline.py` and `validate.py`. The
+redline now has **151 tracked insertions and 130 deletions** (0 and 0 without skills). Score unchanged at 28/29;
+70 steps / 527 s against 36 / 363 s.
+
+## Upstream
+
+harvey-labs main is 5 commits past our pin (2026-11-11), with the same 2,010 tasks. One changes grading: a criterion
+whose deliverable is missing now fails without a judge call (#218). We keep the pin, so the grader is the same as for
+the firm-knowledge runs.

@@ -4,7 +4,8 @@
         [--model {repo}/models/luna-cao.json] [--max-steps 200] [--timeout-s 7200]
 
 --tasks: a file of task ids (e.g. firm-knowledge/tasks/001, one per line), a task-list JSON (`mixed200` = the
-200-task all-areas sample of benchmarks/harvey-mixed/), or a splits JSON with `:<split>`
+200-task all-areas sample of benchmarks/harvey-mixed/; `mixed:train` / `mixed:test` = its 150/50 split), or a splits
+JSON with `:<split>`
 (train, val, test; trainval = train + val; default train), whose task_json_sha256 values are checked against the
 pinned tasks. Shortcuts: `split:<name>` = our 60/20/20 split, benchmarks/harvey/splits.json (make_splits.py);
 `ahe:<name>` = the AHE campaigns' 80/20/70 split, benchmarks/harvey/splits-ahe-80-20-70.json (import_ahe_splits.py;
@@ -14,7 +15,10 @@ AHE's 80 unused tasks added to train (160/20/70, splits-ahe-160-20-70.json, make
 (pinned checkout, image, prepared prompt).
 
 Per task: documents (the task's own, or the shared corpus its `docs_dir` names) are hard-linked read-only into
-workspace/documents; output/ starts empty. No skills (user's decision). patch.yml adds Harvey's write path rule. The user
+workspace/documents; output/ starts empty. No skills by default (user's decision); --skills registers Harvey's docx /
+xlsx / pptx skills with DSH's skill tool (spec key skills_dir, from work/harvey-prepared/skills, see prepare.py) and
+stages their scripts at workspace/skills/<name>/scripts/; the system prompt is the same either way. patch.yml adds
+Harvey's write path rule. The user
 prompt is the task's `instructions`, verbatim, as Harvey's harness sends it. task.json (rubric) is never staged.
 """
 
@@ -35,7 +39,8 @@ PREPARED = REPO / "work/harvey-prepared"
 
 
 SPLIT_FILES = {"split": HERE / "splits.json", "ahe": HERE / "splits-ahe-80-20-70.json",
-               "ahe160": HERE / "splits-ahe-160-20-70.json"}
+               "ahe160": HERE / "splits-ahe-160-20-70.json",
+               "mixed": REPO / "benchmarks/harvey-mixed/splits-150-50.json"}
 # Task lists by name: JSON files with a top-level "tasks" list of {task_id, task_json_sha256}.
 TASK_LISTS = {"mixed200": REPO / "benchmarks/harvey-mixed/sample-200.json"}
 
@@ -61,6 +66,8 @@ def main() -> None:
     parser.add_argument("--model", help="a model file; overrides --endpoint's default model")
     parser.add_argument("--max-steps", type=int, default=200, help="Harvey's --max-turns default")
     parser.add_argument("--timeout-s", type=int, default=7200)
+    parser.add_argument("--skills", action="store_true",
+                        help="register Harvey's docx/xlsx/pptx skills with DSH's skill tool and stage their scripts (off by default)")
     args = parser.parse_args()
     model = model_for(args.endpoint, args.model)
     if not (PREPARED / "system_prompt.md").exists():
@@ -97,6 +104,15 @@ def main() -> None:
             "meta": {"benchmark": "harvey", "lab_commit": "4743403f52c1c1db75f3feb1c8f91fae1bd30296",
                      "task_json_sha256": hashlib.sha256(raw).hexdigest()},
         }
+        if args.skills:
+            skills_dir = PREPARED / "skills"
+            names = sorted(p.parent.name for p in skills_dir.glob("*/SKILL.md"))
+            if not names:
+                raise SystemExit("--skills: run benchmarks/harvey/prepare.py first (work/harvey-prepared/skills)")
+            spec["skills_dir"] = str(skills_dir)
+            spec["stage"] += [{"from": str(skills_dir / n / "scripts"), "to": f"skills/{n}/scripts", "readonly": False}
+                              for n in names if (skills_dir / n / "scripts").is_dir()]
+            spec["meta"]["skills"] = names
         (args.out / (task_id.replace("/", "__") + ".json")).write_text(json.dumps(spec, indent=2) + "\n")
     print(f"{len(ids)} specs in {args.out}")
 
