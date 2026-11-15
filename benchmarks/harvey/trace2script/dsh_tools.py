@@ -176,7 +176,10 @@ class Tools:
             raise ToolError(f'cannot read "{p}": not found')
         if not os.path.isfile(p):
             raise ToolError(f'cannot read "{p}": not a regular file')
-        raw = Path(p).read_bytes().decode("utf-8", errors="replace")
+        data = Path(p).read_bytes()
+        if b"\0" in data[:8192]:                       # DSH: a NUL byte in the first 8 KiB means binary
+            raise ToolError(f'cannot read "{p}": binary file')
+        raw = data.decode("utf-8", errors="replace")
         lines, total, out_bytes, capped = [], 0, 0, False
         parts = raw.split("\n")
         if parts and parts[-1] == "":
@@ -246,6 +249,8 @@ class Tools:
             raise ToolError(f'cannot edit "{p}": not found')
         if not self._fresh(p):
             raise ToolError(f'cannot modify "{p}": file has not been read — read the file, then retry')
+        if b"\0" in Path(p).read_bytes():
+            raise ToolError(f'cannot edit "{p}": binary file')
         text = Path(p).read_text()
         n = text.count(old_string)
         if n == 0:

@@ -38,6 +38,8 @@ def main() -> int:
     r = run(T.read(file_path="big.txt"))
     checks.append(("read: 50 KiB cap", "(Output capped. Showing lines 1-51. Use offset=52 to continue.)" in r))
     checks.append(("read: outside the workspace denied", run(T.read(file_path="/etc/hostname")) == f"Error: {DENIED}"))
+    (ws / "doc.docx").write_bytes(b"PK\x03\x04\x00\x00binary")
+    checks.append(("read: binary file refused", run(T.read(file_path="doc.docx")) == f'Error: cannot read "{ws}/doc.docx": binary file'))
     checks.append(("read: not found", run(T.read(file_path="nope.txt")) == f'Error: cannot read "{ws}/nope.txt": not found'))
     checks.append(("read: out-of-range offset", run(T.read(file_path="wide.txt", offset=5))
                    == f'Error: offset 5 is out of range for "{ws}/wide.txt" (1 lines)'))

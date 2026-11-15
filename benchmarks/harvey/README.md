@@ -79,3 +79,25 @@ python3 benchmarks/harvey/compare_c0.py $RUN                 # optional: task by
 
 The FK-250 reference run (250 tasks, 10 at a time) took about 2 h 10 min. It had subagents on; they are off in the
 harness since 2026-11-09, so its numbers are a baseline to rerun, not to compare a new run with.
+
+## Checking traces for harness, path and grader problems
+
+`python3 benchmarks/harvey/check_traces.py RUN_DIR [...]` sorts every problem in a run's traces that is not the
+agent's legal work into harness components (A), deliverable paths (B) and grader access (C); see its docstring.
+Swept 2026-11-15 over the three Luna-high base runs, the four ask-tools runs (7 x 250 tasks) and the harvey-mixed
+smokes (task runs affected per run, range over the seven 250-task runs):
+
+| Finding | Task runs per 250 | What happens |
+|---|---|---|
+| grader could not open or find a deliverable, grading errors, symlinks | 0 | none anywhere |
+| expected deliverable missing from output/ at the end | 0 | none anywhere |
+| `response.md` looked up in the workspace root instead of output/ (`write` routes it to output/) | 8-42 | 164 failed calls in 156 task runs, every one followed by a successful access of `output/response.md` |
+| saved full result of a capped glob/grep/bash unreadable (`/tmp/dsh-spill-*`) | 79-122 | known limit of the base harness |
+| file the agent wrote to `/tmp` in the container, then tried to `read` (read runs on the host, sees only the workspace) | 22-51 | 959 refused reads in all |
+| grep's raw ripgrep output over DSH's 20 MB buffer: the call fails | 4-15 | 148 failed calls |
+| glob/grep stopped by the 30 s search timeout | 0-16 | 16 task runs, all in ask-open r1 |
+| bash calls hitting their timeout | 47-62 | agent-chosen or 60 s default |
+| `read` of an office file refused ("binary file") / edit of a file not read first | 12-22 / 0-4 | DSH rules, agent recovers |
+| `markitdown` on a .docx | 1 call | the image's markitdown lacks its docx extra (pptx/xlsx work; parse-doc works for all); the prompt names markitdown as an alternative |
+
+The two harvey-mixed smokes (with and without skills) show none of the A-C failures, only the two DSH rules.
