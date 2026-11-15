@@ -1,0 +1,16 @@
+{
+ "task_id": "firm-knowledge/tasks/210",
+ "source_task_dir": "/home/agarwaldi/dsh-bench-harness/runs/hv-fk250-lunahigh-rep2-20261112T122308Z/tasks/firm-knowledge__tasks__210",
+ "session": "/home/agarwaldi/dsh-bench-harness/runs/hv-fk250-lunahigh-rep2-20261112T122308Z/tasks/firm-knowledge__tasks__210/dsh-home/sessions/--home-agarwaldi-dsh-bench-harness-runs-hv-fk250-lunahigh-rep2-20261112T122308Z-tasks-firm-knowledge__tasks__210-workspace--/session-06d7af40-76ec-45eb-b4b2-729dbd46d5bb/session.v2.jsonl",
+ "recorded_workspace": "/home/agarwaldi/dsh-bench-harness/runs/hv-fk250-lunahigh-rep2-20261112T122308Z/tasks/firm-knowledge__tasks__210/workspace",
+ "steps": 19,
+ "calls": 32,
+ "grade": {
+  "all_pass": true,
+  "n_passed": 15,
+  "n_criteria": 15
+ },
+ "output_files": [
+  "response.md"
+ ]
+}
