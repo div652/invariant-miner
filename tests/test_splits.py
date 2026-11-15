@@ -74,7 +74,7 @@ def main() -> int:
                         and not held & {e["task_id"] for e in body["entries"]})]
     # --check refuses a subset that holds a held-out task
     import tempfile
-    sample = json.loads((REPO / "benchmarks/harvey/splits-ahe-80-20-70.json").read_text())
+    sample = json.loads(next(p for p in files if json.loads(p.read_text())["splits"]["test"]).read_text())
     sample["subsets"] = {"bad": {"entries": [sample["splits"]["test"][0]]}}
     with tempfile.NamedTemporaryFile("w", suffix=".json", delete=False) as f:
         json.dump(sample, f)

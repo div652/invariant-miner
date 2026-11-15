@@ -3,7 +3,8 @@
     python3 benchmarks/harvey/make_specs.py --tasks <ids.txt | split.json[:split]> --out runs/<run>/specs \
         [--model {repo}/models/luna-cao.json] [--max-steps 200] [--timeout-s 7200]
 
---tasks: a file of task ids (e.g. firm-knowledge/tasks/001, one per line), or a splits JSON with `:<split>`
+--tasks: a file of task ids (e.g. firm-knowledge/tasks/001, one per line), a task-list JSON (`mixed200` = the
+200-task all-areas sample of benchmarks/harvey-mixed/), or a splits JSON with `:<split>`
 (train, val, test; trainval = train + val; default train), whose task_json_sha256 values are checked against the
 pinned tasks. Shortcuts: `split:<name>` = our 60/20/20 split, benchmarks/harvey/splits.json (make_splits.py);
 `ahe:<name>` = the AHE campaigns' 80/20/70 split, benchmarks/harvey/splits-ahe-80-20-70.json (import_ahe_splits.py;
@@ -35,9 +36,15 @@ PREPARED = REPO / "work/harvey-prepared"
 
 SPLIT_FILES = {"split": HERE / "splits.json", "ahe": HERE / "splits-ahe-80-20-70.json",
                "ahe160": HERE / "splits-ahe-160-20-70.json"}
+# Task lists by name: JSON files with a top-level "tasks" list of {task_id, task_json_sha256}.
+TASK_LISTS = {"mixed200": REPO / "benchmarks/harvey-mixed/sample-200.json"}
 
 
 def task_ids(spec: str) -> tuple[list[str], dict[str, str]]:
+    if spec in TASK_LISTS or (spec.endswith(".json") and "tasks" in json.loads(Path(spec).read_text())
+                              and "splits" not in json.loads(Path(spec).read_text())):
+        chosen = json.loads(Path(TASK_LISTS.get(spec, spec)).read_text())["tasks"]
+        return [e["task_id"] for e in chosen], {e["task_id"]: e["task_json_sha256"] for e in chosen}
     path, _, split = spec.partition(":")
     path = str(SPLIT_FILES.get(path, path))
     if path.endswith(".json"):

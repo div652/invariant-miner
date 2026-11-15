@@ -1,0 +1,1972 @@
+{
+ "benchmark": "harvey-mixed",
+ "description": "200 Harvey LAB tasks drawn at random across all practice areas, stratified by area (proportional, largest remainder), from the pinned checkout minus the AHE-held-out firm-knowledge tasks (val + test).",
+ "lab_commit": "4743403f52c1c1db75f3feb1c8f91fae1bd30296",
+ "seed": 20261115,
+ "method": "benchmarks/harvey-mixed/make_sample.py",
+ "pool": {
+  "tasks": 1920,
+  "all_tasks": 2010,
+  "excluded_ahe_val_test": 90
+ },
+ "counts": {
+  "tasks": 200,
+  "by_area": {
+   "antitrust-competition": 3,
+   "arbitration-international-dispute-resolution": 4,
+   "banking-finance": 4,
+   "bankruptcy-restructuring": 4,
+   "capital-markets": 4,
+   "contracts": 52,
+   "corporate-governance": 10,
+   "corporate-ma": 17,
+   "data-privacy-cybersecurity": 5,
+   "diligence": 1,
+   "emerging-companies-venture-capital": 4,
+   "employment-labor": 4,
+   "energy-natural-resources": 3,
+   "environmental-esg": 5,
+   "firm-knowledge": 17,
+   "funds-asset-management": 7,
+   "healthcare-life-sciences": 4,
+   "immigration": 3,
+   "insurance": 3,
+   "intellectual-property": 15,
+   "international-trade-sanctions": 4,
+   "litigation-dispute-resolution": 5,
+   "real-estate": 5,
+   "structured-finance-securitization": 3,
+   "tax": 4,
+   "trusts-estates-private-client": 8,
+   "white-collar-defense-investigations": 2
+  },
+  "criteria": 11160,
+  "deliverable_types": {
+   ".docx": 151,
+   ".md": 18,
+   ".xlsx": 3
+  }
+ },
+ "tasks": [
+  {
+   "task_id": "antitrust-competition/analyze-counterparty-markup-of-protective-order",
+   "area": "antitrust-competition",
+   "n_criteria": 49,
+   "deliverables": {
+    "protective-order-analysis-memo.docx": "protective-order-analysis-memo.docx"
+   },
+   "n_documents": 6,
+   "task_json_sha256": "71cd3ad8a9143b2a00f931ab6117d33b070664c16005139a077646498ec57c55"
+  },
+  {
+   "task_id": "antitrust-competition/draft-response-to-second-request-for-information",
+   "area": "antitrust-competition",
+   "n_criteria": 62,
+   "deliverables": {
+    "second-request-response-memo.docx": "second-request-response-memo.docx"
+   },
+   "n_documents": 8,
+   "task_json_sha256": "70e5e3652703d2947f815f6ab0d037767b31e9b1e84fb6d80fa5429613ed9015"
+  },
+  {
+   "task_id": "antitrust-competition/identify-issues-in-civil-investigative-demand",
+   "area": "antitrust-competition",
+   "n_criteria": 53,
+   "deliverables": {
+    "cid-issue-memorandum.docx": "cid-issue-memorandum.docx"
+   },
+   "n_documents": 9,
+   "task_json_sha256": "6ed158aa5343c8645b26f160f5bb9e524e54d96bd23a9cede0ee387a653735b8"
+  },
+  {
+   "task_id": "arbitration-international-dispute-resolution/draft-challenge-to-arbitrator-appointment",
+   "area": "arbitration-international-dispute-resolution",
+   "n_criteria": 57,
+   "deliverables": {
+    "arbitrator-challenge-submission.docx": "arbitrator-challenge-submission.docx"
+   },
+   "n_documents": 8,
+   "task_json_sha256": "09b371dbf03c530c366fd9a2f413667cffb92666e999193272a0719132ae026c"
+  },
+  {
+   "task_id": "arbitration-international-dispute-resolution/draft-cost-submissions-for-international-commercial-arbitration",
+   "area": "arbitration-international-dispute-resolution",
+   "n_criteria": 54,
+   "deliverables": {
+    "claimant-cost-submission.docx": "claimant-cost-submission.docx"
+   },
+   "n_documents": 10,
+   "task_json_sha256": "cc217631355a9aad702bfba51112388df18acf95d95a36c8017114a9a06c9952"
+  },
+  {
+   "task_id": "arbitration-international-dispute-resolution/draft-statement-of-claim",
+   "area": "arbitration-international-dispute-resolution",
+   "n_criteria": 66,
+   "deliverables": {
+    "statement-of-claim.docx": "statement-of-claim.docx"
+   },
+   "n_documents": 7,
+   "task_json_sha256": "383260ecae0ac6b17a51858acd6f073751d29a4b1cee872361c94c4545792d2d"
+  },
+  {
+   "task_id": "arbitration-international-dispute-resolution/identify-arbitration-agreement-issues",
+   "area": "arbitration-international-dispute-resolution",
+   "n_criteria": 40,
+   "deliverables": {
+    "arbitration-issues-memo.docx": "arbitration-issues-memo.docx"
+   },
+   "n_documents": 5,
+   "task_json_sha256": "6eca8e0ec1639ee994dc57cb2f035851f526bd5bbbce5cbfb63283fd123b1dfb"
+  },
+  {
+   "task_id": "banking-finance/compare-borrower-covenant-compliance-analysis",
+   "area": "banking-finance",
+   "n_criteria": 36,
+   "deliverables": {
+    "covenant-deviation-report.docx": "covenant-deviation-report.docx"
+   },
+   "n_documents": 5,
+   "task_json_sha256": "2aeebd1cafdfa9f53566571327005df821c21eaa1a0a7604e9b87dc91331e9aa"
+  },
+  {
+   "task_id": "banking-finance/compare-compliance-certificate-against-financial-covenants",
+   "area": "banking-finance",
+   "n_criteria": 49,
+   "deliverables": {
+    "deviation-analysis-memo.docx": "deviation-analysis-memo.docx"
+   },
+   "n_documents": 5,
+   "task_json_sha256": "826323e6b32fa224f38f759ed67d3e6827fd376afbcb3b54c3f6f1972eea810e"
+  },
+  {
+   "task_id": "banking-finance/draft-closing-legal-opinion-for-secured-credit-facility",
+   "area": "banking-finance",
+   "n_criteria": 78,
+   "deliverables": {
+    "closing-legal-opinion.docx": "closing-legal-opinion.docx",
+    "opinion-issues-memo.docx": "opinion-issues-memo.docx"
+   },
+   "n_documents": 11,
+   "task_json_sha256": "b333ce9c50f7e763ca71eb4d003cb6c8920816561d7d2d1470a3acd458503e14"
+  },
+  {
+   "task_id": "banking-finance/draft-credit-compliance-cert",
+   "area": "banking-finance",
+   "n_criteria": 87,
+   "deliverables": {
+    "compliance-memo.docx": "compliance-memo.docx",
+    "covenant-calculation-schedules.xlsx": "covenant-calculation-schedules.xlsx",
+    "compliance-certificate.docx": "compliance-certificate.docx"
+   },
+   "n_documents": 7,
+   "task_json_sha256": "4cd3ad03198ef11ce575ff26c52271488dca23f5fccffe0686765ae3322462f7"
+  },
+  {
+   "task_id": "bankruptcy-restructuring/compare-plan-feasibility-projections-against-historical-financials",
+   "area": "bankruptcy-restructuring",
+   "n_criteria": 47,
+   "deliverables": {
+    "feasibility-analysis-memo.docx": "feasibility-analysis-memo.docx"
+   },
+   "n_documents": 6,
+   "task_json_sha256": "e93ee45924574c6db33606dab14bbf40940421ecdafdbb19c914cc8466b569b6"
+  },
+  {
+   "task_id": "bankruptcy-restructuring/draft-cure-notice-objection-response",
+   "area": "bankruptcy-restructuring",
+   "n_criteria": 57,
+   "deliverables": {
+    "cure-objection-response.docx": "cure-objection-response.docx"
+   },
+   "n_documents": 8,
+   "task_json_sha256": "5a923f25735c4226460ef9b66d166994d33ba2ed581d53dcf18342dde9f3f680"
+  },
+  {
+   "task_id": "bankruptcy-restructuring/draft-disclosure-statement",
+   "area": "bankruptcy-restructuring",
+   "n_criteria": 76,
+   "deliverables": {
+    "disclosure-statement.docx": "disclosure-statement.docx"
+   },
+   "n_documents": 8,
+   "task_json_sha256": "e3faacbd17502670214da5a73ce4b9ce5cd95712b637ba80c78be754b09c6038"
+  },
+  {
+   "task_id": "bankruptcy-restructuring/identify-preference-exposure-analysis",
+   "area": "bankruptcy-restructuring",
+   "n_criteria": 35,
+   "deliverables": {
+    "preference-issues-memorandum.docx": "preference-issues-memorandum.docx"
+   },
+   "n_documents": 6,
+   "task_json_sha256": "6308203bb23f09f67e3747c9618c95c25db3d2ae00cebdb5432f9b32935a6dc1"
+  },
+  {
+   "task_id": "capital-markets/draft-indenture-for-senior-secured-notes-offering",
+   "area": "capital-markets",
+   "n_criteria": 83,
+   "deliverables": {
+    "indenture-draft.docx": "indenture-draft.docx",
+    "issues-memorandum.docx": "issues-memorandum.docx"
+   },
+   "n_documents": 14,
+   "task_json_sha256": "833c17b2ebec926e42c576fd4876cbe0a2e656daf14583258554c465034a6a4e"
+  },
+  {
+   "task_id": "capital-markets/review-form-10",
+   "area": "capital-markets",
+   "n_criteria": 38,
+   "deliverables": {
+    "form-check-compliance-memo.docx": "form-check-compliance-memo.docx"
+   },
+   "n_documents": 4,
+   "task_json_sha256": "5622a7086930a80a34b596300eace673351755ef646fa75079c28d6cb71b35dd"
+  },
+  {
+   "task_id": "capital-markets/review-form-8",
+   "area": "capital-markets",
+   "n_criteria": 32,
+   "deliverables": {
+    "8k-form-check-memo.docx": "8k-form-check-memo.docx"
+   },
+   "n_documents": 7,
+   "task_json_sha256": "cd84971bfd2455b8e3ed79dd7356cd78babc10ebd99100e7e607f21dfe78ddd8"
+  },
+  {
+   "task_id": "capital-markets/review-quarterly-report-for-sec-compliance",
+   "area": "capital-markets",
+   "n_criteria": 41,
+   "deliverables": {
+    "form-check-memorandum.docx": "form-check-memorandum.docx"
+   },
+   "n_documents": 5,
+   "task_json_sha256": "30d1b8269a3737b044b1d70289709b6ec0f99a882ec5f236fbbc476fd74313e4"
+  },
+  {
+   "task_id": "contracts/banking/account-control-agreement-first-turn-redline/scenario-01",
+   "area": "contracts",
+   "n_criteria": 30,
+   "deliverables": [],
+   "n_documents": 9,
+   "task_json_sha256": "d0b807311088083fe4025e37e4ea3840303e1507cb06331048f5d2128f45babd"
+  },
+  {
+   "task_id": "contracts/banking/intercreditor-agreement-first-turn-redline",
+   "area": "contracts",
+   "n_criteria": 34,
+   "deliverables": [],
+   "n_documents": 12,
+   "task_json_sha256": "876125748013acb9212c9a0dbdfafb78e69f13c4c3b6c8dc1ac1538e970b3fef"
+  },
+  {
+   "task_id": "contracts/banking/isda-confirmation-first-draft",
+   "area": "contracts",
+   "n_criteria": 80,
+   "deliverables": [],
+   "n_documents": 9,
+   "task_json_sha256": "4641f506aa35c17599f7bc0dcc2169afe21053b79df9e35a202fa5c64844a7dd"
+  },
+  {
+   "task_id": "contracts/banking/repo-securities-lending-subsequent-turn-redline/scenario-01",
+   "area": "contracts",
+   "n_criteria": 48,
+   "deliverables": [],
+   "n_documents": 11,
+   "task_json_sha256": "ad72e680bef7bf2bb51b83bd8aef45b1a122b8011fa25c352bc582dd669f6220"
+  },
+  {
+   "task_id": "contracts/commercial-channel-partnerships/channel-distribution-counterparty-paper-review/scenario-01",
+   "area": "contracts",
+   "n_criteria": 70,
+   "deliverables": [],
+   "n_documents": 8,
+   "task_json_sha256": "25bbbcd58564e26860bd7db12121b5a77c9f3c5ee42a60c933e38abb10721cbc"
+  },
+  {
+   "task_id": "contracts/commercial-channel-partnerships/channel-distribution-counterparty-paper-review/scenario-02",
+   "area": "contracts",
+   "n_criteria": 64,
+   "deliverables": [],
+   "n_documents": 8,
+   "task_json_sha256": "603ec878dd2b5124cf4c63df0b31944405ff4b7f0791b49bf5e9e1a1649dae21"
+  },
+  {
+   "task_id": "contracts/commercial-channel-partnerships/strategic-partnership-co-sell-counterparty-paper-review/scenario-01",
+   "area": "contracts",
+   "n_criteria": 41,
+   "deliverables": [],
+   "n_documents": 10,
+   "task_json_sha256": "0359fa93c6523434c643b4bdaaa75e98f7b384870062ad572551ebdff7049930"
+  },
+  {
+   "task_id": "contracts/commercial-channel-partnerships/teaming-agreement-first-turn-redline",
+   "area": "contracts",
+   "n_criteria": 35,
+   "deliverables": [],
+   "n_documents": 9,
+   "task_json_sha256": "90fe9a8b51374755fbfcdf6fadaf52a524237d4913d03aaa2ba4bf1087f034f6"
+  },
+  {
+   "task_id": "contracts/commercial-vendor-customer/master-services-agreement-first-turn-redline/scenario-04",
+   "area": "contracts",
+   "n_criteria": 51,
+   "deliverables": [],
+   "n_documents": 10,
+   "task_json_sha256": "973b9a2bb61675774c4cbb9e640bfffa4ab3847b807bcc004b73c33fac0214ae"
+  },
+  {
+   "task_id": "contracts/commercial-vendor-customer/saas-api-subscription-subsequent-turn-redline/scenario-01",
+   "area": "contracts",
+   "n_criteria": 56,
+   "deliverables": [],
+   "n_documents": 10,
+   "task_json_sha256": "2da636334c1d2b928741f25e55da082933e0b5f182966d733ae0324cae39e3c5"
+  },
+  {
+   "task_id": "contracts/commercial-vendor-customer/statement-of-work-counterparty-paper-review",
+   "area": "contracts",
+   "n_criteria": 47,
+   "deliverables": [],
+   "n_documents": 9,
+   "task_json_sha256": "49469659f8429475db377a11272654780b9e456394a23a9f81c545dc95b3ae2b"
+  },
+  {
+   "task_id": "contracts/commercial-vendor-customer/vendor-services-agreement-counterparty-paper-review/scenario-02",
+   "area": "contracts",
+   "n_criteria": 68,
+   "deliverables": [],
+   "n_documents": 8,
+   "task_json_sha256": "e05b8e0251b79cea90b208a24b13a3dffaa809eea22f4992433612c8cd38071b"
+  },
+  {
+   "task_id": "contracts/commercial-vendor-customer/vendor-services-agreement-counterparty-paper-review/scenario-04",
+   "area": "contracts",
+   "n_criteria": 61,
+   "deliverables": [],
+   "n_documents": 8,
+   "task_json_sha256": "2bf0884fbc11215280547a9a039f31c7bdb786fe8de2c5fd06c54e8095f25baa"
+  },
+  {
+   "task_id": "contracts/commercial-vendor-customer/vendor-services-agreement-first-draft/scenario-02",
+   "area": "contracts",
+   "n_criteria": 72,
+   "deliverables": [],
+   "n_documents": 10,
+   "task_json_sha256": "222bb426f2d542e558793b34f7cd604d1fa1cdb816d5881035e8a51fcaf4d280"
+  },
+  {
+   "task_id": "contracts/commercial-vendor-customer/vendor-services-agreement-first-draft/scenario-05",
+   "area": "contracts",
+   "n_criteria": 88,
+   "deliverables": [],
+   "n_documents": 7,
+   "task_json_sha256": "e492f14eb305894c106e1d65924037b145ad524dbb0cf7d8cb556fa4e9787d6f"
+  },
+  {
+   "task_id": "contracts/commercial-vendor-customer/vendor-services-agreement-first-turn-redline/scenario-04",
+   "area": "contracts",
+   "n_criteria": 41,
+   "deliverables": [],
+   "n_documents": 9,
+   "task_json_sha256": "68e5d59c8c3f6bf13c7ed5c521efb077d0abbd6e2c0bbae2f8de787e63e95605"
+  },
+  {
+   "task_id": "contracts/commercial-vendor-customer/vendor-services-agreement-playbook-escalation/scenario-02",
+   "area": "contracts",
+   "n_criteria": 67,
+   "deliverables": [],
+   "n_documents": 11,
+   "task_json_sha256": "736ed9c8eb06f64d93cfbf35397652282db16079429dd59284bc8c04d300cd09"
+  },
+  {
+   "task_id": "contracts/commercial-vendor-customer/vendor-services-agreement-playbook-escalation/scenario-03",
+   "area": "contracts",
+   "n_criteria": 59,
+   "deliverables": [],
+   "n_documents": 10,
+   "task_json_sha256": "a9cb77d6ffdfad27825bc290f28440392e3f3abaab85f91da2abc47e00c0c1ab"
+  },
+  {
+   "task_id": "contracts/commercial-vendor-customer/vendor-services-agreement-term-negotiation/scenario-02",
+   "area": "contracts",
+   "n_criteria": 76,
+   "deliverables": [],
+   "n_documents": 13,
+   "task_json_sha256": "0f9b1367da2aa64df1cbab9e2d6cabc4016ffcb1031e0fd79ebc481fc8413075"
+  },
+  {
+   "task_id": "contracts/corporate-ma/joint-venture-agreement-first-turn-redline/scenario-01",
+   "area": "contracts",
+   "n_criteria": 54,
+   "deliverables": [],
+   "n_documents": 13,
+   "task_json_sha256": "c346bfd206119e34b2b51417b3e9cb9a683e513558d5713435845b07dd5eff8b"
+  },
+  {
+   "task_id": "contracts/corporate-ma/loi-mou-counterparty-paper-review/scenario-02",
+   "area": "contracts",
+   "n_criteria": 85,
+   "deliverables": [],
+   "n_documents": 8,
+   "task_json_sha256": "d2951ef6d914095990cb0bc5dcebe6fb307a4888955cb2db217b693825e82852"
+  },
+  {
+   "task_id": "contracts/corporate-ma/merger-agreement-first-turn-redline",
+   "area": "contracts",
+   "n_criteria": 35,
+   "deliverables": [],
+   "n_documents": 10,
+   "task_json_sha256": "f2e220ea3c7845f8a8763905f5b55144f4a1dd9358915eda3441e8b81551a456"
+  },
+  {
+   "task_id": "contracts/corporate-ma/merger-agreement-term-negotiation",
+   "area": "contracts",
+   "n_criteria": 46,
+   "deliverables": [],
+   "n_documents": 12,
+   "task_json_sha256": "801284754a2d0cbc2c96d1ddb00e9bf82602a810cefeff9528513d2cf03b0e33"
+  },
+  {
+   "task_id": "contracts/corporate-ma/transition-intercompany-services-first-draft/scenario-01",
+   "area": "contracts",
+   "n_criteria": 97,
+   "deliverables": [],
+   "n_documents": 8,
+   "task_json_sha256": "daa2af8b25069c2fee20516868e3a5d415c620718858c66218391e7c929605df"
+  },
+  {
+   "task_id": "contracts/disputes/arbitration-agreement-and-dispute-resolution-policy-first-draft",
+   "area": "contracts",
+   "n_criteria": 77,
+   "deliverables": [],
+   "n_documents": 8,
+   "task_json_sha256": "8b4ade189575719e45bb25e7977d22724d5a07fce9de77d9a67bbed05a42532f"
+  },
+  {
+   "task_id": "contracts/disputes/class-action-settlement-agreement-playbook-escalation",
+   "area": "contracts",
+   "n_criteria": 55,
+   "deliverables": [],
+   "n_documents": 10,
+   "task_json_sha256": "82251b9d070e9557e5a80f03c986926b480b8f65b898798d41670b4ea922e651"
+  },
+  {
+   "task_id": "contracts/employment-compensation/employment-agreement-term-negotiation/scenario-01",
+   "area": "contracts",
+   "n_criteria": 54,
+   "deliverables": [],
+   "n_documents": 13,
+   "task_json_sha256": "e25004629f572f48fd112e82ca52639c4f9e3871e17aa9d257574eb7f1018b87"
+  },
+  {
+   "task_id": "contracts/employment-compensation/severance-release-counterparty-paper-review",
+   "area": "contracts",
+   "n_criteria": 46,
+   "deliverables": [],
+   "n_documents": 7,
+   "task_json_sha256": "357940eae2fe3696c9caf728d9e9f2faa5573c3985d3bb5445f811a11931c955"
+  },
+  {
+   "task_id": "contracts/energy/power-purchase-agreement-counterparty-paper-review",
+   "area": "contracts",
+   "n_criteria": 50,
+   "deliverables": [],
+   "n_documents": 8,
+   "task_json_sha256": "631e54d9780758963af0e93da63cf6b574cf7b83c68a6529b63d9343973ed069"
+  },
+  {
+   "task_id": "contracts/energy/power-purchase-agreement-subsequent-turn-redline",
+   "area": "contracts",
+   "n_criteria": 76,
+   "deliverables": [],
+   "n_documents": 9,
+   "task_json_sha256": "67ec32170810cc01370673144dd1dea4b5897f6eeeb28ce9128f9cff9cf947ab"
+  },
+  {
+   "task_id": "contracts/financing/credit-lending-counterparty-paper-review/scenario-01",
+   "area": "contracts",
+   "n_criteria": 114,
+   "deliverables": [],
+   "n_documents": 8,
+   "task_json_sha256": "095687f85d432b3ecae26537519a7c4d79fb7cf36556d67b249e6f5e1b9ebff6"
+  },
+  {
+   "task_id": "contracts/financing/shareholders-agreement-first-turn-redline",
+   "area": "contracts",
+   "n_criteria": 44,
+   "deliverables": [],
+   "n_documents": 8,
+   "task_json_sha256": "e06fff88c8fc0bedd5f7289d90f72bdb9805d972eea6c5d72c00bab62cc1b01b"
+  },
+  {
+   "task_id": "contracts/financing/shareholders-agreement-term-negotiation",
+   "area": "contracts",
+   "n_criteria": 77,
+   "deliverables": [],
+   "n_documents": 13,
+   "task_json_sha256": "eaa57c274f2dc919aa997098b5026e3a3c33ef0a33c17335629db4659bf4ae33"
+  },
+  {
+   "task_id": "contracts/healthcare/clinical-trial-agreement-counterparty-paper-review",
+   "area": "contracts",
+   "n_criteria": 51,
+   "deliverables": [],
+   "n_documents": 10,
+   "task_json_sha256": "dc3dd3dfdd1c0ecbdf444a706e1ebccaf4ae84d19ddefe9f6cd083e5ed7d21d8"
+  },
+  {
+   "task_id": "contracts/healthcare/clinical-trial-agreement-first-draft",
+   "area": "contracts",
+   "n_criteria": 110,
+   "deliverables": [],
+   "n_documents": 10,
+   "task_json_sha256": "be6b66a21b82dfbfdd40908ff4c55cf3beb1b077f5fe11fcc8907daa40d9708b"
+  },
+  {
+   "task_id": "contracts/healthcare/manufacturing-supply-agreement-term-negotiation",
+   "area": "contracts",
+   "n_criteria": 49,
+   "deliverables": [],
+   "n_documents": 13,
+   "task_json_sha256": "13d0c735c8cbe0313e5c54134cbf106376a937dd3112f51d4dcbed290373e159"
+  },
+  {
+   "task_id": "contracts/healthcare/payer-managed-care-contract-playbook-escalation",
+   "area": "contracts",
+   "n_criteria": 71,
+   "deliverables": [],
+   "n_documents": 14,
+   "task_json_sha256": "2d6d653bac542fa77be41f6565a7b52efd571e3915dfe33511283fe51f1d669e"
+  },
+  {
+   "task_id": "contracts/healthcare/payer-managed-care-contract-subsequent-turn-redline",
+   "area": "contracts",
+   "n_criteria": 68,
+   "deliverables": [],
+   "n_documents": 12,
+   "task_json_sha256": "80ad93e381d49e581bf288832e864db73cb505f2d43c46d0b25490b4a6218ae6"
+  },
+  {
+   "task_id": "contracts/healthcare/payer-managed-care-contract-term-negotiation",
+   "area": "contracts",
+   "n_criteria": 56,
+   "deliverables": [],
+   "n_documents": 12,
+   "task_json_sha256": "c0562bc118969c87e6aa89258bf9a694f879c04752a32d427627bb2587d4b1cc"
+  },
+  {
+   "task_id": "contracts/healthcare/quality-agreement-first-turn-redline",
+   "area": "contracts",
+   "n_criteria": 45,
+   "deliverables": [],
+   "n_documents": 11,
+   "task_json_sha256": "09a057351c0da29d6f39e4e60de7e079c45c800bd04d0a4758987649067e060e"
+  },
+  {
+   "task_id": "contracts/ip-licensing/license-agreement-first-turn-redline/scenario-01",
+   "area": "contracts",
+   "n_criteria": 53,
+   "deliverables": [],
+   "n_documents": 8,
+   "task_json_sha256": "983177fdcb6dd973de4aaf67b6a95783067927838acbbeb45d81a0418ca65997"
+  },
+  {
+   "task_id": "contracts/ip-licensing/license-agreement-first-turn-redline/scenario-05",
+   "area": "contracts",
+   "n_criteria": 29,
+   "deliverables": [],
+   "n_documents": 8,
+   "task_json_sha256": "39580e3a970e1454bdc5117a420ff0a259bd55205a63a75aca9144e8e92c85c0"
+  },
+  {
+   "task_id": "contracts/ip-licensing/license-agreement-playbook-escalation/scenario-04",
+   "area": "contracts",
+   "n_criteria": 55,
+   "deliverables": [],
+   "n_documents": 10,
+   "task_json_sha256": "dc580e0a9ac89c112c2e076a78e8c08049374720c1d92789af5965b2af65f561"
+  },
+  {
+   "task_id": "contracts/ip-licensing/technology-cross-license-agreement-first-turn-redline",
+   "area": "contracts",
+   "n_criteria": 45,
+   "deliverables": [],
+   "n_documents": 13,
+   "task_json_sha256": "f83d0994651f9b6a2d190f1bbae3a6a0632d23d3713dc41256f189da20ec063a"
+  },
+  {
+   "task_id": "contracts/pe-funds/general-partner-management-company-agreement-first-draft",
+   "area": "contracts",
+   "n_criteria": 84,
+   "deliverables": [],
+   "n_documents": 9,
+   "task_json_sha256": "0140b4e1f88fce5e2e9bee3507784629644f8ecbeb0007739a097f55ff66771d"
+  },
+  {
+   "task_id": "contracts/pe-funds/investment-management-agreement-first-draft",
+   "area": "contracts",
+   "n_criteria": 103,
+   "deliverables": [],
+   "n_documents": 9,
+   "task_json_sha256": "88c6e80adaa4d581ada3f987b2adeca741b84e5cfbbac2a6b803759a52fe381a"
+  },
+  {
+   "task_id": "contracts/pe-funds/limited-partnership-agreement-subsequent-turn-redline",
+   "area": "contracts",
+   "n_criteria": 57,
+   "deliverables": [],
+   "n_documents": 12,
+   "task_json_sha256": "5478d2f1c8f6f71b0220fec1ec235d45f2199b5008e91a871b874b85c43eac57"
+  },
+  {
+   "task_id": "contracts/real-estate/commercial-lease-counterparty-paper-review/scenario-03",
+   "area": "contracts",
+   "n_criteria": 87,
+   "deliverables": [],
+   "n_documents": 11,
+   "task_json_sha256": "6596d8ca90489567a826873629e6d91881b16d2abd08c7976be1c106bcda662b"
+  },
+  {
+   "task_id": "contracts/real-estate/commercial-lease-first-turn-redline/scenario-02",
+   "area": "contracts",
+   "n_criteria": 67,
+   "deliverables": [],
+   "n_documents": 9,
+   "task_json_sha256": "e8ee0098e512ad9f8c39cc764c3ebf885af208dbffac41204e261a276a33bac1"
+  },
+  {
+   "task_id": "contracts/real-estate/commercial-lease-first-turn-redline/scenario-03",
+   "area": "contracts",
+   "n_criteria": 58,
+   "deliverables": [],
+   "n_documents": 11,
+   "task_json_sha256": "627c921c432a1eaa236827ee16d6ea4345f2819694c59ff0bd3ce415e27c43af"
+  },
+  {
+   "task_id": "contracts/real-estate/easement-agreement-counterparty-paper-review",
+   "area": "contracts",
+   "n_criteria": 57,
+   "deliverables": [],
+   "n_documents": 6,
+   "task_json_sha256": "7c520697d7d5119b0f0f756be0c6626b7b303c9e4d4a77a0196bcfa472811121"
+  },
+  {
+   "task_id": "contracts/real-estate/easement-agreement-first-draft",
+   "area": "contracts",
+   "n_criteria": 80,
+   "deliverables": [],
+   "n_documents": 10,
+   "task_json_sha256": "13558d7bea40ac14df35d22298f737a10c17df7334bb3395e44b3eb7580c78fc"
+  },
+  {
+   "task_id": "corporate-governance/assess-impact-of-state-pay-transparency-law-on-job-postings-and-offers",
+   "area": "corporate-governance",
+   "n_criteria": 65,
+   "deliverables": {
+    "pay-transparency-compliance-memo.docx": "pay-transparency-compliance-memo.docx"
+   },
+   "n_documents": 11,
+   "task_json_sha256": "325b736aec2cd1460ee1a6196d2b753560f36cf5371b236ed28abc74acaf21f2"
+  },
+  {
+   "task_id": "corporate-governance/compare-ai-disclosure-requirements-across-jurisdictions",
+   "area": "corporate-governance",
+   "n_criteria": 56,
+   "deliverables": {
+    "ai-disclosure-comparison-memo.docx": "ai-disclosure-comparison-memo.docx"
+   },
+   "n_documents": 7,
+   "task_json_sha256": "dbfe304197e1477e72109c090ca64c8a9dd7d7bdd9f2dd508234912eb34683d0"
+  },
+  {
+   "task_id": "corporate-governance/compare-state-privacy-law-requirements",
+   "area": "corporate-governance",
+   "n_criteria": 55,
+   "deliverables": {
+    "state-privacy-gap-analysis-memo.docx": "state-privacy-gap-analysis-memo.docx"
+   },
+   "n_documents": 8,
+   "task_json_sha256": "5d0842962590473407d2224d3f1699a916f80e401f17abf20408ff71e564aa50"
+  },
+  {
+   "task_id": "corporate-governance/draft-activism-response-memorandum",
+   "area": "corporate-governance",
+   "n_criteria": 65,
+   "deliverables": {
+    "activism-response-memorandum.docx": "activism-response-memorandum.docx"
+   },
+   "n_documents": 10,
+   "task_json_sha256": "b89d3cb01b2ff63ecf4ed8257e2ee94db2579b33b8e66a4e8383b99b3e7d8169"
+  },
+  {
+   "task_id": "corporate-governance/draft-bylaws-for-post",
+   "area": "corporate-governance",
+   "n_criteria": 48,
+   "deliverables": {
+    "verdana-robotics-bylaws.docx": "verdana-robotics-bylaws.docx",
+    "bylaws-cover-memo.docx": "bylaws-cover-memo.docx"
+   },
+   "n_documents": 6,
+   "task_json_sha256": "254888b7e8f64cce635303d6d758d677aaf4ad07b726341f05d16508926e3fde"
+  },
+  {
+   "task_id": "corporate-governance/draft-data-retention-and-destruction-policy",
+   "area": "corporate-governance",
+   "n_criteria": 48,
+   "deliverables": {
+    "data-retention-destruction-policy.docx": "data-retention-destruction-policy.docx",
+    "cover-memo-to-castellano.docx": "cover-memo-to-castellano.docx"
+   },
+   "n_documents": 7,
+   "task_json_sha256": "47c0c8e7012716eb0b32813ec6e028920c611f023068f35b4008557b74ca2fc2"
+  },
+  {
+   "task_id": "corporate-governance/extract-indemnification-provisions-from-bylaws",
+   "area": "corporate-governance",
+   "n_criteria": 70,
+   "deliverables": {
+    "indemnification-summary-memo.docx": "indemnification-summary-memo.docx"
+   },
+   "n_documents": 8,
+   "task_json_sha256": "385182dd0c8e562a7386f20bb7770608c4795f8efd55f136c6a551b94ec7ba12"
+  },
+  {
+   "task_id": "corporate-governance/identify-regulatory-and-methodological-issues-in-expert-damages-report",
+   "area": "corporate-governance",
+   "n_criteria": 36,
+   "deliverables": {
+    "expert-report-issues-memo.docx": "expert-report-issues-memo.docx"
+   },
+   "n_documents": 6,
+   "task_json_sha256": "1de0bb065dc347ba054e36d66cbc280f34455cab0dd5829b2ba003dfd88ebcfc"
+  },
+  {
+   "task_id": "corporate-governance/identify-regulatory-compliance-gaps-in-updated-financial-institution-policies",
+   "area": "corporate-governance",
+   "n_criteria": 37,
+   "deliverables": {
+    "compliance-issue-memorandum.docx": "compliance-issue-memorandum.docx"
+   },
+   "n_documents": 7,
+   "task_json_sha256": "47e4961d0ea0fc2a8fb9051e29eaeb431b58bd38c98b82c84de372057cae7a1e"
+  },
+  {
+   "task_id": "corporate-governance/research-fiduciary-duty-standards-for-proposed-related",
+   "area": "corporate-governance",
+   "n_criteria": 47,
+   "deliverables": {
+    "fiduciary-duty-memorandum.docx": "fiduciary-duty-memorandum.docx"
+   },
+   "n_documents": 10,
+   "task_json_sha256": "28fda8934b93b0c862b97e7a0309679f5e8da5301afcf10abf8084e2e53ac2ba"
+  },
+  {
+   "task_id": "corporate-ma/analyze-change-of-control-provisions-across-targets-material-contracts",
+   "area": "corporate-ma",
+   "n_criteria": 57,
+   "deliverables": {
+    "coc-analysis-report.docx": "coc-analysis-report.docx"
+   },
+   "n_documents": 19,
+   "task_json_sha256": "b03ae6f8b42c6f794888d822d734cc7dfb7c35f234d9644af2f8793eab437911"
+  },
+  {
+   "task_id": "corporate-ma/analyze-dd-summary-memo",
+   "area": "corporate-ma",
+   "n_criteria": 67,
+   "deliverables": {
+    "dd-summary-memo.docx": "dd-summary-memo.docx"
+   },
+   "n_documents": 10,
+   "task_json_sha256": "b098c89cc8af06fef00f459ae287cbf244a6fffc591fea23c96a20d68412c564"
+  },
+  {
+   "task_id": "corporate-ma/compare-ddrl-to-vdr-index/scenario-02",
+   "area": "corporate-ma",
+   "n_criteria": 88,
+   "deliverables": {
+    "gap-analysis-memo.docx": "gap-analysis-memo.docx"
+   },
+   "n_documents": 4,
+   "task_json_sha256": "8095fc75a295ea9d9e6dc9d0729e147b1f181022f25cf88944366c8198ab77ad"
+  },
+  {
+   "task_id": "corporate-ma/compare-matter-plan-against-engagement-letter",
+   "area": "corporate-ma",
+   "n_criteria": 33,
+   "deliverables": {
+    "discrepancy-analysis-memo.docx": "discrepancy-analysis-memo.docx"
+   },
+   "n_documents": 2,
+   "task_json_sha256": "ccba35c4fb15b3b50054880015f04c9ff2d3441ed9932b6da8be67ff72f0219b"
+  },
+  {
+   "task_id": "corporate-ma/compare-post",
+   "area": "corporate-ma",
+   "n_criteria": 45,
+   "deliverables": {
+    "working-capital-comparison-memo.docx": "working-capital-comparison-memo.docx"
+   },
+   "n_documents": 6,
+   "task_json_sha256": "63838900c77b79472d33ce4273a6a9be836e9899e2e0f470f003036818d920dc"
+  },
+  {
+   "task_id": "corporate-ma/compare-proposed-acquisition-structure-against-precedent-transaction-summaries",
+   "area": "corporate-ma",
+   "n_criteria": 58,
+   "deliverables": {
+    "tax-structure-comparison-memo.docx": "tax-structure-comparison-memo.docx"
+   },
+   "n_documents": 8,
+   "task_json_sha256": "f5f946ba7c1f996663b57c6033b2c4be4b1fc94c2f55969120189b0ef7c3ee67"
+  },
+  {
+   "task_id": "corporate-ma/draft-acquisition-agreement-provisions-from-precedent-and-term-sheet",
+   "area": "corporate-ma",
+   "n_criteria": 73,
+   "deliverables": {
+    "draft-spa-provisions-and-memo.docx": "draft-spa-provisions-and-memo.docx"
+   },
+   "n_documents": 5,
+   "task_json_sha256": "269ddf70d02b302369c2c29f70d1b47c3c763ada7c54df5ffb2b9f10c185fc28"
+  },
+  {
+   "task_id": "corporate-ma/draft-issues-list-for-acquisition-agreement",
+   "area": "corporate-ma",
+   "n_criteria": 52,
+   "deliverables": {
+    "issues-list-memorandum.docx": "issues-list-memorandum.docx"
+   },
+   "n_documents": 5,
+   "task_json_sha256": "6c536708c587e8fe83636d5aa139b0e547003af897a34afcfee731998748b7de"
+  },
+  {
+   "task_id": "corporate-ma/draft-markup-of-counterparty-acquisition-agreement",
+   "area": "corporate-ma",
+   "n_criteria": 70,
+   "deliverables": {
+    "redlined-mipa.docx": "redlined-mipa.docx",
+    "markup-commentary-memo.docx": "markup-commentary-memo.docx"
+   },
+   "n_documents": 5,
+   "task_json_sha256": "67cda125e7bc327120d92139034f663ba35c48f77bf0fd88c9e006397a579996"
+  },
+  {
+   "task_id": "corporate-ma/draft-markup-of-stock-purchase-agreement-provisions",
+   "area": "corporate-ma",
+   "n_criteria": 59,
+   "deliverables": {
+    "spa-markup-memorandum.docx": "spa-markup-memorandum.docx"
+   },
+   "n_documents": 5,
+   "task_json_sha256": "b6b3a44c3a4fddf3b82291a3d917bf9bc47c49a0131355420ccb441783ba6f2f"
+  },
+  {
+   "task_id": "corporate-ma/draft-markup-of-transition-services-agreement-tsa",
+   "area": "corporate-ma",
+   "n_criteria": 56,
+   "deliverables": {
+    "tsa-markup-redline.docx": "tsa-markup-redline.docx",
+    "tsa-review-memo.docx": "tsa-review-memo.docx"
+   },
+   "n_documents": 4,
+   "task_json_sha256": "5fe7c129c00bc466904ccaa10949904864134e6417c1e9590fc1a272415face6"
+  },
+  {
+   "task_id": "corporate-ma/draft-ppa-memo",
+   "area": "corporate-ma",
+   "n_criteria": 63,
+   "deliverables": {
+    "purchase-price-adjustment-memo.docx": "purchase-price-adjustment-memo.docx"
+   },
+   "n_documents": 6,
+   "task_json_sha256": "6849f10243833dfab5be73f0d989d402bceb167b9c8ce717f4014a81cd02ab9f"
+  },
+  {
+   "task_id": "corporate-ma/draft-term-sheet-markup/scenario-02",
+   "area": "corporate-ma",
+   "n_criteria": 64,
+   "deliverables": {
+    "marked-up-term-sheet.docx": "marked-up-term-sheet.docx",
+    "markup-commentary-memo.docx": "markup-commentary-memo.docx"
+   },
+   "n_documents": 7,
+   "task_json_sha256": "27489e3b1602abbc3ca1fa6707b040d97fe9a3d3c211a52821d5a7cabc853859"
+  },
+  {
+   "task_id": "corporate-ma/identify-rwi-policy-issues",
+   "area": "corporate-ma",
+   "n_criteria": 46,
+   "deliverables": {
+    "rwi-issue-identification-memo.docx": "rwi-issue-identification-memo.docx"
+   },
+   "n_documents": 7,
+   "task_json_sha256": "d042565c91898980101df67c3276c43abb834febb962b14505ba892ba763b6e2"
+  },
+  {
+   "task_id": "corporate-ma/prepare-responses-to-ddrl/scenario-02",
+   "area": "corporate-ma",
+   "n_criteria": 69,
+   "deliverables": {
+    "ddrl-response-matrix.docx": "ddrl-response-matrix.docx"
+   },
+   "n_documents": 6,
+   "task_json_sha256": "00c1389283564c324c06a6c4b62030f6a5cf1ce0ea49ef1baccc862c32190a95"
+  },
+  {
+   "task_id": "corporate-ma/review-commercial-contracts-diligence/scenario-02",
+   "area": "corporate-ma",
+   "n_criteria": 75,
+   "deliverables": {
+    "commercial-contracts-diligence-memo.docx": "commercial-contracts-diligence-memo.docx"
+   },
+   "n_documents": 11,
+   "task_json_sha256": "90b175bad21562514595a2b64e7b7ad997ee438a54dba2426ed3ea0cb882c44d"
+  },
+  {
+   "task_id": "corporate-ma/review-ma-transaction-invoice-against-fee-arrangement",
+   "area": "corporate-ma",
+   "n_criteria": 44,
+   "deliverables": {
+    "billing-deviation-report.docx": "billing-deviation-report.docx"
+   },
+   "n_documents": 4,
+   "task_json_sha256": "b670740aedf1d493141d07b7ccad21bebb4d6dc7d22b39e44644e337a676db29"
+  },
+  {
+   "task_id": "data-privacy-cybersecurity/draft-data-processing-agreement",
+   "area": "data-privacy-cybersecurity",
+   "n_criteria": 62,
+   "deliverables": {
+    "data-processing-agreement.docx": "data-processing-agreement.docx",
+    "client-cover-memo.docx": "client-cover-memo.docx"
+   },
+   "n_documents": 8,
+   "task_json_sha256": "9e941dbc5d4b1fa2bf72446e4135cb02be1c1614dbe9bbf62fbb797a73db1186"
+  },
+  {
+   "task_id": "data-privacy-cybersecurity/draft-standard-contractual-clauses-addendum",
+   "area": "data-privacy-cybersecurity",
+   "n_criteria": 62,
+   "deliverables": {
+    "scc-addendum.docx": "scc-addendum.docx",
+    "client-cover-memo.docx": "client-cover-memo.docx"
+   },
+   "n_documents": 7,
+   "task_json_sha256": "a999c43194961629131b60cdfb87b46d12bb7b2c1d2c1b88f873947a748f2fec"
+  },
+  {
+   "task_id": "data-privacy-cybersecurity/extract-key-compliance-obligations-from-new-state-data-privacy-regulations",
+   "area": "data-privacy-cybersecurity",
+   "n_criteria": 71,
+   "deliverables": {
+    "compliance-obligation-matrix.docx": "compliance-obligation-matrix.docx"
+   },
+   "n_documents": 8,
+   "task_json_sha256": "211c1532e87295235dbea6b61a58af355287afdd84f2bd0117f2f40c02b2b9b6"
+  },
+  {
+   "task_id": "data-privacy-cybersecurity/identify-issues-in-transfer-impact-assessment",
+   "area": "data-privacy-cybersecurity",
+   "n_criteria": 33,
+   "deliverables": {
+    "tia-issue-memorandum.docx": "tia-issue-memorandum.docx"
+   },
+   "n_documents": 8,
+   "task_json_sha256": "4bc24eab744c53a40a9b50caa8520faa4b0640b86f38db564a109127cd48f6da"
+  },
+  {
+   "task_id": "data-privacy-cybersecurity/research-data-localization-requirements-for-planned-market-expansion",
+   "area": "data-privacy-cybersecurity",
+   "n_criteria": 64,
+   "deliverables": {
+    "data-localization-memo.docx": "data-localization-memo.docx"
+   },
+   "n_documents": 7,
+   "task_json_sha256": "a1ff849ece03e9b81352571053c9dd0520da25c572a182eb8d956ace05fb83d7"
+  },
+  {
+   "task_id": "diligence/restaurant-pe-buyout",
+   "area": "diligence",
+   "n_criteria": 653,
+   "deliverables": {
+    "red-flags-report.md": "red-flags-report.md"
+   },
+   "n_documents": 3378,
+   "task_json_sha256": "51cddd9bd3d85146c1e4bfe61e1fec7d1ed8c9f999a31b4da8f3660002da3b20"
+  },
+  {
+   "task_id": "emerging-companies-venture-capital/draft-certificate-of-incorporation",
+   "area": "emerging-companies-venture-capital",
+   "n_criteria": 59,
+   "deliverables": {
+    "amended-restated-certificate-of-incorporation.docx": "amended-restated-certificate-of-incorporation.docx",
+    "drafting-memorandum.docx": "drafting-memorandum.docx"
+   },
+   "n_documents": 4,
+   "task_json_sha256": "0a53e3e77268ff76856dc4a024c6447668d6b9da153c8530b92fa5119aeabf8b"
+  },
+  {
+   "task_id": "emerging-companies-venture-capital/draft-stock-option-grant-notice",
+   "area": "emerging-companies-venture-capital",
+   "n_criteria": 36,
+   "deliverables": {
+    "stock-option-grant-notice-draft.docx": "stock-option-grant-notice-draft.docx",
+    "cover-memo-grant-issues.docx": "cover-memo-grant-issues.docx"
+   },
+   "n_documents": 6,
+   "task_json_sha256": "40bcd914549af1847922f00f9e13802de6b4c845f5fafadc06ea9fb577b3656b"
+  },
+  {
+   "task_id": "emerging-companies-venture-capital/identify-issues-in-bridge-loan-agreement",
+   "area": "emerging-companies-venture-capital",
+   "n_criteria": 52,
+   "deliverables": {
+    "bridge-loan-issue-memorandum.docx": "bridge-loan-issue-memorandum.docx"
+   },
+   "n_documents": 13,
+   "task_json_sha256": "cfa68338c9dd98f399504f55d74acf9afefc4a49cb7ca32a27a9793ca93494e3"
+  },
+  {
+   "task_id": "emerging-companies-venture-capital/identify-spa-issues/scenario-02",
+   "area": "emerging-companies-venture-capital",
+   "n_criteria": 54,
+   "deliverables": {
+    "series-b-issue-memo.docx": "series-b-issue-memo.docx"
+   },
+   "n_documents": 7,
+   "task_json_sha256": "c31393b11257d8761bbbdffe83941e663c27e6ca5c7efc60a01c0679c48849e5"
+  },
+  {
+   "task_id": "employment-labor/assess-legal-risk-of-proposed-employee-termination",
+   "area": "employment-labor",
+   "n_criteria": 47,
+   "deliverables": {
+    "termination-risk-assessment-memo.docx": "termination-risk-assessment-memo.docx"
+   },
+   "n_documents": 9,
+   "task_json_sha256": "4074deaaab8ea11ad978b40da078141bd59496c5779bb40a60fc43abe88c52e7"
+  },
+  {
+   "task_id": "employment-labor/compare-non",
+   "area": "employment-labor",
+   "n_criteria": 38,
+   "deliverables": {
+    "non-compete-enforceability-memo.docx": "non-compete-enforceability-memo.docx"
+   },
+   "n_documents": 7,
+   "task_json_sha256": "d6e321553acecadb4295cf4d0289c8591c02854b9b50941ec7cb7e6f275237df"
+  },
+  {
+   "task_id": "employment-labor/extract-restrictive-covenant-terms-from-executive-employment-agreement",
+   "area": "employment-labor",
+   "n_criteria": 68,
+   "deliverables": {
+    "restrictive-covenant-summary-memo.docx": "restrictive-covenant-summary-memo.docx"
+   },
+   "n_documents": 4,
+   "task_json_sha256": "adc2943c486a7114f2a5fa86ef0c4086fd4deb61c954df03ca29f4cc3921697a"
+  },
+  {
+   "task_id": "employment-labor/review-counterparty-employment-agreement-for-acquisition-targets-key-executive",
+   "area": "employment-labor",
+   "n_criteria": 46,
+   "deliverables": {
+    "anand-employment-issues-memo.docx": "anand-employment-issues-memo.docx"
+   },
+   "n_documents": 5,
+   "task_json_sha256": "8b6ea8724571b360a49da3b8c873817b55ea37a513c07a4d640365dea25d650d"
+  },
+  {
+   "task_id": "energy-natural-resources/analyze-counterparty-markup-of-power-purchase-agreement",
+   "area": "energy-natural-resources",
+   "n_criteria": 63,
+   "deliverables": {
+    "ppa-deviation-report.docx": "ppa-deviation-report.docx"
+   },
+   "n_documents": 5,
+   "task_json_sha256": "67ee45c60528669d3943d57b7f8558c868bb95c4b4d57b3e72d1fc9a277fd32c"
+  },
+  {
+   "task_id": "energy-natural-resources/compare-power-purchase-agreement-against-term-sheet",
+   "area": "energy-natural-resources",
+   "n_criteria": 43,
+   "deliverables": {
+    "ppa-deviation-report.docx": "ppa-deviation-report.docx"
+   },
+   "n_documents": 4,
+   "task_json_sha256": "ae083d33f6178c13f61fa9ed8fcc98a6792702caff52450515763fd6e653c817"
+  },
+  {
+   "task_id": "energy-natural-resources/draft-markup-of-power-purchase-agreement",
+   "area": "energy-natural-resources",
+   "n_criteria": 73,
+   "deliverables": {
+    "ppa-redline-with-comments.docx": "ppa-redline-with-comments.docx",
+    "markup-cover-memo.docx": "markup-cover-memo.docx"
+   },
+   "n_documents": 5,
+   "task_json_sha256": "e5ad125a391d8fd973d92657788b393d7f316746ed4dc98621e78ea4848d5d56"
+  },
+  {
+   "task_id": "environmental-esg/draft-compliance-audit-memorandum",
+   "area": "environmental-esg",
+   "n_criteria": 59,
+   "deliverables": {
+    "compliance-audit-memorandum.docx": "compliance-audit-memorandum.docx"
+   },
+   "n_documents": 5,
+   "task_json_sha256": "7a9c5304f2da249e07c69462567610a548078162555771d5f0ece0c0342be10b"
+  },
+  {
+   "task_id": "environmental-esg/draft-environmental",
+   "area": "environmental-esg",
+   "n_criteria": 55,
+   "deliverables": {
+    "comment-letter-npdes-3ij00247gd.docx": "comment-letter-npdes-3ij00247gd.docx"
+   },
+   "n_documents": 8,
+   "task_json_sha256": "a443237caad42d7fbd6bf2708d366d11f97505109d890f2859ff4de919f9e339"
+  },
+  {
+   "task_id": "environmental-esg/draft-markup-of-administrative-settlement-agreement",
+   "area": "environmental-esg",
+   "n_criteria": 53,
+   "deliverables": {
+    "asaoc-redline-markup.docx": "asaoc-redline-markup.docx"
+   },
+   "n_documents": 5,
+   "task_json_sha256": "f7486a9d3072e0d87d37961ab603da2724cab16ae15c83b1454eb47f04132d4e"
+  },
+  {
+   "task_id": "environmental-esg/extract-environmental-liabilities-from-target-disclosure-schedules",
+   "area": "environmental-esg",
+   "n_criteria": 78,
+   "deliverables": {
+    "environmental-liability-summary-memo.docx": "environmental-liability-summary-memo.docx"
+   },
+   "n_documents": 7,
+   "task_json_sha256": "281a0ffa1e890cae01a024e8edeea97915479dd0cafc0dbc3874dcfb36b456f5"
+  },
+  {
+   "task_id": "environmental-esg/identify-issues-in-draft-permit-application",
+   "area": "environmental-esg",
+   "n_criteria": 31,
+   "deliverables": {
+    "application-issue-memorandum.docx": "application-issue-memorandum.docx"
+   },
+   "n_documents": 7,
+   "task_json_sha256": "72898da08d1f1e57ff29e5f2c16bc44e9502c34568f61d6626aae9424d490aed"
+  },
+  {
+   "task_id": "firm-knowledge/tasks/015",
+   "area": "firm-knowledge",
+   "n_criteria": 3,
+   "deliverables": {
+    "response.md": "response.md"
+   },
+   "n_documents": 9288,
+   "task_json_sha256": "ae20ff45bcee9c2a2a17bef01e70ca07c85b17e03de965f931e007b2a59f4d54"
+  },
+  {
+   "task_id": "firm-knowledge/tasks/016",
+   "area": "firm-knowledge",
+   "n_criteria": 14,
+   "deliverables": {
+    "response.md": "response.md"
+   },
+   "n_documents": 9288,
+   "task_json_sha256": "270376a95319d658ea8361d1c5d17820129b6b1f350f15046b912caf6eeb6056"
+  },
+  {
+   "task_id": "firm-knowledge/tasks/018",
+   "area": "firm-knowledge",
+   "n_criteria": 1,
+   "deliverables": {
+    "response.md": "response.md"
+   },
+   "n_documents": 9288,
+   "task_json_sha256": "8549057c723e2d225c644034bf43da4d2f11d722633b7423df870320082c9404"
+  },
+  {
+   "task_id": "firm-knowledge/tasks/042",
+   "area": "firm-knowledge",
+   "n_criteria": 8,
+   "deliverables": {
+    "response.md": "response.md"
+   },
+   "n_documents": 9288,
+   "task_json_sha256": "d1f7e3644e77c31870e297631ee5195da4f0cdf35e0a95553fd33800ce8151c4"
+  },
+  {
+   "task_id": "firm-knowledge/tasks/053",
+   "area": "firm-knowledge",
+   "n_criteria": 21,
+   "deliverables": {
+    "response.md": "response.md"
+   },
+   "n_documents": 9288,
+   "task_json_sha256": "e09226038f4d4b4c1a3e28cf1e925bd4b7ca2ba7f19ba0bcf239d308e6ae8b4d"
+  },
+  {
+   "task_id": "firm-knowledge/tasks/058",
+   "area": "firm-knowledge",
+   "n_criteria": 11,
+   "deliverables": {
+    "response.md": "response.md"
+   },
+   "n_documents": 9288,
+   "task_json_sha256": "333e86e1f0e0c13aaf2956b210fbd9cb0837b8c5652146b94825187e9e8ae3eb"
+  },
+  {
+   "task_id": "firm-knowledge/tasks/065",
+   "area": "firm-knowledge",
+   "n_criteria": 6,
+   "deliverables": {
+    "response.md": "response.md"
+   },
+   "n_documents": 9288,
+   "task_json_sha256": "dc3306b1f96a947860aff0cd84ab487cb06ef6339d66ec4614a4286631b56523"
+  },
+  {
+   "task_id": "firm-knowledge/tasks/086",
+   "area": "firm-knowledge",
+   "n_criteria": 7,
+   "deliverables": {
+    "response.md": "response.md"
+   },
+   "n_documents": 9288,
+   "task_json_sha256": "e4ce0ac8c752ce23a721dc0f1cf60dd988be0c53285d55ad774a2d7384862188"
+  },
+  {
+   "task_id": "firm-knowledge/tasks/100",
+   "area": "firm-knowledge",
+   "n_criteria": 19,
+   "deliverables": {
+    "response.md": "response.md"
+   },
+   "n_documents": 9288,
+   "task_json_sha256": "fe1ec7b594e53de7d2d2d71ff979b84ca871a8943755697388abe0b399642035"
+  },
+  {
+   "task_id": "firm-knowledge/tasks/111",
+   "area": "firm-knowledge",
+   "n_criteria": 3,
+   "deliverables": {
+    "response.md": "response.md"
+   },
+   "n_documents": 9288,
+   "task_json_sha256": "cf48f718f93f20c32394b89a139c153567847308079ffded8865199fa5137365"
+  },
+  {
+   "task_id": "firm-knowledge/tasks/112",
+   "area": "firm-knowledge",
+   "n_criteria": 4,
+   "deliverables": {
+    "response.md": "response.md"
+   },
+   "n_documents": 9288,
+   "task_json_sha256": "ff633f0cdf595c5c4112c58d8f6800693648101369ea44425ec1f44546a97483"
+  },
+  {
+   "task_id": "firm-knowledge/tasks/121",
+   "area": "firm-knowledge",
+   "n_criteria": 18,
+   "deliverables": {
+    "response.md": "response.md"
+   },
+   "n_documents": 9288,
+   "task_json_sha256": "86987a25404074399da27b5782fde1d525895f3eaba7c1b42f46aabd748957ab"
+  },
+  {
+   "task_id": "firm-knowledge/tasks/161",
+   "area": "firm-knowledge",
+   "n_criteria": 2,
+   "deliverables": {
+    "response.md": "response.md"
+   },
+   "n_documents": 9288,
+   "task_json_sha256": "53ad0ce3142db3e7d188b6c9501de7c7aaad192a086f4e9bc4453ed8b6b79aba"
+  },
+  {
+   "task_id": "firm-knowledge/tasks/176",
+   "area": "firm-knowledge",
+   "n_criteria": 11,
+   "deliverables": {
+    "response.md": "response.md"
+   },
+   "n_documents": 9288,
+   "task_json_sha256": "2c79d509146c5a88eda13518db2aeda1ee8bf23e704f7404de05f886611c1d73"
+  },
+  {
+   "task_id": "firm-knowledge/tasks/221",
+   "area": "firm-knowledge",
+   "n_criteria": 3,
+   "deliverables": {
+    "response.md": "response.md"
+   },
+   "n_documents": 9288,
+   "task_json_sha256": "769116dfd52ff897385b1ba0e9a31c2f2f7a21cd509f15a24a324a5e49153937"
+  },
+  {
+   "task_id": "firm-knowledge/tasks/224",
+   "area": "firm-knowledge",
+   "n_criteria": 7,
+   "deliverables": {
+    "response.md": "response.md"
+   },
+   "n_documents": 9288,
+   "task_json_sha256": "000d6598e54e0933a7c13d58f88dd3cdbe20998792fdcefd713d7475201a66b2"
+  },
+  {
+   "task_id": "firm-knowledge/tasks/242",
+   "area": "firm-knowledge",
+   "n_criteria": 8,
+   "deliverables": {
+    "response.md": "response.md"
+   },
+   "n_documents": 9288,
+   "task_json_sha256": "3bcfd340b3c49d56b2ab9ee3aef13057af1bfc20d6f73ec7f47cb3c24ade72b5"
+  },
+  {
+   "task_id": "funds-asset-management/analyze-mfn-waterfall",
+   "area": "funds-asset-management",
+   "n_criteria": 59,
+   "deliverables": {
+    "mfn-waterfall-analysis.xlsx": "mfn-waterfall-analysis.xlsx",
+    "gp-recommendation-memo.docx": "gp-recommendation-memo.docx"
+   },
+   "n_documents": 6,
+   "task_json_sha256": "ea2c8d7969e98cd09ba78e1c4c826e90e861e212a94e1f04653413a3ba697cbc"
+  },
+  {
+   "task_id": "funds-asset-management/draft-capital-call-distribution",
+   "area": "funds-asset-management",
+   "n_criteria": 50,
+   "deliverables": {
+    "capital-call-notice-7.docx": "capital-call-notice-7.docx",
+    "distribution-notice-1.docx": "distribution-notice-1.docx",
+    "issues-memorandum.docx": "issues-memorandum.docx"
+   },
+   "n_documents": 6,
+   "task_json_sha256": "1ab7a67ad1874cadba4a9c561ddcee934004db01a19e874235c358e353503b7c"
+  },
+  {
+   "task_id": "funds-asset-management/draft-lpa/scenario-06",
+   "area": "funds-asset-management",
+   "n_criteria": 80,
+   "deliverables": {
+    "coppervine-credit-fund-i-lpa.docx": "coppervine-credit-fund-i-lpa.docx"
+   },
+   "n_documents": 3,
+   "task_json_sha256": "71af57da90040092763fbd18cb869f5c5e848e713fbe8396a8e9b596291c3436"
+  },
+  {
+   "task_id": "funds-asset-management/draft-markup-of-limited-partnership-agreement",
+   "area": "funds-asset-management",
+   "n_criteria": 63,
+   "deliverables": {
+    "lpa-markup-commentary.docx": "lpa-markup-commentary.docx"
+   },
+   "n_documents": 5,
+   "task_json_sha256": "ee1142a32313920198e40112864af622c17fdafd1aca7f44bd5d80fd2053efcf"
+  },
+  {
+   "task_id": "funds-asset-management/extract-pricing-terms-from-transfer-agreement",
+   "area": "funds-asset-management",
+   "n_criteria": 63,
+   "deliverables": {
+    "pricing-term-sheet.docx": "pricing-term-sheet.docx"
+   },
+   "n_documents": 7,
+   "task_json_sha256": "c21730f8e57cdb4392e5d6298760b8cfa9ff8be504317810825c3e0fd4fea34c"
+  },
+  {
+   "task_id": "funds-asset-management/extract-reporting-obligations-from-advisory-agreement",
+   "area": "funds-asset-management",
+   "n_criteria": 56,
+   "deliverables": {
+    "reporting-obligations-matrix.docx": "reporting-obligations-matrix.docx"
+   },
+   "n_documents": 3,
+   "task_json_sha256": "d477be1715c6c2838983231af1900d48bb1fe49c5d50f09a2ecb56791c226339"
+  },
+  {
+   "task_id": "funds-asset-management/identify-issues-in-limited-partnership-interest-transfer-agreement",
+   "area": "funds-asset-management",
+   "n_criteria": 38,
+   "deliverables": {
+    "issues-memorandum.docx": "issues-memorandum.docx"
+   },
+   "n_documents": 7,
+   "task_json_sha256": "10ac589afe30edc0cd80b406dd4bbb3202172a9d2a7818aca3d0c86573bd7b3e"
+  },
+  {
+   "task_id": "healthcare-life-sciences/analyze-counterparty-markup-of-clinical-trial-agreement",
+   "area": "healthcare-life-sciences",
+   "n_criteria": 70,
+   "deliverables": {
+    "redline-analysis-memo.docx": "redline-analysis-memo.docx"
+   },
+   "n_documents": 5,
+   "task_json_sha256": "760f8365b4650e7da797de5392e7315df96ac5d87d59bf5c7a7aa67dc408f9d3"
+  },
+  {
+   "task_id": "healthcare-life-sciences/extract-commitments-from-fda-warning-letter",
+   "area": "healthcare-life-sciences",
+   "n_criteria": 60,
+   "deliverables": {
+    "compliance-obligation-register.xlsx": "compliance-obligation-register.xlsx"
+   },
+   "n_documents": 5,
+   "task_json_sha256": "6b7666380cdbd39615dcfb83311f07a4b1242bd38d0720d741350b1718512d55"
+  },
+  {
+   "task_id": "healthcare-life-sciences/identify-clinical-trial-agreement-issues/scenario-01",
+   "area": "healthcare-life-sciences",
+   "n_criteria": 47,
+   "deliverables": {
+    "cta-issue-memorandum.docx": "cta-issue-memorandum.docx"
+   },
+   "n_documents": 6,
+   "task_json_sha256": "889887b18f27c84f4a5a9cd7f15972355a88f74cdf214c9fa379ecf842897dfd"
+  },
+  {
+   "task_id": "healthcare-life-sciences/identify-issues-in-hipaa-privacy-policy",
+   "area": "healthcare-life-sciences",
+   "n_criteria": 41,
+   "deliverables": {
+    "hipaa-compliance-gap-report.docx": "hipaa-compliance-gap-report.docx"
+   },
+   "n_documents": 8,
+   "task_json_sha256": "cdd4032eca9086eb008554821bd0e32073262407bf5b7fe37b72fa06bdee655f"
+  },
+  {
+   "task_id": "immigration/compare-immigration",
+   "area": "immigration",
+   "n_criteria": 43,
+   "deliverables": {
+    "credential-gap-analysis.docx": "credential-gap-analysis.docx"
+   },
+   "n_documents": 9,
+   "task_json_sha256": "299092b7a0ca8eb0b6ff601c5d652dc37cdf3c929832f10e30499bbaf2d81c54"
+  },
+  {
+   "task_id": "immigration/draft-corrective-action-memorandum",
+   "area": "immigration",
+   "n_criteria": 61,
+   "deliverables": {
+    "corrective-action-memorandum.docx": "corrective-action-memorandum.docx"
+   },
+   "n_documents": 8,
+   "task_json_sha256": "6eb4a34ca56207357fbbde079eb950784520f5fa986a064f25b9163d59b2b167"
+  },
+  {
+   "task_id": "immigration/draft-motion-to-reopen-removal-proceedings",
+   "area": "immigration",
+   "n_criteria": 62,
+   "deliverables": {
+    "motion-to-reopen.docx": "motion-to-reopen.docx"
+   },
+   "n_documents": 10,
+   "task_json_sha256": "5ec534518f6eba4e9315f947fe37911c686a4b307f87279a950bc7f8ef87dcd9"
+  },
+  {
+   "task_id": "insurance/analyze-counterparty-markup-of-reinsurance-treaty",
+   "area": "insurance",
+   "n_criteria": 52,
+   "deliverables": {
+    "redline-review-memorandum.docx": "redline-review-memorandum.docx"
+   },
+   "n_documents": 6,
+   "task_json_sha256": "37987c99f4311ea98653667d6c4744caa818575faaf56e7aae1c65f357cd39e3"
+  },
+  {
+   "task_id": "insurance/identify-compliance-issues-in-state-insurance-regulatory-order",
+   "area": "insurance",
+   "n_criteria": 45,
+   "deliverables": {
+    "issue-memorandum.docx": "issue-memorandum.docx"
+   },
+   "n_documents": 9,
+   "task_json_sha256": "9f0b0d172578db400414b9e1f2e0a3d351ad8b23b6d9af52556d92154d396e99"
+  },
+  {
+   "task_id": "insurance/identify-issues-in-regulatory-order",
+   "area": "insurance",
+   "n_criteria": 33,
+   "deliverables": {
+    "issue-memorandum.docx": "issue-memorandum.docx"
+   },
+   "n_documents": 6,
+   "task_json_sha256": "14b734d1fbd814717f6632428f66adac9cc30cb32645f53e5c1a15a476c192aa"
+  },
+  {
+   "task_id": "intellectual-property/analyze-counterparty-markup-of-contract-amendment",
+   "area": "intellectual-property",
+   "n_criteria": 54,
+   "deliverables": {
+    "redline-deviation-report.docx": "redline-deviation-report.docx"
+   },
+   "n_documents": 6,
+   "task_json_sha256": "5c8a1c825d56b923d74e6c08a66cb62568d736436ac8fcaf610468ab37efba8a"
+  },
+  {
+   "task_id": "intellectual-property/analyze-counterparty-markup-of-joint-development-agreement",
+   "area": "intellectual-property",
+   "n_criteria": 62,
+   "deliverables": {
+    "redline-review-memo.docx": "redline-review-memo.docx"
+   },
+   "n_documents": 5,
+   "task_json_sha256": "c21cc51b620e163c8677c24701122e8a0d496c5b801fe6557bdec39ca16ef4fa"
+  },
+  {
+   "task_id": "intellectual-property/compare-proposed-claim-constructions-against-patent-specification",
+   "area": "intellectual-property",
+   "n_criteria": 48,
+   "deliverables": {
+    "claim-construction-analysis-memo.docx": "claim-construction-analysis-memo.docx"
+   },
+   "n_documents": 6,
+   "task_json_sha256": "fc0aa0884bdac0ba8832a847f20b6ad033d6a964adedc09bf856b0ecdacb232b"
+  },
+  {
+   "task_id": "intellectual-property/compare-source-code-documentation-against-patent-claims",
+   "area": "intellectual-property",
+   "n_criteria": 51,
+   "deliverables": {
+    "claim-chart-and-non-infringement-analysis.docx": "claim-chart-and-non-infringement-analysis.docx"
+   },
+   "n_documents": 7,
+   "task_json_sha256": "79e1ca7fda58af9b26c42fa6c473e2849eafa243df2efdf2f28c9a1c32bf6cff"
+  },
+  {
+   "task_id": "intellectual-property/draft-master-services-agreement",
+   "area": "intellectual-property",
+   "n_criteria": 87,
+   "deliverables": {
+    "master-services-agreement.docx": "master-services-agreement.docx",
+    "cover-memorandum.docx": "cover-memorandum.docx"
+   },
+   "n_documents": 5,
+   "task_json_sha256": "9c1f8559c701700d0c20b4915e302005f0b11c88c1501fef68eb1ac1cbec93a6"
+  },
+  {
+   "task_id": "intellectual-property/draft-motion-in-limine",
+   "area": "intellectual-property",
+   "n_criteria": 63,
+   "deliverables": {
+    "motion-in-limine.docx": "motion-in-limine.docx"
+   },
+   "n_documents": 10,
+   "task_json_sha256": "2e54c1800dc19ac5ad1c7d5e61bee9789bd112f7b057e730a7c16bceba0795b9"
+  },
+  {
+   "task_id": "intellectual-property/draft-open-source-compliance-policy",
+   "area": "intellectual-property",
+   "n_criteria": 51,
+   "deliverables": {
+    "oss-compliance-policy.docx": "oss-compliance-policy.docx"
+   },
+   "n_documents": 7,
+   "task_json_sha256": "8ed2fcbc4ec1c5199edfaddfbb7dfa2ae2f49fbd1e669bf60a0f3de3bdd9b2eb"
+  },
+  {
+   "task_id": "intellectual-property/extract-key-terms-from-vendor-proposal",
+   "area": "intellectual-property",
+   "n_criteria": 67,
+   "deliverables": {
+    "vendor-term-sheet-summary.docx": "vendor-term-sheet-summary.docx"
+   },
+   "n_documents": 5,
+   "task_json_sha256": "7b50b194150ea1b5e6a4aeaa01d9c6c8435c5dfd00d3d518cd1b501cee1a572c"
+  },
+  {
+   "task_id": "intellectual-property/extract-open-source-license-obligations-from-targets-software-disclosure-schedule",
+   "area": "intellectual-property",
+   "n_criteria": 33,
+   "deliverables": {
+    "oss-compliance-risk-report.docx": "oss-compliance-risk-report.docx"
+   },
+   "n_documents": 6,
+   "task_json_sha256": "63f2ead10a839e2cfd9383d404ec1f3b0ca4e2f3ff0041c2b31938365711da53"
+  },
+  {
+   "task_id": "intellectual-property/identify-errors-and-vulnerabilities-in-counterpartys-post",
+   "area": "intellectual-property",
+   "n_criteria": 36,
+   "deliverables": {
+    "issue-spotting-memo.docx": "issue-spotting-memo.docx"
+   },
+   "n_documents": 6,
+   "task_json_sha256": "89fa30fa1017de5a045e1d0a59c57ba97d955fb84aea462d3ad24f401a4f95b3"
+  },
+  {
+   "task_id": "intellectual-property/identify-issues-in-saas-subscription-agreement",
+   "area": "intellectual-property",
+   "n_criteria": 50,
+   "deliverables": {
+    "issue-memorandum.docx": "issue-memorandum.docx"
+   },
+   "n_documents": 7,
+   "task_json_sha256": "5a71e7b511d61189e2ec66b1db527f7e0e59cee361348cd5367850c99b8bf31a"
+  },
+  {
+   "task_id": "intellectual-property/review-data-processing-agreement-template-against-eu-and-us-requirements",
+   "area": "intellectual-property",
+   "n_criteria": 47,
+   "deliverables": {
+    "compliance-gap-memorandum.docx": "compliance-gap-memorandum.docx"
+   },
+   "n_documents": 5,
+   "task_json_sha256": "9e947a27b6ba612d8b52aaaa81291de9ed8a80cdea94044e988571ebaba876f3"
+  },
+  {
+   "task_id": "intellectual-property/review-employment-agreement-and-prepare-company",
+   "area": "intellectual-property",
+   "n_criteria": 71,
+   "deliverables": {
+    "redline-memorandum.docx": "redline-memorandum.docx"
+   },
+   "n_documents": 4,
+   "task_json_sha256": "61525144ab0c2b121cc29ecefbd114250e0d931e633bce91d5f96f087f63b390"
+  },
+  {
+   "task_id": "intellectual-property/review-master-services-agreement-for-contract-risk-issues",
+   "area": "intellectual-property",
+   "n_criteria": 53,
+   "deliverables": {
+    "issue-memorandum.docx": "issue-memorandum.docx"
+   },
+   "n_documents": 5,
+   "task_json_sha256": "348c2da20621742c14df5d34a0b5eda3aca4a55afea9aedbf827e23df2c3ad62"
+  },
+  {
+   "task_id": "intellectual-property/review-regional-nda-variants-against-master-template",
+   "area": "intellectual-property",
+   "n_criteria": 50,
+   "deliverables": {
+    "nda-conformance-report.docx": "nda-conformance-report.docx"
+   },
+   "n_documents": 6,
+   "task_json_sha256": "aaa730b3730206a40f04a52d188eeb60983fa2796e4efdbce8241d84e47b9771"
+  },
+  {
+   "task_id": "international-trade-sanctions/compare-country-of-origin-declarations-against-trade-preference-rules",
+   "area": "international-trade-sanctions",
+   "n_criteria": 49,
+   "deliverables": {
+    "compliance-gap-report.docx": "compliance-gap-report.docx"
+   },
+   "n_documents": 8,
+   "task_json_sha256": "06b2db35b54e291188eb891f8dc737ae5ac7aca0ec2d83c019f0e781fd87ed17"
+  },
+  {
+   "task_id": "international-trade-sanctions/draft-antidumping-duty-scope-ruling-request",
+   "area": "international-trade-sanctions",
+   "n_criteria": 64,
+   "deliverables": {
+    "scope-ruling-request-draft.docx": "scope-ruling-request-draft.docx",
+    "strategy-memorandum.docx": "strategy-memorandum.docx"
+   },
+   "n_documents": 9,
+   "task_json_sha256": "1a3836b093b054ecf5542f914c6b6d678852e20587ec74ebdf4e69e6de740202"
+  },
+  {
+   "task_id": "international-trade-sanctions/draft-markup-of-cfius-mitigation-agreement",
+   "area": "international-trade-sanctions",
+   "n_criteria": 49,
+   "deliverables": {
+    "nsa-markup-memorandum.docx": "nsa-markup-memorandum.docx"
+   },
+   "n_documents": 7,
+   "task_json_sha256": "3d0359e8c52c81806feab3d6437ed879654f249b00de16a9a6e78be91324b86e"
+  },
+  {
+   "task_id": "international-trade-sanctions/extract-product-specifications-from-technical-data-sheet",
+   "area": "international-trade-sanctions",
+   "n_criteria": 61,
+   "deliverables": {
+    "export-classification-memorandum.docx": "export-classification-memorandum.docx"
+   },
+   "n_documents": 11,
+   "task_json_sha256": "09bffeb2c9453b231796484a1438f1713c390cc7d894fdb4e3bd9238f9893352"
+  },
+  {
+   "task_id": "litigation-dispute-resolution/assess-settlement-value-range",
+   "area": "litigation-dispute-resolution",
+   "n_criteria": 52,
+   "deliverables": {
+    "settlement-valuation-memo.docx": "settlement-valuation-memo.docx"
+   },
+   "n_documents": 10,
+   "task_json_sha256": "fb9359896609eadd200bb19de58ba2e201bf0b5e1338e7359104af488fb197b5"
+  },
+  {
+   "task_id": "litigation-dispute-resolution/draft-deposition-outline",
+   "area": "litigation-dispute-resolution",
+   "n_criteria": 59,
+   "deliverables": {
+    "whitford-deposition-outline.docx": "whitford-deposition-outline.docx"
+   },
+   "n_documents": 12,
+   "task_json_sha256": "06e89e9cb4158ee21d707d94f82dd46989ece0ca620365b700d2d50455b27d58"
+  },
+  {
+   "task_id": "litigation-dispute-resolution/draft-federal-complaint-drafting",
+   "area": "litigation-dispute-resolution",
+   "n_criteria": 50,
+   "deliverables": {
+    "federal-complaint.docx": "federal-complaint.docx",
+    "filing-issues-memo.docx": "filing-issues-memo.docx"
+   },
+   "n_documents": 8,
+   "task_json_sha256": "e6ecada756b3516d296f14056911ffcb11501c5ac286d3d3413851e0a3693dba"
+  },
+  {
+   "task_id": "litigation-dispute-resolution/identify-issues-in-matter-budget-proposal",
+   "area": "litigation-dispute-resolution",
+   "n_criteria": 39,
+   "deliverables": {
+    "budget-issue-memorandum.docx": "budget-issue-memorandum.docx"
+   },
+   "n_documents": 5,
+   "task_json_sha256": "f583533654f9f705dbcb06967ba140859f2932d243195e2fe8a2408e8d9070b4"
+  },
+  {
+   "task_id": "litigation-dispute-resolution/research-corporate-veil-piercing-standards-across-target-jurisdictions",
+   "area": "litigation-dispute-resolution",
+   "n_criteria": 65,
+   "deliverables": {
+    "veil-piercing-research-memorandum.docx": "veil-piercing-research-memorandum.docx"
+   },
+   "n_documents": 8,
+   "task_json_sha256": "c9f06ad0088fa781d9d543dce1707ba6a1ccc153cb6e6254c93118335752d829"
+  },
+  {
+   "task_id": "real-estate/compare-property-tax-records-against-seller-disclosure-statement",
+   "area": "real-estate",
+   "n_criteria": 46,
+   "deliverables": {
+    "property-tax-discrepancy-report.docx": "property-tax-discrepancy-report.docx"
+   },
+   "n_documents": 5,
+   "task_json_sha256": "28cce0e0749c0862cf1b6d352c1b30c23d8557fe0df1ed40050c628b2e749854"
+  },
+  {
+   "task_id": "real-estate/draft-commercial-real-estate-loan-agreement",
+   "area": "real-estate",
+   "n_criteria": 77,
+   "deliverables": {
+    "loan-agreement.docx": "loan-agreement.docx"
+   },
+   "n_documents": 8,
+   "task_json_sha256": "333fd4e2388a2823528d47fe74ac69ade99b1d44eb0fcd589d793f2e1e87dcce"
+  },
+  {
+   "task_id": "real-estate/draft-construction-contract",
+   "area": "real-estate",
+   "n_criteria": 81,
+   "deliverables": {
+    "construction-contract-pinnacle-ironclad.docx": "construction-contract-pinnacle-ironclad.docx",
+    "drafting-issues-memo.docx": "drafting-issues-memo.docx"
+   },
+   "n_documents": 6,
+   "task_json_sha256": "a3f0e558a56ca837f8a781f654f2ddafe4a9916a545b3764ca7f95696341c9e3"
+  },
+  {
+   "task_id": "real-estate/draft-mortgage-and-security-agreement",
+   "area": "real-estate",
+   "n_criteria": 92,
+   "deliverables": {
+    "mortgage-and-security-agreement.docx": "mortgage-and-security-agreement.docx",
+    "drafting-issues-memorandum.docx": "drafting-issues-memorandum.docx"
+   },
+   "n_documents": 8,
+   "task_json_sha256": "49fbe51285049cfac3fc5637651d507be7b0ef843d32787b852e015b47d99ead"
+  },
+  {
+   "task_id": "real-estate/draft-tenant-notification-letter",
+   "area": "real-estate",
+   "n_criteria": 46,
+   "deliverables": {
+    "tenant-notification-letter.docx": "tenant-notification-letter.docx",
+    "attorney-advisory-memo.docx": "attorney-advisory-memo.docx"
+   },
+   "n_documents": 7,
+   "task_json_sha256": "eed1dee4f8c7971a008ea6b1237980022aa4a58b3881dd5112bcca13295a175c"
+  },
+  {
+   "task_id": "structured-finance-securitization/compare-representations-and-warranties-against-precedent-indenture",
+   "area": "structured-finance-securitization",
+   "n_criteria": 42,
+   "deliverables": {
+    "rw-deviation-report.docx": "rw-deviation-report.docx"
+   },
+   "n_documents": 5,
+   "task_json_sha256": "8cb0bc41e92ebb2091c05f79adf227c6573c9bb0dacfdb1590609a948bbe16e4"
+  },
+  {
+   "task_id": "structured-finance-securitization/draft-intercreditor-agreement",
+   "area": "structured-finance-securitization",
+   "n_criteria": 64,
+   "deliverables": {
+    "intercreditor-agreement.docx": "intercreditor-agreement.docx"
+   },
+   "n_documents": 3,
+   "task_json_sha256": "db90ea16b94d6fd64cbb1d52ebadcbe8bba8fbbffbee0fce7fbf02d52f81dd59"
+  },
+  {
+   "task_id": "structured-finance-securitization/identify-issues-in-term-sheet",
+   "area": "structured-finance-securitization",
+   "n_criteria": 33,
+   "deliverables": {
+    "ncf-2024-1-issue-memorandum.docx": "ncf-2024-1-issue-memorandum.docx"
+   },
+   "n_documents": 5,
+   "task_json_sha256": "0c999ba166e270503c9dc6764a813eabe3cd903f6d016aa027e9d7891bb3c839"
+  },
+  {
+   "task_id": "tax/compare-assessed-tax-positions-against-filed-returns",
+   "area": "tax",
+   "n_criteria": 46,
+   "deliverables": {
+    "variance-analysis-memo.docx": "variance-analysis-memo.docx"
+   },
+   "n_documents": 8,
+   "task_json_sha256": "6679f30edba51b7733130cba880412e93d93cabb32813fee4c2bbd54d88413a6"
+  },
+  {
+   "task_id": "tax/draft-response-to-irs-notice-of-deficiency",
+   "area": "tax",
+   "n_criteria": 54,
+   "deliverables": {
+    "irs-deficiency-response-letter.docx": "irs-deficiency-response-letter.docx"
+   },
+   "n_documents": 10,
+   "task_json_sha256": "870517b14b5e99bf5a743be0f05c8e29b4413069be9515c9b1c1fad13c84968d"
+  },
+  {
+   "task_id": "tax/draft-tax-opinion-letter",
+   "area": "tax",
+   "n_criteria": 76,
+   "deliverables": {
+    "tax-opinion-letter.docx": "tax-opinion-letter.docx"
+   },
+   "n_documents": 7,
+   "task_json_sha256": "a6a06f751edcdef4422c1c04094a380d2f6075fab077c75178eac3abf316a421"
+  },
+  {
+   "task_id": "tax/identify-tax-issues-in-irs-closing-agreement",
+   "area": "tax",
+   "n_criteria": 33,
+   "deliverables": {
+    "closing-agreement-issue-memo.docx": "closing-agreement-issue-memo.docx"
+   },
+   "n_documents": 6,
+   "task_json_sha256": "8e1acb6b13187f1ad0d2ca0b0bc2cc76695e27759da2b4740337f8e6ad4e7e8c"
+  },
+  {
+   "task_id": "trusts-estates-private-client/compare-financial-declaration-against-tax-returns",
+   "area": "trusts-estates-private-client",
+   "n_criteria": 42,
+   "deliverables": {
+    "discrepancy-analysis-memo.docx": "discrepancy-analysis-memo.docx"
+   },
+   "n_documents": 5,
+   "task_json_sha256": "3e660c357d0620fa47983774c7ada13a09bac5ed2b81c126679b568ca7fe3b93"
+  },
+  {
+   "task_id": "trusts-estates-private-client/draft-durable-power-of-attorney",
+   "area": "trusts-estates-private-client",
+   "n_criteria": 64,
+   "deliverables": {
+    "ashford-dpoa-final.docx": "ashford-dpoa-final.docx",
+    "drafting-memorandum.docx": "drafting-memorandum.docx"
+   },
+   "n_documents": 7,
+   "task_json_sha256": "7623f5e3085652b52c2546ac8601ef2e477863613d4d8ed2c129aaa87a889e0b"
+  },
+  {
+   "task_id": "trusts-estates-private-client/extract-creditor-claims-from-estate-correspondence",
+   "area": "trusts-estates-private-client",
+   "n_criteria": 43,
+   "deliverables": {
+    "creditor-claims-summary-report.docx": "creditor-claims-summary-report.docx"
+   },
+   "n_documents": 14,
+   "task_json_sha256": "0e394ea66a27653e97d99c07cc87b29b8a9c29d7a520bac9d2a706aa94c558cb"
+  },
+  {
+   "task_id": "trusts-estates-private-client/extract-key-financial-facts-from-client-intake-questionnaire-and-supporting-documents",
+   "area": "trusts-estates-private-client",
+   "n_criteria": 65,
+   "deliverables": {
+    "financial-summary-memo.docx": "financial-summary-memo.docx"
+   },
+   "n_documents": 4,
+   "task_json_sha256": "7cd607400cd1a9c2230fd39032d822ca48f471894b840079c3f225f846c6c7fc"
+  },
+  {
+   "task_id": "trusts-estates-private-client/identify-contested-divorce-financial-discovery",
+   "area": "trusts-estates-private-client",
+   "n_criteria": 39,
+   "deliverables": {
+    "issue-identification-memo.docx": "issue-identification-memo.docx"
+   },
+   "n_documents": 9,
+   "task_json_sha256": "cd06317f7befd68dc880bab8510d767988b2d02978d103134f0cb412713f0315"
+  },
+  {
+   "task_id": "trusts-estates-private-client/identify-issues-in-probate-court-filing",
+   "area": "trusts-estates-private-client",
+   "n_criteria": 42,
+   "deliverables": {
+    "issue-identification-memo.docx": "issue-identification-memo.docx"
+   },
+   "n_documents": 6,
+   "task_json_sha256": "e5e47ce9bfa4a05c22867efe81a3c3dd78af24a350e3f60fbebc4afd22806b09"
+  },
+  {
+   "task_id": "trusts-estates-private-client/identify-settlement-proposal-issues/scenario-02",
+   "area": "trusts-estates-private-client",
+   "n_criteria": 38,
+   "deliverables": {
+    "settlement-issue-memo.docx": "settlement-issue-memo.docx"
+   },
+   "n_documents": 7,
+   "task_json_sha256": "67e2464ac87c539cbefd91bb208a3fe11ccff33fda6a8764a944408f43adc6df"
+  },
+  {
+   "task_id": "trusts-estates-private-client/review-multigenerational-estate-plan/scenario-02",
+   "area": "trusts-estates-private-client",
+   "n_criteria": 52,
+   "deliverables": {
+    "estate-plan-issue-memo.docx": "estate-plan-issue-memo.docx"
+   },
+   "n_documents": 9,
+   "task_json_sha256": "637e74f4a15c74707d2c77dd30c50f08178790e4be91d3327ad53d5d330fd6aa"
+  },
+  {
+   "task_id": "white-collar-defense-investigations/compare-proposed-settlement-terms-against-precedent-resolutions",
+   "area": "white-collar-defense-investigations",
+   "n_criteria": 44,
+   "deliverables": {
+    "settlement-comparative-analysis-memo.docx": "settlement-comparative-analysis-memo.docx"
+   },
+   "n_documents": 9,
+   "task_json_sha256": "2dc5a38cda13afbb231162d8a993dacc4e6299cd01058b1069d26e1474b0725b"
+  },
+  {
+   "task_id": "white-collar-defense-investigations/identify-issues-in-whistleblower-complaint",
+   "area": "white-collar-defense-investigations",
+   "n_criteria": 52,
+   "deliverables": {
+    "issue-spotting-memorandum.docx": "issue-spotting-memorandum.docx"
+   },
+   "n_documents": 15,
+   "task_json_sha256": "1855dd822dcfda9d3e5daa8dfb53829ea5ca1d31ca063df9d5c214ea3efe6ad1"
+  }
+ ]
+}

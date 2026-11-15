@@ -11,7 +11,7 @@ Split names: train, val, test, and trainval = train + val (for work with only a 
 trainval, report on test).
 
 Named subsets: a file may also carry `"subsets": {"<name>": {"description": ..., "entries": [{"task_id": ...}, ...]}}`,
-working sets addressed by name like a split (e.g. Harvey's `ahe:flip`). They are not part of the partition: a subset
+working sets addressed by name like a split (`<file shortcut>:<subset>`). They are not part of the partition: a subset
 may span train and tasks the partition leaves unused, but never a val or test task (--check refuses it).
 
     python3 -m dsh_bench.splits benchmarks/<name>/splits.json test        # task ids, one per line
