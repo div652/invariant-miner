@@ -1,11 +1,10 @@
 # Same-task invariant mining: design
 
 What the algorithm does and the rules it follows, as agreed in the design conversation of 2026-11-16/17
-([QNA.md](QNA.md): the verbatim log, turns 1-16; "turn N" below points into it). How it is built:
+([QNA.md](QNA.md): the verbatim log, turns 1-18; "turn N" below points into it). How it is built:
 [TECHNICAL.md](TECHNICAL.md). Nothing is built yet.
 
-Items marked **[proposed, not yet confirmed]** were added while writing this document and need the user's
-confirmation; everything else was decided in the conversation.
+Every item below was decided in the conversation; what is still open is in section 12.
 
 ## 1. Goal
 
@@ -69,7 +68,7 @@ important one (turn 7).
 | Too-narrow check | Claude Opus 5.5 | a cell whose final F3 outcome is not followed, on a passing or a failing run (turn 15) | an action with the same purpose after F2's location? yes/no + location |
 | Semantic judge (later) | to decide | two invariants | section 9 |
 
-Effort: **max** for every Opus 5.5 job (turn 15: "use effort for 5.5 whenever using", read as max effort).
+Effort: **high** for every Opus 5.5 job (turn 17).
 
 ### 4.1 F1 propose
 
@@ -89,7 +88,7 @@ present in **both** runs (turn 3), following these rules:
 - the action has a one-line purpose (turn 10);
 - the list of role terms used ("keyword from the question", "most-hit keyword", ...) with one line each, so the terms
   stay consistent across invariants (turn 6);
-- **[proposed, not yet confirmed]** each invariant carries its evidence: the location of the observation and of the
+- each invariant carries its evidence (turns 14-17): the location of the observation and of the
   action in P1 and in P2. No LLM checks it in the loop (turn 15 asked): it is for debugging and the report, and the code
   checks it at no cost (the locations exist; the observation comes before the action in both runs), only logging a
   failure (turn 16).
@@ -129,10 +128,9 @@ On a **passing** trajectory (a removal candidate):
 2. If Opus also says not followed: the too-narrow check, after Opus's F2 location.
 3. Yes -> **reword** (4.5). No -> the invariant is **removed**.
 
-On a **failing** trajectory (turn 15): no re-check (turn 13, answer 5); the too-narrow check runs on Luna's verdict,
-after Luna's F2 location. No -> importance point. Yes -> no point, logged as "purpose achieved otherwise".
-**[proposed, not yet confirmed]** On a failing run a "yes" only cancels the importance point and does not trigger a
-rewording: invariants are built from passing behaviour, and the failing run's other way may be part of why it failed.
+On a **failing** trajectory (turns 15, 17): no re-check (turn 13, answer 5); the too-narrow check runs on Luna's
+verdict, after Luna's F2 location. No -> importance point. Yes -> no importance point for this cell, and **reword**
+(4.5), as for a passing run (turn 17; the alternative is H6).
 
 ### 4.5 F1 reword (H1)
 
@@ -140,13 +138,17 @@ Input (turn 13, answer 1): the invariant, the trajectory that triggered the rewo
 alternative action (from the too-narrow check), and the statement that this invariant was learnt from earlier runs of
 the same task, where it holds. P1 and P2 are not given. Output: a new action and purpose; the observation is unchanged.
 
-Validation (turns 11, 13 answer 2), with the standard F2 and F3 (Luna high): (observation, new action) must give seen
-and followed on P1, on P2 and on the triggering run.
-- Valid: the old invariant is **retired**, the new one is added (new id, link to the old one) with 0 points, and all
-  its cells are scheduled: it is scored again on every other passing and failing run (turn 11). The validation verdicts
-  on the triggering run are kept as that cell's verdicts.
-- Not valid: a second rewording attempt, given the first attempt and which check failed (turn 13, answer 3). If it also
-  fails, the invariant is removed and the failure logged (turn 13).
+Validation, with the standard F2 and F3 (Luna high): (observation, new action) must give seen and followed on P1 and
+P2, and, when the trigger is a passing run, on the triggering run too (turns 11, 13 answer 2, 17).
+- Valid, at either attempt: the old invariant is **retired**, the new one is added (new id, link to the old one) with
+  0 points, and all its cells are scheduled: it is scored again on every other passing and failing run (turns 11, 17).
+  For a passing trigger, the validation verdicts on the triggering run are kept as that cell's verdicts; a failing
+  trigger is scored like any other run.
+- Not valid: a second rewording attempt, given the first attempt and which check failed (turns 13, 17). If it also
+  fails:
+  - passing trigger: the invariant is removed and the failure logged (turn 13);
+  - failing trigger: the invariant stays as it was, the triggering cell counts 0 for importance, and the failure is
+    logged (turn 17).
 
 ## 5. Outcomes and points
 
@@ -154,8 +156,8 @@ Final outcome of each cell -> effect (turns 9, 12, 13, 15). "Not followed" is th
 
 | Trajectory | followed | not followed | not followed, same purpose achieved otherwise | only before | not seen / pinning wrong / job error |
 |---|---|---|---|---|---|
-| Passing | support +1 | invariant removed | reword (4.5) | no change | no change |
-| Failing | no change | importance +1 | no change (logged) | no change | no change |
+| Passing | support +1 | invariant removed | reword (4.5); if both attempts fail, removed | no change | no change |
+| Failing | no change | importance +1 | no point; reword (4.5); if both attempts fail, the invariant stays | no change | no change |
 
 - Cells exist only for trajectories other than the invariant's P1 and P2.
 - Failing cells use Luna's F2/F3 verdicts, with no re-check (turn 13, answer 5), then the too-narrow check on a "not
@@ -179,7 +181,7 @@ Input: the task's trajectories with labels, and P1, P2.
    invariants that are later removed (their verdicts stay in the log).
 3. **Not followed** (4.4): on a passing cell the re-check, then the too-narrow check (remove or reword), one invariant
    at a time: when an invariant is removed or retired, its remaining pending cells are cancelled. On a failing cell the
-   too-narrow check (importance point or not).
+   too-narrow check (importance point, or reword).
 4. **Reword** (4.5) -> a new invariant whose cells go back to step 2.
 5. Repeat until no cell is pending, then write the **report** (section 7).
 
@@ -194,8 +196,8 @@ Per task and overall:
 - active invariants with support points, importance points, first violations;
 - removed invariants, with the cell that removed it and whether Opus agreed with Luna;
 - reworded invariants: old -> new action, attempts, validation verdicts;
-- reword failures (removed after two attempts);
-- failing-run cells where the purpose was achieved otherwise (no importance point);
+- reword failures (after two attempts: removed for a passing trigger, kept for a failing trigger);
+- failing-run cells where the purpose was achieved otherwise (no importance point), and what their rewording gave;
 - F1 evidence check failures (4.1);
 - Luna/Opus disagreements in re-checks;
 - pinning-wrong counts (per invariant and per trajectory);
@@ -211,7 +213,8 @@ passing run instead greps the candidate files for the key term and reads only th
 (every candidate checked), different mechanism. The action as worded did not happen, so the invariant would be removed
 although the run supports it. Cause: the action says how, not what for. User (turn 11): "a great insight". Handled by
 the too-narrow check (4.4) and the reword step with its validation (4.5). The check runs on failing runs too, so a
-failing run that achieved the purpose another way earns no importance point (turn 15). User (turn 15): the hope is that
+failing run that achieved the purpose another way earns no importance point (turn 15) and triggers a rewording (turn 17;
+the alternative is H6). User (turn 15): the hope is that
 F1 is good enough for rewordings to be rarely needed.
 
 ### ★ H2. The causal link comes from F1, so F3 only checks "after" (turn 9)
@@ -241,6 +244,14 @@ answer missing something the grader checks. Usually the passing runs did somethi
 cross-check), which is a process invariant (user, turn 9); what remains is one judgement going wrong inside the same
 process, the "model reasoning error" case (Claude, turn 10). User (turn 11): this might happen. Consequence: a failing
 run that breaks no invariant does not always mean an invariant is missing.
+
+### ★ H6. Should failing runs reshape invariants? (Claude, turn 16; highlighted at the user's request, turn 17)
+
+When a failing run achieved an action's purpose another way, Claude suggested only cancelling its importance point,
+without rewording the invariant: invariants are built from passing behaviour, and the failing run's other way may be
+part of why it failed. User (turn 17): an important point, to be highlighted; for now failing runs do trigger
+rewordings (4.4, 4.5). Worth revisiting with data: how often rewordings come from failing runs, and whether invariants
+reworded from failing runs score worse.
 
 ## 9. Later (not built; to be discussed, turn 13)
 
@@ -286,9 +297,5 @@ anytime after F2's location** (4.3), with "only before" as a separate outcome (H
 
 ## 12. Open questions
 
-1. Effort: max for every Opus 5.5 job, as turn 15 is read here (section 4)?
-2. F1 evidence locations in P1 and P2, for debugging, the report and a programmatic check (4.1)?
-3. On a failing run, does "purpose achieved otherwise" only cancel the importance point, or also trigger a rewording
-   (4.4)?
-4. Semantic judge (later): which pairs are compared, which model, and "each query to a different model" vs a fresh call
-   per query (section 9)?
+1. Semantic judge (later): which pairs are compared, which model, and "each query to a different model" vs a fresh call
+   per query (section 9; explained in turn 18).

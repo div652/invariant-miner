@@ -28,8 +28,10 @@ turns below.
 | "Followed" = anytime after the observation (F1's one-line reason gives the causal link) | 9 |
 | Action only before the observation: detected by F3, counts as no change, a frequent occurrence is a signal that the observation is not the real trigger | 10, 11 |
 | Points: support (passing run: seen + followed), importance (failing run: seen + not followed); (φ, action) earns importance when a failing run skips the action | 9, 12, 13 |
-| Too-narrow check: a separate Opus 5.5 job, run whenever F3 says "not followed" (passing runs: after the Opus re-check; failing runs too): did an action with the same purpose happen after F2's pinned observation? Passing: yes -> reword, no -> remove; failing: yes -> no importance point | 10, 11, 15 |
-| Opus 5.5 at max effort in every use (turn 15 read as max effort); rewording on Opus 5.5 | 14, 15 |
+| Too-narrow check: a separate Opus 5.5 job, run whenever F3 says "not followed" (passing runs: after the Opus re-check; failing runs too): did an action with the same purpose happen after F2's pinned observation? Passing: yes -> reword, no -> remove; failing: yes -> no importance point and reword, validated on P1 and P2; a second attempt if validation fails; if both fail the old invariant stays and the cell counts 0 for importance; a valid rewording replaces the invariant, which is re-evaluated | 10, 11, 15, 17 |
+| H6 highlighted (Claude's view that failing runs should only cancel the importance point, not trigger rewordings); not followed for now | 17 |
+| Opus 5.5 at **high** effort in every use; rewording on Opus 5.5 | 14, 15, 17 |
+| F1 gives evidence locations in P1 and P2: for debugging, the report and a programmatic check (no LLM) | 14-17 |
 | F2, F3 and the too-narrow check give objective answers: exactly one of the given choices, no equivocating or playing it safe | 15 |
 | Reword: the rewording LLM gets only the invariant, the triggering run and the location of its alternative action, and is told the invariant was learnt on earlier runs; the new invariant is validated with standard F2/F3 on P1, P2 and the triggering run | 11, 13 |
 | Reword fails validation: one more attempt; if that fails, the invariant is removed and the failure logged; logs reported at the end of the process | 13 |
@@ -548,4 +550,36 @@ Still open (DESIGN §12):
 - F1 evidence as above;
 - on a failing run, should "purpose achieved otherwise" only cancel the importance point, or also trigger a rewording? I'd only cancel it: invariants are built from passing behaviour, and the failing run's other way may be part of why it failed;
 - the semantic-judge questions for later.
+````
+
+### Turn 17 — user (2026-11-17)
+
+````text
+yeah so remember for the too narrow check that say yes in failing runs there we need to reword them. calidate against p1, p2. if validatoin fails, try reowrding again. if validation failes. then just maintain the ealier invariant and count this as 0 for importance count ! if the validation passes at any point. replace the invariant and reevaluate. 
+
+efforts have to be "high" not "max"
+F1 evidence point makes sense. 
+for purpose achieved otherwise i told you above, yes rewording should also trugigger. I like you suggeston also that : " I'd only cancel it: invariants are built from passing behaviour, and the failing run's other way may be part of why it failed " -> this is an important point and I want you highlght it in the doc. however, for now I want you to stick with what I said. 
+
+what is the sematnic judge questoin ?
+````
+
+### Turn 18 — Claude (2026-11-17)
+
+````text
+Done (pushed). Changes:
+- **Too narrow on a failing run → reword** (DESIGN §4.4–4.5). Validation uses standard F2/F3 on P1 and P2.
+  - Validation passes, on either attempt: the new invariant replaces the old one and is re-evaluated on all other runs.
+  - Both attempts fail: the old invariant stays, and this failing run counts 0 for importance.
+  - On a passing run, nothing changes: validation is on P1, P2 and the triggering run, and if both attempts fail the invariant is removed.
+  - For a failing trigger, the failing run isn't part of the validation; it is scored like any other run once the new invariant is re-evaluated.
+- **Effort:** high for every Opus 5.5 job.
+- **F1 evidence:** confirmed.
+- **New highlighted note H6:** my suggestion that a failing run should only cancel the importance point, not trigger a rewording, because invariants are built from passing behaviour and the failing run's other way may be part of why it failed. It's marked as not followed for now; your rule applies.
+
+**The semantic-judge questions** are about the later step that merges invariants across tasks, your two-stage judge (DESIGN §9). Two things need deciding before it's built:
+1. **Which pairs get compared.** Comparing every pair is quadratic: with e.g. 35 tasks × 20 invariants = 700 invariants, the first stage alone is ~245,000 calls. Options: only pairs from different tasks (barely smaller); only pairs whose observations share a source label; or a cheap programmatic pre-filter such as word overlap, so the judge sees only plausible candidates.
+2. **"Each query to a different model":** did you mean a fresh call per query (same model, new context, as for F2/F3), or literally a different model for each query? And which model?
+
+Apart from these, which are for later, DESIGN §12 has no open questions left.
 ````

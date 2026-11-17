@@ -104,7 +104,7 @@ repo's `models/luna-cao.json` and `models/opus55-max-cao.json`:
 | Model | API | Settings |
 |---|---|---|
 | GPT-5.6 Luna (`gpt-5.6-luna`) | OpenAI Responses, `/v1/responses` | `reasoning: {effort: high, summary: auto}`, `include: [reasoning.encrypted_content]`, `store: false`; the previous output items (reasoning items with their encrypted content, function calls) are sent back each turn with the `function_call_output` items; tools with `strict: false` |
-| Claude Opus 5.5 (`claude-opus-5-5`) | Anthropic Messages, `/v1/messages` (`x-api-key`) | adaptive thinking, effort max for every job kind (DESIGN.md section 4), thinking blocks sent back with their signatures each turn |
+| Claude Opus 5.5 (`claude-opus-5-5`) | Anthropic Messages, `/v1/messages` (`x-api-key`) | adaptive thinking, effort high for every job kind (DESIGN.md section 4), thinking blocks sent back with their signatures each turn |
 
 Retries (as in the model files): rate limits, 5xx, timeouts, transport errors, empty responses, `INVALID_REQUEST`, and
 Anthropic's mid-stream `api_error`; 5 retries with backoff. Concurrency: one limit on running jobs (*default* 20; CAO has
@@ -143,7 +143,7 @@ No shell, no file system, no web.
 ```
 
 `observation: []` is φ. `source` is one of `environment`, `task`, `tool_result`, `reasoning`. `follows` lists the ids of
-invariants this one chains from (information only). `evidence` is DESIGN.md's proposed, not yet confirmed item; after
+invariants this one chains from (information only). `evidence` (DESIGN.md 4.1): after
 F1 the code checks it (each location exists in its trajectory; the observation's location comes before the action's in
 A and in B) and logs an `f1_evidence_invalid` event on a failure, nothing more.
 
@@ -197,11 +197,13 @@ Pure functions over the store, the rules of DESIGN.md sections 4-6:
 - cell: F2 (skipped for φ) -> if seen, F3 -> on `not_followed`:
   - passing cell: re-check (Opus F2, F3) -> Opus's verdicts become final; if still `not_followed`: too-narrow check
     (after Opus's F2 location) -> `purpose_otherwise` (reword) or `not_followed` (remove);
-  - failing cell: too-narrow check (after Luna's F2 location) -> `purpose_otherwise` (no point) or `not_followed`
-    (importance point);
-- the removal path runs for one invariant at a time; removal or retirement cancels the invariant's pending cells;
-- reword -> validation jobs (F2, F3 with Luna on P1, P2 and the triggering trajectory) -> retire + new invariant, or a
-  second attempt, or remove + log;
+  - failing cell: too-narrow check (after Luna's F2 location) -> `not_followed` (importance point) or
+    `purpose_otherwise` (no point, and reword);
+- removals and rewords of one invariant run one at a time; a trigger that arrives meanwhile waits, and is dropped if the
+  invariant is removed or retired; removal or retirement cancels the invariant's pending cells;
+- reword -> validation jobs (F2, F3 with Luna on P1, P2, and on the triggering trajectory when it passed) -> retire +
+  new invariant; or a second attempt; or, after two failures, remove (passing trigger) or keep the invariant (failing
+  trigger), and log;
 - points are computed from final outcomes when reporting (never stored), with the first-violation flag.
 
 ### 4.3 Scheduler (`pipeline.py`)
@@ -237,8 +239,8 @@ python3 -m invariant_mining job runs/NAME --kind f2 --invariant I --trajectory T
 - `test_im_agent.py`: with a scripted model (like `tests/scripted_model.py`): submit validation and retries, budgets,
   context guard, job failure and retry.
 - `test_im_rules.py`: table-driven, one case per cell of DESIGN.md section 5's table, φ, only before, Opus disagreeing
-  either way, too narrow on a passing run -> reword valid / invalid twice, too narrow on a failing run -> no point,
-  cancellation after removal, first-violation flag, F1 evidence check.
+  either way, too narrow on a passing run -> reword valid / invalid twice, too narrow on a failing run -> no point and
+  reword valid / invalid twice (invariant kept), cancellation after removal, first-violation flag, F1 evidence check.
 - `test_im_pipeline.py`: end to end with the scripted model: one task, P1, P2, one more passing and two failing
   trajectories; resume after a stop.
 - `tests/test_layout.py` keeps passing.
@@ -247,6 +249,7 @@ python3 -m invariant_mining job runs/NAME --kind f2 --invariant I --trajectory T
 
 Per task with I invariants and R other trajectories: 1 F1 job; up to I x R F2 jobs and as many F3 jobs; plus, for
 every "not followed": on a passing run a re-check (2 Opus jobs) and maybe a too-narrow check, rewords and validations;
-on a failing run one too-narrow check (Opus). Failing runs may break many invariants, so the too-narrow checks on
+on a failing run one too-narrow check (Opus) and, when it says yes, rewords and validations. Failing runs may break
+many invariants, so the too-narrow checks on
 failing runs can be the largest Opus cost. E.g. I = 20, R = 2: ~80 Luna jobs; at ~10 model steps each (a guess) ~800
 Luna requests, plus F1 at up to 150 Opus requests. The report records the real numbers.
