@@ -29,7 +29,7 @@ SEEN = {"fact-a": {"P3", "X1"}, "fact-c": {"P1", "P2", "P3", "X1"}, "fact-d": {"
 F3 = {  # (action, trajectory, model) -> (outcome, location); model None = either
     ("act-a", "P3", None): ("followed", "s3.c1"), ("act-a", "X1", None): ("not_followed", None),
     ("act-phi", "P3", None): ("followed", "s1.c1"), ("act-phi", "X1", None): ("not_followed", None), ("act-phi", "X2", None): ("followed", "s1.c1"),
-    ("act-c-narrow", "P3", None): ("not_followed", None),
+    ("act-c-narrow", "P3", None): ("not_followed", None), ("act-c-narrow", "X1", None): ("not_followed", None),  # may run before i3 is retired
     ("act-c-broad", "P1", None): ("followed", "s3.c1"), ("act-c-broad", "P2", None): ("followed", "s3.c1"),
     ("act-c-broad", "P3", None): ("followed", "s3.c1"), ("act-c-broad", "X1", None): ("not_followed", None),
     ("act-d", "P3", None): ("not_followed", None),
@@ -149,6 +149,12 @@ n_jobs = p.store.one("SELECT COUNT(*) n FROM jobs")["n"]
 c.check(n_jobs == len(calls), "every job recorded in the jobs table")
 p.run()
 c.check(p.store.one("SELECT COUNT(*) n FROM jobs")["n"] == n_jobs, "running again does nothing when nothing is pending")
+from invariant_mining.cli import retry_errors
+p.store.update("cells", {"invariant_id": "T1.i1", "trajectory_id": "X2"}, status="done", final_outcome="job_error", stage="f2")
+retry_errors(run_dir)
+p.run()
+c.check(p.store.one("SELECT final_outcome FROM cells WHERE invariant_id='T1.i1' AND trajectory_id='X2'")["final_outcome"] == "not_seen",
+        "retry-errors: a cell that ended in a job error runs again from its stage")
 md = (run_dir / "report.md").read_text()
 c.check("### Active invariants" in md and "T1.ri3" in md and "removed" in md, "report.md written")
 c.done()

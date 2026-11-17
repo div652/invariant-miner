@@ -67,9 +67,12 @@ def _quote(value) -> str:
 
 
 def _norm(text: str) -> str:
-    text = text.replace("\u2019", "'").replace("\u2018", "'").replace("\u201c", '"').replace("\u201d", '"')
-    text = text.replace("*", "").replace("`", "")  # markdown emphasis and code marks are often dropped in quotes
-    return re.sub(r"\s+", " ", text).strip().lower()
+    """Letters and digits only, lowercased, after removing line-number prefixes ("15:  text", as tool outputs show
+    them) and quoted-printable soft line breaks: quotes often drop formatting (markdown, table layout, escapes, line
+    numbers), and the check is only that the quoted words are this item's words in this order."""
+    text = re.sub(r"(?m)^[ \t]*\d+:[ \t]?", "", text)
+    text = re.sub(r"=\r?\n", "", text)
+    return re.sub(r"[^0-9a-z]+", "", text.lower())
 
 
 def _strings(value) -> list[str]:
@@ -83,7 +86,7 @@ def _strings(value) -> list[str]:
 
 
 def check_quote(t: Trajectory, loc: str, quote: str) -> None:
-    """The quote must be text of the item at `loc` (case, whitespace, * and ` ignored; '…' or '...' may join excerpts;
+    """The quote must be text of the item at `loc` (compared on letters and digits only, see _norm; '…' or '...' may join excerpts;
     for a tool call, the decoded argument values count too). Raises ValueError."""
     q = (quote or "").strip()
     if not q:

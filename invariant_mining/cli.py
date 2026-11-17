@@ -78,6 +78,16 @@ def run_one_job(run_dir: Path, kind: str, trajectories: dict, inputs: dict, mode
                      ensure_ascii=False, indent=1))
 
 
+def retry_errors(run_dir: Path) -> None:
+    """Put cells that ended in a job error back to pending at the stage they failed in, and failed F1 tasks back to
+    pending (e.g. after fixing a validator). Run `run` afterwards. Do not use while a run is in progress."""
+    s = Store(Path(run_dir) / "state.sqlite")
+    cells = s.db.execute("UPDATE cells SET status='pending', final_outcome=NULL WHERE final_outcome='job_error'").rowcount
+    tasks = s.db.execute("UPDATE tasks SET status='pending', error=NULL WHERE status='error'").rowcount
+    s.event("retry_errors", cells=cells, tasks=tasks)
+    print(f"{run_dir}: {cells} cells and {tasks} tasks back to pending")
+
+
 def ping(config_path: Path | None) -> None:
     cfg = config_mod.load(config_path)
     tool = [{"name": "submit", "description": "Submit the answer.", "parameters": {"type": "object", "properties": {"answer": {"type": "string"}}, "required": ["answer"]}}]
@@ -110,6 +120,8 @@ def main(argv=None) -> None:
     p.add_argument("--trajectories", required=True, help="A=id,B=id for f1_propose; T=id otherwise")
     p.add_argument("--inputs", default="{}", help="JSON object, or @file.json")
     p.add_argument("--model", help="model key from the config (default: the kind's role)")
+    p = sub.add_parser("retry-errors", help="cells that ended in a job error back to pending (then: run)")
+    p.add_argument("run_dir", type=Path)
     p = sub.add_parser("ping", help="one tiny request to each configured model")
     p.add_argument("--config", type=Path)
     a = ap.parse_args(argv)
@@ -129,5 +141,7 @@ def main(argv=None) -> None:
         trajs = dict(kv.split("=", 1) for kv in a.trajectories.split(","))
         inputs = json.loads(Path(a.inputs[1:]).read_text() if a.inputs.startswith("@") else a.inputs)
         run_one_job(a.run_dir, a.kind, trajs, inputs, a.model)
+    elif a.cmd == "retry-errors":
+        retry_errors(a.run_dir)
     elif a.cmd == "ping":
         ping(a.config)
