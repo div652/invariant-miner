@@ -623,3 +623,21 @@ Set (pushed): the semantic judge uses GPT-5.6 Luna high (DESIGN §4 and §9, TEC
 
 Tell me when you've finished reviewing the documents. Then we can discuss the later parts, or I can start building F1–F3, the table and the pipeline.
 ````
+
+### Turn 23 — user (2026-11-17)
+
+````text
+what is the path of the techincal, design and other doc relative to ~
+````
+
+### Turn 24 — Claude (2026-11-17)
+
+````text
+All three are in the `2sameInvariantAlgo` worktree:
+
+- `~/dsh-bench-harness-2sameinv/docs/2same-invariant-algo/DESIGN.md`: the design
+- `~/dsh-bench-harness-2sameinv/docs/2same-invariant-algo/TECHNICAL.md`: the technical document
+- `~/dsh-bench-harness-2sameinv/docs/2same-invariant-algo/QNA.md`: the verbatim conversation log and the decisions table
+
+On GitHub they're on branch `2sameInvariantAlgo` of `div652/dsh-bench-harness`, under `docs/2same-invariant-algo/`.
+````
