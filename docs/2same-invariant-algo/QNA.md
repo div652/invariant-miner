@@ -1,51 +1,14 @@
-# 2sameInvariantAlgo: conversation log, decisions and notes
+# 2sameInvariantAlgo: conversation log and decisions
 
 Verbatim record of the design conversation for this branch: the user's messages, Claude's final replies, the questions
-Claude asked (with their options) and the user's answers. Progress notes and tool output are left out. The sections
-before the log summarize it (current design, decisions, the notes the user asked to be highlighted, cautions, planned
-functions, open questions); the log is the source. New exchanges are appended to the end of the log.
+Claude asked (with their options) and the user's answers. Progress notes and tool output are left out. New exchanges
+are appended to the end of the log.
 
-## Current design (as of turn 12)
+The design built from this conversation: [DESIGN.md](DESIGN.md) (what the algorithm does, its rules, the highlighted
+notes H1-H5, cautions, later work, open questions) and [TECHNICAL.md](TECHNICAL.md) (how it is built). Both cite the
+turns below.
 
-**Functions (the only places LLMs are used; everything else is programmatic):**
-
-| Function | Model | One job = | Output |
-|---|---|---|---|
-| F1 propose | Claude Opus 5.5 | two passing runs of one task (P1, P2) | invariants: observation facts (each with a one-line reason = the causal link, and a source label: none (φ) / environment / task / tool result / the agent's own reasoning) -> action (with its one-line purpose) |
-| F2 seen? | GPT-5.6 Luna high | one observation x one trajectory | yes/no + the FIRST location where the observation holds |
-| F3 followed? | GPT-5.6 Luna high | one invariant x one trajectory (+ F2's location) | observation not at that location (pinning wrong) / yes + location of the action / no; on "no": did the action happen only before the observation? (yes/no + location) |
-| F2 + F3 re-check | Claude Opus 5.5 | a removal candidate | as above, plus: was the action's purpose achieved by a different action? (yes/no + location) |
-| later: semantic judge | ? | two invariants | same observation and same action? / same observation, opposite actions? |
-
-Each job is an agent with read-only tools for reading trajectories (no coding), fresh for every job; system prompts
-shared per function.
-
-**Points** (only on runs other than the two the invariant was proposed from):
-
-| Run | Seen, action followed | Seen, action not followed | Seen, action only before | Not seen / pinning wrong |
-|---|---|---|---|---|
-| Passing | support +1 | removal path | no change | no change |
-| Failing | no change | importance +1 (flag if it is the run's first violation) | no change | no change |
-
-**Pipeline for one task** (input: the task's trajectories with pass/fail labels; P1, P2 = the proposing pair):
-1. Propose: F1 on P1, P2.
-2. Test on the other passing runs: F2, then F3 if seen; support points.
-3. Removal path (Luna: seen, not followed, on a passing run): F2 + F3 again with Opus 5.5. Opus disagrees -> Opus's
-   verdict counts, disagreement logged (proposed, open question 4). Opus agrees and the purpose was achieved another way
-   -> **action too narrow** -> 4. Opus agrees, purpose not achieved -> invariant removed.
-4. Reword (H1): new action at the purpose level; validated with F2 + F3 on P1 and P2 (both must say yes). Valid -> old
-   invariant retired, new one starts at 0 points and is scored on all other runs. Not valid -> the rewording is wrong
-   (what next: open question 3).
-5. Test on the failing runs: F2, then F3 if seen; importance points.
-
-**Bookkeeping:** one table row per invariant x trajectory (task, pass/fail, F2/F3 verdicts, locations, model, re-check
-verdicts, outcome); every row without a verdict is a pending job, so adding an invariant schedules its checks.
-Aggregation rules can change without LLM calls; a changed invariant is a new invariant.
-
-**Later, not built:** targeted re-proposal; union across tasks with the semantic judge (merge only when observation and
-action both mean the same: Claude's view, turn 12); conflicts -> refinement.
-
-## Decisions so far
+## Decisions (with the turn they come from)
 
 | Decision | Turn |
 |---|---|
@@ -54,135 +17,28 @@ action both mean the same: Claude's view, turn 12); conflicts -> refinement.
 | Atomic jobs: one fresh LLM/agent per (input) item; a for loop calls the model inside the loop; system prompts may be shared | 3 |
 | Each job is done by an **agent** with read-only tools for reading trajectories (in parts, with notes), writing its answer to an output file; no general abilities (no coding) | 5 |
 | Models configurable per function: F1 = **Claude Opus 5.5**; F2/F3 = **GPT-5.6 Luna high** | 7, 9 |
-| Before an invariant is deleted (Luna's F2/F3 say, on a passing run: observation seen, action not taken), F2 and F3 are run again with **Opus 5.5** | 9 |
+| Before an invariant is removed (Luna's F2/F3 say, on a passing run: observation seen, action not taken), F2 and F3 are run again with **Opus 5.5**; Opus's verdict replaces Luna's | 9, 13 |
 | Observations and actions abstract and transferable, as granular as possible, keeping the semantic role of task-specific things ("a keyword mentioned in the question", "the keyword with most hits"); short and chainable | 5 |
 | An observation = short facts (1-3 accepted; more allowed); each fact comes with a one-line reason why the action needs it: this is the causal link. No explicit length penalty and no drop-one-fact check | 7, 9, 11 |
-| An observation can be anything in the agent's context, including its own reasoning (the reasoning process is the space where observations and actions happen); it can also be **empty** (φ, action), or about the **environment** (tool descriptions, file system) or **task structure**, always in abstract terms ("a task-specific calculation", not "calculating year-end salaries") | 5, 9 |
-| F1 labels each observation's source: none (φ) / environment / task / tool result / the agent's own reasoning | 10, 11 |
+| An observation can be anything in the agent's context, including its own reasoning; it can also be **empty** (φ, action), or about the **environment** (tool descriptions, file system) or **task structure**, always in abstract terms | 5, 9 |
+| Source labels: none (φ) / environment / task / tool result / the agent's own reasoning | 10, 11 |
+| Each action has a one-line purpose, for our understanding; F2 and F3 never use it | 10, 13 |
 | F2 output: yes/no + the FIRST location of the observation (evidence: line / step / tool-call number) | 7, 9, 11 |
-| F3: checks the observation is at F2's location (if not: error = "observation pinning wrong"); then yes/no whether the action happened after it, and the location of the action if yes. F2/F3 do not judge whether the reasoning links the two: that is F1's job | 7, 9 |
+| F3: checks the observation is at F2's location (if not: "observation pinning wrong"); then yes/no whether the action happened after it, with the action's location if yes. No judgement of whether the reasoning links them | 7, 9, 11 |
 | "Followed" = anytime after the observation (F1's one-line reason gives the causal link) | 9 |
-| Action only before the observation: F3 detects it (yes/no + location); it counts as no change (no point, no removal); a frequent occurrence signals the observation is not the real trigger (re-propose with an earlier trigger or as (φ, action)) | 10, 11 |
-| Scoring: support and importance points (table above) | 9, 12 |
-| **Action too narrow** is part of the removal path: the Opus re-check asks whether the action's purpose was achieved by a different action; if so the action is reworded, the reworded invariant is validated by F2 + F3 on the two source runs, then replaces the old one and is scored again on all other runs | 10, 11 |
-| Refining an invariant (e.g. after a conflict between tasks) retires it and adds new invariants, which have to be scored again on all runs | 9 |
-| Everything outside F1/F2/F3 (and the later semantic judge) is programmatic | 11 |
-| Targeted re-proposal (F1 again, pointed at where a failing run went wrong) will be its own function; implementation still to be discussed | 9 |
-| A semantic judge is needed to match invariants across tasks | 9 |
-| Union across tasks = the union of the tasks' observation-action pairs | 9 |
+| Action only before the observation: detected by F3, counts as no change, a frequent occurrence is a signal that the observation is not the real trigger | 10, 11 |
+| Points: support (passing run: seen + followed), importance (failing run: seen + not followed); (φ, action) earns importance when a failing run skips the action | 9, 12, 13 |
+| Action too narrow: on a confirmed removal candidate, check whether the purpose was achieved by a different action; if so reword the action | 10, 11 |
+| Reword: the rewording LLM gets only the invariant, the triggering run and the location of its alternative action, and is told the invariant was learnt on earlier runs; the new invariant is validated with standard F2/F3 on P1, P2 and the triggering run | 11, 13 |
+| Reword fails validation: one more attempt; if that fails, the invariant is removed and the failure logged; logs reported at the end of the process | 13 |
+| Failing runs are checked right after F1 (together with the passing runs); no Opus re-check for importance points | 13 |
+| A reworded or refined invariant is new: the old one is retired and the new one is scored again on all other passing and failing runs | 9, 11 |
+| Everything outside the LLM functions is programmatic | 11 |
+| Later: targeted re-proposal (F1 again, pointed at where a failing run went wrong), its own function; implementation to discuss | 9 |
+| Later: union across tasks via a two-stage semantic judge (observations same? then actions same / opposite / different but compatible); merge same, log opposite as a conflict, keep compatible; different observations not sent to the second stage, but can be scored on other tasks | 9, 13 |
 | The algorithm is agnostic to the data; which tasks and trajectories are used is decided later (flip tasks for importance) | 7, 9 |
 | How the points are used downstream: decided later | 11 |
-| Aggregation is not built yet | 7 |
-
-## Highlighted notes
-
-### ★ H1. Action too narrow: a different action with the same purpose (turn 8 point 2; turns 10, 11)
-
-F1 sees both source runs do the same thing, e.g. "opens each candidate file", and writes that as the action. A third
-passing run instead greps the candidate files for the key term and reads only the matching passages: same purpose
-(every candidate checked), different mechanism. The action as worded did not happen, so the invariant would be deleted
-although the run supports it. Cause: the action says how, not what for. User (turn 11): "a great insight".
-
-Decided procedure (turns 10-11):
-1. F1 writes each action's purpose in one line.
-2. On a removal candidate only, the Opus re-check answers one more yes/no: "was this purpose achieved by a different
-   action? where?". If yes, the invariant is not removed but flagged "action too narrow".
-3. The action is reworded at the purpose level.
-4. **Validation (user, turn 11):** before the reworded invariant replaces the old one, F2 and F3 run on the two source
-   runs that generated it, for (observation, new action). F2 should say yes (same observation); if F3 does not say yes,
-   the rewording is wrong and something else has to be done.
-5. If valid: the old invariant is deleted (retired), the new one is added with 0 points and scored again on the other
-   passing and failing runs.
-
-Open (turn 12): who rewords (proposed: F1 in a reword mode, Opus 5.5), whether the triggering run must also say
-"followed" in the validation, and what to do when validation fails.
-
-### ★ H2. The causal link comes from F1, so F3 only checks "after" (user, turn 9)
-
-F1's one-line reason per observation fact states why the action follows from the observation. With that causal link in
-place, F3 only checks that the action happened after the observation; F2 and F3 do not judge links. This holds as long
-as F1 works properly.
-
-### ★ H3. The first broken invariant in a failing run says the most (turn 8 point 3; user agreed in turn 9)
-
-A failing run often goes off track once and then breaks many invariants afterwards as a consequence. The first broken
-invariant in a failing run is the most informative, so F3 records locations and importance should weight first
-violations. Tasks whose runs both pass and fail (flip tasks) are the cleanest data for this (user: will use such data).
-
-### ★ H4. Nuance: the action happened before the observation (turn 8 point 9; turns 9-11)
-
-Example: the agent opened the files before the search that should lead to opening them. Under "after the observation"
-this reads as "action not followed" and would delete a good invariant, even when F1's reasons are right. Decided
-(proposed turn 10, user agreed turn 11), instead of a manual check:
-1. Detect it: when F3's answer is "no", it answers one more yes/no, "did the action happen before the observation?
-   where?".
-2. Count it neutrally: the run did not contradict the invariant, it did the action early, so the cell gets no point and
-   no removal (like "observation not seen").
-3. Use it as a signal: if one invariant often has its action first, its observation is not the real trigger; it should
-   be re-proposed with an earlier trigger, or as an empty-observation invariant (φ, action).
-
-An observation that appears early by chance (e.g. incidentally in a large listing) is less of a problem: the "after"
-window just gets longer.
-
-### ★ H5. Process right, content wrong (turn 8 point 6; turns 9-11)
-
-A failing run can follow the same process as the passing runs and still fail on content: a misread document, or a
-final answer missing something the grader checks. User (turn 9): a passing run must have done some process the failing
-run did not. Claude (turn 10): true in most cases (e.g. a cross-check the failing run skipped is a process invariant);
-what remains is one judgement going wrong inside the same process (both runs read the same filing, one misreads the
-date, neither cross-checks), which is the user's "model reasoning error" bucket. User (turn 11): this might happen;
-highlight it. Consequence: a failing run that breaks no invariant is not always a missing invariant.
-
-## Cautions
-
-- **C1. F2/F3 judgement errors** (turn 8 point 6): a model may say "followed" when it was not, or the reverse. The user
-  does not expect it; assumed not to happen for now. The Opus re-check before removal covers the destructive case, and
-  logging where Luna and Opus disagree measures Luna's error rate.
-- **C2. Process right, content wrong**: see H5.
-- **C3. F2 must give the first point where the observation holds** (turn 10; user agreed turn 11): if it gave a later
-  occurrence, an action between the first occurrence and that one would count as "not followed".
-- **C4. Refined or reworded invariants start at 0** (turns 9, 11): an invariant replaced by refined ones (the
-  separating fact added after a conflict) or by a reworded one (H1) is retired; the new ones go through F2/F3 on every
-  run the old one was tested on (the passing runs beyond the first two and the failing runs). In the table, every
-  invariant x trajectory cell without a verdict is a pending job, so adding an invariant schedules its checks.
-
-## Planned functions (not built yet)
-
-- **Targeted re-proposal** (turn 8 point 6; user, turn 9: "we are gonna do this"): when a failing run breaks no
-  invariant, find the first point where it did something the passing runs did not do in a similar situation, and run
-  F1 again on the two passing runs, pointed at that kind of situation, to propose finer pairs there only. The grader's
-  per-criterion verdicts, where a benchmark has them, help find that point (passed in as optional text). Implementation
-  to be discussed. (H5: not every such failing run has a missing invariant.)
-- **Semantic judge**: "do these two invariants say the same thing, observation and action?" (merging across tasks) and
-  "same observation, opposite actions?" (conflicts), one atomic call per candidate pair. Claude's view (turn 12): merge
-  only when both match; same observation with compatible different actions, or different observations with the same
-  action, stay separate invariants.
-- **Aggregation over the table**: points, removal, union across tasks with counts. Aggregation rules can change without
-  new LLM calls; a changed invariant is a new invariant and needs its F2/F3 verdicts again (turn 9 point 7, confirmed
-  turn 10).
-
-## Open questions (turn 12)
-
-1. Who rewords an action that is too narrow? Proposed: a reword mode of F1 (Opus 5.5): input = the invariant, P1, P2,
-   and the triggering run with the location of its alternative action; output = new action + purpose.
-2. Validation of a rewording: besides P1 and P2, must the run that triggered it also say "followed"? (Claude: yes.)
-3. If the validation fails: retry the rewording once, giving F1 the failed check; if it fails again, remove the
-   invariant? Or something else?
-4. On a removal candidate, Opus's verdict replaces Luna's (including +1 support if Opus says "followed")?
-5. Failing runs: test only the invariants that survived the passing runs; no Opus re-check for importance points?
-6. Union: merge only when observation and action both mean the same?
-
-## Notes
-
-### When does an action count as "followed" (F3)?
-
-Raised in turn 6 (question 2). User (turn 7): it can happen at any time after the observation, before the end of the
-trajectory. Ideally the check applies when the agent builds on the observation and does the next thing (it may do
-unrelated work in between), but inferring that is hard, hence "anytime later in this trajectory". Claude (turn 8):
-agrees "anytime later" is the definition to judge by; its weakness is an action that happens much later for an
-unrelated reason; proposed recording whether the reasoning links them, and a fourth outcome "action happened only
-before the observation". User (turn 9): no link judgement in F2/F3 (F1's one-line reason gives the causal link, H2);
-the before-the-observation case is a nuance to highlight (H4). **Status: decided: anytime after F2's location.**
+| A precise design document and a technical document, built from this conversation | 13 |
 
 ## Log
 
@@ -594,4 +450,62 @@ So the semantic judge's question is strict: "do these two pairs say the same thi
 3. **If validation fails:** retry the rewording once, giving F1 the failed check, and remove the invariant if it fails again? Or something else?
 4. **On a removal candidate, should Opus's verdict replace Luna's**, including +1 support if Opus says "followed"?
 5. **Failing runs:** test only the invariants that survived the passing runs, and skip the Opus re-check for importance points (nothing is deleted there)?
+````
+
+### Turn 13 — user (2026-11-17)
+
+````text
+phi, actoin can collect imporatnce points as well, right . it would do so when the actoin is not done simple. is there something I am mssing ? 
+yeah so the one-line purpose thing is for our own understadning, they must not be used when checking f2, f3. 
+
+what happens if rewording is wrong. maybe do another reowrding attempt, if that fails then log this failure, and remove the invariant at the moment. report logs at the end of the process.
+
+I would want to do step 5 after step1. do you thin kthat would lead to some problem ? I think we can do that. 
+
+also now I want you to bulid a very precise design document and a techincal document from all the conversation we had. refer to the save chats. check it. this is going to be very important ! . 
+
+we will talk about the planned for later things after that. 
+
+about union yes i agree with what you say. but i would rather call llm judge on first all observation pairs , for each observation pair, ask the question are they same given the benchmark context . get a boolean answer ! 
+For the ones named same. now do the same activity for the whole observaiot and ask only if the actions are same in both the pairs given, action pairs whose observatoins were called same, so the ones that say yes actions are smae, then are merged. the ones that say oppsoite actions, then that is a ocnflict. must be logged. 
+compatible, then both can hold.
+So pairs of invariants where obsrevations were both said the same, we then give the invairant pair, and not just the obsrvatoin and get a verdits on actions, if they are same, opposite or different but compatible ! only three possible answers thats all. again each query to a differnet model with the right benchmark context
+diff observations same actions should not even be sent for the second check. but perhaps we can score this on the other tasl to get its support and importance evaluated on all other tasks ! 
+
+
+
+1. hmm for rewording I would give it only the invariant and the run that triggered it with localisation of its actions. just tel it that on some realier task invraiant was learnt. that is becaues we validate against p2,p1 later it should hold then ! 
+
+2. yeah agree. again do it in the same standard f2/f3 style we do 
+3. yeah agree. just log this thing as well. 
+4. yeah agree. 
+5. yeah agree.
+````
+
+### Turn 14 — Claude (2026-11-17)
+
+````text
+I wrote the two documents, checked against the saved chat log (turns 1–14), and pushed them:
+- `docs/2same-invariant-algo/DESIGN.md`: what the algorithm does and its rules. It covers terms, principles, each function's inputs and outputs, the outcomes and points table, the pipeline, the report, highlighted notes H1–H5, cautions, later work and open questions. Every rule cites the turn it came from.
+- `docs/2same-invariant-algo/TECHNICAL.md`: how it gets built. It covers the code layout, the session-log format (checked on the 250 Harvey FK sessions), the trajectory format and location scheme, the agent loop, model clients, tools, output schemas, the SQLite state, the scheduler, the CLI, tests and cost.
+- `QNA.md` keeps the verbatim log (now including your message and this reply) and the decisions table. The highlighted notes moved to DESIGN.md §8, so they live in one place.
+
+**Your points:**
+- **(φ, action) and importance:** yes, you're not missing anything. For φ, F3 checks whether the action happens anywhere, and a failing run that never does it earns an importance point. That's what I meant by "only when failing runs skip the action".
+- **Purpose not used in F2/F3:** done; F2 and F3 never see it. One consequence: the "action too narrow" question needs the purpose, so I made it a separate Opus job (the too-narrow check) instead of part of F3. Please confirm (open question 1).
+- **Failed rewording:** a second attempt; if that fails too, the invariant is removed and the failure is logged and shown in the end-of-run report.
+- **Failing runs right after step 1:** no problem. Results are identical in either order, because removal depends only on passing runs and failing runs never remove anything. The only cost is checking failing runs for invariants that get removed later. This replaces "only survivors" from my question 5: failing runs are now checked on all proposed invariants, importance is reported for the active ones, and the other verdicts stay in the log.
+- **Union:** your two-stage judge is in DESIGN.md §9 as later work. Two notes: I read "each query to a different model" as a fresh call per query; tell me if you meant different models. And comparing every pair of invariants is quadratic (e.g. 700 invariants → ~245,000 first-stage calls), so we'll need to decide which pairs to compare.
+- **Answers 1–5:** all recorded. The reworder gets only the invariant, the triggering run with the location of its alternative action, and the statement that the invariant was learnt on earlier runs of this task. Validation uses standard F2/F3 on P1, P2 and the triggering run.
+
+**Things I added while writing, marked "[proposed, not yet confirmed]" in DESIGN.md (open questions there):**
+1. The too-narrow check as a separate job that sees the purpose.
+2. Rewording runs on Opus 5.5. Opus effort: max for F1 and rewording, high for the re-check and the too-narrow check.
+3. Source labels per fact rather than per observation, since one observation can mix a task requirement and a tool result.
+4. F1 gives evidence locations for each invariant in P1 and P2, so its work can be checked.
+5. A new caution, C5: failing runs get no too-narrow check, so a failing run that reached the purpose another way earns an importance point for a too-narrow action. Leave it as is for now?
+
+Engineering defaults (job budgets, retries, context-guard threshold, concurrency 20) are in TECHNICAL.md, marked *default*.
+
+Please review the two documents. Once you've confirmed those five points, we can talk about the later parts or I can start building.
 ````

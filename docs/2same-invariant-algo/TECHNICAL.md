@@ -1,0 +1,238 @@
+# Same-task invariant mining: technical design
+
+How the algorithm in [DESIGN.md](DESIGN.md) is built. Nothing is built yet; this is the plan. Values marked *default*
+are configuration with a starting value, not decisions from the conversation ([QNA.md](QNA.md)).
+
+## 1. Placement
+
+- Code: a Python package `invariant_mining/` at the root of branch `2sameInvariantAlgo` (Python 3.12, standard library
+  only: `urllib` for HTTP, `sqlite3` for state, `json`). It reads DSH session logs; it never runs DSH.
+- It is benchmark-agnostic and must pass `tests/test_layout.py` (no benchmark names in it). Benchmark-specific glue
+  (e.g. building a manifest from a benchmark's run directories and grades) goes in `benchmarks/<name>/`.
+- Run outputs go to `runs/` (gitignored).
+
+```
+invariant_mining/
+  trajectory.py   session.v2.jsonl -> normalized trajectory; locations and their order
+  tools.py        the read-only trajectory tools
+  models.py       CAO clients: OpenAI Responses (GPT), Anthropic Messages (Claude)
+  agent.py        the job agent loop: budgets, context guard, notes, submit validation, transcripts
+  jobs.py         job kinds: inputs -> prompt, output schema (F1 propose, F1 reword, F2, F3, too-narrow)
+  prompts/        one system prompt per job kind + a shared preamble
+  store.py        SQLite state: trajectories, invariants, cells, jobs, events
+  rules.py        the programmatic rules: outcome -> points / removal / reword, scheduling
+  pipeline.py     scheduler: runs pending work with a concurrency limit; resumable
+  report.py       report.md + report.json
+  cli.py          prepare / run / report / job
+tests/            (repo tests/) scripted-model tests, no real model calls
+```
+
+## 2. Trajectories
+
+### 2.1 Input: DSH session logs
+
+One `session.v2.jsonl` per agent (subagents are off in the core, so one per run). Facts below were checked on Harvey
+FK-250 Luna-high runs (250 sessions).
+
+| Record type | Used for |
+|---|---|
+| `request/header` | `data.header.system` (system prompt), `data.header.tools[]` (name, description, parameters); `data.header.config` (model, effort) as metadata |
+| `request/context` | `data.contextWindow` as metadata |
+| `user/message` | `data.content[].text`, in order: the task, then DSH's runtime-context message (file policy), sometimes later messages (e.g. goal rounds); 530 in 250 sessions |
+| `assistant/message` | `data.step`, `data.message.content[]` in order: `reasoning` (summary text), `text`, `tool-call` (`id`, `name`, `arguments` as a JSON string) |
+| `tool/result` | `data.step`, `data.message.content[]`: `tool-result` with `toolCallId`, `content[].text`, `isError` |
+| ignored | `stream` chunks and `source.replayState` (encrypted reasoning), `step/*`, `turn/*`, `todo/write` (same as the `todo_write` call), `agent/inbox/spliced` (the queued task, same as the first user message), `session*`, `permission/preset`, `sandbox/mode`, `approval/policy`, `goal/change`, `llm/retry*`, `assistant/attempt` (failed attempts the agent never saw) |
+
+Sizes (Harvey FK-250 Luna high, 120 trajectories): agent context at the last step median 209K tokens, p90 310K, max
+414K; model steps median 31, p90 53, max 75; tool outputs are capped by DSH at 50,000 characters each; reasoning
+summaries ~7.6K and call arguments ~26K characters per trajectory (median); ~95% of the text is tool output.
+
+### 2.2 Normalized trajectory
+
+`prepare` turns each session log into `trajectories/<id>.json`: a flat list of **items** in the order the agent saw
+them, plus metadata.
+
+```json
+{"id": "...", "task_id": "...", "label": "pass|fail", "source": "<path to session.v2.jsonl>",
+ "meta": {"model": "...", "effort": "...", "context_window": 922000, "steps": 31, "est_tokens": 208973},
+ "items": [
+   {"loc": "sys",     "kind": "system",    "text": "..."},
+   {"loc": "tools",   "kind": "tools",     "text": "<name: description + parameters, one block per tool>"},
+   {"loc": "u1",      "kind": "user",      "text": "<the task>"},
+   {"loc": "u2",      "kind": "user",      "text": "<runtime context>"},
+   {"loc": "s1.r",    "kind": "reasoning", "text": "..."},
+   {"loc": "s1.c1",   "kind": "call",      "name": "grep", "text": "<arguments>"},
+   {"loc": "s1.o1",   "kind": "output",    "text": "...", "is_error": false},
+   {"loc": "s2.r",    "kind": "reasoning", "text": "..."}
+ ]}
+```
+
+### 2.3 Locations
+
+- `sys` system prompt; `tools` tool descriptions; `uN` the N-th user message (numbered over the whole trajectory);
+  `s<n>.r` reasoning of step n (its reasoning blocks joined); `s<n>.t` its text; `s<n>.c<k>` its k-th tool call;
+  `s<n>.o<k>` the output of that call. Optional `#<offset>` = character offset inside the item (long outputs).
+- **Order** = position in `items`, which follows the session log: within a step, the assistant message's blocks in
+  their order (reasoning, text, calls), then the outputs in call order; user messages where they arrived.
+- Uses: F2's first location; F3's "after" and "only before" (judged by F3 with these locations as evidence); the
+  first-violation flag (earliest observation location among a failing run's violated invariants); evidence in reports.
+- φ (empty observation) has the location `start` (before `sys`).
+
+## 3. Job agents
+
+### 3.1 Loop (`agent.py`)
+
+- A job = a fresh conversation: the system prompt of its kind, one user message with the job's inputs and its
+  trajectories' sizes (items, steps, estimated tokens, largest outputs), and the tools of 3.3.
+- Loop: call the model; run its tool calls; append the results; stop when `submit` succeeds.
+- **Budgets** (*default*): F1 propose 150 model steps; F1 reword 60; F2, F3, too-narrow 40; 30 min wall time per job.
+- **Context guard** (*default*): when the conversation passes 60% of the model's prompt window, the oldest tool results
+  (other than `read_notes`) are replaced by `[elided: <tool and arguments>; read again if needed]`. Notes survive.
+- **Submit**: the argument is validated against the job kind's JSON schema (3.4) and its locations against the
+  trajectory; on an error the agent gets the error and continues. After 3 invalid submits, or when a budget runs out,
+  the job fails.
+- **Failures**: a failed job is retried once as a fresh job (*default*); if it fails again, the cell or task gets the
+  outcome `job_error` (no change to points, logged).
+- Each job keeps `jobs/<job_id>/input.json`, `transcript.jsonl` (every request and response), `notes.md`,
+  `output.json`.
+
+### 3.2 Model clients (`models.py`)
+
+Both through the CAO gateway (`http://127.0.0.1:4141`, key from `$DSH_BENCH_CAO_KEY_FILE`), the request shapes of the
+repo's `models/luna-cao.json` and `models/opus55-max-cao.json`:
+
+| Model | API | Settings |
+|---|---|---|
+| GPT-5.6 Luna (`gpt-5.6-luna`) | OpenAI Responses, `/v1/responses` | `reasoning: {effort: high, summary: auto}`, `include: [reasoning.encrypted_content]`, `store: false`; the previous output items (reasoning items with their encrypted content, function calls) are sent back each turn with the `function_call_output` items; tools with `strict: false` |
+| Claude Opus 5.5 (`claude-opus-5-5`) | Anthropic Messages, `/v1/messages` (`x-api-key`) | adaptive thinking, effort per job kind (DESIGN.md section 4), thinking blocks sent back with their signatures each turn |
+
+Retries (as in the model files): rate limits, 5xx, timeouts, transport errors, empty responses, `INVALID_REQUEST`, and
+Anthropic's mid-stream `api_error`; 5 retries with backoff. Concurrency: one limit on running jobs (*default* 20; CAO has
+been run at 24 concurrent requests). Model per job kind is configuration (`config.json`).
+
+### 3.3 Tools (`tools.py`)
+
+Read-only, over the normalized trajectories only. In F1 every tool takes `run: "A" | "B"` (A = P1, B = P2); other jobs
+see one trajectory and the argument is absent.
+
+| Tool | Returns |
+|---|---|
+| `overview(run)` | item and step counts, estimated tokens; the user messages (first 300 characters each); one line per step: location, the first 150 characters of the reasoning, each call (name + first 100 characters of its arguments), each output's size and error flag |
+| `read_context(run, part, offset, length)` | `part` = `sys`, `tools` or `uN`, paged (*default* page 20,000 characters) |
+| `read_steps(run, from_step, to_step)` | the steps' reasoning and text in full, calls with arguments up to 4,000 characters, outputs cut to 2,000 characters with "(N more characters: read_output)"; at most 40,000 characters per call |
+| `read_output(run, loc, offset, length)` | one item's text from `offset`, at most 20,000 characters |
+| `search(run, pattern, regex, kinds, max_hits)` | matches with their location (`loc#offset`) and 200 characters around each; `kinds` filters item kinds; *default* 50 hits |
+| `note(text)`, `read_notes()` | append to / read the job's notes |
+| `submit(output)` | validates and stores the job's output (3.1) |
+
+No shell, no file system, no web.
+
+### 3.4 Job kinds: inputs and outputs (`jobs.py`)
+
+**F1 propose.** Input: P1 (A), P2 (B). Output:
+
+```json
+{"invariants": [
+   {"id": "i1",
+    "observation": [{"fact": "keyword search results over the documents", "source": "tool_result",
+                     "reason": "the hit counts are what the choice is based on"}],
+    "action": {"text": "identifies the keyword with most hits", "purpose": "pick the search term that finds the relevant files"},
+    "follows": [],
+    "evidence": {"A": {"observation": "s4.o1", "action": "s5.r"}, "B": {"observation": "s3.o1", "action": "s4.r"}}}],
+ "roles": [{"term": "keyword with most hits", "meaning": "the search term whose search returned the most matches"}]}
+```
+
+`observation: []` is φ. `source` is one of `environment`, `task`, `tool_result`, `reasoning`. `follows` lists the ids of
+invariants this one chains from (information only). `evidence` is DESIGN.md's proposed, not yet confirmed item.
+
+**F2 seen?** Input: the facts' texts (nothing else of the invariant), one trajectory. Output:
+`{"seen": true, "location": "s7.o2", "evidence": [{"fact": 0, "location": "s7.o2#1200", "quote": "..."}]}` (`location`
+null when not seen).
+
+**F3 followed?** Input: the facts' texts, the action's text, F2's location, one trajectory. Output:
+`{"outcome": "followed" | "not_followed" | "only_before" | "pinning_wrong", "action_location": "s9.c1" | null, "quote": "..."}`.
+
+**Too-narrow check.** Input: facts, action text, purpose, the observation's location, one trajectory. Output:
+`{"purpose_achieved_otherwise": true, "location": "s9.c2" | null, "quote": "..."}`.
+
+**F1 reword.** Input: the invariant (facts, reasons, action, purpose), the triggering trajectory, the location from the
+too-narrow check, the note that the invariant was learnt from earlier runs of this task where it holds; on the second
+attempt also the first attempt's action and the failed validation check (trajectory, F2/F3 verdict). Output:
+`{"action": {"text": "...", "purpose": "..."}}`.
+
+### 3.5 Prompts (`prompts/`)
+
+`preamble.md` (shared): what a trajectory is (agent, steps, reasoning summaries, calls, outputs), the location format,
+the tools, that trajectories may be too long to read whole (read the step overview and reasoning first, open outputs
+when needed, take notes), and that the answer goes through `submit`. Then one file per job kind (`f1_propose.md`,
+`f1_reword.md`, `f2_seen.md`, `f3_followed.md`, `too_narrow.md`) with that kind's rules, taken from DESIGN.md
+section 4 and quoting its examples. Prompts are versioned with the code; each job records the sha256 of the prompt it
+used.
+
+## 4. State and scheduling
+
+### 4.1 Store (`store.py`): `runs/<name>/state.sqlite`
+
+| Table | Columns |
+|---|---|
+| `trajectories` | id, task_id, label, source, json_path, steps, est_tokens |
+| `tasks` | task_id, p1, p2, status, benchmark_context |
+| `invariants` | id, task_id, observation_json, action, purpose, follows_json, evidence_json, status (`active`, `removed`, `retired`, `reword_failed`), parent_id, origin (`propose`, `reword`), reword_attempt, created_job |
+| `cells` | invariant_id, trajectory_id, label, f2_seen, f2_location, f3_outcome, f3_action_location, recheck_f2_seen, recheck_f2_location, recheck_f3_outcome, recheck_f3_action_location, too_narrow, too_narrow_location, final_outcome, status (`pending`, `running`, `done`, `cancelled`, `error`), job_ids |
+| `jobs` | id, kind, model, effort, prompt_sha256, input_json, status, started, ended, model_steps, tokens_in, tokens_out, output_json, error |
+| `events` | time, kind, task_id, invariant_id, trajectory_id, detail_json: every removal, retirement, reword (attempt, result), Luna/Opus disagreement, pinning wrong, only before, job error |
+
+### 4.2 Rules (`rules.py`)
+
+Pure functions over the store, the rules of DESIGN.md sections 4-6:
+- new invariant -> one `pending` cell per trajectory of its task other than P1, P2;
+- cell: F2 (skipped for φ) -> if seen, F3 -> final outcome; on a passing cell with `not_followed`: re-check (Opus F2,
+  F3) -> Opus's verdicts become final; if still `not_followed`: too-narrow check -> remove, or reword;
+- the removal path runs for one invariant at a time; removal or retirement cancels the invariant's pending cells;
+- reword -> validation jobs (F2, F3 with Luna on P1, P2 and the triggering trajectory) -> retire + new invariant, or a
+  second attempt, or remove + log;
+- points are computed from final outcomes when reporting (never stored), with the first-violation flag.
+
+### 4.3 Scheduler (`pipeline.py`)
+
+Repeatedly collects ready work (F1 for tasks without invariants; cells' next job; removal paths; rewords; validations),
+runs it under the concurrency limit, applies the rules to each finished job, until nothing is pending. Resumable: on
+start, jobs left `running` by a stopped run are reset to pending. A task's failing and passing cells run together right
+after F1 (DESIGN.md section 6).
+
+## 5. Run directory and CLI
+
+```
+runs/<name>/
+  config.json          models and effort per job kind, budgets, concurrency, context-guard threshold
+  manifest.json        trajectories (id, task_id, label, session log path), P1/P2 per task, benchmark context file
+  trajectories/<id>.json
+  state.sqlite
+  jobs/<job_id>/       input.json, transcript.jsonl, notes.md, output.json
+  report.md, report.json
+```
+
+```bash
+python3 -m invariant_mining prepare --manifest M.json --config C.json --out runs/NAME   # normalize trajectories
+python3 -m invariant_mining run runs/NAME [--tasks T ...] [--concurrency 20]           # the pipeline; resumable
+python3 -m invariant_mining report runs/NAME                                            # report.md + report.json
+python3 -m invariant_mining job runs/NAME --kind f2 --invariant I --trajectory T        # one job by hand
+```
+
+## 6. Tests (scripted model, no real model calls)
+
+- `test_im_trajectory.py`: a small synthetic session log (not benchmark data): items, locations, order, ignored records.
+- `test_im_tools.py`: paging, caps, search hits and locations, F1's `run` argument.
+- `test_im_agent.py`: with a scripted model (like `tests/scripted_model.py`): submit validation and retries, budgets,
+  context guard, job failure and retry.
+- `test_im_rules.py`: table-driven, one case per row of DESIGN.md section 5, φ, only before, Opus disagreeing either
+  way, too narrow -> reword valid / invalid twice, cancellation after removal, first-violation flag.
+- `test_im_pipeline.py`: end to end with the scripted model: one task, P1, P2, one more passing and two failing
+  trajectories; resume after a stop.
+- `tests/test_layout.py` keeps passing.
+
+## 7. Cost (estimate, to be measured)
+
+Per task with I invariants and R other trajectories: 1 F1 job; up to I x R F2 jobs and as many F3 jobs; plus re-checks,
+too-narrow checks, rewords and validations for removal candidates. E.g. I = 20, R = 2: ~80 Luna jobs; at ~10 model steps
+each (a guess) ~800 Luna requests, plus F1 at up to 150 Opus requests. The report records the real numbers.
