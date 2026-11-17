@@ -796,3 +796,20 @@ yes make both changes
 ````text
 after these changes I want you to go to main and fetch mixed:flip those are 8 tasks that flip across 150 mixed train tasks, and we have there 5 trajecotires. each ahs at least two passing. apply this method on each each task separatel, the full method, as there for some tasks you'll find both passing runs and failing runs !
 ````
+
+### Turn 35 — Claude (2026-11-18)
+
+````text
+Both changes are made, tested and pushed (`b76ea6b`):
+- **F1 must read every step of both runs.** Its submit is refused, with a list of the unread steps, until `read_steps` has shown them all. Live check on 028: Opus read everything before its first submit and proposed 15 invariants in 12 steps (130 s).
+- **Quotes are checked in code** against the text at the location F2, F3 or the too-narrow check gives. Case, whitespace and markdown marks are ignored; excerpts may be joined with "…"; for a tool call, the decoded argument values count. Live check: Luna's quote from the system prompt was rejected once (it had dropped the markdown), then fixed. Markdown marks are now ignored.
+- 91 scripted checks pass.
+
+**mixed:flip run launched at 01:11 IST:** the full method on each of the 8 tasks, with run directory `runs/im-mixed-flip-20261117T194118Z`.
+- Inputs come from main `e4de71f` (`subsets.flip` and the five-run Luna-high baseline), read with `git show`; main is untouched.
+- For each task, P1 and P2 are the first two passing runs. The other 3 runs per task give 10 passing runs (support) and 16 failing runs (importance) in total. Tasks 6–8 (repo-securities, saas-api, firm-knowledge 065) have no extra passing run, so they can only earn importance points.
+- New glue `benchmarks/harvey/im_manifest.py` builds the manifest from a baseline file.
+- My estimate is 4,000–5,000 model requests and 30–60 minutes. If Opus refuses, I'll switch every Opus role to GPT-6 Astra high, as you said.
+
+I'll report the invariants and their points per task when it finishes.
+````
