@@ -1,8 +1,9 @@
 # 2sameInvariantAlgo: conversation log, decisions and notes
 
 Verbatim record of the design conversation for this branch: the user's messages, Claude's final replies, the questions
-Claude asked (with their options) and the user's answers. Progress notes and tool output are left out. The decisions and
-notes at the top are a summary; the log below is the source. New exchanges are appended to the end of the log.
+Claude asked (with their options) and the user's answers. Progress notes and tool output are left out. The sections
+before the log summarize it (decisions, the scoring rule, the notes the user asked to be highlighted, cautions, planned
+functions); the log is the source. New exchanges are appended to the end of the log.
 
 ## Decisions so far
 
@@ -12,14 +13,110 @@ notes at the top are a summary; the log below is the source. New exchanges are a
 | Three functions: F1 propose invariants (two passing trajectories of one task -> observation-action pairs); F2 was each observation seen in a trajectory; F3 did the action follow the observation | 3 |
 | Atomic jobs: one fresh LLM/agent per (input) item; a for loop calls the model inside the loop; system prompts may be shared | 3 |
 | Each job is done by an **agent** with read-only tools for reading trajectories (in parts, with notes), writing its answer to an output file; no general abilities (no coding) | 5 |
-| Models configurable per function; F1 = **Claude Opus 5.5**; F2/F3 a cheaper model (proposed GPT-5.6 Luna medium, not yet confirmed) | 5, 7 |
+| Models configurable per function: F1 = **Claude Opus 5.5**; F2/F3 = **GPT-5.6 Luna high** | 7, 9 |
+| Before an invariant is deleted (Luna's F2/F3 say, on a passing run: observation seen, action not taken), F2 and F3 are run again with **Opus 5.5** | 9 |
 | Observations and actions abstract and transferable, as granular as possible, keeping the semantic role of task-specific things ("a keyword mentioned in the question", "the keyword with most hits"); short and chainable | 5 |
-| An observation = 1-3 short facts (accepted); more than 3 with a penalty under discussion | 7 |
-| An observation can be anything in the agent's context, including its own reasoning; the reasoning process is treated as the space where observations and actions happen | 5 |
-| F2 output: a bool per observation, plus evidence (line or tool-call numbers) | 7 |
-| F3 output: observation pinning was wrong / action happened / action didn't happen (+ evidence); count how often pinning is wrong | 7 |
-| Build the algorithm agnostic to the data; which tasks and trajectories to run on is decided later | 7 |
-| Aggregation (pruning with more passing runs, importance from failing runs, intersection/union across tasks, negations, re-proposal) is NOT to be built yet: opinions first | 7 |
+| An observation = short facts (1-3 accepted; more allowed); each fact comes with a one-line reason why the action needs it: this is the causal link. No explicit length penalty and no drop-one-fact check for now | 7, 9 |
+| An observation can be anything in the agent's context, including its own reasoning (the reasoning process is the space where observations and actions happen); it can also be **empty** (φ, action), or about the **environment** (tool descriptions, file system) or **task structure**, always in abstract terms ("a task-specific calculation", not "calculating year-end salaries") | 5, 9 |
+| F2 output: yes/no + the location of the observation (evidence: line / step / tool-call number) | 7, 9 |
+| F3: checks the observation is at F2's location (if not: error = "observation pinning wrong"); then yes/no whether the action happened after it, and the location of the action if yes. F2/F3 do not judge whether the reasoning links the two: that is F1's job | 7, 9 |
+| "Followed" = anytime after the observation (F1's one-line reason gives the causal link) | 9 |
+| Scoring: the user's rule below | 9 |
+| Refining an invariant (e.g. after a conflict between tasks) retires it and adds new invariants, which have to be scored again on all runs | 9 |
+| Targeted re-proposal (F1 again, pointed at where a failing run went wrong) will be its own function; implementation still to be discussed | 9 |
+| A semantic judge is needed to match invariants across tasks | 9 |
+| Union across tasks = the union of the tasks' observation-action pairs | 9 |
+| The algorithm is agnostic to the data; which tasks and trajectories are used is decided later (flip tasks for importance) | 7, 9 |
+| Aggregation is not built yet | 7 |
+
+## Scoring rule (user, turn 9)
+
+For a proposed invariant (observation, action), on each trajectory other than the two it was proposed from:
+
+| Trajectory | Observation seen, action followed | Observation seen, action not followed | Observation not seen |
+|---|---|---|---|
+| Passing | +1 support point | invariant removed (after the Opus 5.5 re-check) | no change |
+| Failing | no change | +1 importance point | no change |
+
+No explicit penalty for long observations: they are rarely seen, so their support stays low. An invariant with 0
+support points was never tested, not confirmed (Claude, turn 10).
+
+## Highlighted notes
+
+### H1. Action too narrow: a different action with the same purpose (turn 8 point 2; explained in turn 10)
+
+F1 sees both source runs do the same thing, e.g. "opens each candidate file", and writes that as the action. A third
+passing run instead greps the candidate files for the key term and reads only the matching passages: same purpose
+(every candidate checked), different mechanism. The action as worded did not happen, so the invariant would be deleted
+although the run supports it. Cause: the action says how, not what for. Proposed fix (turn 10): F1 also writes each
+action's purpose in one line; on a deletion candidate only, the Opus re-check answers one more yes/no, "was this purpose
+achieved by a different action? where?". If yes, the invariant is not deleted but flagged "action too narrow", to be
+reworded at the purpose level. Status: proposed, awaiting the user's decision.
+
+### H2. The causal link comes from F1, so F3 only checks "after" (user, turn 9)
+
+F1's one-line reason per observation fact states why the action follows from the observation. With that causal link in
+place, F3 only checks that the action happened after the observation; F2 and F3 do not judge links. This holds as long
+as F1 works properly.
+
+### H3. The first broken invariant in a failing run says the most (turn 8 point 3; user agreed in turn 9)
+
+A failing run often goes off track once and then breaks many invariants afterwards as a consequence. The first broken
+invariant in a failing run is the most informative, so F3 records locations and importance should weight first
+violations. Tasks whose runs both pass and fail (flip tasks) are the cleanest data for this (user: will use such data).
+
+### H4. Nuance: the action happened before the observation (turn 8 point 9; user, turn 9: "very interesting case"; turn 10)
+
+Example: the agent opened the files before the search that should lead to opening them. Under "after the observation"
+this reads as "action not followed" and would delete a good invariant, even when F1's reasons are right. Proposal
+(turn 10), instead of a manual check:
+1. Detect it: when F3's answer is "no", it answers one more yes/no, "did the action happen before the observation?
+   where?".
+2. Count it neutrally: the run did not contradict the invariant, it did the action early, so the cell gets no point and
+   no deletion (like "observation not seen").
+3. Use it as a signal: if one invariant often has its action first, its observation is not the real trigger; it should
+   be re-proposed with an earlier trigger, or as an empty-observation invariant (φ, action).
+
+An observation that appears early by chance (e.g. incidentally in a large listing) is less of a problem: the "after"
+window just gets longer. Status: proposed, awaiting the user's decision.
+
+## Cautions
+
+- **C1. F2/F3 judgement errors** (turn 8 point 6): a model may say "followed" when it was not, or the reverse. The user
+  does not expect it; assumed not to happen for now. The Opus re-check before deletion covers the destructive case, and
+  logging where Luna and Opus disagree measures Luna's error rate.
+- **C2. Process right, content wrong** (turn 8 point 6; turn 9; turn 10): a misread document, or a final answer missing
+  something the grader checks. User: a passing run must have done some process the failing run did not. Claude: true
+  in most cases (e.g. a cross-check the failing run skipped is a process invariant); what remains is one judgement
+  going wrong inside the same process (both runs read the same filing, one misreads the date, neither cross-checks),
+  which is the user's "model reasoning error" bucket.
+- **C3. F2 must give the first point where the observation holds** (turn 10): if it gave a later occurrence, an action
+  between the first occurrence and that one would count as "not followed".
+- **C4. Refined invariants start at 0** (turn 9 point 5): an invariant replaced by refined ones (e.g. the separating
+  fact added after a conflict) is retired; the new ones go through F2/F3 on every run the old one was tested on (the
+  passing runs beyond the first two and the failing runs). In the table, every invariant x trajectory cell without a
+  verdict is a pending job, so adding an invariant schedules its checks.
+
+## Planned functions (not built yet)
+
+- **Targeted re-proposal** (turn 8 point 6; user, turn 9: "we are gonna do this"): when a failing run breaks no
+  invariant, find the first point where it did something the passing runs did not do in a similar situation, and run
+  F1 again on the two passing runs, pointed at that kind of situation, to propose finer pairs there only. The grader's
+  per-criterion verdicts, where a benchmark has them, help find that point (passed in as optional text). Implementation
+  to be discussed.
+- **Semantic judge**: "are these two invariants the same?" (merging across tasks) and "same observation, opposite
+  actions?" (conflicts), one atomic call per candidate pair.
+- **Aggregation over the table** (invariant x trajectory -> F2/F3 verdicts, locations, pass/fail, task): points,
+  removal, union across tasks with counts. Aggregation rules can change without new LLM calls; a changed invariant is a
+  new invariant and needs its F2/F3 verdicts again (turn 9 point 7, confirmed turn 10).
+
+## Proposals awaiting the user's decision (turn 10)
+
+- Delete only if the Opus re-check also finds the observation and also finds the action missing; when the models
+  disagree, keep the invariant and log the disagreement.
+- The purpose check on deletion candidates (H1).
+- The "before the observation" check and its neutral count (H4).
+- F1 labels each observation's source: none (φ) / environment / task / tool result / agent's own reasoning.
 
 ## Notes
 
@@ -29,10 +126,9 @@ Raised in turn 6 (question 2). User (turn 7): it can happen at any time after th
 trajectory. Ideally the check applies when the agent builds on the observation and does the next thing (it may do
 unrelated work in between), but inferring that is hard, hence "anytime later in this trajectory". Claude (turn 8):
 agrees "anytime later" is the definition to judge by; its weakness is an action that happens much later for an
-unrelated reason (a wrong invariant survives pruning). Proposal: F3 also records the step of the observation, the step
-of the action, and whether the reasoning links them (yes / no / unclear), so a stricter rule can be computed later
-without new calls; and a fourth outcome, "action happened only before the observation". Status: open, working
-definition "anytime later".
+unrelated reason; proposed recording whether the reasoning links them, and a fourth outcome "action happened only
+before the observation". User (turn 9): no link judgement in F2/F3 (F1's one-line reason gives the causal link, H2);
+the before-the-observation case is a nuance to highlight (H4). **Status: decided: anytime after F2's location.**
 
 ## Log
 
@@ -281,4 +377,100 @@ F1–F3 and the table are now fully specified and don't depend on the aggregatio
 - F2 returns a bool plus evidence; F3 returns the outcomes above plus evidence.
 
 Shall I start building them, data-agnostic, while you decide the rest of the process?
+````
+
+### Turn 9 — user (2026-11-17)
+
+````text
+1. about the scoring you mentioned, do we need to explicitly penalise them, if they get less hits at the first place, their support would remain low , right  ? essentially I want to say that if the observation is found in the compairioson passing task, and the actoin is also counted, the obs,actoin gets one point. if the obs is counted, action is not found it is removed. if obseervatoin is not counted, it stays, without any pont additon. similarly in wrong tasks. if the observation is seen, but action was not happened , onepoint is added. if observation was seen actoin happened , or just observatoin not seen in both these cases, no point added. How is this idea ? 
+yeah the later idea is also fine, butt if we do the one line reason thing, then I guess we don't need to do this. again I want to hear your opinoins on this. 
+2. i see .in case we are are going to delete an invraint, in that case I would just do one more check, this time with opus 5.5 model. how does that sound ? so both f2 and f3 run with opus5.5 if the lower model run gives that on a pssing rn, the observation was present but action did not happen. 
+--> the second point you raise in 2 is interesting, can you tell more about it. also note it down and highlight it in the doc. 
+--> yeah note this down separately as well. i think the idea is that as we talked about one line reason being provided in F1, I essentially want some causal relatoin between the observatoin and the action. after that we need not worry about this thing, we only check after the observatoin, as long as F1 works properly !
+
+3. - yeah right this makes sense. again this observation is good, and I also want you to highlight it separately in the doc. 
+-> yea agree I will make srue I use some data like that is lfip tasks. 
+
+4 -> i dont quite get what you were saying. what did you understand when I said union. maybe we are not on the smae page. my basic idea was to just take a union of thes observation action pairs that we have. 
+-> mm epxlain this more , i didin't quite get when you say unino with these counts covers both ideas ? whats union with a count ? 
+-> yeah this is something I was laso thinking , some kind of sematnic judging needs to be done. 
+
+5. yeah I agree this is smart actually. adding it to both does it fix it. however, i think this means deleting one previous invariant and adding two new in place of it. so I think we would have to be careful to remember that we need to go over the failing runs, and other passign runs (other than first 2) to now  give points to these 2 invariants (action, observation) pairs agian. 
+
+6. btw to be precise it doesn't say anyhting, in these tasks, it will just output yes/no. and for f2 the locatoin for the evidene. 
+-> the first thing is fair, although I dont expect that to happen. still I would want you to note it down as a point of caution in the doc. for now lets assume it won't happen. 
+-> this is interesting note it down. in my opinoin this should n't really happen right ? there must have been some procss the passing run had done because it was instructed to do so, if the final asnwer is missing something then thre must have been some reson it was not missing in the passing runs, right ? maybe I am wrong here. what do you think  ? 
+-> okay your idea of running F1 again is interesting, note it down once. we are gonna do this. but we have to discuss its implementation. this can be a differnet functoin in our pipeline. also note it in docs. 
+7. yeah I like the table desing. btw when tou say change those rules ,you mean aggreation rules, right ? and not invariants. because if the inariant itself is changed then recomputaion needs to be done of f2/f3 verdics and all that. 
+8.  f2 will note the point of observatoin. f3 can check that the observatoin occurs there, if not then it can end with error. if yes, then it can check teh action . and tell yes/no to see if the action happened or not. if it happened in that csae f3 should report step/locatoin where it happened. "whether the reason links them" -> this part is not needed ig, i suppose this is the part of f1, to generate such pairs. f3 and f2 are not uspposed to do cuh stuff. 
+9. well i argree . this is an interesitng case, what if an agent made an observatoin earlier by chance. I want you to note it down as a nuance. and yes also note this down in the docs, and highlight it you know. so even if the observatoins provide some reaosn to do actoins, this special case might still not be handled. this is an interesting caes. very interesting case.  But then we would need to decide what to do with such cases, maybe manual check ? do you have any thing we can do better than manual ceck for such cases?
+f2/f3 I want luna high. 
+
+
+also some more comments on how F1 and the stuff in general should follow . :
+
+
+A good system must be able to have the cpaacity to have  its observatoins to be 
+
+Entirely empty so I mean :  ( \phi, actoin) can be an invariant. Eg. Every run that passes goes on to make a checkerfirst ! 
+
+Or the observatoin can be entirely baesd on 
+
+a. environment -> ie. Observation can entirely be a tool code or tool descriptoin
+
+Or task structure or file system? --> yes but hoping it is expressed in abstract terms
+
+It can be task dpeendent too -> eg. Tsk says calculate , so it takes certain actions like downloading some math library . Just again remember let it be abstract. Instead of saying observation was "calculating year end salaries". It should rather be something like "task specifc calculatoin"
+
+
+I hope you are also on the same page ! if not let me know if you differ.
+````
+
+(The part from "A good system must be able to" to "task specifc calculatoin" came as pasted text.)
+
+### Turn 10 — Claude (2026-11-17)
+
+````text
+Your message and this reply are logged verbatim in `QNA.md` (pushed). I also added what you asked to have noted: your scoring rule, highlighted notes H1–H4, cautions C1–C4, the planned functions, and my proposals that still need your decision.
+
+**1. Scoring.** Your rule works, and I agree no explicit length penalty is needed: a long observation is rarely seen, so it rarely earns points, and its low score already says what a penalty would. One thing to keep in mind: an invariant with 0 points was never tested, not confirmed. Anything downstream should rank by points (or require at least 1) rather than treat "not removed" as "true". I also agree the one-line reason in F1 makes the drop-one-fact check unnecessary for now. We can bring it back if many invariants end with 0 points because their observations are too long.
+
+**2. Opus 5.5 re-check before deleting.** Good: Luna does everything, and Opus only the one decision that throws information away. My default: delete only if Opus also finds the observation and also finds the action missing. When the two models disagree, keep the invariant and log the disagreement; that also measures how often Luna is wrong.
+
+*Action too narrow (H1 in the doc).* F1 sees both source runs do the same thing, e.g. "opens each candidate file", and writes that as the action. A third passing run instead greps the candidate files for the key term and reads only the matching passages. It achieved the same purpose (every candidate checked) by a different mechanism. The action as worded didn't happen, so the invariant gets deleted although this run supports it. The cause is that the action says how, not what for. A fix that keeps your yes/no style: F1 also writes each action's purpose in one line. On a deletion candidate only, the Opus re-check answers one more yes/no: "was this purpose achieved by a different action? where?" If yes, the invariant isn't deleted but flagged "action too narrow", to be reworded at the purpose level.
+
+*Causal link (H2).* Agreed: F1's one-line reason carries the causal link, so F3 only checks "after the observation".
+
+**4. Union.** We mean the same union. Say task A ends with pairs {p1, p2}, task B with {p1, p3}, task C with {p2}:
+- Union = {p1, p2, p3}. Intersection = {}, since no pair is in all three.
+- "Union with counts" is that union with each pair's number of task sets: p1: 2, p2: 2, p3: 1. Intersection is then "count = 3", union is "count ≥ 1", and anything in between is a threshold.
+- My point about intersection: say p1 is about keyword search and task C never searched by keyword. p1 is missing from C because it didn't apply there, not because it failed. "2 of 3 tasks" undersells it; "2 of the 2 tasks where its observation was seen" is the right count. Getting that second number means running F2 for p1 on task C's trajectories.
+- Recognising that p1 from A and p1 from B are the same pair is the semantic judge's job.
+
+**5. Refining after a conflict.** Right: the old invariant is retired, and the two refined ones are new invariants with 0 points. They must go through F2/F3 on every run the old one was tested on: the passing runs beyond the first two, and the failing runs. The table makes this automatic: every invariant × trajectory cell without a verdict is a pending job, so adding invariants schedules their checks (C4).
+
+**6.** Understood: F2 gives yes/no + location; F3 gives yes/no, plus the location of the action.
+- Judgement errors: noted as caution C1, assumed not to happen for now.
+- Process right, content wrong (C2): I think you're right in most cases. A failing run usually skipped something a passing run did, e.g. a cross-check, and that is a process invariant. What remains is when both runs follow the same process and one judgement inside it goes wrong. Example: both read the same filing, one misreads the date, and neither cross-checks. At the abstract level both did "read the filing → record its date". I'd count that as your "model reasoning error" bucket rather than a separate one.
+- Targeted re-proposal: noted under "Planned functions"; implementation still to discuss.
+
+**7.** Yes, I meant the aggregation rules: points, thresholds, first-violation weighting. Those change without new calls. Changing an invariant's text makes it a new invariant, which needs its F2/F3 verdicts again (the pending-job rule in 5).
+
+**8. F2/F3 split.** Agreed, "whether the reasoning links them" is dropped. One requirement follows (C3): F2 must give the *first* point where the observation holds. If it gave a later occurrence, an action between the first one and that one would count as "didn't happen".
+
+**9. Action before the observation (H4).** Something better than a manual check, in three parts:
+- Detect it: when F3's answer is "no", it answers one more yes/no: "did the action happen before the observation? where?"
+- Count it as neutral: the run didn't contradict the invariant, it just acted early. So no point and no deletion, the same as "observation not seen".
+- Use it as a signal: if an invariant's action often comes first, the observation isn't the real trigger. Re-propose it with an earlier trigger, or as an empty-observation invariant (φ, action).
+
+An observation that shows up early by chance, e.g. incidentally in a large listing, is less of a problem: the "after" window just gets longer.
+
+**F1 guidance (your pasted notes).** We're on the same page. Three additions:
+- **(φ, action):** F2 is skipped (the observation holds from step 0), and F3 checks whether the action happens anywhere. Generic actions like "reads the task" will earn support points but never importance points, because failing runs do them too. So the scores separate useful φ-invariants from trivial ones without a special rule.
+- **Environment observations** (tool descriptions, file-system layout) are identical in every run of one harness and benchmark. Within one task they are always seen and behave like φ; they become informative when comparing tasks or setups with different tools.
+- **Source labels:** I'd have F1 label each observation's source: none (φ) / environment / task / tool result / the agent's own reasoning. This replaces my earlier external/internal label.
+
+F2/F3 on Luna high is recorded.
+
+Shall I start building F1–F3, the table and the Opus re-check now? Unless you change them, my defaults will be the proposals above: delete only when Opus agrees, the purpose check, the "before the observation" check with its neutral count, and the source labels.
 ````
