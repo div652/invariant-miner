@@ -104,7 +104,7 @@ repo's `models/luna-cao.json` and `models/opus55-max-cao.json`:
 | Model | API | Settings |
 |---|---|---|
 | GPT-5.6 Luna (`gpt-5.6-luna`) | OpenAI Responses, `/v1/responses` | `reasoning: {effort: high, summary: auto}`, `include: [reasoning.encrypted_content]`, `store: false`; the previous output items (reasoning items with their encrypted content, function calls) are sent back each turn with the `function_call_output` items; tools with `strict: false` |
-| Claude Opus 5.5 (`claude-opus-5-5`) | Anthropic Messages, `/v1/messages` (`x-api-key`) | adaptive thinking, effort per job kind (DESIGN.md section 4), thinking blocks sent back with their signatures each turn |
+| Claude Opus 5.5 (`claude-opus-5-5`) | Anthropic Messages, `/v1/messages` (`x-api-key`) | adaptive thinking, effort max for every job kind (DESIGN.md section 4), thinking blocks sent back with their signatures each turn |
 
 Retries (as in the model files): rate limits, 5xx, timeouts, transport errors, empty responses, `INVALID_REQUEST`, and
 Anthropic's mid-stream `api_error`; 5 retries with backoff. Concurrency: one limit on running jobs (*default* 20; CAO has
@@ -143,7 +143,12 @@ No shell, no file system, no web.
 ```
 
 `observation: []` is φ. `source` is one of `environment`, `task`, `tool_result`, `reasoning`. `follows` lists the ids of
-invariants this one chains from (information only). `evidence` is DESIGN.md's proposed, not yet confirmed item.
+invariants this one chains from (information only). `evidence` is DESIGN.md's proposed, not yet confirmed item; after
+F1 the code checks it (each location exists in its trajectory; the observation's location comes before the action's in
+A and in B) and logs an `f1_evidence_invalid` event on a failure, nothing more.
+
+The outputs of F2, F3 and the too-narrow check are strict (DESIGN.md principle 7): the schemas allow only the fields and
+values shown (`additionalProperties: false`, enums), so there is no "unclear", "partly" or confidence field.
 
 **F2 seen?** Input: the facts' texts (nothing else of the invariant), one trajectory. Output:
 `{"seen": true, "location": "s7.o2", "evidence": [{"fact": 0, "location": "s7.o2#1200", "quote": "..."}]}` (`location`
@@ -152,8 +157,9 @@ null when not seen).
 **F3 followed?** Input: the facts' texts, the action's text, F2's location, one trajectory. Output:
 `{"outcome": "followed" | "not_followed" | "only_before" | "pinning_wrong", "action_location": "s9.c1" | null, "quote": "..."}`.
 
-**Too-narrow check.** Input: facts, action text, purpose, the observation's location, one trajectory. Output:
-`{"purpose_achieved_otherwise": true, "location": "s9.c2" | null, "quote": "..."}`.
+**Too-narrow check.** Input: facts, action text, purpose, F2's location (Opus's on a passing run, after the re-check;
+Luna's on a failing run), one trajectory. Question: did an action that achieves the same purpose happen after that
+location? Output: `{"purpose_achieved_otherwise": true, "location": "s9.c2" | null, "quote": "..."}`.
 
 **F1 reword.** Input: the invariant (facts, reasons, action, purpose), the triggering trajectory, the location from the
 too-narrow check, the note that the invariant was learnt from earlier runs of this task where it holds; on the second
@@ -166,8 +172,9 @@ attempt also the first attempt's action and the failed validation check (traject
 the tools, that trajectories may be too long to read whole (read the step overview and reasoning first, open outputs
 when needed, take notes), and that the answer goes through `submit`. Then one file per job kind (`f1_propose.md`,
 `f1_reword.md`, `f2_seen.md`, `f3_followed.md`, `too_narrow.md`) with that kind's rules, taken from DESIGN.md
-section 4 and quoting its examples. Prompts are versioned with the code; each job records the sha256 of the prompt it
-used.
+section 4 and quoting its examples. The F2, F3 and too-narrow prompts require exactly one of the given answers, decided
+on the most direct reading of the evidence, without hedging (DESIGN.md principle 7). Prompts are versioned with the
+code; each job records the sha256 of the prompt it used.
 
 ## 4. State and scheduling
 
@@ -178,16 +185,20 @@ used.
 | `trajectories` | id, task_id, label, source, json_path, steps, est_tokens |
 | `tasks` | task_id, p1, p2, status, benchmark_context |
 | `invariants` | id, task_id, observation_json, action, purpose, follows_json, evidence_json, status (`active`, `removed`, `retired`, `reword_failed`), parent_id, origin (`propose`, `reword`), reword_attempt, created_job |
-| `cells` | invariant_id, trajectory_id, label, f2_seen, f2_location, f3_outcome, f3_action_location, recheck_f2_seen, recheck_f2_location, recheck_f3_outcome, recheck_f3_action_location, too_narrow, too_narrow_location, final_outcome, status (`pending`, `running`, `done`, `cancelled`, `error`), job_ids |
+| `cells` | invariant_id, trajectory_id, label, f2_seen, f2_location, f3_outcome, f3_action_location, recheck_f2_seen, recheck_f2_location, recheck_f3_outcome, recheck_f3_action_location, too_narrow, too_narrow_location, final_outcome (`followed`, `not_followed`, `purpose_otherwise`, `only_before`, `not_seen`, `pinning_wrong`, `job_error`), status (`pending`, `running`, `done`, `cancelled`, `error`), job_ids |
 | `jobs` | id, kind, model, effort, prompt_sha256, input_json, status, started, ended, model_steps, tokens_in, tokens_out, output_json, error |
-| `events` | time, kind, task_id, invariant_id, trajectory_id, detail_json: every removal, retirement, reword (attempt, result), Luna/Opus disagreement, pinning wrong, only before, job error |
+| `events` | time, kind, task_id, invariant_id, trajectory_id, detail_json: every removal, retirement, reword (attempt, result), Luna/Opus disagreement, pinning wrong, only before, purpose achieved otherwise, F1 evidence check failure, job error |
 
 ### 4.2 Rules (`rules.py`)
 
 Pure functions over the store, the rules of DESIGN.md sections 4-6:
 - new invariant -> one `pending` cell per trajectory of its task other than P1, P2;
-- cell: F2 (skipped for φ) -> if seen, F3 -> final outcome; on a passing cell with `not_followed`: re-check (Opus F2,
-  F3) -> Opus's verdicts become final; if still `not_followed`: too-narrow check -> remove, or reword;
+- F1 output -> the evidence check (3.4), events only;
+- cell: F2 (skipped for φ) -> if seen, F3 -> on `not_followed`:
+  - passing cell: re-check (Opus F2, F3) -> Opus's verdicts become final; if still `not_followed`: too-narrow check
+    (after Opus's F2 location) -> `purpose_otherwise` (reword) or `not_followed` (remove);
+  - failing cell: too-narrow check (after Luna's F2 location) -> `purpose_otherwise` (no point) or `not_followed`
+    (importance point);
 - the removal path runs for one invariant at a time; removal or retirement cancels the invariant's pending cells;
 - reword -> validation jobs (F2, F3 with Luna on P1, P2 and the triggering trajectory) -> retire + new invariant, or a
   second attempt, or remove + log;
@@ -225,14 +236,17 @@ python3 -m invariant_mining job runs/NAME --kind f2 --invariant I --trajectory T
 - `test_im_tools.py`: paging, caps, search hits and locations, F1's `run` argument.
 - `test_im_agent.py`: with a scripted model (like `tests/scripted_model.py`): submit validation and retries, budgets,
   context guard, job failure and retry.
-- `test_im_rules.py`: table-driven, one case per row of DESIGN.md section 5, φ, only before, Opus disagreeing either
-  way, too narrow -> reword valid / invalid twice, cancellation after removal, first-violation flag.
+- `test_im_rules.py`: table-driven, one case per cell of DESIGN.md section 5's table, φ, only before, Opus disagreeing
+  either way, too narrow on a passing run -> reword valid / invalid twice, too narrow on a failing run -> no point,
+  cancellation after removal, first-violation flag, F1 evidence check.
 - `test_im_pipeline.py`: end to end with the scripted model: one task, P1, P2, one more passing and two failing
   trajectories; resume after a stop.
 - `tests/test_layout.py` keeps passing.
 
 ## 7. Cost (estimate, to be measured)
 
-Per task with I invariants and R other trajectories: 1 F1 job; up to I x R F2 jobs and as many F3 jobs; plus re-checks,
-too-narrow checks, rewords and validations for removal candidates. E.g. I = 20, R = 2: ~80 Luna jobs; at ~10 model steps
-each (a guess) ~800 Luna requests, plus F1 at up to 150 Opus requests. The report records the real numbers.
+Per task with I invariants and R other trajectories: 1 F1 job; up to I x R F2 jobs and as many F3 jobs; plus, for
+every "not followed": on a passing run a re-check (2 Opus jobs) and maybe a too-narrow check, rewords and validations;
+on a failing run one too-narrow check (Opus). Failing runs may break many invariants, so the too-narrow checks on
+failing runs can be the largest Opus cost. E.g. I = 20, R = 2: ~80 Luna jobs; at ~10 model steps each (a guess) ~800
+Luna requests, plus F1 at up to 150 Opus requests. The report records the real numbers.

@@ -1,7 +1,7 @@
 # Same-task invariant mining: design
 
 What the algorithm does and the rules it follows, as agreed in the design conversation of 2026-11-16/17
-([QNA.md](QNA.md): the verbatim log, turns 1-14; "turn N" below points into it). How it is built:
+([QNA.md](QNA.md): the verbatim log, turns 1-16; "turn N" below points into it). How it is built:
 [TECHNICAL.md](TECHNICAL.md). Nothing is built yet.
 
 Items marked **[proposed, not yet confirmed]** were added while writing this document and need the user's
@@ -22,7 +22,7 @@ important one (turn 7).
 | P1, P2 | The two passing trajectories of one task that F1 proposes invariants from (the "source runs"). Which runs these are is chosen by the caller (section 3). |
 | Observation | Something that was in the agent's context at some point: anything from the system prompt, tool descriptions, task, tool outputs, or the agent's own earlier reasoning and conclusions (turn 5). Written as a list of **facts** that must all hold. Usually 1-3 facts; more are allowed (turn 9). The list can be **empty** (φ): the invariant then says the action is always taken (turn 9). |
 | Fact | One short statement in abstract, transferable terms that keep the role of the task-specific thing: "a keyword mentioned in the question", "the keyword with most hits", "a task-specific calculation", not "HSR" or "calculating year-end salaries" (turns 5, 9). No names, no values. |
-| Source label | Where a fact comes from: `environment` (tool descriptions, system prompt, file system), `task`, `tool_result`, `reasoning` (the agent's own conclusion); an empty observation is φ (turns 10, 11). **[proposed, not yet confirmed]** one label per fact rather than per observation, since one observation can combine sources (e.g. a task requirement and a tool result). |
+| Source label | Where a fact comes from: `environment` (tool descriptions, system prompt, file system), `task`, `tool_result`, `reasoning` (the agent's own conclusion); an empty observation is φ (turns 10, 11). One label per fact, since one observation can combine sources (e.g. a task requirement and a tool result) (turn 15). |
 | Reason | One line per fact: why the action needs this fact. It is the causal link between observation and action (turns 8, 9; H2). Facts without a reason are dropped. Used by F1 and by us, never shown to F2 or F3. |
 | Action | What the agent does after the observation: a tool call, or a decision or step taken from its reasoning (turn 3). One short statement in the same abstract, granular terms. Something the agent knows is an observation; something it chooses or intends is an action (turn 6). |
 | Purpose | One line per action: what the action achieves (turn 10). For our understanding; never shown to F2 or F3 (turn 13). Used by the too-narrow check and the reword step (section 4). |
@@ -45,27 +45,31 @@ important one (turn 7).
 3. **LLMs only inside the functions** (turn 11): F1 (with its reword mode), F2, F3, the too-narrow check, and later the
    semantic judge. Everything else (scheduling, outcomes, points, removal, retiring, logs, report) is programmatic.
 4. **Checkers see only what they check** (turns 3, 9, 13): F2 sees the observation's facts only (no action, no reasons,
-   no purpose, no source labels); F3 sees the facts, the action and F2's location (no reasons, no purpose).
+   no purpose, no source labels); F3 sees the facts, the action and F2's location (no reasons, no purpose); only the
+   too-narrow check (4.4) also sees the purpose.
 5. **No link judgement in checks** (turn 11; H2). F2 and F3 answer yes/no with locations. They never judge whether the
    agent acted because of the observation; F1's reasons carry the causal link.
 6. **Data-agnostic** (turn 7). The input is a set of trajectories with task ids and pass/fail labels, the choice of P1
    and P2 per task, and optional text describing the benchmark. Which benchmark, tasks and runs are used is decided
    later (flip tasks are the intended data for importance: turn 9).
+7. **Objective answers** (turn 15). F2, F3 and the too-narrow check answer with exactly one of the choices they are
+   given (yes/no, or the listed outcomes) plus locations. They do not equivocate or play it safe: no "unclear", no
+   "partly", no confidence; they decide on the most direct reading of the evidence. The output schemas allow nothing
+   else.
 
 ## 4. The functions
 
 | Function | Model | One job | Output |
 |---|---|---|---|
 | F1 propose | Claude Opus 5.5 (turn 7) | P1 and P2 of one task | invariants common to both runs |
-| F1 reword | Claude Opus 5.5 **[proposed, not yet confirmed]**: F1's model | one too-narrow invariant + the run that triggered it | a new action (and purpose) |
+| F1 reword | Claude Opus 5.5 (turns 14, 15) | one too-narrow invariant + the run that triggered it | a new action (and purpose) |
 | F2 seen? | GPT-5.6 Luna high (turn 11) | one observation x one trajectory | seen yes/no + the first location where it holds |
 | F3 followed? | GPT-5.6 Luna high (turn 11) | one invariant x one trajectory + F2's location | pinning wrong / followed + location / not followed / only before + location |
 | Re-check | Claude Opus 5.5 (turn 9) | a removal candidate | F2 and F3 again, same prompts |
-| Too-narrow check | Claude Opus 5.5 | a confirmed removal candidate | purpose achieved by a different action? yes/no + location |
+| Too-narrow check | Claude Opus 5.5 | a cell whose final F3 outcome is not followed, on a passing or a failing run (turn 15) | an action with the same purpose after F2's location? yes/no + location |
 | Semantic judge (later) | to decide | two invariants | section 9 |
 
-Effort settings for Opus 5.5 (F1, reword, re-check, too-narrow check): **[proposed, not yet confirmed]** max for F1 and
-reword, high for the re-check and too-narrow check.
+Effort: **max** for every Opus 5.5 job (turn 15: "use effort for 5.5 whenever using", read as max effort).
 
 ### 4.1 F1 propose
 
@@ -86,7 +90,9 @@ present in **both** runs (turn 3), following these rules:
 - the list of role terms used ("keyword from the question", "most-hit keyword", ...) with one line each, so the terms
   stay consistent across invariants (turn 6);
 - **[proposed, not yet confirmed]** each invariant carries its evidence: the location of the observation and of the
-  action in P1 and in P2, so F1's work can be checked.
+  action in P1 and in P2. No LLM checks it in the loop (turn 15 asked): it is for debugging and the report, and the code
+  checks it at no cost (the locations exist; the observation comes before the action in both runs), only logging a
+  failure (turn 16).
 
 ### 4.2 F2 seen?
 
@@ -110,16 +116,23 @@ Input: the facts, the action, F2's location, one trajectory. Steps (turns 9, 11)
 The action is judged as worded: a different action with the same effect is not "followed" (that case is the
 too-narrow check's job). For φ, step 1 is skipped and "only before" cannot occur.
 
-### 4.4 Re-check and too-narrow check (removal candidates)
+### 4.4 Re-check and too-narrow check (an F3 outcome of "not followed")
 
-A cell on a passing trajectory whose F3 outcome is **not followed** is a removal candidate. Then:
+**Too-narrow check** (turns 10, 13, 15; H1): a separate job (Opus 5.5), not part of F3, and the only check that sees the
+purpose (F2 and F3 never do: turn 13). Input: the facts, the action, its purpose, F2's location, one trajectory.
+Question: did an action that achieves the same purpose happen after F2's pinned observation? Output: yes/no + location.
+
+On a **passing** trajectory (a removal candidate):
 1. **Re-check** (turn 9): F2 and F3 run again with Opus 5.5 (F3 uses Opus's F2 location). Opus's verdicts replace
    Luna's for this cell, whatever they are (turn 13, answer 4); when they differ from Luna's, the disagreement is
    logged (it measures Luna's error rate: C1).
-2. If Opus also says not followed: the **too-narrow check** (H1) asks whether the action's purpose was achieved by a
-   different action after the observation (yes/no + location). **[proposed, not yet confirmed]** It is a separate job,
-   not part of F3, because it is the one check that sees the purpose (turn 13: purposes are not used in F2/F3).
-3. No -> the invariant is **removed**. Yes -> **reword** (4.5).
+2. If Opus also says not followed: the too-narrow check, after Opus's F2 location.
+3. Yes -> **reword** (4.5). No -> the invariant is **removed**.
+
+On a **failing** trajectory (turn 15): no re-check (turn 13, answer 5); the too-narrow check runs on Luna's verdict,
+after Luna's F2 location. No -> importance point. Yes -> no point, logged as "purpose achieved otherwise".
+**[proposed, not yet confirmed]** On a failing run a "yes" only cancels the importance point and does not trigger a
+rewording: invariants are built from passing behaviour, and the failing run's other way may be part of why it failed.
 
 ### 4.5 F1 reword (H1)
 
@@ -137,15 +150,16 @@ and followed on P1, on P2 and on the triggering run.
 
 ## 5. Outcomes and points
 
-Final outcome of each cell -> effect (turns 9, 12, 13):
+Final outcome of each cell -> effect (turns 9, 12, 13, 15). "Not followed" is the outcome after the steps of 4.4.
 
-| Trajectory | followed | not followed | only before | not seen / pinning wrong / job error |
-|---|---|---|---|---|
-| Passing | support +1 | removal path (4.4) | no change | no change |
-| Failing | no change | importance +1 | no change | no change |
+| Trajectory | followed | not followed | not followed, same purpose achieved otherwise | only before | not seen / pinning wrong / job error |
+|---|---|---|---|---|---|
+| Passing | support +1 | invariant removed | reword (4.5) | no change | no change |
+| Failing | no change | importance +1 | no change (logged) | no change | no change |
 
 - Cells exist only for trajectories other than the invariant's P1 and P2.
-- Failing cells use Luna's verdicts; no re-check, no too-narrow check (turn 13, answer 5).
+- Failing cells use Luna's F2/F3 verdicts, with no re-check (turn 13, answer 5), then the too-narrow check on a "not
+  followed" (turn 15).
 - An importance point is flagged **first violation** when its observation location is the earliest among that failing
   run's violated invariants (H3).
 - (φ, action) invariants are always seen: they get support points when passing runs take the action and importance
@@ -163,8 +177,9 @@ Input: the task's trajectories with labels, and P1, P2.
    runs are checked right after step 1, together with the passing runs (turn 13). This does not change any result:
    removal depends only on passing cells, and failing cells never cause removal; the cost is the failing checks of
    invariants that are later removed (their verdicts stay in the log).
-3. **Removal path** for each passing cell that is not followed (4.4), one invariant at a time: when an invariant is
-   removed or retired, its remaining pending cells are cancelled.
+3. **Not followed** (4.4): on a passing cell the re-check, then the too-narrow check (remove or reword), one invariant
+   at a time: when an invariant is removed or retired, its remaining pending cells are cancelled. On a failing cell the
+   too-narrow check (importance point or not).
 4. **Reword** (4.5) -> a new invariant whose cells go back to step 2.
 5. Repeat until no cell is pending, then write the **report** (section 7).
 
@@ -180,6 +195,8 @@ Per task and overall:
 - removed invariants, with the cell that removed it and whether Opus agreed with Luna;
 - reworded invariants: old -> new action, attempts, validation verdicts;
 - reword failures (removed after two attempts);
+- failing-run cells where the purpose was achieved otherwise (no importance point);
+- F1 evidence check failures (4.1);
 - Luna/Opus disagreements in re-checks;
 - pinning-wrong counts (per invariant and per trajectory);
 - only-before counts per invariant (a frequent one suggests the observation is not the real trigger: H4);
@@ -193,7 +210,9 @@ F1 sees both source runs do the same thing, e.g. "opens each candidate file", an
 passing run instead greps the candidate files for the key term and reads only the matching passages: same purpose
 (every candidate checked), different mechanism. The action as worded did not happen, so the invariant would be removed
 although the run supports it. Cause: the action says how, not what for. User (turn 11): "a great insight". Handled by
-the too-narrow check (4.4) and the reword step with its validation (4.5).
+the too-narrow check (4.4) and the reword step with its validation (4.5). The check runs on failing runs too, so a
+failing run that achieved the purpose another way earns no importance point (turn 15). User (turn 15): the hope is that
+F1 is good enough for rewordings to be rarely needed.
 
 ### ★ H2. The causal link comes from F1, so F3 only checks "after" (turn 9)
 
@@ -255,10 +274,8 @@ run that breaks no invariant does not always mean an invariant is missing.
   that one would count as not followed.
 - **C4. New invariants start at 0** (turns 9, 11): reworded or refined invariants are new; they are checked again on
   every other run.
-- **C5. Importance can be inflated by too-narrow actions** **[proposed, not yet confirmed]**: failing cells get no
-  too-narrow check (turn 13, answer 5), so a failing run that achieved the purpose another way earns an importance
-  point for an invariant no passing run has corrected. Worth checking in the report (e.g. run the too-narrow check on
-  failing cells that earn importance points, if this turns out to be frequent).
+- **C5. Importance inflated by too-narrow actions: resolved** (raised turn 14, resolved turn 15): the too-narrow check
+  also runs on failing cells, so a failing run that achieved the purpose another way earns no importance point.
 
 ## 11. When does an action count as "followed"?
 
@@ -269,9 +286,9 @@ anytime after F2's location** (4.3), with "only before" as a separate outcome (H
 
 ## 12. Open questions
 
-1. The too-narrow check as a separate job that sees the purpose (4.4)?
-2. Reword with Opus 5.5 (F1's model)? Opus effort settings (section 4)?
-3. Source labels per fact rather than per observation (section 2)?
-4. F1 evidence locations in P1 and P2 (4.1)?
-5. C5: leave importance as is for now, or add the too-narrow check to failing cells that earn importance?
-6. Semantic judge: which pairs are compared, and which model (section 9)?
+1. Effort: max for every Opus 5.5 job, as turn 15 is read here (section 4)?
+2. F1 evidence locations in P1 and P2, for debugging, the report and a programmatic check (4.1)?
+3. On a failing run, does "purpose achieved otherwise" only cancel the importance point, or also trigger a rewording
+   (4.4)?
+4. Semantic judge (later): which pairs are compared, which model, and "each query to a different model" vs a fresh call
+   per query (section 9)?

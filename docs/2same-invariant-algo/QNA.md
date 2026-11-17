@@ -21,14 +21,16 @@ turns below.
 | Observations and actions abstract and transferable, as granular as possible, keeping the semantic role of task-specific things ("a keyword mentioned in the question", "the keyword with most hits"); short and chainable | 5 |
 | An observation = short facts (1-3 accepted; more allowed); each fact comes with a one-line reason why the action needs it: this is the causal link. No explicit length penalty and no drop-one-fact check | 7, 9, 11 |
 | An observation can be anything in the agent's context, including its own reasoning; it can also be **empty** (φ, action), or about the **environment** (tool descriptions, file system) or **task structure**, always in abstract terms | 5, 9 |
-| Source labels: none (φ) / environment / task / tool result / the agent's own reasoning | 10, 11 |
+| Source labels: none (φ) / environment / task / tool result / the agent's own reasoning; one label per fact | 10, 11, 15 |
 | Each action has a one-line purpose, for our understanding; F2 and F3 never use it | 10, 13 |
 | F2 output: yes/no + the FIRST location of the observation (evidence: line / step / tool-call number) | 7, 9, 11 |
 | F3: checks the observation is at F2's location (if not: "observation pinning wrong"); then yes/no whether the action happened after it, with the action's location if yes. No judgement of whether the reasoning links them | 7, 9, 11 |
 | "Followed" = anytime after the observation (F1's one-line reason gives the causal link) | 9 |
 | Action only before the observation: detected by F3, counts as no change, a frequent occurrence is a signal that the observation is not the real trigger | 10, 11 |
 | Points: support (passing run: seen + followed), importance (failing run: seen + not followed); (φ, action) earns importance when a failing run skips the action | 9, 12, 13 |
-| Action too narrow: on a confirmed removal candidate, check whether the purpose was achieved by a different action; if so reword the action | 10, 11 |
+| Too-narrow check: a separate Opus 5.5 job, run whenever F3 says "not followed" (passing runs: after the Opus re-check; failing runs too): did an action with the same purpose happen after F2's pinned observation? Passing: yes -> reword, no -> remove; failing: yes -> no importance point | 10, 11, 15 |
+| Opus 5.5 at max effort in every use (turn 15 read as max effort); rewording on Opus 5.5 | 14, 15 |
+| F2, F3 and the too-narrow check give objective answers: exactly one of the given choices, no equivocating or playing it safe | 15 |
 | Reword: the rewording LLM gets only the invariant, the triggering run and the location of its alternative action, and is told the invariant was learnt on earlier runs; the new invariant is validated with standard F2/F3 on P1, P2 and the triggering run | 11, 13 |
 | Reword fails validation: one more attempt; if that fails, the invariant is removed and the failure logged; logs reported at the end of the process | 13 |
 | Failing runs are checked right after F1 (together with the passing runs); no Opus re-check for importance points | 13 |
@@ -508,4 +510,42 @@ I wrote the two documents, checked against the saved chat log (turns 1–14), an
 Engineering defaults (job budgets, retries, context-guard threshold, concurrency 20) are in TECHNICAL.md, marked *default*.
 
 Please review the two documents. Once you've confirmed those five points, we can talk about the later parts or I can start building.
+````
+
+### Turn 15 — user (2026-11-17)
+
+````text
+1. actually i think we must do that if F3 says that actoin not found. then we do this other check separate job where we asked if the same purpose actoin happened, and if it happened after the pinned observatoin of f2. 
+2. use effort for 5.5 whenever using. 
+3. i agree, source labels per fact. 
+4. right, but who is checking F1's work in our loop ? do you mean for later debugging  ? 
+5. no in fact what we do in point 1 must happen for failing runs as well. if F3 says not found, then do the separate job where we tell if the same actoin happened.
+
+ideally I hope these cases don't happen hoping our F1 is good enough that all these reowrdings don't need to happen often.
+also for these f2 and f3 we weant them to be objective answer only in the choices they are provided. I don't want tem to equivocate or play it saege. 
+
+i have started reviewing the documents. will let you know if I agree to everything. let me know if you amke some changes.
+````
+
+### Turn 16 — Claude (2026-11-17)
+
+````text
+I changed the documents (pushed); here's everything that changed, so you can review against it:
+
+1. **Too-narrow check: a separate Opus 5.5 job, run whenever F3's outcome is "not followed".** It asks one thing: did an action with the same purpose happen after F2's pinned observation? Yes/no + location. (DESIGN §4.4)
+   - Passing run: Luna's F3 says not followed → Opus re-check (F2 + F3) → still not followed → too-narrow check → yes: reword; no: remove.
+   - Failing run (your point 5): Luna's F3 says not followed → too-narrow check → no: importance +1; yes: no point, logged.
+   - Cost: one Opus job per violation in a failing run, and failing runs may break many invariants (TECHNICAL §7).
+2. **Effort:** I read your answer as max effort for every Opus 5.5 job (F1, reword, re-check, too-narrow check). Tell me if you meant something else.
+3. **Source labels per fact:** confirmed.
+4. **F1 evidence:** yes, for debugging and the report; nothing in the loop checks it with an LLM. The code also checks it for free: the locations exist, and the observation comes before the action in both runs. A failure is only logged.
+5. Covered by 1. The old caution C5 (inflated importance) is marked resolved.
+- **Objective answers:** new principle 7 in DESIGN §3. F2, F3 and the too-narrow check answer with exactly one of their given choices plus locations: no "unclear", no "partly", no confidence. The output schemas reject anything else, and the prompts tell them to decide on the most direct reading of the evidence.
+- Your hope that rewordings stay rare is noted under H1.
+
+Still open (DESIGN §12):
+- effort as I read it;
+- F1 evidence as above;
+- on a failing run, should "purpose achieved otherwise" only cancel the importance point, or also trigger a rewording? I'd only cancel it: invariants are built from passing behaviour, and the failing run's other way may be part of why it failed;
+- the semantic-judge questions for later.
 ````
