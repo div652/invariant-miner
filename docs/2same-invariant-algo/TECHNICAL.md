@@ -23,6 +23,7 @@ invariant_mining/
   rules.py        the programmatic rules: outcome -> points / removal / reword, scheduling
   pipeline.py     scheduler: runs pending work with a concurrency limit; resumable
   report.py       report.md + report.json
+  aggregate.py    later: union across tasks with the semantic judge (section 8)
   cli.py          prepare / run / report / job
 tests/            (repo tests/) scripted-model tests, no real model calls
 ```
@@ -253,3 +254,27 @@ on a failing run one too-narrow check (Opus) and, when it says yes, rewords and 
 many invariants, so the too-narrow checks on
 failing runs can be the largest Opus cost. E.g. I = 20, R = 2: ~80 Luna jobs; at ~10 model steps each (a guess) ~800
 Luna requests, plus F1 at up to 150 Opus requests. The report records the real numbers.
+
+## 8. Aggregation across tasks (later, not built)
+
+DESIGN.md section 9. A separate step over finished pipeline runs; nothing in sections 1-7 depends on it.
+
+- Module `aggregate.py`; CLI:
+  `python3 -m invariant_mining aggregate runs/A [runs/B ...] --context BENCHMARK.txt [--max-calls 10000] --out runs/AGG`.
+- Input: the active invariants of the given runs (with their task, points and evidence) and the benchmark context text.
+- **Judge jobs**: a single model call each, no tools (the inputs are two short invariants and the benchmark context), a
+  fresh call per query. Model: open (DESIGN.md section 12).
+  - `judge_obs`: input = the two observations' facts + the benchmark context; output `{"same": true | false}`.
+  - `judge_actions`: input = the two whole invariants (facts and actions) + the benchmark context; output
+    `{"actions": "same" | "opposite" | "compatible"}`.
+  - Strict schemas, objective answers (DESIGN.md principle 7); an invalid answer is retried once, then logged as an
+    error (the pair is treated as not the same).
+- **Guard**: with n active invariants, step 1 needs n(n-1)/2 `judge_obs` calls. If that exceeds `--max-calls` (default
+  10,000), the command prints n per task and the count and exits without making any call. After step 1 it counts the
+  `judge_actions` calls needed; if step 1 + step 2 exceed the limit, it stops before step 2 and reports. The report
+  always gives the counts.
+- **Grouping** (*default*): invariants are merged along pairs judged "same" in both steps (connected groups). A group
+  in which some pair was not judged the same is flagged in the report.
+- **Outputs**: `groups.json` (each group: member invariants, their tasks, each member's support and importance points;
+  no combined score, since how points are used is decided later), `conflicts.json` (pairs judged "opposite"),
+  `judgements` table in `state.sqlite` (invariant a, invariant b, step, answer, job id), and a section of `report.md`.

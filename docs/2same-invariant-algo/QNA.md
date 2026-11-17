@@ -40,6 +40,7 @@ turns below.
 | Everything outside the LLM functions is programmatic | 11 |
 | Later: targeted re-proposal (F1 again, pointed at where a failing run went wrong), its own function; implementation to discuss | 9 |
 | Later: union across tasks via a two-stage semantic judge (observations same? then actions same / opposite / different but compatible); merge same, log opposite as a conflict, keep compatible; different observations not sent to the second stage, but can be scored on other tasks | 9, 13 |
+| Semantic judge: a fresh call per query; every pair of invariants compared (quadratic: documented as a shortcoming); before launching, count the calls and do not launch above 10,000 | 19 |
 | The algorithm is agnostic to the data; which tasks and trajectories are used is decided later (flip tasks for importance) | 7, 9 |
 | How the points are used downstream: decided later | 11 |
 | A precise design document and a technical document, built from this conversation | 13 |
@@ -582,4 +583,28 @@ Done (pushed). Changes:
 2. **"Each query to a different model":** did you mean a fresh call per query (same model, new context, as for F2/F3), or literally a different model for each query? And which model?
 
 Apart from these, which are for later, DESIGN §12 has no open questions left.
+````
+
+### Turn 19 — user (2026-11-17)
+
+````text
+2 -> i meant fresh call per query. 
+
+1 -> yeah I understand the issue you are indicating. can you document the current method we have in the doc, also write down this shortcoming of quadartic comparions you noted. for one I thikn after inside task checks and comparison with other passing runs, it should go below 20 . and i will also try to pick smalle rset. for now lets stick to this mthood only. before launching this "aggregation" just review how many calls are going to be made. if they are more than 10k calls, then don't launch it. iun that caes i will think if I need to use agregation using llm fully.
+````
+
+### Turn 20 — Claude (2026-11-17)
+
+````text
+Documented (pushed): DESIGN §9 now describes the union method as the one to use, and TECHNICAL has a new section 8 on how it's built.
+- **Method:** stage 1 is a fresh call per pair of active invariants, seeing only the two observations and the benchmark context: same, yes/no. Stage 2 runs only on the pairs judged same: a fresh call with both whole invariants, answering exactly one of same / opposite / different but compatible. Same → merged; opposite → conflict, logged; compatible → both kept. Pairs with different observations never reach stage 2.
+- **Shortcoming, written down:** stage 1 alone takes n(n−1)/2 calls for n invariants. 10,000 calls is reached at about 141 invariants, i.e. ~7 tasks at 20 invariants each.
+- **Call-count guard:** before launching, the code counts the stage-1 calls and stops without running anything if they exceed 10,000. It checks again before stage 2, against stage 1 + stage 2 together. The report gives the counts either way. The limit is a flag (`--max-calls`, default 10,000), so raising it is always a deliberate choice.
+- **Judge calls are single model calls, not agents:** their inputs are two short invariants plus the benchmark context, so they need no tools.
+
+Two small things I set as defaults (marked *default* in TECHNICAL §8, easy to change):
+- Merging takes connected groups of "same" pairs. A group where not every pair was judged same is flagged in the report.
+- A merged group lists its members, their tasks and each member's own points. No combined score, since how points are used is still your call.
+
+The judge's **model** is still open (DESIGN §12). I'd use Luna high, like the other yes/no checks. OK?
 ````

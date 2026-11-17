@@ -66,7 +66,7 @@ important one (turn 7).
 | F3 followed? | GPT-5.6 Luna high (turn 11) | one invariant x one trajectory + F2's location | pinning wrong / followed + location / not followed / only before + location |
 | Re-check | Claude Opus 5.5 (turn 9) | a removal candidate | F2 and F3 again, same prompts |
 | Too-narrow check | Claude Opus 5.5 | a cell whose final F3 outcome is not followed, on a passing or a failing run (turn 15) | an action with the same purpose after F2's location? yes/no + location |
-| Semantic judge (later) | to decide | two invariants | section 9 |
+| Semantic judge (later) | to decide | two invariants (a single call, no tools) | step 1: observations the same? yes/no; step 2: actions same / opposite / compatible (section 9) |
 
 Effort: **high** for every Opus 5.5 job (turn 17).
 
@@ -259,18 +259,27 @@ reworded from failing runs score worse.
   something the passing runs did not do in a similar situation, and run F1 again on P1, P2, pointed at that kind of
   situation, to propose finer invariants there only. The grader's per-criterion verdicts, where a benchmark has them,
   help find that point (optional text input). H5 applies.
-- **Union across tasks with a semantic judge** (turn 13). Union = the union of the tasks' invariants, merging the ones
-  that are the same:
-  1. For pairs of invariants, a judge sees only the two **observations** and the benchmark context: the same? (yes/no).
-  2. For pairs whose observations are the same, a judge sees both **whole invariants**: are the actions the same,
-     opposite, or different but compatible? (three answers only). Same -> merged; opposite -> a **conflict**, logged;
-     compatible -> both kept.
-  3. Different observations (even with the same action) are not sent to step 2; such invariants can be scored on the
-     other tasks' trajectories (F2/F3) for support and importance there.
+- **Union across tasks with a semantic judge** (turns 13, 19; the method to use). Union = the union of the tasks'
+  active invariants, merging the ones that are the same:
+  1. For **every pair** of active invariants, a judge sees only the two **observations** and the benchmark context:
+     the same? (yes/no).
+  2. For each pair whose observations were judged the same, a judge sees both **whole invariants**: are the actions
+     the same, opposite, or different but compatible? (exactly one of the three). Same -> merged; opposite -> a
+     **conflict**, logged; compatible -> both kept.
+  3. Pairs with different observations (even with the same action) are not sent to step 2; such invariants can be
+     scored on the other tasks' trajectories (F2/F3) for support and importance there.
 
-  Each query is a fresh call with the benchmark context. (Turn 13 says "each query to a different model"; read here as
-  a fresh call per query.) Open: comparing all pairs is quadratic (e.g. 700 invariants -> ~245,000 step-1 calls), so
-  which pairs are compared needs deciding first.
+  Every query is a fresh call (turn 19: "fresh call per query") with the benchmark context, and the judge answers
+  objectively (principle 7). Its inputs are short, so it is a single model call, not an agent.
+
+  **Shortcoming: the comparisons are quadratic** (turns 14, 18, 19). Step 1 alone takes n(n-1)/2 calls for n
+  invariants: 100 -> 4,950; 141 -> 9,870; 200 -> 19,900; 700 -> 244,650. The user expects fewer than 20 invariants per
+  task after the in-task checks, and will pick small sets of tasks (turn 19); at 20 per task, 10,000 calls are reached
+  at about 7 tasks.
+
+  **Call-count guard** (turn 19): before launching the aggregation, count the calls; if there are more than 10,000, do
+  not launch it (the user then decides whether to aggregate with LLMs at all). Step 1's count is known exactly, step
+  2's only after step 1, so the check is repeated before step 2 for both steps together.
 - **Conflict refinement** (turns 8, 9): two invariants with the same observation and opposite actions lack a fact that
   separates the cases; adding it to both retires the old invariant(s) and adds new ones, scored again on all runs (C4).
 - **Cross-task support**: how many tasks an invariant applies to (F2) and holds in (F3) (turn 10).
@@ -297,5 +306,5 @@ anytime after F2's location** (4.3), with "only before" as a separate outcome (H
 
 ## 12. Open questions
 
-1. Semantic judge (later): which pairs are compared, which model, and "each query to a different model" vs a fresh call
-   per query (section 9; explained in turn 18).
+1. Semantic judge (later): which model? (Decided in turn 19: a fresh call per query; every pair compared; the
+   10,000-call guard; section 9.)
