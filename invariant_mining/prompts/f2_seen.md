@@ -16,6 +16,10 @@ Answer:
 - `evidence`: for each fact by its number, the location where it first appears and a short quote copied verbatim from that location (at most 300
   characters). Empty if not seen.
 
+Facts about the environment or the task (what tools do, where files go, how the workspace is laid out, what the task
+asks) are often stated before the first step, in the system prompt (`sys`), the tool descriptions (`tools`) or the user
+messages: read those first, and check them for every fact.
+
 Before you submit, go back over the steps before your location and look for an earlier instance of each fact (any
 concrete form of it counts, e.g. a search over file names or over file contents are both searches): the location must
 be the earliest point where all facts hold, not the clearest one. A later location makes later checks wrong.

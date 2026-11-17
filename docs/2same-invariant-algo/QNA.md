@@ -758,3 +758,28 @@ All 14 checks against the failing run 1 are done; two rewordings (i6, i7) are st
 
 I'll post the final table when both rewordings finish.
 ````
+
+### Turn 32 — Claude (2026-11-18): smoke test result
+
+````text
+The smoke test on task 028 finished at 01:02 IST in 9.7 minutes: 47 jobs, 240 model requests (29 Opus, 211 Luna), 3.9M input and 98K output tokens, 1.5 MB on disk. No job errors and no Opus refusals, so it stayed on Opus.
+
+**Final result:** 16 invariants: the 14 proposed plus 2 rewordings.
+- i6 and i7 were retired and replaced:
+  - **ri6** "converts the documents to text with parse-doc and reads that text, whether saved to files or read from the command output". Validated on P1/P2 at the first attempt.
+  - **ri7** "examines the converted text, with a text tool on the parsed files or directly in the command output". Its first rewording failed validation on run 3; the second passed.
+  - Both were then re-checked on run 1: followed.
+- Everything else is as in the table I sent: support 0 and importance 0 for every invariant. There's no extra passing run, and the failing run follows all of them.
+
+**Correction to my earlier message:** i3 and i12 were not F1 putting the action's result into the observation. Their facts ("documents are in `documents/`", "a relative write goes to `output/`") are in the system prompt and the `write` tool description, so they hold from the start. F2 missed those and pinned later outputs, which made the actions look "only before": the C3 risk. I told F2 to read the system prompt, tool descriptions and user messages first, and re-ran those two cells: both now pin `u1`, so F3 would find the actions after the observation. (The run's stored verdicts keep the old answers.)
+
+**What the smoke test covered:** F1, F2, F3, "only before", the too-narrow check on a failing run, two rewordings (one valid at once, one after a failed attempt), retire/replace and re-evaluation, the F1 evidence check. **Not covered** (028 has no extra passing run, and the failing run broke nothing): the Opus re-check, removal, importance points, pinning wrong.
+
+**Lessons for the real run:**
+1. **Data:** support points need tasks with passing runs beyond P1/P2. 028 has none.
+2. **F1:** it finished in 11 steps, skipped steps 13–17 of run B, and some invariants are generic ("reads back the deliverable"). The prompt could require reading every step of both runs.
+3. **Evidence:** in one re-run the F2 quote came from `sys` but was labelled `tools`. A programmatic check that each quote appears at its location would catch this.
+4. **Cost:** F2 is the bulk (19 jobs, ~6 steps and ~110K input tokens each).
+
+Do you want me to make the F1 and quote-check changes before you pick the data for the real run?
+````
