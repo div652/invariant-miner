@@ -38,7 +38,10 @@ class Trajectory:
         """(item index, offset) of a location; `start` is (-1, 0). Raises LocationError."""
         if not isinstance(loc, str):
             raise LocationError(f"location must be a string, got {loc!r}")
-        m = LOC_RE.match(loc.strip())
+        loc = loc.strip().strip("`")
+        if "#" in loc and not loc.split("#", 1)[1].isdigit():
+            loc = loc.split("#", 1)[0]  # a malformed offset ("sys#?") means the item itself
+        m = LOC_RE.match(loc)
         if not m:
             raise LocationError(f"{loc!r} is not a location (examples: sys, tools, u1, s3.r, s3.t, s3.c1, s3.o1, s3.o1#1200)")
         base, offset = m.group(1), int(m.group(2) or 0)

@@ -23,6 +23,7 @@ c.check(t.meta["steps"] == 3 and t.meta["context_window"] == 922000 and t.meta["
 c.check(all("replayState" not in i["text"] and "thinkingSignature" not in i["text"] for i in t.items), "encrypted replay state is not an item")
 c.check(t.before("s2.c2", "s2.o1") and t.before("s2.o2", "u3") and t.before("start", "sys"), "location order")
 c.check(t.position("s2.o2#100") == (locs.index("s2.o2"), 100), "offsets")
+c.check(t.position("sys#?") == (0, 0) and t.position(" `s2.o2` ") == (locs.index("s2.o2"), 0), "a malformed offset or backticks: the item itself")
 for bad in ("s9.o1", "s2.x1", "s2.o2#999999", "foo"):
     try:
         t.position(bad)
