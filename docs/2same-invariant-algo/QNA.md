@@ -41,6 +41,7 @@ turns below.
 | Later: targeted re-proposal (F1 again, pointed at where a failing run went wrong), its own function; implementation to discuss | 9 |
 | Later: union across tasks via a two-stage semantic judge (observations same? then actions same / opposite / different but compatible); merge same, log opposite as a conflict, keep compatible; different observations not sent to the second stage, but can be scored on other tasks | 9, 13 |
 | Semantic judge: a fresh call per query; every pair of invariants compared (quadratic: documented as a shortcoming); before launching, count the calls and do not launch above 10,000 | 19 |
+| Semantic judge model: GPT-5.6 Luna high | 21 |
 | The algorithm is agnostic to the data; which tasks and trajectories are used is decided later (flip tasks for importance) | 7, 9 |
 | How the points are used downstream: decided later | 11 |
 | A precise design document and a technical document, built from this conversation | 13 |
@@ -607,4 +608,18 @@ Two small things I set as defaults (marked *default* in TECHNICAL §8, easy to c
 - A merged group lists its members, their tasks and each member's own points. No combined score, since how points are used is still your call.
 
 The judge's **model** is still open (DESIGN §12). I'd use Luna high, like the other yes/no checks. OK?
+````
+
+### Turn 21 — user (2026-11-17)
+
+````text
+use luna high for judge model.
+````
+
+### Turn 22 — Claude (2026-11-17)
+
+````text
+Set (pushed): the semantic judge uses GPT-5.6 Luna high (DESIGN §4 and §9, TECHNICAL §8). DESIGN §12 now has no open questions; what's left is the later work in §9 (targeted re-proposal, conflict refinement, cross-task scoring, how points are used).
+
+Tell me when you've finished reviewing the documents. Then we can discuss the later parts, or I can start building F1–F3, the table and the pipeline.
 ````

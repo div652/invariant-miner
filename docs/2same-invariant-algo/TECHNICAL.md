@@ -263,7 +263,7 @@ DESIGN.md section 9. A separate step over finished pipeline runs; nothing in sec
   `python3 -m invariant_mining aggregate runs/A [runs/B ...] --context BENCHMARK.txt [--max-calls 10000] --out runs/AGG`.
 - Input: the active invariants of the given runs (with their task, points and evidence) and the benchmark context text.
 - **Judge jobs**: a single model call each, no tools (the inputs are two short invariants and the benchmark context), a
-  fresh call per query. Model: open (DESIGN.md section 12).
+  fresh call per query. Model: GPT-5.6 Luna high (turn 21), Responses API as in 3.2.
   - `judge_obs`: input = the two observations' facts + the benchmark context; output `{"same": true | false}`.
   - `judge_actions`: input = the two whole invariants (facts and actions) + the benchmark context; output
     `{"actions": "same" | "opposite" | "compatible"}`.

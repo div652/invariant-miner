@@ -1,7 +1,7 @@
 # Same-task invariant mining: design
 
 What the algorithm does and the rules it follows, as agreed in the design conversation of 2026-11-16/17
-([QNA.md](QNA.md): the verbatim log, turns 1-18; "turn N" below points into it). How it is built:
+([QNA.md](QNA.md): the verbatim log, turns 1-22; "turn N" below points into it). How it is built:
 [TECHNICAL.md](TECHNICAL.md). Nothing is built yet.
 
 Every item below was decided in the conversation; what is still open is in section 12.
@@ -66,7 +66,7 @@ important one (turn 7).
 | F3 followed? | GPT-5.6 Luna high (turn 11) | one invariant x one trajectory + F2's location | pinning wrong / followed + location / not followed / only before + location |
 | Re-check | Claude Opus 5.5 (turn 9) | a removal candidate | F2 and F3 again, same prompts |
 | Too-narrow check | Claude Opus 5.5 | a cell whose final F3 outcome is not followed, on a passing or a failing run (turn 15) | an action with the same purpose after F2's location? yes/no + location |
-| Semantic judge (later) | to decide | two invariants (a single call, no tools) | step 1: observations the same? yes/no; step 2: actions same / opposite / compatible (section 9) |
+| Semantic judge (later) | GPT-5.6 Luna high (turn 21) | two invariants (a single call, no tools) | step 1: observations the same? yes/no; step 2: actions same / opposite / compatible (section 9) |
 
 Effort: **high** for every Opus 5.5 job (turn 17).
 
@@ -306,5 +306,4 @@ anytime after F2's location** (4.3), with "only before" as a separate outcome (H
 
 ## 12. Open questions
 
-1. Semantic judge (later): which model? (Decided in turn 19: a fresh call per query; every pair compared; the
-   10,000-call guard; section 9.)
+None (turn 21). The later work of section 9 is still to be discussed.
