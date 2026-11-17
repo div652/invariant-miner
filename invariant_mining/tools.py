@@ -34,6 +34,7 @@ class ToolBox:
         self.notes_path = Path(notes_path)
         self.submit_schema = submit_schema
         self.submit_description = submit_description
+        self.steps_read = {name: set() for name in trajectories}  # steps shown in full by read_steps (F1 coverage)
 
     # --- definitions (provider-neutral: name, description, JSON-schema parameters) ------------------------------------
     def _with_run(self, props: dict, required: list[str]) -> dict:
@@ -141,6 +142,23 @@ class ToolBox:
         flush()
         return "\n".join(lines)
 
+    def _name(self, t: Trajectory) -> str:
+        return next(k for k, v in self.trajs.items() if v is t)
+
+    def unread_steps(self) -> dict[str, str]:
+        """Steps of each trajectory not yet shown by read_steps, as ranges ("13-17, 30")."""
+        out = {}
+        for name, t in self.trajs.items():
+            missing = [n for n in t.steps() if n not in self.steps_read[name]]
+            if missing:
+                ranges, start = [], missing[0]
+                for a, b in zip(missing, missing[1:] + [None]):
+                    if b != a + 1:
+                        ranges.append(str(start) if start == a else f"{start}-{a}")
+                        start = b
+                out[name] = ", ".join(ranges)
+        return out
+
     def read_context(self, args: dict) -> str:
         t = self._traj(args)
         part = str(args.get("part", ""))
@@ -183,6 +201,8 @@ class ToolBox:
                 break
             out.append(block)
             size += len(block)
+            if (m := re.match(r"^s(\d+)\.", loc)):
+                self.steps_read[self._name(t)].add(int(m.group(1)))
         return "\n\n".join(out)
 
     def read_output(self, args: dict) -> str:

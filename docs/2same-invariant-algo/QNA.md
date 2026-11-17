@@ -47,6 +47,7 @@ turns below.
 | A precise design document and a technical document, built from this conversation | 13 |
 | Built (TECHNICAL sections 1-7, package invariant_mining/, commits c8fa902, 1b06c4b); aggregation not built | 27, 28 |
 | Smoke test on Harvey task 028 (P1 run 2, P2 run 3, run 1 failing); if Opus 5.5 refuses, every Opus role is replaced by GPT-6 Astra high | 29 |
+| F1 must read every step of both runs (submit refused until it has); F2/F3/too-narrow quotes are checked in code against the text at their location | 33 |
 | Confirmed after the consistency check: validation verdicts reused as the triggering passing run's cell; chains written self-contained (link kept as information) | 27 |
 
 ## Log
@@ -782,4 +783,16 @@ The smoke test on task 028 finished at 01:02 IST in 9.7 minutes: 47 jobs, 240 mo
 4. **Cost:** F2 is the bulk (19 jobs, ~6 steps and ~110K input tokens each).
 
 Do you want me to make the F1 and quote-check changes before you pick the data for the real run?
+````
+
+### Turn 33 — user (2026-11-18)
+
+````text
+yes make both changes
+````
+
+### Turn 34 — user (2026-11-18, sent while Claude was working on turn 33)
+
+````text
+after these changes I want you to go to main and fetch mixed:flip those are 8 tasks that flip across 150 mixed train tasks, and we have there 5 trajecotires. each ahs at least two passing. apply this method on each each task separatel, the full method, as there for some tasks you'll find both passing runs and failing runs !
 ````

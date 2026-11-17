@@ -56,7 +56,7 @@ important one (turn 7).
 7. **Objective answers** (turn 15). F2, F3 and the too-narrow check answer with exactly one of the choices they are
    given (yes/no, or the listed outcomes) plus locations. They do not equivocate or play it safe: no "unclear", no
    "partly", no confidence; they decide on the most direct reading of the evidence. The output schemas allow nothing
-   else.
+   else. Their quotes are checked in code against the text at the location they give (turns 32-33).
 
 ## 4. The functions
 
@@ -75,6 +75,8 @@ Effort: **high** for every Opus 5.5 job (turn 17).
 ### 4.1 F1 propose
 
 Input: P1 and P2 in full (system prompt, tool descriptions, task, all steps), read through the tools (principle 2).
+F1 must read every step of both runs: its submit is refused until it has (turns 32-33; the smoke test's F1 skipped
+five steps of one run).
 Output: **all** the observation-action pairs common to **both** runs, succinct and systematic (turn 3), following
 these rules:
 - observation and action as defined in section 2: abstract, transferable, as granular as possible, keeping the role of

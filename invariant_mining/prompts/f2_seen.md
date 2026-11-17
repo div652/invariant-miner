@@ -26,3 +26,5 @@ be the earliest point where all facts hold, not the clearest one. A later locati
 
 You judge only the observation; what the agent did afterwards does not matter here. Answer objectively, true or false,
 without hedging: if the evidence is borderline, decide on the most direct reading of the facts.
+
+Quotes are checked against the text at the location you give: copy them exactly (you may join excerpts with "…").

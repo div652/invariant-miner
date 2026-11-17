@@ -95,8 +95,11 @@ them, plus metadata.
 - **Budgets** (*default*): F1 propose 150 model steps; F1 reword 60; F2, F3, too-narrow 40; 30 min wall time per job.
 - **Context guard** (*default*): when the conversation passes 60% of the model's prompt window, the oldest tool results
   (other than `read_notes`) are replaced by `[elided: <tool and arguments>; read again if needed]`. Notes survive.
-- **Submit**: the argument is validated against the job kind's JSON schema (3.4) and its locations against the
-  trajectory; on an error the agent gets the error and continues. After 3 invalid submits, or when a budget runs out,
+- **Submit**: the argument is validated against the job kind's JSON schema (3.4), its locations against the trajectory
+  and its quotes against the text at their locations (case, whitespace, `*` and backticks ignored; excerpts may be
+  joined with "…"; for a tool call the decoded argument values count); on an error the agent gets the error and
+  continues. F1's submit is refused, without counting as an invalid submit, until `read_steps` has shown every step of
+  both runs (the refusal lists the unread steps). After 3 invalid submits, or when a budget runs out,
   the job fails.
 - **Failures**: a failed job is retried once as a fresh job (*default*); if it fails again, the cell or task gets the
   outcome `job_error` (no change to points, logged). A reword or validation job that fails counts as a failed

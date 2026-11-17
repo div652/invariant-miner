@@ -16,3 +16,5 @@ For an empty observation (pinned location `start`), skip step 1: the answer is `
 
 Answer with exactly one of the four outcomes, objectively and without hedging. Give a short quote copied verbatim (at most 300
 characters) from the action's location, or from where you checked.
+
+Quotes are checked against the text at the location you give: copy them exactly (you may join excerpts with "…").

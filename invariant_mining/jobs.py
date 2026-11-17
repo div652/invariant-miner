@@ -5,6 +5,8 @@ another model; the prompts are the same.
 """
 
 import hashlib
+import json
+import re
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Callable
@@ -30,6 +32,7 @@ class JobSpec:
     submit_description: str
     validate: Callable            # output dict -> (ok, error, normalized output)
     inputs: dict = field(default_factory=dict)
+    require_full_read: bool = False  # F1: submit is refused until read_steps has shown every step of every run
 
 
 def system_prompt(kind: str) -> tuple[str, str]:
@@ -61,6 +64,44 @@ def _str(value, what: str) -> str:
 
 def _quote(value) -> str:
     return (value or "")[:QUOTE_MAX] if isinstance(value, str) else ""
+
+
+def _norm(text: str) -> str:
+    text = text.replace("\u2019", "'").replace("\u2018", "'").replace("\u201c", '"').replace("\u201d", '"')
+    text = text.replace("*", "").replace("`", "")  # markdown emphasis and code marks are often dropped in quotes
+    return re.sub(r"\s+", " ", text).strip().lower()
+
+
+def _strings(value) -> list[str]:
+    if isinstance(value, str):
+        return [value]
+    if isinstance(value, dict):
+        return [s for v in value.values() for s in _strings(v)]
+    if isinstance(value, list):
+        return [s for v in value for s in _strings(v)]
+    return []
+
+
+def check_quote(t: Trajectory, loc: str, quote: str) -> None:
+    """The quote must be text of the item at `loc` (case, whitespace, * and ` ignored; '…' or '...' may join excerpts;
+    for a tool call, the decoded argument values count too). Raises ValueError."""
+    q = (quote or "").strip()
+    if not q:
+        raise ValueError(f"a quote from {loc} is required")
+    item = t.items[t.position(loc)[0]] if loc != "start" else None
+    if item is None:
+        return
+    texts = [item.get("text", "")]
+    if item["kind"] == "call":
+        try:
+            texts += _strings(json.loads(item["text"]))
+        except (ValueError, TypeError):
+            pass
+    hay = [_norm(x) for x in texts]
+    parts = [_norm(p) for p in re.split(r"…|\.\.\.", q) if _norm(p)]
+    if not parts or not all(any(p in h for h in hay) for p in parts):
+        raise ValueError(f"quote {q[:80]!r} is not text of {item['loc']}: copy it exactly from the item at the location you "
+                         f"give (or give the location where the quoted text is)")
 
 
 # --- F1 propose -------------------------------------------------------------------------------------------------------
@@ -196,6 +237,7 @@ def make_validate_f2(t: Trajectory, n_facts: int):
                 if epos[0] > pos[0]:
                     raise ValueError(f"fact {k} appears at {eloc}, after the location {loc}: the location must be where ALL facts hold")
                 latest = max(latest, epos[0])
+                check_quote(t, eloc, _quote(e.get("quote")))
                 norm.append({"fact": k, "location": eloc, "quote": _quote(e.get("quote"))})
             if sorted(x["fact"] for x in norm) != list(range(1, n_facts + 1)):
                 raise ValueError("evidence must cover each fact exactly once")
@@ -236,6 +278,7 @@ def make_validate_f3(t: Trajectory, pinned: str):
                 raise ValueError(f"followed: the action location {aloc} must not be before the pinned location {pinned}")
             if outcome == "only_before" and apos >= ppos:
                 raise ValueError(f"only_before: the action location {aloc} must be before the pinned location {pinned}")
+            check_quote(t, aloc, _quote(out.get("quote")))
             return True, None, {"outcome": outcome, "action_location": aloc, "quote": _quote(out.get("quote"))}
         except (ValueError, LocationError) as e:
             return False, str(e), None
@@ -263,6 +306,7 @@ def make_validate_tn(t: Trajectory, pinned: str):
             loc = _str(out.get("location"), "location")
             if t.position(loc)[0] < t.position(pinned)[0]:
                 raise ValueError(f"the different action must come after the pinned location {pinned}")
+            check_quote(t, loc, _quote(out.get("quote")))
             return True, None, {"purpose_achieved_otherwise": True, "location": loc, "quote": _quote(out.get("quote"))}
         except (ValueError, LocationError) as e:
             return False, str(e), None
@@ -292,7 +336,8 @@ def build(kind: str, model_key: str, inputs: dict, trajs: dict[str, Trajectory])
         user = (sizes("Run A", trajs["A"]) + "\n" + sizes("Run B", trajs["B"]) +
                 "\n\nBoth runs passed. Find all the observation -> action pairs common to both runs, then submit them.")
         return JobSpec(kind, model_key, system, sha, user, trajs, F1_SCHEMA,
-                       "Submit all the invariants common to both runs (once; fix and resubmit if rejected).", validate_f1, inputs)
+                       "Submit all the invariants common to both runs (once; fix and resubmit if rejected). Refused until "
+                       "read_steps has shown every step of both runs.", validate_f1, inputs, require_full_read=True)
     t = trajs["T"]
     if kind == "f2_seen":
         facts = inputs["facts"]

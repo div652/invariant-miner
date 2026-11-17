@@ -52,14 +52,14 @@ def answer(spec):
     if k == "f2_seen":
         seen = tid in SEEN[inp["facts"][0]]
         return {"seen": seen, "location": "s2.o1" if seen else None,
-                "evidence": [{"fact": 1, "location": "s2.o1", "quote": "q"}] if seen else []}
+                "evidence": [{"fact": 1, "location": "s2.o1", "quote": "b.txt:7"}] if seen else []}
     if k == "f3_followed":
         key = (inp["action"], tid, spec.model_key)
         out, loc = F3.get(key) or F3[(inp["action"], tid, None)]
-        return {"outcome": out, "action_location": loc, "quote": "q"}
+        return {"outcome": out, "action_location": loc, "quote": {"s3.c1": "echo done", "s1.c1": "ls"}.get(loc, "")}
     if k == "too_narrow":
         loc = NARROW.get((inp["action"], tid))
-        return {"purpose_achieved_otherwise": loc is not None, "location": loc, "quote": "q"}
+        return {"purpose_achieved_otherwise": loc is not None, "location": loc, "quote": "echo done" if loc else ""}
     if k == "f1_reword":
         if inp["action"] == "act-c-narrow":
             return {"action": {"text": "act-c-broad", "purpose": "p"}}
@@ -74,7 +74,10 @@ class Policy(Conversation):
     def step(self):
         self.n += 1
         if self.n == 1:
-            return StepResult([Call("c1", "overview", {"run": "A"} if self.spec.kind == "f1_propose" else {})])
+            if self.spec.kind == "f1_propose":
+                return StepResult([Call("c1", "read_steps", {"run": "A", "from_step": 1, "to_step": 3}),
+                                   Call("c1b", "read_steps", {"run": "B", "from_step": 1, "to_step": 3})])
+            return StepResult([Call("c1", "overview", {})])
         return StepResult([Call("c2", "submit", answer(self.spec))])
 
     def add_results(self, results): pass

@@ -57,4 +57,6 @@ appears; `start` for an empty observation) and of the action, in run A and in ru
 action.
 
 Cover the whole runs, from reading the task to delivering the answer: how the agent explored, searched, read, verified,
-computed, decided and wrote its deliverable. Read both runs before deciding; note candidate pairs as you go.
+computed, decided and wrote its deliverable. Read **every step of both runs** with `read_steps` (and open long outputs
+with `read_output` where they matter) before deciding; `submit` is refused until `read_steps` has shown every step of
+both runs. Note candidate pairs as you go.

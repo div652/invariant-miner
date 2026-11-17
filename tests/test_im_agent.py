@@ -60,20 +60,20 @@ c.check(res.ok and conv.elided == 1, "context guard elides past the threshold")
 
 # --- F3 validator
 v = jobs.make_validate_f3(t, "s2.o1")
-c.check(v({"outcome": "followed", "action_location": "s3.c1", "quote": "x"})[0], "F3: followed after the pinned location")
+c.check(v({"outcome": "followed", "action_location": "s3.c1", "quote": "echo done"})[0], "F3: followed after the pinned location")
 c.check(not v({"outcome": "followed", "action_location": "s1.c1", "quote": "x"})[0], "F3: followed before the pinned location is rejected")
-c.check(v({"outcome": "only_before", "action_location": "s1.c1", "quote": "x"})[0], "F3: only_before before the pinned location")
+c.check(v({"outcome": "only_before", "action_location": "s1.c1", "quote": "ls"})[0], "F3: only_before before the pinned location")
 c.check(not v({"outcome": "only_before", "action_location": "s3.c1", "quote": "x"})[0], "F3: only_before after it is rejected")
 c.check(v({"outcome": "not_followed", "action_location": "s3.c1", "quote": "x"})[2]["action_location"] is None, "F3: not_followed has no location")
 c.check(not v({"outcome": "unclear", "action_location": None, "quote": "x"})[0], "F3: only the four outcomes")
 c.check(not v({"outcome": "followed", "action_location": "s3.c1", "quote": "x", "confidence": 0.7})[0], "F3: no extra fields (no confidence)")
 vphi = jobs.make_validate_f3(t, "start")
 c.check(not vphi({"outcome": "pinning_wrong", "action_location": None, "quote": ""})[0] and
-        vphi({"outcome": "followed", "action_location": "s1.c1", "quote": ""})[0], "F3 with an empty observation: followed / not_followed only")
+        vphi({"outcome": "followed", "action_location": "s1.c1", "quote": "ls"})[0], "F3 with an empty observation: followed / not_followed only")
 
 # --- too-narrow validator
 vt = jobs.make_validate_tn(t, "s2.o1")
-c.check(vt({"purpose_achieved_otherwise": True, "location": "s3.c1", "quote": "x"})[0] and
+c.check(vt({"purpose_achieved_otherwise": True, "location": "s3.c1", "quote": "echo done"})[0] and
         not vt({"purpose_achieved_otherwise": True, "location": "s1.c1", "quote": "x"})[0], "too-narrow: the other action must come after the pinned location")
 
 # --- F1: two runs, validator, evidence check
@@ -111,4 +111,28 @@ sr = jobs.build("f1_reword", "opus", {"facts": [{"fact": "f", "source": "task", 
                 {"T": t})
 c.check("learnt from earlier runs of this task" in sr.user_text and "s3.c1" in sr.user_text and "failed validation" in sr.user_text,
         "reword: told the invariant was learnt earlier, the alternative's location, the failed first attempt")
+# --- quotes must be text of the item at their location
+q2 = jobs.make_validate_f2(t, 1)
+c.check(not q2({"seen": True, "location": "s2.o1", "evidence": [{"fact": 1, "location": "s2.o1", "quote": "c.txt:9"}]})[0],
+        "quote check: a quote that is not in the item is rejected")
+c.check(q2({"seen": True, "location": "s2.o1", "evidence": [{"fact": 1, "location": "s2.o1", "quote": "A.TXT:3   b.txt:7"}]})[0],
+        "quote check: case and whitespace are ignored")
+c.check(q2({"seen": True, "location": "s2.o1", "evidence": [{"fact": 1, "location": "s2.o1", "quote": "a.txt:3 … b.txt:7"}]})[0],
+        "quote check: excerpts joined with …")
+c.check(not q2({"seen": True, "location": "s2.o1", "evidence": [{"fact": 1, "location": "s2.o1", "quote": ""}]})[0],
+        "quote check: an empty quote is rejected")
+c.check(jobs.make_validate_f3(t, "s1.o1")({"outcome": "followed", "action_location": "s2.c1", "quote": "grep -c key *"})[0],
+        "quote check: a call's decoded arguments count")
+ok, err, _ = v({"outcome": "followed", "action_location": "s3.c1", "quote": "b.txt has most hits"})
+c.check(not ok and "is not text of s3.c1" in err, "quote check: a quote from another item (s3.r) is rejected with the reason")
+
+# --- F1 must read every step of both runs before submitting
+res, conv = run(spec1, [[call("submit", **good)],
+                        [call("read_steps", run="A", from_step=1, to_step=3), call("read_steps", run="B", from_step=1, to_step=2)],
+                        [call("submit", **good)],
+                        [call("read_steps", run="B", from_step=3, to_step=3)],
+                        [call("submit", **good)]])
+c.check(res.ok and res.steps == 5, "F1: submit accepted only after read_steps showed every step of both runs")
+c.check("Not read yet: run A: steps 1-3; run B: steps 1-3" in conv.results[0][0][1] and "run B: steps 3" in conv.results[2][0][1],
+        "F1: the refusal names the unread steps")
 c.done()

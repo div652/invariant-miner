@@ -82,6 +82,12 @@ def run_agent(spec: JobSpec, conv_factory, cfg: dict, job_dir: Path) -> JobResul
                     if submitted is not None:
                         results.append((call.id, "ignored: already submitted", True))
                         continue
+                    if spec.require_full_read and (unread := toolbox.unread_steps()):
+                        left = "; ".join(f"run {k}: steps {v}" for k, v in sorted(unread.items()))
+                        results.append((call.id, f"submit refused: read every step of both runs with read_steps first. "
+                                                 f"Not read yet: {left}.", True))
+                        record["coverage_refused"] = left
+                        continue
                     try:
                         args = parse_arguments(call.arguments)
                     except ValueError as e:

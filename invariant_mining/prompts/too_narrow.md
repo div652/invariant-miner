@@ -10,3 +10,5 @@ Decide whether the agent achieved the **same purpose** with a different action a
 - false: the purpose was not achieved after the pinned location, or only partly.
 
 Answer true or false, objectively and without hedging.
+
+Quotes are checked against the text at the location you give: copy them exactly (you may join excerpts with "…").
