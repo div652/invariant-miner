@@ -1,12 +1,16 @@
 # Same-task invariant mining: technical design
 
-How the algorithm in [DESIGN.md](DESIGN.md) is built. Nothing is built yet; this is the plan. Values marked *default*
-are configuration with a starting value, not decisions from the conversation ([QNA.md](QNA.md)).
+How the algorithm in [DESIGN.md](DESIGN.md) is built. Sections 1-7 are built (package `invariant_mining/`, tests
+`tests/test_im_*.py`); section 8 (aggregation) is not. Values marked *default* are configuration with a starting value,
+not decisions from the conversation ([QNA.md](QNA.md)).
 
 ## 1. Placement
 
-- Code: a Python package `invariant_mining/` at the root of branch `2sameInvariantAlgo` (Python 3.12, standard library
-  only: `urllib` for HTTP, `sqlite3` for state, `json`). It reads DSH session logs; it never runs DSH.
+- Code: a Python package `invariant_mining/` at the root of branch `2sameInvariantAlgo` (Python 3.12). Standard library
+  everywhere (`urllib` for the OpenAI Responses API, `sqlite3` for state) except the Claude client, which uses the
+  official `anthropic` SDK: `uv venv work/im-venv && uv pip install --python work/im-venv/bin/python anthropic`, and run
+  with `work/im-venv/bin/python -m invariant_mining ...`. The tests need no SDK. It reads DSH session logs; it never
+  runs DSH.
 - It is benchmark-agnostic and must pass `tests/test_layout.py` (no benchmark names in it). Benchmark-specific glue
   (e.g. building a manifest from a benchmark's run directories and grades) goes in `benchmarks/<name>/`.
 - Run outputs go to `runs/` (gitignored).
@@ -15,17 +19,19 @@ are configuration with a starting value, not decisions from the conversation ([Q
 invariant_mining/
   trajectory.py   session.v2.jsonl -> normalized trajectory; locations and their order
   tools.py        the read-only trajectory tools
-  models.py       CAO clients: OpenAI Responses (GPT), Anthropic Messages (Claude)
+  config.py       the default configuration (models, roles, budgets, limits)
+  models.py       conversations over the CAO gateway: OpenAI Responses (GPT, plain HTTP); key lookup
+  claude_client.py  Claude conversations through the anthropic SDK (Messages API)
   agent.py        the job agent loop: budgets, context guard, notes, submit validation, transcripts
   jobs.py         job kinds: inputs -> prompt, output schema (F1 propose, F1 reword, F2, F3, too-narrow)
   prompts/        one system prompt per job kind + a shared preamble
-  store.py        SQLite state: trajectories, invariants, cells, jobs, events
+  store.py        SQLite state: trajectories, tasks, invariants, cells, triggers, validations, jobs, events
   rules.py        the programmatic rules: outcome -> points / removal / reword, scheduling
   pipeline.py     scheduler: runs pending work with a concurrency limit; resumable
   report.py       report.md + report.json
   aggregate.py    later: union across tasks with the semantic judge (section 8)
   cli.py          prepare / run / report / job
-tests/            (repo tests/) scripted-model tests, no real model calls
+tests/            (repo tests/) im_fixtures.py + test_im_*.py: scripted-model tests, no real model calls
 ```
 
 ## 2. Trajectories
@@ -95,8 +101,11 @@ them, plus metadata.
 - **Failures**: a failed job is retried once as a fresh job (*default*); if it fails again, the cell or task gets the
   outcome `job_error` (no change to points, logged). A reword or validation job that fails counts as a failed
   rewording attempt (*default*).
-- Each job keeps `jobs/<job_id>/input.json`, `transcript.jsonl` (every request and response), `notes.md`,
-  `output.json`.
+- Each job keeps `jobs/<job_id>/input.json`, `transcript.jsonl`, `notes.md`, `output.json` (or `error.txt`). The
+  transcript has one record per model step: the model's response in full (encrypted reasoning and thinking signatures
+  removed) and each tool result as tool, arguments, size and first 500 characters (tool results are deterministic given
+  the trajectory, so they can be recomputed; storing them whole would cost about 1 MB per job). A retried job gets its
+  own directory (`<job_id>-retry1`).
 
 ### 3.2 Model clients (`models.py`)
 
@@ -106,10 +115,14 @@ repo's `models/luna-cao.json` and `models/opus55-max-cao.json`:
 | Model | API | Settings |
 |---|---|---|
 | GPT-5.6 Luna (`gpt-5.6-luna`) | OpenAI Responses, `/v1/responses` | `reasoning: {effort: high, summary: auto}`, `include: [reasoning.encrypted_content]`, `store: false`; the previous output items (reasoning items with their encrypted content, function calls) are sent back each turn with the `function_call_output` items; tools with `strict: false` |
-| Claude Opus 5.5 (`claude-opus-5-5`) | Anthropic Messages, `/v1/messages` (`x-api-key`) | adaptive thinking, effort high for every job kind (DESIGN.md section 4), thinking blocks sent back with their signatures each turn |
+| Claude Opus 5.5 (`claude-opus-5-5`) | Anthropic Messages, `/v1/messages`, through the `anthropic` SDK (streaming) | `thinking: {type: adaptive, display: summarized}`, `output_config: {effort: high}` for every job kind (DESIGN.md section 4), the assistant's content blocks sent back unchanged each turn (thinking blocks keep their signatures) |
 
 Retries (as in the model files): rate limits, 5xx, timeouts, transport errors, empty responses, `INVALID_REQUEST`, and
-Anthropic's mid-stream `api_error`; 5 retries with backoff. Concurrency: one limit on running jobs (*default* 20; CAO has
+Anthropic's mid-stream `api_error`; 5 retries with backoff. A Claude `refusal` stop fails the job (retried once as a
+fresh job, then a job error): the gateway rejects the server-side refusal `fallbacks` parameter (checked 2026-11-17,
+"Extra inputs are not permitted"). A Claude response cut at `max_tokens` (64,000) also fails the job. The context guard
+edits earlier tool results; on Opus 5.5 such an edit can make earlier thinking blocks unreadable to the model, and it
+only happens past 60% of the window. Concurrency: one limit on running jobs (*default* 20; CAO has
 been run at 24 concurrent requests). Model per job kind is configuration (`config.json`).
 
 ### 3.3 Tools (`tools.py`)
@@ -187,8 +200,10 @@ code; each job records the sha256 of the prompt it used.
 | `trajectories` | id, task_id, label, source, json_path, steps, est_tokens |
 | `tasks` | task_id, p1, p2, status, benchmark_context |
 | `invariants` | id, task_id, observation_json, action, purpose, follows_json, evidence_json, status (`active`, `removed`, `retired`), parent_id, origin (`propose`, `reword`), reword_attempt, created_job |
-| `cells` | invariant_id, trajectory_id, label, f2_seen, f2_location, f3_outcome, f3_action_location, recheck_f2_seen, recheck_f2_location, recheck_f3_outcome, recheck_f3_action_location, too_narrow, too_narrow_location, final_outcome (`followed`, `not_followed`, `purpose_otherwise`, `only_before`, `not_seen`, `pinning_wrong`, `job_error`), status (`pending`, `running`, `done`, `cancelled`, `error`), job_ids |
-| `jobs` | id, kind, model, effort, prompt_sha256, input_json, status, started, ended, model_steps, tokens_in, tokens_out, output_json, error |
+| `cells` | invariant_id, trajectory_id, label, stage (`f2`, `f3`, `recheck_f2`, `recheck_f3`, `too_narrow`), f2_seen, f2_location, f3_outcome, f3_action_location, recheck_f2_seen, recheck_f2_location, recheck_f3_outcome, recheck_f3_action_location, too_narrow, too_narrow_location, final_outcome (`followed`, `not_followed`, `purpose_otherwise`, `only_before`, `not_seen`, `pinning_wrong`, `job_error`), status (`pending`, `running`, `done`, `cancelled`, `error`), job_ids |
+| `triggers` | id, invariant_id, kind (`remove`, `reword`), trajectory_id, label, alt_location, status (`waiting`, `active`, `done`, `dropped`), stage (`reword`, `validate`), attempt, new_action, new_purpose, previous_json, result, new_invariant: the per-invariant queue of removals and rewords, processed one at a time, oldest first |
+| `validations` | trigger_id, attempt, trajectory_id, stage (`f2`, `f3`), status, f2_seen, f2_location, f3_outcome, f3_action_location, ok: the F2/F3 checks of a rewording on P1, P2 (and the passing trigger); an attempt reuses earlier attempts' F2 verdicts, since the observation is unchanged |
+| `jobs` | id, kind, role, model, effort, prompt_sha256, input_json, status, started, ended, model_steps, tokens_in, tokens_out, output_json, error |
 | `events` | time, kind, task_id, invariant_id, trajectory_id, detail_json: every removal, retirement, reword (attempt, result), Luna/Opus disagreement, pinning wrong, only before, purpose achieved otherwise, F1 evidence check failure, job error |
 
 ### 4.2 Rules (`rules.py`)
@@ -231,20 +246,25 @@ runs/<name>/
 python3 -m invariant_mining prepare --manifest M.json --config C.json --out runs/NAME   # normalize trajectories
 python3 -m invariant_mining run runs/NAME [--tasks T ...] [--concurrency 20]           # the pipeline; resumable
 python3 -m invariant_mining report runs/NAME                                            # report.md + report.json
-python3 -m invariant_mining job runs/NAME --kind f2 --invariant I --trajectory T        # one job by hand
+python3 -m invariant_mining job runs/NAME --kind f2_seen --trajectories T=ID --inputs '{"facts": ["..."]}'  # one job by hand
+python3 -m invariant_mining ping                                                        # one tiny request per model
 ```
+
+`manifest.json`: `{"trajectories": [{"id", "task_id", "label": "pass" | "fail", "session_log": path to a
+session.v2.jsonl or a directory holding exactly one}], "tasks": [{"task_id", "p1", "p2"}], "benchmark_context": optional
+path}`. `prepare` checks that P1 and P2 are distinct passing trajectories of their task. Building a manifest from a
+benchmark's run directories is benchmark glue (`benchmarks/<name>/`).
 
 ## 6. Tests (scripted model, no real model calls)
 
-- `test_im_trajectory.py`: a small synthetic session log (not benchmark data): items, locations, order, ignored records.
-- `test_im_tools.py`: paging, caps, search hits and locations, F1's `run` argument.
-- `test_im_agent.py`: with a scripted model (like `tests/scripted_model.py`): submit validation and retries, budgets,
-  context guard, job failure and retry.
-- `test_im_rules.py`: table-driven, one case per cell of DESIGN.md section 5's table, φ, only before, Opus disagreeing
-  either way, too narrow on a passing run -> reword valid / invalid twice, too narrow on a failing run -> no point and
-  reword valid / invalid twice (invariant kept), cancellation after removal, first-violation flag, F1 evidence check.
-- `test_im_pipeline.py`: end to end with the scripted model: one task, P1, P2, one more passing and two failing
-  trajectories; resume after a stop.
+- `test_im_trajectory_tools.py`: a synthetic session log (not benchmark data): items, locations, order, ignored
+  records, a user message mid-run; the tools: overview, paging, caps, search hits and locations, F1's `run` argument.
+- `test_im_agent.py`: the agent loop with a scripted model (submit rejected then accepted, nudges, step budget, invalid
+  submits, context guard) and the validators (F1, F2, F3, too-narrow; what each job kind is shown).
+- `test_im_pipeline.py`: end to end with a scripted policy model: one task with P1, P2, one more passing and two failing
+  trajectories, one invariant per rule (support, importance, φ, removal, Opus disagreeing, too narrow on a passing run
+  -> reworded and validated, too narrow on a failing run -> two failed attempts and the invariant kept, pinning wrong,
+  only before, first violation), F2 reuse across attempts, resume after a stop, idempotent re-run.
 - `tests/test_layout.py` keeps passing.
 
 ## 7. Cost (estimate, to be measured)
