@@ -45,6 +45,7 @@ turns below.
 | The algorithm is agnostic to the data; which tasks and trajectories are used is decided later (flip tasks for importance) | 7, 9 |
 | How the points are used downstream: decided later | 11 |
 | A precise design document and a technical document, built from this conversation | 13 |
+| Built (TECHNICAL sections 1-7, package invariant_mining/, commits c8fa902, 1b06c4b); aggregation not built | 27, 28 |
 | Confirmed after the consistency check: validation verdicts reused as the triggering passing run's cell; chains written self-contained (link kept as information) | 27 |
 
 ## Log
@@ -682,4 +683,32 @@ I read all of QNA.md (turns 1–24) and both documents line by line, checking ev
 
 ````text
 yes both are fine, go ahead.
+````
+
+### Turn 28 — Claude (2026-11-17)
+
+````text
+Recorded both confirmations, then built the algorithm (TECHNICAL §1–7) and pushed it to `2sameInvariantAlgo` (`c8fa902`, `1b06c4b`). Aggregation (§8) and the other "later" items aren't built.
+
+**What's there** (`invariant_mining/`):
+- **Jobs:** F1 propose, F2, F3, the too-narrow check and the reword mode, each run as an agent with read-only trajectory tools. Prompts are in `prompts/`.
+- **Models:** Luna through the Responses API; Opus 5.5 at effort high through the Anthropic SDK; both via CAO.
+- **Pipeline:** an SQLite table of cells, plus the per-invariant queue for removals and rewordings with their validation. The scheduler is resumable.
+- **Report:** `report.md` and `report.json`, with points, first violations, removals, rewordings, disagreements and cost.
+- **CLI:** `python -m invariant_mining prepare | run | report | job | ping`.
+
+**Tests:** 83 checks with a scripted model, all passing, plus the layout test. The pipeline test runs one invariant through each rule in DESIGN §5.
+
+**Live checks (about 11 model requests):**
+- Luna F2 and Opus F3 on synthetic trajectories both work end to end, including the tool loop and thinking replay.
+- One F2 job on a real Harvey train trajectory (task 028, run 1, ~250K tokens) took 3 steps, ~20 s and ~25K input tokens.
+- Its first answer pinned a later location than the first instance (caution C3). I tightened the F2 prompt to check earlier steps before submitting; the rerun pinned the earliest one. All prompts now ask for verbatim quotes.
+
+**Worth knowing:**
+- The Anthropic SDK lives in `work/im-venv`; run with `work/im-venv/bin/python -m invariant_mining ...`.
+- CAO rejects Opus's server-side refusal fallback. A refused Opus request therefore fails the job, which is retried once and then logged.
+- On this disk an SQLite commit took 0.4 s (the disk is 95% full, 58 GB free). I turned off the per-commit fsync, so the pipeline test went from minutes to 3 s.
+- Job transcripts keep the model responses in full but only the first 500 characters of each tool result, since tool results can be recomputed from the trajectory.
+
+**Next:** a first real run needs data. Task 028 is ready as a smoke test: P1 = run 2, P2 = run 3, and run 1 is failing. That is one Opus F1 job plus checks on run 1, roughly a few hundred requests. Should I run it, or will you pick the data first?
 ````
