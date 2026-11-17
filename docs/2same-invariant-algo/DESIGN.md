@@ -1,7 +1,7 @@
 # Same-task invariant mining: design
 
 What the algorithm does and the rules it follows, as agreed in the design conversation of 2026-11-16/17
-([QNA.md](QNA.md): the verbatim log, turns 1-26; "turn N" below points into it). How it is built:
+([QNA.md](QNA.md): the verbatim log, turns 1-28; "turn N" below points into it). How it is built:
 [TECHNICAL.md](TECHNICAL.md). Nothing is built yet.
 
 Every item below was decided in the conversation; what is still open is in section 12.
@@ -26,7 +26,7 @@ important one (turn 7).
 | Action | What the agent does after the observation: a tool call, or a decision or step taken from its reasoning (turn 3). One short statement in the same abstract, granular terms. Something the agent knows is an observation; something it chooses or intends is an action (turn 6). |
 | Purpose | One line per action: what the action achieves (turn 10). For our understanding; never shown to F2 or F3 (turn 13). Used by the too-narrow check and the reword step (section 4). |
 | Invariant | (observation, action) with its reasons, source labels and purpose, an id, the task, and P1, P2. |
-| Chain | An observation can describe the outcome of an earlier invariant's action, e.g. "keyword search results with the most-hit keyword identified" after "keyword search results -> identifies the keyword with most hits" (turns 5, 6). The observation is written self-contained, as in the user's own example (turn 5); the link is kept as information only (Claude's turn-6 idea of writing the link into the text was dropped because F2 checks each observation alone; to confirm, section 12). |
+| Chain | An observation can describe the outcome of an earlier invariant's action, e.g. "keyword search results with the most-hit keyword identified" after "keyword search results -> identifies the keyword with most hits" (turns 5, 6). The observation is written self-contained, as in the user's own example (turn 5); the link is kept as information only (Claude's turn-6 idea of writing the link into the text was dropped because F2 checks each observation alone; confirmed turn 27). |
 | Location | A position in a trajectory: the system prompt, the tool descriptions, a user message, or a step's reasoning, text, tool call or tool output (format: TECHNICAL.md section 2.3). Locations are ordered as the agent saw them. |
 | Cell | One invariant x one trajectory, other than that invariant's P1 and P2. It holds the verdicts of the checks run on it and their final outcome. |
 | Support point | +1 for an invariant on a passing trajectory where its observation was seen and its action followed (turns 9, 12). |
@@ -152,8 +152,8 @@ Validation, with the standard F2 and F3 (Luna high): (observation, new action) m
 P2, and, when the trigger is a passing run, on the triggering run too (turns 11, 13 answer 2, 17).
 - Valid, at either attempt: the old invariant is **retired**, the new one is added (new id, link to the old one) with
   0 points, and all its cells are scheduled: it is scored again on every other passing and failing run (turns 11, 17).
-  For a passing trigger, the validation verdicts on the triggering run are kept as that cell's verdicts (Claude's
-  choice, turn 14, not discussed: they are the same F2/F3 jobs the cell would run; to confirm, section 12); a failing
+  For a passing trigger, the validation verdicts on the triggering run are kept as that cell's verdicts (turn 14,
+  confirmed turn 27: they are the same F2/F3 jobs the cell would run); a failing
   trigger is scored like any other run (turn 18).
 - Not valid: a second rewording attempt, given the first attempt and which check failed (turns 13, 17). If it also
   fails:
@@ -318,7 +318,5 @@ anytime after F2's location** (4.3), with "only before" as a separate outcome (H
 
 ## 12. Open questions
 
-No open design questions since turn 21; the later work of section 9 is still to be discussed. Two choices made while
-writing the documents were never discussed and need the user's confirmation (found in the consistency check, turn 26):
-1. Reusing the validation verdicts as the triggering passing run's cell (4.5).
-2. Chains written self-contained, with the link as information only (section 2).
+None (turn 27: the two choices found in the consistency check of turn 26, reusing validation verdicts (4.5) and
+self-contained chains (section 2), were confirmed). The later work of section 9 is still to be discussed.

@@ -45,6 +45,7 @@ turns below.
 | The algorithm is agnostic to the data; which tasks and trajectories are used is decided later (flip tasks for importance) | 7, 9 |
 | How the points are used downstream: decided later | 11 |
 | A precise design document and a technical document, built from this conversation | 13 |
+| Confirmed after the consistency check: validation verdicts reused as the triggering passing run's cell; chains written self-contained (link kept as information) | 27 |
 
 ## Log
 
@@ -675,4 +676,10 @@ I read all of QNA.md (turns 1–24) and both documents line by line, checking ev
 **Two choices in the docs that we never discussed (now listed in DESIGN §12):**
 - **Reusing validation verdicts (4.5):** when a passing run triggers a rewording that validates, its validation F2/F3 verdicts become that run's cell for the new invariant, instead of running the same two jobs again. OK?
 - **Chains:** observations are written self-contained, as in your turn-5 example. The chain is recorded only as a `follows` link. My turn-6 idea of writing the link into the observation text was dropped, because F2 has to check each observation on its own. OK?
+````
+
+### Turn 27 — user (2026-11-17)
+
+````text
+yes both are fine, go ahead.
 ````
