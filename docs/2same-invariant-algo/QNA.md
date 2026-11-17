@@ -719,3 +719,42 @@ Recorded both confirmations, then built the algorithm (TECHNICAL §1–7) and pu
 ````text
 yes run the smoke test on task 028. is opus is refusing we can replace all places opus5.5 is being used with gpt-6 astra high.
 ````
+
+### Turn 30 — user (2026-11-18)
+
+````text
+show me the invariants and their points
+````
+
+### Turn 31 — Claude (2026-11-18)
+
+````text
+The run is almost done: 13 of 14 checks are finished, F3 for i7 is still running, and i6's rewording is in progress. Points so far, against the failing run 1:
+
+| id | observation (short) | action (short) | run 1 (failing) | support | importance |
+|---|---|---|---|---|---|
+| i1 | system prompt forbids reading the task config file | decides not to touch it; searches only task documents | followed | 0 | 0 |
+| i2 | ∅ | creates a phased todo list | followed | 0 | 0 |
+| i3 | task asks which matters involve the keyword; documents are in `documents/` | lists every file under `documents/` (recursive glob) | only before | 0 | 0 |
+| i4 | corpus = thousands of binary office files; task names a keyword | filename globs for the keyword and related terms | followed | 0 | 0 |
+| i5 | filename matches cluster in a few matter folders | lists each candidate matter folder | followed | 0 | 0 |
+| i6 | candidate folders hold the engagement letter + keyword .docx files; system prompt says use parse-doc | parses them with parse-doc into text files | not followed → purpose achieved another way (s8.c3) → rewording | 0 | 0 |
+| i7 | parsed text files exist; system prompt says use read/grep tools | reads the parsed documents with `read` | still running | – | – |
+| i8 | candidates so far came from filename/targeted matches | broadens the search with more domain terms | followed | 0 | 0 |
+| i9 | engagement letters/filings say whom the firm represented | labels each matter with the firm's capacity | followed | 0 | 0 |
+| i10 | one candidate's documents are standby drafts, never filed | includes it, labelled as contingency | followed | 0 | 0 |
+| i11 | many unrelated matters mention generic financing | states inclusion criteria and exclusions | followed | 0 | 0 |
+| i12 | task asks for one markdown file; relative writes go to `output/` | writes `response.md` in the given structure | only before | 0 | 0 |
+| i13 | the write result shows `output/response.md` exists | reads it back | followed | 0 | 0 |
+| i14 | deliverable written and checked | marks the todos complete and ends | followed | 0 | 0 |
+
+**What to read into this:**
+- **Support is 0 for every invariant, by construction.** Task 028 has 3 runs: two are P1/P2, so the only other run is the failing one. Support needs extra passing runs.
+- **Importance is 0 so far.** The failing run follows nearly every invariant, so these mostly generic process steps don't explain why it failed. That matches H5 (process right, content wrong): 028's failure was a recall miss.
+- **i3 and i12 show H4 working, and point at an F1 flaw.** In each, the fact F2 pinned only appears in the action's own result: the glob output reveals `documents/`, and the write result reveals `output/`. So F1 put the action's outcome into its observation.
+- **i6 is H1 on a failing run.** Run 1 ran parse-doc to print the text instead of saving it to files. The too-narrow check said "same purpose", so i6 gets no importance point and a rewording is being validated on P1/P2.
+- **F1 quality:** some invariants are generic (i13, i14), and F1 skipped steps 13–17 of run B.
+- **No Opus refusals,** so no switch to Astra.
+
+I'll post the final table when the last two items finish.
+````
