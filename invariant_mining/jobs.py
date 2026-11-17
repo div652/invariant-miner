@@ -68,10 +68,11 @@ def _quote(value) -> str:
 
 def _norm(text: str) -> str:
     """Letters and digits only, lowercased, after removing line-number prefixes ("15:  text", as tool outputs show
-    them) and quoted-printable soft line breaks: quotes often drop formatting (markdown, table layout, escapes, line
+    them) and quoted-printable soft line breaks and escapes (=E2=80=99): quotes often drop formatting (markdown, table layout, escapes, line
     numbers), and the check is only that the quoted words are this item's words in this order."""
     text = re.sub(r"(?m)^[ \t]*\d+:[ \t]?", "", text)
     text = re.sub(r"=\r?\n", "", text)
+    text = re.sub(r"(?:=[0-9A-F]{2})+", lambda m: bytes.fromhex(m.group(0).replace("=", "")).decode("utf-8", "ignore"), text)
     return re.sub(r"[^0-9a-z]+", "", text.lower())
 
 
