@@ -813,3 +813,58 @@ Both changes are made, tested and pushed (`b76ea6b`):
 
 I'll report the invariants and their points per task when it finishes.
 ````
+
+### Turn 36 — Claude (2026-11-18): mixed:flip result
+
+````text
+The full method ran on all 8 mixed:flip tasks, 01:11–02:06 IST: 1,169 jobs, 8,220 model requests (838 Opus, 7,382 Luna), 134M input tokens. Opus never refused, so Astra wasn't needed.
+
+Three jobs failed their first try because my quote/location checks were too strict: `read` output with line numbers, a pandoc table, a quoted-printable email, a malformed offset `sys#?`. All three passed on their automatic retry, so no cell was lost, and the checks are fixed in code.
+
+**Totals:**
+- 164 invariants proposed, plus 30 rewordings; 156 are active at the end.
+- 8 were removed, because a passing run saw the observation and Opus confirmed the action didn't follow.
+- 30 were retired, each replaced by its rewording. 3 rewordings failed twice: 1 invariant was removed, 2 were kept.
+- Opus disagreed with Luna in 6 of 27 re-checks.
+
+| # | task | runs besides P1/P2 | proposed → active | removed | reworded |
+|---|---|---|---|---|---|
+| 1 | account-control redline | 2 pass, 1 fail | 22 → 19 | 3 | 2 |
+| 2 | SPA markup | 2 pass, 1 fail | 19 → 17 | 2 | 3 |
+| 3 | firm-knowledge 111 | 2 pass, 1 fail | 15 → 14 | 1 | 2 |
+| 4 | TSA markup | 1 pass, 2 fail | 19 → 19 | 0 | 7 |
+| 5 | DPA review | 1 pass, 2 fail | 21 → 19 | 2 | 4 |
+| 6 | repo-securities redline | 0 pass, 3 fail | 32 → 32 | 0 | 9 |
+| 7 | SaaS API redline | 0 pass, 3 fail | 17 → 17 | 0 | 2 |
+| 8 | firm-knowledge 065 | 0 pass, 3 fail | 19 → 19 | 0 | 1 |
+
+**Invariants that earned importance points** (S = support, I = importance, FV = first violation in that many failing runs):
+- **T1:**
+  - i7 "writes a build script that generates the redline from scratch with w:ins/w:del": S2 I1 FV1.
+  - i15 "after the build, extracts both deliverables and counts w:ins/w:del": S2 I1.
+- **T2:** i17 "after the final rebuild, globs the output directory to confirm only the deliverable is there": S2 I1 FV1.
+- **T3:** i4 "a glob result was truncated into a spill file → reads/greps the spill file": S2 I1 FV1.
+- **T4:** i18 "calls get_goal, then update_goal with the returned id and revision": S1 I1 FV1.
+- **T6:**
+  - i7 "compares the first-turn draft's paragraphs against the base redline, to keep unchanged elections": I3 FV1.
+  - i14 "inserts w:trackRevisions into settings.xml": I2 FV2.
+  - i23 "converts the output redline to PDF to check it": I2.
+  - i26 "when the renderer fails, checks each XML part with lxml": I1.
+  - ri18.2 "records each numeric term with its schedule and both parties' positions": I1.
+- **T7:** i9 "adds a drafting note pointing to the still-open points": I2 FV2.
+- **T8:**
+  - i17 "writes response.md with the count, the qualifying matters with cited documents, the criteria and the exclusions": I2 FV2.
+  - i5 "saves extracted document text as files inside the workspace": I1 FV1.
+- **T5:** none.
+
+**What it shows:**
+1. **The points separate routine steps from telling ones.** In tasks 1–3 most invariants hold in both extra passing runs (S2) and earn no importance: todo lists, reading back, final message. Importance concentrates on steps the failing runs skipped, mostly checks of the output: the tracked-changes markup in the redline tasks, the output folder, the spill file.
+2. **4 of the 16 failing runs break no invariant:** SaaS run 5, TSA run 3, DPA runs 3 and 4. These are the cases the planned targeted re-proposal is for (H5).
+3. **Tasks 6–8 have no extra passing run,** so nothing could be pruned there; T6 keeps all 32 invariants. Their importance points are counted over unpruned sets.
+4. **Rewording is not rare:** 40 too-narrow verdicts led to 30 rewordings, more than the "rare" you hoped for. F1 often words actions by mechanism (which tool) rather than purpose.
+5. **32 cells came out "only before".** Some may be late pins by F2 rather than real cases; worth a look.
+
+The full tables, events and cost are in `runs/im-mixed-flip-20261117T194118Z/report.md`.
+
+What next? I could check the 32 "only before" cases, or we can discuss the targeted re-proposal or the union across tasks.
+````
