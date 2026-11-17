@@ -13,8 +13,12 @@ Answer:
 
 - `seen`: true or false.
 - `location`: the **first** location where all facts hold, i.e. where the last of them first appears (null if not seen).
-- `evidence`: for each fact by its number, the location where it first appears and a short quote (at most 300
+- `evidence`: for each fact by its number, the location where it first appears and a short quote copied verbatim from that location (at most 300
   characters). Empty if not seen.
+
+Before you submit, go back over the steps before your location and look for an earlier instance of each fact (any
+concrete form of it counts, e.g. a search over file names or over file contents are both searches): the location must
+be the earliest point where all facts hold, not the clearest one. A later location makes later checks wrong.
 
 You judge only the observation; what the agent did afterwards does not matter here. Answer objectively, true or false,
 without hedging: if the evidence is borderline, decide on the most direct reading of the facts.

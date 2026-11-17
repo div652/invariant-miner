@@ -5,7 +5,7 @@ and one trajectory. Another check found that the agent did not take the action, 
 
 Decide whether the agent achieved the **same purpose** with a different action after the pinned location.
 
-- true: the purpose was achieved by another action after the pinned location; give its location and a short quote (at
+- true: the purpose was achieved by another action after the pinned location; give its location and a short quote copied verbatim from it (at
   most 300 characters).
 - false: the purpose was not achieved after the pinned location, or only partly.
 
