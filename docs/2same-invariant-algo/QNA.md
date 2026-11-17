@@ -729,7 +729,7 @@ show me the invariants and their points
 ### Turn 31 — Claude (2026-11-18)
 
 ````text
-The run is almost done: 13 of 14 checks are finished, F3 for i7 is still running, and i6's rewording is in progress. Points so far, against the failing run 1:
+All 14 checks against the failing run 1 are done; two rewordings (i6, i7) are still running. Points so far:
 
 | id | observation (short) | action (short) | run 1 (failing) | support | importance |
 |---|---|---|---|---|---|
@@ -739,7 +739,7 @@ The run is almost done: 13 of 14 checks are finished, F3 for i7 is still running
 | i4 | corpus = thousands of binary office files; task names a keyword | filename globs for the keyword and related terms | followed | 0 | 0 |
 | i5 | filename matches cluster in a few matter folders | lists each candidate matter folder | followed | 0 | 0 |
 | i6 | candidate folders hold the engagement letter + keyword .docx files; system prompt says use parse-doc | parses them with parse-doc into text files | not followed → purpose achieved another way (s8.c3) → rewording | 0 | 0 |
-| i7 | parsed text files exist; system prompt says use read/grep tools | reads the parsed documents with `read` | still running | – | – |
+| i7 | parsed text files exist; system prompt says use read/grep tools | reads the parsed documents with `read` | not followed → purpose achieved another way → rewording | 0 | 0 |
 | i8 | candidates so far came from filename/targeted matches | broadens the search with more domain terms | followed | 0 | 0 |
 | i9 | engagement letters/filings say whom the firm represented | labels each matter with the firm's capacity | followed | 0 | 0 |
 | i10 | one candidate's documents are standby drafts, never filed | includes it, labelled as contingency | followed | 0 | 0 |
@@ -752,9 +752,9 @@ The run is almost done: 13 of 14 checks are finished, F3 for i7 is still running
 - **Support is 0 for every invariant, by construction.** Task 028 has 3 runs: two are P1/P2, so the only other run is the failing one. Support needs extra passing runs.
 - **Importance is 0 so far.** The failing run follows nearly every invariant, so these mostly generic process steps don't explain why it failed. That matches H5 (process right, content wrong): 028's failure was a recall miss.
 - **i3 and i12 show H4 working, and point at an F1 flaw.** In each, the fact F2 pinned only appears in the action's own result: the glob output reveals `documents/`, and the write result reveals `output/`. So F1 put the action's outcome into its observation.
-- **i6 is H1 on a failing run.** Run 1 ran parse-doc to print the text instead of saving it to files. The too-narrow check said "same purpose", so i6 gets no importance point and a rewording is being validated on P1/P2.
+- **i6 and i7 are H1 on a failing run.** Run 1 ran parse-doc to print the text instead of saving it to files (i6), and so read it from the command output rather than with `read` (i7). Both times the too-narrow check said "same purpose", so neither gets an importance point and both are being reworded. i6's new action is being validated on P1/P2: "Converts each candidate matter's engagement letter and core keyword documents to text with parse-doc and reads that text, whether it is saved to files or read straight from the command output". i7's rewording has started.
 - **F1 quality:** some invariants are generic (i13, i14), and F1 skipped steps 13–17 of run B.
 - **No Opus refusals,** so no switch to Astra.
 
-I'll post the final table when the last two items finish.
+I'll post the final table when both rewordings finish.
 ````
