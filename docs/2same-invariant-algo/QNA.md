@@ -46,6 +46,7 @@ turns below.
 | How the points are used downstream: decided later | 11 |
 | A precise design document and a technical document, built from this conversation | 13 |
 | Built (TECHNICAL sections 1-7, package invariant_mining/, commits c8fa902, 1b06c4b); aggregation not built | 27, 28 |
+| Smoke test on Harvey task 028 (P1 run 2, P2 run 3, run 1 failing); if Opus 5.5 refuses, every Opus role is replaced by GPT-6 Astra high | 29 |
 | Confirmed after the consistency check: validation verdicts reused as the triggering passing run's cell; chains written self-contained (link kept as information) | 27 |
 
 ## Log
@@ -711,4 +712,10 @@ Recorded both confirmations, then built the algorithm (TECHNICAL §1–7) and pu
 - Job transcripts keep the model responses in full but only the first 500 characters of each tool result, since tool results can be recomputed from the trajectory.
 
 **Next:** a first real run needs data. Task 028 is ready as a smoke test: P1 = run 2, P2 = run 3, and run 1 is failing. That is one Opus F1 job plus checks on run 1, roughly a few hundred requests. Should I run it, or will you pick the data first?
+````
+
+### Turn 29 — user (2026-11-17)
+
+````text
+yes run the smoke test on task 028. is opus is refusing we can replace all places opus5.5 is being used with gpt-6 astra high.
 ````

@@ -11,12 +11,15 @@ DEFAULT_CONFIG = {
                  "prompt_window": 1_000_000},
         "luna": {"model": "gpt-5.6-luna", "api": "openai-responses", "effort": "high", "max_tokens": 64000,
                  "prompt_window": 922_000},
+        # the replacement for every Opus role if Opus refuses (user, 2026-11-17): set those roles to "astra"
+        "astra": {"model": "gpt-6-astra", "api": "openai-responses", "effort": "high", "max_tokens": 64000,
+                  "prompt_window": 1_050_000},
     },
     # which model does each kind of job (DESIGN.md section 4)
     "roles": {"f1_propose": "opus", "f1_reword": "opus", "f2_seen": "luna", "f3_followed": "luna",
               "f2_recheck": "opus", "f3_recheck": "opus", "too_narrow": "opus"},
     "budgets": {"f1_propose": 150, "f1_reword": 60, "f2_seen": 40, "f3_followed": 40, "too_narrow": 40},  # model steps
-    "wall_time_s": 1800,          # per job
+    "wall_time_s": {"default": 1800, "f1_propose": 7200},  # per job, by kind
     "context_guard": 0.6,         # elide old tool results past this share of the model's prompt window
     "max_invalid_submits": 3,
     "job_retries": 1,             # a failed job is retried this many times as a fresh job

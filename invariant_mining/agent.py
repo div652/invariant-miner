@@ -39,6 +39,8 @@ def run_agent(spec: JobSpec, conv_factory, cfg: dict, job_dir: Path) -> JobResul
     budget = int(cfg["budgets"].get(spec.kind, 40))
     model = cfg["models"][spec.model_key]
     guard = int(cfg["context_guard"] * model.get("prompt_window", 900_000))
+    wall = cfg["wall_time_s"]
+    wall = wall.get(spec.kind, wall.get("default", 1800)) if isinstance(wall, dict) else wall
     started = time.time()
     steps = invalid = tin = tout = 0
 
@@ -57,8 +59,8 @@ def run_agent(spec: JobSpec, conv_factory, cfg: dict, job_dir: Path) -> JobResul
         while True:
             if steps >= budget:
                 return finish(False, error=f"step budget ({budget}) used up without an accepted submit")
-            if time.time() - started > cfg["wall_time_s"]:
-                return finish(False, error=f"wall time ({cfg['wall_time_s']} s) used up without an accepted submit")
+            if time.time() - started > wall:
+                return finish(False, error=f"wall time ({wall} s) used up without an accepted submit")
             try:
                 st = conv.step()
             except ModelError as e:
