@@ -1,7 +1,7 @@
 # Same-task invariant mining: design
 
 What the algorithm does and the rules it follows, as agreed in the design conversation of 2026-11-16/17
-([QNA.md](QNA.md): the verbatim log, turns 1-22; "turn N" below points into it). How it is built:
+([QNA.md](QNA.md): the verbatim log, turns 1-26; "turn N" below points into it). How it is built:
 [TECHNICAL.md](TECHNICAL.md). Nothing is built yet.
 
 Every item below was decided in the conversation; what is still open is in section 12.
@@ -26,7 +26,7 @@ important one (turn 7).
 | Action | What the agent does after the observation: a tool call, or a decision or step taken from its reasoning (turn 3). One short statement in the same abstract, granular terms. Something the agent knows is an observation; something it chooses or intends is an action (turn 6). |
 | Purpose | One line per action: what the action achieves (turn 10). For our understanding; never shown to F2 or F3 (turn 13). Used by the too-narrow check and the reword step (section 4). |
 | Invariant | (observation, action) with its reasons, source labels and purpose, an id, the task, and P1, P2. |
-| Chain | An observation can describe the outcome of an earlier invariant's action, e.g. "keyword search results with the most-hit keyword identified" after "keyword search results -> identifies the keyword with most hits" (turns 5, 6). The observation is written self-contained; the link is kept as information. |
+| Chain | An observation can describe the outcome of an earlier invariant's action, e.g. "keyword search results with the most-hit keyword identified" after "keyword search results -> identifies the keyword with most hits" (turns 5, 6). The observation is written self-contained, as in the user's own example (turn 5); the link is kept as information only (Claude's turn-6 idea of writing the link into the text was dropped because F2 checks each observation alone; to confirm, section 12). |
 | Location | A position in a trajectory: the system prompt, the tool descriptions, a user message, or a step's reasoning, text, tool call or tool output (format: TECHNICAL.md section 2.3). Locations are ordered as the agent saw them. |
 | Cell | One invariant x one trajectory, other than that invariant's P1 and P2. It holds the verdicts of the checks run on it and their final outcome. |
 | Support point | +1 for an invariant on a passing trajectory where its observation was seen and its action followed (turns 9, 12). |
@@ -38,14 +38,16 @@ important one (turn 7).
    one trajectory; F3 one invariant in one trajectory. A loop over items calls the model inside the loop, with a fresh
    context for each item. Jobs of one kind share a system prompt.
 2. **Jobs are agents** (turn 5). Trajectories are too long to put in one prompt (agent context at the last step: median
-   ~209K tokens, max ~414K, on Harvey FK-250 Luna high), so each job is an agent that reads its trajectories in parts
-   through read-only tools, can keep notes, and submits its answer as a structured output file. It has no other
-   abilities (no shell, no coding, no files, no web). It is told the sizes of its trajectories.
-3. **LLMs only inside the functions** (turn 11): F1 (with its reword mode), F2, F3, the too-narrow check, and later the
+   ~209K tokens, max ~414K, on Harvey FK-250 Luna high), so every job that reads trajectories (F1, its reword mode,
+   F2, F3, the too-narrow check) is an agent that reads them in parts through read-only tools, can keep notes, and
+   submits its answer as a structured output file. It has no other abilities (no shell, no coding, no files, no web).
+   It is told the sizes of its trajectories. The later semantic judge reads no trajectory, so it is a single model call
+   (turn 20).
+3. **LLMs only inside the functions** (turns 11, 15): F1 (with its reword mode), F2, F3, the too-narrow check, and later the
    semantic judge. Everything else (scheduling, outcomes, points, removal, retiring, logs, report) is programmatic.
 4. **Checkers see only what they check** (turns 3, 9, 13): F2 sees the observation's facts only (no action, no reasons,
-   no purpose, no source labels); F3 sees the facts, the action and F2's location (no reasons, no purpose); only the
-   too-narrow check (4.4) also sees the purpose.
+   no purpose, no source labels); F3 sees the facts, the action and F2's location (no reasons, no purpose); of the checks, only
+   the too-narrow check (4.4) also sees the purpose. F1's reword mode sees the whole invariant (turn 13).
 5. **No link judgement in checks** (turn 11; H2). F2 and F3 answer yes/no with locations. They never judge whether the
    agent acted because of the observation; F1's reasons carry the causal link.
 6. **Data-agnostic** (turn 7). The input is a set of trajectories with task ids and pass/fail labels, the choice of P1
@@ -72,8 +74,9 @@ Effort: **high** for every Opus 5.5 job (turn 17).
 
 ### 4.1 F1 propose
 
-Input: P1 and P2 in full (system prompt, tool descriptions, task, all steps). Output: a list of invariants, each
-present in **both** runs (turn 3), following these rules:
+Input: P1 and P2 in full (system prompt, tool descriptions, task, all steps), read through the tools (principle 2).
+Output: **all** the observation-action pairs common to **both** runs, succinct and systematic (turn 3), following
+these rules:
 - observation and action as defined in section 2: abstract, transferable, as granular as possible, keeping the role of
   task-specific things (turn 5);
 - short facts, each with its reason and source label; as many facts as the action needs, no more: a fact without a
@@ -102,6 +105,9 @@ appears (C3); per fact, the location and a short quote as evidence (turn 9).
 
 For φ (no facts) F2 is not run: the observation holds from the start of the trajectory.
 
+As a function (turn 3): F2 takes the list of proposed invariants and one trajectory, ignores the actions, and returns
+one bool (with its location) per observation; each observation is its own job.
+
 ### 4.3 F3 followed?
 
 Input: the facts, the action, F2's location, one trajectory. Steps (turns 9, 11):
@@ -115,6 +121,9 @@ Input: the facts, the action, F2's location, one trajectory. Steps (turns 9, 11)
 The action is judged as worded: a different action with the same effect is not "followed" (that case is the
 too-narrow check's job). For φ, step 1 is skipped and "only before" cannot occur.
 
+As a function (turn 3): F3 takes the proposed invariants, F2's bools and locations, and one trajectory; invariants
+whose observation was not seen are dropped programmatically, and each remaining invariant is its own job.
+
 ### 4.4 Re-check and too-narrow check (an F3 outcome of "not followed")
 
 **Too-narrow check** (turns 10, 13, 15; H1): a separate job (Opus 5.5), not part of F3, and the only check that sees the
@@ -125,7 +134,8 @@ On a **passing** trajectory (a removal candidate):
 1. **Re-check** (turn 9): F2 and F3 run again with Opus 5.5 (F3 uses Opus's F2 location). Opus's verdicts replace
    Luna's for this cell, whatever they are (turn 13, answer 4); when they differ from Luna's, the disagreement is
    logged (it measures Luna's error rate: C1).
-2. If Opus also says not followed: the too-narrow check, after Opus's F2 location.
+2. If Opus also says not followed: the too-narrow check, after Opus's F2 location. Any other Opus outcome is final,
+   with its effect in section 5.
 3. Yes -> **reword** (4.5). No -> the invariant is **removed**.
 
 On a **failing** trajectory (turns 15, 17): no re-check (turn 13, answer 5); the too-narrow check runs on Luna's
@@ -142,8 +152,9 @@ Validation, with the standard F2 and F3 (Luna high): (observation, new action) m
 P2, and, when the trigger is a passing run, on the triggering run too (turns 11, 13 answer 2, 17).
 - Valid, at either attempt: the old invariant is **retired**, the new one is added (new id, link to the old one) with
   0 points, and all its cells are scheduled: it is scored again on every other passing and failing run (turns 11, 17).
-  For a passing trigger, the validation verdicts on the triggering run are kept as that cell's verdicts; a failing
-  trigger is scored like any other run.
+  For a passing trigger, the validation verdicts on the triggering run are kept as that cell's verdicts (Claude's
+  choice, turn 14, not discussed: they are the same F2/F3 jobs the cell would run; to confirm, section 12); a failing
+  trigger is scored like any other run (turn 18).
 - Not valid: a second rewording attempt, given the first attempt and which check failed (turns 13, 17). If it also
   fails:
   - passing trigger: the invariant is removed and the failure logged (turn 13);
@@ -206,7 +217,7 @@ Per task and overall:
 
 ## 8. Highlighted notes
 
-### ★ H1. Action too narrow: a different action with the same purpose (turns 8, 10, 11, 13)
+### ★ H1. Action too narrow: a different action with the same purpose (turns 8, 10, 11, 13, 15, 17)
 
 F1 sees both source runs do the same thing, e.g. "opens each candidate file", and writes that as the action. A third
 passing run instead greps the candidate files for the key term and reads only the matching passages: same purpose
@@ -214,8 +225,7 @@ passing run instead greps the candidate files for the key term and reads only th
 although the run supports it. Cause: the action says how, not what for. User (turn 11): "a great insight". Handled by
 the too-narrow check (4.4) and the reword step with its validation (4.5). The check runs on failing runs too, so a
 failing run that achieved the purpose another way earns no importance point (turn 15) and triggers a rewording (turn 17;
-the alternative is H6). User (turn 15): the hope is that
-F1 is good enough for rewordings to be rarely needed.
+the alternative is H6). User (turn 15): the hope is that F1 is good enough for rewordings to be rarely needed.
 
 ### ★ H2. The causal link comes from F1, so F3 only checks "after" (turn 9)
 
@@ -259,6 +269,8 @@ reworded from failing runs score worse.
   something the passing runs did not do in a similar situation, and run F1 again on P1, P2, pointed at that kind of
   situation, to propose finer invariants there only. The grader's per-criterion verdicts, where a benchmark has them,
   help find that point (optional text input). H5 applies.
+- **Re-proposal for "only before" invariants** (H4; turn 10): an invariant whose action often comes before its
+  observation is re-proposed with an earlier trigger, or as (φ, action).
 - **Union across tasks with a semantic judge** (turns 13, 19; the method to use). Union = the union of the tasks'
   active invariants, merging the ones that are the same:
   1. For **every pair** of active invariants, a judge sees only the two **observations** and the benchmark context:
@@ -306,4 +318,7 @@ anytime after F2's location** (4.3), with "only before" as a separate outcome (H
 
 ## 12. Open questions
 
-None (turn 21). The later work of section 9 is still to be discussed.
+No open design questions since turn 21; the later work of section 9 is still to be discussed. Two choices made while
+writing the documents were never discussed and need the user's confirmation (found in the consistency check, turn 26):
+1. Reusing the validation verdicts as the triggering passing run's cell (4.5).
+2. Chains written self-contained, with the link as information only (section 2).

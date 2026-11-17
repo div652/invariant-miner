@@ -93,7 +93,8 @@ them, plus metadata.
   trajectory; on an error the agent gets the error and continues. After 3 invalid submits, or when a budget runs out,
   the job fails.
 - **Failures**: a failed job is retried once as a fresh job (*default*); if it fails again, the cell or task gets the
-  outcome `job_error` (no change to points, logged).
+  outcome `job_error` (no change to points, logged). A reword or validation job that fails counts as a failed
+  rewording attempt (*default*).
 - Each job keeps `jobs/<job_id>/input.json`, `transcript.jsonl` (every request and response), `notes.md`,
   `output.json`.
 
@@ -113,7 +114,7 @@ been run at 24 concurrent requests). Model per job kind is configuration (`confi
 
 ### 3.3 Tools (`tools.py`)
 
-Read-only, over the normalized trajectories only. In F1 every tool takes `run: "A" | "B"` (A = P1, B = P2); other jobs
+Read-only, over the normalized trajectories only. In F1 every trajectory tool takes `run: "A" | "B"` (A = P1, B = P2); other jobs
 see one trajectory and the argument is absent.
 
 | Tool | Returns |
@@ -185,7 +186,7 @@ code; each job records the sha256 of the prompt it used.
 |---|---|
 | `trajectories` | id, task_id, label, source, json_path, steps, est_tokens |
 | `tasks` | task_id, p1, p2, status, benchmark_context |
-| `invariants` | id, task_id, observation_json, action, purpose, follows_json, evidence_json, status (`active`, `removed`, `retired`, `reword_failed`), parent_id, origin (`propose`, `reword`), reword_attempt, created_job |
+| `invariants` | id, task_id, observation_json, action, purpose, follows_json, evidence_json, status (`active`, `removed`, `retired`), parent_id, origin (`propose`, `reword`), reword_attempt, created_job |
 | `cells` | invariant_id, trajectory_id, label, f2_seen, f2_location, f3_outcome, f3_action_location, recheck_f2_seen, recheck_f2_location, recheck_f3_outcome, recheck_f3_action_location, too_narrow, too_narrow_location, final_outcome (`followed`, `not_followed`, `purpose_otherwise`, `only_before`, `not_seen`, `pinning_wrong`, `job_error`), status (`pending`, `running`, `done`, `cancelled`, `error`), job_ids |
 | `jobs` | id, kind, model, effort, prompt_sha256, input_json, status, started, ended, model_steps, tokens_in, tokens_out, output_json, error |
 | `events` | time, kind, task_id, invariant_id, trajectory_id, detail_json: every removal, retirement, reword (attempt, result), Luna/Opus disagreement, pinning wrong, only before, purpose achieved otherwise, F1 evidence check failure, job error |
@@ -209,7 +210,7 @@ Pure functions over the store, the rules of DESIGN.md sections 4-6:
 
 ### 4.3 Scheduler (`pipeline.py`)
 
-Repeatedly collects ready work (F1 for tasks without invariants; cells' next job; removal paths; rewords; validations),
+Repeatedly collects ready work (F1 for tasks whose F1 job has not finished; cells' next job; removal paths; rewords; validations),
 runs it under the concurrency limit, applies the rules to each finished job, until nothing is pending. Resumable: on
 start, jobs left `running` by a stopped run are reset to pending. A task's failing and passing cells run together right
 after F1 (DESIGN.md section 6).
@@ -251,8 +252,7 @@ python3 -m invariant_mining job runs/NAME --kind f2 --invariant I --trajectory T
 Per task with I invariants and R other trajectories: 1 F1 job; up to I x R F2 jobs and as many F3 jobs; plus, for
 every "not followed": on a passing run a re-check (2 Opus jobs) and maybe a too-narrow check, rewords and validations;
 on a failing run one too-narrow check (Opus) and, when it says yes, rewords and validations. Failing runs may break
-many invariants, so the too-narrow checks on
-failing runs can be the largest Opus cost. E.g. I = 20, R = 2: ~80 Luna jobs; at ~10 model steps each (a guess) ~800
+many invariants, so the too-narrow checks on failing runs can be the largest Opus cost. E.g. I = 20, R = 2: ~80 Luna jobs; at ~10 model steps each (a guess) ~800
 Luna requests, plus F1 at up to 150 Opus requests. The report records the real numbers.
 
 ## 8. Aggregation across tasks (later, not built)
@@ -268,7 +268,7 @@ DESIGN.md section 9. A separate step over finished pipeline runs; nothing in sec
   - `judge_actions`: input = the two whole invariants (facts and actions) + the benchmark context; output
     `{"actions": "same" | "opposite" | "compatible"}`.
   - Strict schemas, objective answers (DESIGN.md principle 7); an invalid answer is retried once, then logged as an
-    error (the pair is treated as not the same).
+    error and the pair is treated as not the same (*default*).
 - **Guard**: with n active invariants, step 1 needs n(n-1)/2 `judge_obs` calls. If that exceeds `--max-calls` (default
   10,000), the command prints n per task and the count and exits without making any call. After step 1 it counts the
   `judge_actions` calls needed; if step 1 + step 2 exceed the limit, it stops before step 2 and reports. The report

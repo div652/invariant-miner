@@ -5,7 +5,7 @@ Claude asked (with their options) and the user's answers. Progress notes and too
 are appended to the end of the log.
 
 The design built from this conversation: [DESIGN.md](DESIGN.md) (what the algorithm does, its rules, the highlighted
-notes H1-H5, cautions, later work, open questions) and [TECHNICAL.md](TECHNICAL.md) (how it is built). Both cite the
+notes H1-H6, cautions, later work, open questions) and [TECHNICAL.md](TECHNICAL.md) (how it is built). Both cite the
 turns below.
 
 ## Decisions (with the turn they come from)
@@ -33,8 +33,8 @@ turns below.
 | Opus 5.5 at **high** effort in every use; rewording on Opus 5.5 | 14, 15, 17 |
 | F1 gives evidence locations in P1 and P2: for debugging, the report and a programmatic check (no LLM) | 14-17 |
 | F2, F3 and the too-narrow check give objective answers: exactly one of the given choices, no equivocating or playing it safe | 15 |
-| Reword: the rewording LLM gets only the invariant, the triggering run and the location of its alternative action, and is told the invariant was learnt on earlier runs; the new invariant is validated with standard F2/F3 on P1, P2 and the triggering run | 11, 13 |
-| Reword fails validation: one more attempt; if that fails, the invariant is removed and the failure logged; logs reported at the end of the process | 13 |
+| Reword: the rewording LLM gets only the invariant, the triggering run and the location of its alternative action, and is told the invariant was learnt on earlier runs; the new invariant is validated with standard F2/F3 on P1, P2 and, for a passing trigger, the triggering run | 11, 13, 17 |
+| Reword fails validation: one more attempt; if that fails, the failure is logged and, for a passing trigger, the invariant is removed (for a failing trigger it stays: see the too-narrow row); logs reported at the end of the process | 13, 17 |
 | Failing runs are checked right after F1 (together with the passing runs); no Opus re-check for importance points | 13 |
 | A reworded or refined invariant is new: the old one is retired and the new one is scored again on all other passing and failing runs | 9, 11 |
 | Everything outside the LLM functions is programmatic | 11 |
@@ -640,4 +640,39 @@ All three are in the `2sameInvariantAlgo` worktree:
 - `~/dsh-bench-harness-2sameinv/docs/2same-invariant-algo/QNA.md`: the verbatim conversation log and the decisions table
 
 On GitHub they're on branch `2sameInvariantAlgo` of `div652/dsh-bench-harness`, under `docs/2same-invariant-algo/`.
+````
+
+### Turn 25 — user (2026-11-17)
+
+````text
+okay, I want you to do a self consistency check, read the full QNA.,d check and then verify that design.md and technical.md are describing exactly the full design we have agreed to.
+````
+
+### Turn 26 — Claude (2026-11-17)
+
+````text
+I read all of QNA.md (turns 1–24) and both documents line by line, checking every decision in the log against them. The design matches what we agreed: every decision in the log is in DESIGN.md, with nothing contradicting it. I found 13 gaps and slips, all fixed and pushed:
+
+**DESIGN.md**
+1. Principle 2 said every job is an agent, but the semantic judge is a single call (turn 20). Now: agents for every job that reads trajectories; the judge is a single call.
+2. Turn 3's function-level definitions were missing. Added: F2 takes the invariant list and one trajectory and returns one bool (+ location) per observation; F3 drops unseen observations programmatically and runs one job per remaining invariant.
+3. F1 now says it outputs **all** common pairs, succinct and systematic (turn 3).
+4. Principle 3 now cites turn 15 for the too-narrow check. Principle 4 now says the reword mode sees the whole invariant.
+5. §4.4: if the Opus re-check gives any outcome other than "not followed", that outcome is final.
+6. §9 now lists H4's re-proposal of "only before" invariants as later work.
+7. H1's turn citations completed, plus a broken line fixed.
+
+**TECHNICAL.md**
+8. A leftover status `reword_failed` contradicted the design (a failed rewording removes the invariant or keeps it active). Removed; the failure is an event.
+9. The scheduler ran F1 for "tasks without invariants", which would loop forever on a task where F1 finds none. Now: tasks whose F1 job hasn't finished.
+10. Unspecified case: a reword or validation job that errors now counts as a failed attempt (*default*).
+11. The judge's handling of invalid answers is now marked *default*. Two wording/formatting fixes.
+
+**QNA.md**
+12. The decisions table still described rewording as before turn 17. Fixed: the triggering run is in the validation only for a passing trigger, and after two failed attempts only a passing trigger leads to removal.
+13. The header listed H1–H5; it now says H1–H6.
+
+**Two choices in the docs that we never discussed (now listed in DESIGN §12):**
+- **Reusing validation verdicts (4.5):** when a passing run triggers a rewording that validates, its validation F2/F3 verdicts become that run's cell for the new invariant, instead of running the same two jobs again. OK?
+- **Chains:** observations are written self-contained, as in your turn-5 example. The chain is recorded only as a `follows` link. My turn-6 idea of writing the link into the observation text was dropped, because F2 has to check each observation on its own. OK?
 ````
