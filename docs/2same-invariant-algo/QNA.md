@@ -1025,3 +1025,25 @@ Yes. They are DSH's own tools, from its goal feature; neither ours nor Harvey's.
 
 Some runs call `create_goal` at the start and then have to close the goal at the end with `get_goal` → `update_goal`. So T4's i18 is about the harness's bookkeeping, not the legal work. Its importance point most likely says something about how that failing run ended, not why it failed.
 ````
+
+### Turn 50 — user (2026-11-18)
+
+````text
+where did it come from if you can trace it back from the main repo  ? is it present in the harness that /home/agarwaldi/agentic-evolution also uses ?
+````
+
+### Turn 51 — Claude (2026-11-18)
+
+````text
+**From main:** it's upstream DSH; neither we nor Harvey added it.
+- `setup.sh` clones deepseek-ai/deepseek-harness at the pinned `c389f96` into `work/deepseek-harness`. That contains the goal packages: `packages/goal/tool-goal` (`@deepseek-ai/dsh-tool-goal`: create_goal / get_goal / update_goal), plus the goal service, the round driver, and the `/goal` command (`command-goal`).
+- They are switched on by DSH's standard agent preset, `packages/preset/agent-presets/presets/standard/agent.cordis.yml` (rows `command-goal` and `tool-goal`), which the `headless` profile uses.
+- Our `harness/core.patch.yml` turns off subagents, workflow/ralph and filesystem skills, but not the goal rows. None of our 9 DSH patches touches them.
+
+**In agentic-evolution: yes, the same.**
+- Its `third_party/deepseek-harness` submodule is pinned at the same commit `c389f96`, with the same preset rows. (A second submodule, `third_party/deepseek-harness-sdk` at the newer `639ed015`, also has the goal packages.)
+- Their JobBench profile (`eval/eval/jobbench/profile.py`) has two compositions. The default `headless` keeps the goal tools. `jobbench-headless-minimal-v1` turns off `goal`, `goal-round-driver`, `command-goal` and `tool-goal`, together with subagents, workflow and todo.
+- Their failure-attribution tooling also tracks these tools (`GOAL_TOOLS` in `attribution/jobbench_failure_attribution/tools/task_state_scan.py`).
+
+So our core matches their default composition on goals. Their minimal one is the variant without goals and todo.
+````
