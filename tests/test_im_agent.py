@@ -119,6 +119,8 @@ c.check(q2({"seen": True, "location": "s2.o1", "evidence": [{"fact": 1, "locatio
         "quote check: case and whitespace are ignored")
 c.check(q2({"seen": True, "location": "s2.o1", "evidence": [{"fact": 1, "location": "s2.o1", "quote": "a.txt:3 … b.txt:7"}]})[0],
         "quote check: excerpts joined with …")
+c.check(q2({"seen": True, "location": "s1.o1", "evidence": [{"fact": 1, "location": "s1.o1", "quote": "a.txt\nt1"}]})[0],
+        "quote check: non-adjacent lines of the item, one per line")
 c.check(not q2({"seen": True, "location": "s2.o1", "evidence": [{"fact": 1, "location": "s2.o1", "quote": ""}]})[0],
         "quote check: an empty quote is rejected")
 c.check(q2({"seen": True, "location": "s2.o1", "evidence": [{"fact": 1, "location": "s2.o1", "quote": "a.txt:3"},

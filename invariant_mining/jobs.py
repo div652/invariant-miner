@@ -87,7 +87,8 @@ def _strings(value) -> list[str]:
 
 
 def check_quote(t: Trajectory, loc: str, quote: str) -> None:
-    """The quote must be text of the item at `loc` (compared on letters and digits only, see _norm; '…' or '...' may join excerpts;
+    """The quote must be text of the item at `loc` (compared on letters and digits only, see _norm; excerpts may be
+    joined by '…' / '...' or put on separate lines;
     for a tool call, the decoded argument values count too). Raises ValueError."""
     q = (quote or "").strip()
     if not q:
@@ -102,7 +103,7 @@ def check_quote(t: Trajectory, loc: str, quote: str) -> None:
         except (ValueError, TypeError):
             pass
     hay = [_norm(x) for x in texts]
-    parts = [_norm(p) for p in re.split(r"…|\.\.\.", q) if _norm(p)]
+    parts = [_norm(p) for p in re.split(r"…|\.\.\.|\n", q) if _norm(p)]  # excerpts: joined by … or on separate lines
     if not parts or not all(any(p in h for h in hay) for p in parts):
         raise ValueError(f"quote {q[:80]!r} is not text of {item['loc']}: copy it exactly from the item at the location you "
                          f"give (or give the location where the quoted text is)")
