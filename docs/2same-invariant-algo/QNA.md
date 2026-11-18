@@ -1210,3 +1210,24 @@ Yes: a new command writes just what F1 proposed, per task.
 
 What happens to each invariant later (points, removals, rewordings) goes into report.md when the run ends.
 ````
+
+### Turn 66 — user (2026-11-18)
+
+````text
+okay so there is one concern about my ai credits, I am currently at 938655/1000000 credits. just keep monitoring that the credits are like less than 999990 , at that point pause.
+````
+
+### Turn 67 — Claude (2026-11-18)
+
+````text
+Done: a credit guard is running (tmux session `im-credit-guard`, started 14:04 IST).
+- **What it checks:** every 10 s it reads the gateway's `/usage`, which costs no credits: used = 1,000,000 − remaining premium interactions.
+- **When it pauses:** when the usage, or the usage projected one interval ahead at the current rate, reaches 999,990. It then stops only the `invariant_mining run` processes (found by their exact command line); other jobs on the machine aren't touched. A paused run resumes with `run` and redoes the jobs that were in flight.
+- **Logs:** every minute it records the usage to `runs/credit-guard.log`, and I'm watching that for PAUSED or warnings.
+
+**Now:** 940,193 used, 59,807 left. The APEX run has ~9,000 model requests to go, so it should end around 950,000 at most, well below 999,990.
+
+**Two caveats:**
+1. The counter seems to update with a delay. It hasn't moved in the last ~10 minutes while the run kept going (it went from your 938,655 to 940,193 in one jump). A delayed jump can overshoot the projection, so 999,990 can't be guaranteed to the last few credits. Overage is permitted on this seat, so going past 1,000,000 would bill. If you want a margin, I can set the pause lower, e.g. 999,000.
+2. The guard pauses once and then exits; restart it before running again.
+````
