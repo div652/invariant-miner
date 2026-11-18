@@ -1192,3 +1192,21 @@ btw, what is the ETA ? is it possible to check intermediate progress somewhere ?
 - Each job has a folder `runs/im-apex-third-flip14-20261118T075246Z/jobs/<id>/` with input.json, transcript.jsonl, notes.md and output.json, plus a row in the jobs table.
 - A cell takes 1–5 jobs: F2, then F3, and on a "not followed" also the Opus re-check (F2 + F3) and/or the too-narrow check.
 ````
+
+### Turn 64 — user (2026-11-18)
+
+````text
+can i just see the propose invariants somewhere ?
+````
+
+### Turn 65 — Claude (2026-11-18)
+
+````text
+Yes: a new command writes just what F1 proposed, per task.
+- **Contents:** each invariant's observation facts with their source and F1's one-line reason, the action and its purpose, `follows` links, and the task's role terms.
+- **Final already:** F1 is finished for all 14 APEX tasks (226 invariants), so the list won't change while the checks run.
+- **Where:** `runs/im-apex-third-flip14-20261118T075246Z/invariants.md` (1,291 lines), with a copy on GitHub at `docs/2same-invariant-algo/results/apex-third-flip14-proposed.md`. The Harvey mixed:flip proposals are in `docs/2same-invariant-algo/results/mixed-flip-proposed.md`.
+- **Regenerate any time:** `work/im-venv/bin/python -m invariant_mining invariants RUN`.
+
+What happens to each invariant later (points, removals, rewordings) goes into report.md when the run ends.
+````

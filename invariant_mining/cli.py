@@ -201,6 +201,8 @@ def main(argv=None) -> None:
     p = sub.add_parser("add-runs", help="add trajectories to a run: the active invariants get cells on them (then: run)")
     p.add_argument("run_dir", type=Path)
     p.add_argument("--manifest", type=Path, required=True)
+    p = sub.add_parser("invariants", help="write invariants.md: what F1 proposed per task (safe while it runs)")
+    p.add_argument("run_dir", type=Path)
     p = sub.add_parser("status", help="progress of a run (safe while it runs)")
     p.add_argument("run_dir", type=Path)
     p = sub.add_parser("retry-errors", help="cells that ended in a job error back to pending (then: run)")
@@ -232,6 +234,10 @@ def main(argv=None) -> None:
         run_one_job(a.run_dir, a.kind, trajs, inputs, a.model)
     elif a.cmd == "add-runs":
         add_runs(a.run_dir, a.manifest)
+    elif a.cmd == "invariants":
+        out = a.run_dir / "invariants.md"
+        out.write_text(report.proposals(a.run_dir))
+        print(out)
     elif a.cmd == "status":
         status(a.run_dir)
     elif a.cmd == "retry-errors":

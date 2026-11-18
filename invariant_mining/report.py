@@ -221,6 +221,31 @@ def markdown(rep: dict) -> str:
     return "\n".join(lines) + "\n"
 
 
+def proposals(run_dir: Path) -> str:
+    """invariants.md: what F1 proposed for each task (facts with source and reason, action and purpose, role terms).
+    Read-only; works while a run is in progress."""
+    s = Store(Path(run_dir) / "state.sqlite")
+    lines = ["# Proposed invariants", "", f"Run: `{run_dir}`. What F1 proposed from P1 and P2 of each task, before any "
+             "check; their later fate (points, removal, rewording) is in report.md.", ""]
+    for n, task in enumerate(s.q("SELECT * FROM tasks ORDER BY seq"), 1):
+        invs = s.q("SELECT * FROM invariants WHERE task_id=? AND origin='propose' ORDER BY created_at", task["task_id"])
+        lines += [f"## Task {n}: `{task['task_id']}`", "", f"P1 `{short(task['p1'])}`, P2 `{short(task['p2'])}`; "
+                  f"{len(invs)} invariants" + ("" if task["status"] == "done" else f" (F1 {task['status']})") + ".", ""]
+        for inv in invs:
+            obs = json.loads(inv["observation_json"])
+            follows = json.loads(inv["follows_json"])
+            lines.append(f"**{inv['local_id']}**" + (f" (follows {', '.join(follows)})" if follows else ""))
+            if obs:
+                lines += [f"- observation: {f['fact']} *[{f['source']}; why: {f['reason']}]*" for f in obs]
+            else:
+                lines.append("- observation: ∅ (always)")
+            lines += [f"- action: {inv['action']}", f"- purpose: {inv['purpose']}", ""]
+        roles = json.loads(task["roles_json"] or "[]")
+        if roles:
+            lines += ["Role terms: " + "; ".join(f"**{r['term']}**: {r['meaning']}" for r in roles), ""]
+    return "\n".join(lines) + "\n"
+
+
 def write(run_dir: Path) -> dict:
     rep = build(run_dir)
     Path(run_dir, "report.json").write_text(json.dumps(rep, ensure_ascii=False, indent=1))
