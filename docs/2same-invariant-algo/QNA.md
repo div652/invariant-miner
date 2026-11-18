@@ -1092,3 +1092,28 @@ P1 and P2 get no cells (the invariants come from them), so the grid has 2 × 3 =
 
 So i1 ends with S 1, I 1, and i2 with S 1, I 1. Each cell is filled by its own jobs: F2, then F3, plus the re-check or the too-narrow check when needed. Adding a run adds a column of cells; a reworded invariant is a new row, whose cells start empty.
 ````
+
+### Turn 56 — user (2026-11-18)
+
+````text
+okay, is the task finsihed now btw ? we were evaluatio on runs 6-10, right ?
+````
+
+### Turn 57 — Claude (2026-11-18)
+
+````text
+Yes, it finished at 11:08 IST, and yes, it was the evaluation on runs 6–10. I just rechecked: nothing pending, no open rewordings, no checks lost to errors, no process running.
+
+On runs 6–10 there are 845 cells: 780 for the invariants that were active before (156 × 5) and 65 for the rewordings made during this pass.
+
+| outcome | cells |
+|---|---|
+| followed | 687 |
+| not seen | 68 |
+| only before | 43 |
+| not followed | 21 |
+| same purpose, other action | 18 |
+| pinning wrong | 8 |
+
+The results are the ones I reported: 1 removed, 13 reworded, 155 active. The report is `runs/im-mixed-flip-r6-10-20261118T043837Z/report.md`, with a copy in `docs/2same-invariant-algo/results/`.
+````
