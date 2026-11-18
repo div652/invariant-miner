@@ -189,4 +189,5 @@ md = (run_dir / "report.md").read_text()
 c.check("### Proposed by F1 (8)" in md and "| ri3 | i3 | act-c-narrow | act-c-broad |" in md and "### Removed (1)" in md
         and "| i4 |" in md and "Opus re-check" in md and "rewording failed twice" in md and "not followed ★" in md,
         "report.md: proposed, rewordings, removed with the reason, kept after failed rewordings, first violation mark")
+c.check("### Failing runs (2)" in md and "| X2 |" in md, "report.md: a section per failing run with what it broke")
 c.done()

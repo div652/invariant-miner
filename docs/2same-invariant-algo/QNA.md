@@ -1312,3 +1312,38 @@ Toy example: invariant i3 has cells on run4 (pass) and run5 (pass). run4 is chec
 
 There are more of them in APEX (145 cells, against 6 in each Harvey run) because of passing-first: a failing-run cell waits until its invariant's passing runs are done, so when a passing run removes or rewords the invariant, all its waiting failing-run cells are cancelled instead of checked. Of the 145, 57 belong to removed invariants and 88 to reworded ones. Those are exactly the jobs passing-first saves.
 ````
+
+### Turn 73 — user (2026-11-18)
+
+````text
+okay, for the mixed:flip tasks that we already did this activity, for 10 runs we have their failing runs checked against invariants that we proposed. No I see this most common : there are very few importance points gained, even though ew have 10 runs, ideally we want som erors in each. Where are then the runs that are failing ? can you just pick some task in which we have like almost equal passs and fail but the importance score is quite less, can you tell me what were the errors there  ? also have we logged this thing in our runs already ? for a run that didn't vilate any invariant, what is actually happening. it can be a few things 
+1. we didn't have the invariant to check it. 
+2. it was actually a model reaosning error , something like H5. i wanna know what you think . 
+don do analysis for every trajecroty every run, just a few relevant ones.
+````
+
+### Turn 74 — Claude (2026-11-18)
+
+````text
+I picked the DPA review task (4 passing, 6 failing of 10 runs), plus a few failing runs of TSA and repo-securities for contrast. For this I read the grader's per-criterion verdicts. The method itself never uses them, but they say why a run failed.
+
+**DPA: 5 of the 6 failing runs break no invariant, and they see every observation.** They follow the same process as the passing runs. Their failures are almost all one thing: criteria C-043/C-044, "mentions subprocessor Larkfield Data Systems / Orionis Analytics by name".
+- **The memos do name them**, as "Larkfield" and "Orionis", many times (run 8's memo: Orionis ×10, Larkfield ×25). The judge fails runs 8 and 9 for not using the full names.
+- **The judge is inconsistent:** in passing run 7 the memo also says just "Orionis", and the judge passes it ("mentions Orionis by name multiple times").
+- So most of DPA's failing runs fail on a naming detail that the judge applies inconsistently. Run 4 (also an anonymization point) and run 6 (a HIPAA breach-notice point) have one real content gap each.
+
+**TSA: all 3 failing runs miss C-039, "redlines payment terms to Net 30 days".** Their clause says "within 30 days after receipt of the invoice", although they all write "Net 30" elsewhere: an exact-wording slip in the clause. Run 3 also chose the APA's 10% markup cap over the playbook's cost-plus-15%, a judgement between two conflicting sources.
+
+**Repo-securities runs 8 and 9 break nothing:** drafting-precision errors. A 1.5% haircut in one clause against 1.75% in the annex, a missing "a substitution must not itself cause a margin deficit", and issues-list details.
+
+**What's happening in a failing run that breaks no invariant:** your two causes are there, plus a third.
+1. **A content or reasoning error (H5): the most common real cause.** The process is the same; one figure, word or judgement in the deliverable is off (repo-securities, TSA run 3).
+2. **A missing invariant, by granularity.** F1's invariants are about process ("writes the redline with the playbook's positions"), so an exact drafting choice ("Net 30 from invoice date") falls between them. A finer, deliverable-level invariant would catch it; that is exactly what the targeted re-proposal is meant for.
+3. **The grader:** some failures are near-misses judged inconsistently (DPA's names). Importance 0 there is arguably correct, because the label itself is shaky.
+
+So the low importance doesn't mean the scoring is broken. On these tasks the process invariants are saturated (failing runs do the same steps), and the failures sit in the last mile: the exact content of the deliverable, or the judge. Two things would help:
+- feed the grader's failed criteria into the targeted re-proposal, to point F1 at the deliverable detail;
+- let F1 also propose deliverable-content invariants (e.g. "names each party by its full legal name", "states the playbook's exact payment term"), knowing they are less transferable.
+
+**Logged?** Only implicitly so far: you could see it in the per-run columns. The report now has a "Failing runs" section per task: for each failing run, how many invariants it broke, didn't see, reached another way, or did only before, its first broken invariant, and a "breaks nothing" mark. I regenerated all three reports, and the copies in `docs/2same-invariant-algo/results/` are updated. The grader's verdicts stay out of the method; the analysis above was done by hand.
+````

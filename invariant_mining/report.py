@@ -5,6 +5,7 @@ with the reason, the rewordings that failed twice, the events and F1's role term
 """
 
 import json
+import re
 from collections import Counter, defaultdict
 from pathlib import Path
 
@@ -14,6 +15,10 @@ from .trajectory import Trajectory
 
 OUTCOME = {"followed": "followed", "not_followed": "not followed", "only_before": "only before", "not_seen": "not seen",
            "pinning_wrong": "pinning wrong", "purpose_otherwise": "same purpose, other action", "job_error": "job error"}
+
+
+def natural(tid: str):
+    return [int(x) if x.isdigit() else x for x in re.split(r"(\d+)", tid)]
 
 
 def short(tid: str) -> str:
@@ -95,7 +100,7 @@ def build(run_dir: Path) -> dict:
         pinning_by_traj = Counter(e["trajectory_id"] for e in events if e["task_id"] == task["task_id"] and e["kind"] == "pinning_wrong")
         out["tasks"].append({"task_id": task["task_id"], "p1": task["p1"], "p2": task["p2"], "status": task["status"],
                              "error": task["error"], "roles": json.loads(task["roles_json"] or "[]"),
-                             "trajectories": {t: trajs_meta[t]["label"] for t in sorted(trajs_meta) if trajs_meta[t]["task_id"] == task["task_id"]},
+                             "trajectories": {t: trajs_meta[t]["label"] for t in sorted(trajs_meta, key=natural) if trajs_meta[t]["task_id"] == task["task_id"]},
                              "events": dict(task_events), "pinning_wrong_by_trajectory": dict(pinning_by_traj),
                              "invariants": tinvs})
     jobs = s.q("SELECT kind, role, model, status, COUNT(*) n, SUM(model_steps) steps, SUM(tokens_in) tin, SUM(tokens_out) tout, "
@@ -203,6 +208,20 @@ def markdown(rep: dict) -> str:
         else:
             lines.append("None" + (" (no passing run besides P1/P2)." if not any(task["trajectories"][t] == "pass" for t in others) else "."))
         lines.append("")
+        fails = [t for t in others if task["trajectories"][t] == "fail"]
+        if fails:
+            active = [i for i in invs if i["status"] == "active"]
+            lines += [f"### Failing runs ({len(fails)})", "",
+                      "Per failing run, over the active invariants: broken (seen, not followed: an importance point), not seen, "
+                      "same purpose by another action, only before. A run that breaks nothing failed for a reason these "
+                      "invariants don't capture (a missing invariant, a content or reasoning error, or the grader).", "",
+                      "| run | broken | not seen | same purpose, other action | only before | first broken | |", "|---|---|---|---|---|---|---|"]
+            for t in fails:
+                outs = Counter(i["cells"].get(t) for i in active)
+                first = [i["id"].split(".", 1)[1] for i in active if t in i["first_violations"]]
+                lines.append(f"| {short(t)} | {outs.get('not_followed', 0)} | {outs.get('not_seen', 0)} | {outs.get('purpose_otherwise', 0)} | "
+                             f"{outs.get('only_before', 0)} | {', '.join(first)} | {'**breaks nothing**' if not outs.get('not_followed') else ''} |")
+            lines.append("")
         kept = [i for i in invs if i["status"] == "active" and any(e["kind"] == "reword_failed" for e in i["events"])]
         if kept:
             lines += ["### Kept after two failed rewordings (failing-run trigger)", ""]
