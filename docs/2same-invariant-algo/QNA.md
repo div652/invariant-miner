@@ -1423,3 +1423,29 @@ The switch worked. CAO is now logged in as `div652`: Copilot enterprise plan thr
 
 **Notes updated:** the CAO notes said the login must be the Microsoft account; they now name div652 and say how to switch back (the old login is backed up in the profile).
 ````
+
+### Turn 81 — user (2026-11-19)
+
+````text
+great i want to do tihs thing : take gpt6 astra using reasoning power high, run 3 times on harvey firm knowledge 80 tasks. after that run 3 times on apex agents train 80 tasks. after that pick random 50 tasks from the 150 train task sfrom harvey mixed and run 3 times on them.
+````
+
+### Turn 82 — Claude (2026-11-19)
+
+````text
+Started at 01:33 IST in tmux `astra-x3`. GPT-6 Astra at reasoning effort high, three runs each, one benchmark after another:
+
+1. Harvey firm-knowledge, the 80 train tasks (`ahe:train`), 20 at a time: running now
+2. APEX-Agents, the 80 train tasks (`third:train`), 12 at a time
+3. Harvey mixed, 50 tasks drawn at random from the 150 train tasks (seed 20261119; the list is in `mixed-train50.txt`)
+
+The setup matches the Luna-high reference runs: same harness checkout (2817664), no skills, same graders, stalled tasks re-run, Harvey graded one run at a time. The only change is the model. I added `models/astra-high-cao.json` to main (b75ea8b).
+
+**Smoke test (one Harvey task):** the request format is right (effort high, reasoning summaries on, reasoning sent back each turn). It took 28 steps (3.7 min) and was graded all-pass.
+
+**Credits:** Astra costs about 40–50× Luna per token. From the token use of the Luna runs on the same tasks, I expect about 50–60K of your credits in total. If the counter tracked token cost one-for-one, the worst case would be about 360K. The account is at 140 / 1,000,000. The guard now also covers these runs: at 999,990 no new task starts, and the APEX runner is stopped.
+
+**ETA, assuming Astra runs about as fast as Luna:** Harvey FK about 2 h, APEX about 7 h, mixed about 2.5 h. That puts the end around 13:00–14:00 IST.
+
+Experiment folder: `~/dsh-bench-harness/runs/astra-high-x3-20261118T195818Z/` (`run.log` shows progress).
+````
