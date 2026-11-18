@@ -1167,3 +1167,28 @@ Both done (pushed), and the APEX run started at 13:23 IST.
 
 **Expected size:** about 280 invariants × 8 runs ≈ 2,200 checks, two to three times the Harvey runs, but on smaller trajectories. Roughly 1.5–2.5 hours. If Opus refuses, I'll switch every Opus role to Astra.
 ````
+
+### Turn 62 — user (2026-11-18)
+
+````text
+btw, what is the ETA ? is it possible to check intermediate progress somewhere ? What is a job?
+````
+
+### Turn 63 — Claude (2026-11-18)
+
+````text
+**ETA:** around 15:15–15:30 IST (now 13:33, started 13:24).
+- **Size:** F1 proposed 226 invariants across the 14 tasks, giving 1,808 cells: 974 on passing runs and 834 on failing runs. 141 are final.
+- **Rate:** 34 jobs/min, about 2 jobs per cell, so the ~1,670 open cells need roughly 100 minutes. Rewordings add a bit.
+- **Order:** with passing-first, the failing-run cells start as each invariant's passing checks finish.
+
+**Watching progress, anytime and safely while it runs:**
+- `work/im-venv/bin/python -m invariant_mining status runs/im-apex-third-flip14-20261118T075246Z`, a new command: cells final/running/pending on passing and failing runs, invariants by status, open rewordings, jobs, rate and a rough ETA.
+- `tail -f runs/im-apex-third-flip14-20261118T075246Z/run.log`: one line every 10 jobs.
+- `work/im-venv/bin/python -m invariant_mining report runs/im-apex-third-flip14-20261118T075246Z` writes report.md with the points so far, which are partial until the run ends.
+
+**What a job is:** one fresh agent doing one atomic decision. For example, the F1 proposal for a task, F2 for one observation on one run, F3, the too-narrow check, a rewording, or a validation F2/F3.
+- It reads the trajectory through the read-only tools over several model requests (steps), then submits its answer.
+- Each job has a folder `runs/im-apex-third-flip14-20261118T075246Z/jobs/<id>/` with input.json, transcript.jsonl, notes.md and output.json, plus a row in the jobs table.
+- A cell takes 1–5 jobs: F2, then F3, and on a "not followed" also the Opus re-check (F2 + F3) and/or the too-narrow check.
+````

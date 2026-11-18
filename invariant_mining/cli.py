@@ -129,6 +129,31 @@ def add_runs(run_dir: Path, manifest_path: Path) -> None:
     print(f"{run_dir}: {added} trajectories added, {cells} new cells")
 
 
+def status(run_dir: Path) -> None:
+    """Progress of a run (read-only; safe while it runs): cells by state and run label, invariants, open rewordings,
+    jobs, request rate, and a rough ETA from the last 10 minutes."""
+    s = Store(Path(run_dir) / "state.sqlite")
+    now = time.time()
+    cells = {(r["label"], r["st"]): r["n"] for r in s.q(
+        "SELECT label, CASE WHEN status IN ('done','cancelled') THEN 'final' ELSE status END st, COUNT(*) n FROM cells GROUP BY 1, 2")}
+    for label in ("pass", "fail"):
+        done = cells.get((label, "final"), 0)
+        total = sum(v for (lab, _), v in cells.items() if lab == label)
+        print(f"cells on {label}ing runs: {done}/{total} final, {cells.get((label, 'running'), 0)} running, {cells.get((label, 'pending'), 0)} pending")
+    print("invariants:", ", ".join(f"{r['status']} {r['n']}" for r in s.q("SELECT status, COUNT(*) n FROM invariants GROUP BY 1")))
+    print("tasks:", ", ".join(f"{r['status']} {r['n']}" for r in s.q("SELECT status, COUNT(*) n FROM tasks GROUP BY 1")),
+          "| open removals/rewordings:", s.one("SELECT COUNT(*) n FROM triggers WHERE status IN ('waiting','active')")["n"])
+    j = s.one("SELECT COUNT(*) n, SUM(model_steps) req, MIN(started) t0 FROM jobs")
+    recent = s.one("SELECT COUNT(*) n FROM jobs WHERE ended > ?", now - 600)["n"]
+    print(f"jobs done: {j['n']} ({j['req'] or 0} model requests) since {time.strftime('%H:%M', time.localtime(j['t0'] or now))}; "
+          f"last 10 min: {recent} jobs ({recent / 10:.1f}/min)")
+    left = sum(v for (lab, st), v in cells.items() if st in ("pending", "running"))
+    if recent and left:
+        per_cell = max(1.0, j["n"] / max(1, sum(v for (lab, st), v in cells.items() if st == "final")))
+        mins = left * per_cell / (recent / 10)
+        print(f"rough ETA: ~{mins:.0f} min for {left} open cells at ~{per_cell:.1f} jobs per cell (rewordings add more)")
+
+
 def retry_errors(run_dir: Path) -> None:
     """Put cells that ended in a job error back to pending at the stage they failed in, and failed F1 tasks back to
     pending (e.g. after fixing a validator). Run `run` afterwards. Do not use while a run is in progress."""
@@ -176,6 +201,8 @@ def main(argv=None) -> None:
     p = sub.add_parser("add-runs", help="add trajectories to a run: the active invariants get cells on them (then: run)")
     p.add_argument("run_dir", type=Path)
     p.add_argument("--manifest", type=Path, required=True)
+    p = sub.add_parser("status", help="progress of a run (safe while it runs)")
+    p.add_argument("run_dir", type=Path)
     p = sub.add_parser("retry-errors", help="cells that ended in a job error back to pending (then: run)")
     p.add_argument("run_dir", type=Path)
     p = sub.add_parser("ping", help="one tiny request to each configured model")
@@ -205,6 +232,8 @@ def main(argv=None) -> None:
         run_one_job(a.run_dir, a.kind, trajs, inputs, a.model)
     elif a.cmd == "add-runs":
         add_runs(a.run_dir, a.manifest)
+    elif a.cmd == "status":
+        status(a.run_dir)
     elif a.cmd == "retry-errors":
         retry_errors(a.run_dir)
     elif a.cmd == "ping":

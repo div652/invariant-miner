@@ -182,6 +182,9 @@ rep = json.loads((run_dir / "report.json").read_text())
 inv = {i["id"]: i for i in rep["tasks"][0]["invariants"]}
 c.check(inv["T1.i1"]["support"] == 2 and inv["T1.i1"]["cells"]["P4"] == "followed" and
         sum(1 for k, *_ in calls if k == "f1_propose") == f1_before, "add-runs: points add up over old and new runs; no new F1")
+from invariant_mining.cli import status
+status(run_dir)
+c.check(True, "status runs on a finished run")
 md = (run_dir / "report.md").read_text()
 c.check("### Proposed by F1 (8)" in md and "| ri3 | i3 | act-c-narrow | act-c-broad |" in md and "### Removed (1)" in md
         and "| i4 |" in md and "Opus re-check" in md and "rewording failed twice" in md and "not followed ★" in md,
