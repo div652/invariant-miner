@@ -888,3 +888,15 @@ A summary table opens the report and the cost table closes it.
 
 The flip run's report is regenerated (`runs/im-mixed-flip-20261117T194118Z/report.md`, 528 lines). A copy is committed at `docs/2same-invariant-algo/results/mixed-flip-20261117T194118Z.md`, so you can read it on GitHub. `python -m invariant_mining report RUN` rebuilds it at any time without model calls.
 ````
+
+### Turn 39 — user (2026-11-18)
+
+````text
+btw one quick question. you just have to answer yes/no. in the whole process are answer files, or grader reports used ?
+````
+
+### Turn 40 — Claude (2026-11-18)
+
+````text
+No. The jobs read only the DSH session logs. The one thing taken from grading is each run's pass/fail label (the all-pass verdict in the baseline file), which decides P1/P2 and support versus importance. A deliverable is only visible as far as it shows up inside the trajectory itself, e.g. the arguments of a `write` call.
+````
