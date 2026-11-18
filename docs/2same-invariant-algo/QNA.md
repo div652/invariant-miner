@@ -970,3 +970,41 @@ About 10–15 minutes: done around 11:15 IST (now 11:02).
   - Every rewording that validates adds 8 new checks, so the tail grows a little.
 - **Rate:** 35–42 jobs/min over the last 20 minutes. That alone would mean ~4 minutes, but the tail is sequential: rewording → validation → new checks, one at a time per invariant. So it slows down at the end.
 ````
+
+### Turn 47 — Claude (2026-11-18): runs 6–10 result
+
+````text
+Done at 11:08 IST: the current invariants are now scored and refined on runs 6–10.
+- **Cost:** 59 minutes, 1,806 jobs, 10,454 model requests (389 Opus, 10,065 Luna), 168M input tokens.
+- **Errors:** no Opus refusals, and no check was lost: the 6 failed attempts all passed on retry.
+
+**What changed:**
+- **Removed: 1.** T1 i19, "rasterizes the first pages and views them": a new passing run saw the observation, didn't do it, and served no equivalent purpose another way.
+- **Reworded: 13.** 7 of them in T6, which got its first extra passing run (run 10); 1 rewording failed twice.
+- **Active: 155** (was 156).
+- **The surviving invariants are stable.** 26 new passing runs removed only one. In T1–T3 most invariants now have support 5–7 out of 7 possible.
+
+**Invariants with importance points** (total I; how much came from runs 6–10; S = support):
+
+| task | invariant | I (new) | S | first violation in |
+|---|---|---|---|---|
+| T6 repo-securities | i14 "turns on tracked changes (w:trackRevisions) in the output's settings" | 4 (2) | 1 | 4 failing runs |
+| T6 | ri7 "checks the first-turn draft's provisions against the base redline" | 2 (1) | 1 | |
+| T6 | i23 "converts the output redline to PDF to check it" | 2 (0) | 1 | |
+| T6 | ri6 / i8 / i13 (inspect the base redline's XML; build from it by accepting its changes; rewrite the cover metadata) | 1 each (1) | 1 | |
+| T7 SaaS API | i9 "adds a drafting note pointing to the still-open points" | 6 (4) | 0 | 6 failing runs |
+| T8 firm-knowledge 065 | i15 "includes the investor-side matter in the count" | 3 (3) | 0 | 3 |
+| T8 | i17 response structure / i16 "counts it as an LP advisory committee" / i5 "saves extracted text in the workspace" | 2 / 1 / 1 | 0 | |
+| T4 TSA | i14 "fixes the defect in the generation script and reruns it" | 1 (1) | 0 | 1 |
+| T4 | i18 get_goal → update_goal | 1 (0) | 3 | 1 |
+| T5 DPA | ri19 "renders the docx to PDF and inspects it" | 1 (1) | 2 | 1 |
+| T1 / T2 / T3 | i7 + i15 / i17 / i4 (unchanged: no new failing runs) | 1 | 7 + 6 / 4 / 7 | |
+
+**What it shows:**
+1. **The strongest signal is T6's i14:** failing runs don't turn on tracked changes in the redline. It's the first invariant broken in 4 of 7 failing runs, and the new passing run follows it.
+2. **Content-level invariants appear as well.** T8's i15/i16 are decisions about which matters count. The failing runs make different decisions: the "content wrong" case (H5), captured because F1 wrote the decision as an action.
+3. **T7 and T8 still have support 0 everywhere** (no passing run besides P1/P2), so their importance points come from invariants no extra passing run has confirmed.
+4. **7 of the 14 new failing runs break no invariant** (T5 runs 6, 8, 9; T6 runs 8, 9; T7 run 8; T8 run 10); 11 of 30 failing runs in total. These are the candidates for the targeted re-proposal.
+
+The report now has per-run columns for runs 3–10: `runs/im-mixed-flip-r6-10-20261118T043837Z/report.md`, with a copy in `docs/2same-invariant-algo/results/mixed-flip-r6-10-20261118T043837Z.md`. The runs 1–5 run is unchanged.
+````
