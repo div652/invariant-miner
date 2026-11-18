@@ -1117,3 +1117,27 @@ On runs 6–10 there are 845 cells: 780 for the invariants that were active befo
 
 The results are the ones I reported: 1 removed, 13 reworded, 155 active. The report is `runs/im-mixed-flip-r6-10-20261118T043837Z/report.md`, with a copy in `docs/2same-invariant-algo/results/`.
 ````
+
+### Turn 58 — user (2026-11-18)
+
+````text
+okay, so for apex agents I have 14 tasks that are known to flip, and have atleast 2 passing trajectories. so it is in perfect shape for our task. i want to run the whole procedure on that ! before that just tell me one thing. if we do the check on passing first andfiling later . Does it change anything in our process ? like the output should be same right ? would it be a hrad change? also do you expect it to increase seped of our task ?
+````
+
+### Turn 59 — Claude (2026-11-18)
+
+````text
+**Same output? Almost, but not exactly.** I need to correct what I said in turn 14 ("results are identical in either order"). That held when failing runs couldn't change an invariant. Since turn 17, a failing run's too-narrow "yes" triggers a rewording, and that can race with a passing run's removal or rewording of the same invariant, whichever trigger comes first wins.
+- **How common:** 5 of 194 invariants in the runs 1–5 pass and 1 in the runs 6–10 pass had both kinds of trigger.
+- **Rewordings mostly come from failing runs:** 26 of 30 in the first pass, 10 of 13 in the second.
+
+Checking passing runs first removes the race. Passing runs prune and reword first; then failing runs score, and can reword, only invariants that survived. That is arguably cleaner, and otherwise the points work the same.
+
+**Hard? No.** It's a small change to the scheduler: a failing-run cell of an invariant becomes ready only when all its passing-run cells are final and it has no open trigger. Plus a test and a DESIGN.md update, since it reverses your turn-13 choice.
+
+**Faster? Not much.** Only failing-run checks spent on invariants that passing runs later remove or reword can be saved:
+- 12% of jobs in the first pass and 6% in the second went to failing-run checks of invariants later removed or retired. Most of those retirements were triggered by the failing checks themselves, and those checks would still run.
+- So expect a few percent fewer jobs, and roughly the same wall time: during rewording tails the 20 slots would have less work.
+
+Shall I make the change before the APEX run? And where are the 14 tasks and their runs? A named subset on main, or a folder like the Harvey one?
+````
