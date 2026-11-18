@@ -1067,3 +1067,28 @@ Done: `docs/2same-invariant-algo/FLOWCHART.md` (pushed), five Mermaid diagrams t
 
 DESIGN.md and QNA.md link to it.
 ````
+
+### Turn 54 — user (2026-11-18)
+
+````text
+simple word explanation of what is a cell, iwth a toy example
+````
+
+### Turn 55 — Claude (2026-11-18)
+
+````text
+A cell is one invariant checked on one run: one box in a grid with invariants as rows and runs as columns. It holds what the checks found on that run and the final outcome, and it is where points come from.
+
+Toy example: a task with 5 runs. Runs 1 and 2 passed and are P1/P2 (the invariants were proposed from them); run 3 passed; runs 4 and 5 failed. F1 proposed two invariants:
+- i1: "a keyword search returned candidate files" → "opens each candidate file"
+- i2: ∅ → "writes a todo list first"
+
+P1 and P2 get no cells (the invariants come from them), so the grid has 2 × 3 = 6 cells:
+
+| | run 3 (pass) | run 4 (fail) | run 5 (fail) |
+|---|---|---|---|
+| i1 | seen, followed → S +1 | seen, not followed → I +1 | not seen → nothing |
+| i2 | followed → S +1 | followed → nothing | not followed → I +1 |
+
+So i1 ends with S 1, I 1, and i2 with S 1, I 1. Each cell is filled by its own jobs: F2, then F3, plus the re-check or the too-narrow check when needed. Adding a run adds a column of cells; a reworded invariant is a new row, whose cells start empty.
+````
