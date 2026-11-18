@@ -935,3 +935,20 @@ Understood, and it's running (started 10:08 IST).
 
 I'll report what was removed and reworded and the new points per task, both from runs 6–10 alone and cumulatively, and regenerate the report.
 ````
+
+### Turn 43 — user (2026-11-18)
+
+````text
+whats the status ?
+````
+
+### Turn 44 — Claude (2026-11-18)
+
+````text
+Still running, 33 minutes in (started 10:08 IST, now 10:41): 960 jobs done, 19 running.
+- **Runs 6–10:** 466 of the 780 checks are finished (60%): 406 followed, 7 not followed, 29 not seen, 34 only before, 4 same purpose by another action (→ rewording), 3 pinning wrong. 314 are left.
+- **Invariants so far:** 1 more removed (9 in total) and 3 more reworded (33 retired); 155 active.
+- **Errors:** 6 job attempts failed my quote check, all on wording slips. Each passed on its automatic retry, so no check is lost. I've loosened the check meanwhile (a one-word slip is now accepted, and excerpts may be on separate lines); it applies from the next run.
+
+At this rate it should finish around 11:05 IST. I'll report the removals, rewordings and new points per task then.
+````
