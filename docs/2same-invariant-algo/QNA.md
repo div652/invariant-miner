@@ -1008,3 +1008,20 @@ Done at 11:08 IST: the current invariants are now scored and refined on runs 6�
 
 The report now has per-run columns for runs 3–10: `runs/im-mixed-flip-r6-10-20261118T043837Z/report.md`, with a copy in `docs/2same-invariant-algo/results/mixed-flip-r6-10-20261118T043837Z.md`. The runs 1–5 run is unchanged.
 ````
+
+### Turn 48 — user (2026-11-18)
+
+````text
+btw, can you quickl tell me what is get_goal and update_goal ? are these harness tools ?
+````
+
+### Turn 49 — Claude (2026-11-18)
+
+````text
+Yes. They are DSH's own tools, from its goal feature; neither ours nor Harvey's. Our core config doesn't switch them off, so every run has them:
+- `create_goal` sets up a persisted "goal" for a long-running request, which DSH can keep working on across automatic continuation rounds.
+- `get_goal` reads the current goal (its id, revision, objective, phase, rounds).
+- `update_goal` changes it (e.g. marks it complete or blocked), and needs the exact id and revision from `get_goal`.
+
+Some runs call `create_goal` at the start and then have to close the goal at the end with `get_goal` → `update_goal`. So T4's i18 is about the harness's bookkeeping, not the legal work. Its importance point most likely says something about how that failing run ended, not why it failed.
+````
