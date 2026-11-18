@@ -868,3 +868,23 @@ The full tables, events and cost are in `runs/im-mixed-flip-20261117T194118Z/rep
 
 What next? I could check the 32 "only before" cases, or we can discuss the targeted re-proposal or the union across tasks.
 ````
+
+### Turn 37 — user (2026-11-18)
+
+````text
+can you put the invariants for each task, what were proposed and what removed for each task in the reprt. add them to the report.
+````
+
+### Turn 38 — Claude (2026-11-18)
+
+````text
+Done. The report now has, for each task:
+- **Proposed by F1:** every invariant with its observation (each fact and its source), its action, its final status (active / removed (run) / retired → its rewording), S and I, and its final outcome on each run besides P1/P2. ★ marks the first invariant a failing run broke.
+- **Added by rewording:** each rewording with the invariant it replaces, the old and new action, the run that triggered it, the attempt, its status and its outcome on each run.
+- **Removed:** each removed invariant and why. For example, "run4 (pass): observation seen at s3.o1; Luna: not followed; Opus re-check: seen at s3.o1, not followed; same purpose by another action: no", or "both rewordings failed validation".
+- **Kept after two failed rewordings** (failing-run trigger), the events, and F1's role terms.
+
+A summary table opens the report and the cost table closes it.
+
+The flip run's report is regenerated (`runs/im-mixed-flip-20261117T194118Z/report.md`, 528 lines). A copy is committed at `docs/2same-invariant-algo/results/mixed-flip-20261117T194118Z.md`, so you can read it on GitHub. `python -m invariant_mining report RUN` rebuilds it at any time without model calls.
+````

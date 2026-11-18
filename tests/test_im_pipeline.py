@@ -156,5 +156,7 @@ p.run()
 c.check(p.store.one("SELECT final_outcome FROM cells WHERE invariant_id='T1.i1' AND trajectory_id='X2'")["final_outcome"] == "not_seen",
         "retry-errors: a cell that ended in a job error runs again from its stage")
 md = (run_dir / "report.md").read_text()
-c.check("### Active invariants" in md and "T1.ri3" in md and "removed" in md, "report.md written")
+c.check("### Proposed by F1 (8)" in md and "| ri3 | i3 | act-c-narrow | act-c-broad |" in md and "### Removed (1)" in md
+        and "| i4 |" in md and "Opus re-check" in md and "rewording failed twice" in md and "not followed ★" in md,
+        "report.md: proposed, rewordings, removed with the reason, kept after failed rewordings, first violation mark")
 c.done()
