@@ -229,22 +229,24 @@ def make_validate_f2(t: Trajectory, n_facts: int):
             loc = _str(out.get("location"), "location")
             pos = t.position(loc)
             ev = out.get("evidence")
-            if not isinstance(ev, list) or len(ev) != n_facts:
-                raise ValueError(f"evidence must have one entry per fact ({n_facts})")
-            norm, latest = [], -1
+            if not isinstance(ev, list) or not ev:
+                raise ValueError(f"evidence must have at least one entry per fact ({n_facts})")
+            norm, first_of = [], {}
             for e in ev:
-                k = e.get("fact")
+                k = e.get("fact") if isinstance(e, dict) else None
                 if not isinstance(k, int) or not 1 <= k <= n_facts:
                     raise ValueError(f"evidence fact numbers must be 1..{n_facts}")
                 eloc = _str(e.get("location"), f"evidence for fact {k}: location")
                 epos = t.position(eloc)
-                if epos[0] > pos[0]:
-                    raise ValueError(f"fact {k} appears at {eloc}, after the location {loc}: the location must be where ALL facts hold")
-                latest = max(latest, epos[0])
                 check_quote(t, eloc, _quote(e.get("quote")))
+                first_of[k] = min(first_of.get(k, epos[0]), epos[0])  # several entries for a fact: its earliest counts
                 norm.append({"fact": k, "location": eloc, "quote": _quote(e.get("quote"))})
-            if sorted(x["fact"] for x in norm) != list(range(1, n_facts + 1)):
-                raise ValueError("evidence must cover each fact exactly once")
+            if sorted(first_of) != list(range(1, n_facts + 1)):
+                raise ValueError(f"evidence must cover every fact (1..{n_facts})")
+            latest = max(first_of.values())
+            if latest > pos[0]:
+                k = max(first_of, key=first_of.get)
+                raise ValueError(f"fact {k} first appears after the location {loc}: the location must be where ALL facts hold")
             if pos[0] != latest:
                 raise ValueError(f"location {loc} must be the FIRST location where all facts hold, i.e. the item where the last "
                                  f"fact first appears ({t.items[latest]['loc']} by your evidence)")

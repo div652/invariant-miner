@@ -121,6 +121,12 @@ c.check(q2({"seen": True, "location": "s2.o1", "evidence": [{"fact": 1, "locatio
         "quote check: excerpts joined with …")
 c.check(not q2({"seen": True, "location": "s2.o1", "evidence": [{"fact": 1, "location": "s2.o1", "quote": ""}]})[0],
         "quote check: an empty quote is rejected")
+c.check(q2({"seen": True, "location": "s2.o1", "evidence": [{"fact": 1, "location": "s2.o1", "quote": "a.txt:3"},
+                                                             {"fact": 1, "location": "s3.r", "quote": "b.txt has most hits"}]})[0],
+        "F2: several evidence entries for a fact are fine; its earliest one counts")
+c.check(not q2({"seen": True, "location": "s3.r", "evidence": [{"fact": 1, "location": "s2.o1", "quote": "a.txt:3"},
+                                                                 {"fact": 1, "location": "s3.r", "quote": "b.txt has most hits"}]})[0],
+        "F2: the location must still be where the fact first appears")
 c.check(jobs.make_validate_f3(t, "s1.o1")({"outcome": "followed", "action_location": "s2.c1", "quote": "grep -c key *"})[0],
         "quote check: a call's decoded arguments count")
 ok, err, _ = v({"outcome": "followed", "action_location": "s3.c1", "quote": "b.txt has most hits"})
