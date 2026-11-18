@@ -1231,3 +1231,20 @@ Done: a credit guard is running (tmux session `im-credit-guard`, started 14:04 I
 1. The counter seems to update with a delay. It hasn't moved in the last ~10 minutes while the run kept going (it went from your 938,655 to 940,193 in one jump). A delayed jump can overshoot the projection, so 999,990 can't be guaranteed to the last few credits. Overage is permitted on this seat, so going past 1,000,000 would bill. If you want a margin, I can set the pause lower, e.g. 999,000.
 2. The guard pauses once and then exits; restart it before running again.
 ````
+
+### Turn 68 — user (2026-11-18)
+
+````text
+whats' the progress. approx how much % are we done ?
+````
+
+### Turn 69 — Claude (2026-11-18)
+
+````text
+About 87% done (14:37 IST).
+- **Cells:** 1,869 of 2,144 are final. Passing runs: 1,130 of 1,144 (only cells of recent rewordings are left). Failing runs: 739 of 1,000.
+- **Jobs:** 3,950 done (18,399 model requests). About 275 open cells, ~2 jobs each, plus a short rewording tail.
+- **ETA:** ~10–15 minutes at 56 jobs/min, so done around 14:50 IST.
+- **Invariants so far:** 209 active, 15 removed, 44 retired by rewording.
+- **Credits:** 942,300 used, 57,700 left; the guard has not had to act.
+````
