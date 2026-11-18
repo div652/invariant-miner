@@ -2,7 +2,7 @@
 
 What the algorithm does and the rules it follows, as agreed in the design conversation of 2026-11-16/17
 ([QNA.md](QNA.md): the verbatim log, turns 1-28; "turn N" below points into it). How it is built:
-[TECHNICAL.md](TECHNICAL.md). Nothing is built yet.
+[TECHNICAL.md](TECHNICAL.md); the flows as diagrams: [FLOWCHART.md](FLOWCHART.md). Nothing is built yet.
 
 Every item below was decided in the conversation; what is still open is in section 12.
 

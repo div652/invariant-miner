@@ -5,7 +5,8 @@ Claude asked (with their options) and the user's answers. Progress notes and too
 are appended to the end of the log.
 
 The design built from this conversation: [DESIGN.md](DESIGN.md) (what the algorithm does, its rules, the highlighted
-notes H1-H6, cautions, later work, open questions) and [TECHNICAL.md](TECHNICAL.md) (how it is built). Both cite the
+notes H1-H6, cautions, later work, open questions), [TECHNICAL.md](TECHNICAL.md) (how it is built) and
+[FLOWCHART.md](FLOWCHART.md) (the flows as diagrams). Both cite the
 turns below.
 
 ## Decisions (with the turn they come from)
@@ -1046,4 +1047,23 @@ where did it come from if you can trace it back from the main repo  ? is it pres
 - Their failure-attribution tooling also tracks these tools (`GOAL_TOOLS` in `attribution/jobbench_failure_attribution/tools/task_state_scan.py`).
 
 So our core matches their default composition on goals. Their minimal one is the variant without goals and todo.
+````
+
+### Turn 52 — user (2026-11-18)
+
+````text
+cool that's great. can you quicky build a flowchart.md document to illustrate the algorithm we are having here. include all components , it might have some loopsand all those kind of things, that say when a rewording happens some steps happens again, and all other detailed flows of the algoirthm we ahave here that leads us to the final table of numbers.
+````
+
+### Turn 53 — Claude (2026-11-18)
+
+````text
+Done: `docs/2same-invariant-algo/FLOWCHART.md` (pushed), five Mermaid diagrams that GitHub renders. All five parse with Mermaid 11.
+1. **The whole pipeline:** inputs → trajectories → F1 → evidence check → cells → per-cell checks → points or triggers → the per-invariant queue → removal, or rewording that loops back into new cells → report. `add-runs` and `retry-errors` are shown as side entries.
+2. **One cell:** φ skips F2; F2 → F3 outcomes; for a passing run, the Opus re-check, whose verdict replaces Luna's, then the too-narrow check (remove or reword); for a failing run, the too-narrow check, then I +1 (with the first-violation flag) or no point + reword.
+3. **Rewording:** attempt 1 → validation on P1/P2 (+ a passing trigger run) → a valid one retires the old invariant and creates new cells (the loop, which can repeat: rX.2 …). A failed attempt gets one retry with the failed check; after two failures a passing trigger removes the invariant, and a failing trigger keeps it with 0 for that run.
+4. **One job:** a fresh agent → model step → read-only tools / nudge / context guard → submit: F1 full-read gate, validation (schema, locations, quotes), at most 3 invalid submits → output or job failure, retried once, then a job error.
+5. **From cells to the numbers:** S, I, first violation, the neutral outcomes → the report's tables.
+
+DESIGN.md and QNA.md link to it.
 ````
