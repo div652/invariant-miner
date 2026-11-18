@@ -145,6 +145,8 @@ c.check(not q2({"seen": True, "location": "s3.r", "evidence": [{"fact": 1, "loca
         "F2: the location must still be where the fact first appears")
 c.check(jobs.make_validate_f3(t, "s1.o1")({"outcome": "followed", "action_location": "s2.c1", "quote": "grep -c key *"})[0],
         "quote check: a call's decoded arguments count")
+c.check(jobs.make_validate_f3(t, "s1.o1")({"outcome": "followed", "action_location": "s2.c2", "quote": "read"})[0],
+        "quote check: a call's tool name counts")
 ok, err, _ = v({"outcome": "followed", "action_location": "s3.c1", "quote": "b.txt has most hits"})
 c.check(not ok and "is not text of s3.c1" in err, "quote check: a quote from another item (s3.r) is rejected with the reason")
 

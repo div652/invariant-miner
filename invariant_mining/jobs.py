@@ -157,6 +157,7 @@ def check_quote(t: Trajectory, loc: str, quote: str) -> None:
         return
     texts = [item.get("text", "")]
     if item["kind"] == "call":
+        texts.append(item.get("name") or "")  # the tool's name is part of the call
         try:
             texts += _strings(json.loads(item["text"]))
         except (ValueError, TypeError):
