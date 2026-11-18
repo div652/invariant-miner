@@ -1248,3 +1248,51 @@ About 87% done (14:37 IST).
 - **Invariants so far:** 209 active, 15 removed, 44 retired by rewording.
 - **Credits:** 942,300 used, 57,700 left; the guard has not had to act.
 ````
+
+### Turn 70 — Claude (2026-11-18): APEX third:flip result
+
+````text
+The APEX run is done, 13:24–14:56 IST (92 min), passing runs first.
+- **Cost:** 4,714 jobs, 22,330 model requests (1,694 Opus, 20,636 Luna), 251M input tokens.
+- **Errors:** 1 cell ended in a job error (a tool-name quote the old check rejected); re-run after the fix, done.
+- **Credits:** 943,389 used now, 56,611 left (938,655 when you asked). The guard is still running; no pause was needed.
+
+**Totals:**
+- 224 invariants proposed (5–27 per task) and 53 rewordings; 209 active at the end.
+- 15 removed by passing runs; 53 retired by rewording; 3 rewordings failed twice.
+- Neutral outcomes: 122 cells "only before", 84 "same purpose, other action", 15 "pinning wrong". Opus disagreed with Luna in 30 re-checks.
+
+| # | task | other runs | proposed → active | removed | reworded | invariants with I > 0 |
+|---|---|---|---|---|---|---|
+| 1 | sp-task-02 | 7 pass, 1 fail | 13 → 10 | 3 | 2 | 1 |
+| 2 | camille-moingeon-5 | 7, 1 | 17 → 16 | 1 | 7 | 0 |
+| 3 | world224-os-task02 | 4, 4 | 13 → 12 | 1 | 5 | 2 |
+| 4 | world224-os-task04 | 3, 5 | 17 → 17 | 0 | 3 | 8 |
+| 5 | world227-tg-07 | 5, 3 | 15 → 14 | 1 | 0 | 0 |
+| 6 | lawworld417-as-03 | 4, 4 | 24 → 21 | 3 | 5 | 3 |
+| 7 | task-seed-13 | 4, 4 | 5 → 5 | 0 | 1 | 1 |
+| 8 | world423-js-01 | 5, 3 | 18 → 16 | 2 | 6 | 1 |
+| 9 | world425-jcf-03 | 6, 2 | 27 → 26 | 1 | 6 | 1 |
+| 10 | task-3uy1546e | 5, 3 | 18 → 17 | 1 | 2 | 1 |
+| 11 | world226-td-02 | 2, 6 | 22 → 21 | 1 | 9 | 3 |
+| 12 | anti-SLAPP | 0, 8 | 10 → 10 | 0 | 2 | 3 |
+| 13 | 128-jr-1 | 1, 7 | 10 → 10 | 0 | 2 | 3 |
+| 14 | world131-dv-03 | 4, 4 | 15 → 14 | 1 | 3 | 1 |
+
+**The strongest invariants** (held by passing runs, broken by failing ones):
+- **T7** i5 "replies with a bolded affirmative verdict and a short explanation citing the satisfied conditions": I4, S4, first violation in all 4 failing runs. The failing runs reach a different verdict.
+- **T11** ri14 "computes each IRR on the model's actual-day (XIRR) basis": I4, S2, first violation in 4 runs. ri15 "checks an offline IRR against the model's own": I2.
+- **T3** i8 / ri9.2 "replace the hardcoded early-year revenue with growth-driven formulas": I3, S4.
+- **T10** i13 "uses all stay records with no status filter": I2, S5, first violation in 2 runs.
+- **T4:** 8 invariants with importance, e.g. i14 "decides not to edit the workbook and reports in the reply" and i17 "replies with the adjusted rates…": I2, S3.
+
+**What to read into it:**
+1. **Content-level invariants matter most** (the decisive ones are decisions or calculations: T7, T11, T10, T3), as T8 in Harvey showed. The decision is captured because F1 writes it down as an action.
+2. **Housekeeping can look important where there's no extra passing run.** T12 (anti-SLAPP) has none, and its "important" invariants are todo bookkeeping: i6 "marks every todo item completed before the final answer", I5. T13's i9 is the same. These most likely say how failing runs end, not why they fail; the same goes for get_goal in Harvey.
+3. **19 of the 55 failing runs break no invariant,** for example all 3 of T5's; T12, T13 and T14 have 3 each. These are candidates for the targeted re-proposal.
+4. **Pruning was light:** 15 removals from 57 extra passing runs. But rewording was frequent (53, from 84 "same purpose, other action" verdicts).
+
+**Where:**
+- Report: `runs/im-apex-third-flip14-20261118T075246Z/report.md`, copied to `docs/2same-invariant-algo/results/apex-third-flip14-report.md`.
+- Proposals: `docs/2same-invariant-algo/results/apex-third-flip14-proposed.md`.
+````
