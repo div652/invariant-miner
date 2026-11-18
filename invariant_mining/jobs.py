@@ -102,6 +102,27 @@ def _near(part: list[str], hay: list[str], share: float = 0.85) -> bool:
     return False
 
 
+def _in_order(part: list[str], hay: list[str]) -> bool:
+    """All the excerpt's words, in order, within a stretch of 3x its length + 30 words of the item: text laid out in
+    columns (PDF tables) puts other cells between the words of a phrase."""
+    span = 3 * len(part) + 30
+    tried = 0
+    for i, w in enumerate(hay):
+        if w != part[0]:
+            continue
+        tried += 1
+        k, j, end = 1, i + 1, min(len(hay), i + span)
+        while k < len(part) and j < end:
+            if hay[j] == part[k]:
+                k += 1
+            j += 1
+        if k == len(part):
+            return True
+        if tried > 2000:
+            break
+    return False
+
+
 def _norm(text: str) -> str:
     """Letters and digits only, lowercased, after removing line-number prefixes ("15:  text", as tool outputs show
     them) and quoted-printable soft line breaks and escapes (=E2=80=99): quotes often drop formatting (markdown, table layout, escapes, line
@@ -124,8 +145,9 @@ def _strings(value) -> list[str]:
 
 def check_quote(t: Trajectory, loc: str, quote: str) -> None:
     """The quote must be text of the item at `loc` (compared on letters and digits only, see _norm; excerpts may be
-    joined by '…' / '...' or put on separate lines; an excerpt of more than 5 words may miss or change a word or two
-    (85% of its words, in order, within one stretch of the item);
+    joined by '…' / '...' or put on separate lines; an excerpt's words may be spread over a stretch of the item (column
+    layout), and an excerpt of more than 5 words may miss or change a word or two (85% of its words, in order, within
+    one stretch of the item);
     for a tool call, the decoded argument values count too). Raises ValueError."""
     q = (quote or "").strip()
     if not q:
@@ -148,11 +170,13 @@ def check_quote(t: Trajectory, loc: str, quote: str) -> None:
         if any(_norm(p) in h for h in hay):
             return True
         words = _words(p)
-        if len(words) <= 5:
+        if not words:
             return False
         if hay_words is None:
             hay_words = [_words(x) for x in texts]
-        return any(_near(words, hw) for hw in hay_words)
+        if any(_in_order(words, hw) for hw in hay_words):
+            return True
+        return len(words) > 5 and any(_near(words, hw) for hw in hay_words)
 
     if not raw_parts or not all(found(p) for p in raw_parts):
         raise ValueError(f"quote {q[:80]!r} is not text of {item['loc']}: copy it exactly from the item at the location you "

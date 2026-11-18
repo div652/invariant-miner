@@ -128,6 +128,13 @@ c.check(vl({"outcome": "followed", "action_location": "s1.o1", "quote": "To read
         "quote check: a word left out of a long excerpt is tolerated")
 c.check(not vl({"outcome": "followed", "action_location": "s1.o1", "quote": "To open spreadsheets, export them as comma separated values first"})[0],
         "quote check: a different sentence is still rejected")
+table_t = parse_session(write_session(tmp / "d/session.v2.jsonl", "Task.", [{"reasoning": "r", "calls": [("read", {"path": "a"},
+                        "Global beauty                                    Europe      24%\n retail sales, 2024        North America 21%")]}]), "t4")
+vt2 = jobs.make_validate_f3(table_t, "start")
+c.check(vt2({"outcome": "followed", "action_location": "s1.o1", "quote": "Global beauty retail sales, 2024"})[0],
+        "quote check: a phrase split by table columns is found")
+c.check(not vt2({"outcome": "followed", "action_location": "s1.o1", "quote": "Global wine retail sales, 2024"})[0],
+        "quote check: a short phrase with a wrong word is still rejected")
 c.check(not q2({"seen": True, "location": "s2.o1", "evidence": [{"fact": 1, "location": "s2.o1", "quote": ""}]})[0],
         "quote check: an empty quote is rejected")
 c.check(q2({"seen": True, "location": "s2.o1", "evidence": [{"fact": 1, "location": "s2.o1", "quote": "a.txt:3"},
