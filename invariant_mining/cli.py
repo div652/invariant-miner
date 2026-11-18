@@ -21,10 +21,33 @@ def safe(name: str) -> str:
     return re.sub(r"[^A-Za-z0-9._-]+", "_", name)
 
 
+def manifest_from_folder(folder: Path) -> dict:
+    """A runs folder: manifest.json with tasks[] = {task_id, folder, runs: {runN: {all_pass, ...}}} and
+    <task folder>/runN/session.v2.jsonl. P1/P2 = the first two passing runs in run order; tasks with fewer than two
+    passing runs are left out."""
+    fm = json.loads((Path(folder) / "manifest.json").read_text())
+    trajs, tasks = [], []
+    for t in fm["tasks"]:
+        runs = sorted(t["runs"].items(), key=lambda kv: int(re.sub(r"\D", "", kv[0]) or 0))
+        ids = []
+        for run, v in runs:
+            log = Path(folder) / t["folder"] / run / "session.v2.jsonl"
+            if not log.is_file():
+                sys.exit(f"missing {log}")
+            tid = f"{t['task_id']}#{run}"
+            trajs.append({"id": tid, "task_id": t["task_id"], "label": "pass" if v["all_pass"] else "fail", "session_log": str(log)})
+            if v["all_pass"]:
+                ids.append(tid)
+        if len(ids) >= 2:
+            tasks.append({"task_id": t["task_id"], "p1": ids[0], "p2": ids[1]})
+    keep = {t["task_id"] for t in tasks}
+    return {"source": {"folder": str(folder)}, "trajectories": [t for t in trajs if t["task_id"] in keep], "tasks": tasks}
+
+
 def prepare(manifest_path: Path, config_path: Path | None, out: Path) -> None:
     """manifest.json: {"trajectories": [{"id", "task_id", "label": "pass"|"fail", "session_log"}],
                        "tasks": [{"task_id", "p1", "p2"}], "benchmark_context": optional path to a text file}"""
-    m = json.loads(Path(manifest_path).read_text())
+    m = json.loads(Path(manifest_path).read_text()) if not isinstance(manifest_path, dict) else manifest_path
     cfg = config_mod.load(config_path)
     trajs = {t["id"]: t for t in m["trajectories"]}
     if len(trajs) != len(m["trajectories"]):
@@ -133,7 +156,9 @@ def main(argv=None) -> None:
     ap = argparse.ArgumentParser(prog="python3 -m invariant_mining", description=__doc__)
     sub = ap.add_subparsers(dest="cmd", required=True)
     p = sub.add_parser("prepare", help="normalize trajectories and create the run's state")
-    p.add_argument("--manifest", type=Path, required=True)
+    src = p.add_mutually_exclusive_group(required=True)
+    src.add_argument("--manifest", type=Path)
+    src.add_argument("--folder", type=Path, help="a runs folder (manifest.json + <task>/runN/session.v2.jsonl); P1/P2 = first two passing runs")
     p.add_argument("--config", type=Path)
     p.add_argument("--out", type=Path, required=True)
     p = sub.add_parser("run", help="run the pipeline (resumable)")
@@ -157,7 +182,13 @@ def main(argv=None) -> None:
     p.add_argument("--config", type=Path)
     a = ap.parse_args(argv)
     if a.cmd == "prepare":
-        prepare(a.manifest, a.config, a.out)
+        if a.folder:
+            m = manifest_from_folder(a.folder)
+            a.out.mkdir(parents=True, exist_ok=True)
+            (a.out / "folder-manifest.json").write_text(json.dumps(m, indent=1))
+            prepare(m, a.config, a.out)
+        else:
+            prepare(a.manifest, a.config, a.out)
     elif a.cmd == "run":
         cfg = config_mod.load(a.run_dir / "config.json")
         if a.concurrency:

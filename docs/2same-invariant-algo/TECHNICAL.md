@@ -248,6 +248,8 @@ runs/<name>/
 
 ```bash
 python3 -m invariant_mining prepare --manifest M.json --config C.json --out runs/NAME   # normalize trajectories
+python3 -m invariant_mining prepare --folder RUNS_FOLDER --out runs/NAME                # or from a runs folder (P1/P2 = first two passes)
+python3 -m invariant_mining add-runs runs/NAME --manifest M.json                         # more runs for the same tasks (no new F1)
 python3 -m invariant_mining run runs/NAME [--tasks T ...] [--concurrency 20]           # the pipeline; resumable
 python3 -m invariant_mining report runs/NAME                                            # report.md + report.json
 python3 -m invariant_mining job runs/NAME --kind f2_seen --trajectories T=ID --inputs '{"facts": ["..."]}'  # one job by hand

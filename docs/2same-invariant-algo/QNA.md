@@ -51,6 +51,7 @@ turns below.
 | Smoke test on Harvey task 028 (P1 run 2, P2 run 3, run 1 failing); if Opus 5.5 refuses, every Opus role is replaced by GPT-6 Astra high | 29 |
 | F1 must read every step of both runs (submit refused until it has); F2/F3/too-narrow quotes are checked in code against the text at their location | 33 |
 | Runs 6-10 of the 8 mixed:flip tasks (user's folder ~/harvey-mixed-flip8-runs6-10): score and refine the current invariants with the normal process (no new F1); done on a copy of the flip run (add-runs) | 41 |
+| APEX-Agents third:flip (14 train tasks, 10 runs each, ~/apex-third-flip14-trajectories): the full procedure, passing runs first | 60 |
 | Confirmed after the consistency check: validation verdicts reused as the triggering passing run's cell; chains written self-contained (link kept as information) | 27 |
 
 ## Log
