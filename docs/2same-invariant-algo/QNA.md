@@ -922,3 +922,16 @@ i hope oyu understand what to do, else just askme.
 ````
 
 (The middle part, from "Runs 6–10" to the pass table, came as pasted text; the table is abbreviated here, it is in ~/harvey-mixed-flip8-runs6-10/README.md.)
+
+### Turn 42 — Claude (2026-11-18)
+
+````text
+Understood, and it's running (started 10:08 IST).
+- **Setup:** I copied the mixed:flip run to `runs/im-mixed-flip-r6-10-20261118T043837Z`, so the original results stay as they are, and added runs 6–10 with a new `add-runs` command. Runs 6–10 add 26 passing and 14 failing runs, matching your table. Only the session logs and the all-pass verdicts are used, not grading.json or output/.
+- **No new proposals:** the 156 active invariants each get checked on the 5 new runs (780 checks), then the normal process runs: Opus re-check before any removal, the too-narrow check, rewording with validation on P1/P2.
+- **Points:** the new runs' points add to those from runs 3–5. A rewording is a new invariant, so it is scored on all 8 non-P1/P2 runs (1–10).
+- **Pruning:** task 6 (repo-securities) gets its first extra passing run (run 10), so its invariants can now be pruned. Tasks 7 and 8 still have no passing run besides P1/P2.
+- **Expected size:** similar to the first run, roughly an hour.
+
+I'll report what was removed and reworded and the new points per task, both from runs 6–10 alone and cumulatively, and regenerate the report.
+````
