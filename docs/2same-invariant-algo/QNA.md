@@ -952,3 +952,21 @@ Still running, 33 minutes in (started 10:08 IST, now 10:41): 960 jobs done, 19 r
 
 At this rate it should finish around 11:05 IST. I'll report the removals, rewordings and new points per task then.
 ````
+
+### Turn 45 — user (2026-11-18)
+
+````text
+whats the ETA
+````
+
+### Turn 46 — Claude (2026-11-18)
+
+````text
+About 10–15 minutes: done around 11:15 IST (now 11:02).
+- **Done:** 1,670 jobs. 801 of the 830 checks on runs 6–10 are finished (830, not 780, because rewordings also get checked on the new runs).
+- **Left:**
+  - 46 checks, all belonging to rewordings: each needs an F2 and usually an F3, ~90 jobs;
+  - 4 rewordings still open (2 being validated), ~25 jobs.
+  - Every rewording that validates adds 8 new checks, so the tail grows a little.
+- **Rate:** 35–42 jobs/min over the last 20 minutes. That alone would mean ~4 minutes, but the tail is sequential: rewording → validation → new checks, one at a time per invariant. So it slows down at the end.
+````
