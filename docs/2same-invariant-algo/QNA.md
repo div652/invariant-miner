@@ -1296,3 +1296,19 @@ The APEX run is done, 13:24–14:56 IST (92 min), passing runs first.
 - Report: `runs/im-apex-third-flip14-20261118T075246Z/report.md`, copied to `docs/2same-invariant-algo/results/apex-third-flip14-report.md`.
 - Proposals: `docs/2same-invariant-algo/results/apex-third-flip14-proposed.md`.
 ````
+
+### Turn 71 — user (2026-11-18)
+
+````text
+what is the meaning of the term "cacnelled" in the reports ?
+````
+
+### Turn 72 — Claude (2026-11-18)
+
+````text
+"cancelled" means the cell was never decided, because its invariant left the active set first. A passing run removed it, or a rewording replaced it, while this cell was still waiting (or its job was still running). Then nothing is left to score, so a cancelled cell counts no points. If the invariant was reworded, the new invariant gets fresh cells of its own on every run.
+
+Toy example: invariant i3 has cells on run4 (pass) and run5 (pass). run4 is checked first: the observation is seen, the action is not followed, Opus confirms, and the purpose wasn't achieved another way, so i3 is removed. Its run5 cell was still waiting, so it becomes "cancelled". It shows as `removed (run4)` with run5 = cancelled, exactly as in Harvey task 1 of the mixed:flip report.
+
+There are more of them in APEX (145 cells, against 6 in each Harvey run) because of passing-first: a failing-run cell waits until its invariant's passing runs are done, so when a passing run removes or rewords the invariant, all its waiting failing-run cells are cancelled instead of checked. Of the 145, 57 belong to removed invariants and 88 to reworded ones. Those are exactly the jobs passing-first saves.
+````
