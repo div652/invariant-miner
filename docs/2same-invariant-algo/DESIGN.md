@@ -1,7 +1,7 @@
 # Same-task invariant mining: design
 
 What the algorithm does and the rules it follows, as agreed in the design conversation of 2026-11-16/17
-([QNA.md](QNA.md): the verbatim log, turns 1-28; "turn N" below points into it). How it is built:
+([QNA.md](QNA.md): the verbatim log, turns 1-61; "turn N" below points into it). How it is built:
 [TECHNICAL.md](TECHNICAL.md); the flows as diagrams: [FLOWCHART.md](FLOWCHART.md). Nothing is built yet.
 
 Every item below was decided in the conversation; what is still open is in section 12.
@@ -188,10 +188,12 @@ Final outcome of each cell -> effect (turns 9, 12, 13, 15). "Not followed" is th
 
 Input: the task's trajectories with labels, and P1, P2.
 1. **Propose**: F1 on P1, P2. All invariants are active.
-2. **Check**: for every active invariant x every other trajectory, passing and failing: F2, then F3 if seen. Failing
-   runs are checked right after step 1, together with the passing runs (turn 13). This does not change any result:
-   removal depends only on passing cells, and failing cells never cause removal; the cost is the failing checks of
-   invariants that are later removed (their verdicts stay in the log).
+2. **Check**: for every active invariant x every other trajectory: F2, then F3 if seen. **Passing runs first** (turn 60):
+   an invariant's failing-run cells wait until all its passing-run cells are final and it has no open trigger, so
+   passing runs remove and reword it before failing runs score it. (Turn 13 had failing runs checked right after step 1,
+   together with the passing runs; since failing runs can trigger rewordings (turn 17), a failing run's rewording could
+   race with a passing run's removal or rewording of the same invariant: 5 of 194 invariants in the first mixed:flip
+   pass. Config `check_order: together` restores the old order.)
 3. **Not followed** (4.4): on a passing cell the re-check, then the too-narrow check (remove or reword), one invariant
    at a time: when an invariant is removed or retired, its remaining pending cells are cancelled. On a failing cell the
    too-narrow check (importance point, or reword).

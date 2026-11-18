@@ -36,7 +36,8 @@ turns below.
 | F2, F3 and the too-narrow check give objective answers: exactly one of the given choices, no equivocating or playing it safe | 15 |
 | Reword: the rewording LLM gets only the invariant, the triggering run and the location of its alternative action, and is told the invariant was learnt on earlier runs; the new invariant is validated with standard F2/F3 on P1, P2 and, for a passing trigger, the triggering run | 11, 13, 17 |
 | Reword fails validation: one more attempt; if that fails, the failure is logged and, for a passing trigger, the invariant is removed (for a failing trigger it stays: see the too-narrow row); logs reported at the end of the process | 13, 17 |
-| Failing runs are checked right after F1 (together with the passing runs); no Opus re-check for importance points | 13 |
+| Failing runs are checked right after F1 (together with the passing runs); no Opus re-check for importance points (order superseded in turn 60) | 13 |
+| Passing runs first: an invariant's failing-run cells wait for its passing-run cells and open triggers (removes the race between failing-run rewordings and passing-run decisions) | 60 |
 | A reworded or refined invariant is new: the old one is retired and the new one is scored again on all other passing and failing runs | 9, 11 |
 | Everything outside the LLM functions is programmatic | 11 |
 | Later: targeted re-proposal (F1 again, pointed at where a failing run went wrong), its own function; implementation to discuss | 9 |
@@ -1140,4 +1141,10 @@ Checking passing runs first removes the race. Passing runs prune and reword firs
 - So expect a few percent fewer jobs, and roughly the same wall time: during rewording tails the 20 slots would have less work.
 
 Shall I make the change before the APEX run? And where are the 14 tasks and their runs? A named subset on main, or a folder like the Harvey one?
+````
+
+### Turn 60 — user (2026-11-18)
+
+````text
+yes make the passing-first change, runs are in ~/apex-third-flip14-trajectories/
 ````

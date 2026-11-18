@@ -26,6 +26,9 @@ DEFAULT_CONFIG = {
     "api_retries": 5,
     "request_timeout_s": 1800,
     "concurrency": 20,
+    # "passing_first" (turn 60): an invariant's failing-run cells wait for its passing-run cells and open triggers;
+    # "together": failing runs are checked right after F1 alongside the passing runs (turn 13)
+    "check_order": "passing_first",
 }
 
 

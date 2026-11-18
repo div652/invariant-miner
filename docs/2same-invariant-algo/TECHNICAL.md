@@ -230,8 +230,9 @@ Pure functions over the store, the rules of DESIGN.md sections 4-6:
 
 Repeatedly collects ready work (F1 for tasks whose F1 job has not finished; cells' next job; removal paths; rewords; validations),
 runs it under the concurrency limit, applies the rules to each finished job, until nothing is pending. Resumable: on
-start, jobs left `running` by a stopped run are reset to pending. A task's failing and passing cells run together right
-after F1 (DESIGN.md section 6).
+start, jobs left `running` by a stopped run are reset to pending. Passing first (DESIGN.md section 6): a failing-run
+cell is ready only when its invariant has no passing-run cell still pending or running and no open trigger (config
+`check_order`, default `passing_first`; `together` checks both at once).
 
 ## 5. Run directory and CLI
 

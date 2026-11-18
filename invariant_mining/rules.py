@@ -74,8 +74,15 @@ def deactivate(store: Store, iid: str, status: str) -> None:
 
 
 # --- ready work -------------------------------------------------------------------------------------------------------
-def ready_work(store: Store, limit: int) -> list[dict]:
-    """Up to `limit` items that can run now; marks them running. Applies removal triggers on the way (no job needed)."""
+PASSING_DONE = """NOT EXISTS (SELECT 1 FROM cells p WHERE p.invariant_id=c.invariant_id AND p.label='pass'
+                    AND p.status IN ('pending','running'))
+               AND NOT EXISTS (SELECT 1 FROM triggers t WHERE t.invariant_id=c.invariant_id AND t.status IN ('waiting','active'))"""
+
+
+def ready_work(store: Store, limit: int, passing_first: bool = True) -> list[dict]:
+    """Up to `limit` items that can run now; marks them running. Applies removal triggers on the way (no job needed).
+    passing_first (DESIGN.md section 6, turn 60): a failing-run cell of an invariant waits until all its passing-run
+    cells are final and it has no open trigger, so passing runs prune and reword first."""
     items: list[dict] = []
     if limit <= 0:
         return items
@@ -111,9 +118,10 @@ def ready_work(store: Store, limit: int) -> list[dict]:
                 items.append({"type": "val", "trigger_id": v["trigger_id"], "attempt": v["attempt"],
                               "trajectory_id": v["trajectory_id"], "stage": v["stage"]})
     if len(items) < limit:
+        gate = f"AND (c.label='pass' OR ({PASSING_DONE}))" if passing_first else ""
         for c in store.q("SELECT c.invariant_id, c.trajectory_id, c.stage FROM cells c JOIN invariants i ON i.id=c.invariant_id "
-                         "WHERE c.status='pending' AND i.status='active' ORDER BY i.created_at, c.trajectory_id LIMIT ?",
-                         limit - len(items)):
+                         f"WHERE c.status='pending' AND i.status='active' {gate} "
+                         "ORDER BY c.label DESC, i.created_at, c.trajectory_id LIMIT ?", limit - len(items)):
             store.update("cells", {"invariant_id": c["invariant_id"], "trajectory_id": c["trajectory_id"]}, status="running")
             items.append({"type": "cell", "invariant_id": c["invariant_id"], "trajectory_id": c["trajectory_id"], "stage": c["stage"]})
     return items

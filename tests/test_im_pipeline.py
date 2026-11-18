@@ -145,6 +145,17 @@ c.check(inv["T1.i2"]["first_violations"] == ["X1"] and inv["T1.i1"]["first_viola
 c.check(not any(t in ("P1", "P2") for k, _, t, inp in calls if k in ("f2_seen", "f3_followed") and ("act-a" in inp or '"fact-a"' in inp)),
         "no cells on P1/P2 (only validations run there)")
 c.check(rep["tasks"][0]["events"].get("f1_evidence_invalid", 0) == 0, "F1 evidence check ran (valid evidence, nothing logged)")
+def first_last(pred):
+    idx = [n for n, x in enumerate(calls) if pred(x)]
+    return (min(idx), max(idx)) if idx else (None, None)
+_, last_pass = first_last(lambda x: x[2] == "P3" and ('"fact-a"' in x[3] or '"act-a"' in x[3]))
+first_fail, _ = first_last(lambda x: x[2] in ("X1", "X2") and ('"fact-a"' in x[3] or '"act-a"' in x[3]))
+c.check(last_pass is not None and first_fail is not None and last_pass < first_fail,
+        "passing first: i1's failing-run checks start after its passing-run checks are final")
+c.check(not any(t in ("X1", "X2") and '"fact-d"' in inp for k, _, t, inp in calls),
+        "passing first: i4 (removed by a passing run) is never checked on the failing runs")
+c.check(not any(t in ("X1", "X2") and '"act-c-narrow"' in inp for k, _, t, inp in calls),
+        "passing first: i3 is reworded before any failing run checks it; only ri3 is checked there")
 n_jobs = p.store.one("SELECT COUNT(*) n FROM jobs")["n"]
 c.check(n_jobs == len(calls), "every job recorded in the jobs table")
 p.run()

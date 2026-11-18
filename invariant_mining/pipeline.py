@@ -75,7 +75,8 @@ class Pipeline:
         done_jobs = 0
         with ThreadPoolExecutor(max_workers=conc) as pool:
             while True:
-                for item in rules.ready_work(self.store, conc - len(inflight)):
+                for item in rules.ready_work(self.store, conc - len(inflight),
+                                             passing_first=self.cfg.get("check_order", "passing_first") == "passing_first"):
                     job = rules.job_for(self.store, item)
                     trajs = {name: self.trajectory(tid) for name, tid in job["trajs"].items()}
                     job_id = self._next_job_id(job["kind"])

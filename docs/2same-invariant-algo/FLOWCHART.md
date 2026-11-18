@@ -13,7 +13,7 @@ flowchart TD
     IN["Inputs: per task, its runs (DSH session logs) with pass/fail labels;<br/>P1, P2 = two passing runs"] --> PREP["prepare: each session log becomes a normalized trajectory<br/>(items in the order the agent saw them; locations sys, tools, uN, sN.r, sN.cK, sN.oK)"]
     PREP --> F1["F1 propose (Opus agent), one job per task:<br/>reads every step of P1 and P2, submits all observation -> action pairs common to both"]
     F1 --> EVC["F1 evidence check (code, logged only):<br/>locations exist, observation before action in P1 and P2"]
-    EVC --> CELLS["Cells: every invariant x every run of the task except P1, P2<br/>(passing and failing runs together)"]
+    EVC --> CELLS["Cells: every invariant x every run of the task except P1, P2<br/>(passing runs first: an invariant's failing-run cells wait for its passing-run cells and triggers)"]
     CELLS --> CELL["Per-cell checks (section 2)"]
     CELL --> PTS["Cell outcome: S +1 / I +1 / no change"]
     CELL --> TRIG["Trigger for the invariant: remove or reword (section 3)"]
@@ -119,5 +119,6 @@ flowchart LR
 All work goes through one SQLite table of cells plus the trigger queue and the validations; a row without a final
 verdict is pending work. Up to 20 jobs run at a time (worker threads); only the main thread changes the state. Each
 round it starts, in order: F1 for tasks not yet proposed, the front trigger of each invariant (a removal is applied at
-once, a rewording or validation becomes a job), then pending cells. A stopped run resumes where it was (`run` again).
+once, a rewording or validation becomes a job), then pending cells, passing runs first: an invariant's failing-run
+cells become ready only when all its passing-run cells are final and it has no open trigger. A stopped run resumes where it was (`run` again).
 Points are computed when the report is written, never stored, so changing a scoring rule needs no new model calls.
