@@ -201,6 +201,11 @@ def main(argv=None) -> None:
     p = sub.add_parser("add-runs", help="add trajectories to a run: the active invariants get cells on them (then: run)")
     p.add_argument("run_dir", type=Path)
     p.add_argument("--manifest", type=Path, required=True)
+    p = sub.add_parser("guard", help="pause invariant_mining runs before the gateway's premium usage reaches a limit")
+    p.add_argument("--max-used", type=int, required=True)
+    p.add_argument("--interval", type=float, default=10)
+    p.add_argument("--log", type=Path, default=Path("runs/credit-guard.log"))
+    p.add_argument("--config", type=Path)
     p = sub.add_parser("invariants", help="write invariants.md: what F1 proposed per task (safe while it runs)")
     p.add_argument("run_dir", type=Path)
     p = sub.add_parser("status", help="progress of a run (safe while it runs)")
@@ -234,6 +239,10 @@ def main(argv=None) -> None:
         run_one_job(a.run_dir, a.kind, trajs, inputs, a.model)
     elif a.cmd == "add-runs":
         add_runs(a.run_dir, a.manifest)
+    elif a.cmd == "guard":
+        from .guard import guard
+        a.log.parent.mkdir(parents=True, exist_ok=True)
+        guard(config_mod.load(a.config), a.max_used, a.interval, a.log)
     elif a.cmd == "invariants":
         out = a.run_dir / "invariants.md"
         out.write_text(report.proposals(a.run_dir))
