@@ -1347,3 +1347,38 @@ So the low importance doesn't mean the scoring is broken. On these tasks the pro
 
 **Logged?** Only implicitly so far: you could see it in the per-run columns. The report now has a "Failing runs" section per task: for each failing run, how many invariants it broke, didn't see, reached another way, or did only before, its first broken invariant, and a "breaks nothing" mark. I regenerated all three reports, and the copies in `docs/2same-invariant-algo/results/` are updated. The grader's verdicts stay out of the method; the analysis above was done by hand.
 ````
+
+### Turn 75 — user (2026-11-18)
+
+````text
+okay. I will check the report, the analysis you gave is good, I want it to be more grounded, like make a report telling things in slight more detail. what actually the model had output so i can read why things went wrong. also then do the same analusis for the apex runs for 1 or 2 tasks.
+````
+
+### Turn 76 — Claude (2026-11-18)
+
+````text
+Written up with verbatim excerpts: `docs/2same-invariant-algo/analysis/FAILING-RUNS.md` (pushed). For each task it has a one-line summary, then per failing run the failed criteria, the judge's reasoning, and the model's own text next to a passing run's, plus what our invariants said about that run. Harvey: DPA, TSA, repo-securities. APEX: world227-tg-07 and world131-dv-03. A small `docx_text.py` beside it reads the .docx deliverables with tracked changes visible.
+
+**New on Harvey,** beyond what I said before:
+- **DPA:** I counted full vs short names in all 10 memos. The naming verdicts don't follow the text: passing runs 1, 2, 7 never write "Orionis Analytics" and pass; failing runs 3, 4, 8, 9 do the same and fail. Runs 3, 8, 9 fail only on that. Run 4's anonymization gap and run 6's HIPAA breach-rule gap are real.
+- **Repo-securities:** the same holds for C-007. Failing run 9's "No substitution may be effected while a Margin Deficit exists" fails; passing runs 4 and 10 say the same and pass. Run 8 has a real error: its 4.11 summary table still says 1.5%, while its annex has the agreed 1.75%.
+- **TSA:** verbatim clauses. Failing runs write "within thirty (30) days after the date of receipt", passing runs "Net 30 from the invoice date". Run 3's comment even says "Replace vague timing with Net 30". Run 3's cap choice is quoted from its reasoning: "The APA's 10% cap controls … even though the playbook target is cost-plus-15%".
+
+**APEX:**
+- **world227-tg-07** (single criterion, $7,728M): failing runs 3/7 answer $6,391.7M, run 4 $7,254.7M. Two modeling errors: FY30 EBITDA labelled as "FY31 NTM", and the special dividends taken out of the cash that repays debt. F1 had proposed both decisive invariants, but our checks lost them:
+  - i9 "concludes the special dividends do not reduce debt paydown" was removed. A passing run (10) got the right debt without stating it, and the too-narrow check said "no" for it but "yes" for run 5 on the same outcome. With passing-first, i9's failing-run checks were then cancelled.
+  - i7 "takes the following year's EBITDA" was judged "followed" because F3 trusted run 3's "FY31" label on a FY30 number.
+- **world131-dv-03** (NPV €15.33B): all 4 failing runs answer €15.31B because they used the business case's "€1.74875 billion/year" instead of its "~€1.75 billion/year". Both are in the document, and the deck's overview slide says €1.75B. Our invariant "takes the renewable-enablement figure" is satisfied by both choices: too coarse.
+
+**The picture:** both of your reasons occur.
+- Content errors (H5) are the most common real cause.
+- Missing invariants show up as invariants too coarse for the decisive detail.
+- Two more appear: inconsistent grader verdicts (some failures aren't), and our own checks hiding a decisive invariant (C1).
+
+The document ends with five suggestions:
+1. Flag inconsistent grader verdicts.
+2. Word actions by their observable result, not "concludes …".
+3. Have F3 verify numeric values, not labels.
+4. Deliverable-level invariants via the targeted re-proposal.
+5. Look at the too-narrow check's consistency.
+````
