@@ -1204,7 +1204,7 @@ can i just see the propose invariants somewhere ?
 ````text
 Yes: a new command writes just what F1 proposed, per task.
 - **Contents:** each invariant's observation facts with their source and F1's one-line reason, the action and its purpose, `follows` links, and the task's role terms.
-- **Final already:** F1 is finished for all 14 APEX tasks (226 invariants), so the list won't change while the checks run.
+- **Final already:** F1 is finished for all 14 APEX tasks (224 invariants, from 5 to 27 per task), so the list won't change while the checks run.
 - **Where:** `runs/im-apex-third-flip14-20261118T075246Z/invariants.md` (1,291 lines), with a copy on GitHub at `docs/2same-invariant-algo/results/apex-third-flip14-proposed.md`. The Harvey mixed:flip proposals are in `docs/2same-invariant-algo/results/mixed-flip-proposed.md`.
 - **Regenerate any time:** `work/im-venv/bin/python -m invariant_mining invariants RUN`.
 
