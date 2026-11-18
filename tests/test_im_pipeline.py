@@ -155,6 +155,22 @@ retry_errors(run_dir)
 p.run()
 c.check(p.store.one("SELECT final_outcome FROM cells WHERE invariant_id='T1.i1' AND trajectory_id='X2'")["final_outcome"] == "not_seen",
         "retry-errors: a cell that ended in a job error runs again from its stage")
+# add-runs: a new passing run for the task; every active invariant gets a cell on it, nothing is proposed again
+from invariant_mining.cli import add_runs
+new_log = write_session(tmp / "logs" / "P4" / "session.v2.jsonl", "Task text.", three_steps("P4"))
+(tmp / "more.json").write_text(json.dumps({"trajectories": [{"id": "P4", "task_id": "task-1", "label": "pass", "session_log": str(new_log)}]}))
+SEEN["fact-a"].add("P4")
+F3[("act-a", "P4", None)] = ("followed", "s3.c1")
+active_before = p.store.one("SELECT COUNT(*) n FROM invariants WHERE status='active'")["n"]
+f1_before = sum(1 for k, *_ in calls if k == "f1_propose")
+add_runs(run_dir, tmp / "more.json")
+c.check(p.store.one("SELECT COUNT(*) n FROM cells WHERE trajectory_id='P4'")["n"] == active_before, "add-runs: one cell per active invariant")
+p.run()
+report.write(run_dir)
+rep = json.loads((run_dir / "report.json").read_text())
+inv = {i["id"]: i for i in rep["tasks"][0]["invariants"]}
+c.check(inv["T1.i1"]["support"] == 2 and inv["T1.i1"]["cells"]["P4"] == "followed" and
+        sum(1 for k, *_ in calls if k == "f1_propose") == f1_before, "add-runs: points add up over old and new runs; no new F1")
 md = (run_dir / "report.md").read_text()
 c.check("### Proposed by F1 (8)" in md and "| ri3 | i3 | act-c-narrow | act-c-broad |" in md and "### Removed (1)" in md
         and "| i4 |" in md and "Opus re-check" in md and "rewording failed twice" in md and "not followed ★" in md,

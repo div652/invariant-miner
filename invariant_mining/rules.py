@@ -50,6 +50,22 @@ def add_invariant(store: Store, task, local_id: str, observation: list, action: 
     return iid
 
 
+def add_trajectory_cells(store: Store, traj_id: str) -> int:
+    """A trajectory added to a run: one pending cell per active invariant of its task (not for its P1/P2)."""
+    t = store.one("SELECT * FROM trajectories WHERE id=?", traj_id)
+    task = store.one("SELECT * FROM tasks WHERE task_id=?", t["task_id"])
+    if traj_id in (task["p1"], task["p2"]):
+        return 0
+    n = 0
+    for inv in store.q("SELECT * FROM invariants WHERE task_id=? AND status='active'", t["task_id"]):
+        phi = is_phi(inv)
+        store.x("INSERT OR IGNORE INTO cells (invariant_id, trajectory_id, label, stage, status, f2_seen, f2_location, job_ids, updated) "
+                "VALUES (?,?,?,?,?,?,?,?,?)", inv["id"], traj_id, t["label"], "f3" if phi else "f2", "pending",
+                1 if phi else None, "start" if phi else None, "[]", time.time())
+        n += 1
+    return n
+
+
 def deactivate(store: Store, iid: str, status: str) -> None:
     """Remove or retire an invariant: pending cells cancelled, waiting triggers dropped."""
     store.update("invariants", {"id": iid}, status=status)

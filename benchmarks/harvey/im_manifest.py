@@ -14,12 +14,29 @@ from pathlib import Path
 
 def main() -> None:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--baseline", type=Path, required=True, help="baseline JSON with 'runs' (run dirs) and per-task 'runN' verdicts")
+    ap.add_argument("--baseline", type=Path, help="baseline JSON with 'runs' (run dirs) and per-task 'runN' verdicts")
     ap.add_argument("--splits", type=Path, help="splits JSON holding the subset")
     ap.add_argument("--subset", help="named subset in the splits file (subsets.<name>)")
     ap.add_argument("--tasks", nargs="*", help="task ids instead of a subset")
+    ap.add_argument("--folder", type=Path, help="a runs folder with manifest.json (tasks[].folder, tasks[].runs.runN.all_pass) "
+                    "and <folder>/runN/session.v2.jsonl: writes trajectories only, for `invariant_mining add-runs`")
     ap.add_argument("--out", type=Path, required=True)
     a = ap.parse_args()
+    if a.folder:
+        fm = json.loads((a.folder / "manifest.json").read_text())
+        trajs = []
+        for t in fm["tasks"]:
+            for run, v in sorted(t["runs"].items(), key=lambda kv: int(kv[0][3:])):
+                log = a.folder / t["folder"] / run / "session.v2.jsonl"
+                if not log.is_file():
+                    raise SystemExit(f"missing {log}")
+                trajs.append({"id": f"{t['task_id']}#{run}", "task_id": t["task_id"], "label": "pass" if v["all_pass"] else "fail",
+                              "session_log": str(log)})
+        a.out.write_text(json.dumps({"source": {"folder": str(a.folder)}, "trajectories": trajs}, indent=1))
+        print(f"{a.out}: {len(trajs)} trajectories from {a.folder}")
+        return
+    if not a.baseline:
+        raise SystemExit("--baseline is required (or --folder)")
     base = json.loads(a.baseline.read_text())
     if a.subset:
         sub = json.loads(a.splits.read_text())["subsets"][a.subset]

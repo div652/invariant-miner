@@ -78,6 +78,34 @@ def run_one_job(run_dir: Path, kind: str, trajectories: dict, inputs: dict, mode
                      ensure_ascii=False, indent=1))
 
 
+def add_runs(run_dir: Path, manifest_path: Path) -> None:
+    """Add trajectories to a prepared run (manifest: {"trajectories": [{"id", "task_id", "label", "session_log"}]}, tasks
+    already in the run). Every active invariant of the task gets a pending cell on each new trajectory; run `run`
+    afterwards. The invariants are not proposed again."""
+    from . import rules
+    m = json.loads(Path(manifest_path).read_text())
+    s = Store(Path(run_dir) / "state.sqlite")
+    tasks = {r["task_id"] for r in s.q("SELECT task_id FROM tasks")}
+    added = cells = 0
+    for t in m["trajectories"]:
+        if t["task_id"] not in tasks:
+            sys.exit(f"{t['id']}: task {t['task_id']} is not in this run")
+        if t.get("label") not in ("pass", "fail"):
+            sys.exit(f"{t['id']}: label must be pass or fail")
+        if s.one("SELECT 1 FROM trajectories WHERE id=?", t["id"]):
+            print(f"skip {t['id']}: already in the run")
+            continue
+        tr = parse_session(Path(t["session_log"]), t["id"], t["task_id"], t["label"])
+        rel = f"trajectories/{safe(t['id'])}.json"
+        tr.save(Path(run_dir) / rel)
+        s.x("INSERT INTO trajectories VALUES (?,?,?,?,?,?,?)", t["id"], t["task_id"], t["label"], tr.data["source"], rel,
+            len(tr.steps()), tr.est_tokens())
+        cells += rules.add_trajectory_cells(s, t["id"])
+        added += 1
+    s.event("add_runs", manifest=str(manifest_path), trajectories=added, cells=cells)
+    print(f"{run_dir}: {added} trajectories added, {cells} new cells")
+
+
 def retry_errors(run_dir: Path) -> None:
     """Put cells that ended in a job error back to pending at the stage they failed in, and failed F1 tasks back to
     pending (e.g. after fixing a validator). Run `run` afterwards. Do not use while a run is in progress."""
@@ -120,6 +148,9 @@ def main(argv=None) -> None:
     p.add_argument("--trajectories", required=True, help="A=id,B=id for f1_propose; T=id otherwise")
     p.add_argument("--inputs", default="{}", help="JSON object, or @file.json")
     p.add_argument("--model", help="model key from the config (default: the kind's role)")
+    p = sub.add_parser("add-runs", help="add trajectories to a run: the active invariants get cells on them (then: run)")
+    p.add_argument("run_dir", type=Path)
+    p.add_argument("--manifest", type=Path, required=True)
     p = sub.add_parser("retry-errors", help="cells that ended in a job error back to pending (then: run)")
     p.add_argument("run_dir", type=Path)
     p = sub.add_parser("ping", help="one tiny request to each configured model")
@@ -141,6 +172,8 @@ def main(argv=None) -> None:
         trajs = dict(kv.split("=", 1) for kv in a.trajectories.split(","))
         inputs = json.loads(Path(a.inputs[1:]).read_text() if a.inputs.startswith("@") else a.inputs)
         run_one_job(a.run_dir, a.kind, trajs, inputs, a.model)
+    elif a.cmd == "add-runs":
+        add_runs(a.run_dir, a.manifest)
     elif a.cmd == "retry-errors":
         retry_errors(a.run_dir)
     elif a.cmd == "ping":
