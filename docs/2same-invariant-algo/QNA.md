@@ -1149,3 +1149,21 @@ Shall I make the change before the APEX run? And where are the 14 tasks and thei
 ````text
 yes make the passing-first change, runs are in ~/apex-third-flip14-trajectories/
 ````
+
+### Turn 61 — Claude (2026-11-18)
+
+````text
+Both done (pushed), and the APEX run started at 13:23 IST.
+
+**Passing first** (`456d9b5`): a failing-run check of an invariant now waits until all its passing-run checks are final and it has no open trigger. Config `check_order: together` restores the old order.
+- New test: an invariant removed by a passing run is never checked on the failing runs, and a reworded one is checked there only in its new form. 105 checks pass.
+- DESIGN §6, TECHNICAL, FLOWCHART and the decisions table are updated.
+
+**APEX third:flip** (`~/apex-third-flip14-trajectories`): 14 train tasks, 10 runs each, all 140 session logs present.
+- P1/P2 are the first two passing runs of each task. That leaves 57 passing runs (support) and 55 failing runs (importance) to check against.
+- The trajectories are smaller than Harvey's: 17 steps and ~70K tokens on average (max 47 steps, 235K tokens). The APEX app tools (`mcp__world__…`) are read like any other tool.
+- New `prepare --folder` reads a runs folder like this one or your Harvey runs 6–10 folder directly.
+- Run directory: `runs/im-apex-third-flip14-20261118T075246Z`.
+
+**Expected size:** about 280 invariants × 8 runs ≈ 2,200 checks, two to three times the Harvey runs, but on smaller trajectories. Roughly 1.5–2.5 hours. If Opus refuses, I'll switch every Opus role to Astra.
+````
