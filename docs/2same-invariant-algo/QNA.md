@@ -1382,3 +1382,28 @@ The document ends with five suggestions:
 4. Deliverable-level invariants via the targeted re-proposal.
 5. Look at the too-narrow check's consistency.
 ````
+
+### Turn 77 — user (2026-11-18)
+
+````text
+okay the one thing i want to do first, is to change the account for which the cao credits our used, I wanna use another github copilot account, and my credits hsould be use d from there. refer to cao skill .
+````
+
+### Turn 78 — Claude (2026-11-18)
+
+````text
+Ready for the switch. The login itself has to be done by you: CAO's GitHub device login runs in your browser, and my CAO notes say the agent mustn't run it. Two things to know first:
+- **This conversation runs through CAO too** (`ANTHROPIC_BASE_URL=http://127.0.0.1:4141`, Opus 5.5). While the gateway is stopped I'm offline, and afterwards this session also bills the new account.
+- **Something else is connected:** agentic-evolution's `judge_cao_shim.py` (up 6 days) holds a connection, and will see the gateway drop for a minute.
+
+I've backed up the current account's login (`profile/github_token.agarwaldi_microsoft.bak`, mode 600, identical copy), so switching back is a restore.
+
+Run these in this prompt, in order:
+
+1. `! /home/agarwaldi/cao/cao.sh stop`
+2. `! /home/agarwaldi/cao/cao.sh login` prints a URL and a code. Open the URL in a browser **signed in to the other GitHub account** (a private window avoids picking up the Microsoft EMU account), enter the code, and authorize.
+3. `! /home/agarwaldi/cao/cao.sh start`
+4. Then send me any message.
+
+Afterwards I'll check `/usage` (which account, which plan, how many premium requests it has), confirm the models we use are available on it, and set the credit guard to the new account's limit before any run. A personal Copilot plan has far fewer premium requests than the 1,000,000 of the enterprise seat, so we'll need its number before the next big run. To switch back: stop, copy the .bak over `github_token`, start.
+````
