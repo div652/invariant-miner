@@ -1,15 +1,18 @@
 """Credit guard: watches the gateway's premium-interaction usage and pauses invariant_mining runs before a limit.
 
-    python -m invariant_mining guard --max-used 999990 [--interval 10] [--log FILE]
+    python -m invariant_mining guard --max-used 999990 [--interval 10] [--log FILE] [--pause-file F] [--kill-pattern RE ...]
 
 Every `interval` seconds it reads GET /usage (no generation) and computes used = entitlement - remaining. It pauses when
 the usage, or the usage projected one interval ahead at the current rate, reaches --max-used: it sends SIGTERM to every
-`python -m invariant_mining run ...` process (only those; found through /proc), logs PAUSED and exits. A paused run
-resumes with `run` (jobs in flight are redone).
+`python -m invariant_mining run ...` process (found through /proc), and to every process whose command line matches a
+--kill-pattern regex; it creates --pause-file (benchmark drivers wait while it exists before starting a task), logs PAUSED
+and exits. A paused invariant_mining run resumes with `run` (jobs in flight are redone); delete the pause file to let the
+drivers go on.
 """
 
 import json
 import os
+import re
 import signal
 import time
 import urllib.request
@@ -25,6 +28,27 @@ def used_now(cfg: dict) -> tuple[int, int, str]:
         j = json.load(r)
     q = j["quota_snapshots"]["premium_interactions"]
     return int(q["entitlement"]) - int(q["remaining"]), int(q["entitlement"]), str(j.get("login"))
+
+
+def cmdlines():
+    for d in Path("/proc").iterdir():
+        if not d.name.isdigit() or int(d.name) == os.getpid():
+            continue
+        try:
+            argv = (d / "cmdline").read_bytes().split(b"\0")
+        except OSError:
+            continue
+        yield int(d.name), [a.decode(errors="replace") for a in argv if a]
+
+
+def matching_pids(patterns: list[str]) -> list[int]:
+    rx = [re.compile(p) for p in patterns]
+    out = []
+    for pid, args in cmdlines():
+        line = " ".join(args)
+        if args and "--kill-pattern" not in line and any(r.search(line) for r in rx):  # never the guard or its shell
+            out.append(pid)
+    return out
 
 
 def pipeline_pids() -> list[int]:
@@ -44,7 +68,8 @@ def pipeline_pids() -> list[int]:
     return pids
 
 
-def guard(cfg: dict, max_used: int, interval: float, log_path: Path) -> None:
+def guard(cfg: dict, max_used: int, interval: float, log_path: Path, pause_file: Path | None = None,
+          kill_patterns: list[str] | None = None) -> None:
     def log(msg: str) -> None:
         line = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()) + " " + msg
         with open(log_path, "a") as f:
@@ -53,7 +78,9 @@ def guard(cfg: dict, max_used: int, interval: float, log_path: Path) -> None:
 
     prev = None
     last_log = 0.0
-    log(f"guard started: pause at {max_used:,} used (checked every {interval:.0f} s, with a one-interval projection)")
+    kill_patterns = kill_patterns or []
+    log(f"guard started: pause at {max_used:,} used (checked every {interval:.0f} s, with a one-interval projection)"
+        + (f"; pause file {pause_file}" if pause_file else "") + (f"; kill patterns {kill_patterns}" if kill_patterns else ""))
     while True:
         try:
             used, ent, login = used_now(cfg)
@@ -78,13 +105,16 @@ def guard(cfg: dict, max_used: int, interval: float, log_path: Path) -> None:
             log(f"{login}: used {used:,} / {ent:,} ({ent - used:,} left), {rate * 60:.0f}/min, runs: {pipeline_pids() or 'none'}")
             last_log = now
         if used >= max_used or projected >= max_used:
-            pids = pipeline_pids()
+            if pause_file:
+                pause_file.write_text(f"paused by the credit guard at {used:,} used\n")
+            pids = pipeline_pids() + matching_pids(kill_patterns)
             for pid in pids:
                 try:
                     os.kill(pid, signal.SIGTERM)
                 except ProcessLookupError:
                     pass
-            log(f"PAUSED at {used:,} used (projected {projected:,.0f} >= {max_used:,}): SIGTERM to invariant_mining runs {pids or 'none'}")
+            log(f"PAUSED at {used:,} used (projected {projected:,.0f} >= {max_used:,}): SIGTERM to {pids or 'none'}"
+                + (f", pause file {pause_file} created" if pause_file else ""))
             return
         prev = (now, used, login)
         time.sleep(interval)

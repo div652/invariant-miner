@@ -206,6 +206,9 @@ def main(argv=None) -> None:
     p.add_argument("--interval", type=float, default=10)
     p.add_argument("--log", type=Path, default=Path("runs/credit-guard.log"))
     p.add_argument("--config", type=Path)
+    p.add_argument("--pause-file", type=Path, help="created at the limit: other drivers start no new work while it exists")
+    p.add_argument("--kill-pattern", action="append", default=[],
+                   help="regex on a process's command line: such processes are also sent SIGTERM at the limit")
     p = sub.add_parser("invariants", help="write invariants.md: what F1 proposed per task (safe while it runs)")
     p.add_argument("run_dir", type=Path)
     p = sub.add_parser("status", help="progress of a run (safe while it runs)")
@@ -242,7 +245,7 @@ def main(argv=None) -> None:
     elif a.cmd == "guard":
         from .guard import guard
         a.log.parent.mkdir(parents=True, exist_ok=True)
-        guard(config_mod.load(a.config), a.max_used, a.interval, a.log)
+        guard(config_mod.load(a.config), a.max_used, a.interval, a.log, a.pause_file, a.kill_pattern)
     elif a.cmd == "invariants":
         out = a.run_dir / "invariants.md"
         out.write_text(report.proposals(a.run_dir))
