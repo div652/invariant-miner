@@ -121,6 +121,13 @@ c.check(q2({"seen": True, "location": "s2.o1", "evidence": [{"fact": 1, "locatio
         "quote check: excerpts joined with …")
 c.check(q2({"seen": True, "location": "s1.o1", "evidence": [{"fact": 1, "location": "s1.o1", "quote": "a.txt\nt1"}]})[0],
         "quote check: non-adjacent lines of the item, one per line")
+long_t = parse_session(write_session(tmp / "c/session.v2.jsonl", "Task.", [{"reasoning": "r", "calls": [("read", {"path": "a"},
+                       "To read .docx, .xlsx or .pptx files, convert them to text with bash: parse-doc docx|xlsx|pptx <file>.")]}]), "t3")
+vl = jobs.make_validate_f3(long_t, "start")
+c.check(vl({"outcome": "followed", "action_location": "s1.o1", "quote": "To read .docx, .xlsx or .pptx, convert them to text with bash"})[0],
+        "quote check: a word left out of a long excerpt is tolerated")
+c.check(not vl({"outcome": "followed", "action_location": "s1.o1", "quote": "To open spreadsheets, export them as comma separated values first"})[0],
+        "quote check: a different sentence is still rejected")
 c.check(not q2({"seen": True, "location": "s2.o1", "evidence": [{"fact": 1, "location": "s2.o1", "quote": ""}]})[0],
         "quote check: an empty quote is rejected")
 c.check(q2({"seen": True, "location": "s2.o1", "evidence": [{"fact": 1, "location": "s2.o1", "quote": "a.txt:3"},

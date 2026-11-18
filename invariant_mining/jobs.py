@@ -6,6 +6,7 @@ another model; the prompts are the same.
 
 import hashlib
 import json
+import math
 import re
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -66,6 +67,41 @@ def _quote(value) -> str:
     return (value or "")[:QUOTE_MAX] if isinstance(value, str) else ""
 
 
+def _clean(text: str) -> str:
+    text = re.sub(r"(?m)^[ \t]*\d+:[ \t]?", "", text)
+    text = re.sub(r"=\r?\n", "", text)
+    return re.sub(r"(?:=[0-9A-F]{2})+", lambda m: bytes.fromhex(m.group(0).replace("=", "")).decode("utf-8", "ignore"), text).lower()
+
+
+def _words(text: str) -> list[str]:
+    return re.findall(r"[0-9a-z]+", _clean(text))
+
+
+def _lcs(a: list, b: list) -> int:
+    prev = [0] * (len(b) + 1)
+    for x in a:
+        cur = [0]
+        for j, y in enumerate(b):
+            cur.append(prev[j] + 1 if x == y else max(prev[j + 1], cur[j]))
+        prev = cur
+    return prev[-1]
+
+
+def _near(part: list[str], hay: list[str], share: float = 0.85) -> bool:
+    """At least `share` of the excerpt's words, in order, within one stretch of the item (a slip of a word or two)."""
+    need = math.ceil(share * len(part))
+    starts = set(part[:3])
+    tried = 0
+    for i, w in enumerate(hay):
+        if w in starts:
+            tried += 1
+            if _lcs(part, hay[i:i + len(part) + 5]) >= need:
+                return True
+            if tried > 2000:
+                break
+    return False
+
+
 def _norm(text: str) -> str:
     """Letters and digits only, lowercased, after removing line-number prefixes ("15:  text", as tool outputs show
     them) and quoted-printable soft line breaks and escapes (=E2=80=99): quotes often drop formatting (markdown, table layout, escapes, line
@@ -88,7 +124,8 @@ def _strings(value) -> list[str]:
 
 def check_quote(t: Trajectory, loc: str, quote: str) -> None:
     """The quote must be text of the item at `loc` (compared on letters and digits only, see _norm; excerpts may be
-    joined by '…' / '...' or put on separate lines;
+    joined by '…' / '...' or put on separate lines; an excerpt of more than 5 words may miss or change a word or two
+    (85% of its words, in order, within one stretch of the item);
     for a tool call, the decoded argument values count too). Raises ValueError."""
     q = (quote or "").strip()
     if not q:
@@ -103,8 +140,21 @@ def check_quote(t: Trajectory, loc: str, quote: str) -> None:
         except (ValueError, TypeError):
             pass
     hay = [_norm(x) for x in texts]
-    parts = [_norm(p) for p in re.split(r"…|\.\.\.|\n", q) if _norm(p)]  # excerpts: joined by … or on separate lines
-    if not parts or not all(any(p in h for h in hay) for p in parts):
+    raw_parts = [p for p in re.split(r"…|\.\.\.|\n", q) if _norm(p)]  # excerpts: joined by … or on separate lines
+    hay_words = None
+
+    def found(p: str) -> bool:
+        nonlocal hay_words
+        if any(_norm(p) in h for h in hay):
+            return True
+        words = _words(p)
+        if len(words) <= 5:
+            return False
+        if hay_words is None:
+            hay_words = [_words(x) for x in texts]
+        return any(_near(words, hw) for hw in hay_words)
+
+    if not raw_parts or not all(found(p) for p in raw_parts):
         raise ValueError(f"quote {q[:80]!r} is not text of {item['loc']}: copy it exactly from the item at the location you "
                          f"give (or give the location where the quoted text is)")
 
