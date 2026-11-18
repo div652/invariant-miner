@@ -18,12 +18,13 @@ from pathlib import Path
 from .models import gateway_key
 
 
-def used_now(cfg: dict) -> tuple[int, int]:
+def used_now(cfg: dict) -> tuple[int, int, str]:
     req = urllib.request.Request(cfg["gateway"]["base_url"].rstrip("/") + "/usage",
                                  headers={"Authorization": "Bearer " + gateway_key(cfg)})
     with urllib.request.urlopen(req, timeout=30) as r:
-        q = json.load(r)["quota_snapshots"]["premium_interactions"]
-    return int(q["entitlement"]) - int(q["remaining"]), int(q["entitlement"])
+        j = json.load(r)
+    q = j["quota_snapshots"]["premium_interactions"]
+    return int(q["entitlement"]) - int(q["remaining"]), int(q["entitlement"]), str(j.get("login"))
 
 
 def pipeline_pids() -> list[int]:
@@ -55,18 +56,26 @@ def guard(cfg: dict, max_used: int, interval: float, log_path: Path) -> None:
     log(f"guard started: pause at {max_used:,} used (checked every {interval:.0f} s, with a one-interval projection)")
     while True:
         try:
-            used, ent = used_now(cfg)
+            used, ent, login = used_now(cfg)
         except Exception as e:  # a failed read never pauses; it is logged
             log(f"WARNING usage read failed: {type(e).__name__}: {e}")
             time.sleep(interval)
             continue
+        if ent < 1000:  # the gateway restarting or between logins reports a placeholder quota: ignore it
+            log(f"WARNING ignoring an implausible quota reading ({used:,} / {ent:,}, login {login})")
+            prev = None
+            time.sleep(interval)
+            continue
         now = time.time()
+        if prev and prev[2] != login:  # another account: start the rate over
+            log(f"account changed: {prev[2]} -> {login}")
+            prev = None
         rate = 0.0
-        if prev:
-            rate = max(0.0, (used - prev[1]) / max(1e-6, now - prev[0]))
+        if prev and used >= prev[1]:
+            rate = (used - prev[1]) / max(1e-6, now - prev[0])
         projected = used + rate * interval * 1.5
         if now - last_log >= 60:
-            log(f"used {used:,} / {ent:,} ({ent - used:,} left), {rate * 60:.0f}/min, runs: {pipeline_pids() or 'none'}")
+            log(f"{login}: used {used:,} / {ent:,} ({ent - used:,} left), {rate * 60:.0f}/min, runs: {pipeline_pids() or 'none'}")
             last_log = now
         if used >= max_used or projected >= max_used:
             pids = pipeline_pids()
@@ -77,5 +86,5 @@ def guard(cfg: dict, max_used: int, interval: float, log_path: Path) -> None:
                     pass
             log(f"PAUSED at {used:,} used (projected {projected:,.0f} >= {max_used:,}): SIGTERM to invariant_mining runs {pids or 'none'}")
             return
-        prev = (now, used)
+        prev = (now, used, login)
         time.sleep(interval)

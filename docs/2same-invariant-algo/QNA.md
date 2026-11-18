@@ -1407,3 +1407,19 @@ Run these in this prompt, in order:
 
 Afterwards I'll check `/usage` (which account, which plan, how many premium requests it has), confirm the models we use are available on it, and set the credit guard to the new account's limit before any run. A personal Copilot plan has far fewer premium requests than the 1,000,000 of the enterprise seat, so we'll need its number before the next big run. To switch back: stop, copy the .bak over `github_token`, start.
 ````
+
+### Turn 79 — user (2026-11-18)
+
+````text
+done .
+````
+
+### Turn 80 — Claude (2026-11-18)
+
+````text
+The switch worked. CAO is now logged in as `div652`: Copilot enterprise plan through the microsoft org, 1,000,000 premium requests a month, all unused, resetting 2026-12-01, overage permitted. Every model we use is available on it (Opus 5.5, Luna, Astra, Sol, Sonnet 5.5). This conversation now bills that account too.
+
+**The credit guard tripped during the switch.** While the gateway restarted it read a placeholder quota (used 0 of 1) and then the old account's 945,195 once. The jump projected past the limit and it "paused"; no run was going, so nothing was stopped, but it exited. I fixed it to ignore placeholder readings and to restart its rate when the account changes. It's running again for div652 at 999,990.
+
+**Notes updated:** the CAO notes said the login must be the Microsoft account; they now name div652 and say how to switch back (the old login is backed up in the profile).
+````
