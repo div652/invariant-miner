@@ -305,8 +305,8 @@ the first explicit statement: the todo call. Run 7 made the same verification re
 would have found the todo call after it.
 
 How far it reaches: of the active invariants' importance points, those whose observation is pinned at an agent call are
-APEX 8 of 53 (7 on todo calls: these 5 and world224-os-task04 i15 runs 1 and 8; 1 a real partial action, world227 i9 run
-2: the edit left early-year revenue hardcoded), Harvey runs 1-5 3 of 19 and runs 6-10 3 of 31 (i7, i17: Luna judged the
+APEX 8 of 53 (7 on todo calls: these 5 and world224-os-task04 i15 runs 1 and 8; 1 a real partial action, world224-os-task02 i9
+run 2: the edit left early-year revenue hardcoded), Harvey runs 1-5 3 of 19 and runs 6-10 3 of 31 (i7, i17: Luna judged the
 content of the written script / response.md; not re-examined).
 
 **Correlation, not cause.** Runs that marked everything complete fail just as often: anti-SLAPP runs 1, 6, 7, 8 and 9 did,

@@ -16,16 +16,31 @@ importance above 0: world226-td-02 i21 (I 1/6), anti-SLAPP i6 (I 5/8), 128-jr-1 
   rest: every failing anti-SLAPP run misses C1 ("applies only to a 'legal action'"), the failing 128-jr-1 runs compute
   wrong scores. The four runs without a list all failed, but most runs of these tasks fail (8/10, 7/10).
 
-**Why the check errs (a pipeline problem, not Luna misreading; checked in the F2/F3 job transcripts):** Luna sees the
-todo call; in td-02 run 7 it even quotes its output *"Updated todo list: 0 pending, 0 in progress, 4 completed."* But
-(1) "all steps are done" has no evidence apart from the todo update, so F2 (which by design does not know the action)
-pins the observation at the todo call itself (s29.c1); (2) F3 asks whether the action came **after** the pinned
-location, and here it is **at** it. Read literally the answer is "not followed" (Luna's reasoning: *"check if the agent
-took the specified action anywhere after the pinned location"*); in the other half of such cells Luna bent the rule
-and said "followed". Over the four invariants, the cells pinned at the todo call itself went 5 "followed" and 6 "not followed" (one of those
-a passing run that Opus corrected). (3) The re-check is
-asymmetric: a passing run's "not followed" gets an Opus re-check (td-02 run 10: Luna "not followed", Opus "followed"),
-a failing run's does not, so these errors survive only on failing runs, as importance points. **Fixes to discuss:** F3 treats an action at the pinned location itself as a separate, neutral outcome (the
-observation is evidenced only by the action); failing runs' "not followed" get the same Opus re-check as passing runs'; an action on something absent (no todo list) counts as not seen; bookkeeping actions are not proposed as
-invariants (or only with a separate observation). Per-run table: [analysis/FAILING-RUNS.md](../analysis/FAILING-RUNS.md),
+### Why the check errs: something in the pipeline is wrong (checked in the F2/F3 job transcripts)
+
+Yes, something in the pipeline is going wrong, not Luna's reading. Luna sees the todo call fine: in td-02 run 7 it even quotes the call's output, "Updated todo list: 0 pending, 0 in progress, 4 completed". Three things combine:
+
+1. **F2 pins the observation on the action itself.** "All steps are done" has no evidence apart from the todo update. F2 never sees the action by design, so it names the todo call (s29.c1) as the first place the observation holds.
+2. **F3 is asked the wrong question for that case.** It must say whether the action came *after* the pinned location, but here the action is *at* it.
+   - Taken literally the answer is "not followed", and Luna's reasoning says exactly that: "check if the agent took the specified action anywhere after the pinned location".
+   - In other cells it bent the rule and said "followed".
+   - Across the four invariants, identical behaviour got 5 "followed" and 6 "not followed". One of those six was a passing run that Opus corrected.
+3. **The Opus re-check is one-sided.** Opus re-checks only a *passing* run's "not followed"; for td-02 run 10, Luna said not followed and Opus said followed. A failing run's verdict is final, so the same error survives only on failing runs, where it becomes an importance point.
+
+**How far it reaches:**
+- **APEX:** 8 of the 53 importance points have the observation pinned at one of the agent's own calls.
+  - 7 of them are on todo calls: these 5, plus world224-os-task04 i15 runs 1 and 8.
+  - 1 is a real partial action: in world224-os-task02 i9 run 2, the edit left early-year revenue hardcoded.
+- **Harvey:** 3 of 19 points (runs 1–5) and 3 of 31 (runs 6–10). There Luna judged the content of the written script or response.md, which looks like a genuine check, but I haven't re-examined those.
+
+**Fixes I'd propose (not built):**
+- F3 gets a separate, neutral outcome for "the action is the pinned item itself".
+- A failing run's "not followed" gets the same Opus re-check as a passing run's.
+- An action on something that doesn't exist (no todo list) counts as "not seen".
+
+After that, only the affected cells need re-running: about 100 F3 checks plus the new re-checks.
+
+(Copied verbatim from the answer given on 2026-11-19, at the user's request; one correction: the partial action is in world224-os-task02 i9, not world227 as first written.)
+
+Per-run table: [analysis/FAILING-RUNS.md](../analysis/FAILING-RUNS.md),
 section "APEX: the 'mark all todos completed' invariants". Each affected task below has a note under its list.

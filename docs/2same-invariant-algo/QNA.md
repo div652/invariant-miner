@@ -1556,3 +1556,18 @@ Not in run 7: its reasoning never says it. The `[reasoning]` tag is F1's label (
 
 So the earlier diagnosis holds, with one more cause: a fact that is the agent's unstated conclusion has no fixed place in the trajectory, so its pin drifts between "the last verification output" and "the todo call". Two possible extra fixes, both changing agreed rules: give F2 the source label, or ask F1 to word such observations by what can be seen (e.g. "a final read-back of the edited values"). Added to the td-02 note in the report and to FAILING-RUNS.md.
 ````
+
+### Turn 93 — user (2026-11-19)
+
+````text
+okay, I really like the 3 points you found in : yes, something in the pipeline is wrong, ... 
+Can you write those 3 points in the report as well , verbatim . and the how far it reaches, fixes proposed.
+````
+
+### Turn 94 — Claude (2026-11-19)
+
+````text
+Done: the three points, "How far it reaches" and "Fixes I'd propose" are now in the APEX report verbatim, as a subsection "Why the check errs: something in the pipeline is wrong" inside the analysis section at the top (after the summary table). Pushed.
+
+One correction while copying: the "real partial action" (i9 run 2) is in **world224-os-task02**, not world227 as I wrote before. I fixed that in the report (and said so in a line under the copied text) and in FAILING-RUNS.md. Everything else is word for word.
+````
