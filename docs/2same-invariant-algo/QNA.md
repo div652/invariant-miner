@@ -1571,3 +1571,22 @@ Done: the three points, "How far it reaches" and "Fixes I'd propose" are now in 
 
 One correction while copying: the "real partial action" (i9 run 2) is in **world224-os-task02**, not world227 as I wrote before. I fixed that in the report (and said so in a line under the copied text) and in FAILING-RUNS.md. Everything else is word for word.
 ````
+
+### Turn 95 — user (2026-11-19)
+
+````text
+okay, so I understand our pipeline as this failure mode, we will try to correct it. However, can you tell me what actually was wrong then in the 5 failing rnus ??? 5 of the 10 points are check errors ?
+````
+
+### Turn 96 — Claude (2026-11-19)
+
+````text
+All five failed on the content of the answer; none of it has to do with todos.
+
+- **td-02 run 7 (0/6): every IRR about 0.6 points low** (17.2% instead of 17.8% at 10% / 18x). It had the same scenario and the same exit EBITDA as passing run 6 (1,081.246). But it recalculated the whole workbook in LibreOffice, which returned `#VALUE!` in the debt/cash block ("It might be due to a circular reference"). After its workaround, exit equity at 18x came out at 19,414 instead of the model's 19,917 (the model has net cash of 455 at exit; run 7 effectively got net debt of about 48). Run 6 used the model's own exit net cash in a formula.
+- **anti-SLAPP runs 8 and 9 (3/4): miss C1,** "States that Chapter 27's motion-to-dismiss procedure applies only to a 'legal action.'" The analysis is the same as in the passing runs, which frame "legal action" as a threshold: run 2 "But that is only the first requirement", run 3 "But that is only the threshold category". Run 8 says "But that does not end the analysis" (borderline wording), and run 9 has no threshold framing at all. Every failing anti-SLAPP run misses C1.
+- **128-jr-1 run 10 (0/6): all scores and the recommendation wrong.** It used the same SkyLink ratings (2, 5, 2, 3, 3) and the same formula as passing run 2, but translated the framework's ranges with "higher = better" on every criterion ("map each criterion descriptor to values from 1-5, ideally with higher values being more desirable"). So it scored Continue 19, Graduate 21, Spin out 17, Sell 16, Discontinue 13 (expected 17 / 18 / 15 / 17 / 20) and recommended Graduate instead of Discontinue.
+- **world131 run 1 (0/1): NPV €15.31B instead of €15.33B.** It used the precise €1.74875B per year instead of the slide's headline "€1.75B/year — renewable enablement", which passing run 2 used. This is the input-choice case already in FAILING-RUNS.md.
+
+So the real causes are a wrong recalculation route, missing threshold wording (close to judge strictness), a reversed scale, and an input choice. Added as a table to the analysis section of the APEX report, and as a paragraph in FAILING-RUNS.md.
+````

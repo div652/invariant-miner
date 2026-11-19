@@ -16,6 +16,19 @@ importance above 0: world226-td-02 i21 (I 1/6), anti-SLAPP i6 (I 5/8), 128-jr-1 
   rest: every failing anti-SLAPP run misses C1 ("applies only to a 'legal action'"), the failing 128-jr-1 runs compute
   wrong scores. The four runs without a list all failed, but most runs of these tasks fail (8/10, 7/10).
 
+### What actually went wrong in the 5 failing runs whose point was a check error
+
+All five fail on the answer's content; none has anything to do with todos (failed criteria from grading.json, quotes
+from the trajectories):
+
+| Run (score) | What the grader wanted | What went wrong |
+|---|---|---|
+| td-02 run 7 (0/6) | the six IRRs, e.g. 17.8% at 10% premium / 18x | Every IRR ~0.6 pt low (17.2%). Same scenario and same exit EBITDA as passing run 6 (K81 = 1,081.246), but it recalculated the whole workbook in LibreOffice, which returned `#VALUE!` in the debt/cash block (its reasoning: *"It might be due to a circular reference"*); after its workaround the exit equity at 18x was 19,414 (net debt ≈ +48) instead of the model's 19,917 (net cash 455.0, `'Copy of LBO'!K160`, which run 6 used with `=ROUND(((EBITDA×multiple − net debt)/entry equity)^(365/1826)−1,3)`). |
+| anti-SLAPP run 8 (3/4) | C1: *"States that Chapter 27's motion-to-dismiss procedure applies only to a 'legal action.'"* | Same analysis as the passing runs, but no threshold framing: passing run 2 says *"But that is only the first requirement"*, run 3 *"But that is only the threshold category"*; run 8 says *"But that does not end the analysis."* Judge: *"never states the threshold legal proposition…"*. Borderline wording; every failing anti-SLAPP run misses C1. |
+| anti-SLAPP run 9 (3/4) | C1, as above | States the petition is a "legal action" and lists the conditions (*"Chapter 27 permits 'a party' to move for dismissal only when the legal action is: …"*), never that being a legal action is the threshold. |
+| 128-jr-1 run 10 (0/6) | scores 17 / 18 / 15 / 17 / 20, recommend discontinue | Same SkyLink ratings (2, 5, 2, 3, 3) and formula (5 − abs(rating − ideal)) as passing run 2, but different ideal ratings: it treated a higher number as better on every criterion (*"map each criterion descriptor to values from 1-5, ideally with higher values being more desirable … a 'Continue' rating of 'low to very low' could ideally score a 4 or 5"*). All five totals wrong (Continue 19, Graduate 21, Spin out 17, Sell 16, Discontinue 13); recommended Graduate. |
+| world131 run 1 (0/1) | NPV €15.33 billion | €15.31 billion: it used €1.74875B a year (*"the annual renewable revenue is 1.74875 billion for year one"*) instead of the slide's headline *"€1.75B/year — renewable enablement"*, which passing run 2 used (see "APEX: world131-dv-03" in FAILING-RUNS.md). |
+
 ### Why the check errs: something in the pipeline is wrong (checked in the F2/F3 job transcripts)
 
 Yes, something in the pipeline is going wrong, not Luna's reading. Luna sees the todo call fine: in td-02 run 7 it even quotes the call's output, "Updated todo list: 0 pending, 0 in progress, 4 completed". Three things combine:

@@ -309,6 +309,13 @@ APEX 8 of 53 (7 on todo calls: these 5 and world224-os-task04 i15 runs 1 and 8; 
 run 2: the edit left early-year revenue hardcoded), Harvey runs 1-5 3 of 19 and runs 6-10 3 of 31 (i7, i17: Luna judged the
 content of the written script / response.md; not re-examined).
 
+**What the five runs with a check-error point actually got wrong** (user follow-up 2026-11-19; table in the APEX report's
+analysis section): td-02 run 7 recalculated the workbook in LibreOffice, which broke on the model's circular reference
+and left exit equity ~500 too low, so every IRR is ~0.6 pt low; anti-SLAPP runs 8 and 9 never frame "legal action" as
+the threshold (passing runs: *"only the first requirement"*, *"only the threshold category"*), so C1 fails; 128-jr-1
+run 10 mapped the framework's ranges with higher = better on every criterion, so all scores and the recommendation are
+wrong; world131 run 1 used €1.74875B instead of the slide's €1.75B.
+
 **Correlation, not cause.** Runs that marked everything complete fail just as often: anti-SLAPP runs 1, 6, 7, 8 and 9 did,
 and failed; 128-jr-1 runs 5, 6, 8, 9 and 10 did, and failed. The failures are content: every failing anti-SLAPP run
 misses C1 (does not say the procedure applies *only* to a "legal action"), with or without todos; the failing 128-jr-1
