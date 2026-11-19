@@ -65,16 +65,29 @@ c.check(not v({"outcome": "followed", "action_location": "s1.c1", "quote": "x"})
 c.check(v({"outcome": "only_before", "action_location": "s1.c1", "quote": "ls"})[0], "F3: only_before before the pinned location")
 c.check(not v({"outcome": "only_before", "action_location": "s3.c1", "quote": "x"})[0], "F3: only_before after it is rejected")
 c.check(v({"outcome": "not_followed", "action_location": "s3.c1", "quote": "x"})[2]["action_location"] is None, "F3: not_followed has no location")
-c.check(not v({"outcome": "unclear", "action_location": None, "quote": "x"})[0], "F3: only the four outcomes")
+c.check(not v({"outcome": "unclear", "action_location": None, "quote": "x"})[0], "F3: only the five outcomes")
+c.check(v({"outcome": "at_pinned", "action_location": "s2.o1", "quote": "b.txt:7"})[0] and
+        not v({"outcome": "at_pinned", "action_location": "s3.c1", "quote": "echo done"})[0],
+        "F3: at_pinned names the pinned location itself")
+c.check(not v({"outcome": "followed", "action_location": "s2.o1", "quote": "b.txt:7"})[0],
+        "F3: followed at the pinned item itself is rejected (answer at_pinned)")
 c.check(not v({"outcome": "followed", "action_location": "s3.c1", "quote": "x", "confidence": 0.7})[0], "F3: no extra fields (no confidence)")
 vphi = jobs.make_validate_f3(t, "start")
 c.check(not vphi({"outcome": "pinning_wrong", "action_location": None, "quote": ""})[0] and
-        vphi({"outcome": "followed", "action_location": "s1.c1", "quote": "ls"})[0], "F3 with an empty observation: followed / not_followed only")
+        vphi({"outcome": "followed", "action_location": "s1.c1", "quote": "ls"})[0] and
+        not vphi({"outcome": "at_pinned", "action_location": "start", "quote": ""})[0], "F3 with an empty observation: followed / not_followed only")
 
 # --- too-narrow validator
 vt = jobs.make_validate_tn(t, "s2.o1")
-c.check(vt({"purpose_achieved_otherwise": True, "location": "s3.c1", "quote": "echo done"})[0] and
-        not vt({"purpose_achieved_otherwise": True, "location": "s1.c1", "quote": "x"})[0], "too-narrow: the other action must come after the pinned location")
+c.check(vt({"outcome": "achieved_otherwise", "location": "s3.c1", "quote": "echo done"})[0] and
+        not vt({"outcome": "achieved_otherwise", "location": "s1.c1", "quote": "x"})[0], "too-narrow: the other action must come after the pinned location")
+c.check(vt({"outcome": "at_pinned", "location": "s2.o1", "quote": "b.txt:7"})[0] and
+        not vt({"outcome": "at_pinned", "location": "s3.c1", "quote": "echo done"})[0] and
+        not vt({"outcome": "achieved_otherwise", "location": "s2.o1", "quote": "b.txt:7"})[0],
+        "too-narrow: at_pinned names the pinned location itself; another action at it is rejected")
+c.check(vt({"outcome": "not_achieved", "location": "s3.c1", "quote": ""})[2]["location"] is None and
+        not vt({"purpose_achieved_otherwise": True, "location": "s3.c1", "quote": "echo done"})[0],
+        "too-narrow: not_achieved has no location; the old boolean answer is rejected")
 
 # --- F1: two runs, validator, evidence check
 spec1 = jobs.build("f1_propose", "opus", {}, {"A": t, "B": t2})

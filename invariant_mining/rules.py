@@ -5,7 +5,9 @@ Work items (dicts): {"type": "f1", "task_id"}; {"type": "cell", "invariant_id", 
 {"type": "reword", "trigger_id"}; {"type": "val", "trigger_id", "attempt", "trajectory_id", "stage"}.
 Each item names the job kind and the model role it needs (job_for()).
 
-Cell stages: f2 -> f3 -> (not followed) passing: recheck_f2 -> recheck_f3 -> too_narrow; failing: too_narrow.
+Cell stages: f2 -> f3 -> (not followed, passing and failing runs alike) recheck_f2 -> recheck_f3 -> too_narrow
+(turn 97: a failing run's "not followed" gives an importance point, so it gets the same Opus re-check). "at_pinned" (F3,
+re-check or too-narrow check: the action, or the purpose-achieving action, is the pinned item itself) is neutral.
 """
 
 import json
@@ -146,8 +148,8 @@ def job_for(store: Store, item: dict) -> dict:
             loc = cell["f2_location"] if stage == "f3" else cell["recheck_f2_location"]
             return {"kind": "f3_followed", "role": "f3_followed" if stage == "f3" else "f3_recheck",
                     "inputs": {"facts": facts, "action": inv["action"], "location": loc}, "trajs": {"T": cell["trajectory_id"]}, "ref": ref}
-        if stage == "too_narrow":
-            loc = cell["recheck_f2_location"] if cell["label"] == "pass" else cell["f2_location"]
+        if stage == "too_narrow":  # after the Opus re-check (older runs: failing cells went here from Luna's F3)
+            loc = cell["recheck_f2_location"] or cell["f2_location"]
             return {"kind": "too_narrow", "role": "too_narrow", "inputs": {"facts": facts, "action": inv["action"],
                     "purpose": inv["purpose"], "location": loc}, "trajs": {"T": cell["trajectory_id"]}, "ref": ref}
     if item["type"] == "reword":
@@ -230,17 +232,14 @@ def _apply_cell(store, item, ok, output, error, job_ids, trajectories):
     elif stage == "f3":
         out = output["outcome"]
         store.update("cells", key, f3_outcome=out, f3_action_location=output["action_location"])
-        if out == "not_followed":
-            if label == "pass":
-                if is_phi(inv):
-                    store.update("cells", key, stage="recheck_f3", status="pending", recheck_f2_seen=1, recheck_f2_location="start")
-                else:
-                    store.update("cells", key, stage="recheck_f2", status="pending")
+        if out == "not_followed":  # passing and failing runs alike: Opus re-checks before a removal or an importance point
+            if is_phi(inv):
+                store.update("cells", key, stage="recheck_f3", status="pending", recheck_f2_seen=1, recheck_f2_location="start")
             else:
-                store.update("cells", key, stage="too_narrow", status="pending")
+                store.update("cells", key, stage="recheck_f2", status="pending")
         else:
             _cell_done(store, key, out)
-            if out in ("pinning_wrong", "only_before"):
+            if out in ("pinning_wrong", "only_before", "at_pinned"):
                 store.event(out, **ev, model="luna")
     elif stage == "recheck_f2":
         if output["seen"]:
@@ -256,11 +255,14 @@ def _apply_cell(store, item, ok, output, error, job_ids, trajectories):
         else:
             _cell_done(store, key, out)
             store.event("recheck_disagrees", **ev, luna="not_followed", opus=out)
-            if out in ("pinning_wrong", "only_before"):
+            if out in ("pinning_wrong", "only_before", "at_pinned"):
                 store.event(out, **ev, model="opus")
     elif stage == "too_narrow":
-        yes = output["purpose_achieved_otherwise"]
-        if not yes:
+        out = output["outcome"]
+        if out == "at_pinned":  # the purpose is achieved by the pinned item itself: self-evidenced, neutral, no rewording
+            _cell_done(store, key, "at_pinned", too_narrow=2, too_narrow_location=output["location"])
+            store.event("at_pinned", **ev, model="opus", stage="too_narrow", label=label)
+        elif out == "not_achieved":
             _cell_done(store, key, "not_followed", too_narrow=0)
             if label == "pass":
                 store.x("INSERT INTO triggers (invariant_id, kind, trajectory_id, label, status, created_at) VALUES (?,?,?,?,?,?)",

@@ -53,6 +53,7 @@ turns below.
 | Runs 6-10 of the 8 mixed:flip tasks (user's folder ~/harvey-mixed-flip8-runs6-10): score and refine the current invariants with the normal process (no new F1); done on a copy of the flip run (add-runs) | 41 |
 | APEX-Agents third:flip (14 train tasks, 10 runs each, ~/apex-third-flip14-trajectories): the full procedure, passing runs first | 60 |
 | Confirmed after the consistency check: validation verdicts reused as the triggering passing run's cell; chains written self-contained (link kept as information) | 27 |
+| F3 outcome `at_pinned` (the action is the pinned item itself) and too-narrow outcome `at_pinned` (the pinned item itself achieves the purpose), both neutral; a failing run's "not followed" gets the same Opus F2/F3 re-check as a passing run's (it decides an importance point) | 97 |
 
 ## Log
 
@@ -1589,4 +1590,32 @@ All five failed on the content of the answer; none of it has to do with todos.
 - **world131 run 1 (0/1): NPV €15.31B instead of €15.33B.** It used the precise €1.74875B per year instead of the slide's headline "€1.75B/year — renewable enablement", which passing run 2 used. This is the input-choice case already in FAILING-RUNS.md.
 
 So the real causes are a wrong recalculation route, missing threshold wording (close to judge strictness), a reversed scale, and an input choice. Added as a table to the analysis section of the APEX report, and as a paragraph in FAILING-RUNS.md.
+````
+
+### Turn 97 — user (2026-11-19)
+
+````text
+okay, so in spirit to fix our pipeline. I think we need to do these things : 1. F3 can choose to say that action is pinned item itself. also when we do the "same purpose actoin" check it should also have an optoin to say that pinned item itself is that same purpose actoin. 
+2. yeah I agree failing runs "not followed" since it updates our imporatnce whihc is an importan metric must get opus re-check. 
+
+so go and build these in the harness.
+````
+
+### Turn 98 — Claude (2026-11-19)
+
+````text
+Both are built and pushed; tests pass (trajectory tools 32/32, agent 47/47, pipeline 37/37, layout).
+
+1. **"The action is the pinned item itself"**
+   - **F3** has a fifth outcome, `at_pinned`. Its prompt asks first whether the pinned item itself is the action (example: a call that marks the todos done is also where "all steps are done" first shows). The answer must name exactly the pinned location. Answering "followed" at the pinned item is now rejected, so the old 5-vs-6 split can't recur.
+   - **The too-narrow check** has three answers instead of yes/no: `achieved_otherwise` (another action after the pinned location), `not_achieved`, and `at_pinned` (the pinned item itself achieves the purpose).
+   - **Both `at_pinned` outcomes are neutral:** no support or importance point, no removal, no rewording. They're counted in the events, and the report's failing-runs table has a column for them.
+   - In rewording validation only "followed" passes, so `at_pinned` there fails the attempt.
+2. **Failing runs' "not followed"** now goes through the same Opus F2/F3 re-check as passing runs, then the too-narrow check at Opus's location. If Opus disagrees, its verdict counts and the disagreement is logged. This adds 2 Opus jobs per failing-run "not followed".
+
+New test cases: F3 `at_pinned` on a failing run (no point, no re-check); Opus overturning a failing run's "not followed" (no point); the too-narrow check answering `at_pinned` (no point, no rewording); the validator rules.
+
+DESIGN.md (4.3, 4.4, 5, 6, C1), TECHNICAL.md and FLOWCHART.md (section 2 redrawn; all 5 diagrams parse with Mermaid 11.4.1) describe the new flow; the decision is in the table above.
+
+Not done yet: re-running the existing runs with this. The cheapest option re-checks only what changes: all failing-run "not followed" cells (the importance points: APEX 53, Harvey 19 + 31) get the Opus re-check, and the cells whose observation sits at an agent call go through F3 again. That's roughly 100–250 Opus jobs per run set. Should I do that for the three runs?
 ````

@@ -173,11 +173,15 @@ values shown (`additionalProperties: false`, enums), so there is no "unclear", "
 null when not seen).
 
 **F3 followed?** Input: the facts' texts, the action's text, F2's location, one trajectory. Output:
-`{"outcome": "followed" | "not_followed" | "only_before" | "pinning_wrong", "action_location": "s9.c1" | null, "quote": "..."}`.
+`{"outcome": "followed" | "not_followed" | "only_before" | "pinning_wrong" | "at_pinned", "action_location": "s9.c1" | null, "quote": "..."}`.
+`at_pinned` (turn 97): the action is the pinned item itself; `action_location` must equal F2's location, and
+`followed` with `action_location` equal to it is rejected (answer `at_pinned`). Not allowed for φ.
 
-**Too-narrow check.** Input: facts, action text, purpose, F2's location (Opus's on a passing run, after the re-check;
-Luna's on a failing run), one trajectory. Question: did an action that achieves the same purpose happen after that
-location? Output: `{"purpose_achieved_otherwise": true, "location": "s9.c2" | null, "quote": "..."}`.
+**Too-narrow check.** Input: facts, action text, purpose, F2's location (Opus's, after the re-check, on passing and
+failing runs since turn 97), one trajectory. Question: did an action that achieves the same purpose happen after that
+location? Output: `{"outcome": "achieved_otherwise" | "not_achieved" | "at_pinned", "location": "s9.c2" | null, "quote": "..."}`
+(turn 97: `at_pinned` = the pinned item itself achieves the purpose, `location` = F2's location; `achieved_otherwise`
+at the pinned location is rejected). Before turn 97 the output was `{"purpose_achieved_otherwise": bool, ...}`.
 
 **F1 reword.** Input: the invariant (facts, reasons, action, purpose), the triggering trajectory, the location from the
 too-narrow check, the note that the invariant was learnt from earlier runs of this task where it holds; on the second
@@ -203,7 +207,7 @@ code; each job records the sha256 of the prompt it used.
 | `trajectories` | id, task_id, label, source, json_path, steps, est_tokens |
 | `tasks` | task_id, p1, p2, status, benchmark_context |
 | `invariants` | id, task_id, observation_json, action, purpose, follows_json, evidence_json, status (`active`, `removed`, `retired`), parent_id, origin (`propose`, `reword`), reword_attempt, created_job |
-| `cells` | invariant_id, trajectory_id, label, stage (`f2`, `f3`, `recheck_f2`, `recheck_f3`, `too_narrow`), f2_seen, f2_location, f3_outcome, f3_action_location, recheck_f2_seen, recheck_f2_location, recheck_f3_outcome, recheck_f3_action_location, too_narrow, too_narrow_location, final_outcome (`followed`, `not_followed`, `purpose_otherwise`, `only_before`, `not_seen`, `pinning_wrong`, `job_error`), status (`pending`, `running`, `done`, `cancelled`, `error`), job_ids |
+| `cells` | invariant_id, trajectory_id, label, stage (`f2`, `f3`, `recheck_f2`, `recheck_f3`, `too_narrow`), f2_seen, f2_location, f3_outcome, f3_action_location, recheck_f2_seen, recheck_f2_location, recheck_f3_outcome, recheck_f3_action_location, too_narrow, too_narrow_location, final_outcome (`followed`, `not_followed`, `purpose_otherwise`, `only_before`, `at_pinned`, `not_seen`, `pinning_wrong`, `job_error`); too_narrow 0 = not achieved, 1 = achieved otherwise, 2 = by the pinned item itself, status (`pending`, `running`, `done`, `cancelled`, `error`), job_ids |
 | `triggers` | id, invariant_id, kind (`remove`, `reword`), trajectory_id, label, alt_location, status (`waiting`, `active`, `done`, `dropped`), stage (`reword`, `validate`), attempt, new_action, new_purpose, previous_json, result, new_invariant: the per-invariant queue of removals and rewords, processed one at a time, oldest first |
 | `validations` | trigger_id, attempt, trajectory_id, stage (`f2`, `f3`), status, f2_seen, f2_location, f3_outcome, f3_action_location, ok: the F2/F3 checks of a rewording on P1, P2 (and the passing trigger); an attempt reuses earlier attempts' F2 verdicts, since the observation is unchanged |
 | `jobs` | id, kind, role, model, effort, prompt_sha256, input_json, status, started, ended, model_steps, tokens_in, tokens_out, output_json, error |
@@ -214,11 +218,12 @@ code; each job records the sha256 of the prompt it used.
 Pure functions over the store, the rules of DESIGN.md sections 4-6:
 - new invariant -> one `pending` cell per trajectory of its task other than P1, P2;
 - F1 output -> the evidence check (3.4), events only;
-- cell: F2 (skipped for φ) -> if seen, F3 -> on `not_followed`:
-  - passing cell: re-check (Opus F2, F3) -> Opus's verdicts become final; if still `not_followed`: too-narrow check
-    (after Opus's F2 location) -> `purpose_otherwise` (reword) or `not_followed` (remove);
-  - failing cell: too-narrow check (after Luna's F2 location) -> `not_followed` (importance point) or
-    `purpose_otherwise` (no point, and reword);
+- cell: F2 (skipped for φ) -> if seen, F3 -> `at_pinned` is final (neutral, event) -> on `not_followed`, passing and
+  failing cells alike (turn 97): re-check (Opus F2, F3) -> Opus's verdicts become final; if still `not_followed`:
+  too-narrow check (after Opus's F2 location):
+  - passing cell: `purpose_otherwise` (reword), `not_followed` (remove) or `at_pinned` (neutral);
+  - failing cell: `not_followed` (importance point), `purpose_otherwise` (no point, and reword) or `at_pinned`
+    (neutral);
 - removals and rewords of one invariant run one at a time; a trigger that arrives meanwhile waits, and is dropped if the
   invariant is removed or retired; removal or retirement cancels the invariant's pending cells;
 - reword -> validation jobs (F2, F3 with Luna on P1, P2, and on the triggering trajectory when it passed) -> retire +
@@ -280,9 +285,9 @@ benchmark's run directories is benchmark glue (`benchmarks/<name>/`).
 ## 7. Cost (estimate, to be measured)
 
 Per task with I invariants and R other trajectories: 1 F1 job; up to I x R F2 jobs and as many F3 jobs; plus, for
-every "not followed": on a passing run a re-check (2 Opus jobs) and maybe a too-narrow check, rewords and validations;
-on a failing run one too-narrow check (Opus) and, when it says yes, rewords and validations. Failing runs may break
-many invariants, so the too-narrow checks on failing runs can be the largest Opus cost. E.g. I = 20, R = 2: ~80 Luna jobs; at ~10 model steps each (a guess) ~800
+every "not followed", on passing and failing runs alike (turn 97): a re-check (2 Opus jobs) and maybe a too-narrow
+check, rewords and validations. Failing runs may break many invariants, so the re-checks and too-narrow checks on
+failing runs can be the largest Opus cost (turn 97 added 2 Opus jobs per failing-run "not followed"). E.g. I = 20, R = 2: ~80 Luna jobs; at ~10 model steps each (a guess) ~800
 Luna requests, plus F1 at up to 150 Opus requests. The report records the real numbers.
 
 ## 8. Aggregation across tasks (later, not built)

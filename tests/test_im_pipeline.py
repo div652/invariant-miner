@@ -23,9 +23,10 @@ manifest = {"trajectories": [{"id": k, "task_id": "task-1", "label": v,
 # --- the policy: what the scripted model answers ------------------------------------------------------------------------
 INV = [  # local id, facts, action
     ("i1", ["fact-a"], "act-a"), ("i2", [], "act-phi"), ("i3", ["fact-c"], "act-c-narrow"), ("i4", ["fact-d"], "act-d"),
-    ("i5", ["fact-e"], "act-e"), ("i6", ["fact-f"], "act-f-narrow"), ("i7", ["fact-g"], "act-g"), ("i8", ["fact-h"], "act-h")]
+    ("i5", ["fact-e"], "act-e"), ("i6", ["fact-f"], "act-f-narrow"), ("i7", ["fact-g"], "act-g"), ("i8", ["fact-h"], "act-h"),
+    ("i9", ["fact-i"], "act-i"), ("i10", ["fact-j"], "act-j"), ("i11", ["fact-k"], "act-k")]
 SEEN = {"fact-a": {"P3", "X1"}, "fact-c": {"P1", "P2", "P3", "X1"}, "fact-d": {"P3"}, "fact-e": {"P3"},
-        "fact-f": {"P1", "P2", "X1"}, "fact-g": {"P3"}, "fact-h": {"X2"}}
+        "fact-f": {"P1", "P2", "X1"}, "fact-g": {"P3"}, "fact-h": {"X2"}, "fact-i": {"X1"}, "fact-j": {"X1"}, "fact-k": {"X2"}}
 F3 = {  # (action, trajectory, model) -> (outcome, location); model None = either
     ("act-a", "P3", None): ("followed", "s3.c1"), ("act-a", "X1", None): ("not_followed", None),
     ("act-phi", "P3", None): ("followed", "s1.c1"), ("act-phi", "X1", None): ("not_followed", None), ("act-phi", "X2", None): ("followed", "s1.c1"),
@@ -37,8 +38,12 @@ F3 = {  # (action, trajectory, model) -> (outcome, location); model None = eithe
     ("act-f-narrow", "X1", None): ("not_followed", None),
     ("act-f-broad1", "P1", None): ("not_followed", None), ("act-f-broad1", "P2", None): ("followed", "s3.c1"),
     ("act-f-broad2", "P1", None): ("not_followed", None), ("act-f-broad2", "P2", None): ("followed", "s3.c1"),
-    ("act-g", "P3", None): ("pinning_wrong", None), ("act-h", "X2", None): ("only_before", "s1.c1")}
+    ("act-g", "P3", None): ("pinning_wrong", None), ("act-h", "X2", None): ("only_before", "s1.c1"),
+    ("act-i", "X1", None): ("at_pinned", "s2.o1"),  # the observation's evidence is the action itself
+    ("act-j", "X1", "luna"): ("not_followed", None), ("act-j", "X1", "opus"): ("followed", "s3.c1"),
+    ("act-k", "X2", None): ("not_followed", None)}
 NARROW = {("act-c-narrow", "P3"): "s3.c1", ("act-f-narrow", "X1"): "s3.c1"}  # purpose achieved otherwise; else no
+NARROW_PINNED = {("act-k", "X2")}  # purpose achieved by the pinned item itself
 
 
 def answer(spec):
@@ -56,10 +61,12 @@ def answer(spec):
     if k == "f3_followed":
         key = (inp["action"], tid, spec.model_key)
         out, loc = F3.get(key) or F3[(inp["action"], tid, None)]
-        return {"outcome": out, "action_location": loc, "quote": {"s3.c1": "echo done", "s1.c1": "ls"}.get(loc, "")}
+        return {"outcome": out, "action_location": loc, "quote": {"s3.c1": "echo done", "s1.c1": "ls", "s2.o1": "b.txt:7"}.get(loc, "")}
     if k == "too_narrow":
+        if (inp["action"], tid) in NARROW_PINNED:
+            return {"outcome": "at_pinned", "location": inp["location"], "quote": "b.txt:7"}
         loc = NARROW.get((inp["action"], tid))
-        return {"purpose_achieved_otherwise": loc is not None, "location": loc, "quote": "echo done" if loc else ""}
+        return {"outcome": "achieved_otherwise" if loc else "not_achieved", "location": loc, "quote": "echo done" if loc else ""}
     if k == "f1_reword":
         if inp["action"] == "act-c-narrow":
             return {"action": {"text": "act-c-broad", "purpose": "p"}}
@@ -129,13 +136,26 @@ c.check(inv["T1.i5"]["status"] == "active" and inv["T1.i5"]["support"] == 1 and
         any(e["kind"] == "recheck_disagrees" for e in inv["T1.i5"]["events"]), "i5: Opus's verdict replaces Luna's (followed: support +1), disagreement logged")
 c.check(inv["T1.i6"]["status"] == "active" and inv["T1.i6"]["importance"] == 0 and inv["T1.i6"]["cells"]["X1"] == "purpose_otherwise",
         "i6: too narrow on a failing run -> no importance point")
+c.check([m for k, m, t, inp in calls if t == "X1" and ('"action": "act-a"' in inp or ('"facts": ["fact-a"]' in inp and k == "f2_seen"))]
+        == ["luna", "luna", "opus", "opus", "opus"],
+        "i1 on failing X1: F2/F3 by Luna, then the Opus F2/F3 re-check and the too-narrow check before the importance point")
+c.check(inv["T1.i9"]["cells"]["X1"] == "at_pinned" and inv["T1.i9"]["importance"] == 0 and
+        any(e["kind"] == "at_pinned" for e in inv["T1.i9"]["events"]) and
+        not any(t == "X1" and '"action": "act-i"' in inp and m == "opus" for k, m, t, inp in calls),
+        "i9: F3 says the action is the pinned item itself -> neutral (no importance), logged, no re-check")
+c.check(inv["T1.i10"]["cells"]["X1"] == "followed" and inv["T1.i10"]["importance"] == 0 and
+        any(e["kind"] == "recheck_disagrees" for e in inv["T1.i10"]["events"]),
+        "i10: failing run, Luna not followed, Opus re-check followed -> Opus's verdict counts, no importance point")
+c.check(inv["T1.i11"]["cells"]["X2"] == "at_pinned" and inv["T1.i11"]["importance"] == 0 and inv["T1.i11"]["status"] == "active"
+        and not any(e["kind"] in ("reworded", "reword_attempt_failed") for e in inv["T1.i11"]["events"]),
+        "i11: too-narrow check says the pinned item itself achieves the purpose -> neutral, no rewording")
 ev6 = [e["kind"] for e in inv["T1.i6"]["events"]]
 c.check(ev6.count("reword_attempt_failed") == 2 and "reword_failed" in ev6, "i6: two rewording attempts failed validation -> invariant kept, logged")
 c.check(sum(1 for k, _, t, inp in calls if k == "f2_seen" and t == "P1" and "fact-f" in inp) == 1,
         "i6: the second attempt reuses the first attempt's F2 verdicts")
-c.check(sum(1 for k, _, t, inp in calls if k == "f2_seen" and t == "X1" and '"fact-f"' in inp) == 1 and
+c.check([m for k, m, t, inp in calls if k == "f2_seen" and t == "X1" and '"fact-f"' in inp] == ["luna", "opus"] and
         not any(k == "f3_followed" and t == "X1" and "act-f-broad" in inp for k, _, t, inp in calls),
-        "i6: a failing trigger is not part of the validation (P1 and P2 only)")
+        "i6: a failing trigger is not part of the validation (P1 and P2 only; X1 has only its cell's F2 and the Opus re-check)")
 c.check(any(k == "f1_reword" and "failed validation" not in inp and '"previous"' in inp for k, _, _, inp in calls),
         "i6: the second attempt is given the first attempt and the failed check")
 c.check(inv["T1.i7"]["cells"]["P3"] == "pinning_wrong" and inv["T1.i7"]["support"] == 0 and
@@ -186,7 +206,7 @@ from invariant_mining.cli import status
 status(run_dir)
 c.check(True, "status runs on a finished run")
 md = (run_dir / "report.md").read_text()
-c.check("### Proposed by F1 (8)" in md and "| ri3 | i3 | act-c-narrow | act-c-broad |" in md and "### Removed (1)" in md
+c.check("### Proposed by F1 (11)" in md and "| ri3 | i3 | act-c-narrow | act-c-broad |" in md and "### Removed (1)" in md
         and "| i4 |" in md and "Opus re-check" in md and "rewording failed twice" in md and "not followed ★" in md,
         "report.md: proposed, rewordings, removed with the reason, kept after failed rewordings, first violation mark")
 c.check("### Failing runs (2)" in md and "| X2 |" in md, "report.md: a section per failing run with what it broke")

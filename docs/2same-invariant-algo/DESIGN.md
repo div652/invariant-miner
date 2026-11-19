@@ -65,9 +65,9 @@ important one (turn 7).
 | F1 propose | Claude Opus 5.5 (turn 7) | P1 and P2 of one task | invariants common to both runs |
 | F1 reword | Claude Opus 5.5 (turns 14, 15) | one too-narrow invariant + the run that triggered it | a new action (and purpose) |
 | F2 seen? | GPT-5.6 Luna high (turn 11) | one observation x one trajectory | seen yes/no + the first location where it holds |
-| F3 followed? | GPT-5.6 Luna high (turn 11) | one invariant x one trajectory + F2's location | pinning wrong / followed + location / not followed / only before + location |
-| Re-check | Claude Opus 5.5 (turn 9) | a removal candidate | F2 and F3 again, same prompts |
-| Too-narrow check | Claude Opus 5.5 | a cell whose final F3 outcome is not followed, on a passing or a failing run (turn 15) | an action with the same purpose after F2's location? yes/no + location |
+| F3 followed? | GPT-5.6 Luna high (turn 11) | one invariant x one trajectory + F2's location | pinning wrong / at pinned (turn 97) / followed + location / not followed / only before + location |
+| Re-check | Claude Opus 5.5 (turn 9) | a "not followed" on a passing run (a removal candidate) or, since turn 97, on a failing run (an importance point) | F2 and F3 again, same prompts |
+| Too-narrow check | Claude Opus 5.5 | a cell whose final F3 outcome is not followed, on a passing or a failing run (turn 15) | an action with the same purpose after F2's location? achieved otherwise + location / achieved by the pinned item itself (turn 97) / not achieved |
 | Semantic judge (later) | GPT-5.6 Luna high (turn 21) | two invariants (a single call, no tools) | step 1: observations the same? yes/no; step 2: actions same / opposite / compatible (section 9) |
 
 Effort: **high** for every Opus 5.5 job (turn 17).
@@ -115,13 +115,19 @@ one bool (with its location) per observation; each observation is its own job.
 Input: the facts, the action, F2's location, one trajectory. Steps (turns 9, 11):
 1. Check that the observation holds at F2's location. If not: outcome **pinning wrong**, stop. (How often this happens
    is reported: turn 7.)
-2. Did the action, as worded, happen anywhere after that location (turns 7, 9: "anytime later")? If yes: outcome
+2. Is the item at that location itself the action (turn 97)? This happens when the observation's only evidence is the
+   action, e.g. a call that marks the todos completed is also where "all steps are done" first shows. If yes: outcome
+   **at pinned**, with that location. It counts nothing (section 5): the run gives no evidence that the action follows
+   the observation. Before turn 97 F3 had to say whether the action came *after* the location, with no rule for *at*
+   it, and Luna split such cells between "followed" and "not followed" (analysis/FAILING-RUNS.md, APEX todo
+   invariants). "Followed" at the pinned item itself is now rejected.
+3. Did the action, as worded, happen anywhere after that location (turns 7, 9: "anytime later")? If yes: outcome
    **followed**, with the action's location.
-3. If not: did it happen before the location? If yes: outcome **only before**, with the location (turn 10, H4);
+4. If not: did it happen before the location? If yes: outcome **only before**, with the location (turn 10, H4);
    otherwise **not followed**.
 
 The action is judged as worded: a different action with the same effect is not "followed" (that case is the
-too-narrow check's job). For φ, step 1 is skipped and "only before" cannot occur.
+too-narrow check's job). For φ, steps 1 and 2 are skipped and "only before" cannot occur.
 
 As a function (turn 3): F3 takes the proposed invariants, F2's bools and locations, and one trajectory; invariants
 whose observation was not seen are dropped programmatically, and each remaining invariant is its own job.
@@ -130,19 +136,23 @@ whose observation was not seen are dropped programmatically, and each remaining 
 
 **Too-narrow check** (turns 10, 13, 15; H1): a separate job (Opus 5.5), not part of F3, and the only check that sees the
 purpose (F2 and F3 never do: turn 13). Input: the facts, the action, its purpose, F2's location, one trajectory.
-Question: did an action that achieves the same purpose happen after F2's pinned observation? Output: yes/no + location.
+Question: did an action that achieves the same purpose happen after F2's pinned observation? Output: one of
+**achieved otherwise** + location, **at pinned** (the purpose is achieved by the pinned item itself: the observation's
+evidence is the purpose-achieving action; turn 97) + the pinned location, or **not achieved**.
 
-On a **passing** trajectory (a removal candidate):
+On **passing and failing** trajectories alike (turn 97; before, only passing runs were re-checked: turn 13, answer 5):
 1. **Re-check** (turn 9): F2 and F3 run again with Opus 5.5 (F3 uses Opus's F2 location). Opus's verdicts replace
    Luna's for this cell, whatever they are (turn 13, answer 4); when they differ from Luna's, the disagreement is
-   logged (it measures Luna's error rate: C1).
+   logged (it measures Luna's error rate: C1). On a failing run this guards the importance point, as it guards the
+   removal on a passing run: with the re-check on passing runs only, Luna's errors were corrected there and survived
+   on failing runs as importance points (turn 90).
 2. If Opus also says not followed: the too-narrow check, after Opus's F2 location. Any other Opus outcome is final,
    with its effect in section 5.
-3. Yes -> **reword** (4.5). No -> the invariant is **removed**.
-
-On a **failing** trajectory (turns 15, 17): no re-check (turn 13, answer 5); the too-narrow check runs on Luna's
-verdict, after Luna's F2 location. No -> importance point. Yes -> no importance point for this cell, and **reword**
-(4.5), as for a passing run (turn 17; the alternative is H6).
+3. On a **passing** trajectory: achieved otherwise -> **reword** (4.5); not achieved -> the invariant is **removed**;
+   at pinned -> no change.
+4. On a **failing** trajectory (turns 15, 17): not achieved -> importance point; achieved otherwise -> no importance
+   point for this cell, and **reword** (4.5), as for a passing run (turn 17; the alternative is H6); at pinned -> no
+   change.
 
 ### 4.5 F1 reword (H1)
 
@@ -167,14 +177,14 @@ P2, and, when the trigger is a passing run, on the triggering run too (turns 11,
 
 Final outcome of each cell -> effect (turns 9, 12, 13, 15). "Not followed" is the outcome after the steps of 4.4.
 
-| Trajectory | followed | not followed | not followed, same purpose achieved otherwise | only before | not seen / pinning wrong / job error |
-|---|---|---|---|---|---|
-| Passing | support +1 | invariant removed | reword (4.5); if both attempts fail, removed | no change | no change |
-| Failing | no change | importance +1 | no point; reword (4.5); if both attempts fail, the invariant stays | no change | no change |
+| Trajectory | followed | not followed | not followed, same purpose achieved otherwise | only before | at pinned (F3 or too-narrow check; turn 97) | not seen / pinning wrong / job error |
+|---|---|---|---|---|---|---|
+| Passing | support +1 | invariant removed | reword (4.5); if both attempts fail, removed | no change | no change | no change |
+| Failing | no change | importance +1 | no point; reword (4.5); if both attempts fail, the invariant stays | no change | no change | no change |
 
 - Cells exist only for trajectories other than the invariant's P1 and P2.
-- Failing cells use Luna's F2/F3 verdicts, with no re-check (turn 13, answer 5), then the too-narrow check on a "not
-  followed" (turn 15).
+- A "not followed" is re-checked by Opus on failing cells as on passing ones (turn 97; until then failing cells used
+  Luna's verdicts: turn 13, answer 5), then the too-narrow check (turn 15).
 - An importance point is flagged **first violation** when its observation location is the earliest among that failing
   run's violated invariants (H3).
 - (φ, action) invariants are always seen: they get support points when passing runs take the action and importance
@@ -194,9 +204,9 @@ Input: the task's trajectories with labels, and P1, P2.
    together with the passing runs; since failing runs can trigger rewordings (turn 17), a failing run's rewording could
    race with a passing run's removal or rewording of the same invariant: 5 of 194 invariants in the first mixed:flip
    pass. Config `check_order: together` restores the old order.)
-3. **Not followed** (4.4): on a passing cell the re-check, then the too-narrow check (remove or reword), one invariant
-   at a time: when an invariant is removed or retired, its remaining pending cells are cancelled. On a failing cell the
-   too-narrow check (importance point, or reword).
+3. **Not followed** (4.4): the re-check, then the too-narrow check; on a passing cell remove or reword, one invariant
+   at a time: when an invariant is removed or retired, its remaining pending cells are cancelled. On a failing cell
+   importance point, or reword (turn 97: failing cells are re-checked too).
 4. **Reword** (4.5) -> a new invariant whose cells go back to step 2.
 5. Repeat until no cell is pending, then write the **report** (section 7).
 
@@ -307,7 +317,9 @@ reworded from failing runs score worse.
 ## 10. Cautions
 
 - **C1. Check errors** (turns 8, 9): a model may say "followed" when it was not, or the reverse. Assumed rare for now;
-  the Opus re-check covers removal, and Luna/Opus disagreements measure Luna's error rate.
+  the Opus re-check covers removal and, since turn 97, importance points, and Luna/Opus disagreements measure Luna's
+  error rate. Found in practice (turns 89-92): an observation whose only evidence is the action itself (a todo update
+  marking everything done); handled by the "at pinned" outcome (4.3, 4.4).
 - **C2. Process right, content wrong**: H5.
 - **C3. F2 must give the first location** (turns 10, 11): with a later one, an action between the first occurrence and
   that one would count as not followed.

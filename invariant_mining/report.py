@@ -15,7 +15,8 @@ from .store import Store
 from .trajectory import Trajectory
 
 OUTCOME = {"followed": "followed", "not_followed": "not followed", "only_before": "only before", "not_seen": "not seen",
-           "pinning_wrong": "pinning wrong", "purpose_otherwise": "same purpose, other action", "job_error": "job error"}
+           "pinning_wrong": "pinning wrong", "purpose_otherwise": "same purpose, other action", "job_error": "job error",
+           "at_pinned": "action = pinned item"}
 
 
 def natural(tid: str):
@@ -154,7 +155,7 @@ def _why_removed(inv: dict) -> str:
     if c.get("recheck_f3_outcome") or c.get("recheck_f2_seen") is not None:
         parts.append(f"Opus re-check: seen at {c.get('recheck_f2_location')}, {OUTCOME.get(c.get('recheck_f3_outcome'), c.get('recheck_f3_outcome'))}")
     if c.get("too_narrow") is not None:
-        parts.append("same purpose by another action: " + ("yes" if c.get("too_narrow") else "no"))
+        parts.append("same purpose by another action: " + {0: "no", 1: "yes", 2: "by the pinned item itself"}.get(c.get("too_narrow"), "?"))
     return "; ".join(parts)
 
 
@@ -245,14 +246,17 @@ def markdown(rep: dict, notes: Path | None = None) -> str:
             active = [i for i in invs if i["status"] == "active"]
             lines += [f"### Failing runs ({len(fails)})", "",
                       "Per failing run, over the active invariants: broken (seen, not followed: an importance point), not seen, "
-                      "same purpose by another action, only before. A run that breaks nothing failed for a reason these "
-                      "invariants don't capture (a missing invariant, a content or reasoning error, or the grader).", "",
-                      "| run | broken | not seen | same purpose, other action | only before | first broken | |", "|---|---|---|---|---|---|---|"]
+                      "same purpose by another action, only before, action = pinned item (the observation's evidence is the "
+                      "action itself). A run that breaks nothing failed for a reason these invariants don't capture (a "
+                      "missing invariant, a content or reasoning error, or the grader).", "",
+                      "| run | broken | not seen | same purpose, other action | only before | action = pinned item | first broken | |",
+                      "|---|---|---|---|---|---|---|---|"]
             for t in fails:
                 outs = Counter(i["cells"].get(t) for i in active)
                 first = [i["id"].split(".", 1)[1] for i in active if t in i["first_violations"]]
                 lines.append(f"| {short(t)} | {outs.get('not_followed', 0)} | {outs.get('not_seen', 0)} | {outs.get('purpose_otherwise', 0)} | "
-                             f"{outs.get('only_before', 0)} | {', '.join(first)} | {'**breaks nothing**' if not outs.get('not_followed') else ''} |")
+                             f"{outs.get('only_before', 0)} | {outs.get('at_pinned', 0)} | {', '.join(first)} | "
+                             f"{'**breaks nothing**' if not outs.get('not_followed') else ''} |")
             lines.append("")
         kept = [i for i in invs if i["status"] == "active" and any(e["kind"] == "reword_failed" for e in i["events"])]
         if kept:

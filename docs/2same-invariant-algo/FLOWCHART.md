@@ -34,29 +34,34 @@ flowchart TD
 
 ## 2. One cell: one invariant on one run
 
+Since turn 97: "at pinned" outcomes (the action, or the purpose-achieving action, is the pinned item itself), and the
+Opus re-check for a failing run's "not followed" as well.
+
 ```mermaid
 flowchart TD
     START["Cell: invariant (observation facts, action) x run R"] --> PHI{"Observation empty (φ)?"}
     PHI -->|yes| F3
     PHI -->|no| F2["F2 seen? (Luna agent; sees the facts only):<br/>yes + FIRST location where all facts hold, evidence per fact / no"]
     F2 -->|no| NS["not seen: no change"]
-    F2 -->|yes| F3["F3 followed? (Luna agent; facts + action + F2's location):<br/>1. observation at that location? 2. action anywhere after it? 3. else before it?"]
+    F2 -->|yes| F3["F3 followed? (Luna agent; facts + action + F2's location):<br/>1. observation at that location? 2. is that item itself the action?<br/>3. action anywhere after it? 4. else before it?"]
     F3 -->|pinning wrong| PW["no change (counted)"]
+    F3 -->|"at pinned"| AP["no change (counted: the observation's only evidence is the action)"]
     F3 -->|only before| OB["no change (counted: the observation may not be the real trigger)"]
     F3 -->|followed| FOL{"R passing?"}
     FOL -->|yes| SP["S +1"]
     FOL -->|no| NC1["no change"]
-    F3 -->|not followed| LAB{"R passing?"}
-    LAB -->|"yes: removal candidate"| RF2["Opus re-check: F2 again"]
+    F3 -->|"not followed (passing or failing run)"| RF2["Opus re-check: F2 again"]
     RF2 -->|not seen| D1["Opus's verdict counts: not seen, no change<br/>(Luna/Opus disagreement logged)"]
     RF2 -->|seen| RF3["Opus re-check: F3 again, at Opus's location"]
-    RF3 -->|"followed / only before / pinning wrong"| D2["Opus's verdict counts (S +1 if followed)<br/>(disagreement logged)"]
-    RF3 -->|not followed| TNP["Too-narrow check (Opus; sees the purpose):<br/>same purpose achieved by another action after the observation?"]
-    TNP -->|no| REM["Trigger: remove the invariant"]
-    TNP -->|yes| RWP["Trigger: reword (from a passing run)"]
-    LAB -->|"no: failing run, Luna's verdict stands"| TNF["Too-narrow check (Opus)"]
-    TNF -->|no| IMP["I +1<br/>(first violation if its observation location is the earliest among this run's broken invariants)"]
-    TNF -->|yes| RWF["No point; trigger: reword (from a failing run)"]
+    RF3 -->|"followed / only before / pinning wrong / at pinned"| D2["Opus's verdict counts (S +1 if followed on a passing run)<br/>(disagreement logged)"]
+    RF3 -->|not followed| TN["Too-narrow check (Opus; sees the purpose):<br/>same purpose achieved after the observation?"]
+    TN -->|"by the pinned item itself (at pinned)"| AP2["no change, no rewording (counted)"]
+    TN -->|not achieved| LAB{"R passing?"}
+    LAB -->|yes| REM["Trigger: remove the invariant"]
+    LAB -->|no| IMP["I +1<br/>(first violation if its observation location is the earliest among this run's broken invariants)"]
+    TN -->|"achieved otherwise"| RW{"R passing?"}
+    RW -->|yes| RWP["Trigger: reword (from a passing run)"]
+    RW -->|no| RWF["No point; trigger: reword (from a failing run)"]
 ```
 
 ## 3. Rewording and its validation (the loop back)
@@ -107,7 +112,7 @@ flowchart LR
     C["Final cell outcomes<br/>(active invariants only)"] --> S["S = passing runs (not P1/P2) with seen + followed"]
     C --> I["I = failing runs with seen + not followed<br/>(after the too-narrow check said no)"]
     C --> FV["First violation: per failing run, the broken invariant<br/>whose observation location comes first (★)"]
-    C --> N["Neutral, counted in events: not seen, only before, pinning wrong,<br/>same purpose another way, job error"]
+    C --> N["Neutral, counted in events: not seen, only before, pinning wrong, at pinned,<br/>same purpose another way, job error"]
     S --> TBL["report.md per task: proposed (status, S, I, outcome per run), rewordings,<br/>removed with the reason, kept after failed rewordings, events, role terms; cost"]
     I --> TBL
     FV --> TBL

@@ -16,7 +16,8 @@ from .trajectory import LocationError, Trajectory
 
 PROMPTS = Path(__file__).parent / "prompts"
 SOURCES = ["environment", "task", "tool_result", "reasoning"]
-F3_OUTCOMES = ["followed", "not_followed", "only_before", "pinning_wrong"]
+F3_OUTCOMES = ["followed", "not_followed", "only_before", "pinning_wrong", "at_pinned"]
+TN_OUTCOMES = ["achieved_otherwise", "not_achieved", "at_pinned"]
 QUOTE_MAX = 300
 KINDS = ["f1_propose", "f1_reword", "f2_seen", "f3_followed", "too_narrow"]
 
@@ -335,7 +336,7 @@ def make_validate_f2(t: Trajectory, n_facts: int):
 # --- F3 followed? -----------------------------------------------------------------------------------------------------
 F3_SCHEMA = {"type": "object", "properties": {
     "outcome": {"type": "string", "enum": F3_OUTCOMES},
-    "action_location": {"type": ["string", "null"], "description": "where the action happened (followed / only_before); null otherwise"},
+    "action_location": {"type": ["string", "null"], "description": "where the action happened (followed / only_before / at_pinned: the pinned location itself); null otherwise"},
     "quote": {"type": "string"}},
     "required": ["outcome", "action_location", "quote"], "additionalProperties": False}
 
@@ -350,12 +351,16 @@ def make_validate_f3(t: Trajectory, pinned: str):
             outcome = out.get("outcome")
             if outcome not in F3_OUTCOMES:
                 raise ValueError(f"outcome must be one of {F3_OUTCOMES}")
-            if phi and outcome in ("pinning_wrong", "only_before"):
+            if phi and outcome in ("pinning_wrong", "only_before", "at_pinned"):
                 raise ValueError("the observation is empty (pinned at start): the outcome is followed or not_followed")
             if outcome in ("not_followed", "pinning_wrong"):
                 return True, None, {"outcome": outcome, "action_location": None, "quote": _quote(out.get("quote"))}
             aloc = _str(out.get("action_location"), "action_location")
             apos, ppos = t.position(aloc), t.position(pinned)
+            if outcome == "at_pinned" and aloc != pinned:
+                raise ValueError(f"at_pinned: the action location must be the pinned location {pinned} itself")
+            if outcome == "followed" and aloc == pinned:
+                raise ValueError(f"the action is the pinned item {pinned} itself: the outcome is at_pinned, not followed")
             if outcome == "followed" and apos[0] < ppos[0]:
                 raise ValueError(f"followed: the action location {aloc} must not be before the pinned location {pinned}")
             if outcome == "only_before" and apos >= ppos:
@@ -369,27 +374,32 @@ def make_validate_f3(t: Trajectory, pinned: str):
 
 # --- too-narrow check ---------------------------------------------------------------------------------------------------
 TN_SCHEMA = {"type": "object", "properties": {
-    "purpose_achieved_otherwise": {"type": "boolean"},
-    "location": {"type": ["string", "null"], "description": "where the different action happened; null if not"},
+    "outcome": {"type": "string", "enum": TN_OUTCOMES},
+    "location": {"type": ["string", "null"], "description": "achieved_otherwise: where the different action happened; "
+                 "at_pinned: the pinned location itself; null if not_achieved"},
     "quote": {"type": "string"}},
-    "required": ["purpose_achieved_otherwise", "location", "quote"], "additionalProperties": False}
+    "required": ["outcome", "location", "quote"], "additionalProperties": False}
 
 
 def make_validate_tn(t: Trajectory, pinned: str):
     def validate(out: dict):
         try:
-            if set(out) - {"purpose_achieved_otherwise", "location", "quote"}:
-                raise ValueError("answer only purpose_achieved_otherwise, location, quote")
-            yes = out.get("purpose_achieved_otherwise")
-            if not isinstance(yes, bool):
-                raise ValueError("purpose_achieved_otherwise must be true or false")
-            if not yes:
-                return True, None, {"purpose_achieved_otherwise": False, "location": None, "quote": _quote(out.get("quote"))}
+            if set(out) - {"outcome", "location", "quote"}:
+                raise ValueError("answer only outcome, location, quote")
+            outcome = out.get("outcome")
+            if outcome not in TN_OUTCOMES:
+                raise ValueError(f"outcome must be one of {TN_OUTCOMES}")
+            if outcome == "not_achieved":
+                return True, None, {"outcome": outcome, "location": None, "quote": _quote(out.get("quote"))}
             loc = _str(out.get("location"), "location")
-            if t.position(loc)[0] < t.position(pinned)[0]:
+            if outcome == "at_pinned" and loc != pinned:
+                raise ValueError(f"at_pinned: the location must be the pinned location {pinned} itself")
+            if outcome == "achieved_otherwise" and loc == pinned:
+                raise ValueError(f"the purpose is achieved by the pinned item {pinned} itself: the outcome is at_pinned")
+            if outcome == "achieved_otherwise" and t.position(loc)[0] < t.position(pinned)[0]:
                 raise ValueError(f"the different action must come after the pinned location {pinned}")
             check_quote(t, loc, _quote(out.get("quote")))
-            return True, None, {"purpose_achieved_otherwise": True, "location": loc, "quote": _quote(out.get("quote"))}
+            return True, None, {"outcome": outcome, "location": loc, "quote": _quote(out.get("quote"))}
         except (ValueError, LocationError) as e:
             return False, str(e), None
     return validate
@@ -430,14 +440,15 @@ def build(kind: str, model_key: str, inputs: dict, trajs: dict[str, Trajectory])
         user = (f"Observation:\n{facts_text(inputs['facts'])}\n\nAction: {inputs['action']}\n\n"
                 f"Pinned location of the observation: {inputs['location']}\n\n{sizes('Trajectory', t)}")
         return JobSpec(kind, model_key, system, sha, user, trajs, F3_SCHEMA, "Submit exactly one outcome "
-                       "(followed / not_followed / only_before / pinning_wrong) with the action's location.",
+                       "(followed / not_followed / only_before / pinning_wrong / at_pinned) with the action's location.",
                        make_validate_f3(t, inputs["location"]), inputs)
     if kind == "too_narrow":
         user = (f"Observation:\n{facts_text(inputs['facts'])}\n\nAction: {inputs['action']}\nPurpose of the action: "
                 f"{inputs['purpose']}\n\nPinned location of the observation: {inputs['location']}\n\n"
                 "Another check found that the action, as worded, did not happen after the pinned location.\n\n" + sizes('Trajectory', t))
-        return JobSpec(kind, model_key, system, sha, user, trajs, TN_SCHEMA, "Submit whether the action's purpose was "
-                       "achieved by a different action after the pinned location, and where.", make_validate_tn(t, inputs["location"]), inputs)
+        return JobSpec(kind, model_key, system, sha, user, trajs, TN_SCHEMA, "Submit exactly one outcome (achieved_otherwise "
+                       "/ not_achieved / at_pinned): whether the action's purpose was achieved by a different action after the "
+                       "pinned location, or by the pinned item itself, and where.", make_validate_tn(t, inputs["location"]), inputs)
     if kind == "f1_reword":
         facts = "\n".join(f"{n}. {f['fact']}  (source: {f['source']}; why the action needs it: {f['reason']})"
                           for n, f in enumerate(inputs["facts"], 1)) or "(empty observation)"
