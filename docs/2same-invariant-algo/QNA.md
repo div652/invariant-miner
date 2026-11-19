@@ -1617,5 +1617,5 @@ New test cases: F3 `at_pinned` on a failing run (no point, no re-check); Opus ov
 
 DESIGN.md (4.3, 4.4, 5, 6, C1), TECHNICAL.md and FLOWCHART.md (section 2 redrawn; all 5 diagrams parse with Mermaid 11.4.1) describe the new flow; the decision is in the table above.
 
-Not done yet: re-running the existing runs with this. The cheapest option re-checks only what changes: all failing-run "not followed" cells (the importance points: APEX 53, Harvey 19 + 31) get the Opus re-check, and the cells whose observation sits at an agent call go through F3 again. That's roughly 100–250 Opus jobs per run set. Should I do that for the three runs?
+Not done yet: re-running the existing runs with this. The cheapest option re-checks only what changes: all failing-run "not followed" cells (the importance points: APEX 53, Harvey 19 + 31) get the Opus re-check, and the cells whose observation sits at an agent call go through F3 again. That's about 60–160 Opus jobs per run set (Harvey runs 1–5 about 60, runs 6–10 about 90, APEX about 160: re-check F2 + F3 + the too-narrow check per importance point), plus Luna F3 re-runs for 40–110 cells pinned at agent calls. Should I do that for the three runs?
 ````
