@@ -283,10 +283,22 @@ returns *"Updated todo list: N pending, N in progress, N completed."* and nothin
 | 128-jr-1 run1, run3 | none: no todo list at all | Vacuous |
 | anti-SLAPP run10 | s8: `completed, completed, in_progress` | Yes, the one real case |
 
-Why the check errs: the observation (*"all steps are done"*) has no evidence apart from the action, so F2 pins it at
-the `todo_write` call itself (s29.c1) or at its output (s33.o1). F3 must then say whether the action comes *after* that
-location; for the call itself Luna answered "followed" in some runs and "not followed" in others, for its output
-"only before". The too-narrow check (Opus) said no each time and did not catch it.
+**Why the check errs: the pipeline, not Luna's reading** (F2/F3 job transcripts, user follow-up 2026-11-19). Luna
+does see the todo call: in td-02 run 7 (F3 job j003490) it quotes its output, *"Updated todo list: 0 pending, 0 in
+progress, 4 completed."* Three things combine:
+1. "All steps are done" has no evidence apart from the todo update, so F2, which by design sees only the facts, pins
+   the observation at the todo call itself (td-02 run 7: s29.c1, evidence = the call's `"status":"completed"` items).
+2. F3 then asks whether the action came **after** the pinned location; it is **at** it. Read literally that is "not
+   followed", and Luna's reasoning says so (*"check if the agent took the specified action anywhere after the pinned
+   location"*); in the other half of such cells it bent the rule and said "followed" (td-02 run 6, same call at s29.c1).
+   Over the four invariants, the cells pinned at the todo call itself went 5 "followed", 5 "not followed".
+3. The Opus re-check runs only on passing runs' "not followed" (td-02 run 10: Luna "not followed" at s28.c1, Opus
+   "followed"). A failing run's verdict is final, so the same error survives only there, as an importance point.
+
+How far it reaches: of the active invariants' importance points, those whose observation is pinned at an agent call are
+APEX 8 of 53 (7 on todo calls: these 5 and world224-os-task04 i15 runs 1 and 8; 1 a real partial action, world227 i9 run
+2: the edit left early-year revenue hardcoded), Harvey runs 1-5 3 of 19 and runs 6-10 3 of 31 (i7, i17: Luna judged the
+content of the written script / response.md; not re-examined).
 
 **Correlation, not cause.** Runs that marked everything complete fail just as often: anti-SLAPP runs 1, 6, 7, 8 and 9 did,
 and failed; 128-jr-1 runs 5, 6, 8, 9 and 10 did, and failed. The failures are content: every failing anti-SLAPP run
@@ -315,6 +327,8 @@ proposals, or proposed only with a separate observation.
    re-proposal (DESIGN.md section 9) would produce; the grader's failed criteria would point it there.
 5. **The too-narrow check's consistency.** It said "no" for run 10 and "yes" for run 5 on the same outcome; worth a look
    before it decides removals.
-6. **Self-evidenced observations.** The todo invariants above earn importance only through check errors: their
-   observation is pinned at the action itself. F2 should need evidence before and apart from the action; an action on
-   something absent (no todo list) should count as not seen.
+6. **Self-evidenced observations and the asymmetric re-check.** The todo invariants above earn importance through a
+   pipeline gap: F2 pins the observation at the action itself and F3's "after the pinned location" has no rule for "at
+   it". Fixes: F3 answers a separate neutral outcome when the action is the pinned item itself; failing runs' "not
+   followed" get the same Opus re-check as passing runs'; an action on something absent (no todo list) counts as not
+   seen.

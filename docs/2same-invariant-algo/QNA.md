@@ -1510,3 +1510,30 @@ The todo analysis is now in the APEX report itself (`results/apex-third-flip14-r
 
 So that regenerating the report doesn't drop them, the notes are files in `results/notes/apex-third-flip14/`, which the generator includes (`report --notes DIR`).
 ````
+
+### Turn 89 — user (2026-11-19)
+
+````text
+5 of the 10 points are check errors.  --> this is quite counter intuitive. can you check why is luna high not able to tell if the run calls todo completed or not, I suppose this must be easy. is something going wrong in the pipeline ?
+````
+
+### Turn 90 — Claude (2026-11-19)
+
+````text
+Yes, it's the pipeline, not Luna misreading. Luna sees the todo call fine: in td-02 run 7 it even quotes its output, "Updated todo list: 0 pending, 0 in progress, 4 completed". Three things combine:
+
+1. **F2 pins the observation on the action itself.** "All steps are done" has no evidence apart from the todo update, so F2 (which by design never sees the action) points at the todo call (s29.c1) as the place the observation first holds.
+2. **F3 asks the wrong question for that case.** It must say whether the action came *after* the pinned location, but the action is *at* it. Taken literally that's "not followed", and Luna's reasoning says exactly that ("check if the agent took the specified action anywhere after the pinned location"). In the other half of such cells it bent the rule and said "followed". Across the four invariants: 5 "followed", 5 "not followed", for identical behaviour.
+3. **The Opus re-check is one-sided.** It only re-checks a *passing* run's "not followed" (td-02 run 10: Luna said not followed, Opus said followed). A failing run's verdict is final, so the same error survives only on failing runs, where it becomes an importance point.
+
+**How far it reaches:** APEX has 53 importance points. 8 have the observation pinned at an agent call: 7 are on todo calls (these 5, plus world224-os-task04 i15 runs 1 and 8), and 1 is a real partial action (world227 i9 run 2 left early-year revenue hardcoded). Harvey has 3 of 19 (runs 1-5) and 3 of 31 (runs 6-10). There Luna judged the content of the written script or response.md, which looks like a genuine check, but I haven't re-examined those.
+
+**Fixes I'd propose** (not built):
+- F3 gets a separate neutral outcome for "the action is the pinned item itself".
+- A failing run's "not followed" gets the same Opus re-check as a passing run's.
+- An action on something that doesn't exist (no todo list) counts as "not seen".
+
+After that, re-run only the affected cells: about 100 F3 checks plus the new re-checks.
+
+The report's analysis section and FAILING-RUNS.md now state this cause.
+````
