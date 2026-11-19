@@ -255,6 +255,7 @@ python3 -m invariant_mining invariants runs/NAME                                
 python3 -m invariant_mining guard --max-used N                                          # pause runs before the gateway's premium usage reaches N
 python3 -m invariant_mining run runs/NAME [--tasks T ...] [--concurrency 20]           # the pipeline; resumable
 python3 -m invariant_mining report runs/NAME                                            # report.md + report.json
+python3 -m invariant_mining report runs/NAME --notes DIR                               # + written analyses: DIR/_top.md, DIR/<task>.md
 python3 -m invariant_mining job runs/NAME --kind f2_seen --trajectories T=ID --inputs '{"facts": ["..."]}'  # one job by hand
 python3 -m invariant_mining ping                                                        # one tiny request per model
 ```

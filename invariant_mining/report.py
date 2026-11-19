@@ -158,7 +158,12 @@ def _why_removed(inv: dict) -> str:
     return "; ".join(parts)
 
 
-def markdown(rep: dict) -> str:
+def _note(notes: Path | None, name: str) -> list[str]:
+    f = notes / f"{name.replace('/', '__')}.md" if notes else None
+    return [f.read_text().rstrip(), ""] if f and f.is_file() else []
+
+
+def markdown(rep: dict, notes: Path | None = None) -> str:
     lines = ["# Invariant mining report", "", f"Run: `{rep['run']}`", "",
              "Points: **S** = support (passing runs other than P1/P2 where the observation was seen and the action followed), "
              "**I** = importance (failing runs where the observation was seen and the action did not follow), both written "
@@ -176,6 +181,7 @@ def markdown(rep: dict) -> str:
                      f"{lab.get('fail', 0)} fail | {sum(1 for i in invs if i['origin'] == 'propose')} | "
                      f"{sum(1 for i in invs if i['origin'] == 'reword')} | {st.get('active', 0)} | {st.get('removed', 0)} | {st.get('retired', 0)} |")
     lines += ["", "Totals: " + ", ".join(f"{k} {v}" for k, v in sorted(rep["totals"].items())), ""]
+    lines += _note(notes, "_top")
     for n, task in enumerate(rep["tasks"], 1):
         invs = task["invariants"]
         others = [t for t in task["trajectories"] if t not in (task["p1"], task["p2"])]
@@ -203,6 +209,7 @@ def markdown(rep: dict) -> str:
         else:
             lines.append("None" + (" (no failing run)." if not n_fail else "."))
         lines.append("")
+        lines += _note(notes, task["task_id"])
         run_cols = " | ".join(f"{short(t)} ({task['trajectories'][t]})" for t in others)
         sep = "|---" * (6 + len(others)) + "|"
         proposed = [i for i in invs if i["origin"] == "propose"]
@@ -290,8 +297,8 @@ def proposals(run_dir: Path) -> str:
     return "\n".join(lines) + "\n"
 
 
-def write(run_dir: Path) -> dict:
+def write(run_dir: Path, notes: Path | None = None) -> dict:
     rep = build(run_dir)
     Path(run_dir, "report.json").write_text(json.dumps(rep, ensure_ascii=False, indent=1))
-    Path(run_dir, "report.md").write_text(markdown(rep))
+    Path(run_dir, "report.md").write_text(markdown(rep, notes))
     return rep

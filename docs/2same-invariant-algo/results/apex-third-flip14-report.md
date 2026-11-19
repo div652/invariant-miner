@@ -25,6 +25,31 @@ Points: **S** = support (passing runs other than P1/P2 where the observation was
 
 Totals: invariants_active 209, invariants_removed 15, invariants_retired 53, job_error 1, only_before 122, pinning_wrong 15, proposed 14, purpose_otherwise 84, recheck_disagrees 30, removed 15, reword_attempt_failed 8, reword_failed 3, reworded 53
 
+## ⚠ Analysis: the "mark all todos completed" invariants earn importance through check errors (2026-11-19)
+
+Four tasks keep an active invariant of the form *"all planned steps are done" -> "marks all todo items completed"* with
+importance above 0: world226-td-02 i21 (I 1/6), anti-SLAPP i6 (I 5/8), 128-jr-1 i9 (I 3/7), world131-dv-03 i14 (I 1/4).
+**These points do not mean that marking todos matters.** Checked against the trajectories:
+
+- **The grade cannot depend on todos.** Every criterion is about the answer's content, and the judge sees the answer and
+  the world's files. The todo list exists only in the agent's DSH session, and DSH does not act on it (no reminder, no
+  finish gate).
+- **5 of the 10 points are check errors.** Those runs did mark every todo `completed` as their last todo update:
+  td-02 run 7, anti-SLAPP runs 8 and 9, 128-jr-1 run 10, world131 run 1. td-02 run 7 made the same call at the same step
+  (s29, all 4 completed) as passing run 6, which was judged "followed".
+- **4 points come from runs without a todo list** (anti-SLAPP runs 4, 5; 128-jr-1 runs 1, 3): nothing to mark.
+- **1 point is real:** anti-SLAPP run 10 left its last item `in_progress`.
+- **Correlation, not cause.** Failing runs that marked everything complete fail on the same content criteria as the
+  rest: every failing anti-SLAPP run misses C1 ("applies only to a 'legal action'"), the failing 128-jr-1 runs compute
+  wrong scores. The four runs without a list all failed, but most runs of these tasks fail (8/10, 7/10).
+
+**Why the check errs:** "all steps are done" has no evidence apart from the todo update, so F2 pins the observation at
+that call (or its output) and F3 must judge whether the action comes *after* the same call; Luna answers that
+inconsistently, and the too-narrow check did not catch it. **Fixes to discuss:** F2 needs evidence before and apart from
+the action; an action on something absent (no todo list) counts as not seen; bookkeeping actions are not proposed as
+invariants (or only with a separate observation). Per-run table: [analysis/FAILING-RUNS.md](../analysis/FAILING-RUNS.md),
+section "APEX: the 'mark all todos completed' invariants". Each affected task below has a note under its list.
+
 ## Task 1: `sp-task-02-wold-135-8429838a`
 
 P1 `run1`, P2 `run2`; other runs: run3 (pass), run4 (fail), run5 (pass), run6 (pass), run7 (pass), run8 (pass), run9 (pass), run10 (pass). Status done.
@@ -793,6 +818,10 @@ Active after every removal and rewording; most important first. Broken in = the 
 | ri15 | The model shows a known base-case IRR / existing sensitivity value computed before the scenario [tool_result] | Checks that at least one IRR from the offline formula matches the IRR the model itself gives for the same inputs (stored base case or recalculated scenario point) | 2/2 | 2/6 | run2 ★, run7 ★ |
 | i21 | All planned steps are done and verified [reasoning] | Marks all todo items completed | 2/2 | 1/6 | run7 |
 
+**⚠ i21 (Marks all todo items completed): its importance point is a check error.** Run 7's last todo update (s29 of
+30) marks all 4 items `completed`, the same call at the same step as passing run 6, which was judged "followed". The
+observation was pinned at that call itself (s29.c1). See the analysis after the summary.
+
 ### Proposed by F1 (22)
 
 | id | observation | action | final status | S | I | run1 (fail) | run2 (fail) | run4 (fail) | run6 (pass) | run7 (fail) | run8 (fail) | run9 (fail) | run10 (pass) |
@@ -883,6 +912,13 @@ Active after every removal and rewording; most important first. Broken in = the 
 | i1 | The task asks for a legal analysis applying an attached statute to the client's proceeding [task]; A todo-tracking tool is available [environment] | Writes a three-step todo plan: find and read the attached statute, apply it to the moving party, draft a focused reply | 0/0 | 2/8 | run4 ★, run5 ★ |
 | ri5 | The full statute text has been read [tool_result] | Updates the todo plan to mark the reading step completed and set the later steps to their current status | 0/0 | 2/8 | run4, run5 |
 
+**⚠ i6 (Marks every todo item completed just before the final answer): 1 of its 5 points is real.** Runs 8 and 9 did
+mark all 3 items `completed` in their last todo update (s8, s7): check errors. Runs 4 and 5 never made a todo list
+(4-step runs): nothing to mark. Only run 10 left its last item `in_progress`. Every failing run, with or without
+todos, misses the same criterion C1 (*"States that Chapter 27's motion-to-dismiss procedure applies only to a 'legal
+action.'"*); runs 1, 6, 7 marked everything complete and failed too. i1 and ri5 (the todo plan and its update) take
+their points from the same two runs without a list. See the analysis after the summary.
+
 ### Proposed by F1 (10)
 
 | id | observation | action | final status | S | I | run1 (fail) | run4 (fail) | run5 (fail) | run6 (fail) | run7 (fail) | run8 (fail) | run9 (fail) | run10 (fail) |
@@ -952,6 +988,12 @@ Active after every removal and rewording; most important first. Broken in = the 
 | i1 | The task asks for a multi-step computation: read updated inputs, translate them to numbers, score each option and recommend one [task] | Writes a todo list covering inspecting the inputs, translating them into worst-case scores, and verifying/reporting the result | 1/1 | 2/7 | run1 ★, run3 ★ |
 | i8 | Per-option total scores were computed for the target project from the worst-case ideals and updated ratings [reasoning] | Recommends the strategic option with the highest total score as the final path | 1/1 | 1/7 | run5 ★ |
 
+**⚠ i9 (Marks all todo items completed before the final answer): none of its 3 points shows a todo effect.** Run 10
+marked all 3 items `completed` (s6 of 7): a check error. Runs 1 and 3 never made a todo list. The failures are wrong
+scores (C1-C6: the five assessment scores and the recommendation), also in runs 5, 6, 8, 9 that marked everything
+complete. i1 (writes the todo list) takes its 2 points from the same two runs without a list. See the analysis after
+the summary.
+
 ### Proposed by F1 (10)
 
 | id | observation | action | final status | S | I | run1 (fail) | run3 (fail) | run5 (fail) | run6 (fail) | run7 (pass) | run8 (fail) | run9 (fail) | run10 (fail) |
@@ -1017,6 +1059,10 @@ Active after every removal and rewording; most important first. Broken in = the 
 | id | observation | action | S | I | broken in |
 |---|---|---|---|---|---|
 | i14 | NPV computed and verified [reasoning] | Marks all todo items completed | 4/4 | 1/4 | run1 ★ |
+
+**⚠ i14 (Marks all todo items completed): its importance point is a check error.** Run 1's last todo update (s15 of
+16) marks all 3 items `completed`; run 3 made the same call at s15 and was judged "followed". Runs 1, 3, 4 and 9 fail on
+the NPV value (see "APEX: world131-dv-03" in analysis/FAILING-RUNS.md), not on todos. See the analysis after the summary.
 
 ### Proposed by F1 (15)
 

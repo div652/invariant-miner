@@ -1493,3 +1493,20 @@ Marking todos complete has no causal impact. The importance points mostly come f
 
 Written up with the per-run table in `analysis/FAILING-RUNS.md` (new APEX section, plus point 6 of the suggestions).
 ````
+
+### Turn 87 — user (2026-11-19)
+
+````text
+okay, I want you to add this analysis in the report. this is important.
+````
+
+### Turn 88 — Claude (2026-11-19)
+
+````text
+The todo analysis is now in the APEX report itself (`results/apex-third-flip14-report.md`). Pushed.
+
+- **Top of the report, after the summary:** a section "⚠ Analysis: the 'mark all todos completed' invariants earn importance through check errors". It gives the four invariants, the breakdown of their 10 points (5 check errors, 4 runs without a todo list, 1 real), why the grade can't depend on todos, why the check errs, and the fixes to discuss.
+- **In each of the four tasks** (td-02, anti-SLAPP, 128-jr-1, world131): a ⚠ note right under the "importance above 0" list, giving that task's runs. For example, td-02 run 7 made the same call as passing run 6. The notes also flag related invariants that take their points from the same runs without a todo list (anti-SLAPP i1 and ri5, 128-jr-1 i1).
+
+So that regenerating the report doesn't drop them, the notes are files in `results/notes/apex-third-flip14/`, which the generator includes (`report --notes DIR`).
+````

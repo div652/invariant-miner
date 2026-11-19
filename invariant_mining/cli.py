@@ -192,6 +192,8 @@ def main(argv=None) -> None:
     p.add_argument("--concurrency", type=int)
     p = sub.add_parser("report", help="write report.md and report.json")
     p.add_argument("run_dir", type=Path)
+    p.add_argument("--notes", type=Path, help="folder of written analyses to include: _top.md (after the summary) and "
+                   "<task_id with / as __>.md (in that task's section)")
     p = sub.add_parser("job", help="run one job by hand (not recorded in the state)")
     p.add_argument("run_dir", type=Path)
     p.add_argument("--kind", required=True, choices=jobs.KINDS)
@@ -234,7 +236,7 @@ def main(argv=None) -> None:
         rep = report.write(a.run_dir)
         print(json.dumps(rep["totals"], indent=1))
     elif a.cmd == "report":
-        rep = report.write(a.run_dir)
+        rep = report.write(a.run_dir, a.notes)
         print(json.dumps(rep["totals"], indent=1))
     elif a.cmd == "job":
         trajs = dict(kv.split("=", 1) for kv in a.trajectories.split(","))
