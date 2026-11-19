@@ -22,7 +22,8 @@ todo call; in td-02 run 7 it even quotes its output *"Updated todo list: 0 pendi
 pins the observation at the todo call itself (s29.c1); (2) F3 asks whether the action came **after** the pinned
 location, and here it is **at** it. Read literally the answer is "not followed" (Luna's reasoning: *"check if the agent
 took the specified action anywhere after the pinned location"*); in the other half of such cells Luna bent the rule
-and said "followed". In APEX, of the cells pinned at an agent call, 5 todo cells went each way. (3) The re-check is
+and said "followed". Over the four invariants, the cells pinned at the todo call itself went 5 "followed" and 6 "not followed" (one of those
+a passing run that Opus corrected). (3) The re-check is
 asymmetric: a passing run's "not followed" gets an Opus re-check (td-02 run 10: Luna "not followed", Opus "followed"),
 a failing run's does not, so these errors survive only on failing runs, as importance points. **Fixes to discuss:** F3 treats an action at the pinned location itself as a separate, neutral outcome (the
 observation is evidenced only by the action); failing runs' "not followed" get the same Opus re-check as passing runs'; an action on something absent (no todo list) counts as not seen; bookkeeping actions are not proposed as

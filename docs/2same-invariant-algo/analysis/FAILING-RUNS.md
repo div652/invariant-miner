@@ -291,7 +291,8 @@ progress, 4 completed."* Three things combine:
 2. F3 then asks whether the action came **after** the pinned location; it is **at** it. Read literally that is "not
    followed", and Luna's reasoning says so (*"check if the agent took the specified action anywhere after the pinned
    location"*); in the other half of such cells it bent the rule and said "followed" (td-02 run 6, same call at s29.c1).
-   Over the four invariants, the cells pinned at the todo call itself went 5 "followed", 5 "not followed".
+   Over the four invariants, the cells pinned at the todo call itself went 5 "followed" and 6 "not followed" (one of
+   those passing run 10 of td-02, corrected by Opus; see 3).
 3. The Opus re-check runs only on passing runs' "not followed" (td-02 run 10: Luna "not followed" at s28.c1, Opus
    "followed"). A failing run's verdict is final, so the same error survives only there, as an importance point.
 
