@@ -1640,3 +1640,18 @@ No blocking doubts, so it's running: started 23:02 IST in tmux `im-astra-edge`, 
 
 All 8 F1 jobs are reading their runs now. These trajectories are big (0.35–1.35M characters per run), so F1 will take a while. I expect the whole run to take about 3 hours (around 02:00 IST). Credits are at 157K, and this should add roughly 10–20K.
 ````
+
+### Turns 101-108 — status questions (2026-11-19/20)
+
+User: "whats the status of the edge invariant run" (twice), "can i see the invariants that were proposed in some file ?", "whats the status of the APEX runs", "can you tell just top 5 invariant that has till now gained most importance points", "whats the status". Answers: progress reports; the proposals in `results/astra-edge-proposed.md`; the APEX/mixed Astra results (main f36d01b); an interim top 5 (209 i3 and 240 i4 at I 5/5, 240 i21 3/5, 243 i4 2/4, then three at 2/5), with the caution that every failing run but one is a Luna run, so importance partly reads "Astra does this, Luna does not".
+
+### Turn 109 — Claude (2026-11-20), the run finished
+
+````text
+Finished at 01:42 IST (4,471 jobs, 2 h 10 min, ~21K credits). Report: `results/astra-edge-report.md` (same format: S and I as fractions, the active invariants with importance above 0 first in each task).
+
+- 215 proposed + 42 reworded; at the end 198 active, 17 removed, 42 retired by rewording.
+- 83 importance points, on 48 active invariants.
+- The new rules mattered: `at_pinned` was answered 83 times (74 by Luna's F3, 3 by Opus's re-check, 6 by the too-narrow check), all neutral.
+- The Opus re-check on failing runs overturned 79 of Luna's 240 "not followed" verdicts there: 62 "not seen" (Opus did not find the observation at all), 13 "followed", 2 at pinned, 2 other. Without it those would have been importance points.
+````
