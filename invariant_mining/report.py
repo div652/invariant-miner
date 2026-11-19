@@ -1,7 +1,8 @@
 """report.json + report.md from a run's state (DESIGN.md section 7). Points are computed here, never stored.
 
-Per task: every invariant F1 proposed (final status, points, outcome on each run), the rewordings, the removed invariants
-with the reason, the rewordings that failed twice, the events and F1's role terms. Ends with the cost.
+Per task: the final active invariants with importance above 0, every invariant F1 proposed (final status, points, outcome
+on each run), the rewordings, the removed invariants with the reason, the rewordings that failed twice, the events and
+F1's role terms. Ends with the cost. Points are shown as S = k/(passing runs other than P1, P2) and I = k/(failing runs).
 """
 
 import json
@@ -127,6 +128,10 @@ def _outcome(inv: dict, tid: str) -> str:
     return text + (" ★" if tid in inv["first_violations"] else "")
 
 
+def _frac(k: int, n: int) -> str:
+    return f"{k}/{n}"
+
+
 def _status(inv: dict) -> str:
     if inv["status"] == "retired":
         return f"retired → {str(inv.get('replaced_by', '?')).split('.', 1)[-1]}"
@@ -156,7 +161,8 @@ def _why_removed(inv: dict) -> str:
 def markdown(rep: dict) -> str:
     lines = ["# Invariant mining report", "", f"Run: `{rep['run']}`", "",
              "Points: **S** = support (passing runs other than P1/P2 where the observation was seen and the action followed), "
-             "**I** = importance (failing runs where the observation was seen and the action did not follow). "
+             "**I** = importance (failing runs where the observation was seen and the action did not follow), both written "
+             "as points / runs: S = k/(the task's passing runs other than P1, P2), I = k/(its failing runs). "
              "★ = the first invariant this failing run broke. Outcomes per run are the final verdicts after the re-check "
              "and the too-narrow check (DESIGN.md sections 4-5).", ""]
     lines += ["## Summary", "", "| # | task | P1, P2 | other runs | proposed | rewordings | active | removed | retired |",
@@ -178,26 +184,45 @@ def markdown(rep: dict) -> str:
                 f"P1 `{short(task['p1'])}`, P2 `{short(task['p2'])}`; other runs: {runs_desc or 'none'}. Status {task['status']}"
                 + (f" ({task['error']})" if task["error"] else "") + ".", ""]
         lines += head
+        n_pass = sum(1 for t in others if task["trajectories"][t] == "pass")
+        n_fail = sum(1 for t in others if task["trajectories"][t] == "fail")
+        S = lambda i: _frac(i["support"], n_pass)  # noqa: E731
+        I = lambda i: _frac(i["importance"], n_fail)  # noqa: E731
+        imp = sorted((i for i in invs if i["status"] == "active" and i["importance"] > 0),
+                     key=lambda i: (-i["importance"], -i["support"], natural(i["id"])))
+        lines += [f"### Final active invariants with importance above 0 ({len(imp)})", ""]
+        if imp:
+            lines += ["Active after every removal and rewording; most important first. Broken in = the failing runs where the "
+                      "observation was seen and the action did not follow (★ = the first invariant that run broke).", "",
+                      "| id | observation | action | S | I | broken in |", "|---|---|---|---|---|---|"]
+            for i in imp:
+                broken = [short(t) + (" ★" if t in i["first_violations"] else "") for t in others
+                          if task["trajectories"][t] == "fail" and i["cells"].get(t) == "not_followed"]
+                lines.append(f"| {i['id'].split('.', 1)[1]} | {cell(_facts(i['observation']))} | {cell(i['action'])} | {S(i)} | {I(i)} | "
+                             f"{', '.join(broken)} |")
+        else:
+            lines.append("None" + (" (no failing run)." if not n_fail else "."))
+        lines.append("")
         run_cols = " | ".join(f"{short(t)} ({task['trajectories'][t]})" for t in others)
         sep = "|---" * (6 + len(others)) + "|"
         proposed = [i for i in invs if i["origin"] == "propose"]
         lines += [f"### Proposed by F1 ({len(proposed)})", "", f"| id | observation | action | final status | S | I | {run_cols} |", sep]
         for i in proposed:
             lines.append(f"| {i['local_id']} | {cell(_facts(i['observation']))} | {cell(i['action'])} | {cell(_status(i))} | "
-                         f"{i['support']} | {i['importance']} | " + " | ".join(cell(_outcome(i, t)) for t in others) + " |")
+                         f"{S(i)} | {I(i)} | " + " | ".join(cell(_outcome(i, t)) for t in others) + " |")
         lines.append("")
         reworded = [i for i in invs if i["origin"] == "reword"]
         if reworded:
-            sep2 = "|---" * (8 + len(others)) + "|"
+            sep2 = "|---" * (9 + len(others)) + "|"
             lines += [f"### Added by rewording ({len(reworded)})", "",
                       "The observation is the original's; the action was reworded at the purpose level after a run achieved "
                       "the purpose with another action, and validated on P1/P2 (and the run, if it passed).", "",
-                      f"| id | replaces | old action | new action | from run | attempt | final status | S/I | {run_cols} |", sep2]
+                      f"| id | replaces | old action | new action | from run | attempt | final status | S | I | {run_cols} |", sep2]
             for i in reworded:
                 rf = i.get("reworded_from") or {}
                 lines.append(f"| {i['id'].split('.', 1)[1]} | {cell(rf.get('parent', '').split('.', 1)[-1])} | {cell(rf.get('old_action'))} | "
                              f"{cell(i['action'])} | {cell(short(rf.get('trajectory') or ''))} ({cell(rf.get('trigger'))}) | {rf.get('attempt', '')} | "
-                             f"{cell(_status(i))} | {i['support']}/{i['importance']} | " + " | ".join(cell(_outcome(i, t)) for t in others) + " |")
+                             f"{cell(_status(i))} | {S(i)} | {I(i)} | " + " | ".join(cell(_outcome(i, t)) for t in others) + " |")
             lines.append("")
         removed = [i for i in invs if i["status"] == "removed"]
         lines += [f"### Removed ({len(removed)})", ""]

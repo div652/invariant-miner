@@ -1449,3 +1449,20 @@ The setup matches the Luna-high reference runs: same harness checkout (2817664),
 
 Experiment folder: `~/dsh-bench-harness/runs/astra-high-x3-20261118T195818Z/` (`run.log` shows progress).
 ````
+
+### Turn 83 — user (2026-11-19)
+
+````text
+for the reports on github inside docs. For each task I want you to also to separately inform the list of those invariant that were finally active (after all the reowrding) that had Importance score more than 0. Also in all the table where you report S and I numbers instead of writing S =2 for example , write S = 2/{total passing runs other first 2} . same for importance, the denominator would failing runs. that makes it more readable.
+````
+
+### Turn 84 — Claude (2026-11-19)
+
+````text
+Done for all three reports in `docs/2same-invariant-algo/results/` (mixed-flip runs 1-5, runs 6-10, APEX third:flip). Pushed (commit below).
+
+- **New section, first in each task:** "Final active invariants with importance above 0". These are the invariants still active after every removal and rewording, most important first, with S, I and the failing runs that broke each (★ = the first invariant that run broke). Counts: mixed-flip runs 1-5: 13 over 8 tasks; runs 6-10: 18; APEX: 28 over 14 tasks.
+- **Fractions everywhere:** S = points/passing runs other than P1, P2 and I = points/failing runs, e.g. `S 6/7, I 1/1`. The rewording table now has separate S and I columns instead of `S/I`.
+
+The generator (`invariant_mining/report.py`) makes these by default, so future reports have them too; DESIGN.md section 7 notes it.
+````

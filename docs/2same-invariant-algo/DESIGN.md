@@ -208,6 +208,9 @@ weighting) needs no new LLM calls; changing an invariant's text makes a new inva
 ## 7. Logs and the report (turn 13: "report logs at the end of the process")
 
 Per task and overall:
+- first, the final active invariants (after every removal and rewording) with importance above 0, most important first,
+  with the failing runs that broke each (turn 83);
+- points written as fractions (turn 83): S = k/(the task's passing runs other than P1, P2), I = k/(its failing runs);
 - active invariants with support points, importance points, first violations;
 - removed invariants, with the cell that removed it and whether Opus agreed with Luna;
 - reworded invariants: old -> new action, attempts, validation verdicts;
