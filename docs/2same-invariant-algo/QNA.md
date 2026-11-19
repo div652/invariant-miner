@@ -1619,3 +1619,24 @@ DESIGN.md (4.3, 4.4, 5, 6, C1), TECHNICAL.md and FLOWCHART.md (section 2 redrawn
 
 Not done yet: re-running the existing runs with this. The cheapest option re-checks only what changes: all failing-run "not followed" cells (the importance points: APEX 53, Harvey 19 + 31) get the Opus re-check, and the cells whose observation sits at an agent call go through F3 again. That's about 60–160 Opus jobs per run set (Harvey runs 1–5 about 60, runs 6–10 about 90, APEX about 160: re-check F2 + F3 + the too-narrow check per importance point), plus Luna F3 re-runs for 40–110 cells pinned at agent calls. Should I do that for the three runs?
 ````
+
+### Turn 99 — user (2026-11-19)
+
+````text
+okay, not don't do that instead. I want you to do this , one those 8 edge tasks. we have for each task good and bad trajeotires, almost 5 good and 5 bad in most (except 1 or 2) , so yes start the process on these 10 trajecotries. the usual take 2 good (pick astra ones , anyways good ones are mostly astra only), propose invariants and then do the usual loop of refinement that we have. the other good and bad trajectories are the ones present pther than these 2 good. 
+Any doubt ? let me know
+````
+
+### Turn 100 — Claude (2026-11-19)
+
+````text
+No blocking doubts, so it's running: started 23:02 IST in tmux `im-astra-edge`, with the latest code (a2aab71: `at_pinned` and the Opus re-check on failing runs).
+
+- **Trajectories, 10 per task:** GPT-6 Astra high runs 1–5 and GPT-5.6 Luna high's 5 runs on the latest harness. 42 of the 80 pass: Astra 24 of 25 per... all except 190 run 4, and Luna 3 (092 run 2, 093 run 1, 243 run 1).
+- **P1, P2:** Astra runs 1 and 2 (both pass on all 8 tasks). The other 8 runs per task are scored: Astra runs 3–5 (mostly passing) and the 5 Luna runs (mostly failing).
+- **Left out:** Luna's 3 older base runs (older harness), since you said 10 trajectories.
+- **Process:** the full loop: F1 proposes from P1/P2, passing runs first, re-checks, too-narrow checks, rewording.
+- **Concurrency:** 16 jobs at a time (the Astra APEX run 3 shares the gateway).
+
+All 8 F1 jobs are reading their runs now. These trajectories are big (0.35–1.35M characters per run), so F1 will take a while. I expect the whole run to take about 3 hours (around 02:00 IST). Credits are at 157K, and this should add roughly 10–20K.
+````
