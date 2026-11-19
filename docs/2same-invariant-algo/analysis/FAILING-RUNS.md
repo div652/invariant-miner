@@ -258,6 +258,48 @@ its figure from the slide; I did not check whether the other passing runs saw an
 figure the task's wording points to (the business case's stated steady-state benefit) rather than a more precise figure
 from the body", which is fine-grained and partly task-specific.
 
+## APEX: the "mark all todos completed" invariants (user question, 2026-11-19)
+
+Four tasks have an active invariant of this form with importance above 0 (apex-third-flip14-report.md): world226-td-02
+i21 (*"All planned steps are done and verified" -> "Marks all todo items completed"*, I 1/6), anti-SLAPP i6 (I 5/8),
+128-jr-1 i9 (I 3/7), world131-dv-03 i14 (I 1/4). Question: can marking todos complete separate passing from failing runs?
+
+**The rubric cannot see todos.** Every criterion is a statement about the answer (anti-SLAPP C1: *"States that Chapter
+27's motion-to-dismiss procedure applies only to a 'legal action.'"*; 128-jr-1 C1-C6: the five scores and the
+recommendation). The judge gets the final answer and the world's files; the todo list lives only in the DSH session
+(tool-todo is a session projection). DSH does not react to todo states either: no reminder, no finish gate; the tool
+returns *"Updated todo list: N pending, N in progress, N completed."* and nothing else.
+
+**What the 10 importance points are.** Last `todo_write` of each failing run that "broke" the invariant:
+
+| Task, run | Last todo_write | Verdict right? |
+|---|---|---|
+| world226-td-02 run7 | s29 (of 30): all 4 `completed` | **No**: same call as passing run 6 (s29, all completed), judged followed there |
+| anti-SLAPP run8 | s8 (of 9): all 3 `completed` | **No** |
+| anti-SLAPP run9 | s7: all 3 `completed` | **No** |
+| 128-jr-1 run10 | s6 (of 7): all 3 `completed` | **No** |
+| world131-dv-03 run1 | s15 (of 16): all 3 `completed` | **No**: run 3 made the same call (s15), judged followed |
+| anti-SLAPP run4, run5 | none: no todo list at all (4-step runs) | Vacuous: there was nothing to mark |
+| 128-jr-1 run1, run3 | none: no todo list at all | Vacuous |
+| anti-SLAPP run10 | s8: `completed, completed, in_progress` | Yes, the one real case |
+
+Why the check errs: the observation (*"all steps are done"*) has no evidence apart from the action, so F2 pins it at
+the `todo_write` call itself (s29.c1) or at its output (s33.o1). F3 must then say whether the action comes *after* that
+location; for the call itself Luna answered "followed" in some runs and "not followed" in others, for its output
+"only before". The too-narrow check (Opus) said no each time and did not catch it.
+
+**Correlation, not cause.** Runs that marked everything complete fail just as often: anti-SLAPP runs 1, 6, 7, 8 and 9 did,
+and failed; 128-jr-1 runs 5, 6, 8, 9 and 10 did, and failed. The failures are content: every failing anti-SLAPP run
+misses C1 (does not say the procedure applies *only* to a "legal action"), with or without todos; the failing 128-jr-1
+runs compute wrong scores. The only pattern left: the four runs that never made a todo list all failed (anti-SLAPP 4, 5
+are also the shortest, 4 steps against 7-9), but most runs of these tasks fail anyway (8/10 and 7/10), and those four
+failed on the same criteria as the runs with a list. At most a weak sign of a hastier run; no causal effect on the grade.
+
+**For the method.** (1) An observation must have evidence before and apart from the action (F2 may not pin it at the
+action's own call or output). (2) An action on an object that does not exist (no todo list) should make the observation
+"not seen", not a violation. (3) Bookkeeping actions (todo updates, progress notes) could be excluded from F1's
+proposals, or proposed only with a separate observation.
+
 ## What this suggests for the method (not built; to discuss)
 
 1. **Grader noise.** Some failing labels are not failures (DPA runs 3, 8, 9; repo run 9). Importance 0 there is correct;
@@ -273,3 +315,6 @@ from the body", which is fine-grained and partly task-specific.
    re-proposal (DESIGN.md section 9) would produce; the grader's failed criteria would point it there.
 5. **The too-narrow check's consistency.** It said "no" for run 10 and "yes" for run 5 on the same outcome; worth a look
    before it decides removals.
+6. **Self-evidenced observations.** The todo invariants above earn importance only through check errors: their
+   observation is pinned at the action itself. F2 should need evidence before and apart from the action; an action on
+   something absent (no todo list) should count as not seen.

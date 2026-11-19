@@ -1466,3 +1466,30 @@ Done for all three reports in `docs/2same-invariant-algo/results/` (mixed-flip r
 
 The generator (`invariant_mining/report.py`) makes these by default, so future reports have them too; DESIGN.md section 7 notes it.
 ````
+
+### Turn 85 — user (2026-11-19)
+
+````text
+okay, so I was analysing 2same-invariant-algo/results/apex-third-flip14-report.md . One thing I swa was that there was this one recurring invariant : if in the reasoning the model inferred that all the todos achieved, it showed go and mark them completed . I understand that might be good thing to do , but I don't understadn how can that be a differee between a failing and a pssing run ? can you check if something specific happened in these runs that marked todo completed that it lead to successes? was the rubric just checking if it marked todos finishes? is marking odo list finsihed just corelated with success passes, or does it have a causal impact ?
+````
+
+### Turn 86 — Claude (2026-11-19)
+
+````text
+Marking todos complete has no causal impact. The importance points mostly come from errors in our own check.
+
+**The rubric can't see todos.** Every criterion is about the answer's content (anti-SLAPP: "states that Chapter 27's motion-to-dismiss procedure applies only to a 'legal action'"; 128-jr-1: the five scores and the recommendation). The todo list exists only inside the agent's session, and DSH doesn't react to it either: no reminder, no finish gate.
+
+**What the 10 importance points actually are** (4 invariants: td-02 i21, anti-SLAPP i6, 128-jr-1 i9, world131 i14):
+- 5 are check errors. Those runs did mark every todo complete as their last todo update. For example, td-02 run 7 made the same call at the same step as passing run 6, but was judged "not followed".
+- 4 come from runs that never made a todo list at all (anti-SLAPP 4 and 5, 128-jr-1 1 and 3), so there was nothing to mark.
+- 1 is real: anti-SLAPP run 10 left its last item in progress.
+
+**Why the check goes wrong:** "all steps are done" has no evidence apart from the todo update itself. F2 therefore pins the observation at the todo call, and F3 then has to decide whether the action came *after* that same call, which Luna answers inconsistently.
+
+**Correlation, not cause:** many failing runs marked everything complete (anti-SLAPP 1, 6, 7, 8, 9; 128-jr-1 5, 6, 8, 9, 10). Every failing anti-SLAPP run misses the same content criterion, and the failing 128-jr-1 runs compute wrong scores, whether or not they used todos. The only hint of a link is that the four runs with no todo list all failed (the anti-SLAPP ones were also the shortest runs). But most runs of these tasks fail anyway, and those four failed on the same criteria. At most it's a weak sign of a hastier run.
+
+**Fixes for the method** (not built): F2 must find evidence for the observation before and apart from the action; an action on something absent (no todo list) should count as "not seen"; and bookkeeping actions could be excluded from F1's proposals.
+
+Written up with the per-run table in `analysis/FAILING-RUNS.md` (new APEX section, plus point 6 of the suggestions).
+````
