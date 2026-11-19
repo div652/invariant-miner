@@ -1648,7 +1648,7 @@ User: "whats the status of the edge invariant run" (twice), "can i see the invar
 ### Turn 109 — Claude (2026-11-20), the run finished
 
 ````text
-Finished at 01:42 IST (4,471 jobs, 2 h 10 min, ~21K credits). Report: `results/astra-edge-report.md` (same format: S and I as fractions, the active invariants with importance above 0 first in each task).
+Finished at 01:12 IST (4,471 jobs, 2 h 10 min, ~21K credits). Report: `results/astra-edge-report.md` (same format: S and I as fractions, the active invariants with importance above 0 first in each task).
 
 - 215 proposed + 42 reworded; at the end 198 active, 17 removed, 42 retired by rewording.
 - 83 importance points, on 48 active invariants.
