@@ -1537,3 +1537,22 @@ After that, re-run only the affected cells: about 100 F3 checks plus the new re-
 
 The report's analysis section and FAILING-RUNS.md now state this cause.
 ````
+
+### Turn 91 — user (2026-11-19)
+
+````text
+wait but td-02 says : i21    All planned steps are done and verified [reasoning] . so didnt it infer that all steps are done from the rsaoing trace ? instead of tool calls.
+````
+
+### Turn 92 — Claude (2026-11-19)
+
+````text
+Not in run 7: its reasoning never says it. The `[reasoning]` tag is F1's label ("the agent's own conclusion"), but even in the passing runs F1 didn't point at a reasoning sentence.
+
+- **F1's own evidence (P1, P2) is a tool output:** the last verification read before the todo update. Run 3 s23.o2 and run 5 s37.o4 both re-read the store-openings row (Q54). Only run 5's reasoning says it outright, at s38.r: "I think everything is looking good overall! … Finally, I need to update my to-do list".
+- **Run 7's reasoning before the todo call never concludes "all done":** s27.r "Checking spreadsheet values", s28.r "Verifying table formats", s29.r "Validating results and scenarios". These are ~400-character summaries of reasoning we can't read (the full reasoning is encrypted), so such conclusions are often invisible.
+- **F2 doesn't see source labels** (agreed design rule 4), so it took the first explicit statement of "done and verified": the todo call itself ("Verify the workbook and sensitivity table values", "status": "completed"). That was its quoted evidence.
+- **Run 7 did make the same verification read as P1** (s27.o3, re-reading Q54:AN54). Had F2 pinned there, as F1 did in the passing runs, F3 would have found the todo call after it, and the verdict would have been "followed".
+
+So the earlier diagnosis holds, with one more cause: a fact that is the agent's unstated conclusion has no fixed place in the trajectory, so its pin drifts between "the last verification output" and "the todo call". Two possible extra fixes, both changing agreed rules: give F2 the source label, or ask F1 to word such observations by what can be seen (e.g. "a final read-back of the edited values"). Added to the td-02 note in the report and to FAILING-RUNS.md.
+````

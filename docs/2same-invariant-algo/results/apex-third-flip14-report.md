@@ -829,6 +829,16 @@ Active after every removal and rewording; most important first. Broken in = the 
 30) marks all 4 items `completed`, the same call at the same step as passing run 6, which was judged "followed". The
 observation was pinned at that call itself (s29.c1). See the analysis after the summary.
 
+*Why the pin landed on the todo call although the fact is tagged [reasoning]:* the tag is F1's label (the agent's own
+conclusion), but F1's own evidence in the passing runs is a tool output, the last verification read before the todo
+update (P1 run 3: s23.o2, re-read of the store-openings row Q54; P2 run 5: s37.o4, the same read). Only run 5's
+reasoning says it outright (s38.r: *"I think everything is looking good overall! … Finally, I need to update my to-do
+list"*). Run 7's reasoning summaries before the todo call never conclude "all done" (s27.r *"Checking spreadsheet
+values"*, s28.r *"Verifying table formats"*, s29.r *"Validating results and scenarios"*; they are ~400-character
+summaries of hidden reasoning). F2 sees no source labels (DESIGN.md rule 4), so it took the first explicit statement,
+the todo call's *"Verify the workbook and sensitivity table values", "status":"completed"*. Run 7 did make the same
+verification read as P1 (s27.o3, Q54:AN54); pinned there, F3 would have found the todo call after it.
+
 ### Proposed by F1 (22)
 
 | id | observation | action | final status | S | I | run1 (fail) | run2 (fail) | run4 (fail) | run6 (pass) | run7 (fail) | run8 (fail) | run9 (fail) | run10 (pass) |

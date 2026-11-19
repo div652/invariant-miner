@@ -296,6 +296,14 @@ progress, 4 completed."* Three things combine:
 3. The Opus re-check runs only on passing runs' "not followed" (td-02 run 10: Luna "not followed" at s28.c1, Opus
    "followed"). A failing run's verdict is final, so the same error survives only there, as an importance point.
 
+Why F2 pinned the call although the fact is tagged `[reasoning]`: the tag is F1's label, but F1's own evidence in P1/P2
+is the last verification read before the todo update (run 3 s23.o2, run 5 s37.o4: re-reads of row Q54); only run 5's
+reasoning says it outright (s38.r *"I think everything is looking good overall! … Finally, I need to update my to-do
+list"*). Run 7's reasoning summaries never conclude "all done" (s27.r-s29.r: checking, verifying, validating values;
+summaries are ~400 characters of hidden reasoning), and F2 does not see source labels (DESIGN.md rule 4), so it took
+the first explicit statement: the todo call. Run 7 made the same verification read as P1 (s27.o3); pinned there, F3
+would have found the todo call after it.
+
 How far it reaches: of the active invariants' importance points, those whose observation is pinned at an agent call are
 APEX 8 of 53 (7 on todo calls: these 5 and world224-os-task04 i15 runs 1 and 8; 1 a real partial action, world227 i9 run
 2: the edit left early-year revenue hardcoded), Harvey runs 1-5 3 of 19 and runs 6-10 3 of 31 (i7, i17: Luna judged the
