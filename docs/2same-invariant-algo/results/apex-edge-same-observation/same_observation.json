@@ -1,0 +1,1278 @@
+{
+ "run": "runs/xc-apex-edge-20261120T124256Z",
+ "invariants": 21,
+ "pairs": 210,
+ "exact_fact": [],
+ "same_fact_set": [],
+ "lexical_ge_0.4": [
+  [
+   0.69,
+   "T7.i5",
+   "T7.i6",
+   "The scoring framework spreadsheet holds unrelated criteria and does not define the requested scoring methodology",
+   "The scoring framework spreadsheet does not define the requested scoring methodology"
+  ]
+ ],
+ "judge": [
+  [
+   "T1.i20",
+   "T2.i9",
+   "different",
+   "The observations contain no shared or equivalent facts."
+  ],
+  [
+   "T1.i20",
+   "T3.i10",
+   "different",
+   "The observations concern unrelated facts about calculation methodology versus answer formats and selection limits."
+  ],
+  [
+   "T1.i20",
+   "T3.i11",
+   "different",
+   "The observations state different calculation requirements and share no equivalent fact."
+  ],
+  [
+   "T1.i20",
+   "T4.i10",
+   "different",
+   "The observations contain no equivalent facts."
+  ],
+  [
+   "T1.i20",
+   "T5.i20",
+   "different",
+   "The observations contain no shared or equivalent facts."
+  ],
+  [
+   "T1.i20",
+   "T5.ri22",
+   "different",
+   "The observations contain no equivalent facts; they describe separate calculation inputs and output requirements."
+  ],
+  [
+   "T1.i20",
+   "T6.i8",
+   "different",
+   "The observations contain no equivalent facts."
+  ],
+  [
+   "T1.i20",
+   "T7.i5",
+   "different",
+   "The observations contain no equivalent facts and address unrelated issues."
+  ],
+  [
+   "T1.i20",
+   "T7.i6",
+   "different",
+   "The observations contain no equivalent facts."
+  ],
+  [
+   "T1.i20",
+   "T7.i20",
+   "different",
+   "The two observations contain no equivalent facts."
+  ],
+  [
+   "T1.i20",
+   "T9.i5",
+   "different",
+   "The two observations contain no equivalent facts."
+  ],
+  [
+   "T1.i20",
+   "T9.i9",
+   "different",
+   "Observation B shares no specific fact with the calculation and environment conditions listed in Observation A."
+  ],
+  [
+   "T1.i20",
+   "T10.i7",
+   "different",
+   "The observations describe unrelated facts: regional base-year and channel-share calculations versus a projection formula and stepped-up growth and margin assumptions."
+  ],
+  [
+   "T1.i20",
+   "T10.i12",
+   "different",
+   "The observations contain no equivalent facts and describe unrelated requirements."
+  ],
+  [
+   "T1.i20",
+   "T10.ri9",
+   "different",
+   "The observations contain no equivalent facts; A concerns base-year calculations and tool use, while B concerns placing a table in a sensitivity sheet."
+  ],
+  [
+   "T1.i20",
+   "T10.ri16",
+   "different",
+   "The observations contain no equivalent facts: A concerns regional calculations and exact-value instructions, while B concerns writing and verifying a sensitivity table."
+  ],
+  [
+   "T1.i20",
+   "T10.ri11",
+   "different",
+   "The observations concern unrelated facts: calculation methodology and instructions versus spreadsheet layout and computed scenario values."
+  ],
+  [
+   "T1.i20",
+   "T11.i8",
+   "different",
+   "The observations contain no equivalent facts and describe unrelated modeling conditions."
+  ],
+  [
+   "T1.i20",
+   "T13.i10",
+   "different",
+   "The observations contain no equivalent facts and describe unrelated situations."
+  ],
+  [
+   "T1.i20",
+   "T13.ri9.2",
+   "different",
+   "The observations contain no equivalent facts and concern unrelated calculations versus procedural timelines."
+  ],
+  [
+   "T2.i9",
+   "T3.i10",
+   "different",
+   "The observations describe unrelated dataset header placement versus target-answer formatting and selection limits."
+  ],
+  [
+   "T2.i9",
+   "T3.i11",
+   "different",
+   "The observations describe unrelated conditions: dataset header placement versus calculating percentages from total responses."
+  ],
+  [
+   "T2.i9",
+   "T4.i10",
+   "different",
+   "The observations describe unrelated dataset header placement and inspection of outage and frequency records."
+  ],
+  [
+   "T2.i9",
+   "T5.i20",
+   "different",
+   "The observations describe unrelated dataset header placement and calculation outputs."
+  ],
+  [
+   "T2.i9",
+   "T5.ri22",
+   "different",
+   "The observations describe unrelated conditions with no shared facts."
+  ],
+  [
+   "T2.i9",
+   "T6.i8",
+   "different",
+   "The observations describe unrelated dataset structures and contents with no shared fact."
+  ],
+  [
+   "T2.i9",
+   "T7.i5",
+   "different",
+   "The observations describe unrelated spreadsheet conditions with no shared fact."
+  ],
+  [
+   "T2.i9",
+   "T7.i6",
+   "different",
+   "The observations describe unrelated spreadsheet conditions with no shared fact."
+  ],
+  [
+   "T2.i9",
+   "T7.i20",
+   "different",
+   "The observations describe unrelated dataset header placement and score interpretation."
+  ],
+  [
+   "T2.i9",
+   "T9.i5",
+   "different",
+   "The observations describe unrelated dataset header placement and reference model version details."
+  ],
+  [
+   "T2.i9",
+   "T9.i9",
+   "different",
+   "The observations describe unrelated conditions with no shared fact."
+  ],
+  [
+   "T2.i9",
+   "T10.i7",
+   "different",
+   "The observations describe unrelated conditions with no shared facts."
+  ],
+  [
+   "T2.i9",
+   "T10.i12",
+   "different",
+   "The observations describe unrelated dataset header placement versus workbook structure and cached formulas."
+  ],
+  [
+   "T2.i9",
+   "T10.ri9",
+   "different",
+   "The observations describe unrelated conditions: dataset header placement versus the required worksheet location."
+  ],
+  [
+   "T2.i9",
+   "T10.ri16",
+   "different",
+   "The observations describe unrelated dataset header placement and writing verified values to a sensitivity sheet range."
+  ],
+  [
+   "T2.i9",
+   "T10.ri11",
+   "different",
+   "The observations describe unrelated conditions with no shared facts."
+  ],
+  [
+   "T2.i9",
+   "T11.i8",
+   "different",
+   "The observations describe unrelated dataset header placement and debt-interest calculation mechanics."
+  ],
+  [
+   "T2.i9",
+   "T13.i10",
+   "different",
+   "The observations describe unrelated situations with no shared facts."
+  ],
+  [
+   "T2.i9",
+   "T13.ri9.2",
+   "different",
+   "The observations describe unrelated conditions: dataset header placement versus procedural deadlines and milestone dates."
+  ],
+  [
+   "T3.i10",
+   "T3.i11",
+   "different",
+   "The observations describe different output formats and task requirements with no shared fact."
+  ],
+  [
+   "T3.i10",
+   "T4.i10",
+   "different",
+   "The observations contain no shared facts."
+  ],
+  [
+   "T3.i10",
+   "T5.i20",
+   "different",
+   "The observations describe unrelated outputs: target-question response formats and selection limits versus financial calculation results."
+  ],
+  [
+   "T3.i10",
+   "T5.ri22",
+   "different",
+   "The observations contain no equivalent facts."
+  ],
+  [
+   "T3.i10",
+   "T6.i8",
+   "different",
+   "The observations describe unrelated facts: answer formatting and selection limits versus tabular pricing data by family and propulsion type."
+  ],
+  [
+   "T3.i10",
+   "T7.i5",
+   "different",
+   "The observations contain no equivalent facts and describe unrelated situations."
+  ],
+  [
+   "T3.i10",
+   "T7.i6",
+   "different",
+   "The observations contain no shared facts."
+  ],
+  [
+   "T3.i10",
+   "T7.i20",
+   "different",
+   "The observations concern unrelated facts about answer formatting versus score interpretation."
+  ],
+  [
+   "T3.i10",
+   "T9.i5",
+   "different",
+   "The observations contain no shared facts."
+  ],
+  [
+   "T3.i10",
+   "T9.i9",
+   "different",
+   "The observations contain no equivalent facts."
+  ],
+  [
+   "T3.i10",
+   "T10.i7",
+   "different",
+   "The observations concern unrelated facts about answer formatting and projection-sheet calculations."
+  ],
+  [
+   "T3.i10",
+   "T10.i12",
+   "different",
+   "The observations concern unrelated situations: answer format and selection limits versus editing a complex model workbook."
+  ],
+  [
+   "T3.i10",
+   "T10.ri9",
+   "different",
+   "The observations concern unrelated requirements: target-question answer format and selection limits versus the table's destination sheet."
+  ],
+  [
+   "T3.i10",
+   "T10.ri16",
+   "different",
+   "The observations describe unrelated facts: answer formatting and selection limits versus a verified sensitivity-table range and scenario values."
+  ],
+  [
+   "T3.i10",
+   "T10.ri11",
+   "different",
+   "The observations contain no equivalent facts."
+  ],
+  [
+   "T3.i10",
+   "T11.i8",
+   "different",
+   "The observations describe unrelated facts about answer formatting and debt-interest model circularity."
+  ],
+  [
+   "T3.i10",
+   "T13.i10",
+   "different",
+   "The observations concern unrelated situations and share no facts."
+  ],
+  [
+   "T3.i10",
+   "T13.ri9.2",
+   "different",
+   "The observations concern unrelated facts about answer formats and selection limits versus procedural deadlines and milestone dates."
+  ],
+  [
+   "T3.i11",
+   "T4.i10",
+   "different",
+   "The observations describe unrelated situations: one concerns calculating response percentages, while the other concerns inspecting outage records and frequency sheets."
+  ],
+  [
+   "T3.i11",
+   "T5.i20",
+   "different",
+   "The observations describe unrelated facts: one concerns calculating response percentages, while the other concerns financial metrics from a script."
+  ],
+  [
+   "T3.i11",
+   "T5.ri22",
+   "different",
+   "The observations contain no shared fact or equivalent condition."
+  ],
+  [
+   "T3.i11",
+   "T6.i8",
+   "different",
+   "The observations describe unrelated task requirements and data-tab contents with no shared fact."
+  ],
+  [
+   "T3.i11",
+   "T7.i5",
+   "different",
+   "The observations describe unrelated task and spreadsheet conditions with no shared fact."
+  ],
+  [
+   "T3.i11",
+   "T7.i6",
+   "different",
+   "The observations describe unrelated issues: percentage calculation requirements versus an undefined scoring methodology."
+  ],
+  [
+   "T3.i11",
+   "T7.i20",
+   "different",
+   "The observations concern unrelated facts: one defines how to report response percentages, while the other interprets scores as cost burdens."
+  ],
+  [
+   "T3.i11",
+   "T9.i5",
+   "different",
+   "The observations describe unrelated facts with no overlap."
+  ],
+  [
+   "T3.i11",
+   "T9.i9",
+   "different",
+   "The observations describe unrelated situations with no shared fact."
+  ],
+  [
+   "T3.i11",
+   "T10.i7",
+   "different",
+   "The observations contain no equivalent facts or shared situation."
+  ],
+  [
+   "T3.i11",
+   "T10.i12",
+   "different",
+   "The observations describe unrelated task requirements with no shared fact."
+  ],
+  [
+   "T3.i11",
+   "T10.ri9",
+   "different",
+   "The observations concern unrelated requirements: calculating response percentages versus placing a table in a sensitivity sheet."
+  ],
+  [
+   "T3.i11",
+   "T10.ri16",
+   "different",
+   "The observations describe unrelated situations with no shared facts."
+  ],
+  [
+   "T3.i11",
+   "T10.ri11",
+   "different",
+   "The observations contain no equivalent facts: A concerns calculating response percentages, while B concerns sheet layout and computed scenario values."
+  ],
+  [
+   "T3.i11",
+   "T11.i8",
+   "different",
+   "The observations describe unrelated facts about response percentages versus debt-interest calculation circularity."
+  ],
+  [
+   "T3.i11",
+   "T13.i10",
+   "different",
+   "The observations describe unrelated situations with no shared facts."
+  ],
+  [
+   "T3.i11",
+   "T13.ri9.2",
+   "different",
+   "The observations concern unrelated facts: response percentages versus procedural deadlines and milestone dates."
+  ],
+  [
+   "T4.i10",
+   "T5.i20",
+   "different",
+   "The observations describe separate activities with no shared facts."
+  ],
+  [
+   "T4.i10",
+   "T5.ri22",
+   "different",
+   "The observations contain no equivalent facts."
+  ],
+  [
+   "T4.i10",
+   "T6.i8",
+   "different",
+   "The observations describe unrelated information: inspected outage and frequency records versus a per-expert pricing input tab."
+  ],
+  [
+   "T4.i10",
+   "T7.i5",
+   "different",
+   "The observations describe unrelated findings with no shared fact."
+  ],
+  [
+   "T4.i10",
+   "T7.i6",
+   "different",
+   "The observations describe unrelated findings with no shared fact."
+  ],
+  [
+   "T4.i10",
+   "T7.i20",
+   "different",
+   "The observations concern inspecting outage records and frequency sheets versus interpreting scores as cost burdens, with no shared fact."
+  ],
+  [
+   "T4.i10",
+   "T9.i5",
+   "different",
+   "The observations describe entirely different facts with no overlap."
+  ],
+  [
+   "T4.i10",
+   "T9.i9",
+   "different",
+   "The observations describe distinct situations with no shared facts."
+  ],
+  [
+   "T4.i10",
+   "T10.i7",
+   "different",
+   "The observations concern unrelated facts: inspecting outage records versus calculating a projection line item and applying growth and margin step-ups."
+  ],
+  [
+   "T4.i10",
+   "T10.i12",
+   "different",
+   "The observations describe unrelated situations with no shared facts."
+  ],
+  [
+   "T4.i10",
+   "T10.ri9",
+   "different",
+   "The observations describe unrelated conditions: inspecting outage records versus placing a table in an existing sensitivity sheet."
+  ],
+  [
+   "T4.i10",
+   "T10.ri16",
+   "different",
+   "The observations describe entirely different facts, with no shared situation."
+  ],
+  [
+   "T4.i10",
+   "T10.ri11",
+   "different",
+   "The observations describe entirely different facts with no overlap."
+  ],
+  [
+   "T4.i10",
+   "T11.i8",
+   "different",
+   "The observations describe unrelated facts: inspecting outage records and frequency sheets versus a circular debt-interest calculation with a cash sweep."
+  ],
+  [
+   "T4.i10",
+   "T13.i10",
+   "different",
+   "The observations describe unrelated facts: inspected outage records versus a noncompliant deliverable later corrected."
+  ],
+  [
+   "T4.i10",
+   "T13.ri9.2",
+   "different",
+   "The observations describe unrelated facts: inspecting outage records versus procedural deadlines and milestone dates."
+  ],
+  [
+   "T5.i20",
+   "T5.ri22",
+   "one_contains_other",
+   "Observation B includes the same availability of total savings, investment, and payback as A, plus the requirement to print the answer."
+  ],
+  [
+   "T5.i20",
+   "T6.i8",
+   "different",
+   "The observations describe different outputs: one concerns aggregate financial calculations, while the other concerns structured input rows and unit prices."
+  ],
+  [
+   "T5.i20",
+   "T7.i5",
+   "different",
+   "The observations describe unrelated facts with no shared situation."
+  ],
+  [
+   "T5.i20",
+   "T7.i6",
+   "different",
+   "The observations describe unrelated facts with no shared situation or condition."
+  ],
+  [
+   "T5.i20",
+   "T7.i20",
+   "different",
+   "The observations describe unrelated facts: one concerns financial outputs from a calculation script, while the other concerns interpreting scores as cost burdens."
+  ],
+  [
+   "T5.i20",
+   "T9.i5",
+   "different",
+   "The observations describe unrelated facts: one concerns calculated financial metrics, while the other concerns an earlier reference model with an assumptions tab."
+  ],
+  [
+   "T5.i20",
+   "T9.i9",
+   "different",
+   "The observations describe different situations: one concerns calculated financial outputs, while the other concerns finalized inputs and assumptions."
+  ],
+  [
+   "T5.i20",
+   "T10.i7",
+   "different",
+   "The observations describe unrelated facts: one reports a script's outputs, while the other specifies a projection formula and input assumptions."
+  ],
+  [
+   "T5.i20",
+   "T10.i12",
+   "different",
+   "The observations describe unrelated facts with no shared situation."
+  ],
+  [
+   "T5.i20",
+   "T10.ri9",
+   "different",
+   "The observations concern unrelated facts: one reports calculated financial outputs, while the other specifies where a table must be placed."
+  ],
+  [
+   "T5.i20",
+   "T10.ri16",
+   "different",
+   "The observations describe separate outcomes with no shared fact."
+  ],
+  [
+   "T5.i20",
+   "T10.ri11",
+   "different",
+   "The observations describe different facts: one reports a primary script's financial outputs, while the other concerns a sensitivity sheet and computed scenario values."
+  ],
+  [
+   "T5.i20",
+   "T11.i8",
+   "different",
+   "The observations describe unrelated facts: one concerns calculated financial outputs, while the other concerns circular debt-interest modeling."
+  ],
+  [
+   "T5.i20",
+   "T13.i10",
+   "different",
+   "The observations describe unrelated facts: one concerns financial calculation results, while the other concerns a noncompliant installation and later correction."
+  ],
+  [
+   "T5.i20",
+   "T13.ri9.2",
+   "different",
+   "The observations describe unrelated facts: financial calculation outputs versus procedural deadlines and milestone dates."
+  ],
+  [
+   "T5.ri22",
+   "T6.i8",
+   "different",
+   "The observations contain no equivalent facts."
+  ],
+  [
+   "T5.ri22",
+   "T7.i5",
+   "different",
+   "The observations contain no equivalent facts."
+  ],
+  [
+   "T5.ri22",
+   "T7.i6",
+   "different",
+   "The observations contain no equivalent facts."
+  ],
+  [
+   "T5.ri22",
+   "T7.i20",
+   "different",
+   "The observations contain no equivalent facts."
+  ],
+  [
+   "T5.ri22",
+   "T9.i5",
+   "different",
+   "The observations contain no shared facts."
+  ],
+  [
+   "T5.ri22",
+   "T9.i9",
+   "different",
+   "The observations describe different conditions, with no shared fact."
+  ],
+  [
+   "T5.ri22",
+   "T10.i7",
+   "different",
+   "The observations contain no shared facts or equivalent conditions."
+  ],
+  [
+   "T5.ri22",
+   "T10.i12",
+   "different",
+   "The observations contain no equivalent facts."
+  ],
+  [
+   "T5.ri22",
+   "T10.ri9",
+   "different",
+   "The observations contain no equivalent facts."
+  ],
+  [
+   "T5.ri22",
+   "T10.ri16",
+   "different",
+   "The observations contain no equivalent facts; they describe different verified outputs and task conditions."
+  ],
+  [
+   "T5.ri22",
+   "T10.ri11",
+   "different",
+   "The observations contain no equivalent facts."
+  ],
+  [
+   "T5.ri22",
+   "T11.i8",
+   "different",
+   "The observations contain no equivalent facts."
+  ],
+  [
+   "T5.ri22",
+   "T13.i10",
+   "different",
+   "The observations contain no shared facts or equivalent conditions."
+  ],
+  [
+   "T5.ri22",
+   "T13.ri9.2",
+   "different",
+   "The observations concern unrelated facts about financial figures and message output versus procedural deadlines and milestone dates."
+  ],
+  [
+   "T6.i8",
+   "T7.i5",
+   "different",
+   "The observations describe unrelated spreadsheet content and share no common fact."
+  ],
+  [
+   "T6.i8",
+   "T7.i6",
+   "different",
+   "The observations describe unrelated facts: one concerns input-tab row organization and pricing, while the other concerns a missing scoring methodology."
+  ],
+  [
+   "T6.i8",
+   "T7.i20",
+   "different",
+   "The observations concern unrelated facts: input-tab row organization and score interpretation."
+  ],
+  [
+   "T6.i8",
+   "T9.i5",
+   "different",
+   "The observations describe unrelated facts: one concerns input-tab rows and unit prices, while the other concerns an earlier reference model with an assumptions tab."
+  ],
+  [
+   "T6.i8",
+   "T9.i9",
+   "different",
+   "The observations describe unrelated situations: one concerns input-tab row organization and pricing, while the other concerns settled model inputs and assumptions."
+  ],
+  [
+   "T6.i8",
+   "T10.i7",
+   "different",
+   "The observations concern unrelated facts: input-tab unit prices versus projection formulas and growth/margin assumptions."
+  ],
+  [
+   "T6.i8",
+   "T10.i12",
+   "different",
+   "The observations describe unrelated facts: one concerns an input tab's row structure and pricing, while the other concerns editing an existing workbook with multiple sheets and cached values."
+  ],
+  [
+   "T6.i8",
+   "T10.ri9",
+   "different",
+   "The observations describe unrelated requirements: one concerns table content and organization, while the other concerns the sheet where the table belongs."
+  ],
+  [
+   "T6.i8",
+   "T10.ri16",
+   "different",
+   "The observations describe unrelated spreadsheet content and verification details with no shared fact."
+  ],
+  [
+   "T6.i8",
+   "T10.ri11",
+   "different",
+   "The observations describe unrelated spreadsheet conditions with no shared facts."
+  ],
+  [
+   "T6.i8",
+   "T11.i8",
+   "different",
+   "The observations describe unrelated spreadsheet/model features."
+  ],
+  [
+   "T6.i8",
+   "T13.i10",
+   "different",
+   "The observations concern unrelated situations: one describes an input tab with unit prices, while the other describes a noncompliant deliverable and later correction."
+  ],
+  [
+   "T6.i8",
+   "T13.ri9.2",
+   "different",
+   "The observations concern unrelated information: expert input pricing rows versus procedural deadlines and milestone dates."
+  ],
+  [
+   "T7.i5",
+   "T7.i6",
+   "one_contains_other",
+   "Observation A contains the fact in Observation B and adds that the spreadsheet holds unrelated criteria."
+  ],
+  [
+   "T7.i5",
+   "T7.i20",
+   "different",
+   "The observations state unrelated facts and share no equivalent information."
+  ],
+  [
+   "T7.i5",
+   "T9.i5",
+   "different",
+   "The observations state entirely different facts with no overlap."
+  ],
+  [
+   "T7.i5",
+   "T9.i9",
+   "different",
+   "The observations describe unrelated conditions with no shared fact."
+  ],
+  [
+   "T7.i5",
+   "T10.i7",
+   "different",
+   "The observations contain no equivalent facts and describe unrelated spreadsheet conditions."
+  ],
+  [
+   "T7.i5",
+   "T10.i12",
+   "different",
+   "The observations describe different issues: missing scoring methodology versus the complexity of editing an existing workbook."
+  ],
+  [
+   "T7.i5",
+   "T10.ri9",
+   "different",
+   "The observations describe unrelated conditions with no shared fact."
+  ],
+  [
+   "T7.i5",
+   "T10.ri16",
+   "different",
+   "The observations describe unrelated facts about a scoring framework and a sensitivity-sheet table."
+  ],
+  [
+   "T7.i5",
+   "T10.ri11",
+   "different",
+   "The observations describe unrelated spreadsheet conditions with no shared fact."
+  ],
+  [
+   "T7.i5",
+   "T11.i8",
+   "different",
+   "The observations describe unrelated issues: missing scoring methodology versus circular debt-interest modeling."
+  ],
+  [
+   "T7.i5",
+   "T13.i10",
+   "different",
+   "The observations concern unrelated facts: a scoring framework spreadsheet versus a counterparty deliverable's compliance timeline."
+  ],
+  [
+   "T7.i5",
+   "T13.ri9.2",
+   "different",
+   "The observations describe unrelated facts about a scoring framework versus procedural deadlines and milestone dates."
+  ],
+  [
+   "T7.i6",
+   "T7.i20",
+   "different",
+   "The observations state unrelated facts: one concerns missing methodology documentation, while the other defines how scores reflect cost burden."
+  ],
+  [
+   "T7.i6",
+   "T9.i5",
+   "different",
+   "The observations state unrelated facts and share no equivalent condition."
+  ],
+  [
+   "T7.i6",
+   "T9.i9",
+   "different",
+   "The observations state unrelated conditions with no shared fact."
+  ],
+  [
+   "T7.i6",
+   "T10.i7",
+   "different",
+   "The observations concern unrelated facts: a missing scoring methodology versus projection formula and growth/margin assumptions."
+  ],
+  [
+   "T7.i6",
+   "T10.i12",
+   "different",
+   "The observations describe unrelated conditions with no shared fact."
+  ],
+  [
+   "T7.i6",
+   "T10.ri9",
+   "different",
+   "The observations concern unrelated issues: an undefined scoring methodology versus placement in a sensitivity sheet."
+  ],
+  [
+   "T7.i6",
+   "T10.ri16",
+   "different",
+   "The observations describe unrelated situations with no shared facts."
+  ],
+  [
+   "T7.i6",
+   "T10.ri11",
+   "different",
+   "The observations describe unrelated spreadsheet conditions with no shared facts."
+  ],
+  [
+   "T7.i6",
+   "T11.i8",
+   "different",
+   "The observations describe unrelated issues: a missing scoring methodology versus a circular debt-interest calculation."
+  ],
+  [
+   "T7.i6",
+   "T13.i10",
+   "different",
+   "The observations concern unrelated facts: a missing scoring methodology versus a noncompliant deliverable and its later correction."
+  ],
+  [
+   "T7.i6",
+   "T13.ri9.2",
+   "different",
+   "The observations contain no equivalent facts."
+  ],
+  [
+   "T7.i20",
+   "T9.i5",
+   "different",
+   "The observations describe unrelated facts: score interpretation versus the existence of an earlier reference model version."
+  ],
+  [
+   "T7.i20",
+   "T9.i9",
+   "different",
+   "The observations describe unrelated conditions: cost-score interpretation versus settled inputs and assumptions."
+  ],
+  [
+   "T7.i20",
+   "T10.i7",
+   "different",
+   "The observations describe unrelated facts: cost-score interpretation versus projection formulas and growth/margin assumptions."
+  ],
+  [
+   "T7.i20",
+   "T10.i12",
+   "different",
+   "The observations describe unrelated situations: score interpretation versus editing a complex existing workbook."
+  ],
+  [
+   "T7.i20",
+   "T10.ri9",
+   "different",
+   "The observations concern unrelated facts: score interpretation versus spreadsheet placement."
+  ],
+  [
+   "T7.i20",
+   "T10.ri16",
+   "different",
+   "The observations describe unrelated facts about score interpretation versus table placement and value verification."
+  ],
+  [
+   "T7.i20",
+   "T10.ri11",
+   "different",
+   "The observations describe unrelated facts: score interpretation versus spreadsheet layout and computed scenario values."
+  ],
+  [
+   "T7.i20",
+   "T11.i8",
+   "different",
+   "The observations concern unrelated facts about cost scoring versus circular debt-interest calculations."
+  ],
+  [
+   "T7.i20",
+   "T13.i10",
+   "different",
+   "The observations describe unrelated facts: cost-score interpretation versus a noncompliant deliverable and its later correction."
+  ],
+  [
+   "T7.i20",
+   "T13.ri9.2",
+   "different",
+   "The observations concern unrelated facts about cost scores versus procedural deadlines and milestone dates."
+  ],
+  [
+   "T9.i5",
+   "T9.i9",
+   "different",
+   "The observations describe different situations: one concerns an earlier model version with an assumptions tab, while the other concerns finalized inputs and assumptions."
+  ],
+  [
+   "T9.i5",
+   "T10.i7",
+   "different",
+   "The observations contain no shared facts."
+  ],
+  [
+   "T9.i5",
+   "T10.i12",
+   "different",
+   "The observations describe different workbook conditions and share no equivalent fact."
+  ],
+  [
+   "T9.i5",
+   "T10.ri9",
+   "different",
+   "The observations describe unrelated requirements: one concerns an earlier reference model with an assumptions tab, while the other concerns placing a table in an existing sensitivity sheet."
+  ],
+  [
+   "T9.i5",
+   "T10.ri16",
+   "different",
+   "The observations describe unrelated facts: one concerns an earlier reference model with an assumptions tab, while the other concerns a sensitivity table and verified scenario values."
+  ],
+  [
+   "T9.i5",
+   "T10.ri11",
+   "different",
+   "The observations describe unrelated conditions with no shared facts."
+  ],
+  [
+   "T9.i5",
+   "T11.i8",
+   "different",
+   "The observations describe different facts: one notes an earlier model with an assumptions tab, while the other describes circular debt-interest calculations."
+  ],
+  [
+   "T9.i5",
+   "T13.i10",
+   "different",
+   "The observations describe unrelated facts: one concerns an earlier reference model with an assumptions tab, while the other concerns a noncompliant deliverable and its later correction."
+  ],
+  [
+   "T9.i5",
+   "T13.ri9.2",
+   "different",
+   "The observations describe unrelated facts: one concerns an earlier reference model with an assumptions tab, while the other concerns procedural deadlines and milestone dates."
+  ],
+  [
+   "T9.i9",
+   "T10.i7",
+   "different",
+   "Observation A states only that inputs and assumptions are settled, while Observation B gives a specific projection formula and growth and margin assumptions."
+  ],
+  [
+   "T9.i9",
+   "T10.i12",
+   "different",
+   "The observations describe unrelated conditions with no shared fact."
+  ],
+  [
+   "T9.i9",
+   "T10.ri9",
+   "different",
+   "The observations concern unrelated facts: settled model assumptions versus placing a table in an existing sensitivity sheet."
+  ],
+  [
+   "T9.i9",
+   "T10.ri16",
+   "different",
+   "The observations describe unrelated conditions: settled modeling assumptions versus a written and verified sensitivity table."
+  ],
+  [
+   "T9.i9",
+   "T10.ri11",
+   "different",
+   "The observations contain no equivalent facts."
+  ],
+  [
+   "T9.i9",
+   "T11.i8",
+   "different",
+   "The observations describe unrelated conditions with no shared fact."
+  ],
+  [
+   "T9.i9",
+   "T13.i10",
+   "different",
+   "The observations describe unrelated situations with no shared fact."
+  ],
+  [
+   "T9.i9",
+   "T13.ri9.2",
+   "different",
+   "The observations contain no equivalent facts."
+  ],
+  [
+   "T10.i7",
+   "T10.i12",
+   "different",
+   "The observations contain no equivalent facts."
+  ],
+  [
+   "T10.i7",
+   "T10.ri9",
+   "different",
+   "The observations contain no equivalent facts."
+  ],
+  [
+   "T10.i7",
+   "T10.ri16",
+   "different",
+   "The observations describe unrelated facts: projection formulas and assumptions versus writing and verifying a sensitivity table."
+  ],
+  [
+   "T10.i7",
+   "T10.ri11",
+   "different",
+   "The observations describe unrelated facts about projection assumptions versus sensitivity-sheet layout and scenario calculations."
+  ],
+  [
+   "T10.i7",
+   "T11.i8",
+   "different",
+   "The observations describe different model mechanics, with no equivalent fact shared between them."
+  ],
+  [
+   "T10.i7",
+   "T13.i10",
+   "different",
+   "The observations concern unrelated situations: a financial projection formula and a noncompliant deliverable timeline."
+  ],
+  [
+   "T10.i7",
+   "T13.ri9.2",
+   "different",
+   "The observations describe unrelated financial projection assumptions versus procedural deadlines and milestone dates."
+  ],
+  [
+   "T10.i12",
+   "T10.ri9",
+   "different",
+   "They describe different requirements: one concerns an existing workbook's structure and cached values, while the other specifies the destination sheet."
+  ],
+  [
+   "T10.i12",
+   "T10.ri16",
+   "partial_overlap",
+   "Both concern edits to an existing workbook, but A specifies a multi-sheet cached-formula model while B specifies a sensitivity-sheet range and verified scenario values."
+  ],
+  [
+   "T10.i12",
+   "T10.ri11",
+   "different",
+   "The observations describe entirely different conditions with no shared fact."
+  ],
+  [
+   "T10.i12",
+   "T11.i8",
+   "different",
+   "The observations describe unrelated workbook context and debt-interest calculation behavior."
+  ],
+  [
+   "T10.i12",
+   "T13.i10",
+   "different",
+   "The observations describe unrelated situations with no shared facts."
+  ],
+  [
+   "T10.i12",
+   "T13.ri9.2",
+   "different",
+   "The observations describe unrelated situations with no shared facts."
+  ],
+  [
+   "T10.ri9",
+   "T10.ri16",
+   "one_contains_other",
+   "Observation B includes the requirement that the table be in the existing sensitivity sheet and adds its range and verification details."
+  ],
+  [
+   "T10.ri9",
+   "T10.ri11",
+   "different",
+   "Observation A specifies where the table must be placed, while Observation B describes available space and computed values without stating that placement requirement."
+  ],
+  [
+   "T10.ri9",
+   "T11.i8",
+   "different",
+   "The observations describe unrelated requirements, with no shared fact."
+  ],
+  [
+   "T10.ri9",
+   "T13.i10",
+   "different",
+   "The observations concern unrelated facts: placing a table in a sensitivity sheet versus a counterparty deliverable's compliance timeline."
+  ],
+  [
+   "T10.ri9",
+   "T13.ri9.2",
+   "different",
+   "The observations contain no equivalent facts."
+  ],
+  [
+   "T10.ri16",
+   "T10.ri11",
+   "partial_overlap",
+   "Both mention the four scenario values, but A also states they were verified and written to a range while B states the sheet has empty rows and the values were computed."
+  ],
+  [
+   "T10.ri16",
+   "T11.i8",
+   "different",
+   "The observations describe unrelated situations with no shared facts."
+  ],
+  [
+   "T10.ri16",
+   "T13.i10",
+   "different",
+   "The observations describe unrelated situations: one concerns verifying a sensitivity-sheet table, while the other concerns a noncompliant deliverable and its later correction."
+  ],
+  [
+   "T10.ri16",
+   "T13.ri9.2",
+   "different",
+   "The observations describe unrelated facts about a sensitivity table versus procedural deadlines and milestone dates."
+  ],
+  [
+   "T10.ri11",
+   "T11.i8",
+   "different",
+   "The observations describe unrelated spreadsheet conditions and share no facts."
+  ],
+  [
+   "T10.ri11",
+   "T13.i10",
+   "different",
+   "The observations describe unrelated situations: an empty area below a sensitivity sheet with computed scenario values versus a noncompliant deliverable and its later correction."
+  ],
+  [
+   "T10.ri11",
+   "T13.ri9.2",
+   "different",
+   "The observations describe unrelated spreadsheet layout and scenario values versus procedural deadlines and client milestone dates."
+  ],
+  [
+   "T11.i8",
+   "T13.i10",
+   "different",
+   "The observations concern unrelated situations: a circular debt-interest model versus a noncompliant deliverable corrected after installation."
+  ],
+  [
+   "T11.i8",
+   "T13.ri9.2",
+   "different",
+   "The observations concern unrelated facts: a circular debt-interest model versus procedural deadlines and milestone dates."
+  ],
+  [
+   "T13.i10",
+   "T13.ri9.2",
+   "different",
+   "The observations concern distinct facts, with no equivalent fact shared between them."
+  ]
+ ]
+}
