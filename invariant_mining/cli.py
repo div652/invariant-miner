@@ -214,7 +214,7 @@ def main(argv=None) -> None:
     p = sub.add_parser("cross-check", help="prepare an invariant cross-check of a finished mining run (crosscheck.py)")
     p.add_argument("source_run", type=Path)
     p.add_argument("--out", type=Path, required=True)
-    p.add_argument("--min-support", type=int, default=1)
+    p.add_argument("--min-importance", type=int, default=1, help="active invariants with importance >= this (>= 1)")
     p = sub.add_parser("cross-report", help="write cross_check.md / .json of a cross-check run (safe while it runs)")
     p.add_argument("run_dir", type=Path)
     p = sub.add_parser("invariants", help="write invariants.md: what F1 proposed per task (safe while it runs)")
@@ -260,7 +260,7 @@ def main(argv=None) -> None:
         guard(config_mod.load(a.config), a.max_used, a.interval, a.log, a.pause_file, a.kill_pattern)
     elif a.cmd == "cross-check":
         from . import crosscheck
-        crosscheck.prepare_cross_check(a.source_run, a.out, a.min_support)
+        crosscheck.prepare_cross_check(a.source_run, a.out, a.min_importance)
     elif a.cmd == "cross-report":
         from . import crosscheck
         rep = crosscheck.write(a.run_dir)

@@ -321,8 +321,10 @@ want see if they are violated ! violation check is same as before, first luna th
 remove them at the moment. Come up with a final list of what invariants violated on some other tasks. In fact make a
 routine out of this, call it invariant cross checking."
 
-- **Input:** a finished mining run. Its invariants that are active with support > 0 (S counts only the task's own
-  passing runs other than P1, P2).
+- **Input:** a finished mining run. Its invariants that are **active with importance > 0**, always (user, corrected
+  the same day: "in cross checking I want invariants that are active and have imporatnce > 0 ! [...] Even in future when
+  you do cross check it has to be importance>0 and active ones"; the first version took support > 0, which in the APEX
+  edge run selected 193 of 203 active invariants, and was stopped and deleted).
 - **Cells:** each such invariant x every passing trajectory of every other task of the run, including those tasks' own
   P1 and P2 (user's choice).
 - **Checks, as for a passing run in mining (section 4):** F2 (Luna), F3 (Luna); on "not followed" the Opus F2/F3

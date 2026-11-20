@@ -1,10 +1,11 @@
-"""Invariant cross-checking (user, 2026-11-20): a finished mining run's invariants that are active with support > 0,
-each checked on every passing trajectory of every OTHER task of that run, with the usual cell checks: Luna F2 (seen?),
+"""Invariant cross-checking (user, 2026-11-20): a finished mining run's invariants that are active with IMPORTANCE > 0
+(always: "in future when you do cross check it has to be importance>0 and active ones"; support plays no part), each
+checked on every passing trajectory of every OTHER task of that run, with the usual cell checks: Luna F2 (seen?),
 Luna F3 (followed?), on "not followed" the Opus F2/F3 re-check, then the Opus too-narrow check. Nothing is removed or
 reworded: a run is only observed. A cell whose final outcome is "not followed" (Opus agreed, purpose not achieved another
 way) is a VIOLATION: a passing run of another task saw the observation and did not take the action.
 
-    python -m invariant_mining cross-check SOURCE_RUN --out runs/xc-NAME [--min-support 1]   # prepare
+    python -m invariant_mining cross-check SOURCE_RUN --out runs/xc-NAME [--min-importance 1]   # prepare
     python -m invariant_mining run runs/xc-NAME                                              # the checks (resumable)
     python -m invariant_mining cross-report runs/xc-NAME                                     # cross_check.md / .json
 
@@ -25,7 +26,9 @@ from .store import Store
 SEEN = ("followed", "not_followed", "purpose_otherwise", "only_before", "at_pinned", "pinning_wrong")
 
 
-def prepare_cross_check(source: Path, out: Path, min_support: int = 1) -> dict:
+def prepare_cross_check(source: Path, out: Path, min_importance: int = 1) -> dict:
+    if min_importance < 1:
+        raise SystemExit("cross-checking takes the active invariants with importance > 0 (--min-importance >= 1)")
     source, out = Path(source).resolve(), Path(out)
     if (out / "state.sqlite").exists():
         raise SystemExit(f"{out} already has a run")
@@ -52,7 +55,7 @@ def prepare_cross_check(source: Path, out: Path, min_support: int = 1) -> dict:
         others = [x for x in tr if x not in (task["p1"], task["p2"])]
         n_pass, n_fail = sum(tr[x] == "pass" for x in others), sum(tr[x] == "fail" for x in others)
         for inv in task["invariants"]:
-            if inv["status"] != "active" or inv["support"] < min_support:
+            if inv["status"] != "active" or inv["importance"] < min_importance:
                 continue
             row = src.one("SELECT * FROM invariants WHERE id=?", inv["id"])
             s.x(f"INSERT INTO invariants VALUES ({','.join('?' * len(row.keys()))})", *[row[k] for k in row.keys()])
@@ -68,11 +71,11 @@ def prepare_cross_check(source: Path, out: Path, min_support: int = 1) -> dict:
                     n_cells += 1
             n_inv += 1
     s.set_meta("source_points", json.dumps(points))
-    s.set_meta("min_support", min_support)
+    s.set_meta("min_importance", min_importance)
     summary = {"invariants": n_inv, "cells": n_cells, "tasks": len(rep["tasks"]),
                "passing_trajectories": sum(len(v) for v in passing.values())}
     s.set_meta("prepared", json.dumps(summary))
-    print(f"cross-check prepared {out}: {n_inv} invariants (active, support >= {min_support}) x the passing runs of the other "
+    print(f"cross-check prepared {out}: {n_inv} invariants (active, importance >= {min_importance}) x the passing runs of the other "
           f"tasks = {n_cells} cells ({summary['passing_trajectories']} passing trajectories, {summary['tasks']} tasks)")
     return summary
 
@@ -113,7 +116,7 @@ def markdown(rep: dict) -> str:
     p = rep["prepared"]
     lines = ["# Invariant cross-check", "",
              f"Run: `{rep['run']}`; source mining run: `{rep['source_run']}`. The source run's invariants that are active "
-             f"with support > 0 ({p.get('invariants')}), each checked on every passing trajectory of every other task "
+             f"with importance > 0 ({p.get('invariants')}), each checked on every passing trajectory of every other task "
              f"({p.get('cells')} checks over {p.get('passing_trajectories')} passing trajectories of {p.get('tasks')} tasks): "
              "Luna F2 and F3, on 'not followed' the Opus re-check, then the Opus too-narrow check. Nothing was removed or "
              "reworded.", "",

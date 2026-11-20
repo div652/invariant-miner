@@ -261,7 +261,7 @@ python3 -m invariant_mining guard --max-used N                                  
 python3 -m invariant_mining run runs/NAME [--tasks T ...] [--concurrency 20]           # the pipeline; resumable
 python3 -m invariant_mining report runs/NAME                                            # report.md + report.json
 python3 -m invariant_mining report runs/NAME --notes DIR                               # + written analyses: DIR/_top.md, DIR/<task>.md
-python3 -m invariant_mining cross-check runs/NAME --out runs/xc-NAME [--min-support 1]  # invariant cross-check (DESIGN 9b)
+python3 -m invariant_mining cross-check runs/NAME --out runs/xc-NAME [--min-importance 1]  # invariant cross-check (DESIGN 9b): active, importance > 0
 python3 -m invariant_mining run runs/xc-NAME                                            # its checks; writes cross_check.md
 python3 -m invariant_mining cross-report runs/xc-NAME                                   # cross_check.md / .json (safe while it runs)
 python3 -m invariant_mining job runs/NAME --kind f2_seen --trajectories T=ID --inputs '{"facts": ["..."]}'  # one job by hand
