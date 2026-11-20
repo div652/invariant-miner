@@ -53,6 +53,7 @@ turns below.
 | Runs 6-10 of the 8 mixed:flip tasks (user's folder ~/harvey-mixed-flip8-runs6-10): score and refine the current invariants with the normal process (no new F1); done on a copy of the flip run (add-runs) | 41 |
 | APEX-Agents third:flip (14 train tasks, 10 runs each, ~/apex-third-flip14-trajectories): the full procedure, passing runs first | 60 |
 | Confirmed after the consistency check: validation verdicts reused as the triggering passing run's cell; chains written self-contained (link kept as information) | 27 |
+| Invariant cross-checking (`crosscheck.py`): active invariants with support > 0 checked on all passing runs of the other tasks (incl. their P1/P2), Luna then Opus re-check then the too-narrow check, nothing removed; first on APEX third:edge | 2026-11-20 (APEX edge) |
 | F3 outcome `at_pinned` (the action is the pinned item itself) and too-narrow outcome `at_pinned` (the pinned item itself achieves the purpose), both neutral; a failing run's "not followed" gets the same Opus F2/F3 re-check as a passing run's (it decides an importance point) | 97 |
 
 ## Log
@@ -1661,3 +1662,9 @@ Finished at 01:12 IST (4,471 jobs, 2 h 10 min, ~21K credits). Report: `results/a
 User: "now I want to pick tasks on which astra passes all three times on apex, and luna high never passes" -> 13 tasks (subset `third:edge`, main e819dab). "now for these 13 tasks , do 2 more runs using astra then you get 10 trajecotries , 5 from astra, 5 from luna , take 2 from astra and start the whole invariant process , on the other 8. is that clear ?"
 
 Done 16:15 IST: Astra runs 4 and 5 passed 13/13 and 11/13 (task-o88f1452 and world225-rl-task01 failed in run 5). Mining `runs/im-apex-edge-20261120T082216Z` (4,527 jobs, 1 h 51 min): 211 proposed + 49 reworded; 203 active, 8 removed; 91 importance points on 28 active invariants (21 with I > 1); at_pinned 69, Opus re-check disagreements 47. Top importance: invariants where Astra searches the mailbox or chat for what the files do not say (o88f1452 i5 6/6, sp-task-07 i11 5/5, world132-da-task05 i5/i6 5/5). Report: `results/apex-edge-report.md`; proposals `results/apex-edge-proposed.md`.
+
+### 2026-11-20 — invariant cross-checking
+
+User: "I want to now do this thing : I want to work with only the invariants that were finally active and hap support >0 for such an invariant from task i, I want to evaluate it on all passing trajectories of all tasks other than i. I want see if they are violated ! violation check is same as before, first luna then confirmation with opus5.5, just odn't remove them at the moment. Come up with a final list of what invariants violated on some other tasks. Infact make a routine out of this, call it invariant cross checking. Is that clear ?"
+
+Answers to my questions: APEX third:edge first; include the too-narrow check; all passing runs (including other tasks' P1/P2). Built `invariant_mining/crosscheck.py` (commands `cross-check`, `cross-report`; DESIGN.md 9b), test 9/9. APEX edge: 193 invariants x passing runs of the other tasks = 11,219 checks.

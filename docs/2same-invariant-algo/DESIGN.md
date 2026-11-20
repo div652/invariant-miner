@@ -314,6 +314,25 @@ reworded from failing runs score worse.
 - **Cross-task support**: how many tasks an invariant applies to (F2) and holds in (F3) (turn 10).
 - How the points are used downstream (turn 11).
 
+## 9b. Invariant cross-checking (built 2026-11-20)
+
+User: "for such an invariant from task i, I want to evaluate it on all passing trajectories of all tasks other than i. I
+want see if they are violated ! violation check is same as before, first luna then confirmation with opus5.5, just don't
+remove them at the moment. Come up with a final list of what invariants violated on some other tasks. In fact make a
+routine out of this, call it invariant cross checking."
+
+- **Input:** a finished mining run. Its invariants that are active with support > 0 (S counts only the task's own
+  passing runs other than P1, P2).
+- **Cells:** each such invariant x every passing trajectory of every other task of the run, including those tasks' own
+  P1 and P2 (user's choice).
+- **Checks, as for a passing run in mining (section 4):** F2 (Luna), F3 (Luna); on "not followed" the Opus F2/F3
+  re-check, then the Opus too-narrow check (user's choice). All outcomes as in mining, including "at pinned".
+- **Violation:** the final outcome is "not followed": a passing run of another task saw the observation and did not
+  take the action (Opus agreed, purpose not achieved another way). "Same purpose, other action" is listed, not counted.
+- **Nothing changes:** no removal, no rewording, no triggers; the invariants keep their ids and their source points.
+- **Output:** `cross_check.md` / `.json`: the invariants violated on other tasks (how many runs and tasks, which runs,
+  where the observation was), then every invariant's outcome counts. Code: `invariant_mining/crosscheck.py`.
+
 ## 10. Cautions
 
 - **C1. Check errors** (turns 8, 9): a model may say "followed" when it was not, or the reverse. Assumed rare for now;

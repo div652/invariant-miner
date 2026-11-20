@@ -211,6 +211,12 @@ def main(argv=None) -> None:
     p.add_argument("--pause-file", type=Path, help="created at the limit: other drivers start no new work while it exists")
     p.add_argument("--kill-pattern", action="append", default=[],
                    help="regex on a process's command line: such processes are also sent SIGTERM at the limit")
+    p = sub.add_parser("cross-check", help="prepare an invariant cross-check of a finished mining run (crosscheck.py)")
+    p.add_argument("source_run", type=Path)
+    p.add_argument("--out", type=Path, required=True)
+    p.add_argument("--min-support", type=int, default=1)
+    p = sub.add_parser("cross-report", help="write cross_check.md / .json of a cross-check run (safe while it runs)")
+    p.add_argument("run_dir", type=Path)
     p = sub.add_parser("invariants", help="write invariants.md: what F1 proposed per task (safe while it runs)")
     p.add_argument("run_dir", type=Path)
     p = sub.add_parser("status", help="progress of a run (safe while it runs)")
@@ -233,7 +239,11 @@ def main(argv=None) -> None:
         if a.concurrency:
             cfg["concurrency"] = a.concurrency
         Pipeline(a.run_dir, cfg).run(a.tasks)
-        rep = report.write(a.run_dir)
+        if Store(a.run_dir / "state.sqlite").get_meta("mode") == "cross_check":
+            from . import crosscheck
+            rep = crosscheck.write(a.run_dir)
+        else:
+            rep = report.write(a.run_dir)
         print(json.dumps(rep["totals"], indent=1))
     elif a.cmd == "report":
         rep = report.write(a.run_dir, a.notes)
@@ -248,6 +258,13 @@ def main(argv=None) -> None:
         from .guard import guard
         a.log.parent.mkdir(parents=True, exist_ok=True)
         guard(config_mod.load(a.config), a.max_used, a.interval, a.log, a.pause_file, a.kill_pattern)
+    elif a.cmd == "cross-check":
+        from . import crosscheck
+        crosscheck.prepare_cross_check(a.source_run, a.out, a.min_support)
+    elif a.cmd == "cross-report":
+        from . import crosscheck
+        rep = crosscheck.write(a.run_dir)
+        print(json.dumps(rep["totals"], indent=1))
     elif a.cmd == "invariants":
         out = a.run_dir / "invariants.md"
         out.write_text(report.proposals(a.run_dir))

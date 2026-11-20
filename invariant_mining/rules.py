@@ -259,19 +259,21 @@ def _apply_cell(store, item, ok, output, error, job_ids, trajectories):
                 store.event(out, **ev, model="opus")
     elif stage == "too_narrow":
         out = output["outcome"]
+        observe_only = store.get_meta("mode") == "cross_check"  # crosscheck.py: record the outcome, never remove or reword
         if out == "at_pinned":  # the purpose is achieved by the pinned item itself: self-evidenced, neutral, no rewording
             _cell_done(store, key, "at_pinned", too_narrow=2, too_narrow_location=output["location"])
             store.event("at_pinned", **ev, model="opus", stage="too_narrow", label=label)
         elif out == "not_achieved":
             _cell_done(store, key, "not_followed", too_narrow=0)
-            if label == "pass":
+            if label == "pass" and not observe_only:
                 store.x("INSERT INTO triggers (invariant_id, kind, trajectory_id, label, status, created_at) VALUES (?,?,?,?,?,?)",
                         inv["id"], "remove", cell["trajectory_id"], label, "waiting", time.time())
         else:
             _cell_done(store, key, "purpose_otherwise", too_narrow=1, too_narrow_location=output["location"])
             store.event("purpose_otherwise", **ev, label=label, location=output["location"])
-            store.x("INSERT INTO triggers (invariant_id, kind, trajectory_id, label, alt_location, status, created_at) VALUES (?,?,?,?,?,?,?)",
-                    inv["id"], "reword", cell["trajectory_id"], label, output["location"], "waiting", time.time())
+            if not observe_only:
+                store.x("INSERT INTO triggers (invariant_id, kind, trajectory_id, label, alt_location, status, created_at) VALUES (?,?,?,?,?,?,?)",
+                        inv["id"], "reword", cell["trajectory_id"], label, output["location"], "waiting", time.time())
 
 
 def _validation_targets(store, trig) -> list[str]:
