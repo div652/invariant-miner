@@ -1655,3 +1655,9 @@ Finished at 01:12 IST (4,471 jobs, 2 h 10 min, ~21K credits). Report: `results/a
 - The new rules mattered: `at_pinned` was answered 83 times (74 by Luna's F3, 3 by Opus's re-check, 6 by the too-narrow check), all neutral.
 - The Opus re-check on failing runs overturned 79 of Luna's 240 "not followed" verdicts there: 62 "not seen" (Opus did not find the observation at all), 13 "followed", 2 at pinned, 2 other. Without it those would have been importance points.
 ````
+
+### 2026-11-20 — APEX third:edge (branched session)
+
+User: "now I want to pick tasks on which astra passes all three times on apex, and luna high never passes" -> 13 tasks (subset `third:edge`, main e819dab). "now for these 13 tasks , do 2 more runs using astra then you get 10 trajecotries , 5 from astra, 5 from luna , take 2 from astra and start the whole invariant process , on the other 8. is that clear ?"
+
+Done 16:15 IST: Astra runs 4 and 5 passed 13/13 and 11/13 (task-o88f1452 and world225-rl-task01 failed in run 5). Mining `runs/im-apex-edge-20261120T082216Z` (4,527 jobs, 1 h 51 min): 211 proposed + 49 reworded; 203 active, 8 removed; 91 importance points on 28 active invariants (21 with I > 1); at_pinned 69, Opus re-check disagreements 47. Top importance: invariants where Astra searches the mailbox or chat for what the files do not say (o88f1452 i5 6/6, sp-task-07 i11 5/5, world132-da-task05 i5/i6 5/5). Report: `results/apex-edge-report.md`; proposals `results/apex-edge-proposed.md`.
