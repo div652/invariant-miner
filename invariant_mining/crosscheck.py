@@ -104,8 +104,10 @@ def build(run_dir: Path) -> dict:
     totals = Counter()
     for i in invs:
         totals.update(i["outcomes"])
+    # cross-consistent invariants (user's name, 2026-11-20): checked (active, importance > 0) and violated on no other task
+    consistent = [i["id"] for i in invs if not i["violations"] and not i["outcomes"].get("pending") and not i["outcomes"].get("running")]
     return {"run": str(run_dir), "source_run": s.get_meta("source_run"), "prepared": json.loads(s.get_meta("prepared", "{}")),
-            "totals": dict(totals), "invariants": invs}
+            "totals": dict(totals), "invariants": invs, "cross_consistent": consistent}
 
 
 def markdown(rep: dict) -> str:
@@ -136,6 +138,16 @@ def markdown(rep: dict) -> str:
                          f"{i['seen']}/{i['checked']} | {len(i['violations'])}/{i['seen']} runs, {len(i['violated_tasks'])} tasks | {cell(where)} |")
     else:
         lines.append("None.")
+    cons = [i for i in invs if i["id"] in set(rep.get("cross_consistent", []))]
+    lines += ["", f"## Cross-consistent invariants ({len(cons)} of {len(invs)})", "",
+              "Active, importance > 0, and violated on no other task. 'Seen elsewhere' 0 means the observation never came up "
+              "on another task, so the check could not test it there.", "",
+              "| invariant (task) | observation | action | own S, I | seen elsewhere | followed elsewhere |", "|---|---|---|---|---|---|"]
+    for i in sorted(cons, key=lambda i: (-i["seen"], i["id"])):
+        src = i["source"]
+        lines.append(f"| {i['local_id']} (`{i['task']}`) | {cell(facts(i['observation']))} | {cell(i['action'])} | "
+                     f"S {src.get('support')}/{src.get('n_pass')}, I {src.get('importance')}/{src.get('n_fail')} | "
+                     f"{i['seen']}/{i['checked']} | {i['outcomes'].get('followed', 0)} |")
     lines += ["", "## All invariants", "",
               "| invariant (task) | action | own S, I | seen | followed | violated | same purpose, other action | only before | action = pinned item | pinning wrong | job error |",
               "|---|---|---|---|---|---|---|---|---|---|---|"]
