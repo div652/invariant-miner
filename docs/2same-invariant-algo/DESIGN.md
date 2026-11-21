@@ -331,6 +331,11 @@ routine out of this, call it invariant cross checking."
   re-check, then the Opus too-narrow check (user's choice). All outcomes as in mining, including "at pinned".
 - **Violation:** the final outcome is "not followed": a passing run of another task saw the observation and did not
   take the action (Opus agreed, purpose not achieved another way). "Same purpose, other action" is listed, not counted.
+- **Cross-consistent invariants** (user's name, 2026-11-20): checked and violated on no other task. Consistent means
+  never violated, not usually followed: a sighting ending as same purpose another way, action = pinned item or only
+  before is not a violation (nor a "followed"). The report shows that breakdown and flags as weakly supported an
+  invariant seen on at least 5 other-task runs and followed as worded in fewer than half (APEX edge: world223 i9,
+  followed 19 of 53 sightings).
 - **Nothing changes:** no removal, no rewording, no triggers; the invariants keep their ids and their source points.
 - **Output:** `cross_check.md` / `.json`: the invariants violated on other tasks (how many runs and tasks, which runs,
   where the observation was), then every invariant's outcome counts. Code: `invariant_mining/crosscheck.py`.

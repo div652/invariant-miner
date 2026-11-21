@@ -139,15 +139,29 @@ def markdown(rep: dict) -> str:
     else:
         lines.append("None.")
     cons = [i for i in invs if i["id"] in set(rep.get("cross_consistent", []))]
+    weak = [i for i in cons if i["seen"] >= 5 and i["outcomes"].get("followed", 0) / i["seen"] < 0.5]
     lines += ["", f"## Cross-consistent invariants ({len(cons)} of {len(invs)})", "",
-              "Active, importance > 0, and violated on no other task. 'Seen elsewhere' 0 means the observation never came up "
-              "on another task, so the check could not test it there.", "",
-              "| invariant (task) | observation | action | own S, I | seen elsewhere | followed elsewhere |", "|---|---|---|---|---|---|"]
+              "Active, importance > 0, and violated on no other task. **Consistent means never violated, not usually "
+              "followed**: only a confirmed 'not followed' (Luna, then the Opus re-check, and the too-narrow check finding "
+              "the purpose not achieved another way) breaks consistency. A sighting can also end as *same purpose, other "
+              "action* (the run achieved the purpose differently), *action = pinned item* (the observation's only evidence "
+              "is the action itself) or *only before* (the action came before the observation); none of these is a "
+              "violation, and none is a 'followed' either. 'Seen elsewhere' 0 means the observation never came up on "
+              "another task, so it could not be tested there.", ""]
+    if weak:
+        lines += ["**Weakly supported** (seen on at least 5 other-task runs, followed as worded in fewer than half): "
+                  + "; ".join(f"{i['local_id']} (`{i['task']}`): followed {i['outcomes'].get('followed', 0)} of {i['seen']} sightings, "
+                              f"same purpose another way {i['outcomes'].get('purpose_otherwise', 0)}, action = pinned item "
+                              f"{i['outcomes'].get('at_pinned', 0)}, only before {i['outcomes'].get('only_before', 0)}" for i in weak)
+                  + ". Such an invariant is consistent only in the sense above.", ""]
+    lines += ["| invariant (task) | observation | action | own S, I | seen elsewhere | followed | same purpose, other action | action = pinned item | only before |",
+              "|---|---|---|---|---|---|---|---|---|"]
     for i in sorted(cons, key=lambda i: (-i["seen"], i["id"])):
-        src = i["source"]
+        src, o = i["source"], i["outcomes"]
         lines.append(f"| {i['local_id']} (`{i['task']}`) | {cell(facts(i['observation']))} | {cell(i['action'])} | "
                      f"S {src.get('support')}/{src.get('n_pass')}, I {src.get('importance')}/{src.get('n_fail')} | "
-                     f"{i['seen']}/{i['checked']} | {i['outcomes'].get('followed', 0)} |")
+                     f"{i['seen']}/{i['checked']} | {o.get('followed', 0)} | {o.get('purpose_otherwise', 0)} | "
+                     f"{o.get('at_pinned', 0)} | {o.get('only_before', 0)} |")
     lines += ["", "## All invariants", "",
               "| invariant (task) | action | own S, I | seen | followed | violated | same purpose, other action | only before | action = pinned item | pinning wrong | job error |",
               "|---|---|---|---|---|---|---|---|---|---|---|"]
