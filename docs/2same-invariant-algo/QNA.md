@@ -1700,3 +1700,39 @@ All 28 (active, importance > 0 in the mining run, as they went into the cross-ch
 results/apex-edge-28-before-crosscheck.md (observation with sources, action, purpose, own S and I, cross-check outcome).
 Violated (7): world223 i14, sp-task-07 i11, task-o88f1452 i4 and i5, world227-sk i10, world132-pm i13 and i14. The other 21 are cross-consistent.
 ````
+
+### 2026-11-23 — APEX third:edge: failing runs that break no invariant
+
+User (2026-11-23): "okay, in the apex agents example, we started with about 20 or so invariants propsoed per task, and then saw on each fliaing run howmany of those were violated. do you have teh numbers or analysis of how many of those 13*5 approx failing runs were those that did not violate any invariant ."
+
+Claude:
+
+````text
+It wasn't aggregated before (the report only has a "Failing runs" table per task), so I computed it from the mining run's report.json (runs/im-apex-edge-20261120T082216Z: 13 tasks x 10 runs, Astra 1-5 + Luna 1-5, P1/P2 = Astra 1, 2).
+
+- Failing runs: 67 (the 65 Luna runs + Astra run 5 of task-o88f1452 and world225-rl-task01).
+- F1 proposed 9-23 invariants per task (mean 16.2); 9-21 active at the end.
+- Failing runs that break no invariant: 11 of 67 (16%). The same 11 whether I count only the final active invariants or every invariant ever (removed and retired included).
+- Invariants broken per failing run: 0 -> 11 runs, 1 -> 25, 2 -> 27, 3 -> 4.
+- The 11 sit in three tasks: world228-jp-01 (all 5 failing runs), world-131-jr-1 (luna2, luna4, luna5), world112-1-task05 (luna1, luna2, luna3). In the other 10 tasks every failing run breaks at least one.
+
+| task | proposed | active | failing runs | break nothing | broken per run (active invariants) |
+|---|---|---|---|---|---|
+| sp-task-07-world-135 | 23 | 21 | 5 | 0 | 1 1 2 1 1 |
+| task-o88f1452 | 13 | 11 | 6 | 0 | astra5 2; 2 1 2 2 2 |
+| world-127-ah-task-2 | 14 | 14 | 5 | 0 | 1 2 1 2 2 |
+| world-131-jr-1 | 16 | 16 | 5 | 3 | 1 0 1 0 0 |
+| world112-1-task05 | 22 | 21 | 5 | 3 | 0 0 0 1 1 |
+| world127-am-task03 | 12 | 11 | 5 | 0 | 1 1 1 1 1 |
+| world132-da-task05 | 22 | 21 | 5 | 0 | 3 2 2 2 2 |
+| world132-pm-task03 | 16 | 16 | 5 | 0 | 1 1 1 2 2 |
+| world223-es-01 | 17 | 17 | 5 | 0 | 2 2 1 1 2 |
+| world225-rl-task01 | 16 | 16 | 6 | 0 | astra5 1; 3 2 2 3 3 |
+| world227-sk-task03 | 15 | 15 | 5 | 0 | 2 2 2 2 2 |
+| world228-jp-01 | 9 | 9 | 5 | 5 | 0 0 0 0 0 |
+| world431-jcf-01 | 16 | 15 | 5 | 0 | 1 2 1 1 2 |
+
+(Luna runs 1-5 in order.) "Broken" = the final verdict: seen, not followed after the Opus re-check, and the too-narrow check found the purpose not met another way.
+
+Caveat: breaking an invariant doesn't mean it caused the failure. On the flip sets (FAILING-RUNS.md) many broken invariants were unrelated to what the grader failed (todo bookkeeping, rendering checks). I haven't done that check for these 56 runs.
+````
