@@ -1778,3 +1778,13 @@ File: analysis/FK-EDGE-NO-INVARIANT-RUNS.md (mining run runs/im-astra-edge-20261
 - What happened: 6 of 8 searched by file name only and never read the document holding the answer (092: grep over .docx returned "No matches found"; 093: 1038-00006 surfaced through a memo's name but was never parsed; 181: Subramaniam is named only in an e-mail of matter 1031-00001, never surfaced). 243 luna3's full-text scan was killed at the 120 s timeout and the rerun covered only five filename keywords, missing attribution in status reports, memos and e-mails. 190 astra4 read the right documents and counted a CFIUS workstream as an M&A closing (astra1/astra2 explicitly excluded it).
 - Why no invariant: the decisive invariant everywhere is "convert the whole corpus to text, then search contents". It was removed on a passing run that skipped it (092 i4 by luna2, 181 i4 by astra5), loosened by a rewording from a failing run (092 ri8 "… or straight inside the original files", 093 ri3 "… over filenames and/or directly readable text"), not seen (093 i5), or judged followed on the action alone (243 i4 although the extraction was killed; 190 i22 although the check reached the wrong conclusion).
 ````
+
+### 2026-11-23 — the mixed:flip trajectories in the repo
+
+User (2026-11-23): "I just want the 10 trajectoreis for these 8 tasks that flip, and then you get thre rwa trajectory, readable.md, answer.json, run.json, grading.json output/ and put it on github." then "no, why did you put it in a separate repo, just put it on the 2SameInvariantAlgo repo"
+
+Claude:
+
+````text
+Now on this branch: docs/2same-invariant-algo/data/harvey-mixed-flip8-trajectories/ (commit 8f94fd7, pushed): 8 tasks x 10 Luna-high runs, each run with session.v2.jsonl, readable.md, answer.json, run.json, grading.json and output/, plus README.md, manifest.json, system_prompt.md and each task's prompt.txt (531 files, 225 MB). The separate private repo div652/harvey-mixed-flip8-trajectories created first is still there; delete it only on the user's word.
+````
