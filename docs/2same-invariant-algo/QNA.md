@@ -1682,3 +1682,21 @@ User (2026-11-20): "and for the one invariant with 69% mathc, what are their act
 User: "Btw, in our system are the obsrevatoins if they have multiple conditions, are those conditions checked indepedntly or together ?" -> Mining and cross-checking: together, in one F2 job (one agent sees all the facts and must find the first point where all hold), but each fact needs its own evidence, checked in code: a location and a verbatim quote per fact; the observation's location must be exactly where the last fact first appears. F3 and the too-narrow check also get all facts together. The invariant middleware is the other way: each fact is judged on its own (yes/no per fact, per piece of evidence), a fact stays true once seen, and the observation holds when all its facts are true, even if they came from different places at different times.
 
 User (2026-11-21): "btw, I was seeing : i9 (world223-es-01-4e64f4e3) Model inputs and task-specified assumptions have been settled [reasoning] . you marked that it was seen in 53/58 and fllowed in 19. so why is it still considered consistesnt ?" -> Consistent = never violated (only a confirmed not-followed with the purpose not achieved otherwise counts); its 53 sightings: followed 19, same purpose another way 16, action = pinned item 14, only before 4, none violated. User: "okay, that makes sense in explaining 19 out of 53. just add this nuance in the report as well." -> crosscheck.py: the cross-consistent section now explains it, shows the breakdown per invariant and flags weakly supported ones (>= 5 sightings, followed as worded in fewer than half); DESIGN 9b; report regenerated.
+
+### 2026-11-23 — purposes of the 28 cross-checked APEX invariants
+
+User (2026-11-23): "this invairant was removed in the cross-check procedure. can you tell me verbatim what was the purpose text of this invariant. I am assuming it got removed in the cross checks, because even its purpose was not obeyed. in general can you give me the observation action purpose of all 28 invariants beore cross check on apex. 
+i11 (sp-task-07-world-135-0a861743)    No file is named after the channel data source [tool_result]    Searches email subjects for the name of the channel"
+
+Claude:
+
+````text
+i11 (sp-task-07-world-135-0a861743), purpose verbatim: "Finds emails that carry the missing report's data".
+(Its observation also carries a reason: "The data may have been shared by email".)
+
+Your assumption is right, with one nuance: the cross-check itself removes nothing; i11 is one of the 7 left out of the 21 cross-consistent set because it was violated. On other tasks' passing runs it was seen 21 times: followed 0, violated 10 (5 tasks), same purpose by another action 0, only before 4, pinning wrong 7. A violation already requires the too-narrow check to find the purpose not achieved another way, so in all 10 the purpose was not met either.
+
+All 28 (active, importance > 0 in the mining run, as they went into the cross-check), verbatim:
+results/apex-edge-28-before-crosscheck.md (observation with sources, action, purpose, own S and I, cross-check outcome).
+Violated (7): world223 i14, sp-task-07 i11, task-o88f1452 i4 and i5, world227-sk i10, world132-pm i13 and i14. The other 21 are cross-consistent.
+````
