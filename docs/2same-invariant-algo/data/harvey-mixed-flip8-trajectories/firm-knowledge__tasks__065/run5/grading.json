@@ -1,0 +1,52 @@
+{
+  "score": 0.0,
+  "max_score": 1.0,
+  "summary": "5/6 criteria passed.  Missed 1 \u2014 task FAIL.",
+  "all_pass": false,
+  "n_criteria": 6,
+  "n_passed": 5,
+  "n_grading_errors": 0,
+  "pandoc_version": "3.11",
+  "criteria_results": [
+    {
+      "id": "C-001",
+      "title": "Qualifying matter \u2014 Ardent 1001-00002",
+      "verdict": "pass",
+      "reasoning": "The output explicitly identifies matter 1001-00002 (Ardent Capital Partners III / Ardent Capital Management) as one of the qualifying Funds & Asset Management matters involving an LP advisory committee."
+    },
+    {
+      "id": "C-002",
+      "title": "Qualifying matter \u2014 Harrowgate 1003-00002",
+      "verdict": "fail",
+      "reasoning": "The output expressly excludes matter 1003-00002 (Harrowgate Private Equity Fund V LP) rather than identifying it as a qualifying matter, so it does not satisfy the criterion."
+    },
+    {
+      "id": "C-003",
+      "title": "Qualifying matter \u2014 Driftwood 1024-00002",
+      "verdict": "pass",
+      "reasoning": "The output identifies matter 1024-00002 (Driftwood) as qualifying and explains that its Investor Advisory Committee is the functional equivalent of an LP advisory committee because it consists of limited partners and operates under the LPA."
+    },
+    {
+      "id": "C-004",
+      "title": "Qualifying matter \u2014 Briarwood 1026-00001",
+      "verdict": "pass",
+      "reasoning": "The output identifies matter 1026-00001 as qualifying and explains that it involved review of a third-party fund for an LP client, with the client ultimately declining the proposed commitment. This matches the criterion concerning Briarwood Family Office."
+    },
+    {
+      "id": "C-005",
+      "title": "Qualifying matter \u2014 Pellegrino 1027-00002",
+      "verdict": "pass",
+      "reasoning": "The output explicitly identifies matter 1027-00002 for Pellegrino Capital Group and Ridgeline-Clarion Co-Invest, L.P. as a qualifying Funds & Asset Management matter involving an LP advisory committee."
+    },
+    {
+      "id": "C-006",
+      "title": "Qualifying set \u2014 precision",
+      "verdict": "pass",
+      "reasoning": "The four matters asserted as qualifying\u20141001-00002, 1024-00002, 1026-00001, and 1027-00002\u2014are all within the criterion\u2019s permitted qualifying set. Other matters are discussed only as exclusions, not asserted as qualifying."
+    }
+  ],
+  "run_id": "firm-knowledge__tasks__065",
+  "task": "firm-knowledge/tasks/065",
+  "judge_model": "gpt-5.6-sol",
+  "scored_at": "2026-11-16T19:35:06.491113+00:00"
+}

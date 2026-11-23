@@ -1,0 +1,10 @@
+{
+  "answer": "Completed `output/response.md` with the qualifying matter count, supporting documents, reasoning, and excluded near-misses.",
+  "source": "last_assistant_message",
+  "finish_reason": "completed",
+  "turn_end": {
+    "kind": "completed"
+  },
+  "root_session_id": "session-c2f1374b-3dd3-4410-a29d-4585ca6f9197",
+  "exit_code": 0
+}

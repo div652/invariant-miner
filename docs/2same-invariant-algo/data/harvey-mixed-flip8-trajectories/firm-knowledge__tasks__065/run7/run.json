@@ -1,0 +1,1488 @@
+{
+  "task_id": "firm-knowledge/tasks/065",
+  "started_at": "2026-11-18T03:10:14Z",
+  "container": "dshb-1cf1466717",
+  "spec": {
+    "system_prompt": "You are an AI agent executing a task provided by the user within a workspace.\n\n## Workspace layout\n\nEverything you work with lives under one workspace root. **`bash` starts in\n`$WORKSPACE_DIR`**, so `bash ls` shows you the whole layout at a glance:\n`documents/  output/` plus any scratch files you create.\n\n- **`$WORKSPACE_DIR`** \u2014 your working area, default `bash` cwd. Use it for\n  notes and intermediate files.\n- **`$DOCUMENTS_DIR`** (`$WORKSPACE_DIR/documents`) \u2014 task documents.\n  Read-only.\n- **`$OUTPUT_DIR`** (`$WORKSPACE_DIR/output`) \u2014 deliverables. Save every\n  deliverable file here, including files you build with `bash` (.docx,\n  .xlsx, .pptx): only files in `$OUTPUT_DIR` are delivered. `write` saves\n  here by default: a relative `write` path is written under `$OUTPUT_DIR`.\n- **Task configuration** (`task.json`) \u2014 contains the task definition and the\n  grading rubric. Do not read, search, or reference it. Doing so will be\n  flagged as a rule violation and automatically fail the task.\n\n## Tool conventions\n\n- `read` opens plain-text files only (.txt, .md, .eml, .csv, ...). To read\n  .docx, .xlsx or .pptx files, convert them to text with `bash`:\n  `parse-doc docx|xlsx|pptx <file>` (markitdown and pandoc are also available).\n- Use `write` only for plain markdown \u2014 typically a `response.md`\n  summarizing your work.\n- Use `edit` for incremental refinement of a file you have already created.\n",
+    "system_prompt_mode": "append",
+    "stage": [
+      {
+        "from": "/home/agarwaldi/dsh-bench-harness/work/harvey-labs/tasks/firm-knowledge/dms",
+        "to": "documents",
+        "readonly": true,
+        "method": "hardlink"
+      }
+    ],
+    "make_dirs": [
+      "output"
+    ],
+    "image": "dsh-bench-harvey",
+    "runtime": "podman",
+    "network": "none",
+    "container_env": {
+      "WORKSPACE_DIR": "{workspace}",
+      "DOCUMENTS_DIR": "{workspace}/documents",
+      "OUTPUT_DIR": "{workspace}/output"
+    },
+    "disable": [
+      "tool-web"
+    ],
+    "mcp": [],
+    "limits": {
+      "max_steps": 200,
+      "timeout_s": 7200,
+      "temperature": null
+    },
+    "skills_dir": null,
+    "toolbelt": null,
+    "final_answer": false,
+    "extra_patches": [
+      "/home/agarwaldi/dsh-bench-harness-base-2817664/benchmarks/harvey/patch.yml"
+    ],
+    "dsh_env": {},
+    "dsh_env_files": {},
+    "grace_s": 300,
+    "attach": null,
+    "tool_limits": null,
+    "task_id": "firm-knowledge/tasks/065",
+    "prompt": "I'm scoping staffing for our funds practice \u2014 how many of our Funds & Asset Management matters involved a fund that had an LP advisory committee, whoever's fund it was? Skip any fund whose LPA was never signed, and list them out.\n\nOutput: write your complete answer to `response.md` \u2014 a single self-contained markdown file with your findings, the matters/documents you relied on, and your reasoning.",
+    "model": "/home/agarwaldi/dsh-bench-harness-base-2817664/models/luna-cao.json",
+    "meta": {
+      "benchmark": "harvey",
+      "lab_commit": "4743403f52c1c1db75f3feb1c8f91fae1bd30296",
+      "task_json_sha256": "dc3306b1f96a947860aff0cd84ab487cb06ef6339d66ec4614a4286631b56523"
+    }
+  },
+  "model": {
+    "provider": "luna-cao",
+    "display_name": "GPT-5.6 Luna (CAO, c34 endpoint shape, effort high)",
+    "model": "gpt-5.6-luna",
+    "api": "openai-responses",
+    "base_url": "http://127.0.0.1:4141/v1",
+    "api_key_file": "$DSH_BENCH_CAO_KEY_FILE",
+    "reasoning": "high",
+    "reasoning_efforts": {
+      "low": "low",
+      "medium": "medium",
+      "high": "high",
+      "xhigh": "xhigh"
+    },
+    "context_window": 922000,
+    "max_tokens": 128000,
+    "input": [
+      "text",
+      "image"
+    ],
+    "compat": {
+      "supportsStrictMode": true
+    },
+    "stream_idle_timeout_ms": 1800000,
+    "retry_policy": {
+      "mode": "normal",
+      "maxRetries": 5,
+      "retryableCodes": [
+        "EMPTY_RESPONSE",
+        "RATE_LIMIT",
+        "SERVER",
+        "TIMEOUT",
+        "TRANSPORT",
+        "INVALID_REQUEST"
+      ]
+    }
+  },
+  "dsh": {
+    "root": "/home/agarwaldi/dsh-bench-harness-base-2817664/work/deepseek-harness",
+    "commit": "45f80080eeab454b0c09ce5e03d02e5cb49d118c"
+  },
+  "harness_commit": "28176646ce95096d6ffc882eb745885c410530a0",
+  "image": {
+    "name": "dsh-bench-harvey",
+    "id": "4ed2ef114a3746150c87a4c298b5bdeefb2681901b0970dbb6737960a2ca5940"
+  },
+  "patches": [
+    {
+      "path": "/home/agarwaldi/dsh-bench-harness-base-2817664/harness/core.patch.yml",
+      "sha256": "8988098d9c5a7cb575ce7f0dabb02ad614ce4ccf8061eac4f82bf00f799b8027"
+    },
+    {
+      "path": "/home/agarwaldi/dsh-bench-harness/runs/hv-mixed200-lunahigh-flip-r7-20261118T030322Z/tasks/firm-knowledge__tasks__065/run.patch.yml",
+      "sha256": "a5facc67e3a29a225552c50f697c08dbea89a453131c7668e56f51d6c60f16da"
+    },
+    {
+      "path": "/home/agarwaldi/dsh-bench-harness/runs/hv-mixed200-lunahigh-flip-r7-20261118T030322Z/tasks/firm-knowledge__tasks__065/extra-0-patch.yml",
+      "sha256": "83739a7deca11376d513f2e73b897d1bf57e84ab88c489650041a00632b81812"
+    }
+  ],
+  "core_env": {
+    "DSH_BENCH_CAO_KEY_FILE": "/home/agarwaldi/cao/profile/.gateway-key",
+    "DSH_BENCH_EXA_KEY_FILE": "/home/agarwaldi/.config/evolve_agents/model_serve_local.token",
+    "DSH_BENCH_MODEL_SERVE_TOKEN_FILE": "/home/agarwaldi/.config/evolve_agents/model_serve_local.token",
+    "DSH_BENCH_C0_ARTIFACTS": "/home/agarwaldi/AHE_Harvey_cao/harvey-ahe-project/campaign-artifacts",
+    "DSH_BENCH_FMP_KEY_FILE": "/home/agarwaldi/.config/dsh-bench/fmp.key",
+    "DSH_BENCH_EDGAR_USER_AGENT": "Divyanshu div652@gmail.com",
+    "DSH_BENCH_DSH_ROOT": "/home/agarwaldi/dsh-bench-harness-base-2817664/work/deepseek-harness",
+    "DSH_BENCH_CONTAINER": "dshb-1cf1466717",
+    "DSH_BENCH_RUNTIME": "podman",
+    "DSH_BENCH_CONTAINER_ENV": "{\"WORKSPACE_DIR\": \"/home/agarwaldi/dsh-bench-harness/runs/hv-mixed200-lunahigh-flip-r7-20261118T030322Z/tasks/firm-knowledge__tasks__065/workspace\", \"DOCUMENTS_DIR\": \"/home/agarwaldi/dsh-bench-harness/runs/hv-mixed200-lunahigh-flip-r7-20261118T030322Z/tasks/firm-knowledge__tasks__065/workspace/documents\", \"OUTPUT_DIR\": \"/home/agarwaldi/dsh-bench-harness/runs/hv-mixed200-lunahigh-flip-r7-20261118T030322Z/tasks/firm-knowledge__tasks__065/workspace/output\"}",
+    "DSH_BENCH_LIMITS": "{\"maxSteps\": 200, \"timeoutMs\": 7200000}",
+    "DSH_BENCH_ANSWERS_DIR": "/home/agarwaldi/dsh-bench-harness/runs/hv-mixed200-lunahigh-flip-r7-20261118T030322Z/tasks/firm-knowledge__tasks__065/answers"
+  },
+  "setup_s": 8.6,
+  "agent_s": 811.2,
+  "exit_code": 0,
+  "finish_reason": "completed",
+  "answer_source": "last_assistant_message",
+  "root_steps": 69,
+  "sessions": 1,
+  "changed_files": [
+    {
+      "status": "A",
+      "path": "output/response.md"
+    },
+    {
+      "status": "A",
+      "path": "scratch/1001-00002-closing.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/1001-00002-conflict.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/1001-00002-engagement.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/1002-00005-engagement.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/1004-engagement.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/1023-engagement.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/1023-governance.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/1023-lpa.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/1024-amendment.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/1024-closing.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/1024-engagement.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/1024-keyperson.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/1026-closing.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/1026-lpa-review.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/1026-ppm.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/1026-sideletter.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/1026-withdrawal.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/1027-closing.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/1027-keyterms.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/1027-lpa.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/1041-intake.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/all_docx_xml_text.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/docx_keyword_sources.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1001-00001_Engagement_&_Administration_conflicts-check-memorandum.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1001-00001_Engagement_&_Administration_engagement-letter-ardent-capital.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1001-00001_Engagement_&_Administration_matter-opening-memorandum.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1001-00002_Engagement_&_Administration_conflict-check-memo.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1001-00002_Engagement_&_Administration_engagement-letter.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1001-00002_Engagement_&_Administration_matter-closing-memo.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1001-00003_Engagement_engagement-letter-ardent-capital.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1001-00004_Engagement_&_Administrative_conflict-waiver-letter-vectis.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1001-00004_Engagement_&_Administrative_engagement-letter-ardent-capital.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1001-00004_Engagement_&_Administrative_matter-opening-memorandum.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1001-00004_Engagement_&_Administrative_staffing-budget-memorandum.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1001-00005_Engagement_engagement-letter-ardent-cp-iii.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1001-00006_Engagement_&_Administrative_conflict-check-memorandum.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1001-00006_Engagement_&_Administrative_engagement-close-out-memorandum.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1001-00006_Engagement_&_Administrative_engagement-letter.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1001-00006_Engagement_&_Administrative_staffing-and-budget-memorandum.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1002-00001_Engagement_engagement-letter-pinnacle-vc.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1002-00002_Engagement_conflicts-check-memorandum.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1002-00002_Engagement_engagement-letter-pinnacle-vc.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1002-00003_Engagement_engagement-letter-pinnacle-vc.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1002-00005_Engagement_engagement-letter-pinnacle-cv-tax-structuring.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1003-00001_Engagement_engagement-letter-harrowgate-hsr.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1003-00002_Engagement_conflict-check-memo.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1003-00002_Engagement_engagement-letter-hcp.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1003-00002_Engagement_staffing-budget-memo.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1003-00003_Engagement_engagement-letter-hpe-fund-iv.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1003-00005_Engagement_&_Administrative_conflict-check-memorandum.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1003-00005_Engagement_&_Administrative_engagement-letter-hpe-fund-iv.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1003-00005_Engagement_&_Administrative_interim-invoice-22-7831-001.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1003-00005_Engagement_&_Administrative_interim-invoice-22-7831-002.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1003-00005_Engagement_&_Administrative_new-matter-opening-memorandum.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1004-00001_Engagement_engagement-letter-cobalt.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1004-00002_Engagement_engagement-letter-cobalt-ventures.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1004-00003_Engagement_engagement-letter.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1005-00001_Engagement_&_Administrative_conflict-check-memorandum.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1005-00001_Engagement_&_Administrative_engagement-letter-briarcliff-de-local-counsel.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1005-00001_Engagement_&_Administrative_engagement-letter-hargrove-whitmore-il-local-counsel.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1005-00001_Engagement_&_Administrative_engagement-letter-sc-to-nexford.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1005-00001_Engagement_&_Administrative_internal-budget-estimate-memorandum.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1005-00001_Engagement_&_Administrative_new-matter-memorandum.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1005-00001_Engagement_&_Administrative_outside-counsel-guidelines-acknowledgment.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1005-00001_Engagement_&_Administrative_staffing-memorandum.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1005-00002_Engagement_engagement-letter-nexford.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1005-00003_Engagement_&_Administrative_conflict-check-memo.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1005-00003_Engagement_&_Administrative_document-request-list.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1005-00003_Engagement_&_Administrative_dormancy-status-letter.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1005-00003_Engagement_&_Administrative_engagement-letter-nexford-tower-review.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1005-00003_Engagement_&_Administrative_new-matter-memorandum.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1005-00004_Engagement_engagement-letter-nexford.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1005-00004_Engagement_litigation-hold-notice.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1005-00005_Engagement_conflict-check-memorandum.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1005-00005_Engagement_engagement-letter.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1005-00005_Engagement_litigation-hold-notice.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1006-00001_Engagement_engagement-letter-crestline.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1006-00002_Engagement_conflicts-check-memo.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1006-00002_Engagement_engagement-letter-cps.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1006-00002_Engagement_pre-petition-restructuring-strategy-memo.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1006-00003_Engagement_&_Administrative_conflict-check-memorandum.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1006-00003_Engagement_&_Administrative_document-preservation-hold-notice.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1006-00003_Engagement_&_Administrative_engagement-letter-cps-environmental-diligence.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1006-00003_Engagement_&_Administrative_matter-dormancy-memorandum.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1006-00004_Engagement_engagement-letter-crestline.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1006-00005_Engagement_engagement-letter.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1006-00006_Engagement_engagement-letter-calderwood-harkness-cps.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1006-00007_Engagement_engagement-letter-crestline-apa.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1006-00008_Engagement_engagement-letter-crestline.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1007-00001_Engagement_engagement-letter-vms.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1007-00002_Engagement_engagement-letter-vms.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1007-00003_Engagement_engagement-letter-vms-defense.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1007-00004_Engagement_engagement-letter-reyes-v-vms.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1007-00005_Engagement_engagement-letter-vms.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1007-00005_Engagement_expert-retention-letter-apex.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1007-00006_Engagement_engagement-letter-vms.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1007-00007_Engagement_dormancy-status-memorandum.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1007-00007_Engagement_engagement-letter-vms.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1007-00008_Engagement_conflict-check-memo.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1007-00008_Engagement_engagement-letter-vms.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1008-00002_Engagement_&_Organization_conflicts-clearance-memo.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1008-00002_Engagement_&_Organization_corporate-structure-chart-memo.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1008-00002_Engagement_&_Organization_engagement-letter.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1008-00003_Engagement_conflict-check-memo.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1008-00003_Engagement_engagement-letter-lumos.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1008-00004_Engagement_engagement-letter-lumos-immigration.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1008-00006_Engagement_conflicts-clearance-memorandum.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1008-00006_Engagement_engagement-letter-el-2024-0847-rv.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1008-00007_Engagement_engagement-letter-lumos.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1008-00008_Engagement_engagement-letter-lumos.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1008-00009_Engagement_engagement-letter-lumos-breach-response.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1008-00009_Engagement_privilege-protocol-forensic-retention-memo.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1008-00010_Engagement_conflicts-check-memo.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1008-00010_Engagement_engagement-letter-lumos.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1009-00001_Engagement_&_Administration_conflict-check-memo.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1009-00001_Engagement_&_Administration_engagement-letter-amendment-ip-scope.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1009-00001_Engagement_&_Administration_engagement-letter-skybridge.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1009-00001_Engagement_&_Administration_fee-estimate-budget-memo.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1009-00001_Engagement_&_Administration_new-matter-intake-form.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1009-00001_Engagement_&_Administration_staffing-plan-memo.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1009-00002_Engagement_engagement-letter-skybridge-series-b.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1009-00004_Engagement_&_Administration_conflict-check-memo.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1009-00004_Engagement_&_Administration_engagement-letter-skybridge.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1009-00004_Engagement_&_Administration_matter-opening-memo.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1009-00005_Engagement_engagement-letter-sbf.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1009-00006_Engagement_engagement-letter-skybridge.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1009-00007_Engagement_conflict-check-memo.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1009-00007_Engagement_engagement-letter-skybridge.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1009-00007_Engagement_matter-opening-memo.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1010-00001_Engagement_engagement-letter-aht-bridge-loan.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1010-00003_Engagement_&_Administration_conflict-check-memorandum.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1010-00003_Engagement_&_Administration_document-request-list.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1010-00003_Engagement_&_Administration_engagement-close-out-letter.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1010-00003_Engagement_&_Administration_engagement-letter.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1010-00004_Engagement_&_Administration_conflict-check-memo.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1010-00004_Engagement_&_Administration_engagement-letter-aht-executed.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1010-00004_Engagement_&_Administration_matter-dormancy-memo.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1010-00004_Engagement_&_Administration_new-matter-memo.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1010-00005_Engagement_engagement-letter-aht.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1010-00005_Engagement_expert-retention-letter-hargrove.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1010-00006_Engagement_engagement-letter-calderwood-harkness.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1011-00001_Engagement_engagement-letter-mcb.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1011-00002_Engagement_engagement-letter-meridian.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1011-00003_Engagement_engagement-letter-mcb.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1011-00003_Engagement_expert-engagement-letter-lakeshore.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1011-00004_Engagement_engagement-letter-meridian.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1011-00004_Engagement_expert-retention-letter-choe.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1011-00006_Engagement_engagement-letter-mcb.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1011-00007_Engagement_engagement-letter-mcb-lease.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1011-00008_Engagement_engagement-letter-mcb-msa.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1012-00002_Engagement_conflict-check-memo.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1012-00002_Engagement_engagement-letter-stonefield.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1012-00003_Engagement_conflict-check-memo.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1012-00003_Engagement_engagement-letter-slg.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1012-00004_Engagement_&_Client_Communications_conflict-check-memorandum.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1012-00004_Engagement_&_Client_Communications_engagement-letter.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1012-00004_Engagement_&_Client_Communications_initial-case-assessment-memorandum.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1012-00004_Engagement_&_Client_Communications_insurance-coverage-notification-letter.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1012-00004_Engagement_&_Client_Communications_litigation-hold-notice.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1012-00005_Engagement_&_Administration_conflict-check-memorandum.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1012-00005_Engagement_&_Administration_engagement-letter-stonefield.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1012-00005_Engagement_&_Administration_litigation-hold-ack-hess.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1012-00005_Engagement_&_Administration_litigation-hold-ack-kirkwood.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1012-00005_Engagement_&_Administration_litigation-hold-ack-medina.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1012-00005_Engagement_&_Administration_litigation-hold-ack-ramachandran.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1012-00005_Engagement_&_Administration_litigation-hold-memorandum.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1012-00005_Engagement_&_Administration_new-matter-intake-form.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1012-00006_Engagement_engagement-letter-stonefield.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1013-00002_Engagement_engagement-letter.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1013-00003_Engagement_engagement-letter-genomedx.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1013-00004_Engagement_conflict-check-memo.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1013-00004_Engagement_engagement-letter-executed.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1013-00004_Engagement_engagement-proposal.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1013-00005_Engagement_engagement-letter-gdt.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1013-00006_Engagement_engagement-letter.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1014-00002_Engagement_&_Administrative_conflicts-clearance-memorandum.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1014-00002_Engagement_&_Administrative_engagement-letter-sc-ows-2025-0520-imm.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1014-00002_Engagement_&_Administrative_file-transfer-request-letter-to-whitfield-parekh.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1014-00002_Engagement_&_Administrative_matter-staffing-responsibility-memo.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1014-00003_Engagement_&_Client_Intake_conflict-check-memo.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1014-00003_Engagement_&_Client_Intake_engagement-letter-ows.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1014-00003_Engagement_&_Client_Intake_litigation-hold-notice-ows.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1014-00003_Engagement_&_Client_Intake_new-matter-intake-form.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1014-00003_Engagement_&_Client_Intake_retainer-deposit-acknowledgment.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1014-00004_Engagement_&_Administration_case-team-status-report-q4-2024.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1014-00004_Engagement_&_Administration_conflict-check-memo.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1014-00004_Engagement_&_Administration_document-preservation-protocol-internal.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1014-00004_Engagement_&_Administration_engagement-letter-ows.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1014-00004_Engagement_&_Administration_insurance-coverage-notification.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1014-00004_Engagement_&_Administration_litigation-hold-memo-ows.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1014-00004_Engagement_&_Administration_local-counsel-retainer-whitmore-callahan.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1014-00004_Engagement_&_Administration_pro-hac-vice-applications.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1014-00004_Engagement_&_Administration_ridgeline-approval-letter.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1014-00005_Engagement_&_Administrative_conflict-check-memorandum.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1014-00005_Engagement_&_Administrative_dormancy-acknowledgment-letter.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1014-00005_Engagement_&_Administrative_engagement-letter-ows-patent-prosecution.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1014-00005_Engagement_&_Administrative_engagement-scope-amendment-letter.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1014-00005_Engagement_&_Administrative_matter-opening-memorandum.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1014-00006_Engagement_engagement-letter-ows-eda-renewal.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1015-00001_Engagement_&_Administration_conflict-check-memorandum.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1015-00001_Engagement_&_Administration_engagement-letter-sc-to-cbr.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1015-00001_Engagement_&_Administration_new-matter-memorandum.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1015-00001_Engagement_&_Administration_organizational-meeting-agenda.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1015-00001_Engagement_&_Administration_organizational-meeting-minutes.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1015-00001_Engagement_&_Administration_staffing-memorandum.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1015-00002_Engagement_&_Administration_conflict-check-memo.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1015-00002_Engagement_&_Administration_engagement-letter-cbr.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1015-00002_Engagement_&_Administration_matter-opening-memo.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1015-00003_Engagement_engagement-letter-cbr.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1015-00004_Engagement_conflict-clearance-memo.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1015-00004_Engagement_engagement-letter-cbr.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1015-00005_Engagement_engagement-letter-cbr.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1016-00001_Engagement_engagement-letter-deh.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1016-00002_Engagement_engagement-letter-deh.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1016-00003_Engagement_and_Administrative_conflict-check-memorandum.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1016-00003_Engagement_and_Administrative_engagement-letter-deh.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1016-00003_Engagement_and_Administrative_matter-opening-form.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1016-00003_Engagement_and_Administrative_privilege-protocol-memo.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1016-00003_Engagement_and_Administrative_staffing-memorandum.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1016-00005_Engagement_&_Conflicts_conflict-waiver-memorandum.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1016-00005_Engagement_&_Conflicts_engagement-letter-deh.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1016-00005_Engagement_&_Conflicts_fee-arrangement-memorandum.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1016-00005_Engagement_&_Conflicts_matter-opening-memorandum.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1016-00005_Engagement_&_Conflicts_supplemental-engagement-letter.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1016-00006_Engagement_engagement-letter-deh.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1016-00007_Engagement_engagement-letter-deh-ofac-vsd.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1016-00008_Engagement_advisor-coordination-memo.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1016-00008_Engagement_conflicts-clearance-memo.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1016-00008_Engagement_engagement-letter-deh.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1016-00009_Engagement_&_Scope_conflict-check-memo.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1016-00009_Engagement_&_Scope_engagement-letter-deh.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1016-00009_Engagement_&_Scope_fee-arrangement-do-insurance-notification.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1016-00009_Engagement_&_Scope_joint-defense-common-interest-agreement.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1016-00009_Engagement_&_Scope_letter-to-harwood-pennington-common-interest.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1016-00009_Engagement_&_Scope_staffing-plan-budget-memo.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1016-00009_Engagement_&_Scope_supplemental-engagement-letter-ofac-vsd.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1017-00003_Engagement_&_Administrative_conflict-check-memorandum.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1017-00003_Engagement_&_Administrative_engagement-letter-aurelius.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1017-00003_Engagement_&_Administrative_expert-retention-letter-ciphertrace.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1017-00003_Engagement_&_Administrative_expert-retention-letter-hargrove.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1017-00003_Engagement_&_Administrative_litigation-hold-notice.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1017-00004_Engagement_&_Administration_budget-memo-preliminary.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1017-00004_Engagement_&_Administration_conflict-check-memo.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1017-00004_Engagement_&_Administration_engagement-letter-ama.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1017-00004_Engagement_&_Administration_epl-coverage-analysis-memo.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1017-00004_Engagement_&_Administration_insurance-tender-pemberton-epl.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1017-00004_Engagement_&_Administration_insurance-tender-redcliffe-do.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1017-00004_Engagement_&_Administration_litigation-hold-acknowledgment-template.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1017-00004_Engagement_&_Administration_litigation-hold-notice-draft.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1017-00004_Engagement_&_Administration_ocg-compliance-confirmation.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1017-00004_Engagement_&_Administration_staffing-plan-memo.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1017-00005_Engagement_conflict-check-memo.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1017-00005_Engagement_engagement-letter-agmg.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1017-00005_Engagement_investigation-scope-protocol-memo.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1017-00005_Engagement_litigation-hold-notice.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1017-00005_Engagement_upjohn-warning-script.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1017-00006_Engagement_conflict-check-memo.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1017-00006_Engagement_engagement-letter-agmg.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1017-00007_Engagement_engagement-letter-aurelius.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1017-00008_Engagement_common-interest-privilege-protocol-memo.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1017-00008_Engagement_engagement-letter-agmg-gdpr-remediation.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1017-00009_Engagement_conflict-check-memorandum.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1017-00009_Engagement_engagement-letter.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1017-00009_Engagement_fee-estimate-memo.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1017-00009_Engagement_matter-opening-memo.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1018-00001_Engagement_&_Internal_conflict-check-memo.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1018-00001_Engagement_&_Internal_engagement-letter-ppc.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1018-00001_Engagement_&_Internal_internal-deal-memo.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1018-00002_Engagement_co-counsel-engagement-letter-whitfield-bauer.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1018-00002_Engagement_engagement-letter-penterra.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1018-00003_Engagement_&_Independence_Protocol_board-resolution-special-committee.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1018-00003_Engagement_&_Independence_Protocol_conflicts-clearance-memorandum.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1018-00003_Engagement_&_Independence_Protocol_director-independence-questionnaire-summary.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1018-00003_Engagement_&_Independence_Protocol_engagement-letter-ch-calderwood-harkness.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1018-00003_Engagement_&_Independence_Protocol_independence-protocol-information-barrier.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1018-00003_Engagement_&_Independence_Protocol_memo-delaware-law-interested-director-transactions.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1018-00003_Engagement_&_Independence_Protocol_special-committee-charter.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1018-00004_Engagement_conflict-check-memo.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1018-00004_Engagement_engagement-letter-penterra.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1018-00004_Engagement_matter-opening-memo.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1018-00004_Engagement_retainer-acknowledgment-letter.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1018-00004_Engagement_staffing-budget-estimate-memo.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1018-00005_Engagement_engagement-letter-penterra-snda.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1018-00006_Engagement_conflict-check-memo.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1018-00006_Engagement_engagement-letter-penterra.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1018-00008_Engagement_&_Preliminary_confidentiality-agreement-nda.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1018-00008_Engagement_&_Preliminary_conflicts-clearance-memo.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1018-00008_Engagement_&_Preliminary_engagement-letter-penterra.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1018-00008_Engagement_&_Preliminary_internal-deal-team-memo.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1018-00008_Engagement_&_Preliminary_non-binding-ioi-letter.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1018-00008_Engagement_&_Preliminary_preliminary-dd-request-list.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1018-00009_Engagement_conflict-check-memo.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1018-00009_Engagement_engagement-letter-ppc-draft.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1018-00009_Engagement_engagement-letter-ppc-executed.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1018-00009_Engagement_form-2848-power-of-attorney.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1018-00009_Engagement_kovel-letter-whitmore-executed.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1018-00009_Engagement_matter-staffing-plan.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1019-00001_Engagement_conflict-check-memo.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1019-00001_Engagement_engagement-letter-wal.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1019-00001_Engagement_insurance-coverage-notification-letter.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1019-00001_Engagement_litigation-hold-notice.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1019-00002_Engagement_engagement-letter.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1019-00003_Engagement_client-intake-memorandum.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1019-00003_Engagement_conflict-check-memorandum.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1019-00003_Engagement_engagement-letter-whitmore.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1019-00004_Engagement_engagement-letter-whitmore-itar-ear.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1019-00004_Engagement_northbridge-edd-engagement-letter.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1019-00005_Engagement_conflict-check-memo.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1019-00005_Engagement_engagement-letter-wal.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1019-00005_Engagement_litigation-hold-notice.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1020-00001_Engagement_&_Administration_conflict-check-memorandum.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1020-00001_Engagement_&_Administration_engagement-letter.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1020-00001_Engagement_&_Administration_matter-pause-dormancy-memorandum.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1020-00001_Engagement_&_Administration_new-matter-memorandum.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1020-00002_Engagement_engagement-letter-greenfield.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1020-00003_Engagement_engagement-letter-gap-2022-02-21.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1020-00004_Engagement_engagement-letter-gap-permitting.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1020-00005_Engagement_case-assessment-memorandum.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1020-00005_Engagement_conflict-check-memorandum.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1020-00005_Engagement_engagement-letter.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1020-00005_Engagement_litigation-hold-notice.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1020-00006_Engagement_engagement-letter-greenfield-jv.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1021-00001_Engagement_&_Preliminary_conflict-check-memo.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1021-00001_Engagement_&_Preliminary_engagement-letter-vhg.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1021-00001_Engagement_&_Preliminary_existing-credit-facilities-summary.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1021-00001_Engagement_&_Preliminary_existing-tlb-provisions-analysis.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1021-00001_Engagement_&_Preliminary_preliminary-assessment-memo.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1021-00001_Engagement_&_Preliminary_tax-considerations-memo.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1021-00002_Engagement_conflicts-check-memo.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1021-00002_Engagement_engagement-letter.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1021-00002_Engagement_preliminary-transaction-overview-memo.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1021-00003_Engagement_&_Client_Administration_conflicts-check-memorandum.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1021-00003_Engagement_&_Client_Administration_engagement-letter-vhg.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1021-00003_Engagement_&_Client_Administration_litigation-hold-notice-vhg.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1021-00003_Engagement_&_Client_Administration_revised-fee-staffing-memo.docx.txt"
+    },
+    {
+      "status": "A",
+      "path": "scratch/engagement_text/documents_matters_1021-00004_Engagement_engagement-letter-vhg-trademark-enforcement.docx.txt"
+    }
+  ],
+  "finished_at": "2026-11-18T03:24:07Z"
+}

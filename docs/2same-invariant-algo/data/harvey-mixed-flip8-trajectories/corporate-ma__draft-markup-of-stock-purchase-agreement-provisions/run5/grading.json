@@ -1,0 +1,370 @@
+{
+  "score": 1.0,
+  "max_score": 1.0,
+  "summary": "59/59 criteria passed.  ALL-PASS.",
+  "all_pass": true,
+  "n_criteria": 59,
+  "n_passed": 59,
+  "n_grading_errors": 0,
+  "pandoc_version": "3.11",
+  "criteria_results": [
+    {
+      "id": "C-001",
+      "title": "ISSUE_001: Identifies overbroad MAE carve-outs for environmental industry/regulations",
+      "verdict": "pass",
+      "reasoning": "The memorandum expressly identifies the environmental-services industry and Environmental Law carve-outs as problematic and proposes a disproportionate-impact qualifier applying to those carve-outs."
+    },
+    {
+      "id": "C-002",
+      "title": "ISSUE_001: Proposes adding disproportionate impact qualifier to MAE carve-outs",
+      "verdict": "pass",
+      "reasoning": "The proposed MAE definition adds an express disproportionate-impact exception applying to clauses (i) through (v), including the environmental-services industry carve-out and changes in Environmental Laws, where the Company is disproportionately affected relative to other industry participants."
+    },
+    {
+      "id": "C-003",
+      "title": "ISSUE_001: Provides actual revised contract language for MAE definition",
+      "verdict": "pass",
+      "reasoning": "The memorandum includes a full proposed replacement MAE definition as draft contract text, including a disproportionate-impact proviso applying to specified carve-outs relative to other industry participants."
+    },
+    {
+      "id": "C-004",
+      "title": "ISSUE_001: Explains rationale \u2014 environmental company needs MAE protection",
+      "verdict": "pass",
+      "reasoning": "The memorandum expressly explains that the environmental-services industry and Environmental Law carve-outs remove from the MAE analysis the risks most likely to affect Cascadia\u2019s value, noting that environmental-industry downturns and regulatory changes are core platform risks for a permit-dependent environmental services company. This directly satisfies the criterion."
+    },
+    {
+      "id": "C-005",
+      "title": "ISSUE_002: Identifies missing interim covenant restricting affiliate transactions",
+      "verdict": "pass",
+      "reasoning": "The memorandum expressly identifies that the interim covenants lack a restriction on transactions with Seller or Seller affiliates and proposes a new Section 6.01(b)(xiv) restricting entry into, amendment, extension, renewal, supplementation, or termination of such affiliate transactions between signing and closing."
+    },
+    {
+      "id": "C-006",
+      "title": "ISSUE_002: Proposes covenant requiring Buyer consent for affiliate transactions",
+      "verdict": "pass",
+      "reasoning": "The memorandum proposes new Section 6.01(b)(xiv), which prohibits the Company from entering into, amending, modifying, extending, renewing, supplementing, or terminating any contract, transaction, or arrangement with Seller or any Seller affiliate without Buyer's prior written consent."
+    },
+    {
+      "id": "C-007",
+      "title": "ISSUE_002: References the above-market rent to Seller affiliate as rationale",
+      "verdict": "pass",
+      "reasoning": "The memorandum expressly connects the affiliate-transaction covenant to the identified \u201c$1,600,000 Affiliate Lease,\u201d describing it as an above-market EBITDA adjustment and explaining that the covenant prevents Seller from expanding or amending value-leaking affiliate arrangements before closing."
+    },
+    {
+      "id": "C-008",
+      "title": "ISSUE_003: Identifies indemnification cap discrepancy (20% vs. 12.5%)",
+      "verdict": "pass",
+      "reasoning": "The memorandum expressly identifies the Seller draft\u2019s general indemnification cap as 20%/$43,000,000 and contrasts it with the term sheet\u2019s agreed 12.5%/$26,875,000 cap, including proposed replacement language."
+    },
+    {
+      "id": "C-009",
+      "title": "ISSUE_003: Proposes redline reducing cap to 12.5% / $26,875,000",
+      "verdict": "pass",
+      "reasoning": "The memorandum expressly proposes replacing the 20%/$43 million cap with a 12.5% cap equal to $26,875,000, based on the $215 million Base Enterprise Value."
+    },
+    {
+      "id": "C-010",
+      "title": "ISSUE_003: References the term sheet as basis for cap correction",
+      "verdict": "pass",
+      "reasoning": "The memorandum expressly cites the executed September 10, 2025 Term Sheet as the basis for correcting the indemnification cap. In Section 18, it states that the draft's 20%/$43 million cap contradicts Term Sheet \u00a78, which fixes the cap at 12.5% of the $215 million Base Enterprise Value, or $26.875 million."
+    },
+    {
+      "id": "C-011",
+      "title": "ISSUE_004: Identifies that environmental reps survival period is too short",
+      "verdict": "pass",
+      "reasoning": "The memorandum expressly identifies the Seller's 12-month blanket survival period as inadequate for environmental risks and proposes a separate 36-month survival period for environmental representations, including Environmental Laws and Environmental Permits, while flagging full-statute survival as a preferred alternative."
+    },
+    {
+      "id": "C-012",
+      "title": "ISSUE_004: Proposes extending environmental reps survival to at least 36 months",
+      "verdict": "pass",
+      "reasoning": "The memorandum expressly proposes that the Environmental Representations survive for 36 months following closing and also reserves the option to seek survival for the full applicable statute of limitations."
+    },
+    {
+      "id": "C-013",
+      "title": "ISSUE_004: References CERCLA/Dalton Creek exposure as rationale for longer survival",
+      "verdict": "pass",
+      "reasoning": "The memorandum expressly connects longer environmental survival to known environmental risks. In the Section 9.01 commentary, it cites the DD Memo\u2019s \u201clong-tail Dalton Creek CERCLA exposure\u201d and the Hargrove remediation project\u2019s 18\u201324-month timeline to justify at least 36 months of survival, while also flagging full-statute survival as the preferred alternative."
+    },
+    {
+      "id": "C-014",
+      "title": "ISSUE_005: Identifies anti-sandbagging provision in Section 9.06",
+      "verdict": "pass",
+      "reasoning": "The memorandum expressly identifies Section 9.06 as an anti-sandbagging provision and quotes its language barring Buyer from indemnification for breaches or inaccuracies of which Buyer or its Representatives had Knowledge as of the Closing Date."
+    },
+    {
+      "id": "C-015",
+      "title": "ISSUE_005: Proposes replacing with pro-sandbagging language",
+      "verdict": "pass",
+      "reasoning": "The memorandum expressly strikes the anti-sandbagging provision and replaces it with Section 9.06 stating that Buyer's indemnification and other remedies are not limited, diminished, or otherwise affected by any investigation or knowledge acquired before or after execution or Closing."
+    },
+    {
+      "id": "C-016",
+      "title": "ISSUE_005: Provides actual pro-sandbagging contract text",
+      "verdict": "pass",
+      "reasoning": "The memorandum includes actual proposed pro-sandbagging contract language in Section 9.06, expressly stating that Buyer's indemnification and other remedies are not affected by investigations, knowledge, or notice before or after signing or closing."
+    },
+    {
+      "id": "C-017",
+      "title": "ISSUE_006: Identifies need for Special Indemnity for Dalton Creek CERCLA matter",
+      "verdict": "pass",
+      "reasoning": "The memorandum expressly proposes a separate \u201cDalton Creek Special Indemnity\u201d in Section 9.02(e), covering the EPA CERCLA Section 104(e) request and related investigation, remediation, enforcement, contribution, and cost-recovery liabilities. It also states that relying only on general environmental representation indemnity would be inadequate."
+    },
+    {
+      "id": "C-018",
+      "title": "ISSUE_006: Special Indemnity survival of 72 months",
+      "verdict": "pass",
+      "reasoning": "The memorandum expressly states that the Dalton Creek Special Indemnity survives for seventy-two (72) months following the Closing Date, including in proposed Sections 9.01(d) and 9.02(e)."
+    },
+    {
+      "id": "C-019",
+      "title": "ISSUE_006: Special Indemnity not subject to basket or cap",
+      "verdict": "pass",
+      "reasoning": "The memorandum expressly states that the Dalton Creek Special Indemnity is not subject to the Basket Amount or the Indemnification Cap, provides first-dollar recovery, and includes conforming carve-outs in the proposed basket and cap provisions."
+    },
+    {
+      "id": "C-020",
+      "title": "ISSUE_006: References Dalton Creek liability range ($1.5M-$6M)",
+      "verdict": "pass",
+      "reasoning": "The memorandum expressly states in the proposed Dalton Creek schedule: \u201cCurrent estimated exposure: $1,500,000\u2013$6,000,000,\u201d and uses that exposure to support the Dalton Creek Special Indemnity and related escrow protections."
+    },
+    {
+      "id": "C-021",
+      "title": "ISSUE_007: Identifies problematic earnout operational covenant",
+      "verdict": "pass",
+      "reasoning": "The memorandum expressly identifies Section 2.05's requirement to operate consistently with past practice and in good faith to maximize the earnout as overly restrictive, recommends deleting those affirmative operating obligations, and replaces them with a narrow primary-purpose restriction."
+    },
+    {
+      "id": "C-022",
+      "title": "ISSUE_007: Proposes limiting earnout covenant to no-frustration standard",
+      "verdict": "pass",
+      "reasoning": "The memorandum expressly replaces the affirmative past-practice and earnout-maximization obligations with a narrow covenant prohibiting actions taken with the primary purpose of reducing or avoiding the earnout payment. It also preserves Buyer's discretion to operate, integrate, and restructure the business absent that prohibited purpose."
+    },
+    {
+      "id": "C-023",
+      "title": "ISSUE_007: Explains rationale \u2014 Buyer integration/restructuring flexibility",
+      "verdict": "pass",
+      "reasoning": "The memorandum expressly explains that the seller\u2019s broad earnout covenant should be deleted because it would constrain Buyer\u2019s post-closing discretion. It states that Buyer must retain the right to operate, integrate, restructure, allocate resources, and make other operational or strategic decisions in its sole discretion, subject only to a narrow primary-purpose restriction."
+    },
+    {
+      "id": "C-024",
+      "title": "ISSUE_008: Identifies missing payoff letter requirement",
+      "verdict": "pass",
+      "reasoning": "The memorandum expressly identifies that the draft permits repayment \u201cat or promptly following the Closing\u201d and lacks a payoff-letter deliverable or closing condition. It proposes requiring executed payoff letters from each holder of Closing Indebtedness at least three Business Days before closing, with simultaneous payoff through the funds flow."
+    },
+    {
+      "id": "C-025",
+      "title": "ISSUE_008: Proposes payoff letters at least 3 business days pre-closing",
+      "verdict": "pass",
+      "reasoning": "The memorandum expressly requires executed payoff letters no later than three Business Days before closing. It also requires each letter to include wiring instructions and commitments to provide lien releases, UCC termination statements, and related release documentation."
+    },
+    {
+      "id": "C-026",
+      "title": "ISSUE_008: Proposes simultaneous repayment at closing through funds flow",
+      "verdict": "pass",
+      "reasoning": "The memorandum expressly proposes in Section 2.03(d) that all Closing Indebtedness be repaid simultaneously at the Closing through the funds flow, with no Closing Indebtedness remaining outstanding afterward. It also adds a funds flow agreement covering the exact payoff amounts and wiring instructions."
+    },
+    {
+      "id": "C-027",
+      "title": "ISSUE_008: Proposes payoff letter delivery as a condition to closing",
+      "verdict": "pass",
+      "reasoning": "The memorandum expressly proposes a Buyer closing condition in Section 7.02(h) requiring Seller to deliver the payoff letters at least three Business Days before closing, in full force and effect and reasonably satisfactory to Buyer."
+    },
+    {
+      "id": "C-028",
+      "title": "ISSUE_009: Identifies missing government contract anti-assignment/novation requirement",
+      "verdict": "pass",
+      "reasoning": "The memorandum expressly identifies that the Seller's draft lacks specific government-contract anti-assignment, novation, and recognition protections. It discusses the Oregon DEQ, Washington Ecology, U.S. Army Corps of Engineers, and Bureau of Land Management contracts; cites the Anti-Assignment Act and FAR Part 42.12; and proposes related representations, covenants, and closing conditions."
+    },
+    {
+      "id": "C-029",
+      "title": "ISSUE_009: References specific government contracts requiring novation",
+      "verdict": "pass",
+      "reasoning": "The memorandum specifically identifies the U.S. Army Corps of Engineers and Bureau of Land Management contracts as subject to FAR Part 42, Subpart 42.12 novation requirements, satisfying the requirement to identify at least two specific active government contracts requiring novation or recognition."
+    },
+    {
+      "id": "C-030",
+      "title": "ISSUE_009: Proposes closing condition or covenant for government contract novation",
+      "verdict": "pass",
+      "reasoning": "The memorandum proposes a specific pre-closing covenant in Section 6.12 requiring Seller and the Company to notify contracting officers, submit all required novation and recognition requests, and use commercially reasonable efforts to obtain the relevant agreements and approvals. It also proposes a Section 7.02 closing condition requiring submission of those requests and no adverse agency response."
+    },
+    {
+      "id": "C-031",
+      "title": "ISSUE_009: References Anti-Assignment Act or FAR provisions",
+      "verdict": "pass",
+      "reasoning": "The memorandum expressly cites both the Anti-Assignment Act, 41 U.S.C. \u00a7 6305, and FAR Part 42, Subpart 42.12 as the legal basis for government-contract novation, recognition, notice, and approval requirements."
+    },
+    {
+      "id": "C-032",
+      "title": "ISSUE_010: Identifies missing environmental permit transfer/notification covenant",
+      "verdict": "pass",
+      "reasoning": "The memorandum expressly identifies that the draft lacks a pre- or post-closing covenant addressing the 23-permit portfolio and change-of-control notices or approvals. It proposes Section 6.13 requiring identification and submission of required notices/applications, efforts to obtain approvals, and post-closing cooperation on permit transfers, reissuances, amendments, and approvals."
+    },
+    {
+      "id": "C-033",
+      "title": "ISSUE_010: Proposes cooperation covenant for environmental permit transfers",
+      "verdict": "pass",
+      "reasoning": "The memorandum proposes new Section 6.13, requiring Seller to assist both before and after closing with identifying permit requirements, preparing and submitting environmental permit notices and applications, obtaining approvals, and cooperating on permit transfers, re-issuances, amendments, and approvals under applicable state requirements."
+    },
+    {
+      "id": "C-034",
+      "title": "ISSUE_010: Notes that permits may require notification even in a stock deal",
+      "verdict": "pass",
+      "reasoning": "The memorandum expressly identifies Oregon, Washington, California, and Nevada permit requirements triggered by a change in ownership or control and proposes notice, approval, and cooperation provisions for the contemplated stock purchase. This captures that permit notifications or approvals may be required despite the permit-holding entity remaining in place."
+    },
+    {
+      "id": "C-035",
+      "title": "ISSUE_011: Identifies missing R&W Insurance subrogation waiver",
+      "verdict": "pass",
+      "reasoning": "The memorandum expressly states that the Seller's draft contains no reference to R&W Insurance, Granite Ridge Underwriters, or the insurer's subrogation rights, and proposes a new Section 10.13 requiring a subrogation waiver against Seller and related parties, subject to an actual-fraud exception."
+    },
+    {
+      "id": "C-036",
+      "title": "ISSUE_011: Proposes subrogation waiver provision with fraud exception",
+      "verdict": "pass",
+      "reasoning": "The memorandum proposes new Section 10.13 requiring the R&W insurer to irrevocably waive subrogation and other recovery rights against Seller and related parties, with an express exception for claims arising from actual fraud by Seller. Although Granite Ridge Underwriters is not named in the provision itself, the memorandum identifies Granite Ridge as the relevant insurer elsewhere and satisfies the substantive criterion."
+    },
+    {
+      "id": "C-037",
+      "title": "ISSUE_011: References R&W Insurance policy / Granite Ridge Underwriters",
+      "verdict": "pass",
+      "reasoning": "The memorandum expressly states that Buyer will obtain an R&W Insurance policy and adds a proposed Section 10.13 requiring the insurer to waive subrogation against Seller except for actual fraud. It also references Granite Ridge Underwriters in the priority matrix and notes the need to coordinate the policy with the subrogation waiver."
+    },
+    {
+      "id": "C-038",
+      "title": "ISSUE_012: Identifies non-compete scope exceeds term sheet (duration)",
+      "verdict": "pass",
+      "reasoning": "The memorandum expressly identifies that the Seller's draft imposes a five-year non-compete and states that it must be conformed to the term sheet's three-year period, including proposed replacement language using three years."
+    },
+    {
+      "id": "C-039",
+      "title": "ISSUE_012: Identifies non-compete scope exceeds term sheet (geographic)",
+      "verdict": "pass",
+      "reasoning": "The memorandum expressly identifies that the Seller\u2019s draft imposes a nationwide restriction and proposes conforming it to the term sheet\u2019s four-state scope: Oregon, Washington, California, and Nevada."
+    },
+    {
+      "id": "C-040",
+      "title": "ISSUE_012: Identifies non-compete scope exceeds term sheet (activity)",
+      "verdict": "pass",
+      "reasoning": "The memorandum expressly identifies that the Seller's five-year nationwide restriction covering \u201cany business\u201d is overbroad and states that the term sheet limits the activity scope to environmental remediation and hazardous waste management services. It also proposes replacement language conforming to that narrower scope."
+    },
+    {
+      "id": "C-041",
+      "title": "ISSUE_012: Proposes narrowing non-compete duration to 3 years",
+      "verdict": "pass",
+      "reasoning": "The memorandum expressly proposes replacing the five-year non-compete with a three-year non-compete in Section 6.09(a), matching the term sheet."
+    },
+    {
+      "id": "C-042",
+      "title": "ISSUE_012: Proposes narrowing non-compete geographic scope to OR, WA, CA, NV",
+      "verdict": "pass",
+      "reasoning": "The proposed replacement for Section 6.09(a) expressly limits the non-compete to the States of Oregon, Washington, California, and Nevada, matching the term sheet and replacing the seller draft\u2019s nationwide scope."
+    },
+    {
+      "id": "C-043",
+      "title": "ISSUE_012: Proposes narrowing non-compete activity scope to environmental remediation and hazardous waste management",
+      "verdict": "pass",
+      "reasoning": "The proposed replacement for Section 6.09(a) expressly limits the non-compete to businesses engaged in \u201cenvironmental remediation services or hazardous waste management services,\u201d matching the term sheet\u2019s activity scope."
+    },
+    {
+      "id": "C-044",
+      "title": "ISSUE_012: Notes enforceability risk of overbroad non-compete",
+      "verdict": "pass",
+      "reasoning": "The memorandum expressly states that the five-year nationwide restriction covering \u201cany business\u201d improperly sweeps in Evergreen\u2019s unrelated construction and timber operations and \u201ccreates enforceability risk.\u201d It also proposes carve-outs preserving those legitimate businesses."
+    },
+    {
+      "id": "C-045",
+      "title": "Indemnification cap issue rated as Critical or High priority",
+      "verdict": "pass",
+      "reasoning": "The indemnification cap discrepancy is expressly assigned High priority in both the priority matrix and Section 18, where the draft's 20%/$43 million cap is corrected to 12.5%/$26.875 million."
+    },
+    {
+      "id": "C-046",
+      "title": "Anti-sandbagging issue rated as Critical or High priority",
+      "verdict": "pass",
+      "reasoning": "Section 9.06 (sandbagging) is expressly assigned \u201cPriority: CRITICAL,\u201d which is the highest priority tier and satisfies the criterion."
+    },
+    {
+      "id": "C-047",
+      "title": "Memorandum identifies provisions acceptable as drafted",
+      "verdict": "pass",
+      "reasoning": "The memorandum includes a dedicated \u201cProvisions intentionally not marked up\u201d section identifying multiple provisions as acceptable as drafted, including the basket, knowledge qualifier, good-standing certificates, Delaware governing law, escrow amount and agent, and certain core economic terms. It also briefly explains why each conforms to the term sheet or playbook."
+    },
+    {
+      "id": "C-048",
+      "title": "Memorandum flags items for partner/client discussion",
+      "verdict": "pass",
+      "reasoning": "The memorandum expressly includes Section 23, \u201cAdditional items requiring partner/client discussion,\u201d identifying multiple issues for Marcus Devereaux to decide or confirm, including whether completed government-contract novation should be a hard closing condition, whether to seek environmental survival for the full statute of limitations, and the Dalton Creek escrow structure. It also flags discussion points elsewhere in the markup."
+    },
+    {
+      "id": "C-049",
+      "title": "Escrow amount correctly stated as $16,125,000 (7.5% of EV)",
+      "verdict": "pass",
+      "reasoning": "The memorandum correctly states the escrow amount as $16,125,000 and expressly identifies it as 7.5% of the $215,000,000 base enterprise value, including in the escrow mechanics discussion."
+    },
+    {
+      "id": "C-050",
+      "title": "ISSUE_006: Proposes 36-month escrow holdback for Special Indemnity",
+      "verdict": "pass",
+      "reasoning": "The memorandum expressly distinguishes the 18-month general escrow release from a 36-month holdback for Fundamental Representations and Special Indemnities, including Dalton Creek. Section 9.08(b) requires the Dalton Creek-allocated escrow portion (at least $1.5 million) to remain available through the 36th month post-closing."
+    },
+    {
+      "id": "C-051",
+      "title": "Earnout maximum correctly referenced as $25,000,000",
+      "verdict": "pass",
+      "reasoning": "The memorandum correctly states that the maximum earnout payment is $25,000,000 in the proposed Section 2.05 language and accompanying commentary."
+    },
+    {
+      "id": "C-052",
+      "title": "Earnout Adjusted EBITDA threshold correctly referenced as $38,000,000",
+      "verdict": "pass",
+      "reasoning": "The memorandum correctly states that the maximum $25,000,000 earnout is payable if Adjusted EBITDA equals or exceeds $38,000,000, and repeatedly identifies $38,000,000 as the full-payment threshold."
+    },
+    {
+      "id": "C-053",
+      "title": "Earnout floor correctly referenced as $32,000,000",
+      "verdict": "pass",
+      "reasoning": "The memorandum correctly states a $32,000,000 earnout floor and provides for linear pro-rata payment between $32,000,000 and the $38,000,000 full-payment threshold, with no payment below $32,000,000."
+    },
+    {
+      "id": "C-054",
+      "title": "References playbook as authority for at least 3 markup positions",
+      "verdict": "pass",
+      "reasoning": "The memorandum cites the Buyer's M&A Playbook as authority for well over three distinct markup positions, including the MAE disproportionate-impact qualifier, earnout covenant and EBITDA definition, debt payoff mechanics, affiliate and environmental interim covenants, environmental survival, indemnification cap, pro-sandbagging, escrow coordination, R&W insurance provisions, and restrictive covenants."
+    },
+    {
+      "id": "C-055",
+      "title": "References term sheet as authority for at least 3 markup positions",
+      "verdict": "pass",
+      "reasoning": "The memorandum cites the executed term sheet as authority for well over three distinct markup positions, including the earnout covenant and mechanics, debt payoff letters and funds flow, absence-of-MAE lookback, non-compete scope, indemnification survival and cap, Dalton Creek special indemnity, closing conditions, R&W insurance provisions, escrow mechanics, and books-and-records access."
+    },
+    {
+      "id": "C-056",
+      "title": "References environmental DD memo for at least one markup position",
+      "verdict": "pass",
+      "reasoning": "The memorandum repeatedly cites the Environmental Due Diligence Summary (defined as the \u201cDD Memo\u201d) to support markup positions, including the Dalton Creek special indemnity, government-contract novation provisions, permit-transfer covenants, and environmental representation survival."
+    },
+    {
+      "id": "C-057",
+      "title": "Memorandum identifies specific SPA section numbers for issues",
+      "verdict": "pass",
+      "reasoning": "The memorandum ties well over 8 issues to specific SPA section numbers, including Sections 1.01, 2.03, 2.05, 2.08, 4.08, 4.15, 4.16, 6.01, 6.09, 7.02, 9.01, 9.02, 9.04, 9.06, 9.08, 10.13, and 10.14."
+    },
+    {
+      "id": "C-058",
+      "title": "Proposed redline language is actual contract text for at least 8 issues",
+      "verdict": "pass",
+      "reasoning": "The memorandum provides draft-ready contract text for well over 8 planted issues, including MAE, earnout mechanics and operating covenants, debt payoff letters/funds flow, government contracts, permit cooperation, affiliate transactions, non-compete, closing conditions, survival, Dalton Creek indemnity, the indemnification cap, sandbagging, escrow releases, and R&W insurance subrogation."
+    },
+    {
+      "id": "C-059",
+      "title": "ISSUE_008: Identifies all three sources of Target indebtedness",
+      "verdict": "pass",
+      "reasoning": "The payoff-letter provision expressly identifies all three sources of Target indebtedness: Cascade Mutual Bank's $28.0 million senior term loan, Pacific Lease Corp.'s $9.8 million equipment financing, and Evergreen Holdings Group, Inc.'s $4.5 million subordinated seller note."
+    }
+  ],
+  "run_id": "corporate-ma__draft-markup-of-stock-purchase-agreement-provisions",
+  "task": "corporate-ma/draft-markup-of-stock-purchase-agreement-provisions",
+  "judge_model": "gpt-5.6-sol",
+  "scored_at": "2026-11-16T19:29:02.733985+00:00"
+}

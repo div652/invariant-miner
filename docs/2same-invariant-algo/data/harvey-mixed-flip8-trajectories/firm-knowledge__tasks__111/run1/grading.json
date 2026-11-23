@@ -1,0 +1,34 @@
+{
+  "score": 0.0,
+  "max_score": 1.0,
+  "summary": "0/3 criteria passed.  Missed 3 \u2014 task FAIL.",
+  "all_pass": false,
+  "n_criteria": 3,
+  "n_passed": 0,
+  "n_grading_errors": 0,
+  "pandoc_version": "3.11",
+  "criteria_results": [
+    {
+      "id": "C-001",
+      "title": "Qualifying matter \u2014 Verimark Hospitality 1021-00006",
+      "verdict": "fail",
+      "reasoning": "The output identifies Verimark Hospitality as the largest settlement but cites Matter 1021-00003, not the required qualifying Matter 1021-00006. Therefore, it does not satisfy the criterion."
+    },
+    {
+      "id": "C-002",
+      "title": "Settlement figure \u2014 1021-00006",
+      "verdict": "fail",
+      "reasoning": "The output identifies a different matter (1021-00003) and states a $47,300,000 settlement. The criterion requires stating that the Verimark Hospitality settlement in matter 1021-00006 was $87,500,000."
+    },
+    {
+      "id": "C-003",
+      "title": "Qualifying set \u2014 precision",
+      "verdict": "fail",
+      "reasoning": "The output identifies Matter 1021-00003 as the Verimark matter with the largest settlement, whereas the criterion requires that only Matter 1021-00006 be asserted as having the largest settlement."
+    }
+  ],
+  "run_id": "firm-knowledge__tasks__111",
+  "task": "firm-knowledge/tasks/111",
+  "judge_model": "gpt-5.6-sol",
+  "scored_at": "2026-11-16T13:32:09.043293+00:00"
+}

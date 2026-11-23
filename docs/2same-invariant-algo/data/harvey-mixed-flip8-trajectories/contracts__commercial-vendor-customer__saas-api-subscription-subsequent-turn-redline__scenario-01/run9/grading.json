@@ -1,0 +1,352 @@
+{
+  "score": 0.0,
+  "max_score": 1.0,
+  "summary": "54/56 criteria passed.  Missed 2 \u2014 task FAIL.",
+  "all_pass": false,
+  "n_criteria": 56,
+  "n_passed": 54,
+  "n_grading_errors": 0,
+  "pandoc_version": "3.11",
+  "criteria_results": [
+    {
+      "id": "C-001",
+      "title": "IP section revised from ownership to perpetual-license construct",
+      "verdict": "pass",
+      "reasoning": "Draft 3 deletes Customer ownership of Customer-Trained Adaptations and replaces it with Vendor ownership plus a worldwide, irrevocable, perpetual, royalty-free license allowing Customer to use, reproduce, modify, deploy, and create derivative works from the adaptations, including after termination."
+    },
+    {
+      "id": "C-002",
+      "title": "Non-assertion covenant included in IP section",
+      "verdict": "pass",
+      "reasoning": "Draft 3 includes a broad Vendor non-assertion covenant in Section 5.2. It states that Vendor will not assert any patent, copyright, trade secret, trademark, or other intellectual property right against Customer\u2019s post-termination use, deployment, modification, or further development of the exported Customer-Trained Adaptations, and it binds Vendor\u2019s successors and assigns."
+    },
+    {
+      "id": "C-003",
+      "title": "API-based weight export portability within 30 days in industry-standard format",
+      "verdict": "pass",
+      "reasoning": "Draft 3 requires Vendor to provide an API-based export of Customer-Trained Adaptations, expressly including fine-tuned adapter weights, within 30 days after termination or expiration in an industry-standard format such as ONNX or SafeTensors. Section 13.6(g) reinforces the same requirement."
+    },
+    {
+      "id": "C-004",
+      "title": "Escrow provisions included as part of IP protective measures",
+      "verdict": "pass",
+      "reasoning": "Draft 3 includes a dedicated Technology Escrow framework tied to the perpetual-license construct. Article 5A and Exhibit E require escrow of fine-tuned adapter weights and other Customer-Trained Adaptations, along with training configurations, pipeline artifacts, documentation, and dependencies, with specified release conditions and a post-release perpetual license. The issues list also identifies escrow as a mandatory condition of the IP/license compromise."
+    },
+    {
+      "id": "C-005",
+      "title": "General liability cap at 1.5\u00d7 annual fees ($3,600,000)",
+      "verdict": "pass",
+      "reasoning": "Section 10.2 of Draft 3 sets the general aggregate liability cap at 1.5\u00d7 the $2,400,000 Annual Platform Fee, expressly equal to $3,600,000. The updated issues list also reflects this amount."
+    },
+    {
+      "id": "C-006",
+      "title": "Super-cap at 3\u00d7 annual fees ($7,200,000) for IP indemnity and data-breach carve-outs",
+      "verdict": "pass",
+      "reasoning": "Section 10.3 sets a separate super-cap of three times the $2,400,000 Annual Platform Fee, expressly stated as $7,200,000, for both Vendor\u2019s data-processing/data-breach liability and Vendor\u2019s IP indemnification obligations under Section 11.1."
+    },
+    {
+      "id": "C-007",
+      "title": "Willful misconduct and gross negligence remain fully uncapped",
+      "verdict": "pass",
+      "reasoning": "Section 10.3 expressly states that liability arising from either party\u2019s willful misconduct or gross negligence \u201cshall remain uncapped,\u201d excluding it from both the General Cap and consequential-damages exclusion. The issues list also confirms these liabilities remain uncapped."
+    },
+    {
+      "id": "C-008",
+      "title": "CCPA service-provider designation and certification",
+      "verdict": "pass",
+      "reasoning": "Draft 3 expressly designates Vendor as Customer\u2019s service provider/processor, not an independent controller, in Section 6.2 and requires certification under Cal. Civ. Code \u00a7 1798.140(ag). Exhibit D also contains an express CCPA/CPRA service-provider certification and associated use, sale, sharing, and disclosure restrictions."
+    },
+    {
+      "id": "C-009",
+      "title": "Prohibition on use of Customer Data for model improvement with de-identification conditions",
+      "verdict": "pass",
+      "reasoning": "Section 6.1 expressly prohibits model-improvement use of Customer Data, including de-identified or aggregated data, unless it satisfies the CCPA de-identification standard in Cal. Civ. Code \u00a7 1798.140(m) and is verified and certified before use by an independent third-party assessor approved in writing by Customer. It also states these are specific contractual obligations, and DPA Section 13 reinforces them."
+    },
+    {
+      "id": "C-010",
+      "title": "Uptime SLA at 99.95% monthly",
+      "verdict": "pass",
+      "reasoning": "Draft 3 expressly requires Platform availability of at least 99.95% in each calendar month in Section 9.1, and Exhibit B confirms the same monthly uptime target."
+    },
+    {
+      "id": "C-011",
+      "title": "Uptime SLA exclusions for scheduled maintenance and force majeure",
+      "verdict": "pass",
+      "reasoning": "Draft 3 expressly excludes both scheduled maintenance windows and Force Majeure Events from uptime Downtime calculations in Section 9.1. Exhibit B also confirms the scheduled-maintenance exclusion, subject to notice, timing, and duration conditions, and the force-majeure exclusion."
+    },
+    {
+      "id": "C-012",
+      "title": "Latency SLA at p95 \u2264 450 ms in Draft 3",
+      "verdict": "fail",
+      "reasoning": "Although Section 9.2 and the latency credit provision use p95 \u2264 450 ms, Exhibit B\u2019s Service Levels table still states p95 \u2264 400 ms, leaving Draft 3 internally inconsistent rather than uniformly setting the SLA at 450 ms."
+    },
+    {
+      "id": "C-013",
+      "title": "Issues list flags latency as yellow-zone item (450 ms vs. product team's 400 ms preference)",
+      "verdict": "pass",
+      "reasoning": "The updated issues list identifies \u201cLatency (p95 \u2264 450 ms)\u201d as a \u201cYELLOW CAUTION\u201d item and expressly notes that Product Engineering prefers \u2264400 ms for LendStream real-time decisioning."
+    },
+    {
+      "id": "C-014",
+      "title": "F1 accuracy threshold at \u2265 0.92 initial",
+      "verdict": "fail",
+      "reasoning": "Although Section 9.3 and Exhibit B set the Stabilization Period threshold at F1 \u2265 0.92, Exhibit A still sets the initial fine-tuning and Go-Live acceptance threshold at F1 \u2265 0.90. Draft 3 therefore contains an initial F1 threshold other than the required 0.92."
+    },
+    {
+      "id": "C-015",
+      "title": "F1 ramp mechanism to \u2265 0.94 after 90-day stabilization period post-Go-Live",
+      "verdict": "pass",
+      "reasoning": "Draft 3 expressly requires F1 \u2265 0.92 during the 90-day stabilization period from October 1 through December 31, 2025, and increases the contractual target to F1 \u2265 0.94 beginning January 1, 2026 and thereafter. This satisfies the required post-Go-Live ramp mechanism."
+    },
+    {
+      "id": "C-016",
+      "title": "SLA service credits capped at 20% of monthly fees ($40,000)",
+      "verdict": "pass",
+      "reasoning": "Draft 3 expressly caps aggregate SLA Service Credits at 20% of the $200,000 monthly Annual Platform Fee installment, equal to $40,000 per month, in Section 9.4 and Exhibit B, Section 5(c)."
+    },
+    {
+      "id": "C-017",
+      "title": "Termination right for 3 consecutive months of SLA miss retained",
+      "verdict": "pass",
+      "reasoning": "Draft 3 retains Customer\u2019s termination right in Section 9.5 when Vendor fails to meet any SLA target\u2014uptime, latency, or accuracy\u2014for three consecutive calendar months, with 30 days\u2019 written notice and no early termination fee. Exhibit B also preserves this trigger."
+    },
+    {
+      "id": "C-018",
+      "title": "New AI-output indemnity provision inserted",
+      "verdict": "pass",
+      "reasoning": "Draft 3 includes a newly inserted Section 11.5, \u201cAI-Output Indemnification,\u201d requiring Vendor to defend, indemnify, and hold Customer harmless from third-party claims alleging that AI-generated Platform outputs infringe or misappropriate intellectual property rights or violate applicable law, subject to specified Customer-caused exclusions."
+    },
+    {
+      "id": "C-019",
+      "title": "AI-output indemnity carve-out for Customer modification or off-label use",
+      "verdict": "pass",
+      "reasoning": "Section 11.5 includes the required carve-out: the AI-output indemnity does not apply to the extent a claim is caused by Customer\u2019s modification of an output after receipt or use of the Platform or output outside the documented use case in the SOW."
+    },
+    {
+      "id": "C-020",
+      "title": "IP indemnity scope broadened to all intellectual property rights",
+      "verdict": "pass",
+      "reasoning": "Section 11.1 expressly broadens Vendor\u2019s IP indemnity to all Intellectual Property Rights, including patents, copyrights, trade secrets, trademarks, moral rights, and analogous foreign-law rights, arising from Customer\u2019s authorized use of the Platform, Base Model, Customer-Trained Adaptations, or related outputs. It is not limited to registered U.S. patents and copyrights."
+    },
+    {
+      "id": "C-021",
+      "title": "Escrow of adapter weights plus training configuration and pipeline artifacts",
+      "verdict": "pass",
+      "reasoning": "Draft 3 replaces the full Base Model source-code escrow requirement with escrow of all fine-tuned adapter weights/Customer-Trained Adaptations and all training configuration and pipeline artifacts necessary to render, reproduce, or redeploy them. The issues list confirms the same scope."
+    },
+    {
+      "id": "C-022",
+      "title": "Iron Mountain IPM as proposed escrow agent with NCC Group as acceptable alternative",
+      "verdict": "pass",
+      "reasoning": "Draft 3 names Iron Mountain Intellectual Property Management, Inc. as the proposed Escrow Agent in the agreement and Exhibit E. The updated issues list also expressly identifies NCC Group plc as an acceptable fallback alternative."
+    },
+    {
+      "id": "C-023",
+      "title": "Escrow release triggers include insolvency, material uncured breach (>60 days), and cessation of product support",
+      "verdict": "pass",
+      "reasoning": "Draft 3 Section 5A.3 includes all required escrow release triggers: Vendor insolvency/bankruptcy, a material breach remaining uncured for more than 60 days after notice, and Vendor ceasing to support, maintain, or commercially offer the Platform. Exhibit E also confirms these triggers."
+    },
+    {
+      "id": "C-024",
+      "title": "Tech E&O insurance accepted at $5M per occurrence in Draft 3",
+      "verdict": "pass",
+      "reasoning": "Draft 3 Section 12.1(b) sets Technology Errors & Omissions / Cyber Liability Insurance at $5,000,000 per occurrence (and $5,000,000 annual aggregate), thereby accepting Meridian's current policy limit."
+    },
+    {
+      "id": "C-025",
+      "title": "Issues list flags Tech E&O as yellow-zone item (playbook prefers $10M for TCV > $5M)",
+      "verdict": "pass",
+      "reasoning": "Issue 11 flags the accepted $5M Tech E&O coverage as \u201cYELLOW CAUTION\u201d and expressly notes that the TCV is $7.2M and the preferred Tech E&O coverage is $10M, satisfying the criterion."
+    },
+    {
+      "id": "C-026",
+      "title": "Delaware governing law maintained in Draft 3",
+      "verdict": "pass",
+      "reasoning": "Draft 3 maintains Delaware governing law. Section 14.1 expressly states that the Agreement is governed by the laws of the State of Delaware, and no other state's law is specified as governing law."
+    },
+    {
+      "id": "C-027",
+      "title": "Delaware courts (Court of Chancery or U.S. District Court for D. Del.) as dispute forum",
+      "verdict": "pass",
+      "reasoning": "Section 14.2 specifies exclusive dispute resolution in the Delaware Court of Chancery or, where subject-matter jurisdiction exists, the U.S. District Court for the District of Delaware, with no arbitration requirement."
+    },
+    {
+      "id": "C-029",
+      "title": "DPA includes CCPA service-provider certification language",
+      "verdict": "pass",
+      "reasoning": "Exhibit D expressly includes a CCPA/CPRA Service-Provider Certification stating that Vendor certifies it is a \u201cservice provider\u201d under Cal. Civ. Code \u00a7 1798.140(ag), will process Customer Data only for the Agreement\u2019s specified business purposes, and will not sell, share, retain, use, or disclose it outside the direct business relationship or for other purposes."
+    },
+    {
+      "id": "C-030",
+      "title": "DPA includes GLBA safeguards compliance",
+      "verdict": "pass",
+      "reasoning": "Draft 3 expressly addresses GLBA safeguards compliance. Exhibit D, Section 4 states that Vendor acknowledges Customer Data includes NPPI subject to GLBA and agrees to comply with all applicable safeguard requirements. The main agreement also references the FTC Safeguards Rule in Section 6.3 and requires security safeguards in Section 6.4."
+    },
+    {
+      "id": "C-031",
+      "title": "DPA includes 72-hour data breach notification",
+      "verdict": "pass",
+      "reasoning": "Draft 3 requires Vendor to notify Customer of any confirmed or reasonably suspected Security Breach within seventy-two (72) hours of discovery or awareness. This requirement appears in DPA Section 8 and is consistent with Agreement Section 6.5."
+    },
+    {
+      "id": "C-032",
+      "title": "DPA includes sub-processor management with prior written consent",
+      "verdict": "pass",
+      "reasoning": "Draft 3 expressly requires Customer\u2019s prior written consent before Vendor may engage any sub-processor to process Customer Data. This appears in DPA Section 6 and is also reinforced in Agreement Section 6.6."
+    },
+    {
+      "id": "C-033",
+      "title": "DPA includes de-identification standards with statutory compliance and independent verification",
+      "verdict": "pass",
+      "reasoning": "Draft 3 expressly requires de-identified or aggregated Customer Data to satisfy the CCPA statutory de-identification standard in Cal. Civ. Code \u00a7 1798.140(m) and to be independently verified and certified before use by a third-party assessor approved by Customer. These requirements appear in both Section 6.1 and DPA Section 13."
+    },
+    {
+      "id": "C-034",
+      "title": "DPA includes data return/deletion upon termination",
+      "verdict": "pass",
+      "reasoning": "Draft 3 expressly addresses data return/deletion upon termination or expiration. DPA Section 10 requires Vendor to return or delete all Customer Data in accordance with Agreement Section 6.7 within 30 days of Customer\u2019s written request and to certify completion in writing."
+    },
+    {
+      "id": "C-035",
+      "title": "Issues list covers all 12 minimum negotiation point categories",
+      "verdict": "pass",
+      "reasoning": "The updated issues list covers all 12 required categories: IP ownership/licensing; liability cap; data processing/de-identification; uptime, latency, and accuracy/F1 SLAs; SLA credits; escrow; AI-output indemnity; IP indemnity scope; Tech E&O insurance; and governing law/dispute resolution."
+    },
+    {
+      "id": "C-036",
+      "title": "IP ownership/licensing categorized as partially resolved",
+      "verdict": "pass",
+      "reasoning": "The updated issues list categorizes Issue 5, \u201cIP ownership / license structure,\u201d as \u201cPartially Resolved,\u201d reflecting acceptance of the perpetual-license construct subject to unresolved portability, escrow, and non-assertion protections."
+    },
+    {
+      "id": "C-037",
+      "title": "Liability cap categorized as partially resolved",
+      "verdict": "pass",
+      "reasoning": "The updated issues list categorizes the general liability cap (Issue 6) as \u201cOpen,\u201d reflecting that the proposed 1.5\u00d7 compromise remains unaccepted. The criterion expressly permits either \u201cPartially Resolved\u201d or \u201cOpen.\u201d"
+    },
+    {
+      "id": "C-038",
+      "title": "Data processing/de-identification categorized as partially resolved",
+      "verdict": "pass",
+      "reasoning": "The updated issues list categorizes Issue 8, \u201cData processing / CCPA service-provider,\u201d as \u201cPartially Resolved\u201d and expressly notes that the de-identification certification remains unagreed, while confirming the service-provider status."
+    },
+    {
+      "id": "C-039",
+      "title": "Uptime SLA categorized as resolved",
+      "verdict": "pass",
+      "reasoning": "The updated issues list categorizes the 99.95% monthly uptime SLA as \u201cResolved\u201d and expressly carries forward the agreed scheduled-maintenance and force-majeure exclusions."
+    },
+    {
+      "id": "C-040",
+      "title": "Latency SLA categorized as partially resolved",
+      "verdict": "pass",
+      "reasoning": "The updated issues list categorizes the latency SLA as \u201cPartially Resolved,\u201d states that Draft 3 accepts p95 \u2264 450 ms, and notes that Product Engineering still prefers sub-400 ms for LendStream real-time decisioning."
+    },
+    {
+      "id": "C-041",
+      "title": "Accuracy/F1 SLA categorized as open",
+      "verdict": "pass",
+      "reasoning": "The updated issues list categorizes \u201cAccuracy / F1 score ramp\u201d as \u201cOpen\u201d and states that Draft 3 proposes F1 \u2265 0.92 through December 31, 2025, increasing to F1 \u2265 0.94 beginning January 1, 2026, with the target remaining unagreed."
+    },
+    {
+      "id": "C-042",
+      "title": "SLA credits categorized as partially resolved",
+      "verdict": "pass",
+      "reasoning": "The updated issues list categorizes SLA credits (Issue 4) as \u201cOpen,\u201d not fully resolved. This satisfies the criterion, which permits either \u201cPartially Resolved\u201d or \u201cOpen.\u201d"
+    },
+    {
+      "id": "C-043",
+      "title": "Escrow categorized as partially resolved",
+      "verdict": "pass",
+      "reasoning": "The updated issues list categorizes Issue 13 (Escrow) as \u201cOpen,\u201d noting that the escrow agent and scope remain disputed. The criterion expressly accepts either \u201cPartially Resolved\u201d or \u201cOpen\u201d and only fails if escrow is marked fully \u201cResolved.\u201d"
+    },
+    {
+      "id": "C-044",
+      "title": "AI-output indemnity categorized as open",
+      "verdict": "pass",
+      "reasoning": "The updated issues list categorizes Issue 9, \u201cAI-output indemnity,\u201d as \u201cOpen\u201d and notes that Meridian has not responded substantively."
+    },
+    {
+      "id": "C-045",
+      "title": "IP indemnity scope categorized as open",
+      "verdict": "pass",
+      "reasoning": "The updated issues list categorizes Issue 10, \u201cIP indemnity scope,\u201d as \u201cOpen\u201d and notes that Meridian has not agreed to the broadened scope."
+    },
+    {
+      "id": "C-046",
+      "title": "Tech E&O insurance categorized as partially resolved with yellow-zone flag",
+      "verdict": "pass",
+      "reasoning": "In the updated issues list, item 11 (\u201cInsurance / Tech E&O ($5M accepted)\u201d) is categorized as \u201cPartially Resolved\u201d and expressly flagged \u201cYELLOW CAUTION,\u201d satisfying both requirements."
+    },
+    {
+      "id": "C-047",
+      "title": "Governing law/dispute resolution categorized as open",
+      "verdict": "pass",
+      "reasoning": "The updated issues list categorizes Issue 12, \u201cGoverning law / dispute resolution,\u201d as \u201cOpen,\u201d noting that Meridian remains on Massachusetts law and Boston AAA arbitration."
+    },
+    {
+      "id": "C-048",
+      "title": "Draft 3 is redlined against Draft 2 as the base (not Draft 1)",
+      "verdict": "pass",
+      "reasoning": "Draft 3 contains tracked insertions and deletions, and the accompanying issues list expressly states that it was prepared against the accepted Draft 2 base. There is no indication that Draft 1 or another document was used as the redline base."
+    },
+    {
+      "id": "C-049",
+      "title": "Annual platform fee preserved at $2,400,000/yr",
+      "verdict": "pass",
+      "reasoning": "Draft 3 preserves the Annual Platform Fee at $2,400,000 per Contract Year in Section 4.1, invoiced as twelve monthly installments of $200,000. The updated issues list also confirms the same annual fee."
+    },
+    {
+      "id": "C-050",
+      "title": "3-year initial term preserved (July 1, 2025 \u2013 June 30, 2028)",
+      "verdict": "pass",
+      "reasoning": "Draft 3 preserves the three-year Initial Term. Section 13.1 states that it begins July 1, 2025 and expires June 30, 2028, and the Initial Term definition and updated issues list are consistent with those dates."
+    },
+    {
+      "id": "C-051",
+      "title": "Implementation fee preserved at $850,000 with 50/50 milestone split",
+      "verdict": "pass",
+      "reasoning": "Draft 3 preserves the one-time implementation fee at $850,000 and splits it equally: $425,000 due following execution of the Initial SOW and $425,000 due following Go-Live. The same amounts and milestones are reflected in Exhibit A and the updated issues list."
+    },
+    {
+      "id": "C-052",
+      "title": "Included API calls preserved at 40,000,000/yr with $0.012 overage",
+      "verdict": "pass",
+      "reasoning": "Draft 3 preserves 40,000,000 included API calls per Contract Year and an overage rate of $0.012 per API call in Section 4.3; the updated issues list confirms the same terms."
+    },
+    {
+      "id": "C-053",
+      "title": "180-day auto-renewal notice period preserved",
+      "verdict": "pass",
+      "reasoning": "Draft 3 preserves the 180-day auto-renewal notice period. Section 13.2 requires either party to provide notice of non-renewal at least 180 days before the current term expires, and the updated issues list confirms the same term."
+    },
+    {
+      "id": "C-054",
+      "title": "Issues list notes latency 450 ms is within playbook acceptable range but below preferred 400 ms",
+      "verdict": "pass",
+      "reasoning": "The issues list states that 450 ms is within the Playbook\u2019s \u2264500 ms fallback range, exceeds the preferred \u2264400 ms target, and conflicts with Product Engineering\u2019s preference for LendStream real-time decisioning."
+    },
+    {
+      "id": "C-055",
+      "title": "Issues list recommends considering latency escalation at the May 19 joint call",
+      "verdict": "pass",
+      "reasoning": "The latency issue\u2019s fallback/next step expressly says to \u201cRevisit at the week-of-May-19 joint call,\u201d which is a recommendation to raise or consider escalating the issue at that planned call."
+    },
+    {
+      "id": "C-056",
+      "title": "Issues list flags AI-output indemnity as fully open with no Meridian response",
+      "verdict": "pass",
+      "reasoning": "Issue 9 in the updated issues list labels AI-output indemnity as \u201cOpen\u201d and expressly states that \u201cMeridian has not responded substantively,\u201d satisfying the criterion that it be fully open with no substantive Meridian response."
+    },
+    {
+      "id": "C-057",
+      "title": "Issues list notes playbook fallback for AI-output indemnity (shared-risk with vendor first-dollar coverage)",
+      "verdict": "pass",
+      "reasoning": "The updated issues list expressly states under Issue 9 (AI-output indemnity): \u201cPlaybook fallback: shared-risk framework with Vendor first-dollar coverage, defense cooperation, and prompt remediation.\u201d This satisfies the criterion."
+    }
+  ],
+  "run_id": "contracts__commercial-vendor-customer__saas-api-subscription-subsequent-turn-redline__scenario-01",
+  "task": "contracts/commercial-vendor-customer/saas-api-subscription-subsequent-turn-redline/scenario-01",
+  "judge_model": "gpt-5.6-sol",
+  "scored_at": "2026-11-18T03:27:49.343622+00:00"
+}

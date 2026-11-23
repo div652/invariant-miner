@@ -1,0 +1,10 @@
+{
+  "answer": "Completed `response.md` with the qualifying matter count, fund names, supporting documents, reasoning, and exclusions for unsigned LPAs.",
+  "source": "last_assistant_message",
+  "finish_reason": "completed",
+  "turn_end": {
+    "kind": "completed"
+  },
+  "root_session_id": "session-46b48593-60b6-4ca3-bf21-bf0fa28b7653",
+  "exit_code": 0
+}

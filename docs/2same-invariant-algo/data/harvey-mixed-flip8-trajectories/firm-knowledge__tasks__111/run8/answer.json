@@ -1,0 +1,10 @@
+{
+  "answer": "Completed and saved the self-contained findings to `output/response.md`.",
+  "source": "last_assistant_message",
+  "finish_reason": "completed",
+  "turn_end": {
+    "kind": "completed"
+  },
+  "root_session_id": "session-0ea85a2f-5bfa-4d90-a3e0-b01d73d1bd95",
+  "exit_code": 0
+}

@@ -1,0 +1,10 @@
+{
+  "answer": "Completed the research and wrote the self-contained answer to `output/response.md`.",
+  "source": "last_assistant_message",
+  "finish_reason": "completed",
+  "turn_end": {
+    "kind": "completed"
+  },
+  "root_session_id": "session-a9657456-71a7-4063-93e6-761c7ac4f893",
+  "exit_code": 0
+}

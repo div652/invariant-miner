@@ -1,0 +1,10 @@
+{
+  "answer": "Completed `response.md` with the largest settlement, matter identification, source documents, comparison methodology, and reasoning.",
+  "source": "last_assistant_message",
+  "finish_reason": "completed",
+  "turn_end": {
+    "kind": "completed"
+  },
+  "root_session_id": "session-f3497c2a-d873-4078-ae8e-c58cf10c2bf0",
+  "exit_code": 0
+}

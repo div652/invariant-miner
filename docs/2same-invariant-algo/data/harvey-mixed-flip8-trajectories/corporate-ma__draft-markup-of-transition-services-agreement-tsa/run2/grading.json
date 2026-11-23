@@ -1,0 +1,352 @@
+{
+  "score": 0.0,
+  "max_score": 1.0,
+  "summary": "55/56 criteria passed.  Missed 1 \u2014 task FAIL.",
+  "all_pass": false,
+  "n_criteria": 56,
+  "n_passed": 55,
+  "n_grading_errors": 0,
+  "pandoc_version": "3.11",
+  "criteria_results": [
+    {
+      "id": "C-001",
+      "title": "ISSUE_001a: Identifies 24-month lookback deviation in service standard",
+      "verdict": "pass",
+      "reasoning": "The agent expressly identifies that Section 3.1 improperly uses a 24-month lookback instead of the APA/playbook-required 12-month lookback and revises the service standard to the twelve months immediately preceding Closing. The cover memo also highlights this discrepancy and proposed correction."
+    },
+    {
+      "id": "C-002",
+      "title": "ISSUE_001b: Identifies 'or better than' qualifier in service standard",
+      "verdict": "pass",
+      "reasoning": "The agent expressly flags Section 3.1's \u201cat least equal to or better than\u201d language as creating a ratcheting service obligation and replaces it with a \u201csubstantially consistent\u201d historical standard that does not require performance above historical levels."
+    },
+    {
+      "id": "C-003",
+      "title": "ISSUE_001c: Identifies undefined 'industry best practices' benchmark",
+      "verdict": "pass",
+      "reasoning": "The agent expressly flags the \u201cindustry best practices\u201d language in Section 3.1 as undefined and not required by the APA, explains that it could create an expansive service obligation, and replaces it with the APA\u2019s 12-month historical \u201csubstantially consistent\u201d standard. It also removes the industry-standard overlay from Schedule B and highlights the issue in the cover memo."
+    },
+    {
+      "id": "C-004",
+      "title": "ISSUE_001d: Proposes redline conforming service standard to playbook",
+      "verdict": "pass",
+      "reasoning": "The agent proposes replacement language in Section 3.1 requiring each Service to be provided \u201cin a manner and at a level of quality substantially consistent with the manner and level of quality\u201d provided to the Business during the twelve months immediately preceding Closing, which conforms to the playbook standard."
+    },
+    {
+      "id": "C-005",
+      "title": "ISSUE_002a: Identifies liability cap as 200% of total fees vs. APA's trailing 12-month cap",
+      "verdict": "pass",
+      "reasoning": "The agent expressly identifies that draft Section 10.1 uses a 200% cap based on total fees paid and contrasts it with APA Section 7.12(d), which requires a cap based on fees actually paid during the trailing 12-month period preceding the claim, including the first-year lookback."
+    },
+    {
+      "id": "C-006",
+      "title": "ISSUE_002b: Quantifies liability cap exposure difference",
+      "verdict": "pass",
+      "reasoning": "The cover memo expressly quantifies the gap: the draft cap is calculated at $41.004 million (or $40.392 million after correcting the IT markup), versus an APA trailing-12-month cap of $13.464 million, yielding a difference of approximately $27.54 million (or $26.928 million after correction)."
+    },
+    {
+      "id": "C-007",
+      "title": "ISSUE_002c: Redlines liability cap to conform to APA Section 7.12(d)",
+      "verdict": "pass",
+      "reasoning": "Section 10.1 is redlined to cap aggregate liability at the total fees actually paid during the 12-month period immediately preceding the date the applicable claim is first asserted, with an appropriate first-year formulation. This conforms to APA Section 7.12(d)."
+    },
+    {
+      "id": "C-008",
+      "title": "ISSUE_003a: Identifies non-mutual consequential damages waiver",
+      "verdict": "pass",
+      "reasoning": "The agent expressly identifies Section 10.2 as unilateral, noting that only Polaris waives consequential-damages claims against Trident and that Polaris remains exposed to such claims by Trident. It also proposes a mutual waiver."
+    },
+    {
+      "id": "C-009",
+      "title": "ISSUE_003b: Redlines to make consequential damages waiver mutual",
+      "verdict": "pass",
+      "reasoning": "The agent redlined Section 10.2 to state that \u201cNEITHER PARTY SHALL BE LIABLE TO THE OTHER PARTY\u201d for consequential, incidental, indirect, special, exemplary, or punitive damages, expressly making the waiver mutual and consistent with the criterion."
+    },
+    {
+      "id": "C-010",
+      "title": "ISSUE_004a: Identifies automatic renewal extending TSA beyond 18 months",
+      "verdict": "pass",
+      "reasoning": "The markup expressly states that the two automatic six-month renewal periods could extend the TSA to 30 months and identifies this as conflicting with APA Section 7.12(a)'s 18-month cap. The cover memo likewise recommends deleting automatic renewal and imposing an 18-month hard stop."
+    },
+    {
+      "id": "C-011",
+      "title": "ISSUE_004b: Redlines to delete auto-renewal and impose hard 18-month stop",
+      "verdict": "pass",
+      "reasoning": "The markup deletes the automatic-renewal mechanism and provides that the Agreement expires after the 18-month Initial Term unless the parties mutually execute a written extension. Any extension is capped at six additional months and priced at fully loaded cost plus 15%."
+    },
+    {
+      "id": "C-012",
+      "title": "ISSUE_005a: Identifies 120-day termination notice exceeding APA's 90 days",
+      "verdict": "pass",
+      "reasoning": "The agent expressly flags draft Section 5.3's 120-day notice requirement as conflicting with APA Section 7.12(c)'s 90-day period and revises it to exactly 90 days. The cover memo also identifies this as a critical APA-conforming change."
+    },
+    {
+      "id": "C-013",
+      "title": "ISSUE_005b: Redlines termination notice to 90 days per APA",
+      "verdict": "pass",
+      "reasoning": "The agent redlines Section 5.3 to replace the 120-day termination notice with exactly 90 days\u2019 prior written notice and expressly cites APA Section 7.12(c) as the basis."
+    },
+    {
+      "id": "C-014",
+      "title": "ISSUE_006a: Identifies Key Personnel consent right overriding Polaris staffing discretion",
+      "verdict": "pass",
+      "reasoning": "The agent expressly flags Section 4.3 and Schedule H as conflicting with Polaris\u2019s sole staffing discretion because they require Trident\u2019s prior written consent for reassignment or replacement of the named Key Personnel. It revises the provision to preserve Polaris\u2019s sole discretion and eliminate Trident\u2019s consent right, and highlights the issue again in the cover memo."
+    },
+    {
+      "id": "C-015",
+      "title": "ISSUE_006b: Proposes compromise on Key Personnel (notice + qualified replacement)",
+      "verdict": "pass",
+      "reasoning": "The redline restores Polaris's sole discretion over staffing and removes Trident's consent right, while requiring reasonable efforts to give 15 Business Days' advance notice of planned changes where practicable and to designate a reasonably qualified replacement. Schedule H includes consistent notice and replacement language."
+    },
+    {
+      "id": "C-016",
+      "title": "ISSUE_007a: Identifies IT services 15% markup exceeding APA 10% cap",
+      "verdict": "pass",
+      "reasoning": "The agent expressly flags the IT Services markup as 15% on a $340,000 base, yielding $391,000 per month, and corrects it to the APA Section 7.12(b) maximum of 10%, yielding $374,000 per month. This discrepancy is identified in both the redline (C4) and the review memo."
+    },
+    {
+      "id": "C-017",
+      "title": "ISSUE_007b: Correctly computes IT fee difference",
+      "verdict": "pass",
+      "reasoning": "The agent correctly identifies the IT monthly fee as $391,000 at a 15% markup, corrects it to $374,000 at 10%, and expressly computes the monthly overcharge as $17,000."
+    },
+    {
+      "id": "C-018",
+      "title": "ISSUE_007c: Notes APA compliance risk even though overcharge benefits Polaris",
+      "verdict": "pass",
+      "reasoning": "The agent expressly notes that the 15% IT markup benefits Polaris but violates APA Section 7.12(b), and states it must be corrected to 10% to preserve APA compliance and credibility. Both the redline comment and memo characterize the correction as firm even though it reduces Polaris\u2019s revenue."
+    },
+    {
+      "id": "C-019",
+      "title": "ISSUE_008a: Identifies audit frequency deviation (twice/year vs. once/12 months)",
+      "verdict": "pass",
+      "reasoning": "The agent expressly flags that draft Section 14.1 permits audits twice per calendar year, states the playbook limit is once per 12-month period, and redlines Section 14.1 accordingly. The cover memo also repeats this deviation and proposed correction."
+    },
+    {
+      "id": "C-020",
+      "title": "ISSUE_008b: Identifies audit cost allocation deviation (Seller's vs. Buyer's expense)",
+      "verdict": "pass",
+      "reasoning": "The agent expressly flags that draft Section 14.1 puts audits and third-party auditor costs at Polaris's expense, states the playbook requires audits at the Buyer's expense, and redlines the provision so Service Recipient conducts audits \u201cat its sole expense,\u201d subject to reimbursement only if overcharges exceed 5%."
+    },
+    {
+      "id": "C-021",
+      "title": "ISSUE_008c: Identifies audit notice period deviation (10 vs. 30 business days)",
+      "verdict": "pass",
+      "reasoning": "The agent expressly flags Section 14.1\u2019s 10-business-day audit notice as a deviation from the playbook and redlines it to require at least 30 business days\u2019 prior written notice. The cover memo also repeats this correction."
+    },
+    {
+      "id": "C-022",
+      "title": "ISSUE_009a: Identifies Ohio governing law vs. playbook's Pennsylvania law",
+      "verdict": "pass",
+      "reasoning": "The agent expressly flags Section 15.1\u2019s Ohio governing law as inconsistent with the playbook and redlines it to Pennsylvania law. The cover memo also identifies the Ohio-law deviation and recommends Pennsylvania law."
+    },
+    {
+      "id": "C-023",
+      "title": "ISSUE_009b: Identifies Cuyahoga County litigation vs. playbook's AAA arbitration in Pittsburgh",
+      "verdict": "pass",
+      "reasoning": "The agent expressly flags Section 15.2\u2019s exclusive Cuyahoga County, Ohio litigation provision as a playbook deviation and replaces it with confidential, binding arbitration under the AAA Commercial Arbitration Rules in Pittsburgh, Pennsylvania, after executive escalation."
+    },
+    {
+      "id": "C-024",
+      "title": "ISSUE_009c: Explains strategic importance of home-state law and arbitration for Polaris",
+      "verdict": "pass",
+      "reasoning": "The output explains the strategic rationale for Pennsylvania law and Pittsburgh arbitration: it notes that Ohio litigation gives Trident a home-forum advantage, creates public-docket exposure, and increases discovery and procedural burdens, while proposing confidential AAA arbitration in Polaris\u2019s home forum."
+    },
+    {
+      "id": "C-025",
+      "title": "ISSUE_010a: Identifies overbroad perpetual IP license grant",
+      "verdict": "pass",
+      "reasoning": "The agent expressly flags Section 7.1\u2019s perpetual, irrevocable, worldwide, royalty-free license covering Polaris\u2019s tools, methodologies, templates, software, and know-how as an overbroad departure from the playbook\u2019s firm no-license position. It identifies the risk of permanently exposing enterprise-wide proprietary operational IP and redlines the provision to reserve all Service Provider Materials to Polaris, allowing only limited access necessary to receive services during the applicable service period."
+    },
+    {
+      "id": "C-026",
+      "title": "ISSUE_010b: Redlines to delete IP license and confirm Polaris sole ownership",
+      "verdict": "pass",
+      "reasoning": "Section 7.1 deletes the perpetual, irrevocable license and replaces it with language confirming that all Service Provider Materials remain Polaris\u2019s sole and exclusive property. It grants no license beyond Service Recipient\u2019s limited ability to access and use the Services during the applicable service period solely to receive those Services, with access ending when the service ends."
+    },
+    {
+      "id": "C-027",
+      "title": "ISSUE_011a: Identifies missing non-solicitation provision",
+      "verdict": "pass",
+      "reasoning": "The agent expressly flags that the draft has no restriction on hiring Polaris service personnel and adds Section 15.12, a non-solicitation/non-hire covenant covering Polaris employees who provided Services."
+    },
+    {
+      "id": "C-028",
+      "title": "ISSUE_011b: Drafts non-solicitation provision with 12-month post-service tail",
+      "verdict": "pass",
+      "reasoning": "Proposed Section 15.12 restricts Trident (Service Recipient) from soliciting, recruiting, hiring, or engaging Polaris personnel who provided Services during the Term and for 12 months after expiration or termination of the applicable Service, unless Polaris gives prior written consent."
+    },
+    {
+      "id": "C-029",
+      "title": "ISSUE_012a: Identifies CGL insurance reduction ($2M vs. $5M playbook)",
+      "verdict": "pass",
+      "reasoning": "The agent expressly flags that Section 13.1 requires only $2 million in Buyer CGL coverage versus the playbook\u2019s $5 million requirement and proposes increasing the CGL limits to $5 million per occurrence and aggregate. The cover memo repeats this issue and recommendation."
+    },
+    {
+      "id": "C-030",
+      "title": "ISSUE_012b: Identifies missing umbrella coverage requirement",
+      "verdict": "pass",
+      "reasoning": "The agent expressly flags that the draft has no umbrella coverage and proposes adding umbrella or excess liability insurance with limits of at least $5 million in revised Section 13.1. The cover memo also identifies the missing $5 million umbrella requirement."
+    },
+    {
+      "id": "C-031",
+      "title": "ISSUE_012c: Identifies missing additional insured endorsement",
+      "verdict": "pass",
+      "reasoning": "The agent expressly flags that the buyer insurance provision lacks additional-insured protection and revises Section 13.1 to require Polaris and its affiliates to be named as additional insureds under the buyer\u2019s CGL and umbrella/excess policies, with delivery of the required endorsements."
+    },
+    {
+      "id": "C-032",
+      "title": "ISSUE_013a: Flags missing IMMEX program provisions for Monterrey facility",
+      "verdict": "pass",
+      "reasoning": "The agent expressly flags the absence of IMMEX provisions for the Monterrey facility and adds Schedule E Section 6A allocating primary responsibility and costs to Trident for maintaining, transferring, renewing, and complying with IMMEX certification and related customs requirements, while defining Polaris's transition-assistance role."
+    },
+    {
+      "id": "C-033",
+      "title": "ISSUE_013b: Flags missing Mexican data privacy (LFPDPPP) provisions",
+      "verdict": "pass",
+      "reasoning": "The agent expressly flags that Section 8.4 covers only U.S. privacy laws and adds provisions addressing Mexico\u2019s LFPDPPP for Mexican employee payroll and HR data. The proposed language allocates controller/processor roles, requires privacy notices and consents or another lawful basis for processing and cross-border transfers, imposes safeguards and incident notification obligations, and contemplates a data-processing addendum. The cover memo also identifies this as a significant missing requirement."
+    },
+    {
+      "id": "C-034",
+      "title": "ISSUE_014a: Identifies missing termination assistance/wind-down provisions",
+      "verdict": "pass",
+      "reasoning": "The agent expressly flags that the draft has no defined termination assistance or wind-down obligation and adds Section 5.5A providing reasonable termination assistance for up to 60 days. The cover memo likewise identifies the omission and cites the playbook\u2019s 60-day standard."
+    },
+    {
+      "id": "C-035",
+      "title": "ISSUE_014b: Proposes termination assistance at cost-plus-15% for up to 60 days",
+      "verdict": "pass",
+      "reasoning": "The agent added Section 5.5A requiring reasonable termination assistance for a period not exceeding 60 days, priced at Service Provider's Fully-Loaded Cost plus a 15% markup."
+    },
+    {
+      "id": "C-036",
+      "title": "ISSUE_015a: Identifies missing change order procedure",
+      "verdict": "pass",
+      "reasoning": "The agent expressly flags the absence of a formal change-order mechanism in the cover memo (S4) and adds Section 6.7 requiring a signed written change order for out-of-scope services, material volume increases, or material scope changes."
+    },
+    {
+      "id": "C-037",
+      "title": "ISSUE_015b: Proposes change order procedure with cost-plus-15% pricing",
+      "verdict": "pass",
+      "reasoning": "The proposed new Section 6.7 requires out-of-scope services, material volume increases, or material scope changes to be documented in a written change order signed by authorized representatives of both parties, and provides default pricing at Service Provider's Fully-Loaded Cost plus a 15% markup."
+    },
+    {
+      "id": "C-038",
+      "title": "ISSUE_016a: Identifies vague payment terms ('commercially reasonable time')",
+      "verdict": "pass",
+      "reasoning": "The agent expressly flags Section 6.3's requirement to pay within a \u201ccommercially reasonable time\u201d as vague and replaces it with a defined 30-day payment window. The cover memo likewise identifies the issue and recommends Net 30 terms."
+    },
+    {
+      "id": "C-039",
+      "title": "ISSUE_016b: Redlines payment terms to Net 30 days",
+      "verdict": "fail",
+      "reasoning": "Section 6.3 replaces the vague standard with payment within 30 days after receipt, not Net 30 days from the invoice date as required by the criterion."
+    },
+    {
+      "id": "C-040",
+      "title": "ISSUE_016c: Adds late payment interest at 1.5%/month or max legal rate",
+      "verdict": "pass",
+      "reasoning": "The proposed revision to Section 6.3 adds interest on overdue undisputed amounts at the lesser of 1.5% per month or the maximum rate permitted by Applicable Law, satisfying the criterion."
+    },
+    {
+      "id": "C-041",
+      "title": "ISSUE_017a: Identifies missing force majeure 90-day termination trigger",
+      "verdict": "pass",
+      "reasoning": "The agent expressly flags that the draft force majeure clause lacks a termination trigger and adds a provision allowing either party to terminate an affected Service if the force majeure event materially affects it for 90 consecutive days, without further liability other than accrued fees and surviving obligations. The cover memo also identifies this as a significant gap."
+    },
+    {
+      "id": "C-042",
+      "title": "ISSUE_017b: Proposes 90-day force majeure termination right",
+      "verdict": "pass",
+      "reasoning": "The proposed revision to Section 12.1 states that if a Force Majeure Event materially affects a Service for 90 consecutive days, either party may terminate the affected Service upon written notice without further liability, except for accrued fees and surviving obligations. This satisfies the criterion."
+    },
+    {
+      "id": "C-043",
+      "title": "Cover memo produced as a deliverable",
+      "verdict": "pass",
+      "reasoning": "The output includes a clearly labeled seller-side cover memorandum summarizing the TSA review, including key issues, priorities, fee reconciliation, and negotiation recommendations."
+    },
+    {
+      "id": "C-044",
+      "title": "Cover memo organizes issues by priority tiers (Critical/Significant/Minor)",
+      "verdict": "pass",
+      "reasoning": "The cover memo expressly organizes deviations into three ranked sections: Priority Tier 1 \u2014 Critical / APA Conforming Changes, Priority Tier 2 \u2014 Significant / Playbook Deviations, and Priority Tier 3 \u2014 Minor / Cleanup and Negotiation Items."
+    },
+    {
+      "id": "C-045",
+      "title": "APA-conflict issues classified as highest priority in cover memo",
+      "verdict": "pass",
+      "reasoning": "The cover memo places all four specified APA conflicts\u2014200% liability cap, automatic renewal beyond the 18-month cap, 120-day termination notice, and 15% IT markup\u2014in \u201cPriority Tier 1 \u2014 CRITICAL / APA CONFORMING CHANGES.\u201d It separately places pure playbook deviations in Priority Tier 2, clearly distinguishing the APA conflicts as highest priority."
+    },
+    {
+      "id": "C-046",
+      "title": "Cover memo includes negotiation strategy distinguishing firm vs. flexible positions",
+      "verdict": "pass",
+      "reasoning": "The cover memo clearly distinguishes firm from flexible positions for well over three key issues and explains why. It identifies APA conflicts (including service standard, term, termination notice, IT fee, liability cap, and damages waiver) as non-negotiable conforming changes, while giving compromise positions for matters such as termination assistance, payment terms, audits, insurance, force majeure, non-solicitation, escalation, staffing notice, and Mexico implementation details. It also provides negotiation fallbacks and supporting rationales based on the APA and playbook."
+    },
+    {
+      "id": "C-047",
+      "title": "Redline markup includes proposed edits to the TSA",
+      "verdict": "pass",
+      "reasoning": "The output is a marked-up TSA containing numerous proposed redline edits, including strikethrough deletions, underlined insertions, substitutions, and added provisions embedded directly in the draft text."
+    },
+    {
+      "id": "C-048",
+      "title": "Redline markup includes explanatory comments for changes",
+      "verdict": "pass",
+      "reasoning": "The redline includes numerous bracketed comments (e.g., C1\u2013C26) tied to proposed edits. These comments explain the basis for changes by citing specific APA provisions or playbook sections and describing the associated risk and negotiating position."
+    },
+    {
+      "id": "C-049",
+      "title": "Correctly identifies Polaris as Service Provider / Seller throughout",
+      "verdict": "pass",
+      "reasoning": "The output consistently identifies Polaris Industrial Holdings, Inc. as the Seller and Service Provider and Trident as the Service Recipient. The markup and cover memo are expressly framed from Polaris\u2019s seller-side perspective, emphasizing protections for Polaris\u2019s liability, fees, staffing discretion, intellectual property, audit exposure, and operational flexibility. No party-role confusion appears."
+    },
+    {
+      "id": "C-050",
+      "title": "References APA Section 7.12 when flagging APA-conflict issues",
+      "verdict": "pass",
+      "reasoning": "The output repeatedly cites APA Section 7.12 and relevant subsections for the identified conflicts: \u00a77.12(a) for term/renewal, \u00a77.12(c) for individual-service termination notice, \u00a77.12(b) for the fee markup cap, and \u00a77.12(d) for the liability cap. These citations appear in both the redline comments and the cover memo."
+    },
+    {
+      "id": "C-051",
+      "title": "Fee escalation provision addressed (playbook: greater of 3% or CPI-U)",
+      "verdict": "pass",
+      "reasoning": "The agent expressly addresses fee escalation in redlined Section 6.4, proposing annual adjustment by the greater of 3% or the trailing 12-month CPI-U increase, subject to the APA constraints. The cover memo also identifies this as the playbook position and discusses a CPI-U-only fallback."
+    },
+    {
+      "id": "C-052",
+      "title": "Indemnification provision addressed (Buyer indemnifies for third-party claims)",
+      "verdict": "pass",
+      "reasoning": "The markup includes Section 9.1, under which the Service Recipient (Buyer) indemnifies the Service Provider (Seller) for third-party claims arising from Buyer's use of the Services, except to the extent caused by Seller's gross negligence or willful misconduct. The indemnification structure is also discussed in the review memo."
+    },
+    {
+      "id": "C-053",
+      "title": "Both deliverable files are produced",
+      "verdict": "pass",
+      "reasoning": "The output includes two clearly distinct deliverables: (1) a marked-up/redlined TSA titled \u201ctsa-markup-redline.docx\u201d and (2) a seller-side cover memorandum titled \u201ctsa-review-memo.docx.\u201d"
+    },
+    {
+      "id": "C-054",
+      "title": "Correct total monthly service cost baseline ($1,020,000) referenced",
+      "verdict": "pass",
+      "reasoning": "The output correctly references both the $1,020,000 total monthly base cost and the corrected $1,122,000 total monthly fee at a 10% markup in Schedule G and the review memo's fee reconciliation."
+    },
+    {
+      "id": "C-055",
+      "title": "Playbook's dispute escalation to senior executives referenced",
+      "verdict": "pass",
+      "reasoning": "Section 15.2 expressly requires disputes to be escalated first to the parties\u2019 designated CFO or General Counsel representatives, who must attempt resolution in good faith for 15 Business Days before unresolved disputes proceed to arbitration."
+    },
+    {
+      "id": "C-056",
+      "title": "Redline comments explain specific risk to Polaris for at least five changes",
+      "verdict": "pass",
+      "reasoning": "The redline includes well over five distinct comments identifying concrete risks to Polaris, not merely playbook or APA inconsistencies. Examples include ratcheting service obligations from the heightened performance standard (C1), exposure to up to roughly $41.004 million rather than approximately $13.464 million under the liability cap (C5), permanent leakage of enterprise-wide operational IP through the broad license (C8), workforce-management and operational constraints from key-personnel consent and FTE requirements (C9), unpriced scope creep from the absence of a change-order process (C11), disruption and proprietary-information exposure from broad audit rights (C13), and Mexican regulatory and employee-data enforcement risk (C7/C22)."
+    }
+  ],
+  "run_id": "corporate-ma__draft-markup-of-transition-services-agreement-tsa",
+  "task": "corporate-ma/draft-markup-of-transition-services-agreement-tsa",
+  "judge_model": "gpt-5.6-sol",
+  "scored_at": "2026-11-16T15:24:04.501696+00:00"
+}

@@ -1,0 +1,304 @@
+{
+  "score": 0.0,
+  "max_score": 1.0,
+  "summary": "47/48 criteria passed.  Missed 1 \u2014 task FAIL.",
+  "all_pass": false,
+  "n_criteria": 48,
+  "n_passed": 47,
+  "n_grading_errors": 0,
+  "pandoc_version": "3.11",
+  "criteria_results": [
+    {
+      "id": "C-001",
+      "title": "Sovereign haircut at 1.75% as clean text",
+      "verdict": "pass",
+      "reasoning": "The Turn 3 redline states the sovereign haircut as 1.75% in clean, non-tracked text in Paragraph 4.11 and Annex II, Section 4(a)."
+    },
+    {
+      "id": "C-002",
+      "title": "Corporate haircut at 4.25% as clean text",
+      "verdict": "pass",
+      "reasoning": "The Turn 3 redline states the Eligible Corporate Securities haircut as 4.25% in clean, non-tracked text in Paragraph 4.11 and Annex II, Section 4(b)."
+    },
+    {
+      "id": "C-003",
+      "title": "Asymmetric margin threshold \u2014 $500K for Seller deliveries as clean text",
+      "verdict": "pass",
+      "reasoning": "The Turn 3 redline states a $500,000 Margin Threshold for Seller Delivery Amounts in Paragraph 4.4 and Annex II Section 5(a), and the term appears as clean text rather than a tracked change."
+    },
+    {
+      "id": "C-004",
+      "title": "Asymmetric margin threshold \u2014 $250K for Buyer deliveries as clean text",
+      "verdict": "pass",
+      "reasoning": "The Turn 3 redline states a $250,000 threshold for Buyer deliveries/Return Amounts in Paragraph 4.5 and Annex II \u00a75(b), and the text appears clean rather than as a tracked change."
+    },
+    {
+      "id": "C-005",
+      "title": "Substitution right \u2014 1 BD notice as clean text",
+      "verdict": "pass",
+      "reasoning": "The Turn 3 redline states in Paragraph 8.3 and Annex II \u00a79(b), as clean text without tracked-change markup, that Seller may exercise substitution rights on not less than one business day\u2019s prior notice."
+    },
+    {
+      "id": "C-006",
+      "title": "Substitution right \u2014 same-or-better collateral condition as clean text",
+      "verdict": "pass",
+      "reasoning": "The Turn 3 redline includes, as clean text in Paragraph 8.5 and Annex II Section 9(d), the requirement that Alternative Securities must be of the same or better Eligible Collateral category as the replaced securities."
+    },
+    {
+      "id": "C-007",
+      "title": "Substitution right \u2014 no Margin Deficit condition as clean text",
+      "verdict": "fail",
+      "reasoning": "The clean text states that no substitution may be effected while a Margin Deficit already exists, but it does not state that the substitution itself must not cause or create a Margin Deficit. These are not equivalent conditions."
+    },
+    {
+      "id": "C-008",
+      "title": "Substitution right \u2014 no Buyer prior written consent required",
+      "verdict": "pass",
+      "reasoning": "The Turn 3 redline expressly states in Paragraph 8.3 and Annex II Section 9(b) that no consent of Buyer is required for substitution. It therefore does not retain a Buyer prior written consent requirement."
+    },
+    {
+      "id": "C-009",
+      "title": "Repricing mechanic \u2014 quarterly or 90th day (whichever later) in tracked changes",
+      "verdict": "pass",
+      "reasoning": "Annex II, Section 12(a) shows the repricing mechanic as a tracked insertion, allowing Buyer to reprice on the 90th calendar day after the Purchase Date or a quarterly anniversary, whichever is later. This matches the required timing and is not presented as clean text."
+    },
+    {
+      "id": "C-010",
+      "title": "Repricing mechanic \u2014 2 BD prior notice in tracked changes",
+      "verdict": "pass",
+      "reasoning": "Annex II \u00a712(b) adds, as tracked insertion, that Buyer must give Seller \u201cnot less than two (2) Business Days\u2019 prior written notice\u201d of a Repricing Event. This matches the required 2 BD notice and is not clean text."
+    },
+    {
+      "id": "C-011",
+      "title": "Repricing issue marked 'Open \u2014 Advancing' in issues list",
+      "verdict": "pass",
+      "reasoning": "Issue 4 is expressly marked \u201cOpen \u2014 Advancing.\u201d The issues list states that Seller accepts Buyer\u2019s revised repricing formulation\u2014at the 90th day or quarterly anniversary, whichever is later, on 2 Business Days\u2019 notice\u2014and describes it as the accepted 4 April compromise, with only final drafting confirmation remaining."
+    },
+    {
+      "id": "C-012",
+      "title": "Cross-default threshold at $25M in tracked changes",
+      "verdict": "pass",
+      "reasoning": "Annex II, Section 10(c) shows the prior $50,000,000 threshold as a tracked deletion and $25,000,000 as a tracked insertion, correctly reflecting Seller's Turn 3 counter rather than clean text."
+    },
+    {
+      "id": "C-013",
+      "title": "Cross-default \u2014 issues list reflects $25M and 6.07% of net capital",
+      "verdict": "pass",
+      "reasoning": "Issue 5 is marked \u201cOpen \u2014 Advancing,\u201d identifies Seller\u2019s Turn 3 counter as $25,000,000, shows Buyer\u2019s response/confirmation remains pending with its Credit Committee, and calculates $25M as approximately 6.07% of Meridian\u2019s $412M audited net capital."
+    },
+    {
+      "id": "C-014",
+      "title": "Act of Insolvency grace period at 15 BD in tracked changes",
+      "verdict": "pass",
+      "reasoning": "Annex II, Section 11(b) shows the prior 30-calendar-day provision as a tracked deletion and replaces it with a tracked insertion stating a grace period of fifteen (15) Business Days."
+    },
+    {
+      "id": "C-015",
+      "title": "Act of Insolvency \u2014 issues list notes 5\u201315 BD bracket",
+      "verdict": "pass",
+      "reasoning": "Issue 6 is marked \u201cOpen \u2014 Advancing,\u201d and the issues tracker states the Buyer\u2019s position as a 5\u201315 Business Day bracket, with Buyer confirmation still required. This reflects that the parties have not yet finalized the grace period."
+    },
+    {
+      "id": "C-016",
+      "title": "Dispute resolution \u2014 LCIA arbitration conceded in tracked changes",
+      "verdict": "pass",
+      "reasoning": "Paragraphs 17.3\u201317.6 show tracked deletions of the Turn 2 English courts non-exclusive jurisdiction provisions and tracked insertions of LCIA arbitration, with London as the seat. The concession is therefore properly reflected in tracked changes rather than clean text."
+    },
+    {
+      "id": "C-017",
+      "title": "Dispute resolution \u2014 expedited procedure for claims \u2264 $5M in tracked changes",
+      "verdict": "pass",
+      "reasoning": "Paragraph 17.6 includes, as a tracked insertion, a condition that disputes of $5,000,000 or less are eligible for the LCIA expedited procedure. The cap matches the required $5,000,000."
+    },
+    {
+      "id": "C-018",
+      "title": "Dispute resolution \u2014 English law as governing law confirmed",
+      "verdict": "pass",
+      "reasoning": "Paragraph 17.1 expressly provides that the Agreement and related non-contractual obligations are governed by and construed in accordance with English law. The issues list also confirms that English law is agreed and unchanged."
+    },
+    {
+      "id": "C-019",
+      "title": "Dispute resolution marked 'Open \u2014 Advancing' in issues list",
+      "verdict": "pass",
+      "reasoning": "In the Issues Tracker, Issue 7 (Governing law and dispute resolution) is marked \u201cOpen \u2014 Advancing,\u201d and the Seller position states that Seller concedes LCIA arbitration in London with an expedited procedure for claims at or below $5 million."
+    },
+    {
+      "id": "C-020",
+      "title": "Sovereign haircut arithmetic cross-check ($98,280,098.28)",
+      "verdict": "pass",
+      "reasoning": "The Turn 3 redline states a 1.75% sovereign haircut and calculates the illustrative Purchase Price as $100,000,000 \u00f7 1.0175 = $98,280,098.28, which is arithmetically consistent with the criterion."
+    },
+    {
+      "id": "C-021",
+      "title": "Corporate haircut arithmetic cross-check ($47,961,630.70)",
+      "verdict": "pass",
+      "reasoning": "The Turn 3 redline states a 4.25% corporate haircut and calculates the Purchase Price as $50,000,000 \u00f7 1.0425 = $47,961,630.70, which is correct when rounded to the nearest cent."
+    },
+    {
+      "id": "C-022",
+      "title": "7 accepted drafting mark-ups incorporated as clean text",
+      "verdict": "pass",
+      "reasoning": "All seven accepted drafting marks are incorporated as clean, non-tracked text: corrected Voss details and identifiers, both parties\u2019 LEIs, Buy/Sell Back and Agency elections, USD Base Currency, the 10:00 a.m. London margin cut-off mechanics, next-Business-Day manufactured payments, and Paragraph 7(b) netting. None of these seven is shown as a tracked change or reverted."
+    },
+    {
+      "id": "C-023",
+      "title": "9 pending drafting marks retained in tracked changes flagged for Calder Stone",
+      "verdict": "pass",
+      "reasoning": "All nine pending drafting mark-ups (Nos. 8\u201316) are identified as pending, annotated with comments requesting Voss/Credit Committee confirmation, and associated with tracked deletions/insertions in the redline. The issues list also records each as \u201cTracked + comment\u201d and flags follow-up for Calder Stone/Voss confirmation rather than treating them as accepted clean text."
+    },
+    {
+      "id": "C-024",
+      "title": "Buyer correctly identified \u2014 Voss Bank AG, London Branch with identifiers",
+      "verdict": "pass",
+      "reasoning": "The Turn 3 redline identifies Buyer as \u201cVoss Bank AG, acting through its London Branch\u201d and includes all required identifiers: FCA Firm Reference Number 487203, CHE-314.827.059, and LEI 2138004WJZ83NHQKF744."
+    },
+    {
+      "id": "C-025",
+      "title": "Seller correctly identified \u2014 Meridian Capital Securities LLC with identifiers",
+      "verdict": "pass",
+      "reasoning": "The Turn 3 redline identifies the Seller as Meridian Capital Securities LLC and includes all required identifiers: CRD# 298417, EIN 83-2947561, and LEI 5493007XKBT49LP2QR12."
+    },
+    {
+      "id": "C-026",
+      "title": "Annex II \u2014 Base Currency USD preserved",
+      "verdict": "pass",
+      "reasoning": "The Turn 3 redline preserves USD as the Base Currency. Annex II, Section 2 expressly states that the Base Currency for all purposes is United States Dollars (USD), and the issues list confirms this election is unchanged."
+    },
+    {
+      "id": "C-027",
+      "title": "Annex II \u2014 Buy/Sell Back Transactions Not Applicable preserved",
+      "verdict": "pass",
+      "reasoning": "Annex II, Section 17 expressly states that Buy/Sell Back Transactions are \u201cNot Applicable,\u201d and the issues list confirms this election was preserved unchanged."
+    },
+    {
+      "id": "C-028",
+      "title": "Annex II \u2014 Agency Transactions Not Applicable preserved",
+      "verdict": "pass",
+      "reasoning": "Annex II, Section 18 expressly states that Agency Transactions are \u201cNot Applicable,\u201d and the issues list also identifies this election as unchanged and preserved. The election was not changed."
+    },
+    {
+      "id": "C-029",
+      "title": "Annex II \u2014 Paragraph 7(b) netting elected preserved",
+      "verdict": "pass",
+      "reasoning": "The Turn 3 redline preserves the Paragraph 7(b) netting election. Paragraph 7.2, Annex II Section 8, and the issues/QC lists all confirm that same-currency obligations payable on the same settlement date are elected for netting and remain unchanged."
+    },
+    {
+      "id": "C-030",
+      "title": "Annex II \u2014 Paragraph 11(b) tax gross-up with 5 BD cure preserved",
+      "verdict": "pass",
+      "reasoning": "Turn 3 preserves the Paragraph 11(b) tax gross-up election. Paragraph 11.5 and Annex II Section 13 provide a five-Business-Day cure period, after which failure to pay the required gross-up amount constitutes an Event of Default."
+    },
+    {
+      "id": "C-031",
+      "title": "Annex II \u2014 Manufactured Payments due next BD following record date preserved",
+      "verdict": "pass",
+      "reasoning": "Annex II, Section 16 expressly provides that Manufactured Payments are due on the next Business Day following the relevant record date, regardless of the issuer\u2019s actual payment date. The issues list also identifies this election as unchanged and preserved."
+    },
+    {
+      "id": "C-032",
+      "title": "Annex II \u2014 Settlement via Clearstream (EUR) and DTC (USD) preserved",
+      "verdict": "pass",
+      "reasoning": "The Turn 3 redline preserves bilateral settlement through Clearstream Banking S.A. for EUR-denominated Eligible Collateral and The Depository Trust Company (DTC) for USD-denominated Eligible Collateral, including in Annex II Section 15. The issues list also confirms these systems are preserved and unchanged."
+    },
+    {
+      "id": "C-033",
+      "title": "Net Exposure Cap at $1,500,000,000 preserved",
+      "verdict": "pass",
+      "reasoning": "The Turn 3 redline preserves the Net Exposure Cap at $1,500,000,000 in Annex II, Section 6.1 and expressly states that it is unchanged from Turn 1. The updated issues list also consistently identifies the cap as $1.5 billion and unchanged."
+    },
+    {
+      "id": "C-034",
+      "title": "Margin call deadline \u2014 10:00 a.m. London time cut-off with correct settlement",
+      "verdict": "pass",
+      "reasoning": "The Turn 3 redline states a 10:00 a.m. London time margin call cut-off. Paragraphs 4.7\u20134.9 and Annex II \u00a77 provide that calls received before the cut-off settle the same Business Day, while calls received at or after the cut-off settle on the next following Business Day."
+    },
+    {
+      "id": "C-035",
+      "title": "Eligible Collateral \u2014 sovereign debt of G7 nations rated \u2265 A\u2013/A3",
+      "verdict": "pass",
+      "reasoning": "Annex II \u00a73(a) defines Eligible Sovereign Securities as debt issued by the central governments or government-guaranteed agencies of all G7 nations\u2014United States, United Kingdom, Germany, France, Japan, Canada, and Italy\u2014and requires a rating of at least A\u2212 by S&P or A3 by Moody\u2019s."
+    },
+    {
+      "id": "C-036",
+      "title": "Eligible Collateral \u2014 corporate bonds rated \u2265 BBB+/Baa1, maturity \u2264 10 years",
+      "verdict": "pass",
+      "reasoning": "Annex II \u00a73(b) defines Eligible Corporate Securities as corporate debt securities rated at least BBB+ by S&P or Baa1 by Moody\u2019s, with residual maturity not exceeding 10 years from the relevant Purchase Date. Annex II \u00a73(c) includes those securities within Eligible Collateral, so the required rating and maturity criteria are satisfied."
+    },
+    {
+      "id": "C-037",
+      "title": "Eligible sovereign issuers consistent with schedule (US, UK, DE, FR, JP, CA, IT)",
+      "verdict": "pass",
+      "reasoning": "Annex II, Section 3(a) lists the United States, United Kingdom, Germany, France, Japan, Canada, and Italy as eligible sovereign issuers. All required issuers are included, and no non-G7 issuer is added."
+    },
+    {
+      "id": "C-038",
+      "title": "Issues list \u2014 Issues 1\u20133 marked as 'Resolved' with correct final terms",
+      "verdict": "pass",
+      "reasoning": "The issues list marks Issues 1\u20133 as \u201cResolved \u2014 Clean Text in Turn 3\u201d and states the required final terms: 1.75% sovereign and 4.25% corporate haircuts; asymmetric margin thresholds of $500,000 for Seller and $250,000 for Buyer; and substitution on one Business Day\u2019s notice with same-or-better collateral and no Margin Deficit."
+    },
+    {
+      "id": "C-039",
+      "title": "Issues list \u2014 Issues 4\u20137 marked as 'Open \u2014 Advancing' with latest positions",
+      "verdict": "pass",
+      "reasoning": "The Issues Tracker marks Issues 4\u20137 as \u201cOpen \u2014 Advancing\u201d and records the required latest positions: repricing at the 90th day or later quarterly anniversary with 2 BD notice; Seller\u2019s $25M cross-default counter; the 5\u201315 BD insolvency bracket with Seller proposing 15 BD; and LCIA London arbitration with expedited procedure for disputes up to $5M. Each issue also identifies the remaining gap and a next step/owner."
+    },
+    {
+      "id": "C-040",
+      "title": "Cross-default $25M within Buyer's acceptable range \u2014 issues list flags edge of range",
+      "verdict": "pass",
+      "reasoning": "The issues list correctly identifies Seller\u2019s $25M cross-default counter as the top/outer edge of Buyer\u2019s $10M\u2013$25M acceptable range and as meeting Meridian\u2019s $25M floor. It also flags that Buyer Credit Committee confirmation is needed at the top of the range."
+    },
+    {
+      "id": "C-041",
+      "title": "Act of Insolvency 15 BD \u2014 issues list flags upper limit of Buyer's range",
+      "verdict": "pass",
+      "reasoning": "The issues list expressly states that Seller\u2019s proposed 15 Business Days is at the top of the identified range and is Voss\u2019s ceiling, with Buyer walking away above 15 BD. It also states that 15 BD falls within Meridian\u2019s acceptable 10\u201315 BD range."
+    },
+    {
+      "id": "C-042",
+      "title": "Turn 3 redline based on Turn 2 redline with resolved issues clean and open issues tracked",
+      "verdict": "pass",
+      "reasoning": "The redline expressly identifies the 28 March 2025 Turn 2 redline as the comparison base. The resolved haircut, margin-threshold, and substitution terms appear as clean accepted text, while repricing, cross-default, Act of Insolvency, and dispute-resolution changes are shown through tracked deletions and insertions."
+    },
+    {
+      "id": "C-043",
+      "title": "GMRA identified as 2011 ICMA with 2011 Annex I",
+      "verdict": "pass",
+      "reasoning": "The redline identifies the agreement as the 2011 ICMA GMRA in the title and Paragraph 1.1, expressly incorporates the 2011 Annex I, and consistently references the 2011 version throughout."
+    },
+    {
+      "id": "C-044",
+      "title": "Issues list tracks 16 drafting mark-ups with 7 accepted and 9 pending",
+      "verdict": "pass",
+      "reasoning": "The issues list includes a separate \u201cDrafting Mark-Ups\u201d tab with 16 numbered non-commercial mark-ups, GMRA paragraph/section cross-references, and status treatment. Mark-ups 1\u20137 are identified as accepted clean, while mark-ups 8\u201316 are identified as tracked/commented and pending Voss Bank Credit Committee review, matching the required 7/9 split."
+    },
+    {
+      "id": "C-045",
+      "title": "Deliverable date of 18 April 2025 correctly attributed",
+      "verdict": "pass",
+      "reasoning": "The deliverable date is correctly referenced as 18 April 2025 in both the Turn 3 redline (\"Turn 3 redline prepared by Seller: 18 April 2025\") and the issues list (\"Turn 3 delivery date: 18 April 2025\")."
+    },
+    {
+      "id": "C-046",
+      "title": "Redline prepared from Seller's counsel (PAG) for circulation to Calder Stone",
+      "verdict": "pass",
+      "reasoning": "The Turn 3 redline is expressly identified as prepared/marked up by Pryor, Ashworth & Gelb LLP on behalf of Seller, Meridian Capital Securities LLC, and the issues list likewise states it was prepared by PAG for Seller. It is framed for Calder Stone\u2019s review, with next steps and confirmations assigned to Calder Stone/Buyer, so the counsel perspective and circulation direction are correct."
+    },
+    {
+      "id": "C-047",
+      "title": "Repricing mechanic not deleted \u2014 retains in-term repricing right",
+      "verdict": "pass",
+      "reasoning": "Annex II \u00a712 retains an in-term repricing mechanic: Buyer may reprice an outstanding Transaction at the 90th calendar day after the Purchase Date or at a later quarterly anniversary, on at least two Business Days\u2019 prior notice. It is therefore not deleted or limited solely to a maturity roll."
+    },
+    {
+      "id": "C-048",
+      "title": "Issues list notes Buyer's walk-away constraint on repricing deletion",
+      "verdict": "pass",
+      "reasoning": "In the Issues Tracker, Issue #4 (Mini close-out / repricing) expressly states: \u201cdeletion is Voss walk-away for terms >60 days.\u201d This notes Buyer's walk-away constraint that repricing rights cannot be deleted for term trades exceeding 60 days."
+    }
+  ],
+  "run_id": "contracts__banking__repo-securities-lending-subsequent-turn-redline__scenario-01",
+  "task": "contracts/banking/repo-securities-lending-subsequent-turn-redline/scenario-01",
+  "judge_model": "gpt-5.6-sol",
+  "scored_at": "2026-11-18T03:27:36.015551+00:00"
+}

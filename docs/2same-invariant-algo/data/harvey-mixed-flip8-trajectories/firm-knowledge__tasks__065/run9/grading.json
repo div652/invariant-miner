@@ -1,0 +1,52 @@
+{
+  "score": 0.0,
+  "max_score": 1.0,
+  "summary": "3/6 criteria passed.  Missed 3 \u2014 task FAIL.",
+  "all_pass": false,
+  "n_criteria": 6,
+  "n_passed": 3,
+  "n_grading_errors": 0,
+  "pandoc_version": "3.11",
+  "criteria_results": [
+    {
+      "id": "C-001",
+      "title": "Qualifying matter \u2014 Ardent 1001-00002",
+      "verdict": "pass",
+      "reasoning": "The output expressly identifies matter 1001-00002, Ardent Capital Partners III LP, as a qualifying matter and includes it in the final list of qualifying matters."
+    },
+    {
+      "id": "C-002",
+      "title": "Qualifying matter \u2014 Harrowgate 1003-00002",
+      "verdict": "fail",
+      "reasoning": "The output explicitly excludes matter 1003-00002 (Harrowgate Private Equity Fund V LP) as a near-miss, whereas the criterion requires identifying it as a qualifying matter."
+    },
+    {
+      "id": "C-003",
+      "title": "Qualifying matter \u2014 Driftwood 1024-00002",
+      "verdict": "pass",
+      "reasoning": "The output expressly identifies matter 1024-00002 as qualifying and explains that Driftwood's Investor Advisory Committee (IAC) serves as the fund's LP advisory committee under the governing LPA."
+    },
+    {
+      "id": "C-004",
+      "title": "Qualifying matter \u2014 Briarwood 1026-00001",
+      "verdict": "fail",
+      "reasoning": "The output expressly excludes matter 1026-00001, stating that Briarwood did not subscribe and that no relevant transaction documents were executed. The criterion requires identifying 1026-00001 as a qualifying third-party fund matter reviewed for an LP client that ultimately passed, so the output does not satisfy it."
+    },
+    {
+      "id": "C-005",
+      "title": "Qualifying matter \u2014 Pellegrino 1027-00002",
+      "verdict": "pass",
+      "reasoning": "The output explicitly identifies matter 1027-00002, involving Pellegrino Capital Group and Ridgeline-Clarion Co-Invest, L.P., as a qualifying matter."
+    },
+    {
+      "id": "C-006",
+      "title": "Qualifying set \u2014 precision",
+      "verdict": "fail",
+      "reasoning": "The output asserts 1041-00005 as a qualifying matter, but that matter is outside the criterion\u2019s permitted qualifying set. Therefore, it fails the precision criterion."
+    }
+  ],
+  "run_id": "firm-knowledge__tasks__065",
+  "task": "firm-knowledge/tasks/065",
+  "judge_model": "gpt-5.6-sol",
+  "scored_at": "2026-11-18T03:27:53.402430+00:00"
+}

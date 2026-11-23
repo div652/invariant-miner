@@ -1,0 +1,52 @@
+{
+  "score": 0.0,
+  "max_score": 1.0,
+  "summary": "4/6 criteria passed.  Missed 2 \u2014 task FAIL.",
+  "all_pass": false,
+  "n_criteria": 6,
+  "n_passed": 4,
+  "n_grading_errors": 0,
+  "pandoc_version": "3.11",
+  "criteria_results": [
+    {
+      "id": "C-001",
+      "title": "Qualifying matter \u2014 Ardent 1001-00002",
+      "verdict": "pass",
+      "reasoning": "The output explicitly identifies matter 1001-00002 (Ardent Capital Management / Ardent Capital Partners III LP) as one of the three qualifying matters and provides supporting details."
+    },
+    {
+      "id": "C-002",
+      "title": "Qualifying matter \u2014 Harrowgate 1003-00002",
+      "verdict": "fail",
+      "reasoning": "The output identifies matter 1003-00002 (Harrowgate Capital Partners) only as an excluded matter and expressly does not count it as qualifying. This contradicts the criterion requiring it to be identified as a qualifying matter."
+    },
+    {
+      "id": "C-003",
+      "title": "Qualifying matter \u2014 Driftwood 1024-00002",
+      "verdict": "pass",
+      "reasoning": "The output expressly identifies matter 1024-00002, involving Driftwood Capital Management and DARF, as qualifying. It explains that the fund's five-member Investor Advisory Committee is composed of LP representatives and performs LP governance and advisory functions under the LPA, satisfying the criterion."
+    },
+    {
+      "id": "C-004",
+      "title": "Qualifying matter \u2014 Briarwood 1026-00001",
+      "verdict": "fail",
+      "reasoning": "The output expressly excludes matter 1026-00001 (Briarwood Family Office / Meridian Peak Capital Partners Fund IV) rather than identifying it as a qualifying third-party fund matter reviewed for an LP client that ultimately passed. Therefore, it does not satisfy the criterion."
+    },
+    {
+      "id": "C-005",
+      "title": "Qualifying matter \u2014 Pellegrino 1027-00002",
+      "verdict": "pass",
+      "reasoning": "The output explicitly identifies matter 1027-00002, involving Pellegrino Capital Group and Ridgeline-Clarion Co-Invest, L.P., as one of the three qualifying matters."
+    },
+    {
+      "id": "C-006",
+      "title": "Qualifying set \u2014 precision",
+      "verdict": "pass",
+      "reasoning": "The agent asserts only 1001-00002, 1024-00002, and 1027-00002 as qualifying matters, all of which are within the permitted qualifying set. It does not assert any matter outside that set as qualifying."
+    }
+  ],
+  "run_id": "firm-knowledge__tasks__065",
+  "task": "firm-knowledge/tasks/065",
+  "judge_model": "gpt-5.6-sol",
+  "scored_at": "2026-11-18T03:25:51.136980+00:00"
+}

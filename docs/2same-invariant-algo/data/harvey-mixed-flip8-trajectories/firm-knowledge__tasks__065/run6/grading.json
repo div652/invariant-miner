@@ -1,0 +1,52 @@
+{
+  "score": 0.0,
+  "max_score": 1.0,
+  "summary": "4/6 criteria passed.  Missed 2 \u2014 task FAIL.",
+  "all_pass": false,
+  "n_criteria": 6,
+  "n_passed": 4,
+  "n_grading_errors": 0,
+  "pandoc_version": "3.11",
+  "criteria_results": [
+    {
+      "id": "C-001",
+      "title": "Qualifying matter \u2014 Ardent 1001-00002",
+      "verdict": "pass",
+      "reasoning": "The output identifies matter 1001-00002, involving Ardent Capital Partners III LP, as a qualifying Funds & Asset Management matter with an LP advisory committee."
+    },
+    {
+      "id": "C-002",
+      "title": "Qualifying matter \u2014 Harrowgate 1003-00002",
+      "verdict": "fail",
+      "reasoning": "The output expressly excludes matter 1003-00002 (Harrowgate Private Equity Fund V LP), whereas the criterion requires identifying it as a qualifying matter."
+    },
+    {
+      "id": "C-003",
+      "title": "Qualifying matter \u2014 Driftwood 1024-00002",
+      "verdict": "fail",
+      "reasoning": "The output expressly excludes matter 1024-00002 because it calls the body an Investor Advisory Committee rather than recognizing that committee as functioning as the fund's LP advisory committee. Therefore, it fails to identify Driftwood as qualifying under the stated criterion."
+    },
+    {
+      "id": "C-004",
+      "title": "Qualifying matter \u2014 Briarwood 1026-00001",
+      "verdict": "pass",
+      "reasoning": "The output identifies matter 1026-00001 as an investor-side matter for BFO involving review of a third-party fund, Meridian Peak Capital Partners Fund IV, and states that BFO ultimately declined the commitment. This matches the criterion for Briarwood Family Office as an LP client that ultimately passed on the investment."
+    },
+    {
+      "id": "C-005",
+      "title": "Qualifying matter \u2014 Pellegrino 1027-00002",
+      "verdict": "pass",
+      "reasoning": "The output explicitly identifies matter 1027-00002 for Pellegrino and the vehicle Ridgeline-Clarion Co-Invest, L.P. as one of the four qualifying matters."
+    },
+    {
+      "id": "C-006",
+      "title": "Qualifying set \u2014 precision",
+      "verdict": "pass",
+      "reasoning": "The agent asserts only four qualifying matters\u20141001-00002, 1002-00003, 1026-00001, and 1027-00002\u2014all of which are within the criterion's permitted qualifying set. It does not assert any matter outside that set as qualifying."
+    }
+  ],
+  "run_id": "firm-knowledge__tasks__065",
+  "task": "firm-knowledge/tasks/065",
+  "judge_model": "gpt-5.6-sol",
+  "scored_at": "2026-11-18T03:24:54.813172+00:00"
+}

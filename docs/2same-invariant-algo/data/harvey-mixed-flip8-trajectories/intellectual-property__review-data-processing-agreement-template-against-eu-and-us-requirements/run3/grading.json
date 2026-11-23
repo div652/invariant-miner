@@ -1,0 +1,298 @@
+{
+  "score": 0.0,
+  "max_score": 1.0,
+  "summary": "46/47 criteria passed.  Missed 1 \u2014 task FAIL.",
+  "all_pass": false,
+  "n_criteria": 47,
+  "n_passed": 46,
+  "n_grading_errors": 0,
+  "pandoc_version": "3.11",
+  "criteria_results": [
+    {
+      "id": "C-001",
+      "title": "Prioritized summary table at beginning of memo",
+      "verdict": "pass",
+      "reasoning": "The memo includes a prioritized summary table in the Executive Summary near the beginning. It lists each identified issue with P0/P1/P2 risk levels, concise descriptions of why each matters, and required dispositions."
+    },
+    {
+      "id": "C-002",
+      "title": "ISSUE_001: Identifies missing HIPAA BAA integration",
+      "verdict": "pass",
+      "reasoning": "The memo expressly identifies the absence of a HIPAA BAA as a P0 blocking issue, notes that Stratosphere processes US patient PHI as a Business Associate, and recommends adding an integrated BAA with required HIPAA provisions and subcontractor flow-downs."
+    },
+    {
+      "id": "C-003",
+      "title": "ISSUE_001: Notes missing HIPAA-specific definitions",
+      "verdict": "pass",
+      "reasoning": "The memo expressly states in F-01 that the DPA \u201cdefines only GDPR terms\u201d and has \u201cno HIPAA definitions,\u201d which directly identifies the missing HIPAA-specific definitions required by the criterion."
+    },
+    {
+      "id": "C-004",
+      "title": "ISSUE_001: Recommends integrating BAA or attaching as exhibit",
+      "verdict": "pass",
+      "reasoning": "The memo expressly recommends adding an integrated BAA or an executed BAA exhibit. Finding F-01 proposes a \u201cnew BAA exhibit / integration clause,\u201d and the consolidated redline package directs adding a HIPAA BAA as an execution exhibit."
+    },
+    {
+      "id": "C-005",
+      "title": "ISSUE_001: References minimum necessary standard or workforce training",
+      "verdict": "pass",
+      "reasoning": "The memo expressly identifies both missing HIPAA obligations in F-01: the minimum-necessary standard and workforce training, and recommends adding them to the BAA."
+    },
+    {
+      "id": "C-006",
+      "title": "ISSUE_002: Identifies 48-hour vs. 24-hour breach notification discrepancy",
+      "verdict": "pass",
+      "reasoning": "The memo expressly flags that the DPA requires notice within 48 hours after confirmation, while Pinnacle's playbook requires notice within 24 hours of discovery of an actual or reasonably suspected breach. It also recommends replacing the 48-hour provision with the 24-hour standard."
+    },
+    {
+      "id": "C-007",
+      "title": "ISSUE_002: Identifies missing HIPAA breach notification obligations",
+      "verdict": "pass",
+      "reasoning": "The memo expressly identifies the absence of a HIPAA breach-notification cascade as a gap and recommends adding HIPAA-specific breach notice and cascade cooperation requirements, separate from the GDPR incident provisions."
+    },
+    {
+      "id": "C-008",
+      "title": "ISSUE_002: Recommends specific redline for breach notification timeline",
+      "verdict": "pass",
+      "reasoning": "The memo provides a specific redline replacing the existing 48-hour confirmed-breach standard with notice within 24 hours of discovery of any actual or reasonably suspected incident. It also recommends a four-hour telephonic notice, written notice within 24 hours, and HIPAA breach-notification/cascade provisions."
+    },
+    {
+      "id": "C-009",
+      "title": "ISSUE_003: Identifies liability cap gap (\u20ac500K vs. playbook minimum)",
+      "verdict": "pass",
+      "reasoning": "The memo expressly identifies the \u20ac500,000 aggregate liability cap as substantially below Pinnacle\u2019s playbook minimum of 2x annual fees, calculating the applicable minimums as $8.4M combined, $5.6M for US services, and $2.8M for EU services."
+    },
+    {
+      "id": "C-010",
+      "title": "ISSUE_003: Quantifies liability gap with correct dollar figures",
+      "verdict": "pass",
+      "reasoning": "The memo expressly contrasts the \u20ac500,000 template cap (approximately $545,000) with the playbook minimums of $8.4M for the combined engagement and $2.8M for the EU-specific fees, satisfying the required dollar quantification."
+    },
+    {
+      "id": "C-011",
+      "title": "ISSUE_003: Identifies missing carve-outs for willful misconduct/gross negligence",
+      "verdict": "pass",
+      "reasoning": "The memo expressly states in F-05 that the DPA lacks required uncapped carve-outs for willful misconduct and gross negligence, and recommends revising the liability clause to make the cap inapplicable to both categories of conduct."
+    },
+    {
+      "id": "C-012",
+      "title": "ISSUE_003: Identifies blanket exclusion of consequential damages as problematic",
+      "verdict": "pass",
+      "reasoning": "The memo expressly flags Section 13.2\u2019s broad consequential/indirect damages exclusion as problematic and recommends that no consequential-damages exclusion apply to data breaches involving willful misconduct, matching the playbook requirement."
+    },
+    {
+      "id": "C-013",
+      "title": "ISSUE_003: References correct MSA fee structure",
+      "verdict": "pass",
+      "reasoning": "The liability discussion expressly references the MSA annual fee structure: $4.2M total, comprising $2.8M for US services and $1.4M for EU services, and uses those figures to calculate the proposed 2x liability caps."
+    },
+    {
+      "id": "C-014",
+      "title": "ISSUE_004: Identifies missing SCC Module 3 for processor-to-subprocessor transfers",
+      "verdict": "pass",
+      "reasoning": "The memo expressly states that the DPA incorporates only SCC Module 2 and that Stratosphere\u2019s processor-to-subprocessor transfer to Larkfield in Northern Virginia requires SCC Module 3. It also recommends executing Module 3 with Larkfield before any transfer."
+    },
+    {
+      "id": "C-015",
+      "title": "ISSUE_004: Identifies Singapore remote access as an unaddressed transfer",
+      "verdict": "pass",
+      "reasoning": "The memo expressly flags Singapore-based support engineers' regular remote access to EU personal data as a restricted third-country transfer that is not addressed by the DPA. It also recommends either eliminating/restricting that access or covering it with SCCs, a TIA, and supplementary safeguards."
+    },
+    {
+      "id": "C-016",
+      "title": "ISSUE_004: Notes Larkfield not certified under EU-US Data Privacy Framework",
+      "verdict": "pass",
+      "reasoning": "The memo expressly states that \u201cLarkfield is not DPF-certified\u201d in both the operating facts and the transfer-gap analysis, and accordingly recommends SCC Module 3 rather than relying on the EU-US Data Privacy Framework."
+    },
+    {
+      "id": "C-017",
+      "title": "ISSUE_004: Flags absence of Transfer Impact Assessment documentation",
+      "verdict": "pass",
+      "reasoning": "The memorandum expressly flags that the DPA does not require documented TIAs for the US or Singapore transfer flows, including periodic reassessment and supplementary measures, and recommends adding those requirements."
+    },
+    {
+      "id": "C-018",
+      "title": "ISSUE_005: Identifies missing CCPA/CPRA Service Provider provisions",
+      "verdict": "pass",
+      "reasoning": "The memo expressly identifies the absence of CCPA/CPRA Service Provider provisions despite processing personal information of approximately 890,000 California residents, including in the executive summary, priority table, and Finding F-02."
+    },
+    {
+      "id": "C-019",
+      "title": "ISSUE_005: Specifies required CCPA/CPRA contractual terms",
+      "verdict": "pass",
+      "reasoning": "The memo specifies all three listed CCPA/CPRA Service Provider provisions: a prohibition on sale or sharing, a restriction on combining personal information with data from other sources except as permitted, and certification by an authorized representative that the processor understands and will comply with the restrictions."
+    },
+    {
+      "id": "C-020",
+      "title": "ISSUE_006: Identifies audit rights limited to Frankfurt only",
+      "verdict": "pass",
+      "reasoning": "The memo expressly flags in F-09 that Section 11.3 limits audits to Frankfurt, excluding Dublin and Larkfield/Northern Virginia, and recommends extending audit rights to all processor and subprocessor locations."
+    },
+    {
+      "id": "C-021",
+      "title": "ISSUE_006: Recommends extending audit rights to subprocessor locations",
+      "verdict": "pass",
+      "reasoning": "The memo expressly recommends extending audits to all processor and subprocessor locations, including Larkfield/Northern Virginia, Dublin, and Singapore operations. It also requires each subprocessor to provide equivalent audit rights or current relevant reports at least annually, satisfying the criterion."
+    },
+    {
+      "id": "C-022",
+      "title": "ISSUE_007: Identifies missing data return option at termination",
+      "verdict": "pass",
+      "reasoning": "The memo expressly identifies in F-10 that Section 12 provides only deletion and lacks a structured data return option. It also recommends machine-readable return and at least 30 days of transition assistance, matching the playbook requirement."
+    },
+    {
+      "id": "C-023",
+      "title": "ISSUE_007: Identifies HIPAA 6-year retention conflict with 90-day deletion",
+      "verdict": "pass",
+      "reasoning": "The memo expressly identifies the conflict between DPA \u00a712\u2019s 90-day deletion requirement and HIPAA\u2019s six-year documentation-retention requirement under 45 CFR \u00a7 164.530(j), particularly in Finding F-11, and recommends a retention and survival carve-out."
+    },
+    {
+      "id": "C-024",
+      "title": "ISSUE_008: Identifies governing law mismatch for US data disputes",
+      "verdict": "pass",
+      "reasoning": "The memo expressly flags that German law and Munich DIS arbitration apply to all DPA disputes, including PHI and CCPA/CPRA data, and contrasts this with the playbook requirement for Delaware law and US court jurisdiction, specifically the Western District of Texas, Austin Division, for US data disputes."
+    },
+    {
+      "id": "C-025",
+      "title": "ISSUE_008: Recommends bifurcated governing law/dispute resolution",
+      "verdict": "pass",
+      "reasoning": "The memo expressly recommends bifurcating governing law and dispute resolution: Delaware law and U.S. court jurisdiction for U.S. data disputes, while retaining Netherlands or German law and DIS arbitration for EU data disputes."
+    },
+    {
+      "id": "C-026",
+      "title": "ISSUE_009: Recognizes Module 2 alone is insufficient for processor-to-subprocessor transfers",
+      "verdict": "pass",
+      "reasoning": "The memo expressly distinguishes SCC Module 2 (Controller-to-Processor) from Module 3 (Processor-to-Subprocessor), identifies the Stratosphere-to-Larkfield transfer as a processor-to-subprocessor transfer, and recommends separately executing Module 3 under Commission Implementing Decision (EU) 2021/914 before that transfer occurs."
+    },
+    {
+      "id": "C-027",
+      "title": "ISSUE_011: Identifies 2-year survival period as insufficient for HIPAA",
+      "verdict": "pass",
+      "reasoning": "The memorandum expressly flags Section 16's two-year survival period as insufficient for HIPAA, cites the six-year retention requirement under 45 CFR \u00a7 164.530(j), and recommends that BAA protections survive for as long as PHI is retained and at least six years for required records."
+    },
+    {
+      "id": "C-028",
+      "title": "ISSUE_012: Flags anonymization vs. pseudonymization regulatory risk",
+      "verdict": "pass",
+      "reasoning": "The memo expressly flags that Orionis's purported anonymization may instead produce pseudonymized personal data, states that the DPA fails to distinguish or define anonymization versus pseudonymization, and recommends an objective anonymization test with outputs failing that test remaining subject to GDPR/DPA obligations. This captures the regulatory consequence that only truly anonymized data falls outside GDPR scope."
+    },
+    {
+      "id": "C-029",
+      "title": "DISTRACTOR_003: Does not flag DIS arbitration for EU disputes as a gap",
+      "verdict": "pass",
+      "reasoning": "The memo flags German law/Munich DIS only insofar as it improperly applies to US data disputes. It expressly permits retaining German law/DIS for EU data as a negotiated fallback and does not treat DIS arbitration for EU matters as a material compliance gap."
+    },
+    {
+      "id": "C-030",
+      "title": "Each gap includes risk level classification",
+      "verdict": "pass",
+      "reasoning": "All 16 identified findings are explicitly classified by priority in their headings (P0, P1, or P2), and the executive summary also maps these priorities to Blocking, High, or Material severity. This exceeds the 75% threshold."
+    },
+    {
+      "id": "C-031",
+      "title": "Each gap references the specific DPA section at issue",
+      "verdict": "pass",
+      "reasoning": "All 16 enumerated findings include a specific \u201cTemplate location\u201d identifying the relevant DPA section(s), annex, or provision\u2014for example, \u00a713 for liability, \u00a7\u00a79.1\u20139.6 for breach notification, \u00a714 for governing law/forum, and Annex A/B provisions for annex-related gaps. This substantially exceeds the 75% threshold."
+    },
+    {
+      "id": "C-032",
+      "title": "Each gap includes a specific recommended redline or amendment",
+      "verdict": "pass",
+      "reasoning": "All 16 identified findings include a specific recommended redline or amendment, typically with proposed contract language and a precise structural or operational change (such as adding a BAA/CCPA exhibit, SCC Module 3, a 24-hour notice deadline, expanded audit rights, or revised liability terms). This comfortably exceeds the 75% threshold."
+    },
+    {
+      "id": "C-033",
+      "title": "Correctly identifies Pinnacle as HIPAA Covered Entity",
+      "verdict": "pass",
+      "reasoning": "The memorandum expressly states in Section 2 that \u201cPinnacle Health Solutions, Inc. is HIPAA Covered Entity\u201d and consistently treats Stratosphere as Pinnacle\u2019s Business Associate."
+    },
+    {
+      "id": "C-034",
+      "title": "Correctly identifies Stratosphere as Processor/Business Associate",
+      "verdict": "pass",
+      "reasoning": "The memo expressly identifies Stratosphere as a GDPR Processor and HIPAA Business Associate in the roles table and consistently applies those roles throughout its findings."
+    },
+    {
+      "id": "C-035",
+      "title": "References EU-US Data Privacy Framework in transfer analysis",
+      "verdict": "pass",
+      "reasoning": "The memorandum discusses the Data Privacy Framework in its transfer analysis by stating that Larkfield is not DPF-certified, including in the EU-to-US disaster-recovery transfer finding and source crosswalk."
+    },
+    {
+      "id": "C-036",
+      "title": "Identifies EU-to-US (Larkfield/Northern Virginia) disaster recovery transfer scenario",
+      "verdict": "pass",
+      "reasoning": "The memorandum expressly identifies the Frankfurt/EU-to-Larkfield/Northern Virginia transfer of EU data for disaster recovery, including in the transfer facts, Finding F-03, the transfer matrix instructions, and the pre-sign checklist."
+    },
+    {
+      "id": "C-037",
+      "title": "Identifies Singapore remote access transfer scenario",
+      "verdict": "pass",
+      "reasoning": "The memorandum expressly identifies regular remote access by Singapore-based support engineers to EU personal data as a third-country transfer scenario, including it in the findings, transfer schedule recommendations, and pre-sign checklist."
+    },
+    {
+      "id": "C-038",
+      "title": "Identifies Stratosphere processor-to-subprocessor transfer scenario",
+      "verdict": "pass",
+      "reasoning": "The memo expressly identifies the Stratosphere-to-Larkfield transfer as a processor-to-subprocessor international transfer, explains that SCC Module 2 is insufficient, and recommends separate coverage under SCC Module 3. It also addresses Singapore subprocessor/access transfer coverage."
+    },
+    {
+      "id": "C-039",
+      "title": "References 2.1 million US patients or 890,000 California residents",
+      "verdict": "pass",
+      "reasoning": "The memo references both required figures in the relevant contexts: approximately 2.1 million US patient records/PHI for HIPAA analysis and approximately 890,000 California residents for CCPA/CPRA analysis."
+    },
+    {
+      "id": "C-040",
+      "title": "ISSUE_001 classified as Critical or High risk",
+      "verdict": "pass",
+      "reasoning": "The missing HIPAA BAA is explicitly classified as \u201cP0 -- Blocking,\u201d the memorandum\u2019s highest-priority severity tier, and is described as a no-go item requiring resolution before execution or PHI processing. This is equivalent to Critical/High risk."
+    },
+    {
+      "id": "C-041",
+      "title": "ISSUE_003 classified as Critical or High risk",
+      "verdict": "pass",
+      "reasoning": "The liability cap gap is explicitly classified as \u201cP0 -- Blocking\u201d in the executive summary and as \u201cP0 / F-05\u201d in the detailed findings, which is an equivalent highest-tier severity exceeding Critical/High."
+    },
+    {
+      "id": "C-042",
+      "title": "References negotiation context from email thread",
+      "verdict": "pass",
+      "reasoning": "The memo expressly references the negotiation email thread, including Stratosphere\u2019s position that the \u20ac500,000 liability cap is its \u201cglobal standard / firm position,\u201d Pinnacle\u2019s threshold objection, and the scheduled April 30 call and redline timing."
+    },
+    {
+      "id": "C-043",
+      "title": "Mentions subprocessor Larkfield Data Systems by name",
+      "verdict": "pass",
+      "reasoning": "The memorandum repeatedly mentions Larkfield by name and identifies it as the relevant US subprocessor and BA subcontractor."
+    },
+    {
+      "id": "C-044",
+      "title": "Mentions subprocessor Orionis Analytics by name",
+      "verdict": "fail",
+      "reasoning": "The memo mentions \u201cOrionis\u201d repeatedly, but never identifies the subprocessor by its full name, \u201cOrionis Analytics\u201d or \u201cOrionis Analytics Ltd.\u201d"
+    },
+    {
+      "id": "C-045",
+      "title": "ISSUE_006: Notes audit limited to once per year",
+      "verdict": "pass",
+      "reasoning": "The audit-rights analysis expressly proposes one planned audit annually on 30 days\u2019 notice, while adding unlimited for-cause audits without notice. This addresses the annual audit frequency and its sufficiency by supplementing it with for-cause rights."
+    },
+    {
+      "id": "C-046",
+      "title": "ISSUE_004: Recommends specific transfer mechanisms for identified gaps",
+      "verdict": "pass",
+      "reasoning": "The memo recommends at least three specified mechanisms: executing SCC Module 3 for the Stratosphere-to-Larkfield processor-to-subprocessor transfer, implementing supplementary measures for Singapore remote access (including least privilege, MFA, logging, masking, and no local storage), and conducting documented TIAs for the US and Singapore transfers with reassessment triggers."
+    },
+    {
+      "id": "C-047",
+      "title": "ISSUE_012: Recommends defining anonymization standard in DPA",
+      "verdict": "pass",
+      "reasoning": "The memo expressly recommends adding an objective anonymization definition for Orionis, requiring validation against that standard, and treating any output that fails the standard\u2014including pseudonymized output\u2014as Personal Data subject to the DPA."
+    }
+  ],
+  "run_id": "intellectual-property__review-data-processing-agreement-template-against-eu-and-us-requirements",
+  "task": "intellectual-property/review-data-processing-agreement-template-against-eu-and-us-requirements",
+  "judge_model": "gpt-5.6-sol",
+  "scored_at": "2026-11-16T13:31:19.127589+00:00"
+}

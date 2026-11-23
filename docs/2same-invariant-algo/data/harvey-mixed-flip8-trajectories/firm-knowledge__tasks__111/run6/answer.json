@@ -1,0 +1,10 @@
+{
+  "answer": "Created `output/response.md` with the largest settlement, matter details, supporting documents, comparative review, and reasoning.",
+  "source": "last_assistant_message",
+  "finish_reason": "completed",
+  "turn_end": {
+    "kind": "completed"
+  },
+  "root_session_id": "session-ef2bc202-9312-4aab-8893-9088686e21a7",
+  "exit_code": 0
+}

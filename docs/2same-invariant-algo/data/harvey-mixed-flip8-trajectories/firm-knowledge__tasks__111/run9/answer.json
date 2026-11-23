@@ -1,0 +1,10 @@
+{
+  "answer": "Completed `output/response.md` with the largest settlement, matter identification, executed-agreement analysis, comparison against other settlements, and supporting document paths.",
+  "source": "last_assistant_message",
+  "finish_reason": "completed",
+  "turn_end": {
+    "kind": "completed"
+  },
+  "root_session_id": "session-3bcf9825-c491-4828-bcea-5a4fee1491f4",
+  "exit_code": 0
+}

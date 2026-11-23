@@ -1,0 +1,10 @@
+{
+  "answer": "Created `output/response.md` with the complete findings, supporting matters/documents, inclusion criteria, exclusions, and reasoning.",
+  "source": "last_assistant_message",
+  "finish_reason": "completed",
+  "turn_end": {
+    "kind": "completed"
+  },
+  "root_session_id": "session-56c068b7-38eb-4455-8c21-ff9dbb39758e",
+  "exit_code": 0
+}

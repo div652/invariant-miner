@@ -1,0 +1,34 @@
+{
+  "score": 1.0,
+  "max_score": 1.0,
+  "summary": "3/3 criteria passed.  ALL-PASS.",
+  "all_pass": true,
+  "n_criteria": 3,
+  "n_passed": 3,
+  "n_grading_errors": 0,
+  "pandoc_version": "3.11",
+  "criteria_results": [
+    {
+      "id": "C-001",
+      "title": "Qualifying matter \u2014 Verimark Hospitality 1021-00006",
+      "verdict": "pass",
+      "reasoning": "The output explicitly identifies Matter No. 1021-00006, Verimark Hospitality Group Inc. v. Coastal Palms Franchise Holdings LLC, et al., as the firm's largest settlement, satisfying the criterion."
+    },
+    {
+      "id": "C-002",
+      "title": "Settlement figure \u2014 1021-00006",
+      "verdict": "pass",
+      "reasoning": "The output explicitly states that the settlement in Matter No. 1021-00006, Verimark Hospitality, was $87,500,000, satisfying the criterion."
+    },
+    {
+      "id": "C-003",
+      "title": "Qualifying set \u2014 precision",
+      "verdict": "pass",
+      "reasoning": "The output identifies only Matter No. 1021-00006 (Verimark Hospitality) as the matter with the largest settlement. Other matters are mentioned solely as lower-value comparisons, not as the largest settlement."
+    }
+  ],
+  "run_id": "firm-knowledge__tasks__111",
+  "task": "firm-knowledge/tasks/111",
+  "judge_model": "gpt-5.6-sol",
+  "scored_at": "2026-11-18T03:26:57.489892+00:00"
+}

@@ -1,0 +1,1434 @@
+{
+ "description": "The 8 harvey-mixed train tasks of the named subset `mixed:flip` (all-pass in 2-4 of the first five Luna-high reference runs), each run 10 times with the same harness: GPT-5.6 Luna high (models/luna-cao.json), base harness at main 2817664, no skills, 200 steps / 2 h, graded by Harvey's grader (gpt-5.6-sol high). run1-run5 = the mixed-200 reference runs (benchmarks/harvey-mixed/RESULTS.md), run6-run10 = five more runs of these 8 (2026-11-18).",
+ "benchmark": "harvey",
+ "runs": {
+  "run1": "/home/agarwaldi/dsh-bench-harness/runs/hv-mixed200-lunahigh-r1-20261116T093818Z",
+  "run2": "/home/agarwaldi/dsh-bench-harness/runs/hv-mixed200-lunahigh-r2-20261116T093818Z",
+  "run3": "/home/agarwaldi/dsh-bench-harness/runs/hv-mixed200-lunahigh-r3-20261116T093818Z",
+  "run4": "/home/agarwaldi/dsh-bench-harness/runs/hv-mixed200-lunahigh-r4-20261116T164249Z",
+  "run5": "/home/agarwaldi/dsh-bench-harness/runs/hv-mixed200-lunahigh-r5-20261116T164249Z",
+  "run6": "/home/agarwaldi/dsh-bench-harness/runs/hv-mixed200-lunahigh-flip-r6-20261118T030322Z",
+  "run7": "/home/agarwaldi/dsh-bench-harness/runs/hv-mixed200-lunahigh-flip-r7-20261118T030322Z",
+  "run8": "/home/agarwaldi/dsh-bench-harness/runs/hv-mixed200-lunahigh-flip-r8-20261118T030322Z",
+  "run9": "/home/agarwaldi/dsh-bench-harness/runs/hv-mixed200-lunahigh-flip-r9-20261118T030322Z",
+  "run10": "/home/agarwaldi/dsh-bench-harness/runs/hv-mixed200-lunahigh-flip-r10-20261118T030322Z"
+ },
+ "tasks": [
+  {
+   "task_id": "contracts/banking/account-control-agreement-first-turn-redline/scenario-01",
+   "folder": "contracts__banking__account-control-agreement-first-turn-redline__scenario-01",
+   "runs": {
+    "run1": {
+     "all_pass": true,
+     "n_passed": 30,
+     "n_criteria": 30,
+     "finish_reason": "completed",
+     "agent_s": 414.9,
+     "source_task_dir": "/home/agarwaldi/dsh-bench-harness/runs/hv-mixed200-lunahigh-r1-20261116T093818Z/tasks/contracts__banking__account-control-agreement-first-turn-redline__scenario-01",
+     "session_files": 1,
+     "files": [
+      "answer.json",
+      "grading.json",
+      "output",
+      "readable.md",
+      "run.json",
+      "session.v2.jsonl"
+     ]
+    },
+    "run2": {
+     "all_pass": true,
+     "n_passed": 30,
+     "n_criteria": 30,
+     "finish_reason": "completed",
+     "agent_s": 250.1,
+     "source_task_dir": "/home/agarwaldi/dsh-bench-harness/runs/hv-mixed200-lunahigh-r2-20261116T093818Z/tasks/contracts__banking__account-control-agreement-first-turn-redline__scenario-01",
+     "session_files": 1,
+     "files": [
+      "answer.json",
+      "grading.json",
+      "output",
+      "readable.md",
+      "run.json",
+      "session.v2.jsonl"
+     ]
+    },
+    "run3": {
+     "all_pass": false,
+     "n_passed": 28,
+     "n_criteria": 30,
+     "finish_reason": "completed",
+     "agent_s": 350.6,
+     "source_task_dir": "/home/agarwaldi/dsh-bench-harness/runs/hv-mixed200-lunahigh-r3-20261116T093818Z/tasks/contracts__banking__account-control-agreement-first-turn-redline__scenario-01",
+     "session_files": 1,
+     "files": [
+      "answer.json",
+      "grading.json",
+      "output",
+      "readable.md",
+      "run.json",
+      "session.v2.jsonl"
+     ]
+    },
+    "run4": {
+     "all_pass": true,
+     "n_passed": 30,
+     "n_criteria": 30,
+     "finish_reason": "completed",
+     "agent_s": 325.5,
+     "source_task_dir": "/home/agarwaldi/dsh-bench-harness/runs/hv-mixed200-lunahigh-r4-20261116T164249Z/tasks/contracts__banking__account-control-agreement-first-turn-redline__scenario-01",
+     "session_files": 1,
+     "files": [
+      "answer.json",
+      "grading.json",
+      "output",
+      "readable.md",
+      "run.json",
+      "session.v2.jsonl"
+     ]
+    },
+    "run5": {
+     "all_pass": true,
+     "n_passed": 30,
+     "n_criteria": 30,
+     "finish_reason": "completed",
+     "agent_s": 149.2,
+     "source_task_dir": "/home/agarwaldi/dsh-bench-harness/runs/hv-mixed200-lunahigh-r5-20261116T164249Z/tasks/contracts__banking__account-control-agreement-first-turn-redline__scenario-01",
+     "session_files": 1,
+     "files": [
+      "answer.json",
+      "grading.json",
+      "output",
+      "readable.md",
+      "run.json",
+      "session.v2.jsonl"
+     ]
+    },
+    "run6": {
+     "all_pass": true,
+     "n_passed": 30,
+     "n_criteria": 30,
+     "finish_reason": "completed",
+     "agent_s": 369.5,
+     "source_task_dir": "/home/agarwaldi/dsh-bench-harness/runs/hv-mixed200-lunahigh-flip-r6-20261118T030322Z/tasks/contracts__banking__account-control-agreement-first-turn-redline__scenario-01",
+     "session_files": 1,
+     "files": [
+      "answer.json",
+      "grading.json",
+      "output",
+      "readable.md",
+      "run.json",
+      "session.v2.jsonl"
+     ]
+    },
+    "run7": {
+     "all_pass": true,
+     "n_passed": 30,
+     "n_criteria": 30,
+     "finish_reason": "completed",
+     "agent_s": 251.1,
+     "source_task_dir": "/home/agarwaldi/dsh-bench-harness/runs/hv-mixed200-lunahigh-flip-r7-20261118T030322Z/tasks/contracts__banking__account-control-agreement-first-turn-redline__scenario-01",
+     "session_files": 1,
+     "files": [
+      "answer.json",
+      "grading.json",
+      "output",
+      "readable.md",
+      "run.json",
+      "session.v2.jsonl"
+     ]
+    },
+    "run8": {
+     "all_pass": true,
+     "n_passed": 30,
+     "n_criteria": 30,
+     "finish_reason": "completed",
+     "agent_s": 293.6,
+     "source_task_dir": "/home/agarwaldi/dsh-bench-harness/runs/hv-mixed200-lunahigh-flip-r8-20261118T030322Z/tasks/contracts__banking__account-control-agreement-first-turn-redline__scenario-01",
+     "session_files": 1,
+     "files": [
+      "answer.json",
+      "grading.json",
+      "output",
+      "readable.md",
+      "run.json",
+      "session.v2.jsonl"
+     ]
+    },
+    "run9": {
+     "all_pass": true,
+     "n_passed": 30,
+     "n_criteria": 30,
+     "finish_reason": "completed",
+     "agent_s": 362.5,
+     "source_task_dir": "/home/agarwaldi/dsh-bench-harness/runs/hv-mixed200-lunahigh-flip-r9-20261118T030322Z/tasks/contracts__banking__account-control-agreement-first-turn-redline__scenario-01",
+     "session_files": 1,
+     "files": [
+      "answer.json",
+      "grading.json",
+      "output",
+      "readable.md",
+      "run.json",
+      "session.v2.jsonl"
+     ]
+    },
+    "run10": {
+     "all_pass": true,
+     "n_passed": 30,
+     "n_criteria": 30,
+     "finish_reason": "completed",
+     "agent_s": 361.3,
+     "source_task_dir": "/home/agarwaldi/dsh-bench-harness/runs/hv-mixed200-lunahigh-flip-r10-20261118T030322Z/tasks/contracts__banking__account-control-agreement-first-turn-redline__scenario-01",
+     "session_files": 1,
+     "files": [
+      "answer.json",
+      "grading.json",
+      "output",
+      "readable.md",
+      "run.json",
+      "session.v2.jsonl"
+     ]
+    }
+   },
+   "passes": 9
+  },
+  {
+   "task_id": "corporate-ma/draft-markup-of-stock-purchase-agreement-provisions",
+   "folder": "corporate-ma__draft-markup-of-stock-purchase-agreement-provisions",
+   "runs": {
+    "run1": {
+     "all_pass": false,
+     "n_passed": 56,
+     "n_criteria": 59,
+     "finish_reason": "completed",
+     "agent_s": 236.0,
+     "source_task_dir": "/home/agarwaldi/dsh-bench-harness/runs/hv-mixed200-lunahigh-r1-20261116T093818Z/tasks/corporate-ma__draft-markup-of-stock-purchase-agreement-provisions",
+     "session_files": 1,
+     "files": [
+      "answer.json",
+      "grading.json",
+      "output",
+      "readable.md",
+      "run.json",
+      "session.v2.jsonl"
+     ]
+    },
+    "run2": {
+     "all_pass": true,
+     "n_passed": 59,
+     "n_criteria": 59,
+     "finish_reason": "completed",
+     "agent_s": 486.3,
+     "source_task_dir": "/home/agarwaldi/dsh-bench-harness/runs/hv-mixed200-lunahigh-r2-20261116T093818Z/tasks/corporate-ma__draft-markup-of-stock-purchase-agreement-provisions",
+     "session_files": 1,
+     "files": [
+      "answer.json",
+      "grading.json",
+      "output",
+      "readable.md",
+      "run.json",
+      "session.v2.jsonl"
+     ]
+    },
+    "run3": {
+     "all_pass": true,
+     "n_passed": 59,
+     "n_criteria": 59,
+     "finish_reason": "completed",
+     "agent_s": 271.7,
+     "source_task_dir": "/home/agarwaldi/dsh-bench-harness/runs/hv-mixed200-lunahigh-r3-20261116T093818Z/tasks/corporate-ma__draft-markup-of-stock-purchase-agreement-provisions",
+     "session_files": 1,
+     "files": [
+      "answer.json",
+      "grading.json",
+      "output",
+      "readable.md",
+      "run.json",
+      "session.v2.jsonl"
+     ]
+    },
+    "run4": {
+     "all_pass": true,
+     "n_passed": 59,
+     "n_criteria": 59,
+     "finish_reason": "completed",
+     "agent_s": 316.6,
+     "source_task_dir": "/home/agarwaldi/dsh-bench-harness/runs/hv-mixed200-lunahigh-r4-20261116T164249Z/tasks/corporate-ma__draft-markup-of-stock-purchase-agreement-provisions",
+     "session_files": 1,
+     "files": [
+      "answer.json",
+      "grading.json",
+      "output",
+      "readable.md",
+      "run.json",
+      "session.v2.jsonl"
+     ]
+    },
+    "run5": {
+     "all_pass": true,
+     "n_passed": 59,
+     "n_criteria": 59,
+     "finish_reason": "completed",
+     "agent_s": 329.8,
+     "source_task_dir": "/home/agarwaldi/dsh-bench-harness/runs/hv-mixed200-lunahigh-r5-20261116T164249Z/tasks/corporate-ma__draft-markup-of-stock-purchase-agreement-provisions",
+     "session_files": 1,
+     "files": [
+      "answer.json",
+      "grading.json",
+      "output",
+      "readable.md",
+      "run.json",
+      "session.v2.jsonl"
+     ]
+    },
+    "run6": {
+     "all_pass": true,
+     "n_passed": 59,
+     "n_criteria": 59,
+     "finish_reason": "completed",
+     "agent_s": 286.9,
+     "source_task_dir": "/home/agarwaldi/dsh-bench-harness/runs/hv-mixed200-lunahigh-flip-r6-20261118T030322Z/tasks/corporate-ma__draft-markup-of-stock-purchase-agreement-provisions",
+     "session_files": 1,
+     "files": [
+      "answer.json",
+      "grading.json",
+      "output",
+      "readable.md",
+      "run.json",
+      "session.v2.jsonl"
+     ]
+    },
+    "run7": {
+     "all_pass": true,
+     "n_passed": 59,
+     "n_criteria": 59,
+     "finish_reason": "completed",
+     "agent_s": 259.8,
+     "source_task_dir": "/home/agarwaldi/dsh-bench-harness/runs/hv-mixed200-lunahigh-flip-r7-20261118T030322Z/tasks/corporate-ma__draft-markup-of-stock-purchase-agreement-provisions",
+     "session_files": 1,
+     "files": [
+      "answer.json",
+      "grading.json",
+      "output",
+      "readable.md",
+      "run.json",
+      "session.v2.jsonl"
+     ]
+    },
+    "run8": {
+     "all_pass": true,
+     "n_passed": 59,
+     "n_criteria": 59,
+     "finish_reason": "completed",
+     "agent_s": 281.3,
+     "source_task_dir": "/home/agarwaldi/dsh-bench-harness/runs/hv-mixed200-lunahigh-flip-r8-20261118T030322Z/tasks/corporate-ma__draft-markup-of-stock-purchase-agreement-provisions",
+     "session_files": 1,
+     "files": [
+      "answer.json",
+      "grading.json",
+      "output",
+      "readable.md",
+      "run.json",
+      "session.v2.jsonl"
+     ]
+    },
+    "run9": {
+     "all_pass": true,
+     "n_passed": 59,
+     "n_criteria": 59,
+     "finish_reason": "completed",
+     "agent_s": 362.8,
+     "source_task_dir": "/home/agarwaldi/dsh-bench-harness/runs/hv-mixed200-lunahigh-flip-r9-20261118T030322Z/tasks/corporate-ma__draft-markup-of-stock-purchase-agreement-provisions",
+     "session_files": 1,
+     "files": [
+      "answer.json",
+      "grading.json",
+      "output",
+      "readable.md",
+      "run.json",
+      "session.v2.jsonl"
+     ]
+    },
+    "run10": {
+     "all_pass": true,
+     "n_passed": 59,
+     "n_criteria": 59,
+     "finish_reason": "completed",
+     "agent_s": 558.4,
+     "source_task_dir": "/home/agarwaldi/dsh-bench-harness/runs/hv-mixed200-lunahigh-flip-r10-20261118T030322Z/tasks/corporate-ma__draft-markup-of-stock-purchase-agreement-provisions",
+     "session_files": 1,
+     "files": [
+      "answer.json",
+      "grading.json",
+      "output",
+      "readable.md",
+      "run.json",
+      "session.v2.jsonl"
+     ]
+    }
+   },
+   "passes": 9
+  },
+  {
+   "task_id": "firm-knowledge/tasks/111",
+   "folder": "firm-knowledge__tasks__111",
+   "runs": {
+    "run1": {
+     "all_pass": false,
+     "n_passed": 0,
+     "n_criteria": 3,
+     "finish_reason": "completed",
+     "agent_s": 510.0,
+     "source_task_dir": "/home/agarwaldi/dsh-bench-harness/runs/hv-mixed200-lunahigh-r1-20261116T093818Z/tasks/firm-knowledge__tasks__111",
+     "session_files": 1,
+     "files": [
+      "answer.json",
+      "grading.json",
+      "output",
+      "readable.md",
+      "run.json",
+      "session.v2.jsonl"
+     ]
+    },
+    "run2": {
+     "all_pass": true,
+     "n_passed": 3,
+     "n_criteria": 3,
+     "finish_reason": "completed",
+     "agent_s": 348.7,
+     "source_task_dir": "/home/agarwaldi/dsh-bench-harness/runs/hv-mixed200-lunahigh-r2-20261116T093818Z/tasks/firm-knowledge__tasks__111",
+     "session_files": 1,
+     "files": [
+      "answer.json",
+      "grading.json",
+      "output",
+      "readable.md",
+      "run.json",
+      "session.v2.jsonl"
+     ]
+    },
+    "run3": {
+     "all_pass": true,
+     "n_passed": 3,
+     "n_criteria": 3,
+     "finish_reason": "completed",
+     "agent_s": 171.2,
+     "source_task_dir": "/home/agarwaldi/dsh-bench-harness/runs/hv-mixed200-lunahigh-r3-20261116T093818Z/tasks/firm-knowledge__tasks__111",
+     "session_files": 1,
+     "files": [
+      "answer.json",
+      "grading.json",
+      "output",
+      "readable.md",
+      "run.json",
+      "session.v2.jsonl"
+     ]
+    },
+    "run4": {
+     "all_pass": true,
+     "n_passed": 3,
+     "n_criteria": 3,
+     "finish_reason": "completed",
+     "agent_s": 145.7,
+     "source_task_dir": "/home/agarwaldi/dsh-bench-harness/runs/hv-mixed200-lunahigh-r4-20261116T164249Z/tasks/firm-knowledge__tasks__111",
+     "session_files": 1,
+     "files": [
+      "answer.json",
+      "grading.json",
+      "output",
+      "readable.md",
+      "run.json",
+      "session.v2.jsonl"
+     ]
+    },
+    "run5": {
+     "all_pass": true,
+     "n_passed": 3,
+     "n_criteria": 3,
+     "finish_reason": "completed",
+     "agent_s": 259.5,
+     "source_task_dir": "/home/agarwaldi/dsh-bench-harness/runs/hv-mixed200-lunahigh-r5-20261116T164249Z/tasks/firm-knowledge__tasks__111",
+     "session_files": 1,
+     "files": [
+      "answer.json",
+      "grading.json",
+      "output",
+      "readable.md",
+      "run.json",
+      "session.v2.jsonl"
+     ]
+    },
+    "run6": {
+     "all_pass": true,
+     "n_passed": 3,
+     "n_criteria": 3,
+     "finish_reason": "completed",
+     "agent_s": 279.7,
+     "source_task_dir": "/home/agarwaldi/dsh-bench-harness/runs/hv-mixed200-lunahigh-flip-r6-20261118T030322Z/tasks/firm-knowledge__tasks__111",
+     "session_files": 1,
+     "files": [
+      "answer.json",
+      "grading.json",
+      "output",
+      "readable.md",
+      "run.json",
+      "session.v2.jsonl"
+     ]
+    },
+    "run7": {
+     "all_pass": true,
+     "n_passed": 3,
+     "n_criteria": 3,
+     "finish_reason": "completed",
+     "agent_s": 276.9,
+     "source_task_dir": "/home/agarwaldi/dsh-bench-harness/runs/hv-mixed200-lunahigh-flip-r7-20261118T030322Z/tasks/firm-knowledge__tasks__111",
+     "session_files": 1,
+     "files": [
+      "answer.json",
+      "grading.json",
+      "output",
+      "readable.md",
+      "run.json",
+      "session.v2.jsonl"
+     ]
+    },
+    "run8": {
+     "all_pass": true,
+     "n_passed": 3,
+     "n_criteria": 3,
+     "finish_reason": "completed",
+     "agent_s": 338.7,
+     "source_task_dir": "/home/agarwaldi/dsh-bench-harness/runs/hv-mixed200-lunahigh-flip-r8-20261118T030322Z/tasks/firm-knowledge__tasks__111",
+     "session_files": 1,
+     "files": [
+      "answer.json",
+      "grading.json",
+      "output",
+      "readable.md",
+      "run.json",
+      "session.v2.jsonl"
+     ]
+    },
+    "run9": {
+     "all_pass": true,
+     "n_passed": 3,
+     "n_criteria": 3,
+     "finish_reason": "completed",
+     "agent_s": 266.0,
+     "source_task_dir": "/home/agarwaldi/dsh-bench-harness/runs/hv-mixed200-lunahigh-flip-r9-20261118T030322Z/tasks/firm-knowledge__tasks__111",
+     "session_files": 1,
+     "files": [
+      "answer.json",
+      "grading.json",
+      "output",
+      "readable.md",
+      "run.json",
+      "session.v2.jsonl"
+     ]
+    },
+    "run10": {
+     "all_pass": true,
+     "n_passed": 3,
+     "n_criteria": 3,
+     "finish_reason": "completed",
+     "agent_s": 157.4,
+     "source_task_dir": "/home/agarwaldi/dsh-bench-harness/runs/hv-mixed200-lunahigh-flip-r10-20261118T030322Z/tasks/firm-knowledge__tasks__111",
+     "session_files": 1,
+     "files": [
+      "answer.json",
+      "grading.json",
+      "output",
+      "readable.md",
+      "run.json",
+      "session.v2.jsonl"
+     ]
+    }
+   },
+   "passes": 9
+  },
+  {
+   "task_id": "corporate-ma/draft-markup-of-transition-services-agreement-tsa",
+   "folder": "corporate-ma__draft-markup-of-transition-services-agreement-tsa",
+   "runs": {
+    "run1": {
+     "all_pass": true,
+     "n_passed": 56,
+     "n_criteria": 56,
+     "finish_reason": "completed",
+     "agent_s": 404.3,
+     "source_task_dir": "/home/agarwaldi/dsh-bench-harness/runs/hv-mixed200-lunahigh-r1-20261116T093818Z/tasks/corporate-ma__draft-markup-of-transition-services-agreement-tsa",
+     "session_files": 1,
+     "files": [
+      "answer.json",
+      "grading.json",
+      "output",
+      "readable.md",
+      "run.json",
+      "session.v2.jsonl"
+     ]
+    },
+    "run2": {
+     "all_pass": false,
+     "n_passed": 55,
+     "n_criteria": 56,
+     "finish_reason": "completed",
+     "agent_s": 426.0,
+     "source_task_dir": "/home/agarwaldi/dsh-bench-harness/runs/hv-mixed200-lunahigh-r2-20261116T093818Z/tasks/corporate-ma__draft-markup-of-transition-services-agreement-tsa",
+     "session_files": 1,
+     "files": [
+      "answer.json",
+      "grading.json",
+      "output",
+      "readable.md",
+      "run.json",
+      "session.v2.jsonl"
+     ]
+    },
+    "run3": {
+     "all_pass": false,
+     "n_passed": 52,
+     "n_criteria": 56,
+     "finish_reason": "completed",
+     "agent_s": 422.7,
+     "source_task_dir": "/home/agarwaldi/dsh-bench-harness/runs/hv-mixed200-lunahigh-r3-20261116T093818Z/tasks/corporate-ma__draft-markup-of-transition-services-agreement-tsa",
+     "session_files": 1,
+     "files": [
+      "answer.json",
+      "grading.json",
+      "output",
+      "readable.md",
+      "run.json",
+      "session.v2.jsonl"
+     ]
+    },
+    "run4": {
+     "all_pass": true,
+     "n_passed": 56,
+     "n_criteria": 56,
+     "finish_reason": "completed",
+     "agent_s": 247.9,
+     "source_task_dir": "/home/agarwaldi/dsh-bench-harness/runs/hv-mixed200-lunahigh-r4-20261116T164249Z/tasks/corporate-ma__draft-markup-of-transition-services-agreement-tsa",
+     "session_files": 1,
+     "files": [
+      "answer.json",
+      "grading.json",
+      "output",
+      "readable.md",
+      "run.json",
+      "session.v2.jsonl"
+     ]
+    },
+    "run5": {
+     "all_pass": true,
+     "n_passed": 56,
+     "n_criteria": 56,
+     "finish_reason": "completed",
+     "agent_s": 232.9,
+     "source_task_dir": "/home/agarwaldi/dsh-bench-harness/runs/hv-mixed200-lunahigh-r5-20261116T164249Z/tasks/corporate-ma__draft-markup-of-transition-services-agreement-tsa",
+     "session_files": 1,
+     "files": [
+      "answer.json",
+      "grading.json",
+      "output",
+      "readable.md",
+      "run.json",
+      "session.v2.jsonl"
+     ]
+    },
+    "run6": {
+     "all_pass": true,
+     "n_passed": 56,
+     "n_criteria": 56,
+     "finish_reason": "completed",
+     "agent_s": 300.9,
+     "source_task_dir": "/home/agarwaldi/dsh-bench-harness/runs/hv-mixed200-lunahigh-flip-r6-20261118T030322Z/tasks/corporate-ma__draft-markup-of-transition-services-agreement-tsa",
+     "session_files": 1,
+     "files": [
+      "answer.json",
+      "grading.json",
+      "output",
+      "readable.md",
+      "run.json",
+      "session.v2.jsonl"
+     ]
+    },
+    "run7": {
+     "all_pass": true,
+     "n_passed": 56,
+     "n_criteria": 56,
+     "finish_reason": "completed",
+     "agent_s": 400.2,
+     "source_task_dir": "/home/agarwaldi/dsh-bench-harness/runs/hv-mixed200-lunahigh-flip-r7-20261118T030322Z/tasks/corporate-ma__draft-markup-of-transition-services-agreement-tsa",
+     "session_files": 1,
+     "files": [
+      "answer.json",
+      "grading.json",
+      "output",
+      "readable.md",
+      "run.json",
+      "session.v2.jsonl"
+     ]
+    },
+    "run8": {
+     "all_pass": true,
+     "n_passed": 56,
+     "n_criteria": 56,
+     "finish_reason": "completed",
+     "agent_s": 369.7,
+     "source_task_dir": "/home/agarwaldi/dsh-bench-harness/runs/hv-mixed200-lunahigh-flip-r8-20261118T030322Z/tasks/corporate-ma__draft-markup-of-transition-services-agreement-tsa",
+     "session_files": 1,
+     "files": [
+      "answer.json",
+      "grading.json",
+      "output",
+      "readable.md",
+      "run.json",
+      "session.v2.jsonl"
+     ]
+    },
+    "run9": {
+     "all_pass": true,
+     "n_passed": 56,
+     "n_criteria": 56,
+     "finish_reason": "completed",
+     "agent_s": 308.2,
+     "source_task_dir": "/home/agarwaldi/dsh-bench-harness/runs/hv-mixed200-lunahigh-flip-r9-20261118T030322Z/tasks/corporate-ma__draft-markup-of-transition-services-agreement-tsa",
+     "session_files": 1,
+     "files": [
+      "answer.json",
+      "grading.json",
+      "output",
+      "readable.md",
+      "run.json",
+      "session.v2.jsonl"
+     ]
+    },
+    "run10": {
+     "all_pass": false,
+     "n_passed": 54,
+     "n_criteria": 56,
+     "finish_reason": "completed",
+     "agent_s": 332.6,
+     "source_task_dir": "/home/agarwaldi/dsh-bench-harness/runs/hv-mixed200-lunahigh-flip-r10-20261118T030322Z/tasks/corporate-ma__draft-markup-of-transition-services-agreement-tsa",
+     "session_files": 1,
+     "files": [
+      "answer.json",
+      "grading.json",
+      "output",
+      "readable.md",
+      "run.json",
+      "session.v2.jsonl"
+     ]
+    }
+   },
+   "passes": 7
+  },
+  {
+   "task_id": "intellectual-property/review-data-processing-agreement-template-against-eu-and-us-requirements",
+   "folder": "intellectual-property__review-data-processing-agreement-template-against-eu-and-us-requirements",
+   "runs": {
+    "run1": {
+     "all_pass": true,
+     "n_passed": 47,
+     "n_criteria": 47,
+     "finish_reason": "completed",
+     "agent_s": 300.3,
+     "source_task_dir": "/home/agarwaldi/dsh-bench-harness/runs/hv-mixed200-lunahigh-r1-20261116T093818Z/tasks/intellectual-property__review-data-processing-agreement-template-against-eu-and-us-requirements",
+     "session_files": 1,
+     "files": [
+      "answer.json",
+      "grading.json",
+      "output",
+      "readable.md",
+      "run.json",
+      "session.v2.jsonl"
+     ]
+    },
+    "run2": {
+     "all_pass": true,
+     "n_passed": 47,
+     "n_criteria": 47,
+     "finish_reason": "completed",
+     "agent_s": 186.5,
+     "source_task_dir": "/home/agarwaldi/dsh-bench-harness/runs/hv-mixed200-lunahigh-r2-20261116T093818Z/tasks/intellectual-property__review-data-processing-agreement-template-against-eu-and-us-requirements",
+     "session_files": 1,
+     "files": [
+      "answer.json",
+      "grading.json",
+      "output",
+      "readable.md",
+      "run.json",
+      "session.v2.jsonl"
+     ]
+    },
+    "run3": {
+     "all_pass": false,
+     "n_passed": 46,
+     "n_criteria": 47,
+     "finish_reason": "completed",
+     "agent_s": 269.6,
+     "source_task_dir": "/home/agarwaldi/dsh-bench-harness/runs/hv-mixed200-lunahigh-r3-20261116T093818Z/tasks/intellectual-property__review-data-processing-agreement-template-against-eu-and-us-requirements",
+     "session_files": 1,
+     "files": [
+      "answer.json",
+      "grading.json",
+      "output",
+      "readable.md",
+      "run.json",
+      "session.v2.jsonl"
+     ]
+    },
+    "run4": {
+     "all_pass": false,
+     "n_passed": 44,
+     "n_criteria": 47,
+     "finish_reason": "completed",
+     "agent_s": 258.1,
+     "source_task_dir": "/home/agarwaldi/dsh-bench-harness/runs/hv-mixed200-lunahigh-r4-20261116T164249Z/tasks/intellectual-property__review-data-processing-agreement-template-against-eu-and-us-requirements",
+     "session_files": 1,
+     "files": [
+      "answer.json",
+      "grading.json",
+      "output",
+      "readable.md",
+      "run.json",
+      "session.v2.jsonl"
+     ]
+    },
+    "run5": {
+     "all_pass": true,
+     "n_passed": 47,
+     "n_criteria": 47,
+     "finish_reason": "completed",
+     "agent_s": 231.7,
+     "source_task_dir": "/home/agarwaldi/dsh-bench-harness/runs/hv-mixed200-lunahigh-r5-20261116T164249Z/tasks/intellectual-property__review-data-processing-agreement-template-against-eu-and-us-requirements",
+     "session_files": 1,
+     "files": [
+      "answer.json",
+      "grading.json",
+      "output",
+      "readable.md",
+      "run.json",
+      "session.v2.jsonl"
+     ]
+    },
+    "run6": {
+     "all_pass": false,
+     "n_passed": 45,
+     "n_criteria": 47,
+     "finish_reason": "completed",
+     "agent_s": 254.3,
+     "source_task_dir": "/home/agarwaldi/dsh-bench-harness/runs/hv-mixed200-lunahigh-flip-r6-20261118T030322Z/tasks/intellectual-property__review-data-processing-agreement-template-against-eu-and-us-requirements",
+     "session_files": 1,
+     "files": [
+      "answer.json",
+      "grading.json",
+      "output",
+      "readable.md",
+      "run.json",
+      "session.v2.jsonl"
+     ]
+    },
+    "run7": {
+     "all_pass": true,
+     "n_passed": 47,
+     "n_criteria": 47,
+     "finish_reason": "completed",
+     "agent_s": 376.6,
+     "source_task_dir": "/home/agarwaldi/dsh-bench-harness/runs/hv-mixed200-lunahigh-flip-r7-20261118T030322Z/tasks/intellectual-property__review-data-processing-agreement-template-against-eu-and-us-requirements",
+     "session_files": 1,
+     "files": [
+      "answer.json",
+      "grading.json",
+      "output",
+      "readable.md",
+      "run.json",
+      "session.v2.jsonl"
+     ]
+    },
+    "run8": {
+     "all_pass": false,
+     "n_passed": 45,
+     "n_criteria": 47,
+     "finish_reason": "completed",
+     "agent_s": 280.5,
+     "source_task_dir": "/home/agarwaldi/dsh-bench-harness/runs/hv-mixed200-lunahigh-flip-r8-20261118T030322Z/tasks/intellectual-property__review-data-processing-agreement-template-against-eu-and-us-requirements",
+     "session_files": 1,
+     "files": [
+      "answer.json",
+      "grading.json",
+      "output",
+      "readable.md",
+      "run.json",
+      "session.v2.jsonl"
+     ]
+    },
+    "run9": {
+     "all_pass": false,
+     "n_passed": 45,
+     "n_criteria": 47,
+     "finish_reason": "completed",
+     "agent_s": 247.9,
+     "source_task_dir": "/home/agarwaldi/dsh-bench-harness/runs/hv-mixed200-lunahigh-flip-r9-20261118T030322Z/tasks/intellectual-property__review-data-processing-agreement-template-against-eu-and-us-requirements",
+     "session_files": 1,
+     "files": [
+      "answer.json",
+      "grading.json",
+      "output",
+      "readable.md",
+      "run.json",
+      "session.v2.jsonl"
+     ]
+    },
+    "run10": {
+     "all_pass": false,
+     "n_passed": 45,
+     "n_criteria": 47,
+     "finish_reason": "completed",
+     "agent_s": 212.0,
+     "source_task_dir": "/home/agarwaldi/dsh-bench-harness/runs/hv-mixed200-lunahigh-flip-r10-20261118T030322Z/tasks/intellectual-property__review-data-processing-agreement-template-against-eu-and-us-requirements",
+     "session_files": 1,
+     "files": [
+      "answer.json",
+      "grading.json",
+      "output",
+      "readable.md",
+      "run.json",
+      "session.v2.jsonl"
+     ]
+    }
+   },
+   "passes": 4
+  },
+  {
+   "task_id": "contracts/banking/repo-securities-lending-subsequent-turn-redline/scenario-01",
+   "folder": "contracts__banking__repo-securities-lending-subsequent-turn-redline__scenario-01",
+   "runs": {
+    "run1": {
+     "all_pass": false,
+     "n_passed": 43,
+     "n_criteria": 48,
+     "finish_reason": "completed",
+     "agent_s": 328.3,
+     "source_task_dir": "/home/agarwaldi/dsh-bench-harness/runs/hv-mixed200-lunahigh-r1-20261116T093818Z/tasks/contracts__banking__repo-securities-lending-subsequent-turn-redline__scenario-01",
+     "session_files": 1,
+     "files": [
+      "answer.json",
+      "grading.json",
+      "output",
+      "readable.md",
+      "run.json",
+      "session.v2.jsonl"
+     ]
+    },
+    "run2": {
+     "all_pass": false,
+     "n_passed": 46,
+     "n_criteria": 48,
+     "finish_reason": "completed",
+     "agent_s": 737.7,
+     "source_task_dir": "/home/agarwaldi/dsh-bench-harness/runs/hv-mixed200-lunahigh-r2-20261116T093818Z/tasks/contracts__banking__repo-securities-lending-subsequent-turn-redline__scenario-01",
+     "session_files": 1,
+     "files": [
+      "answer.json",
+      "grading.json",
+      "output",
+      "readable.md",
+      "run.json",
+      "session.v2.jsonl"
+     ]
+    },
+    "run3": {
+     "all_pass": false,
+     "n_passed": 45,
+     "n_criteria": 48,
+     "finish_reason": "completed",
+     "agent_s": 525.1,
+     "source_task_dir": "/home/agarwaldi/dsh-bench-harness/runs/hv-mixed200-lunahigh-r3-20261116T093818Z/tasks/contracts__banking__repo-securities-lending-subsequent-turn-redline__scenario-01",
+     "session_files": 1,
+     "files": [
+      "answer.json",
+      "grading.json",
+      "output",
+      "readable.md",
+      "run.json",
+      "session.v2.jsonl"
+     ]
+    },
+    "run4": {
+     "all_pass": true,
+     "n_passed": 48,
+     "n_criteria": 48,
+     "finish_reason": "completed",
+     "agent_s": 480.7,
+     "source_task_dir": "/home/agarwaldi/dsh-bench-harness/runs/hv-mixed200-lunahigh-r4-20261116T164249Z/tasks/contracts__banking__repo-securities-lending-subsequent-turn-redline__scenario-01",
+     "session_files": 1,
+     "files": [
+      "answer.json",
+      "grading.json",
+      "output",
+      "readable.md",
+      "run.json",
+      "session.v2.jsonl"
+     ]
+    },
+    "run5": {
+     "all_pass": true,
+     "n_passed": 48,
+     "n_criteria": 48,
+     "finish_reason": "completed",
+     "agent_s": 538.1,
+     "source_task_dir": "/home/agarwaldi/dsh-bench-harness/runs/hv-mixed200-lunahigh-r5-20261116T164249Z/tasks/contracts__banking__repo-securities-lending-subsequent-turn-redline__scenario-01",
+     "session_files": 1,
+     "files": [
+      "answer.json",
+      "grading.json",
+      "output",
+      "readable.md",
+      "run.json",
+      "session.v2.jsonl"
+     ]
+    },
+    "run6": {
+     "all_pass": false,
+     "n_passed": 46,
+     "n_criteria": 48,
+     "finish_reason": "completed",
+     "agent_s": 416.1,
+     "source_task_dir": "/home/agarwaldi/dsh-bench-harness/runs/hv-mixed200-lunahigh-flip-r6-20261118T030322Z/tasks/contracts__banking__repo-securities-lending-subsequent-turn-redline__scenario-01",
+     "session_files": 1,
+     "files": [
+      "answer.json",
+      "grading.json",
+      "output",
+      "readable.md",
+      "run.json",
+      "session.v2.jsonl"
+     ]
+    },
+    "run7": {
+     "all_pass": false,
+     "n_passed": 44,
+     "n_criteria": 48,
+     "finish_reason": "completed",
+     "agent_s": 308.8,
+     "source_task_dir": "/home/agarwaldi/dsh-bench-harness/runs/hv-mixed200-lunahigh-flip-r7-20261118T030322Z/tasks/contracts__banking__repo-securities-lending-subsequent-turn-redline__scenario-01",
+     "session_files": 1,
+     "files": [
+      "answer.json",
+      "grading.json",
+      "output",
+      "readable.md",
+      "run.json",
+      "session.v2.jsonl"
+     ]
+    },
+    "run8": {
+     "all_pass": false,
+     "n_passed": 45,
+     "n_criteria": 48,
+     "finish_reason": "completed",
+     "agent_s": 486.2,
+     "source_task_dir": "/home/agarwaldi/dsh-bench-harness/runs/hv-mixed200-lunahigh-flip-r8-20261118T030322Z/tasks/contracts__banking__repo-securities-lending-subsequent-turn-redline__scenario-01",
+     "session_files": 1,
+     "files": [
+      "answer.json",
+      "grading.json",
+      "output",
+      "readable.md",
+      "run.json",
+      "session.v2.jsonl"
+     ]
+    },
+    "run9": {
+     "all_pass": false,
+     "n_passed": 47,
+     "n_criteria": 48,
+     "finish_reason": "completed",
+     "agent_s": 764.8,
+     "source_task_dir": "/home/agarwaldi/dsh-bench-harness/runs/hv-mixed200-lunahigh-flip-r9-20261118T030322Z/tasks/contracts__banking__repo-securities-lending-subsequent-turn-redline__scenario-01",
+     "session_files": 1,
+     "files": [
+      "answer.json",
+      "grading.json",
+      "output",
+      "readable.md",
+      "run.json",
+      "session.v2.jsonl"
+     ]
+    },
+    "run10": {
+     "all_pass": true,
+     "n_passed": 48,
+     "n_criteria": 48,
+     "finish_reason": "completed",
+     "agent_s": 671.5,
+     "source_task_dir": "/home/agarwaldi/dsh-bench-harness/runs/hv-mixed200-lunahigh-flip-r10-20261118T030322Z/tasks/contracts__banking__repo-securities-lending-subsequent-turn-redline__scenario-01",
+     "session_files": 1,
+     "files": [
+      "answer.json",
+      "grading.json",
+      "output",
+      "readable.md",
+      "run.json",
+      "session.v2.jsonl"
+     ]
+    }
+   },
+   "passes": 3
+  },
+  {
+   "task_id": "contracts/commercial-vendor-customer/saas-api-subscription-subsequent-turn-redline/scenario-01",
+   "folder": "contracts__commercial-vendor-customer__saas-api-subscription-subsequent-turn-redline__scenario-01",
+   "runs": {
+    "run1": {
+     "all_pass": false,
+     "n_passed": 54,
+     "n_criteria": 56,
+     "finish_reason": "completed",
+     "agent_s": 500.2,
+     "source_task_dir": "/home/agarwaldi/dsh-bench-harness/runs/hv-mixed200-lunahigh-r1-20261116T093818Z/tasks/contracts__commercial-vendor-customer__saas-api-subscription-subsequent-turn-redline__scenario-01",
+     "session_files": 1,
+     "files": [
+      "answer.json",
+      "grading.json",
+      "output",
+      "readable.md",
+      "run.json",
+      "session.v2.jsonl"
+     ]
+    },
+    "run2": {
+     "all_pass": true,
+     "n_passed": 56,
+     "n_criteria": 56,
+     "finish_reason": "completed",
+     "agent_s": 257.9,
+     "source_task_dir": "/home/agarwaldi/dsh-bench-harness/runs/hv-mixed200-lunahigh-r2-20261116T093818Z/tasks/contracts__commercial-vendor-customer__saas-api-subscription-subsequent-turn-redline__scenario-01",
+     "session_files": 1,
+     "files": [
+      "answer.json",
+      "grading.json",
+      "output",
+      "readable.md",
+      "run.json",
+      "session.v2.jsonl"
+     ]
+    },
+    "run3": {
+     "all_pass": true,
+     "n_passed": 56,
+     "n_criteria": 56,
+     "finish_reason": "completed",
+     "agent_s": 482.6,
+     "source_task_dir": "/home/agarwaldi/dsh-bench-harness/runs/hv-mixed200-lunahigh-r3-20261116T093818Z/tasks/contracts__commercial-vendor-customer__saas-api-subscription-subsequent-turn-redline__scenario-01",
+     "session_files": 1,
+     "files": [
+      "answer.json",
+      "grading.json",
+      "output",
+      "readable.md",
+      "run.json",
+      "session.v2.jsonl"
+     ]
+    },
+    "run4": {
+     "all_pass": false,
+     "n_passed": 53,
+     "n_criteria": 56,
+     "finish_reason": "completed",
+     "agent_s": 585.8,
+     "source_task_dir": "/home/agarwaldi/dsh-bench-harness/runs/hv-mixed200-lunahigh-r4-20261116T164249Z/tasks/contracts__commercial-vendor-customer__saas-api-subscription-subsequent-turn-redline__scenario-01",
+     "session_files": 1,
+     "files": [
+      "answer.json",
+      "grading.json",
+      "output",
+      "readable.md",
+      "run.json",
+      "session.v2.jsonl"
+     ]
+    },
+    "run5": {
+     "all_pass": false,
+     "n_passed": 38,
+     "n_criteria": 56,
+     "finish_reason": "completed",
+     "agent_s": 577.8,
+     "source_task_dir": "/home/agarwaldi/dsh-bench-harness/runs/hv-mixed200-lunahigh-r5-20261116T164249Z/tasks/contracts__commercial-vendor-customer__saas-api-subscription-subsequent-turn-redline__scenario-01",
+     "session_files": 1,
+     "files": [
+      "answer.json",
+      "grading.json",
+      "output",
+      "readable.md",
+      "run.json",
+      "session.v2.jsonl"
+     ]
+    },
+    "run6": {
+     "all_pass": false,
+     "n_passed": 53,
+     "n_criteria": 56,
+     "finish_reason": "completed",
+     "agent_s": 712.2,
+     "source_task_dir": "/home/agarwaldi/dsh-bench-harness/runs/hv-mixed200-lunahigh-flip-r6-20261118T030322Z/tasks/contracts__commercial-vendor-customer__saas-api-subscription-subsequent-turn-redline__scenario-01",
+     "session_files": 1,
+     "files": [
+      "answer.json",
+      "grading.json",
+      "output",
+      "readable.md",
+      "run.json",
+      "session.v2.jsonl"
+     ]
+    },
+    "run7": {
+     "all_pass": false,
+     "n_passed": 53,
+     "n_criteria": 56,
+     "finish_reason": "completed",
+     "agent_s": 874.1,
+     "source_task_dir": "/home/agarwaldi/dsh-bench-harness/runs/hv-mixed200-lunahigh-flip-r7-20261118T030322Z/tasks/contracts__commercial-vendor-customer__saas-api-subscription-subsequent-turn-redline__scenario-01",
+     "session_files": 1,
+     "files": [
+      "answer.json",
+      "grading.json",
+      "output",
+      "readable.md",
+      "run.json",
+      "session.v2.jsonl"
+     ]
+    },
+    "run8": {
+     "all_pass": false,
+     "n_passed": 54,
+     "n_criteria": 56,
+     "finish_reason": "completed",
+     "agent_s": 600.9,
+     "source_task_dir": "/home/agarwaldi/dsh-bench-harness/runs/hv-mixed200-lunahigh-flip-r8-20261118T030322Z/tasks/contracts__commercial-vendor-customer__saas-api-subscription-subsequent-turn-redline__scenario-01",
+     "session_files": 1,
+     "files": [
+      "answer.json",
+      "grading.json",
+      "output",
+      "readable.md",
+      "run.json",
+      "session.v2.jsonl"
+     ]
+    },
+    "run9": {
+     "all_pass": false,
+     "n_passed": 54,
+     "n_criteria": 56,
+     "finish_reason": "completed",
+     "agent_s": 525.2,
+     "source_task_dir": "/home/agarwaldi/dsh-bench-harness/runs/hv-mixed200-lunahigh-flip-r9-20261118T030322Z/tasks/contracts__commercial-vendor-customer__saas-api-subscription-subsequent-turn-redline__scenario-01",
+     "session_files": 1,
+     "files": [
+      "answer.json",
+      "grading.json",
+      "output",
+      "readable.md",
+      "run.json",
+      "session.v2.jsonl"
+     ]
+    },
+    "run10": {
+     "all_pass": false,
+     "n_passed": 54,
+     "n_criteria": 56,
+     "finish_reason": "completed",
+     "agent_s": 821.1,
+     "source_task_dir": "/home/agarwaldi/dsh-bench-harness/runs/hv-mixed200-lunahigh-flip-r10-20261118T030322Z/tasks/contracts__commercial-vendor-customer__saas-api-subscription-subsequent-turn-redline__scenario-01",
+     "session_files": 1,
+     "files": [
+      "answer.json",
+      "grading.json",
+      "output",
+      "readable.md",
+      "run.json",
+      "session.v2.jsonl"
+     ]
+    }
+   },
+   "passes": 2
+  },
+  {
+   "task_id": "firm-knowledge/tasks/065",
+   "folder": "firm-knowledge__tasks__065",
+   "runs": {
+    "run1": {
+     "all_pass": true,
+     "n_passed": 6,
+     "n_criteria": 6,
+     "finish_reason": "completed",
+     "agent_s": 352.4,
+     "source_task_dir": "/home/agarwaldi/dsh-bench-harness/runs/hv-mixed200-lunahigh-r1-20261116T093818Z/tasks/firm-knowledge__tasks__065",
+     "session_files": 1,
+     "files": [
+      "answer.json",
+      "grading.json",
+      "output",
+      "readable.md",
+      "run.json",
+      "session.v2.jsonl"
+     ]
+    },
+    "run2": {
+     "all_pass": true,
+     "n_passed": 6,
+     "n_criteria": 6,
+     "finish_reason": "completed",
+     "agent_s": 481.3,
+     "source_task_dir": "/home/agarwaldi/dsh-bench-harness/runs/hv-mixed200-lunahigh-r2-20261116T093818Z/tasks/firm-knowledge__tasks__065",
+     "session_files": 1,
+     "files": [
+      "answer.json",
+      "grading.json",
+      "output",
+      "readable.md",
+      "run.json",
+      "session.v2.jsonl"
+     ]
+    },
+    "run3": {
+     "all_pass": false,
+     "n_passed": 5,
+     "n_criteria": 6,
+     "finish_reason": "completed",
+     "agent_s": 517.6,
+     "source_task_dir": "/home/agarwaldi/dsh-bench-harness/runs/hv-mixed200-lunahigh-r3-20261116T093818Z/tasks/firm-knowledge__tasks__065",
+     "session_files": 1,
+     "files": [
+      "answer.json",
+      "grading.json",
+      "output",
+      "readable.md",
+      "run.json",
+      "session.v2.jsonl"
+     ]
+    },
+    "run4": {
+     "all_pass": false,
+     "n_passed": 5,
+     "n_criteria": 6,
+     "finish_reason": "completed",
+     "agent_s": 734.2,
+     "source_task_dir": "/home/agarwaldi/dsh-bench-harness/runs/hv-mixed200-lunahigh-r4-20261116T164249Z/tasks/firm-knowledge__tasks__065",
+     "session_files": 1,
+     "files": [
+      "answer.json",
+      "grading.json",
+      "output",
+      "readable.md",
+      "run.json",
+      "session.v2.jsonl"
+     ]
+    },
+    "run5": {
+     "all_pass": false,
+     "n_passed": 5,
+     "n_criteria": 6,
+     "finish_reason": "completed",
+     "agent_s": 623.2,
+     "source_task_dir": "/home/agarwaldi/dsh-bench-harness/runs/hv-mixed200-lunahigh-r5-20261116T164249Z/tasks/firm-knowledge__tasks__065",
+     "session_files": 1,
+     "files": [
+      "answer.json",
+      "grading.json",
+      "output",
+      "readable.md",
+      "run.json",
+      "session.v2.jsonl"
+     ]
+    },
+    "run6": {
+     "all_pass": false,
+     "n_passed": 4,
+     "n_criteria": 6,
+     "finish_reason": "completed",
+     "agent_s": 508.9,
+     "source_task_dir": "/home/agarwaldi/dsh-bench-harness/runs/hv-mixed200-lunahigh-flip-r6-20261118T030322Z/tasks/firm-knowledge__tasks__065",
+     "session_files": 1,
+     "files": [
+      "answer.json",
+      "grading.json",
+      "output",
+      "readable.md",
+      "run.json",
+      "session.v2.jsonl"
+     ]
+    },
+    "run7": {
+     "all_pass": false,
+     "n_passed": 4,
+     "n_criteria": 6,
+     "finish_reason": "completed",
+     "agent_s": 811.2,
+     "source_task_dir": "/home/agarwaldi/dsh-bench-harness/runs/hv-mixed200-lunahigh-flip-r7-20261118T030322Z/tasks/firm-knowledge__tasks__065",
+     "session_files": 1,
+     "files": [
+      "answer.json",
+      "grading.json",
+      "output",
+      "readable.md",
+      "run.json",
+      "session.v2.jsonl"
+     ]
+    },
+    "run8": {
+     "all_pass": false,
+     "n_passed": 4,
+     "n_criteria": 6,
+     "finish_reason": "completed",
+     "agent_s": 495.6,
+     "source_task_dir": "/home/agarwaldi/dsh-bench-harness/runs/hv-mixed200-lunahigh-flip-r8-20261118T030322Z/tasks/firm-knowledge__tasks__065",
+     "session_files": 1,
+     "files": [
+      "answer.json",
+      "grading.json",
+      "output",
+      "readable.md",
+      "run.json",
+      "session.v2.jsonl"
+     ]
+    },
+    "run9": {
+     "all_pass": false,
+     "n_passed": 3,
+     "n_criteria": 6,
+     "finish_reason": "completed",
+     "agent_s": 420.6,
+     "source_task_dir": "/home/agarwaldi/dsh-bench-harness/runs/hv-mixed200-lunahigh-flip-r9-20261118T030322Z/tasks/firm-knowledge__tasks__065",
+     "session_files": 1,
+     "files": [
+      "answer.json",
+      "grading.json",
+      "output",
+      "readable.md",
+      "run.json",
+      "session.v2.jsonl"
+     ]
+    },
+    "run10": {
+     "all_pass": false,
+     "n_passed": 3,
+     "n_criteria": 6,
+     "finish_reason": "completed",
+     "agent_s": 255.7,
+     "source_task_dir": "/home/agarwaldi/dsh-bench-harness/runs/hv-mixed200-lunahigh-flip-r10-20261118T030322Z/tasks/firm-knowledge__tasks__065",
+     "session_files": 1,
+     "files": [
+      "answer.json",
+      "grading.json",
+      "output",
+      "readable.md",
+      "run.json",
+      "session.v2.jsonl"
+     ]
+    }
+   },
+   "passes": 2
+  }
+ ]
+}

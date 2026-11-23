@@ -1,0 +1,34 @@
+{
+  "score": 1.0,
+  "max_score": 1.0,
+  "summary": "3/3 criteria passed.  ALL-PASS.",
+  "all_pass": true,
+  "n_criteria": 3,
+  "n_passed": 3,
+  "n_grading_errors": 0,
+  "pandoc_version": "3.11",
+  "criteria_results": [
+    {
+      "id": "C-001",
+      "title": "Qualifying matter \u2014 Verimark Hospitality 1021-00006",
+      "verdict": "pass",
+      "reasoning": "The output explicitly identifies Verimark Hospitality matter 1021-00006 as the firm's largest settlement, with an executed settlement amount of $87.5 million."
+    },
+    {
+      "id": "C-002",
+      "title": "Settlement figure \u2014 1021-00006",
+      "verdict": "pass",
+      "reasoning": "The output explicitly states that the settlement in matter 1021-00006, involving Verimark Hospitality Group Inc., was $87,500,000."
+    },
+    {
+      "id": "C-003",
+      "title": "Qualifying set \u2014 precision",
+      "verdict": "pass",
+      "reasoning": "The output consistently identifies matter 1021-00006 (Verimark Hospitality) as having the largest settlement. Other matters are mentioned only as lower-value comparisons, not asserted as the largest."
+    }
+  ],
+  "run_id": "firm-knowledge__tasks__111",
+  "task": "firm-knowledge/tasks/111",
+  "judge_model": "gpt-5.6-sol",
+  "scored_at": "2026-11-16T19:35:13.574814+00:00"
+}

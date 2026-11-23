@@ -1,0 +1,196 @@
+{
+  "score": 1.0,
+  "max_score": 1.0,
+  "summary": "30/30 criteria passed.  ALL-PASS.",
+  "all_pass": true,
+  "n_criteria": 30,
+  "n_passed": 30,
+  "n_grading_errors": 0,
+  "pandoc_version": "3.11",
+  "criteria_results": [
+    {
+      "id": "C-001",
+      "title": "\u00a72(a): Restore 'entitlement order' language",
+      "verdict": "pass",
+      "reasoning": "The redline expressly rejects the Bank\u2019s instruction-only language and restores \u201cEntitlement Orders\u201d in the relevant control provision, while also directing restoration of the defined term and conforming references. This is consistent with the UCC Article 8 control framework."
+    },
+    {
+      "id": "C-002",
+      "title": "Cover note explains \u00a72(a) entitlement order position",
+      "verdict": "pass",
+      "reasoning": "The cover note expressly addresses the entitlement-order change, states that Pinnacle rejects the Bank's substitution and restores \u201cEntitlement Order\u201d references, and explains the UCC Article 8 rationale: preserving control if an account is characterized as a securities account and avoiding ambiguity in the control arrangement."
+    },
+    {
+      "id": "C-003",
+      "title": "\u00a72(b): Address springing exclusive control and reject broad Bank carve-out",
+      "verdict": "pass",
+      "reasoning": "The redline retains springing exclusive control triggered by the Bank\u2019s receipt and authentication of an NOEC, while expressly ending Graycliff\u2019s operating rights at that point. It requires the Bank to cease following Depositor instructions, reject new Depositor debits, withdrawals, and transfers, and comply exclusively with the Secured Party\u2019s instructions and entitlement orders. Thus, it rejects the broad post-NOEC operating carve-out."
+    },
+    {
+      "id": "C-004",
+      "title": "\u00a73: Reject Bank set-off priority over Secured Party instructions",
+      "verdict": "pass",
+      "reasoning": "The redline expressly rejects the Bank\u2019s proposed priority for set-off, recoupment, liens, and security interests. It restores a waterfall under which, after receipt of an NOEC, the Bank must follow the Secured Party\u2019s instructions exclusively, with any set-off rights limited to expressly permitted exceptions."
+    },
+    {
+      "id": "C-005",
+      "title": "\u00a74: Narrow expanded self-help set-off to direct, liquidated obligations",
+      "verdict": "pass",
+      "reasoning": "The redline expressly rejects the Bank\u2019s broad \u201cany obligation\u2026whether direct or contingent\u201d formulation and limits set-off to obligations that are direct, matured, liquidated, due and payable, and arise under the deposit-account agreements. It also excludes contingent, disputed, unliquidated, derivative, affiliate, and unrelated obligations, thereby narrowing set-off to account-related fees and charges."
+    },
+    {
+      "id": "C-006",
+      "title": "\u00a75: Propose 3-business-day NOEC compliance period",
+      "verdict": "pass",
+      "reasoning": "The redline expressly rejects the Bank\u2019s five-business-day period and proposes in Section 5.2 that compliance begin no later than the third Business Day after receipt and authentication of the NOEC. It does not restore the original two-business-day period."
+    },
+    {
+      "id": "C-007",
+      "title": "\u00a76: Reject indemnification coverage for Bank gross negligence",
+      "verdict": "pass",
+      "reasoning": "The redline expressly rejects indemnification for the Bank\u2019s own gross negligence and adds a carve-out excluding losses resulting from the Bank\u2019s gross negligence, willful misconduct, or fraud (as well as material breach). This satisfies the criterion."
+    },
+    {
+      "id": "C-008",
+      "title": "\u00a77(a): Reject $50,000 aggregate liability cap",
+      "verdict": "pass",
+      "reasoning": "The redline expressly rejects and deletes the $50,000 aggregate liability cap, replacing it with language stating that the Bank's liability is not subject to an aggregate dollar cap. This satisfies the criterion."
+    },
+    {
+      "id": "C-009",
+      "title": "\u00a77(b): Address mutual consequential/punitive/indirect damages waiver",
+      "verdict": "pass",
+      "reasoning": "The redline expressly addresses the mutual consequential, punitive, indirect, special, and exemplary damages waiver in Issue 8. It accepts the waiver in principle while qualifying it so it does not limit indemnification, direct damages, or losses arising from gross negligence, willful misconduct, fraud, or material breach."
+    },
+    {
+      "id": "C-010",
+      "title": "Cover note confirms position on \u00a77(b) mutual damages waiver",
+      "verdict": "pass",
+      "reasoning": "The cover note expressly addresses the mutual consequential, special, punitive, and exemplary damages waiver under the heading \u201cConsequential damages waiver \u2014 accept in principle, subject to clarification.\u201d It confirms acceptance while qualifying that the waiver must not limit indemnification, direct damages, or liability for gross negligence, willful misconduct, fraud, or material breach."
+    },
+    {
+      "id": "C-011",
+      "title": "\u00a78: Reject 90-day lookback; propose full subordination or 180-day lookback",
+      "verdict": "pass",
+      "reasoning": "The redline expressly rejects the Bank\u2019s 90-day lookback and proposes full subordination as Pinnacle\u2019s preferred position, with a 180-day lookback as the minimum fallback. This satisfies the criterion."
+    },
+    {
+      "id": "C-012",
+      "title": "\u00a79: Reject 30-day unilateral termination; propose 90-day notice with transition rights",
+      "verdict": "pass",
+      "reasoning": "The redline expressly rejects the Bank\u2019s unilateral 30-day termination right and replaces it with at least 90 days\u2019 prior written notice plus transition protections. The agreement remains effective until replacement accounts and a replacement control agreement are established and the Secured Party confirms completion in writing, while the Bank must continue performing during the notice period."
+    },
+    {
+      "id": "C-013",
+      "title": "\u00a710: Restore New York governing law",
+      "verdict": "pass",
+      "reasoning": "The redline expressly rejects North Carolina governing law in Section 10.1 and restores New York governing law and New York jurisdiction."
+    },
+    {
+      "id": "C-014",
+      "title": "Cover note acknowledges New York governing law is strongly preferred with possible flexibility",
+      "verdict": "pass",
+      "reasoning": "The cover note expressly rejects North Carolina law and states that New York law and courts should be restored because New York governs the Credit Agreement and is the appropriate framework. This clearly indicates a strong preference for New York, even though it does not expressly offer flexibility if that position is a deal-breaker."
+    },
+    {
+      "id": "C-015",
+      "title": "\u00a712: Restore no-prior-control-agreement representation",
+      "verdict": "pass",
+      "reasoning": "The redline expressly rejects the Bank\u2019s deletion in \u00a712.1(b) and reinstates a knowledge-qualified representation that the Bank has not entered into another control agreement and has no written notice or actual knowledge of any competing lien or adverse claim on the accounts."
+    },
+    {
+      "id": "C-016",
+      "title": "\u00a713: Restore successor-bank notification obligation",
+      "verdict": "pass",
+      "reasoning": "The redline expressly rejects the Bank's deletion and reinstates a successor-bank notification obligation in Section 9.1, requiring at least 30 days' prior written notice to the Secured Party of a proposed transfer of the Accounts or other succession, subject to limited legal or practicability exceptions."
+    },
+    {
+      "id": "C-017",
+      "title": "\u00a711: Accept annual maintenance fee but negotiate down $15,000 legal-fee reimbursement",
+      "verdict": "pass",
+      "reasoning": "The redline expressly accepts the $3,500 annual maintenance fee per account ($10,500 total) and negotiates the $15,000 legal-fee reimbursement down to the lesser of $7,500 or the Bank\u2019s actual, reasonable, documented outside-counsel fees."
+    },
+    {
+      "id": "C-018",
+      "title": "Cover note: Correct sender and recipient firms",
+      "verdict": "pass",
+      "reasoning": "The cover note is sent by Hargrave Stein & Collier LLP, signed by Priya Nagarajan, and addressed to Lena Marchetti and Reginald Stowe of Blackmere Fox LLP."
+    },
+    {
+      "id": "C-019",
+      "title": "Cover note: Correct Hargrave Stein matter number",
+      "verdict": "pass",
+      "reasoning": "The cover note correctly references the Hargrave Stein matter number as 2025-HSC-04417."
+    },
+    {
+      "id": "C-020",
+      "title": "Cover note: Correct Blackmere Fox matter reference",
+      "verdict": "pass",
+      "reasoning": "The cover note correctly references Blackmere Fox matter number BF-IRB-25-00893 in the subject line."
+    },
+    {
+      "id": "C-021",
+      "title": "Cover note: Identifies document as Lender Turn 2 / counter-turn",
+      "verdict": "pass",
+      "reasoning": "The cover note expressly identifies the attachment as \u201cBank Turn 1 / Pinnacle Turn 2 Counter-Markup\u201d and states, \u201cAttached is Pinnacle\u2019s second-turn redline,\u201d clearly establishing it as the lender\u2019s counter-turn to the Bank\u2019s first markup."
+    },
+    {
+      "id": "C-022",
+      "title": "Cover note: Appropriate cc's to Catherine Voss, Diana Whitford, Jonathan Kehoe, and relevant contacts",
+      "verdict": "pass",
+      "reasoning": "The cover note cc's Catherine Voss of Dunlevy Rourke LLP, Diana Whitford of Pinnacle Capital Partners, LLC, and Jonathan Kehoe of Ironbridge National Bank, N.A., satisfying all required cc recipients."
+    },
+    {
+      "id": "C-023",
+      "title": "Cover note addresses all 13 substantive changes individually",
+      "verdict": "pass",
+      "reasoning": "The cover note separately addresses all 13 numbered substantive Bank changes. For each, it states Pinnacle\u2019s disposition\u2014acceptance, rejection, or counterproposal\u2014and provides a brief supporting rationale. The fees issue is also addressed separately."
+    },
+    {
+      "id": "C-024",
+      "title": "Cover note references May 30, 2025 perfection deadline",
+      "verdict": "pass",
+      "reasoning": "The cover note expressly references the May 30, 2025 perfection deadline and identifies Credit Agreement \u00a7 6.14(b)."
+    },
+    {
+      "id": "C-025",
+      "title": "Cover note conveys urgency and encourages prompt turnaround",
+      "verdict": "pass",
+      "reasoning": "The cover note repeatedly emphasizes the May 30, 2025 perfection deadline and expressly asks for the Bank's response \u201cas soon as practicable,\u201d while offering prompt availability to discuss remaining issues. This conveys urgency and encourages expedited turnaround."
+    },
+    {
+      "id": "C-026",
+      "title": "Correct identification of all three parties",
+      "verdict": "pass",
+      "reasoning": "The redline correctly identifies all three parties: Pinnacle Capital Partners, LLC as Secured Party, Graycliff Industries, Inc. as Depositor, and Ironbridge National Bank, N.A. as Bank/depository bank. No party is omitted or misidentified."
+    },
+    {
+      "id": "C-027",
+      "title": "Correct identification of all three controlled accounts",
+      "verdict": "pass",
+      "reasoning": "The redline correctly and consistently identifies all three controlled accounts as \u25cf\u25cf\u25cf\u25cf-4471, \u25cf\u25cf\u25cf\u25cf-4472, and \u25cf\u25cf\u25cf\u25cf-4473."
+    },
+    {
+      "id": "C-028",
+      "title": "ACA maintains form and substance satisfactory to Administrative Agent",
+      "verdict": "pass",
+      "reasoning": "The counter-redline preserves the essential UCC control mechanics: it restores Entitlement Order terminology where Article 8 may apply, permits ordinary-course operation only before an NOEC, requires cessation of new Depositor instructions upon NOEC receipt, and gives the Secured Party exclusive post-NOEC instruction authority. It also rejects unrestricted Bank set-off priority and limits any set-off to narrow, matured account-level obligations. The authentication and implementation period does not eliminate control because the Accounts are frozen against new Depositor activity during that period."
+    },
+    {
+      "id": "C-029",
+      "title": "Cover note maintains professional and cordial tone",
+      "verdict": "pass",
+      "reasoning": "The cover note is professional, courteous, and appropriate for inter-counsel negotiations. It thanks opposing counsel, explains Pinnacle\u2019s positions clearly and firmly without inflammatory language, identifies practical compromises, invites further discussion, and closes with a courteous request tied to the transaction deadline."
+    },
+    {
+      "id": "C-030",
+      "title": "Two distinct deliverables produced",
+      "verdict": "pass",
+      "reasoning": "The output includes two separately identified deliverables: counter-turn-redline.docx and cover-note.docx."
+    }
+  ],
+  "run_id": "contracts__banking__account-control-agreement-first-turn-redline__scenario-01",
+  "task": "contracts/banking/account-control-agreement-first-turn-redline/scenario-01",
+  "judge_model": "gpt-5.6-sol",
+  "scored_at": "2026-11-16T19:16:01.279012+00:00"
+}

@@ -1,0 +1,10 @@
+{
+  "answer": "Completed and validated both deliverables:\n\n- [tsa-markup-redline.docx](sandbox:/home/agarwaldi/dsh-bench-harness/runs/hv-mixed200-lunahigh-flip-r10-20261118T030322Z/tasks/corporate-ma__draft-markup-of-transition-services-agreement-tsa/workspace/output/tsa-markup-redline.docx)\n- [tsa-review-memo.docx](sandbox:/home/agarwaldi/dsh-bench-harness/runs/hv-mixed200-lunahigh-flip-r10-20261118T030322Z/tasks/corporate-ma__draft-markup-of-transition-services-agreement-tsa/workspace/output/tsa-review-memo.docx)\n\nThe redline includes annotated seller-side comments addressing APA conflicts, playbook deviations, fee and liability calculations, IP, staffing, termination assistance, audit rights, insurance, dispute resolution, IMMEX, and LFPDPPP issues. The memo organizes the findings into Critical, Significant, and Minor tiers.",
+  "source": "last_assistant_message",
+  "finish_reason": "completed",
+  "turn_end": {
+    "kind": "completed"
+  },
+  "root_session_id": "session-2011c91a-26d5-40b7-aae3-83aaabeabfca",
+  "exit_code": 0
+}
