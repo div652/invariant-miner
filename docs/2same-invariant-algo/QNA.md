@@ -1736,3 +1736,29 @@ It wasn't aggregated before (the report only has a "Failing runs" table per task
 
 Caveat: breaking an invariant doesn't mean it caused the failure. On the flip sets (FAILING-RUNS.md) many broken invariants were unrelated to what the grader failed (todo bookkeeping, rendering checks). I haven't done that check for these 56 runs.
 ````
+
+### 2026-11-23 — the 11 failing runs that break no invariant: criteria, verdicts, what happened
+
+User (2026-11-23): "okay, now in a file make the analysis of how many rubric criteroi does each of the 11 runs violate. after that I want you to actually tell me for each run, what is the rubric criteria it violates .what is the judes verdict on why it violates this criteria. and explain me what actually happened."
+
+Claude:
+
+````text
+File: analysis/APEX-EDGE-NO-INVARIANT-RUNS.md (counts table, one-liners, per run: failed criteria verbatim, judge verdict verbatim, what happened with step ids, and why no invariant caught it).
+
+Failed criteria: world228-jp-01 luna1-5: 1 of 1 each; world-131-jr-1 luna2 4/6, luna4 4/6, luna5 2/6; world112-1-task05 luna1-3: 1 of 3 each. 18 in all; the judge is right in all 18 (the reported values differ from the reference).
+
+world228-jp-01 (luna1-5, criterion "difference in share performance for 2024 is 28.61%"): all answered 36.40; judge e.g. "The agent reported the difference as 36.40 percentage points rather than 28.61%." They subtracted the 2024 cumulative 5-year index values (ATR 144.64 − Peer 108.24, base 100 in 2019) instead of the 2024 one-year returns (144.64/112.48 − 1 vs 108.24/108.26 − 1, from the Share Performance table). luna1-3 and luna5 got the values by decoding the page-2 chart's PDF vector paths; luna4 and luna5 read the 10-K's Share Performance page as an image, and luna4's reasoning even computed ATR's 28.59% before choosing the cumulative reading.
+
+world-131-jr-1:
+- luna2 and luna4 (4/6: events per year and minutes per event, both countries): 2.67 / 2.33 events per year and 261.13 / 379.57 min per event vs 23.42 / 29.26 and 89.20 / 90.81; judge e.g. "The agent reported 2.33 events per year (by counting outage records instead of the underlying event counts), rather than 29.26." Both counted outage records (8 and 7 over three years) despite the task's warning that Outage IDs are not events, and never read the Extreme_Weather_Frequency sheet (luna2 never opened the weather workbook; luna4 only listed its tabs).
+- luna5 (2/6, Netherlands only): 22.39 events per year and 118.67 min vs 29.26 and 90.81; judge "the agent reported 22.39 rather than 29.26." It used the frequency sheet correctly (France right) but mapped only Storm + Flooding to Weather - Storm, dropping Ice_Storm (Netherlands 1.89 + 4.98 = 6.87).
+
+world112-1-task05 (luna1-3, criterion total savings $69,725,793.18): all answered $69,725,793.19; judge e.g. "The agent reported $69,725,793.19 instead of the specified $69,725,793.18. Per the evaluation standard, exact values are required". They took the current input-material cost as the memo screenshot's cent-rounded $104,570,050.54 instead of recomputing it from the batch data ($104,570,050.5352…, as Astra did); material savings $9,337,537.2887 instead of .2839, so .29 instead of .28.
+
+Why no invariant caught them: each task had the decisive invariant, but
+1. a rewording from a FAILING run loosened it until it accepted the error (4 runs): world-131 i11 "assigning ice-storm to the storm category" was reworded from luna5's "same purpose, other action" to "… either by adding it to the storm category or by leaving it out"; world112 i14 (Astra's recompute-from-batch-data method) was reworded from luna1 to "current material cost (from current yields or the memo's stated baseline) …";
+2. the decisive observation never appeared (7 runs): world-131 luna2/luna4 never read the frequency sheet; world228's i8 ("the performance table gives index values at prior-year end and requested-year end" -> end/prior-end − 1) was seen by Luna's F2 in all 5 but the Opus re-check said not seen (luna4 did see the table, but only in an image);
+3. nothing covers the upstream choice (read the frequency sheet; find the year-end table instead of the chart), and the nearby invariants are coarse (world-131 i5, world228 i7 judged followed).
+Proposed (not built): no rewording from a failing run's "same purpose, other action"; let the checks see images the agent read.
+````
