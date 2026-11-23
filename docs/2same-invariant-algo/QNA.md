@@ -1762,3 +1762,19 @@ Why no invariant caught them: each task had the decisive invariant, but
 3. nothing covers the upstream choice (read the frequency sheet; find the year-end table instead of the chart), and the nearby invariants are coarse (world-131 i5, world228 i7 judged followed).
 Proposed (not built): no rewording from a failing run's "same purpose, other action"; let the checks see images the agent read.
 ````
+
+### 2026-11-23 — the same analysis on Harvey FK edge (Astra_fk:edge)
+
+User (2026-11-23): "okay, and now i remember we had done the same thing on harvey fk tasks also rgiht ? we had  edge runs from astra on fk tasks, on that also can you do the sama analysis, runs that didn't break any invariant. how many out of total were there, and what crireteria failed, and all that shit."
+
+Claude:
+
+````text
+File: analysis/FK-EDGE-NO-INVARIANT-RUNS.md (mining run runs/im-astra-edge-20261119T173221Z: 8 FK tasks x 10 runs, Astra 1-5 + Luna 1-5).
+
+- Failing runs: 38 (37 Luna + Astra run 4 of task 190). Break no active invariant: 8 (21%); counting retired/removed ones too: 6 (181 luna1 and luna2 each broke only a retired invariant).
+- The 8 and their failed criteria (18 in all, no grading errors):
+  092 luna3 4/9 (matters 1008-00006, 1012-00004 + their proof documents); 093 luna3 and luna4 4/4 each (9-month covenant in 1038-00006; they answered 18 and 12 months); 181 luna1, luna2, luna5 1/6 each (associate Priya Subramaniam); 190 astra4 1/16 (precision: added CFIUS matter 1032-00004 as a closed M&A deal); 243 luna3 2/8 (matters 1021-00008, 1032-00007).
+- What happened: 6 of 8 searched by file name only and never read the document holding the answer (092: grep over .docx returned "No matches found"; 093: 1038-00006 surfaced through a memo's name but was never parsed; 181: Subramaniam is named only in an e-mail of matter 1031-00001, never surfaced). 243 luna3's full-text scan was killed at the 120 s timeout and the rerun covered only five filename keywords, missing attribution in status reports, memos and e-mails. 190 astra4 read the right documents and counted a CFIUS workstream as an M&A closing (astra1/astra2 explicitly excluded it).
+- Why no invariant: the decisive invariant everywhere is "convert the whole corpus to text, then search contents". It was removed on a passing run that skipped it (092 i4 by luna2, 181 i4 by astra5), loosened by a rewording from a failing run (092 ri8 "… or straight inside the original files", 093 ri3 "… over filenames and/or directly readable text"), not seen (093 i5), or judged followed on the action alone (243 i4 although the extraction was killed; 190 i22 although the check reached the wrong conclusion).
+````
